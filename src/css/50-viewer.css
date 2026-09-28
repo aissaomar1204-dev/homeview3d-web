@@ -1,0 +1,320 @@
+/* ==========================================================================
+   50-viewer.css · 3D viewer, AR handoff, formats, embed code. Owner: VIEWER.
+   Rulebook B2 "Plano": COMP-07..COMP-11, COMP-25, A6 motion, A10 a11y.
+   Tokens only (COLOR-01), sharp 0/2px, every control >= 44px.
+   The engine already styles .block/.band--stage/.wrap/.block__head, .btn,
+   .btn--primary/--neutral, .link-arrow, .table, :focus-visible and the
+   prefers-contrast token swap: this file only adds what is viewer-specific.
+   Markup: build/lib/viewer.mjs · Behaviour: src/js/viewer.js
+   ========================================================================== */
+
+/* ---------- Grid: rail · stage · toolbar · info (COMP-08) ---------- */
+.vw { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+@media (min-width: 1024px) {
+  .vw { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: auto auto 1fr; column-gap: var(--space-5); align-items: start; }
+  .vw-rail { grid-column: 1 / span 3; grid-row: 1 / span 3; }
+  .vw-stage, .vw-bar, .vw-info { grid-column: 4 / -1; }
+}
+.vw-app { padding-block: var(--space-5) var(--space-7); }
+.vw-band__link { margin-top: var(--space-3); }
+
+/* ---------- Rail: 12 rooms with m², real HTML (A11Y-05, GEO-01) ---------- */
+.vw-rail { min-width: 0; }
+.vw-rail__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); margin-bottom: var(--space-3); }
+.vw-rail__title, .vw-ar__label, .vw-embed__title {
+  margin: 0;
+  font: var(--wght-heading) var(--fs-base)/var(--lh-h3) var(--font-sans);
+  font-stretch: 100%;
+  letter-spacing: 0;
+}
+.vw-rail__sum, .vw-size, .vw-hint { margin: 0; font-size: var(--fs-meta); line-height: var(--lh-meta); color: var(--color-ink-3); }
+.vw-rooms {
+  position: relative;
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 calc(-1 * var(--gutter));
+  padding: 0 var(--gutter) var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--gutter);
+  scrollbar-width: thin;
+}
+.vw-rooms > li { flex: none; scroll-snap-align: start; }
+.vw-room {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap-min);
+  padding: 0 var(--space-3);
+  font: var(--wght-ui) var(--fs-sm)/1.2 var(--font-sans);
+  color: var(--color-ink);
+  text-align: left;
+  white-space: nowrap;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  touch-action: manipulation;
+  /* Feedback: colour on hover and selection, 1px press. */
+  transition: background-color var(--dur-hover) var(--ease-out), border-color var(--dur-hover) var(--ease-out), transform var(--dur-press) var(--ease-out);
+}
+.vw-room:active { transform: translateY(1px); }
+.vw-room__n, .vw-hs__n { font: var(--wght-mono) var(--fs-meta)/1 var(--font-mono); color: var(--color-ink-3); font-variant-numeric: tabular-nums; }
+.vw-room__n { min-width: 2ch; }
+.vw-room__m2 { font-weight: var(--wght-body); color: var(--color-ink-2); font-variant-numeric: tabular-nums lining-nums; }
+.vw-room[aria-pressed="true"], .vw-tool[aria-pressed="true"] { background: var(--color-accent-soft); border-color: var(--color-accent); }
+/* State change: the 2px accent bar of the active room draws in. */
+.vw-room::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 -1px;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--dur-state) var(--ease-in-out);
+}
+.vw-room[aria-pressed="true"]::before { transform: none; }
+@media (hover: hover) and (pointer: fine) {
+  .vw-room:hover { border-color: var(--color-accent); }
+}
+@media (min-width: 1024px) {
+  .vw-rooms { flex-direction: column; gap: 0; margin: 0; padding: 0; overflow: visible; border-top: 1px solid var(--color-line); }
+  .vw-rooms > li { border-bottom: 1px solid var(--color-line); }
+  .vw-room { grid-template-columns: auto minmax(0, 1fr) auto; width: 100%; padding: 0 var(--space-2) 0 var(--space-3); white-space: normal; background: none; border: 0; border-radius: 0; }
+  .vw-room::before { inset: 0 auto 0 0; width: 2px; height: auto; transform: scaleY(0); transform-origin: 50% 0; }
+  .vw-room[aria-pressed="true"] { background: var(--color-accent-soft); }
+}
+
+/* ---------- Stage: the model rests on the band's table, no frame ---------- */
+.vw-stage { position: relative; aspect-ratio: 4 / 5; max-height: 78svh; margin-inline: calc(-1 * var(--gutter)); overflow: clip; }
+@media (min-width: 768px) { .vw-stage { aspect-ratio: 16 / 11; max-height: none; margin-inline: 0; } }
+/* Desktop: 16:9 keeps the facade button above the fold; poster and live model are both height-limited, so they still match. */
+@media (min-width: 1024px) { .vw-stage { aspect-ratio: 16 / 9; } }
+.vw[data-state="poster"] .vw-stage { cursor: pointer; }
+.vw-mv { position: absolute; inset: 0; display: block; width: 100%; height: 100%; background: none; --poster-color: transparent; }
+.vw-mv:focus-visible { outline-offset: calc(-1 * var(--focus-width)); }
+/* Before model-viewer is defined only the poster shows, in the same box (CLS 0). */
+.vw-mv:not(:defined) > :not([slot="poster"]), .vw-native-ar { display: none; }
+.vw-mv > [slot="poster"], .vw-mv > [slot="poster"] img { display: block; width: 100%; height: 100%; object-fit: contain; }
+/* Portrait stage: model-viewer frames the villa to the width, the 16:11 poster (villa at ~62 % of it) does not.
+   A static 1.6 scale matches the live framing so the swap does not jump; the pushed-out margins are transparent. */
+@media (max-width: 767px) {
+  .vw:not(.vw--embed) .vw-mv > [slot="poster"] img { transform: scale(1.6); }
+}
+
+/* Loading: 2px accent line at the stage bottom, driven by transform (COMP-10). */
+.vw-progress {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  opacity: 0;
+  pointer-events: none;
+  /* Feedback: the line fades out once the model is ready. */
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+.vw[data-state="loading"] .vw-progress { opacity: 1; }
+.vw-progress__bar {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  /* Feedback: smooths the jumps between progress events. */
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+/* Facade control on the poster, bottom-left; gone once the model is live. */
+.vw-start { position: absolute; left: var(--space-4); bottom: var(--space-4); z-index: var(--z-raised); }
+@media (min-width: 768px) { .vw-start { left: var(--space-5); bottom: var(--space-5); } }
+
+/* Hotspots: numbered room labels (data on the stage, IMG-08 exception), created after load. */
+.vw-hs {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  font: var(--wght-mono) var(--fs-meta)/1 var(--font-mono);
+  color: var(--color-ink);
+  white-space: nowrap;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  /* State change: labels facing away from the camera fade out. */
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+.vw-hs::after { content: ""; position: absolute; inset: -8px; }
+.vw-hs:not([data-visible]) { opacity: 0; pointer-events: none; }
+.vw-hs:not(.is-on) .vw-hs__name { display: none; }
+.vw-hs.is-on, .vw-hs.is-on .vw-hs__n { color: var(--color-on-accent); background: var(--color-accent); border-color: var(--color-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .vw-hs:hover { z-index: var(--z-raised); }
+  .vw-hs:hover .vw-hs__name { display: inline; }
+}
+
+/* ---------- Toolbar below the stage, never over the model ---------- */
+.vw-bar, .vw-tools { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-4); min-width: 0; }
+.vw-bar { align-items: flex-start; }
+.vw-tools { flex: 1 1 0; align-items: center; min-width: min(100%, 18rem); }
+.vw-group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.vw-seg { flex-wrap: nowrap; gap: 0; }
+.vw-seg .vw-tool + .vw-tool { margin-left: -1px; }
+.vw-tool { padding-inline: var(--space-4); font-size: var(--fs-sm); background: var(--color-surface); }
+.vw-tool[aria-pressed="true"] { position: relative; z-index: var(--z-raised); }
+.vw-tool .icon { width: 20px; height: 20px; }
+.vw-icon { width: var(--tap-min); padding: 0; }
+.vw-ar-open { margin-left: auto; color: var(--color-accent); border-color: var(--color-accent); }
+.vw-light label { font-weight: var(--wght-ui); font-size: var(--fs-sm); }
+.vw-light input { width: var(--space-10); height: var(--tap-min); margin: 0; accent-color: var(--color-accent); cursor: pointer; }
+.vw-size, .vw-status { flex: 1 1 auto; align-self: center; }
+.vw-status { margin: 0; font-size: var(--fs-sm); color: var(--color-ink-2); font-variant-numeric: tabular-nums; }
+
+/* State machine on .vw[data-state]: poster -> loading -> ready | error | nowebgl. */
+.vw:not([data-state="ready"]) .vw-tools,
+.vw:not([data-state="error"]) .vw-error,
+.vw:not([data-state="poster"]) .vw-size,
+.vw:is([data-state="ready"], [data-state="error"], [data-state="nowebgl"]) .vw-start,
+html:not(.js) :is(.vw-start, .vw-size) { display: none; }
+/* The live region stays in the DOM for announcements; it only shows while loading or without WebGL. */
+.vw:not([data-state="loading"], [data-state="nowebgl"]) .vw-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.vw-error { display: grid; gap: var(--space-2); width: 100%; padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-left: 2px solid var(--color-danger); }
+.vw-error p { margin: 0; font-size: var(--fs-sm); }
+.vw-error strong { color: var(--color-danger); }
+
+/* ---------- Info: room note (aria-live) + static hint (COMP-11) ---------- */
+.vw-info { display: grid; gap: var(--space-2); min-width: 0; }
+.vw-note { margin: 0; min-height: 3.2em; max-width: var(--measure); font-size: var(--fs-sm); color: var(--color-ink-2); text-wrap: pretty; }
+.vw-note strong { color: var(--color-ink); }
+.vw-hint { max-width: var(--measure); }
+.vw-keys { display: none; }
+@media (hover: hover) and (pointer: fine) { .vw-keys { display: inline; } }
+
+/* ---------- AR chooser dialog (native <dialog>: Esc closes, focus returns) ---------- */
+.vw-dialog {
+  width: min(100% - 2 * var(--gutter), 720px);
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--space-5));
+  padding: var(--space-5);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-pop);
+  overscroll-behavior: contain;
+}
+.vw-dialog::backdrop { background: var(--color-scrim); }
+.vw-dialog__body { display: grid; gap: var(--space-4); }
+.vw-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.vw-dialog__title { margin: 0; font-size: var(--fs-h3); }
+.vw-dialog__intro { margin: 0; color: var(--color-ink-2); }
+
+/* ---------- AR choices (dialog, `ar` block, /ar/villa/) ---------- */
+.vw-ar, .vw-ar__group { display: grid; gap: var(--space-6); align-content: start; }
+.vw-ar__group { gap: var(--space-3); }
+.vw-ar__label { font-size: var(--fs-h4); }
+.vw-ar__how { margin: 0; font-size: var(--fs-sm); color: var(--color-ink-2); }
+.vw-ar__links, .vw-ar__modes { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+@media (min-width: 640px) { .vw-ar__links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.vw-arlink {
+  display: grid;
+  grid-template-columns: var(--space-9) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--space-9);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  font-weight: var(--wght-ui);
+  line-height: 1.25;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  touch-action: manipulation;
+  transition: border-color var(--dur-hover) var(--ease-out), transform var(--dur-press) var(--ease-out);
+}
+.vw-arlink:active { transform: translateY(1px); }
+@media (hover: hover) and (pointer: fine) { .vw-arlink:hover { border-color: var(--color-accent); } }
+.vw-arlink--text { grid-template-columns: minmax(0, 1fr); min-height: var(--space-8); padding-left: var(--space-4); }
+.vw-arlink > :is(img, picture), .vw-arlink > picture img { display: block; width: var(--space-9); height: var(--space-8); object-fit: cover; background: var(--color-stage); }
+.vw-arlink__meta { margin: var(--space-2) 0 0; font: var(--wght-mono) var(--fs-meta)/var(--lh-meta) var(--font-mono); color: var(--color-ink-3); }
+.vw-ar--big .vw-arlink { grid-template-columns: var(--space-10) minmax(0, 1fr); min-height: var(--space-10); font-size: var(--fs-lead); }
+.vw-ar--big .vw-arlink--text { grid-template-columns: minmax(0, 1fr); min-height: var(--space-9); }
+.vw-ar--big .vw-arlink > :is(img, picture), .vw-ar--big .vw-arlink > picture img { width: var(--space-10); height: var(--space-9); }
+
+.vw-ar__qr { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--space-5); margin: 0; }
+.vw-ar__qr figcaption { display: grid; gap: var(--space-3); max-width: 48ch; font-size: var(--fs-sm); color: var(--color-ink-2); }
+.vw-ar__qr figcaption p { margin: 0; }
+.vw-ar__modes { gap: var(--space-2); }
+.vw-ar__modes li { padding-left: var(--space-3); border-left: 1px solid var(--color-line-strong); }
+.vw-ar__modes strong { color: var(--color-ink); font-weight: var(--wght-ui); }
+/* The QR stays dark on light in both themes so every camera app decodes it. */
+.vw-qr { display: block; width: 168px; height: 168px; padding: var(--space-2); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line); }
+.vw-qr path { fill: none; stroke: currentColor; }
+@media (prefers-color-scheme: dark) { .vw-qr { color: var(--color-bg); background: var(--color-ink); } }
+.vw-ar__notice { margin: 0; padding: var(--space-3) var(--space-4); font-size: var(--fs-sm); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-left: 2px solid var(--color-accent); }
+
+/* Platform (data-platform from viewer.js). Without JS: both mobile groups, the QR on fine pointers only. */
+.vw-ar__group--desktop,
+.vw-ar[data-platform="ios"] :is(.vw-ar__group--android, .vw-ar__group--desktop),
+.vw-ar[data-platform="android"] :is(.vw-ar__group--ios, .vw-ar__group--desktop),
+.vw-ar[data-platform="desktop"] :is(.vw-ar__group--ios, .vw-ar__group--android) { display: none; }
+.vw-ar[data-platform="desktop"] .vw-ar__group--desktop { display: grid; }
+@media (hover: hover) and (pointer: fine) { .vw-ar:not([data-platform]) .vw-ar__group--desktop { display: grid; } }
+
+/* ---------- Embed code: live iframe + snippet (COMP-25) ---------- */
+.vw-embedcode { display: grid; gap: var(--space-6); }
+@media (min-width: 1024px) {
+  .vw-embedcode { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); align-items: start; }
+  .vw-embedcode__preview { grid-column: 1 / span 7; }
+  .vw-code { grid-column: 8 / -1; }
+}
+.vw-embedcode__preview { margin: 0; }
+.vw-embedcode__preview iframe { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; background: var(--color-stage); border: 1px solid var(--color-line); }
+@media (min-width: 768px) { .vw-embedcode__preview iframe { aspect-ratio: 4 / 3; } }
+.vw-embedcode__preview figcaption { margin-top: var(--space-2); }
+.vw-code { display: grid; gap: var(--space-3); min-width: 0; }
+.vw-code__label, .vw-code__actions { margin: 0; }
+.vw-code__label { font-weight: var(--wght-ui); }
+.vw-code pre { margin: 0; padding: var(--space-4); font: var(--fs-meta)/1.6 var(--font-mono); white-space: pre-wrap; word-break: break-all; background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); }
+.vw-code__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); font-size: var(--fs-sm); color: var(--color-ink-2); }
+
+/* ---------- /ar/villa/ landing ---------- */
+.vw-arpage .wrap { display: grid; gap: var(--space-7); }
+.vw-arpage__head > * + * { margin-top: var(--space-3); }
+.vw-arpage__how h2 { margin-bottom: var(--space-4); }
+.vw-steps { display: grid; gap: var(--space-3); max-width: var(--measure); margin: 0; padding-left: var(--space-5); }
+.vw-steps li::marker { font-family: var(--font-mono); color: var(--color-ink-3); }
+.vw-arpage__links { margin: 0; }
+
+/* ---------- Embed page (/embed/villa/, bare layout inside third-party iframes) ---------- */
+.vw-embed { display: flex; flex-direction: column; min-height: 100dvh; background: var(--color-stage); }
+.vw-embed__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1) var(--space-4); padding-top: var(--space-2); }
+.vw-embed .vw-embed__title { font-size: var(--fs-base); font-stretch: 100%; line-height: var(--lh-h3); letter-spacing: 0; }
+.vw-embed__by { display: inline-flex; align-items: center; min-height: var(--tap-min); font-size: var(--fs-meta); color: var(--color-ink-2); }
+.vw-app--embed { flex: 1 1 auto; padding-block: var(--space-2) var(--space-3); }
+.vw--embed { gap: var(--space-3); }
+.vw--embed .vw-stage { aspect-ratio: auto; height: 56dvh; min-height: 240px; max-height: none; }
+.vw--embed :is(.vw-rail__sum, .vw-keys) { display: none; }
+@media (min-width: 1024px) {
+  .vw--embed .vw-stage { height: 70dvh; }
+  .vw--embed .vw-rail { max-height: 80dvh; overflow-y: auto; overscroll-behavior: contain; }
+}
+
+/* ---------- Forced colours: selection must not rely on fills (A11Y-12) ---------- */
+@media (forced-colors: active) {
+  :is(.vw-room, .vw-tool)[aria-pressed="true"], .vw-hs.is-on { outline: 2px solid Highlight; outline-offset: -2px; }
+  .vw-progress__bar { background: Highlight; }
+  .vw-qr { forced-color-adjust: none; }
+}
+.block--formats thead th:last-child { text-align: right; }
+@media (max-width: 559px) { .vw-ar__qr { grid-template-columns: minmax(0, 1fr); } }

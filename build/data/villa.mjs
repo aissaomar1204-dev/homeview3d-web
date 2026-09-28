@@ -35,8 +35,8 @@ export const villa = {
     glb:        { url: '/models/villa.glb',                bytes: 3132584,  label: { es: 'Modelo web (GLB, Meshopt + WebP)', en: 'Web model (GLB, Meshopt + WebP)' } },
     glbAr:      { url: '/models/villa-ar.glb',             bytes: 8270000,  label: { es: 'Android, tamaño real (GLB)', en: 'Android, real size (GLB)' } },
     glbArMesa:  { url: '/models/villa-ar-maqueta.glb',     bytes: 6952076,  label: { es: 'Android, maqueta 1:20 (GLB)', en: 'Android, 1:20 tabletop model (GLB)' } },
-    usdzMesa:   { url: '/models/villa_maqueta_1a20.usdz',  bytes: 9975119,  label: { es: 'iPhone/iPad, maqueta 1:20 (USDZ)', en: 'iPhone/iPad, 1:20 tabletop model (USDZ)' } },
-    usdzReal:   { url: '/models/villa_tamano_real.usdz',   bytes: 10723010, label: { es: 'iPhone/iPad, tamaño real (USDZ)', en: 'iPhone/iPad, real size (USDZ)' } },
+    usdzMesa:   { url: '/models/villa_maqueta_1a20.usdz',  bytes: 5255570,  label: { es: 'iPhone/iPad, maqueta 1:20 (USDZ)', en: 'iPhone/iPad, 1:20 tabletop model (USDZ)' } },
+    usdzReal:   { url: '/models/villa_tamano_real.usdz',   bytes: 8239444,  label: { es: 'iPhone/iPad, tamaño real (USDZ)', en: 'iPhone/iPad, real size (USDZ)' } },
   },
 
   // <model-viewer> defaults (tuned in the original viewer).

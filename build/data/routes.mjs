@@ -68,8 +68,6 @@ export const redirects = [
   { from: '/casos/', to: '/casos/villa-costa-del-sol/', status: 301 },
   { from: '/en/case-studies/', to: '/en/case-studies/costa-del-sol-villa/', status: 301 },
   { from: '/ar/', to: '/ar/villa/', status: 301 },
-  { from: '/index.html', to: '/', status: 301 },
-  { from: '/en/index.html', to: '/en/', status: 301 },
 ];
 
 export const routeById = Object.fromEntries(routes.map((r) => [r.id, r]));

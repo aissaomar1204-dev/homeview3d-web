@@ -1,0 +1,297 @@
+# Web del estudio 3D · build, despliegue y lanzamiento
+
+Sitio estático generado con Node (sin frameworks) y publicado en Netlify. Convierte los datos de
+`build/data/` y los textos de `build/content/` en `dist/`: páginas HTML en español (raíz) e inglés
+(`/en/`), visor 3D, realidad aumentada sin app y todos los ficheros para buscadores y asistentes de IA
+(`robots.txt`, sitemaps, `llms.txt`, espejos Markdown, IndexNow, JSON-LD).
+
+Especificación: `docs/build/BUILD-SPEC.md` · contrato de contenidos: `docs/build/CONTENT-SCHEMA.md` ·
+diseño: `docs/design/DESIGN-RULEBOOK.md` · estrategia GEO: `docs/research/04-geo-2026.md`.
+
+**Orden del lanzamiento:** §1 datos → §2 comprobación local → §3 Netlify → §4 formularios → §5 a §7
+indexación → §8 y §9 presencia fuera de la web → §10 medición mensual.
+
+---
+
+## 1. Antes del lanzamiento: rellenar los datos provisionales
+
+Mientras quede un dato provisional (`placeholder: true` en `site.mjs`):
+
+- **todas las páginas salen con `noindex, follow`** (las vistas previas no llegan a Google),
+- `llms.txt` y `llms-full.txt` empiezan con un comentario de «vista previa»,
+- IndexNow no envía nada,
+- **el deploy de producción falla a propósito** (salvo `ALLOW_PLACEHOLDERS=1`, ver §3).
+
+### 1.1 `build/data/site.mjs`
+
+| Campo | Qué poner | Al terminar |
+|---|---|---|
+| `brand.name` | Nombre definitivo. Único y sin colisiones: compruébalo en Google, Bing, Wikidata, LinkedIn, Instagram, YouTube y OEPM/EUIPO (`04-geo-2026.md` §7.1). Nada genérico tipo «3D Studio». | — |
+| `brand.legalName` | Razón social | — |
+| `brand.logo` | Ruta del logo en `public/` (SVG, o PNG cuadrado de 112 px o más) o `null` para el logotipo de texto | — |
+| `brand.placeholder` | | `false` |
+| `domain` | `https://www.tudominio.com`, sin barra final. Es la base de **todas** las URL canónicas, hreflang, sitemaps, schema, `llms.txt` e IndexNow. Decide ahora con o sin `www` y no lo cambies. | `domainPlaceholder: false` |
+| `contact.email`, `contact.phoneE164` (`+34…`), `contact.phoneDisplay`, `contact.whatsapp` (sin `+`), `contact.booking` (enlace de Cal.com o `null`) | Datos reales: salen en texto en cada página, en el schema y en `llms.txt` | `contact.placeholder: false` |
+| `base.locality`, `base.region` | Localidad y provincia de la sede. Es un negocio de área de servicio: no se publica calle. | `placeholderAddress: false` |
+| `legal.razonSocial`, `legal.nif`, `legal.domicilio`, `legal.registro`, `legal.email` | Datos LSSI-CE (aviso legal, privacidad). Si queda un `[NIF]` o similar, el QA de producción falla. | `legal.placeholder: false` |
+| `entity.es`, `entity.en` | La **frase canónica**: idéntica en la web, `llms.txt`, LinkedIn, YouTube, Google Business Profile y directorios. Revísala cuando haya nombre. | — |
+| `sameAs` | URL de cada perfil a medida que exista (LinkedIn, YouTube, Instagram, GBP, Clutch, Sortlist, Houzz, Behance, Sketchfab, GitHub…). Van a `Organization.sameAs`. | Rebuild |
+| `indexNowKey` | Puede quedarse. Para una nueva: `node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"`. Se publica sola como `/<clave>.txt`. | — |
+| `analytics` | `null` (sin analítica, sin banner) o `{ provider: 'plausible', domain: 'tudominio.com' }` (sin cookies; la CSP se amplía sola). | — |
+| `facts` | Año de fundación, idiomas y herramientas: comprueba que siguen siendo ciertos. | — |
+
+### 1.2 `build/data/pricing.mjs`
+
+Los precios son una **propuesta** (`confirmed: false`). Todo lo relacionado con precios sale de este
+fichero: textos (tokens `{{price:…}}`), tablas, calculadora, FAQ, schema `Offer`/`OfferCatalog` y
+`llms.txt`. **Nunca escribas un precio a mano en un contenido.**
+
+Revisa y aprueba: `packs` (precio base, `tiers` por m², `deliveryDays`, `revisions`, `includes`),
+`extras` (render, staging, tipología, hosting, urgente en %), `volume` (pack cartera), `calculator.steps`,
+`guarantees`, `vatRate`, `validFrom` y `priceValidUntil` (va al schema). Cuando estén aprobados:
+`confirmed: true` (desaparece el aviso del build). Los precios se muestran siempre **sin IVA** («+ IVA»).
+
+### 1.3 Otros datos que dependen de ti
+
+- `build/data/villa.mjs`: cifras del caso demostrativo (m², estancias, tamaños de los ficheros). El QA
+  avisa si el tamaño declarado de un GLB/USDZ no coincide con el fichero publicado.
+- Fechas `dateModified` de cada `build/content/<id>.mjs`: mandan en el sitemap, el schema y la fecha
+  visible. Súbelas solo cuando cambie el contenido de verdad.
+
+---
+
+## 2. Comandos locales
+
+Requisitos: Node 24 (vale ≥ 20) y `npm install` una vez.
+
+| Comando | Qué hace |
+|---|---|
+| `npm run build` | Genera `dist/`: páginas, 404 por idioma, `robots.txt`, sitemaps, `llms.txt`, `llms-full.txt` (ES) y `en/llms-full.txt` (EN), un `index.md` por página indexable, feeds RSS, IndexNow, `_headers`, `_redirects`, `site.webmanifest`. |
+| `npm run check` | QA sobre `dist/` (ver abajo). Código de salida 1 si hay algún error. |
+| `npm run qa` | `build` + `check`: exactamente lo que ejecuta Netlify. |
+| `npm run preview` | Build y servidor local de `dist/` (barras finales, 404 real, MIME de GLB/USDZ/Markdown). |
+| `npm run validate` | Valida los ficheros de contenido (`build/content/*.mjs`). |
+| `npm run lint:design` | Solo el *design lint* (`scripts/design-lint.mjs dist`). |
+| `npm run indexnow` | Lista las URL pendientes de IndexNow (ver §6). |
+| `npm run images` | Regenera AVIF/WebP/OG desde los renders. |
+| `node scripts/geo-harness.mjs` | Prueba aislada de los módulos GEO (schema, Markdown, ficheros para máquinas) con datos falsos. |
+
+**Qué comprueba `npm run check`:** enlaces, recursos y anclas rotos; un solo `h1` y orden de encabezados;
+canonical autorreferente; hreflang recíproco con `x-default`; títulos y descripciones únicos y con
+longitud correcta; JSON-LD (se parsea, campos obligatorios por tipo, `@id` resueltos, FAQ del schema =
+FAQ visible, precios del schema visibles en la página); `.lead` y datos clave; imágenes con `alt`,
+`width`/`height` y una sola `fetchpriority="high"`; páginas huérfanas; sitemaps, `robots.txt`, `llms*.txt`,
+espejos `index.md`, feeds e IndexNow; `_headers` (CSP con los *hash* de los scripts en línea, embed
+enmarcable, MIME y CORS de los modelos); `_redirects` (sin bucles, 404 por idioma); formulario de Netlify;
+modelos 3D (cabeceras GLB, USDZ sin compresión y alineado a 64 bytes, texturas, tamaños); datos
+provisionales; presupuestos de peso (HTML ≤ 60 KB, CSS ≤ 40 KB, JS inicial ≤ 30 KB, fuentes ≤ 110 KB,
+imagen LCP ≤ 120 KB) y el *design lint*.
+
+El informe se agrupa **por responsable** (ENGINE, VIEWER, CONTENT, ASSETS, GEO, LAUNCH), indica el fichero
+de contenido afectado y, en las páginas que superan 60 KB, qué partes pesan más.
+Opciones: `--verbose` (todo), `--production` (simula producción), `--placeholders-ok`, `--no-lint`,
+`--json informe.json`.
+
+**Comprobación final antes de publicar:**
+
+```bash
+npm run qa                                  # 0 errores
+CONTEXT=production npm run check            # simula producción: los datos provisionales son errores
+# PowerShell:  $env:CONTEXT='production'; npm run check; Remove-Item Env:CONTEXT
+```
+
+Fuera del build (05 §5.3, n.º 24 y 25), antes del lanzamiento y tras cambios grandes: Lighthouse móvil
+(≥ 95 en rendimiento, 100 en SEO y accesibilidad) y axe/pa11y en una página de cada plantilla (home, un
+servicio, el caso, precios, una guía y contacto).
+
+---
+
+## 3. Netlify
+
+1. **Crear el sitio** desde el repositorio Git: *Add new site → Import an existing project* → elige el
+   repositorio y la rama principal. `netlify.toml` ya fija todo:
+   - comando `npm run build && npm run check` y carpeta `dist`,
+   - Node 24 (`NODE_VERSION`),
+   - funciones en `netlify/functions` (IndexNow tras cada deploy de producción) y *edge functions* en
+     `netlify/edge-functions` (Markdown para agentes; se declara en el propio fichero y solo se ejecuta
+     si la petición pide `Accept: text/markdown`),
+   - *pretty URLs* desactivadas.
+
+   No añadas cabeceras, redirecciones ni *snippet injection* en la interfaz: `_headers` y `_redirects`
+   los genera el build (una regla duplicada en la interfaz se fusiona y rompe la CSP o el visor embebido).
+2. **Variables de entorno** (*Site configuration → Environment variables*):
+   - `ALLOW_PLACEHOLDERS=1` **solo en el contexto Production y solo antes del lanzamiento**, si quieres
+     publicar la web en `*.netlify.app` con datos provisionales (las páginas siguen en `noindex`).
+     **Bórrala el día del lanzamiento**: desde entonces un dato provisional vuelve a bloquear el deploy.
+   - Las *deploy previews* y los *branch deploys* no la necesitan: ahí los datos provisionales son avisos.
+3. **Dominio**: *Domain management* → añade el dominio, apunta el DNS (o usa Netlify DNS) y activa HTTPS.
+   La versión principal (con o sin `www`) tiene que ser la misma que `site.domain`; Netlify redirige la otra.
+4. **Deploy previews**: cada *pull request* genera una vista previa con el mismo QA.
+5. **Comprobaciones tras el primer deploy** (sustituye el dominio):
+
+```bash
+D=https://www.tudominio.com
+curl -sI $D/ | grep -i -E "content-security-policy|strict-transport|x-content-type"
+curl -sI $D/models/villa.glb | grep -i -E "content-type|access-control|cache-control"      # model/gltf-binary
+curl -sI $D/models/villa_maqueta_1a20.usdz | grep -i content-type                          # model/vnd.usdz+zip
+curl -sI $D/embed/villa/ | grep -i -E "content-security-policy|x-robots-tag"                # frame-ancestors *
+curl -sI $D/no-existe/ | head -1                                                           # HTTP/2 404 (404 en español)
+curl -sI $D/en/no-such-page/ | head -1                                                     # HTTP/2 404 (404 en inglés)
+curl -s -H "Accept: text/markdown" $D/precios/ | head -5                                   # Markdown (edge function)
+curl -s $D/robots.txt | head -20 ; curl -s $D/llms.txt | head -20
+```
+
+   Abre la home y el caso de la villa con la consola del navegador abierta: **0 errores de CSP**; el visor
+   carga con texturas al pulsar «Ver la villa en 3D» y los modos Maqueta/Muros completos funcionan.
+   Prueba la realidad aumentada en un iPhone (Safari) y en un Android con ARCore escaneando el QR del caso.
+
+---
+
+## 4. Formularios (Netlify Forms) y avisos por email
+
+- El formulario `presupuesto` (página de contacto y final de la home) se detecta en cada deploy. En
+  *Forms* activa *Form detection* si está desactivado y comprueba que aparece «presupuesto».
+- **Avisos por email**: *Site configuration → Notifications → Emails and webhooks → Form submission
+  notifications → Add notification → Email notification*, formulario `presupuesto`, al correo del estudio.
+  Añade el remitente de Netlify a contactos para que no vaya a spam. (Opcional: Slack o *webhook* a un CRM.)
+- **Antispam**: el formulario lleva *honeypot* (`bot-field`); deja activado el filtro de spam de Netlify.
+- **Adjuntos**: el plano se sube con el formulario (límite de Netlify: 8 MB por envío); la web ofrece
+  pegar un enlace de descarga para archivos mayores.
+- **Prueba real**: envía una solicitud con un PDF pequeño, comprueba que llega el email y que redirige a
+  `/gracias/` (o `/en/thanks/`); revisa los campos ocultos (`utm_*`, `referrer`, `landing`) y «¿Cómo nos
+  conociste?» (ChatGPT, Perplexity, Gemini, Claude, Copilot, Google…): es la mejor medida de la IA.
+- Los envíos contienen datos personales: responde en plazo y borra los que no se conviertan (RGPD).
+
+---
+
+## 5. Google Search Console
+
+1. Añade una **propiedad de dominio** (verificación por registro TXT en el DNS).
+2. **Sitemaps** → envía `https://www.tudominio.com/sitemap.xml` (índice con `sitemap-pages.xml` y
+   `sitemap-images.xml`).
+3. **Inspección de URL** → solicita la indexación de: home ES y EN, los 5 servicios, precios, caso de la
+   villa, cómo funciona y contacto.
+4. **No** actives ningún control de exclusión de funciones de IA generativa.
+5. Cada mes: informe de rendimiento en IA generativa (AI Overviews, AI Mode), indexación y Core Web Vitals.
+
+## 6. Bing Webmaster Tools + IndexNow
+
+1. En Bing Webmaster Tools, **importa el sitio desde Search Console** (trae la verificación y el sitemap).
+2. **Primer envío completo por IndexNow** (Bing, Yandex, Seznam, Naver, Yep) el día del lanzamiento,
+   después del primer deploy de producción con el dominio real:
+
+```bash
+npm run build
+npm run indexnow -- --all            # revisa la lista (no envía nada)
+npm run indexnow -- --all --submit   # comprueba que /<clave>.txt está publicado y envía todas las URL
+```
+
+3. Después es **automático**: el build compara el *hash* del Markdown de cada página con el manifiesto
+   publicado (`/indexnow-manifest.json`) y escribe `/indexnow-pending.json`; al publicarse cada deploy de
+   **producción**, `netlify/functions/deploy-succeeded.mjs` envía solo las URL nuevas, cambiadas o
+   eliminadas. Se ve en *Logs → Functions → deploy-succeeded* (`[indexnow] HTTP 200 · N URL(s)`).
+4. Cada mes: informe **AI Performance** de Bing (citas, páginas citadas y *grounding queries*: son ideas
+   de contenido).
+
+## 7. Brave Search (el índice que usa Claude)
+
+Envía en <https://search.brave.com/submit-url> la home, los 5 servicios, precios y el caso (sin cuenta).
+Repite tras cambios grandes. Brave sigue las reglas de Googlebot: por eso `robots.txt` nunca bloquea
+contenido a Googlebot.
+
+---
+
+## 8. Google Business Profile (negocio de área de servicio)
+
+- Crea el perfil como **negocio de área de servicio**: sin dirección visible si no hay oficina abierta al
+  público (la dirección se usa solo para verificar). Área: Marbella, Málaga y Costa del Sol (puedes añadir
+  más municipios; no pongas toda España).
+- Categoría principal: la más cercana disponible (prueba «Diseñador arquitectónico», «Agencia de diseño»
+  o similar); secundarias relacionadas.
+- Nombre, teléfono y web **idénticos** a los de la web. Web con UTM:
+  `https://www.tudominio.com/?utm_source=gbp&utm_medium=organic`.
+- Descripción = la frase canónica (`site.entity.es`). Servicios con los precios de `pricing.mjs`.
+  Fotos = renders de la villa (indica que son renders). Publica novedades cuando haya un caso nuevo.
+- Pide reseñas reales a cada cliente tras la entrega (nunca incentivadas ni inventadas).
+- **Bing Places**: importa desde Google Business Profile. **Apple Business Connect**: mismos datos.
+- Añade la URL pública del perfil a `site.sameAs` y haz un deploy.
+
+## 9. Directorios y perfiles (las menciones hacen que la IA nos cite)
+
+En todos: mismo nombre, misma frase canónica, mismo teléfono y enlace a la web. Cada perfil creado → su
+URL en `site.sameAs` → deploy. Nada de menciones falsas ni reseñas compradas.
+
+| Prioridad | Dónde | Por qué |
+|---|---|---|
+| P0 | **Google Business Profile**, **Bing Places**, **Apple Business Connect** (§8) | Gemini, Maps, AI Mode, Copilot, Siri |
+| P0 | **LinkedIn**: página de empresa + perfil del fundador (cargo y frase canónica), artículos | Canal B2B con agencias; Perplexity y ChatGPT citan LinkedIn |
+| P0 | **YouTube** (ES y EN): AR en iPhone (tamaño real y 1:20), recorrido del visor, «del plano al 3D», Shorts de 30 s; descripción con la frase canónica y enlace | Gran predictor de visibilidad en IA |
+| P1 | **Sketchfab** (modelos con enlace a la web), **Behance**, **ArtStation** | Portafolio 3D indexable y `sameAs` |
+| P1 | **Clutch**, **Sortlist**, **GoodFirms**, **DesignRush** | Los LLM los citan en «mejor agencia de…» |
+| P1 | **Houzz** (profesionales), **Habitissimo**, **Páginas Amarillas**, **Cylex**, **Europages** | Datos estructurados de terceros |
+| P1 | **GitHub**: una pieza pequeña del pipeline en abierto con README que enlace la web | Autoridad para los LLM |
+| P1 | **Comunidad Blender**: artículo técnico en BlenderNation, Blender Artists y r/blender | Menciones y enlaces reales |
+| P2 | Prensa del sector (Idealista/news, Inmodiario, Observatorio Inmobiliario, Brainsre.news) y prensa en inglés de la Costa del Sol (Sur in English, The Olive Press, Euro Weekly News) | Menciones editoriales |
+| P2 | Listas «mejores estudios de renders/3D en España» y blogs *proptech*: ofrecer la demo AR | Entrar en las listas que usan los LLM |
+| P3 | **Wikidata**, solo cuando haya fuentes independientes (prensa, directorios) | Anclaje de entidad |
+
+---
+
+## 10. Medición mensual: panel de *prompts* GEO
+
+Una vez al mes, en ventana privada y sin sesión iniciada, lanza cada *prompt* en **ChatGPT, Perplexity,
+Gemini, Google AI Mode, Claude y Copilot**. Apunta en una hoja de cálculo: ¿nos menciona? · ¿cita una URL
+nuestra (cuál)? · posición · competidores citados · fecha. Amplía la lista con las *grounding queries* de
+Bing y las consultas de Search Console.
+
+**Español**
+1. ¿Qué empresa convierte planos en modelos 3D para inmobiliarias en Málaga?
+2. ¿Cómo mostrar una vivienda de obra nueva sobre plano en realidad aumentada?
+3. ¿Cuánto cuesta un modelo 3D de una vivienda a partir del plano?
+4. Alternativa a Matterport para una promoción que aún no está construida.
+5. Mejores estudios de renders 3D en la Costa del Sol.
+6. Home staging virtual en Marbella: precio.
+7. ¿Se puede ver una casa en realidad aumentada en el iPhone sin descargar una app?
+8. ¿Cuánto cuesta un render 3D de una vivienda en España?
+9. ¿La IA puede convertir un plano 2D en 3D de forma fiable?
+10. Tour virtual 3D para anuncios de inmobiliaria sin visitar la vivienda.
+
+**English**
+1. Floor plan to 3D model service for real estate agencies in Spain.
+2. Company that makes AR models of off-plan property in Marbella.
+3. 3D rendering studio on the Costa del Sol for developers.
+4. How to show a new-build home in augmented reality without an app.
+5. Virtual staging Marbella price.
+6. How much does 3D rendering cost in Spain?
+7. Interactive 3D floor plan for a property listing.
+
+**KPIs del mes:** visitas desde asistentes de IA, **solicitudes atribuidas a IA** (referrer + campo «¿Cómo
+nos conociste?»), citas en Bing AI Performance, impresiones de IA en Search Console y cuota de menciones
+del panel. Con esos datos: una guía o un caso nuevo al mes y revisión trimestral de precios y guías.
+
+---
+
+## 11. Qué genera el build para buscadores y agentes
+
+| Fichero | Para qué |
+|---|---|
+| `/robots.txt` | Todo abierto a buscadores y asistentes de IA con una sola lista de reglas (grupo `*` y grupo explícito idénticos); cerrados `/models/` y `/embed/`; `Bytespider` bloqueado; `Content-Signal` y `Sitemap:`. |
+| `/sitemap.xml` → `/sitemap-pages.xml`, `/sitemap-images.xml` | Páginas indexables con `hreflang` y `lastmod` = fecha real del contenido; renders. |
+| `/llms.txt` | Índice bilingüe para agentes (< 10 KB): frase canónica, datos clave con precios y plazos, enlaces. |
+| `/llms-full.txt`, `/en/llms-full.txt` | Todo el contenido en Markdown, **un fichero por idioma** (≤ 400 KB cada uno, unas 100 000 *tokens*: cabe en una sola lectura de un asistente). Sin índices ni legales (siguen en `llms.txt`); el contenido compartido se cita una vez. |
+| `/<ruta>/index.md` | Versión Markdown de cada página indexable; también se sirve en la URL de la página con `Accept: text/markdown`. |
+| `/feed.xml`, `/en/feed.xml` | RSS de guías y del caso. |
+| `/<clave>.txt`, `/indexnow-manifest.json`, `/indexnow-pending.json` | IndexNow (§6). |
+| `/_headers` | Seguridad (HSTS, CSP por página con los *hash* de los scripts en línea, sin `X-Frame-Options`), `/embed/*` enmarcable (`frame-ancestors *`) y `noindex`, MIME y CORS de los modelos 3D, caché inmutable de `/assets/` y `/lib/`, `noindex` en los ficheros para máquinas. |
+| `/_redirects` | 301 de `routes.mjs` y 404 por idioma (`/en/*` → `/en/404.html`, `/*` → `/404.html`, con estado 404). Sin reglas comodín con estado 200. |
+| `/site.webmanifest` | Nombre, colores e iconos PNG 192 y 512 (`any maskable`). |
+
+## 12. Mantenimiento
+
+- Cada trimestre: precios (`pricing.mjs`), guías y comparativas; `dateModified` solo de lo que cambie.
+- Cada mes: panel de *prompts* (§10), informes de IA de Search Console y Bing, formularios.
+- Cada 6 meses: lista de *user agents* de IA en `build/lib/machine.mjs` (`ALLOWED_AGENTS`).
+- Si se añade un script en línea a una plantilla, el build recalcula la CSP. Si Netlify inyecta scripts
+  (analítica de Netlify, *snippet injection*), la CSP los bloqueará: no los actives.
+- USDZ: el QA avisa por encima de 10 MB porque AR Quick Look descarga el fichero entero antes de mostrar
+  nada; el GLB web, por encima de 4 MB.

@@ -1,0 +1,638 @@
+{
+  "og_image": {
+    "width": 1200,
+    "height": 630,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/og_image-{w}.{ext}",
+    "fallback": "/assets/img/og_image-1200.webp",
+    "og": "/assets/img/og/og_image.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADQAwCdASoYAA0APt1ep00opSOiMAgBEBuJZQDG9B6WnsDhBnWyRAAA/u1fv7iZ7qvbknUIVTw1taNLMWekDfZ/JCOOSIP6mP90I0PHCE6UlFHHhHbCCxu21hOxlkXcbmM7YZ4+0GF7MP/DZ6qy5XAA",
+    "bytes": {
+      "avif-480": 11029,
+      "webp-480": 13116,
+      "avif-800": 21363,
+      "webp-800": 25732,
+      "avif-1200": 35750,
+      "webp-1200": 43186,
+      "og": 61760
+    }
+  },
+  "villa_bano_suite": {
+    "width": 2000,
+    "height": 1600,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_bano_suite-{w}.{ext}",
+    "fallback": "/assets/img/villa_bano_suite-1200.webp",
+    "og": "/assets/img/og/villa_bano_suite.jpg",
+    "placeholder": "data:image/webp;base64,UklGRi4BAABXRUJQVlA4WAoAAAAQAAAAFwAAEgAAQUxQSFEAAAARX6CgbRs21W0I/o2IEL+vzu/VAoNIVutEAhKwEgm1gBU0pBbQEJ68zFw/CiL6PwHjvFrnYSngRaKBLYG5gaWAF4kGtgTmBpaCXiSa3KKN/gkAVlA4ILYAAACQBQCdASoYABMAPt1gq08opSQiKAqpEBuJQBdmUC1AAEzd4c1IJGfy5xffu9IW0X574r26gAD+9ofvcWZNEMg7GSbqTJF85yO0RHokcAQ2J6PbemvRNa6ZSw55YbBVP/E814oYJCp75yFVJnZ7j7IIAmAIG1Cy2aTuBHfMGQabhnWibQshHg9mmMa8/RPBedWRFiBWWJC1Eb2rtAV0lrFnVxWkUg9KgJ0d4FbjEWt0wBrgBhgAAA==",
+    "bytes": {
+      "avif-480": 17515,
+      "webp-480": 22200,
+      "avif-800": 36351,
+      "webp-800": 47860,
+      "avif-1200": 62898,
+      "webp-1200": 88548,
+      "avif-1600": 89440,
+      "webp-1600": 130300,
+      "og": 45749
+    }
+  },
+  "villa_bano_suite_opaco": {
+    "width": 2000,
+    "height": 1600,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_bano_suite_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_bano_suite_opaco-1200.webp",
+    "og": "/assets/img/og/villa_bano_suite_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRsAAAABXRUJQVlA4ILQAAADwBQCdASoYABMAPt1Yo02opKMiMBgMARAbiUAXZlBmGlgABMvrn1fW0GVJeBJA1M7SiquaksCkAAD+7Ug51leKTeZPLMUY5rTcogTX5f8SzN2eeezZdeNgck+gb4AC0u9FRNYKOsD8GyePgdZwLKpCrTGIdhBlk5EV9j/a5FiMgZECFGbb6UMWRfdgytt1WNd2lgUbPtbSxw+r2ptZAlQMctRR0j9vk5MElZZFZSjEMqAUgAA=",
+    "bytes": {
+      "avif-480": 16295,
+      "webp-480": 17658,
+      "avif-800": 34579,
+      "webp-800": 36886,
+      "avif-1200": 60614,
+      "webp-1200": 64134,
+      "avif-1600": 86628,
+      "webp-1600": 90718,
+      "og": 45746
+    }
+  },
+  "villa_despiece_1": {
+    "width": 1600,
+    "height": 1030,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_despiece_1-{w}.{ext}",
+    "fallback": "/assets/img/villa_despiece_1-1200.webp",
+    "og": "/assets/img/og/villa_despiece_1.jpg",
+    "placeholder": "data:image/webp;base64,UklGRhoBAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSIcAAAARX6CgjSQ1dQqY7yEiAnC/6zlntOC21rY1eb9M8MsCCTKAUzsr0EqVFocR/h7vfQH43/FiK0T0fwJQWEU6S/U2VcmonT+xTQvXnvdOkDJ9kzxUJNH9k/yOTSJ6kKSrCgC18CS/E5Oo/UgytgCgjyRdWxJq5unaBinR042MpEDPW0aQriKtAQAAVlA4IGwAAADwAwCdASoYAA8APt1apkyopSOiMAgBEBuJQBadAlbidt/lzR3ZusRAAP7zD2BA8lYD5RlfuVP3IM+eju7YUly4Xrs2IsdWdR1y2rwPFIwBrzHVUBy+ofB5zoXynfz0DLpcNqj8E1RIycOAAAA=",
+    "bytes": {
+      "avif-480": 12539,
+      "webp-480": 24232,
+      "avif-800": 24484,
+      "webp-800": 52030,
+      "avif-1200": 41407,
+      "webp-1200": 112060,
+      "avif-1600": 61632,
+      "webp-1600": 163052,
+      "og": 30724
+    }
+  },
+  "villa_despiece_2": {
+    "width": 1600,
+    "height": 1030,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_despiece_2-{w}.{ext}",
+    "fallback": "/assets/img/villa_despiece_2-1200.webp",
+    "og": "/assets/img/og/villa_despiece_2.jpg",
+    "placeholder": "data:image/webp;base64,UklGRlYBAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSIgAAAARX6CgbRs2VQLt/omIAPNvc6pz4LbWtjX5/kygA3hSB63dSofaoXTooz2+gC7Aft/3H1aI6P8EANYZcMXUTuF5z2+NUbr/eMQqtfoc79ehQB2fy/DjEF4U5/zXQEDiJrOddZ4ugpa9rnZ+TYa0Sio83PKAxZF5SmoyAYVqUJOB1oKaDPyUDP8DVlA4IKgAAADwBACdASoYAA8APt1apkyopSOiMAgBEBuJZwAD4+5mu+AfqAOKryHNjuVHCrT1b0AA2zMpCyRDSDvtqn5bQTCaW2B2hZHK/0SVspjr8vNV39ljNhqX1S1QITlf1hMHamsd1FmcFl8KPDu+fFsBXJMwn6/oRI9L+PULwIvAiFrb0fCj2OMMNS7e+rZS2ssvLepvEambW3cZWJ74Fzj9dt/DsYNVf+BAAAA=",
+    "bytes": {
+      "avif-480": 19111,
+      "webp-480": 21330,
+      "avif-800": 33235,
+      "webp-800": 39484,
+      "avif-1200": 51198,
+      "webp-1200": 73238,
+      "avif-1600": 56219,
+      "webp-1600": 90648,
+      "og": 26399
+    }
+  },
+  "villa_despiece_3": {
+    "width": 1600,
+    "height": 1030,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_despiece_3-{w}.{ext}",
+    "fallback": "/assets/img/villa_despiece_3-1200.webp",
+    "og": "/assets/img/og/villa_despiece_3.jpg",
+    "placeholder": "data:image/webp;base64,UklGRiQBAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSG0AAAARV6CgbRs2VQBnn8EiIsDJvL78AtvItpW838HHcm/AYyd2iJ3YpRE6oFLvIKL/EwDvCXRHcDF1g9UyFdGVuc6aQqIL9vCr1aMu8Nide8JcQLBVS6qjC9aVj9y9AoKrPfEGilwi4LY3CLjnSPgXAFZQOCCQAAAAMAQAnQEqGAAPAD7dWqZMqKUjojAIARAbiWUAA+KhQZVmdjIXtj5KFAAAANkmAQl8s3tmtStUsOkO2NutMSpvTbkcqdc/PuNk1MqDKG0ch45nOjohi1jE65S1uerUtzRzrZ4LDHqONnuHRhAHJMIftc+iv7BrE3/KsBBMIkij0R/0FRz7T79F/gduEWhPFAAA",
+    "bytes": {
+      "avif-480": 16940,
+      "webp-480": 22752,
+      "avif-800": 29520,
+      "webp-800": 46258,
+      "avif-1200": 46068,
+      "webp-1200": 86750,
+      "avif-1600": 52955,
+      "webp-1600": 117672,
+      "og": 18698
+    }
+  },
+  "villa_dormitorios": {
+    "width": 2400,
+    "height": 1600,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_dormitorios-{w}.{ext}",
+    "fallback": "/assets/img/villa_dormitorios-1200.webp",
+    "og": "/assets/img/og/villa_dormitorios.jpg",
+    "placeholder": "data:image/webp;base64,UklGRjABAABXRUJQVlA4WAoAAAAQAAAAFwAADwAAQUxQSHMAAAARX6CgbRs2pGK4OxERIOf+tRnDbW3bSvSgAs8dOmCRsoiInRYmdAknmtwlxjuYWx5aQkT/J4BGFZ2GeV4LnSEl2l+bgOlxXtMCZ5Y4VfN3fwCdTN7+3bTou7RuMbpiLxj/SbcJnT0F+X3Kr5iCcrFqUj0JAFZQOCCWAAAA8AMAnQEqGAAQAD7dWqZMqKUjojAIARAbiWUAxNgbQp1zqnRAp2YagAD+9F5p3mPeBt3R6UDL8KdplQV2IIMvlpaaYCI8u4RWgFPZ1niBnPFCPhBtqYcJgwKSSBd3Ybf5r3BUnXfYf09fo5CH7k3Z0rSJA97AG/maYsBeTldk+Wp4F6XNHNmOm1ES37AKtrucaswn/sYA",
+    "bytes": {
+      "avif-480": 17727,
+      "webp-480": 26154,
+      "avif-800": 35428,
+      "webp-800": 56534,
+      "avif-1200": 58354,
+      "webp-1200": 97954,
+      "avif-1600": 82858,
+      "webp-1600": 153948,
+      "avif-2400": 126565,
+      "webp-2400": 256584,
+      "og": 55977
+    }
+  },
+  "villa_dormitorios_opaco": {
+    "width": 2400,
+    "height": 1600,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_dormitorios_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_dormitorios_opaco-1200.webp",
+    "og": "/assets/img/og/villa_dormitorios_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJYwDImCHZdgKZ3ox/eB+WB6AA/u/Dbs1lYFh/frNQ6QlnMDIvb3DN27wWaPhylqtuzM485s1T76Q+OsPQB+59JBcRIySM96R+ufJ8tW6XvYCigtqq7of57AK0/77CYImd//YwAAA=",
+    "bytes": {
+      "avif-480": 14807,
+      "webp-480": 18056,
+      "avif-800": 30518,
+      "webp-800": 37266,
+      "avif-1200": 50777,
+      "webp-1200": 62888,
+      "avif-1600": 72727,
+      "webp-1600": 89168,
+      "avif-2400": 117736,
+      "webp-2400": 144202,
+      "og": 76839
+    }
+  },
+  "villa_maqueta_iso": {
+    "width": 2800,
+    "height": 1800,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_maqueta_iso-{w}.{ext}",
+    "fallback": "/assets/img/villa_maqueta_iso-1200.webp",
+    "og": "/assets/img/og/villa_maqueta_iso.jpg",
+    "placeholder": "data:image/webp;base64,UklGRiwBAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSIcAAAARX6CgjSQ1dQIYnjEiArCN/bP8KgNuY9tWlfN+BU8q+B/JndihBVKXUGrwlIzcG4B3yrv39xDR/wmATA1ybXUe8iqHzyjR0n3ktaRN3iTHXtlGkveyEe0/SW6CSB/i2zIA3C6S5CYAsJWfWAu4G8lLwyiTyMvAQ9rK8zLwRnPTvnfQXeocAAAAVlA4IH4AAADwAwCdASoYAA8APt1cp0yopSOiMAgBEBuJZwAAMgRWGNNqP91XB2fgAP5xogOA0OyL5l98GazLhxeGKbDjKdSJn2aO/RH9PhWUx+DeYcBMNuf7JrFLc4kb6qMuOWfv0izZxzOK98DXPHYhhiu/v0RplzDJVvw000vYB3xTgAA=",
+    "bytes": {
+      "avif-480": 15879,
+      "webp-480": 27976,
+      "avif-800": 30592,
+      "webp-800": 61016,
+      "avif-1200": 51153,
+      "webp-1200": 113294,
+      "avif-1600": 73602,
+      "webp-1600": 191666,
+      "avif-2400": 119305,
+      "webp-2400": 377016,
+      "og": 35153
+    }
+  },
+  "villa_maqueta_iso_opaco": {
+    "width": 2800,
+    "height": 1800,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_maqueta_iso_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_maqueta_iso_opaco-1200.webp",
+    "og": "/assets/img/og/villa_maqueta_iso_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAwCdASoYAA8APt1cpkyopSOiMAgBEBuJZwDKACFQYGwRRK2tWOHAAP7v0i9uBo551/S81gk+6amy0yN8qz07xncHollfUk72Yzitz2Mjw9tm7cAaUAAA",
+    "bytes": {
+      "avif-480": 11539,
+      "webp-480": 10812,
+      "avif-800": 23002,
+      "webp-800": 21650,
+      "avif-1200": 39382,
+      "webp-1200": 37368,
+      "avif-1600": 57145,
+      "webp-1600": 53326,
+      "avif-2400": 93936,
+      "webp-2400": 89088,
+      "og": 54315
+    }
+  },
+  "villa_muros_completos": {
+    "width": 2800,
+    "height": 1800,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_muros_completos-{w}.{ext}",
+    "fallback": "/assets/img/villa_muros_completos-1200.webp",
+    "og": "/assets/img/og/villa_muros_completos.jpg",
+    "placeholder": "data:image/webp;base64,UklGRkIBAABXRUJQVlA4WAoAAAAQAAAAFwAADgAAQUxQSJAAAAARX6AmABI2RwA+cBsRAcb3/I864Ki2bae5OPj3Y6AzThfQM+6ZdwE98y6gKgBiIOHJAzxE9H8CAEAR+apU0TmqdH6PXSOl6o9E4pVHANYjEZHvoaqBwl/S308AWL8Mka6G9ciZeFC9MOM7NqE4jVL3mgHSXici34kJkCyeEjl6BgCSpceno1MAWR+5zFKkQwJWUDggjAAAAHAEAJ0BKhgADwA+3VymTKilI6IwCAEQG4lnAMaBqAGLqsKBs+c80EvXiG1gAP7XG7iGNLvAAeEvwRAVJS7x3pZRWri38WMBw0/OoEJGfAdeQbqaKjPRDqcqZ0HXLJcrKeTbR3GycuZOv/W8MWOirBWmmHjVcViLaPK/NmNB7vNVaPsIXWNhVpYM8AAA",
+    "bytes": {
+      "avif-480": 12795,
+      "webp-480": 24264,
+      "avif-800": 23575,
+      "webp-800": 50238,
+      "avif-1200": 38258,
+      "webp-1200": 94050,
+      "avif-1600": 53764,
+      "webp-1600": 159874,
+      "avif-2400": 83703,
+      "webp-2400": 310568,
+      "og": 28402
+    }
+  },
+  "villa_muros_completos_opaco": {
+    "width": 2800,
+    "height": 1800,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_muros_completos_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_muros_completos_opaco-1200.webp",
+    "og": "/assets/img/og/villa_muros_completos_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABQBACdASoYAA8APt1gqU2opaQiMAgBEBuJZwDLLCHgTOR77BXnqr6WQ0MAAP7v0TNLElV2QaG8SFbBsdn5029tj8kgiT1cC6pQ64JyLV++5plx/bRmuRv4po0AAA==",
+    "bytes": {
+      "avif-480": 9525,
+      "webp-480": 7834,
+      "avif-800": 18153,
+      "webp-800": 15470,
+      "avif-1200": 30188,
+      "webp-1200": 26512,
+      "avif-1600": 43319,
+      "webp-1600": 38246,
+      "avif-2400": 69130,
+      "webp-2400": 63104,
+      "og": 42603
+    }
+  },
+  "villa_plano_lineas": {
+    "width": 2400,
+    "height": 3700,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_plano_lineas-{w}.{ext}",
+    "fallback": "/assets/img/villa_plano_lineas-1200.webp",
+    "og": "/assets/img/og/villa_plano_lineas.jpg",
+    "placeholder": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAADwBQCdASoYACUAPt1oqVEopaOipWsxEBuJaQAAH0TbHu3Uz+BiSzBJSQSGOAtzPB/DZi+/341wAAD+9Ovm+S62fO4a34SsWzDnIIka/8xWKmaq/fJ1uz0tffCgNM51U8296WuIqV5iC6Mti+PQPbc+N7oavmytEFsfKpTBE+7QbVyr5H4sAG3ngQtuZvxQsD0OOOU88owVPceArDyoawUC8s78ny+OOEAAAA==",
+    "bytes": {
+      "avif-480": 19107,
+      "webp-480": 21198,
+      "avif-800": 36346,
+      "webp-800": 43040,
+      "avif-1200": 63454,
+      "webp-1200": 76742,
+      "avif-1600": 104827,
+      "webp-1600": 124510,
+      "avif-2400": 232760,
+      "webp-2400": 279168,
+      "og": 25191
+    }
+  },
+  "villa_planta_cenital": {
+    "width": 2400,
+    "height": 3700,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_planta_cenital-{w}.{ext}",
+    "fallback": "/assets/img/villa_planta_cenital-1200.webp",
+    "og": "/assets/img/og/villa_planta_cenital.jpg",
+    "placeholder": "data:image/webp;base64,UklGRoIBAABXRUJQVlA4WAoAAAAQAAAAFwAAJAAAQUxQSFYAAAARX6CgbSQUvwJmiIiAyKvXw5sCm9ram0RCQEGRgJS+Vwsc9s5KLFAl5FfXsjNG9H8CFA8i7gvVykumDwt01x4ODQhJjrtbMh+10gn8rxrfzz3Ebe/uAFZQOCAGAQAAEAcAnQEqGAAlAD7daKlQqKYjoqq4CAEQG4liALsz6QEdSlISUBVX7NU/jNCsH6CUvAttp0Cd3FlHK/Fcqxmo6AAA/sFoVO3D+b+xXns7khgKzz2K4ZrFZjVJeyLSJBMjFq2qPdHydEpwws0kpIfZJXEDpYjvMbzQwjT9p0wDLk2Hot5J/iEnz21KkyRFB/AY9wMNaCschGjM4H7g2uTveHIBwgeeEJDFfnH1x+a2XC8uoa6GfYQAVS0xfQSmFk/wqmN8s+Ws/p6EDnZH9VdzcPNitsohUW5fpeJUYRYs6dYulGdWt6fD415ff/jef2ZqMjYCUotn04GZZVRgH4zjz81kUQ4AAA==",
+    "bytes": {
+      "avif-480": 33203,
+      "webp-480": 39946,
+      "avif-800": 67008,
+      "webp-800": 86180,
+      "avif-1200": 116561,
+      "webp-1200": 163036,
+      "avif-1600": 173063,
+      "webp-1600": 242324,
+      "avif-2400": 301731,
+      "webp-2400": 417586,
+      "og": 36247
+    }
+  },
+  "villa_planta_cenital_opaco": {
+    "width": 2400,
+    "height": 3700,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_planta_cenital_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_planta_cenital_opaco-1200.webp",
+    "og": "/assets/img/og/villa_planta_cenital_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRvoAAABXRUJQVlA4IO4AAADwBgCdASoYACUAPt1epEyopSMiKq35EBuJYgC7BvGA2riGr4QvOhtz4rzkczSNuIg3UXOIyuthie9bzgEiCbUwAP7tSS5jpK47zpXeKgKlYL4FuPJj6sKfiCyZQ0UmI0pjbSKd9yCdaQ4BODFwm1Xb5nd5XZz2s/VvY2zTDUYB11GOZzzHhGEZTPzcsuSfbmbn6OEzY6cjmK5rJ7XrEwmCM9UUPYewzzgMGWnTRJIbn912xJ+rEx1XrhlUpCVMD1MB+rpARmF3Ij/Cyf1KIyL73jVLZcnxqwjFZMUPtuyTZTySaD1BQfLX3cGMAAAA",
+    "bytes": {
+      "avif-480": 32725,
+      "webp-480": 31856,
+      "avif-800": 66360,
+      "webp-800": 64548,
+      "avif-1200": 116439,
+      "webp-1200": 110812,
+      "avif-1600": 173028,
+      "webp-1600": 163610,
+      "avif-2400": 301980,
+      "webp-2400": 278912,
+      "og": 36247
+    }
+  },
+  "villa_salon_dormitorio": {
+    "width": 2400,
+    "height": 1600,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_salon_dormitorio-{w}.{ext}",
+    "fallback": "/assets/img/villa_salon_dormitorio-1200.webp",
+    "og": "/assets/img/og/villa_salon_dormitorio.jpg",
+    "placeholder": "data:image/webp;base64,UklGRt4AAABXRUJQVlA4WAoAAAAQAAAAFwAADwAAQUxQSC4AAAARP6C2bRs2uttO3QN/mIiIx57NgpFIUuazfJaPABWIcP0FSHRE/yeAPdZhuvgyVlA4IIoAAADQAwCdASoYABAAPt1apkyopSOiMAgBEBuJQBOgAbOYaEpXVjiPm8AA/sQ/MY3cpsATuks8Xix6Fi0HmJAOKIONvr5nwW2JQv36WoyUYtaz0j96Mzzxr4fg57lK1f4uCOFVh0Z7L6K49sGL17ugYcLNKNAfZhAZNj5l0L3WSKTZrod4U0VzuOw6AAA=",
+    "bytes": {
+      "avif-480": 18389,
+      "webp-480": 22628,
+      "avif-800": 36518,
+      "webp-800": 45374,
+      "avif-1200": 60035,
+      "webp-1200": 74294,
+      "avif-1600": 84531,
+      "webp-1600": 104996,
+      "avif-2400": 138807,
+      "webp-2400": 164034,
+      "og": 85497
+    }
+  },
+  "villa_salon_dormitorio_opaco": {
+    "width": 2400,
+    "height": 1600,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_salon_dormitorio_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_salon_dormitorio_opaco-1200.webp",
+    "og": "/assets/img/og/villa_salon_dormitorio_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAADQAwCdASoYABAAPt1apkyopSOiMAgBEBuJQBOgAbOYaE3jLtNdU2gA/sQ/MY3cpsATuks8Xix6Fi0HmJAOKIONvr5nwW2JQv36WoyUYtaz0j96Mzzxr+fgaZ++Wkj9CPQnRgDCUiY+AvB9UPvEqcKd5hmqDYuwnNV6/FA9Nmuh3hTRXO47DoAA",
+    "bytes": {
+      "avif-480": 17897,
+      "webp-480": 21796,
+      "avif-800": 35761,
+      "webp-800": 43726,
+      "avif-1200": 58752,
+      "webp-1200": 72228,
+      "avif-1600": 83565,
+      "webp-1600": 101784,
+      "avif-2400": 137777,
+      "webp-2400": 160090,
+      "og": 85497
+    }
+  },
+  "villa_terraza": {
+    "width": 2400,
+    "height": 1600,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_terraza-{w}.{ext}",
+    "fallback": "/assets/img/villa_terraza-1200.webp",
+    "og": "/assets/img/og/villa_terraza.jpg",
+    "placeholder": "data:image/webp;base64,UklGRigBAABXRUJQVlA4WAoAAAAQAAAAFwAADwAAQUxQSH0AAAARX6C4bSQ1t/Dn3eOLiGDZJ++8s3/ATW3tbfPJCDqADqDvhmBPnlsCIJP2NAKdgAoDi507hIj+k03apG79hKvV5DkY1ynxVFuTh/uNW9HbliZ+rcnCKN8rfwcbqAUYFVs+GiY1WzwEgO62fHoigoWOK2oDSxfemMtguNeIAABWUDgghAAAAFAEAJ0BKhgAEAA+3VymTKilI6IwCAEQG4lAF2QRGE47RjBoXl1rjiBRrgAA/masS2RERDIiH3ynNgiW7lZc8L/mR1QpwgQ4a5EPT8+D4KPxGm/Tb7IfLmumQZFXTb/wUXfAE9GGTNSHwL7EIFp3Tz0/9HukuoM8toKDg31Xa+BKugAAAA==",
+    "bytes": {
+      "avif-480": 16967,
+      "webp-480": 30686,
+      "avif-800": 33813,
+      "webp-800": 63574,
+      "avif-1200": 56905,
+      "webp-1200": 114274,
+      "avif-1600": 81031,
+      "webp-1600": 179474,
+      "avif-2400": 127992,
+      "webp-2400": 303780,
+      "og": 78289
+    }
+  },
+  "villa_terraza_opaco": {
+    "width": 2400,
+    "height": 1600,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_terraza_opaco-{w}.{ext}",
+    "fallback": "/assets/img/villa_terraza_opaco-1200.webp",
+    "og": "/assets/img/og/villa_terraza_opaco.jpg",
+    "placeholder": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAQBACdASoYABAAPt1epkyopSOiMAgBEBuJQBdgA2639yTGbeTjrOKAYAD+mD7ubN5Jve3/kM8EYyGeeXx9bDItchPAc8FM8qqhrN4hivIl9Tk6GZHxRGaSq99D+T/XbPIuSP6sZMQFLDX5HVl3fKZF4L+kQCanSKEUzKAA",
+    "bytes": {
+      "avif-480": 15223,
+      "webp-480": 17904,
+      "avif-800": 31168,
+      "webp-800": 36318,
+      "avif-1200": 53538,
+      "webp-1200": 60940,
+      "avif-1600": 76550,
+      "webp-1600": 86618,
+      "avif-2400": 124214,
+      "webp-2400": 136882,
+      "og": 78289
+    }
+  },
+  "villa_viewer_poster": {
+    "width": 1600,
+    "height": 1100,
+    "alpha": true,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/villa_viewer_poster-{w}.{ext}",
+    "fallback": "/assets/img/villa_viewer_poster-1200.webp",
+    "og": "/assets/img/og/villa_viewer_poster.jpg",
+    "placeholder": "data:image/webp;base64,UklGRkYBAABXRUJQVlA4WAoAAAAQAAAAFwAAEAAAQUxQSIQAAAARX6CgbRs2VAjdvxERYM92fH4LnFbbtizP+/0LYAP4AE6GRGUF2l9pH9UhOwzw2wR8z3ifIBNE9H8C8LelbjVguhuLp3HNTzVXfWtYzJRjnpF8dRzdN0nGyipdrNdIAGBpSHIVWd3UetWs0plkESsLC8NCt+GsJ4Vui6u01m2Bd9IRAABWUDggnAAAANAEAJ0BKhgAEQA+3WKqT6ilI6IoCqkQG4lnAAPjAOUr8bX9YC27CwyHkklQorsQAP5SjH2iC9cTSPDxCvo+J2Yr7higE05XQKfLEEmO4XKPVfXneAl3nGZkcKMryNfx9TenxTmXKe7nvF5aMKjmfRUhbnkPP1fuVRozEMj8XOkoggN+pNjAqVcVkXn/5/bf4PZ0UnJagpORnwAAAA==",
+    "bytes": {
+      "avif-480": 14406,
+      "webp-480": 14180,
+      "avif-800": 27757,
+      "webp-800": 29742,
+      "avif-1200": 45756,
+      "webp-1200": 51414,
+      "avif-1600": 66540,
+      "webp-1600": 63650,
+      "og": 34902
+    }
+  }
+}

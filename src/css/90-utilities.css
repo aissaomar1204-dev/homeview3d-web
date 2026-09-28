@@ -1,0 +1,9 @@
+/* ==========================================================================
+   90-utilities · helpers and print. Owner: ENGINE.
+   ========================================================================== */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media print {
+  .site-header, .bottom-bar, .crumbs, .cta-band, .form-section, .skip { display: none !important; }
+  .band { padding-block: var(--space-6); }
+}

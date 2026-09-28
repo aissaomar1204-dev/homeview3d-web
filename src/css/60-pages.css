@@ -1,0 +1,23 @@
+/* ==========================================================================
+   60-pages · page-level rhythm (home, case, contact, legal, 404, thanks). Owner: ENGINE.
+   ========================================================================== */
+
+/* Home: the cajetín sits under the hero; big sections breathe; the form closes the page. */
+.page-home .cajetin-band { padding-block: var(--space-7) var(--space-8); }
+.page-home :is(.block--deliverables, .block--process, .block--pricing, .block--faq) { margin-block: var(--section-y); }
+.page-home .form-section { margin: var(--section-y) 0 0; padding-block: var(--section-y); border-top: 1px solid var(--color-line); }
+.hero--text + .cajetin-band { padding-top: var(--space-5); }
+.hero--case { padding-bottom: var(--space-6); }
+.page-contact .form-section { margin-top: var(--space-5); }
+.hero--contact .lead { max-width: 56ch; }
+
+/* Legal: plain reading column with modest headings. */
+.legal .block { margin-block: var(--space-6); }
+.legal .block__head { border: 0; padding: 0; margin-bottom: var(--space-4); }
+.legal h2 { font: var(--wght-heading) var(--fs-h3) var(--font-sans); letter-spacing: var(--tracking-h3); }
+.page-404 .index__title { font: var(--wght-heading) var(--fs-h3) var(--font-sans); }
+
+/* Thanks: numbered next steps. */
+.page-thanks .steps { max-width: var(--measure); counter-reset: n; }
+.page-thanks .step { grid-template-columns: var(--space-6) minmax(0, 1fr); column-gap: var(--space-3); }
+.page-thanks .step::before { counter-increment: n; content: counter(n); padding-top: 0.3em; font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--color-ink-3); }

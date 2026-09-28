@@ -1,0 +1,129 @@
+/* ==========================================================================
+   10-base · reset, type roles, links, focus, shared label styles, preferences.
+   Owner: ENGINE. Only tokens from 00-tokens.css (COLOR-01, SPACE-01, TYPE-04, MOTION-04).
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--color-bg);
+  scroll-padding-top: calc(var(--header-h) + var(--space-4));
+}
+@media (prefers-reduced-motion: no-preference) {
+  html:focus-within { scroll-behavior: smooth; }
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font: var(--wght-body) var(--fs-base) / var(--lh-body) var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  overflow-x: clip;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+img, picture, video { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, h4 { margin: 0; font-weight: var(--wght-heading); text-wrap: balance; overflow-wrap: break-word; }
+p, li, dd, dt, figcaption { text-wrap: pretty; }
+p, ul, ol, dl, dd, figure { margin: 0; }
+ul, ol { padding: 0; }
+[role="list"] { list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; touch-action: manipulation; }
+button { cursor: pointer; }
+table { border-collapse: collapse; }
+dfn { font-style: normal; }
+strong { font-weight: var(--wght-heading); }
+::selection { background: var(--color-accent-soft); color: var(--color-ink); }
+[hidden] { display: none !important; }
+
+a { color: inherit; text-decoration-thickness: 1px; text-decoration-color: var(--color-line-strong); text-underline-offset: 0.22em; }
+/* Feedback: link hover shifts to the accent (COLOR-02). */
+@media (hover: hover) and (pointer: fine) {
+  a { transition: color var(--dur-hover) var(--ease-out); }
+  a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
+}
+
+/* Focus (A11Y-03): outline, never box-shadow, so it survives forced colors. */
+:focus-visible { outline: var(--focus-width) solid var(--color-accent); outline-offset: var(--focus-offset); }
+.main:focus:not(:focus-visible) { outline: none; }
+
+/* ---------- Type roles (B2) ---------- */
+h1, h2, .h1 {
+  font-family: var(--font-display);
+  font-weight: var(--wght-display);
+  font-size: var(--fs-h2);
+  font-stretch: var(--stretch-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--tracking-h2);
+}
+h1:not(.h1--long) { font-size: var(--fs-h1); font-stretch: var(--stretch-display); line-height: var(--lh-display); letter-spacing: var(--tracking-display); }
+h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--tracking-h3); }
+.lead { font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--color-ink-2); max-width: 48ch; }
+.lead strong { color: var(--color-ink); }
+.num, .table td, .cajetin dd, .specs dd { font-variant-numeric: tabular-nums lining-nums; }
+
+/* Mono is for measurements, data keys and short labels only (TYPE-09). */
+.eyebrow, .mono, .cajetin__head, .cajetin dt, .cota, .table caption, .step__time, .compare__hint, .compare__labels,
+.despiece__legend, .bento__formats, .bento__soon span, .pack__flag, .pack__meta dt, .calc__total-label, .form__progress,
+.alt__k, .specs dt, .toc__title, .az__title, .az__letters, .byline, .dateline, .footer-col__title, .site-footer__contact dt,
+.lang-link, .notfound__code, .toc__list a::before {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  font-weight: var(--wght-mono);
+  font-stretch: 100%;
+  line-height: var(--lh-meta);
+  letter-spacing: var(--tracking-mono);
+}
+.eyebrow, .cajetin__head, .cajetin dt, .table caption, .step__time, .compare__hint, .despiece__legend, .bento__formats,
+.bento__soon span, .pack__meta dt, .calc__total-label, .form__progress, .alt__k, .specs dt, .toc__title, .az__title,
+.byline, .dateline, .footer-col__title, .site-footer__contact dt, .notfound__code, figcaption, .field__hint,
+.hero__caption, .index__arrow, .form__privacy, .calc__note, .pricing__vat, .table__note, .sources__note { color: var(--color-ink-3); }
+.eyebrow { margin-bottom: var(--space-3); }
+figcaption, .field__hint, .hero__caption, .form__privacy, .calc__note, .pricing__vat, .table__note { font-size: var(--fs-sm); line-height: var(--lh-meta); }
+
+/* Body copy may hyphenate on very narrow screens only (TYPE-11). */
+@media (max-width: 479px) {
+  .prose p, .faq__a p { hyphens: auto; }
+}
+
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 16;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Skip link (A11Y-01) */
+.skip {
+  position: fixed;
+  top: var(--space-2);
+  left: var(--space-4);
+  z-index: var(--z-skip);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: var(--wght-ui);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
+
+/* ---------- Preferences (A11Y-12) ---------- */
+@media (prefers-contrast: more) {
+  :root { --color-line: var(--color-line-strong); --color-ink-3: var(--color-ink-2); }
+}
+@media (forced-colors: active) {
+  .btn, .input, .choice, .stepper, .pack { border: 1px solid CanvasText; }
+  .choice:has(input:checked), .pack--featured { border: 2px solid Highlight; }
+  .site-nav a[aria-current="page"] { text-decoration: underline; }
+  .compare__handle::before { background: Highlight; }
+}

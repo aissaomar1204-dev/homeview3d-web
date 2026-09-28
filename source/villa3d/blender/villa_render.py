@@ -33,7 +33,9 @@ GLTF = os.path.join(HERE, "import", "villa.gltf")
 BLEND = os.path.join(HERE, "villa_renders.blend")
 DEFAULT_OUT = os.path.join(VILLA, "renders")
 
-# Warm off-white seamless background for the opaque variants (sRGB 8-bit)
+# Seamless background for the opaque variants (sRGB 8-bit). Historical default: warm off-white #EFEBE4.
+# The website uses the cool-grey stage token instead (--bg E4E7EA); scripts/images.mjs rebuilds the
+# *_opaco plates from the RGBA renders over --color-stage anyway, so this only matters for og_image.
 BG_SRGB = (0xEF, 0xEB, 0xE4)
 
 # Base of the maqueta block (the "Base Maqueta" object goes from z=-0.60 to -0.02)
@@ -102,6 +104,7 @@ def parse_args():
     p.add_argument("--sun-az", type=float, default=SUN_AZ)
     p.add_argument("--sun-el", type=float, default=SUN_EL)
     p.add_argument("--force-sun", default="", help="az,el applied to every shot (testing)")
+    p.add_argument("--bg", default="", help="RRGGBB background for the opaque composites (default EFEBE4)")
     return p.parse_args(argv)
 
 
@@ -764,7 +767,7 @@ def main():
         dt = time.time() - t
         if spec.get("opaque"):
             opq = out if spec.get("only_opaque") else os.path.join(args.outdir, name + "_opaco.png")
-            composite_opaque(out, opq)
+            composite_opaque(out, opq, bg=tuple(int(args.bg[i:i + 2], 16) for i in (0, 2, 4)) if args.bg else BG_SRGB)
         if spec["mode"] == "lineas":
             composite_opaque(out, out, bg=(255, 255, 255))
         st = stats(out)

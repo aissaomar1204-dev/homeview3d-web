@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Captura model-viewer</title>
+<!--
+  Frames from <model-viewer> with the SITE defaults (build/data/villa.mjs → villa.viewer), cut applied,
+  transparent background. Served by capture-server.mjs (it saves the POSTed PNGs).
+    ?w=1600&h=1100&scale=2                     poster → source/villa3d/renders/villa_viewer_poster.png
+    ?mode=turntable&w=1280&h=800&frames=240    frames → CAPTURE_TMP/turntable/f_0001.png …
+  `scale` renders at N× (fake devicePixelRatio) for supersampling; the PNG is saved at w×h·scale and
+  downscaled by the caller (sharp), which gives cleaner edges than the WebGL MSAA alone.
+-->
+<style>
+  html, body { margin: 0; background: transparent; }
+  model-viewer { display: block; background: transparent; --poster-color: transparent; }
+</style>
+</head>
+<body>
+<script type="module">
+  const q = new URLSearchParams(location.search);
+  const W = Number(q.get('w') || 1600), H = Number(q.get('h') || 1100), SCALE = Number(q.get('scale') || 1);
+  const MODE = q.get('mode') || 'poster';
+  const FRAMES = Number(q.get('frames') || 240);
+  const NAME = q.get('name') || 'villa_viewer_poster.png';
+  Object.defineProperty(window, 'devicePixelRatio', { get: () => SCALE });
+  const { villa } = await import('/build/data/villa.mjs');
+  const v = villa.viewer;
+  self.ModelViewerElement = Object.assign(self.ModelViewerElement || {}, {
+    meshoptDecoderLocation: '/public/lib/model-viewer/meshopt_decoder.js',
+    minimumRenderScale: 1,
+  });
+  await import('/public/lib/model-viewer/model-viewer.min.js');
+
+  const mv = document.createElement('model-viewer');
+  const attrs = {
+    src: '/public' + villa.files.glb.url, alt: 'captura',
+    'camera-orbit': v.cameraOrbit, 'camera-target': v.cameraTarget,
+    'min-camera-orbit': v.minCameraOrbit, 'max-camera-orbit': v.maxCameraOrbit,
+    'field-of-view': v.fieldOfView, 'interpolation-decay': '120',
+    'environment-image': 'neutral', 'tone-mapping': v.toneMapping, exposure: String(v.exposure),
+    'shadow-intensity': String(v.shadowIntensity), 'shadow-softness': String(v.shadowSoftness),
+    'interaction-prompt': 'none',
+  };
+  for (const [k, val] of Object.entries(attrs)) mv.setAttribute(k, val);
+  mv.style.width = W + 'px';
+  mv.style.height = H + 'px';
+  document.body.append(mv);
+
+  const frame = () => new Promise((r) => requestAnimationFrame(() => r()));
+  const settle = async (n = 6) => { for (let i = 0; i < n; i++) await frame(); };
+  const save = async (blob, name, dir) => {
+    const url = `/__save?name=${encodeURIComponent(name)}${dir ? `&dir=${dir}` : ''}`;
+    const r = await fetch(url, { method: 'POST', body: blob });
+    return r.text();
+  };
+
+  window.__result = new Promise((resolve) => {
+    mv.addEventListener('error', (e) => resolve({ error: e.detail && e.detail.type }));
+    mv.addEventListener('load', async () => {
+      // Same cut as the site (src/js/viewer.js): _Alto materials discarded with alpha MASK.
+      const cut = mv.model.materials.filter((m) => m.name.endsWith(v.cutMaterialSuffix));
+      for (const m of cut) {
+        const c = m.pbrMetallicRoughness.baseColorFactor;
+        m.setAlphaMode('MASK');
+        m.setAlphaCutoff(0.5);
+        m.pbrMetallicRoughness.setBaseColorFactor([c[0], c[1], c[2], 0]);
+      }
+      mv.jumpCameraToGoal();
+      await settle(20);
+      const info = { cut: cut.length, orbit: mv.getCameraOrbit().toString(), fov: mv.getFieldOfView(), canvas: null, saved: [] };
+      if (MODE === 'poster') {
+        const blob = await mv.toBlob({ mimeType: 'image/png', idealAspect: false });
+        const bmp = await createImageBitmap(blob);
+        info.canvas = [bmp.width, bmp.height];
+        info.saved.push(await save(blob, NAME));
+      } else {
+        const start = mv.getCameraOrbit();
+        for (let i = 0; i < FRAMES; i++) {
+          const theta = start.theta + (i / FRAMES) * 2 * Math.PI;
+          mv.cameraOrbit = `${theta}rad ${start.phi}rad ${start.radius}m`;
+          mv.jumpCameraToGoal();
+          await settle(3);
+          const blob = await mv.toBlob({ mimeType: 'image/png', idealAspect: false });
+          if (i === 0) { const bmp = await createImageBitmap(blob); info.canvas = [bmp.width, bmp.height]; }
+          info.saved.push(await save(blob, `f_${String(i + 1).padStart(4, '0')}.png`, 'turntable'));
+        }
+      }
+      resolve(info);
+    }, { once: true });
+  });
+</script>
+</body>
+</html>

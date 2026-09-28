@@ -12,6 +12,10 @@ como alternativa) y denoiser OpenImageDenoise en GPU.
 | `villa_render.py` | Escena completa y render de las 9 tomas: cámaras, sol, cielo, sombra y modos maqueta/muros/plano. |
 | `export_usdz_mesa.py` | Maqueta de sobremesa 1:20 para AR Quick Look (`../ar/villa_maqueta_mesa.usdz`). |
 | `villa_renders.blend` | Escena guardada, con rutas de textura relativas. Tiene todas las cámaras `CAM_*` y las colecciones `Maqueta` / `Alto (sobre 1,15 m)` / `Corte seccion`. |
+| `villa_despiece.py` | Despiece del home/proceso: 3 capas RGBA registradas al píxel con la cámara y la luz del hero (`villa_despiece_1..3.png`, 1600×1030). |
+| `villa_turntable.py` + `encode_turntable.mjs` | Vuelta de 8 s de la maqueta (Cycles, 240 fotogramas) y su codificación a MP4/WebM + póster (`public/assets/video/`). |
+| `capture/` | `capture-server.mjs` + `poster.html`: fotogramas de `<model-viewer>` con los valores del sitio (`villa_viewer_poster.png`). |
+| `usdz_web.py` + `usdz_textures.mjs` | USDZ publicados en `public/models/`: tamaño real con el suelo en y = 0 y maqueta 1:20, normales en JPEG. |
 | `probe.py` | Diagnóstico: lista objetos, materiales y dispositivos GPU. |
 | `../renders/` | PNG de salida, `_timings.json` (tiempo y estadísticas de cada toma) y `_render_log.txt`. |
 
@@ -36,7 +40,52 @@ Copy-Item ..\gltf\villa-geometria.wasm import\villa.bin; Copy-Item ..\gltf\tex\*
 
 # 3) AR de sobremesa 1:20 (USDZ con las texturas empaquetadas y reducidas a 512 px: 10,2 MB)
 & $B -b --factory-startup -P export_usdz_mesa.py -- --tex 512
+
+# 4) despiece (3 capas, unos 45 s) y después las variantes web
+& $B -b --factory-startup -P villa_despiece.py
+cd E:\ProyectosRealStateBlender; npm run images
+
+# 5) póster del visor (model-viewer, valores de build/data/villa.mjs, corte aplicado, fondo transparente)
+node source/villa3d/blender/capture/capture-server.mjs 8802        # en otra terminal
+playwright-cli open "http://127.0.0.1:8802/source/villa3d/blender/capture/poster.html?w=1600&h=1100&scale=2&name=_poster_2x.png"
+playwright-cli eval "async () => JSON.stringify(await window.__result)"
+node source/villa3d/blender/capture/finish-poster.mjs    # _poster_2x.png (3200×2200) -> villa_viewer_poster.png (1600×1100)
+
+# 6) USDZ para AR Quick Look (usd-core en un venv; texturas con sharp)
+.venv-usd\Scripts\python source\villa3d\blender\usdz_web.py all      # real + maqueta -> public/models/
+
+# 7) vuelta de 8 s (unos 16 min en la RTX 4060) y vídeo
+& $B -b --factory-startup -P source\villa3d\blender\villa_turntable.py -- --outdir $env:TEMP\villa_turntable
+node source/villa3d/blender/encode_turntable.mjs $env:TEMP\villa_turntable
 ```
+
+### Despiece (`villa_despiece.py`)
+
+Tres pasadas con la cámara `CAM_villa_maqueta_iso` y el mismo sol, cielo, AgX y *shadow catcher* que el
+hero. Todo el modelo sigue en la escena para la luz; en cada pasada solo cambia lo que ve la cámara:
+
+1. **Suelos**: forjados, peana y la huella de los muros (las tapas de sección copiadas a ras de suelo: el
+   plano 2D sobre el forjado). Los muros proyectan su sombra pero no se ven. El mobiliario no existe, así
+   que no quedan manchas negras bajo camas y sofás cuando la pila se separa.
+2. **Muros** cortados a 1,15 m, con puertas, ventanas, escaleras y petos. Los suelos son *holdout*.
+3. **Mobiliario**: dos pasadas combinadas con numpy. Una da el color, con suelos y muros como *holdout*.
+   La otra da las sombras del mobiliario sobre los suelos (*shadow catcher*), convertidas a negro con alfa.
+
+Apiladas 1+2+3 con "over" reproducen el hero (diferencia media de 1,5/255 frente a `villa_maqueta_iso`).
+
+### USDZ (`usdz_web.py`)
+
+- **Tamaño real** (`villa_tamano_real.usdz`, 7,86 MB; antes 10,23): sin `Base_Maqueta`, sin el fondo del
+  hueco ni los 11 peldaños que bajan, con el suelo terminado en y = 0 y los 2 cm bajo el forjado recortados
+  a 0. El origen y la base del *bounding box* coinciden con el suelo, así que Quick Look deja el suelo
+  virtual sobre el real tanto si apoya el origen como si apoya la caja (el original flotaba 0,60 m).
+- **Maqueta 1:20** (`villa_maqueta_1a20.usdz`, 5,01 MB; antes 9,51): sin los 110 `*_Alto`, con la peana,
+  la escala aplicada en `/Villa/Villa` (no en la raíz, que algunos importadores ignoran) y texturas a 512 px.
+- En los dos: normales de PNG a JPEG (q90, 4:4:4), materiales sin uso eliminados y paquete sin compresión y
+  alineado a 64 bytes. `UsdValidation` (usd-core 26.8) da **0 errores y 0 avisos**. Reimportados en
+  Blender, texturas y escala son correctas. Los originales siguen en `../ar/villa_tamano_real.usdz` y
+  `../ar/originales/villa_maqueta_1a20.usdz`.
+- **Pendiente: no se han probado en un iPhone o iPad real (AR Quick Look).**
 
 Opciones de `villa_render.py`:
 
@@ -46,6 +95,8 @@ Opciones de `villa_render.py`:
 - `--outdir RUTA`: carpeta de salida.
 - `--sun-az` y `--sun-el`: sol por defecto, 292° / 38°.
 - `--force-sun az,el`: un mismo sol en todas las tomas, para pruebas.
+- `--bg RRGGBB`: fondo de las variantes opacas (por defecto EFEBE4). La web usa el gris de escenario
+  `--bg E4E7EA` (`og_image` se renderizó así); los `_opaco` los recompone `scripts/images.mjs` desde el RGBA.
 - `--save-blend`: guarda `villa_renders.blend`.
 - `--no-render`: construye la escena sin renderizar.
 

@@ -1,0 +1,270 @@
+/* ═══════════════════════════════════════════════════════════════
+   Block renderers (docs/build/CONTENT-SCHEMA.md §3). Owner: ENGINE.
+   renderBlocks(ctx, blocks, opts) → HTML. viewer / ar / formats / embedCode
+   are delegated to build/lib/viewer.mjs (VIEWER) when it exists; small
+   internal fallbacks keep pages meaningful while it does not.
+   ═══════════════════════════════════════════════════════════════ */
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { esc } from './md.mjs';
+import { optionalImport } from './context.mjs';
+import {
+  cls, head, section, figure, table, faqSection, faqList, indexList, routePrice, ctaBand, compare, cajetin, related,
+  processBlock, deliverablesBlock, pricingBlock, guaranteesBlock, calculator, contactForm, hasImage, linkArrow, tableHtml,
+} from './components.mjs';
+
+const HERE = path.dirname(fileURLToPath(import.meta.url));
+const viewerImport = await optionalImport(path.join(HERE, 'viewer.mjs'), { label: 'build/lib/viewer.mjs' });
+/** VIEWER module (or null while it does not exist). */
+export const viewerModule = viewerImport.mod;
+export const viewerStatus = viewerImport.mod ? 'loaded' : viewerImport.missing ? 'missing' : 'error';
+
+const SERVICE_IDS = ['servicio-plano', 'servicio-renders', 'servicio-tour', 'servicio-ar', 'servicio-staging'];
+const AUDIENCE_IDS = ['sol-inmobiliarias', 'sol-promotoras', 'sol-arquitectos', 'sol-vacacional'];
+
+function callViewer(fn, ctx, block, fallback) {
+  const f = viewerModule && viewerModule[fn];
+  if (typeof f === 'function') {
+    const out = f(ctx, block);
+    if (typeof out === 'string') return out;
+    if (out && typeof out.html === 'string') return out.html;
+    return '';
+  }
+  return fallback();
+}
+
+/* ─── Viewer fallbacks (only while viewer.mjs is missing) ─────── */
+
+function viewerFallback(ctx, block, { eyebrow } = {}) {
+  const hd = head(ctx, { h2: block.h2 || ctx.t('h2.viewer'), intro: block.intro, eyebrow });
+  const poster = hasImage(ctx, 'villa_viewer_poster') ? 'villa_viewer_poster' : 'villa_maqueta_iso';
+  const rooms = ctx.data.villa.rooms.map((r) => `<li><span>${esc(r[ctx.lang].name)}</span><span class="num">≈${esc(ctx.fmtNumber(r.area, 1))} m²</span></li>`).join('');
+  const link = ctx.has('caso-villa') && ctx.route.id !== 'caso-villa' ? `<p class="actions">${linkArrow(ctx, ctx.href('caso-villa', 'visor'), ctx.t('cta.villa'))}</p>` : '';
+  const inner = `${hd.html}<div class="viewer-fallback"><figure class="figure figure--stage"><div class="figure__media">${ctx.img(poster, { alt: ctx.t('hero.alt'), sizes: '(min-width: 1024px) 66vw, 100vw' })}</div><figcaption>${esc(ctx.t('viewer.fallbackCaption'))}</figcaption></figure><div><h3>${esc(ctx.t('viewer.rooms'))}</h3><ol class="rooms" role="list">${rooms}</ol>${link}</div></div>`;
+  return section(ctx, { type: 'viewer', id: ctx.route.template === 'home' ? 'demo' : undefined, band: 'stage', labelledby: hd.id, inner });
+}
+
+function formatsFallback(ctx, block) {
+  const hd = head(ctx, { h2: block.h2 || ctx.t('h2.formats'), intro: block.intro });
+  const rows = Object.values(ctx.data.villa.files).map((f) => [esc(f.label[ctx.lang]), { html: esc(ctx.fmtBytes(f.bytes)), num: true }]);
+  return section(ctx, { type: 'formats', labelledby: hd.id, inner: `${hd.html}${tableHtml(ctx, { caption: esc(ctx.t('formats.caption')), cols: ctx.t('formats.head').map(esc), rows })}` });
+}
+
+function simpleFallback(ctx, block, key) {
+  const hd = head(ctx, { h2: block.h2 || ctx.t(`h2.${key}`), intro: block.intro });
+  const link = ctx.has('caso-villa') && ctx.route.id !== 'caso-villa' ? `<p class="actions">${linkArrow(ctx, ctx.href('caso-villa', 'visor'), ctx.t('cta.villa'))}</p>` : '';
+  return section(ctx, { type: key, labelledby: hd.id, inner: `${hd.html}${link}` });
+}
+
+/* ─── Individual blocks ───────────────────────────────────────── */
+
+/** Index of pages (services / audiences / pages blocks). Skipped when none of the pages is rendered. */
+function indexBlock(ctx, b, type, ids, opts) {
+  if (!ids.some((id) => ctx.has(id))) return '';
+  const hd = head(ctx, { h2: b.h2 || ctx.t(`h2.${type}`), intro: b.intro });
+  return section(ctx, { type, labelledby: hd.id, inner: `${hd.html}${indexList(ctx, ids, opts)}` });
+}
+
+const R = {
+  prose(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 });
+    return section(ctx, { type: 'prose', labelledby: hd.id, inner: `${hd.html}<div class="prose">${ctx.md(b.body)}</div>` });
+  },
+
+  answer(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 });
+    const body = b.body ? `<div class="prose">${ctx.md(b.body)}</div>` : '';
+    return section(ctx, { type: 'answer', labelledby: hd.id, inner: `${hd.html}<div class="answer" data-answer>${ctx.md(b.answer)}</div>${body}` });
+  },
+
+  table(ctx, b) {
+    const hd = head(ctx, { h2: b.h2, intro: b.intro });
+    return section(ctx, { type: 'table', labelledby: hd.id, inner: `${hd.html}${table(ctx, b)}` });
+  },
+
+  steps(ctx, b) {
+    const hd = head(ctx, { h2: b.h2, intro: b.intro });
+    const items = (b.items || []).map((it) => `<li class="step" data-reveal>${it.time ? `<p class="step__time">${ctx.mdInline(it.time)}</p>` : ''}<h3 class="step__title">${ctx.mdInline(it.title)}</h3><div class="step__body">${ctx.md(it.body)}</div></li>`).join('');
+    return section(ctx, { type: 'steps', labelledby: hd.id, inner: `${hd.html}<ol class="steps" role="list">${items}</ol>` });
+  },
+
+  checklist(ctx, b) {
+    const hd = head(ctx, { h2: b.h2, intro: b.intro });
+    const items = (b.items || []).map((x) => `<li>${ctx.mdInline(x)}</li>`).join('');
+    return section(ctx, { type: 'checklist', labelledby: hd.id, inner: `${hd.html}<ul class="checks checks--grid" role="list">${items}</ul>` });
+  },
+
+  figure(ctx, b) {
+    return section(ctx, { type: 'figure', className: b.layout === 'wide' ? 'block--wide' : '', inner: figure(ctx, { image: b.image, alt: ctx.tok(b.alt), caption: b.caption, layout: b.layout || 'wide' }) });
+  },
+
+  gallery(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 || ctx.t('h2.gallery'), intro: b.intro });
+    const n = (b.items || []).length;
+    const items = (b.items || []).map((it, i) => {
+      // Plates: odd count starts with a full-width plate; pairs alternate 7/5 and 5/7 (no equal widths side by side).
+      const k = n % 2 ? i - 1 : i;
+      const span = n % 2 && i === 0 ? 'full' : (Math.floor(k / 2) % 2 === 0 ? (k % 2 === 0 ? 'wide' : 'narrow') : (k % 2 === 0 ? 'narrow' : 'wide'));
+      return `<li class="plate plate--${span}" data-reveal>${figure(ctx, { image: it.image, alt: ctx.tok(it.alt), caption: it.caption, sizes: span === 'full' ? '(min-width: 1320px) 1224px, 100vw' : '(min-width: 1024px) 58vw, 100vw' })}</li>`;
+    }).join('');
+    return section(ctx, { type: 'gallery', labelledby: hd.id, inner: `${hd.html}<ul class="plates" role="list">${items}</ul>` });
+  },
+
+  compare(ctx, b, o) { return compare(ctx, b, { eyebrow: o.eyebrows?.compare }); },
+
+  viewer(ctx, b, o) {
+    ctx.needs.add('viewer');
+    return callViewer('renderViewerBand', ctx, b, () => { ctx.needs.delete('viewer'); return viewerFallback(ctx, b, { eyebrow: o.eyebrows?.viewer }); });
+  },
+  ar(ctx, b) {
+    ctx.needs.add('viewer');
+    return callViewer('renderArBlock', ctx, b, () => { ctx.needs.delete('viewer'); return simpleFallback(ctx, b, 'ar'); });
+  },
+  formats(ctx, b) { return callViewer('renderFormats', ctx, b, () => formatsFallback(ctx, b)); },
+  embedCode(ctx, b) { return callViewer('renderEmbedCode', ctx, b, () => simpleFallback(ctx, b, 'embedCode')); },
+
+  deliverables(ctx, b) { return deliverablesBlock(ctx, b); },
+
+  comingSoon(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 || ctx.t('h2.comingSoon'), intro: b.intro });
+    const items = (ctx.data.comingSoon || []).map((s) => `<li class="soon__item"><h3>${esc(s[ctx.lang].title)}</h3><p>${ctx.mdInline(s[ctx.lang].body)}</p></li>`).join('');
+    return section(ctx, { type: 'soon', labelledby: hd.id, inner: `${hd.html}<ul class="soon" role="list">${items}</ul>` });
+  },
+
+  process(ctx, b) { return processBlock(ctx, b); },
+
+  needs(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 || ctx.t('h2.needs'), intro: b.intro });
+    const items = (ctx.data.process.needs[ctx.lang] || []).map((x) => `<li>${ctx.mdInline(x)}</li>`).join('');
+    return section(ctx, { type: 'needs', labelledby: hd.id, inner: `${hd.html}<ul class="checks checks--grid" role="list">${items}</ul>` });
+  },
+
+  services(ctx, b) { return indexBlock(ctx, b, 'services', SERVICE_IDS, { className: 'index--services', meta: (id) => routePrice(ctx, id) }); },
+  audiences(ctx, b) { return indexBlock(ctx, b, 'audiences', AUDIENCE_IDS, { className: 'index--grid' }); },
+  pages(ctx, b) { return indexBlock(ctx, b, 'pages', b.ids || [], { className: (b.ids || []).length > 3 ? 'index--grid' : '' }); },
+
+  pricing(ctx, b) { return pricingBlock(ctx, b); },
+  calculator(ctx, b) { return calculator(ctx, b); },
+  guarantees(ctx, b) { return guaranteesBlock(ctx, b); },
+
+  stat(ctx, b) {
+    const src = b.source ? `<p class="stat__source">${esc(ctx.t('stat.source'))}: <a href="${esc(b.source.url)}" rel="noopener">${esc(ctx.tok(b.source.label))}</a>${b.year ? `, ${esc(b.year)}` : ''}</p>` : '';
+    return section(ctx, { type: 'stat', inner: `<figure class="stat" data-reveal><p class="stat__value num">${ctx.mdInline(String(b.value))}</p><figcaption><p class="stat__label">${ctx.mdInline(b.label)}</p>${src}</figcaption></figure>` });
+  },
+
+  callout(ctx, b) {
+    const title = b.title ? `<p class="callout__title">${ctx.mdInline(b.title)}</p>` : '';
+    return section(ctx, { type: 'callout', inner: `<aside class="callout callout--${b.tone || 'note'}">${title}<div class="callout__body">${ctx.md(b.body)}</div></aside>` });
+  },
+
+  specs(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 || ctx.t('h2.specs') });
+    const rows = (b.items || []).map(([k, v]) => `<div class="specs__row"><dt>${ctx.mdInline(k)}</dt><dd>${ctx.mdInline(String(v))}</dd></div>`).join('');
+    return section(ctx, { type: 'specs', labelledby: hd.id, inner: `${hd.html}<dl class="specs">${rows}</dl>` });
+  },
+
+  sources(ctx, b) {
+    const hd = head(ctx, { h2: b.h2 || ctx.t('h2.sources') });
+    const items = (b.items || []).map((s) => `<li><a href="${esc(s.url)}" rel="noopener">${esc(ctx.tok(s.label))}</a>${s.note ? `<span class="sources__note">${ctx.mdInline(s.note)}</span>` : ''}</li>`).join('');
+    return section(ctx, { type: 'sources', labelledby: hd.id, inner: `${hd.html}<ol class="sources">${items}</ol>` });
+  },
+
+  faq(ctx, b, o) {
+    o.state.faqPlaced = true;
+    return faqSection(ctx, ctx.page.faq || [], { eyebrow: o.eyebrows?.faq, h2: b.h2 });
+  },
+
+  faqGroups(ctx, b, o) {
+    o.state.faqPlaced = true;
+    return (b.groups || []).map((g) => {
+      const hd = head(ctx, { h2: g.title });
+      return section(ctx, { type: 'faq', className: 'faq-group', labelledby: hd.id, inner: `${hd.html}${faqList(ctx, g.items || [], { openCount: 3 })}` });
+    }).join('');
+  },
+
+  glossary(ctx) { return glossaryBlock(ctx); },
+
+  contactForm(ctx, b, o) { o.state.formPlaced = true; return contactForm(ctx, { ...b, service: b.service || o.service }); },
+
+  cta(ctx, b, o) { return ctaBand(ctx, { h2: b.h2, body: b.body, service: b.service || o.service, image: null, className: 'cta-band--inline' }); },
+};
+
+/* ─── Glossary (A–Z index + terms, DefinedTermSet on the GEO side) ── */
+
+export function glossaryTerms(ctx) {
+  const list = (ctx.data.glossary || []).filter((t) => t[ctx.lang] && t[ctx.lang].term);
+  const coll = new Intl.Collator(ctx.lang === 'es' ? 'es' : 'en', { sensitivity: 'base' });
+  return list.slice().sort((a, b) => coll.compare(a[ctx.lang].term, b[ctx.lang].term));
+}
+
+function glossaryBlock(ctx) {
+  const terms = glossaryTerms(ctx);
+  if (!terms.length) return '';
+  const letterOf = (t) => t[ctx.lang].term.normalize('NFD').replace(/[̀-ͯ]/g, '').charAt(0).toUpperCase();
+  const first = new Map();
+  for (const t of terms) { const L = letterOf(t); if (!first.has(L)) first.set(L, t.id); }
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const idxId = ctx.uid('indice');
+  const index = `<nav class="az" aria-labelledby="${idxId}"><h2 id="${idxId}" class="az__title">${esc(ctx.t('h2.glossaryIndex'))}</h2><ul class="az__letters" role="list">${letters.map((L) => (first.has(L) ? `<li><a href="#${esc(first.get(L))}">${L}</a></li>` : `<li><span aria-hidden="true">${L}</span></li>`)).join('')}</ul></nav>`;
+  const items = terms.map((t) => {
+    const L = t[ctx.lang];
+    ctx.collect.headings.push({ level: 2, id: t.id, text: L.term });
+    const rel = t.related && ctx.has(t.related) ? `<p class="term__related">${esc(ctx.t('glossary.related'))}: <a href="${esc(ctx.href(t.related))}">${esc(ctx.label(t.related))}</a></p>` : '';
+    return `<section class="term" id="${esc(t.id)}" aria-labelledby="${esc(t.id)}-t"><h2 class="term__name" id="${esc(t.id)}-t"><dfn>${esc(L.term)}</dfn></h2><p class="term__def">${ctx.mdInline(L.definition)}</p>${L.body ? `<div class="term__body prose">${ctx.md(L.body)}</div>` : ''}${rel}</section>`;
+  }).join('');
+  return `<div class="block block--glossary"><div class="wrap glossary">${index}<div class="glossary__terms">${items}</div></div></div>`;
+}
+
+/* ─── Public API ──────────────────────────────────────────────── */
+
+/**
+ * Render an array of blocks.
+ * opts: { eyebrows: { compare, viewer, faq }, service, skip: Set(types), state: {} }
+ * After the call, opts.state.faqPlaced / formPlaced tell the template what is already on the page.
+ */
+export function renderBlocks(ctx, blocks, opts = {}) {
+  const o = { eyebrows: {}, state: {}, skip: new Set(), ...opts };
+  if (!o.state) o.state = {};
+  const out = [];
+  for (const b of blocks || []) {
+    if (o.skip.has(b.type)) continue;
+    const fn = R[b.type];
+    if (!fn) throw new Error(`Unknown block type "${b.type}" in ${ctx.route.id}[${ctx.lang}]`);
+    out.push(fn(ctx, b, o));
+  }
+  opts.state = o.state;
+  return out.join('');
+}
+
+/* ─── Page composer shared by the templates ───────────────────── */
+
+const SERVICE_BY_PAGE = {
+  'servicio-plano': 'maqueta', 'servicio-renders': 'renders', 'servicio-tour': 'visor', 'servicio-ar': 'ar',
+  'servicio-staging': 'staging', 'sol-promotoras': 'promocion', 'caso-villa': 'maqueta', precios: 'maqueta',
+};
+export const serviceFor = (ctx) => (ctx.page && ctx.page.cta && ctx.page.cta.service) || SERVICE_BY_PAGE[ctx.route.id] || 'maqueta';
+
+/**
+ * hero → cajetín → blocks → FAQ (if not placed) → extra → related → closing CTA.
+ * opts: { hero (html), facts (bool), faq (bool), related (bool), cta (bool | { h2, body, service }), eyebrows, afterBlocks (html) }
+ */
+export function standardPage(ctx, opts = {}) {
+  const p = ctx.page;
+  const service = serviceFor(ctx);
+  const state = {};
+  const blocks = renderBlocks(ctx, p.blocks || [], { state, service, eyebrows: opts.eyebrows });
+  const parts = [opts.hero || ''];
+  if (opts.facts !== false) parts.push(cajetin(ctx, p.facts));
+  if (opts.beforeBlocks) parts.push(opts.beforeBlocks);
+  parts.push(blocks);
+  if (opts.afterBlocks) parts.push(opts.afterBlocks);
+  if (opts.faq !== false && !state.faqPlaced && p.faq && p.faq.length) parts.push(faqSection(ctx, p.faq));
+  if (opts.related !== false) parts.push(related(ctx, p.related));
+  if (opts.cta !== false) {
+    const c = { ...(typeof opts.cta === 'object' ? opts.cta : {}), ...(p.cta || {}) };
+    parts.push(ctaBand(ctx, { h2: c.h2, body: c.body, service: c.service || service }));
+  }
+  return { html: parts.join(''), state };
+}
+
+export { SERVICE_IDS, AUDIENCE_IDS, cls };

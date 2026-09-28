@@ -178,10 +178,11 @@ const report = { generated: new Date().toISOString(), source: {}, outputs: {} };
   report.outputs.arMaqueta = { ...summary(`ar maqueta 1:20 (removed ${removed} "_Alto" primitives)`, doc, out), removedCutPrimitives: removed };
 }
 
-// ---- USDZ copy ------------------------------------------------------------------
-fs.copyFileSync(P.srcUsdz, P.usdz);
+// ---- USDZ (report only) -----------------------------------------------------------
+// The web USDZ files are produced by source/villa3d/blender/usdz_web.py (floor at y = 0,
+// base removed, JPEG normals). Never overwrite them here; just record their sizes.
 report.outputs.usdz = { file: path.basename(P.usdz), bytes: fs.statSync(P.usdz).size };
-log(`usdz: copied ${path.basename(P.usdz)} ${mb(report.outputs.usdz.bytes)}`);
+log(`usdz: kept ${path.basename(P.usdz)} ${mb(report.outputs.usdz.bytes)} (see npm run model:usdz)`);
 
 fs.writeFileSync(P.report, JSON.stringify(report, null, 2));
 log(`report -> ${path.relative(process.cwd(), P.report)}`);

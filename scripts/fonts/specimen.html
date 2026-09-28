@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font specimen</title>
+<!-- QA page for the self-hosted fonts (not part of the site). Serve the project root, e.g.
+     node source/villa3d/blender/capture/capture-server.mjs 8802 → http://127.0.0.1:8802/scripts/fonts/specimen.html
+     It prints glyph coverage and compares text widths/heights against the metric-matched Arial fallbacks. -->
+<style>
+  @font-face { font-family: "Archivo"; src: url("/public/assets/fonts/archivo-var.woff2") format("woff2"); font-weight: 400 650; font-stretch: 100% 125%; font-display: block; }
+  @font-face { font-family: "Geist Mono"; src: url("/public/assets/fonts/geist-mono-var.woff2") format("woff2"); font-weight: 400 500; font-display: block; }
+  /* copied from docs/design/tokens.css */
+  @font-face { font-family: "Archivo Text Fallback"; src: local("Arial"), local("ArialMT"); size-adjust: 98.4%; ascent-override: 89.2%; descent-override: 21.3%; line-gap-override: 0%; }
+  @font-face { font-family: "Archivo Display S Fallback"; src: local("Arial"), local("ArialMT"); size-adjust: 107.6%; ascent-override: 81.6%; descent-override: 19.5%; line-gap-override: 0%; }
+  @font-face { font-family: "Archivo Display L Fallback"; src: local("Arial"), local("ArialMT"); size-adjust: 121.6%; ascent-override: 72.2%; descent-override: 17.3%; line-gap-override: 0%; }
+  body { margin: 24px; background: #F4F5F6; color: #14171B; font-family: "Archivo", sans-serif; }
+  .row { margin: 0 0 12px; }
+  .mono { font-family: "Geist Mono", monospace; font-weight: 450; font-size: 16px; }
+  .m { position: absolute; visibility: hidden; white-space: nowrap; }
+  pre { font: 13px/1.4 "Geist Mono", monospace; }
+</style>
+</head>
+<body>
+<p class="row" style="font-size:64px;font-weight:560;font-stretch:118%;letter-spacing:-0.022em;line-height:1.04">Tu plano 2D, en 3D</p>
+<p class="row" style="font-size:34px;font-weight:560;font-stretch:106%">Ñandú · ¿Qué incluye? ¡Hecho! «Maqueta» “render”</p>
+<p class="row" style="font-size:17px;font-weight:400">Áreas ≈ 75 m² · 9,1 × 14,1 m · 1.200 € + IVA · 30 % · ≤ 8 MB · ≥ 95 · Diseño — Plano – Añil… ü ñ á é í ó ú ¿ ¡</p>
+<p class="row" style="font-size:17px;font-weight:600;font-variant-numeric:tabular-nums lining-nums">0123456789 · 1111 · 8888 (tnum)</p>
+<p class="row" style="font-size:15px;font-weight:650;font-stretch:125%;text-transform:uppercase;font-feature-settings:'case'">(Cajetín) — [Datos clave] ¿Precio?</p>
+<p class="row mono">villa.glb · 3,13 MB · 178.704 tri · 1:20 · ≈ 0,60 m · €</p>
+<pre id="out"></pre>
+<script>
+  const SAMPLE = 'Convertimos el plano 2D de tu vivienda en un modelo 3D fotorrealista, con renders, visor web y realidad aumentada sin app.';
+  const cases = [
+    ['Text', 'Archivo Text Fallback', 17, 400, '100%'],
+    ['Display S', 'Archivo Display S Fallback', 34, 560, '106%'],
+    ['Display L', 'Archivo Display L Fallback', 64, 560, '118%'],
+  ];
+  const span = (fam, size, wght, wdth) => {
+    const s = document.createElement('span');
+    s.className = 'm';
+    s.style.cssText = `font-family:"${fam}";font-size:${size}px;font-weight:${wght};font-stretch:${wdth};line-height:normal`;
+    s.textContent = SAMPLE;
+    document.body.append(s);
+    return s;
+  };
+  document.fonts.ready.then(async () => {
+    await document.fonts.load('400 17px "Archivo"');
+    const lines = [];
+    for (const [label, fb, size, wght, wdth] of cases) {
+      const a = span('Archivo', size, wght, wdth).getBoundingClientRect();
+      const b = span(fb, size, wght, '100%').getBoundingClientRect(); // same weight as the real CSS (560 < 600: no synthetic bold)
+      lines.push(`${label.padEnd(10)} width webfont/fallback = ${(a.width / b.width * 100).toFixed(1)} %   line box ${a.height.toFixed(1)} / ${b.height.toFixed(1)} px`);
+    }
+    const missing = [...'ñáéíóúüÑÁÉÍÓÚÜ¿¡«»“”²×€≈·…–—≤≥'].filter((c) => !document.fonts.check(`16px "Archivo"`, c));
+    lines.push(`fonts loaded: ${[...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family).join(', ')}`);
+    lines.push(`check() misses: ${missing.join(' ') || 'none'}`);
+    document.getElementById('out').textContent = lines.join('\n');
+    window.__specimen = lines;
+  });
+</script>
+</body>
+</html>
