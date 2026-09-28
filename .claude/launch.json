@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["build/serve.mjs", "8765", "dist"],
+      "port": 8765
+    }
+  ]
+}

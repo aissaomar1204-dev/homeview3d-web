@@ -40,7 +40,7 @@ const argv = process.argv.slice(2);
 const flag = (f) => argv.includes(f);
 const optVal = (f) => { const i = argv.indexOf(f); return i >= 0 ? argv[i + 1] : null; };
 const positional = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--json');
-const DIST = path.resolve(positional[0] || path.join(ROOT, 'dist'));
+const DIST = path.resolve(positional[0] || path.join(ROOT, process.env.OUT_DIR || 'dist'));
 const PRODUCTION = process.env.CONTEXT === 'production' || flag('--production');
 const PLACEHOLDERS_FAIL = PRODUCTION && process.env.ALLOW_PLACEHOLDERS !== '1' && !flag('--placeholders-ok');
 const PLACEHOLDERS = hasPlaceholders();

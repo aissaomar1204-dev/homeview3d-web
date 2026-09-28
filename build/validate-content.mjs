@@ -35,7 +35,7 @@ const BLOCKS = {
   figure: ['image', 'alt', 'caption'], gallery: ['items'], compare: [], viewer: [], ar: [], formats: [], embedCode: [],
   deliverables: [], comingSoon: [], process: [], needs: [], services: [], audiences: [], pages: ['ids'], pricing: ['variant'],
   calculator: [], guarantees: [], stat: ['value', 'label', 'source', 'year'], callout: ['body'], specs: ['items'],
-  sources: ['items'], faq: [], faqGroups: ['groups'], glossary: [], contactForm: [], cta: ['h2', 'body'],
+  sources: ['items'], faq: [], faqGroups: ['groups'], glossary: [], contactForm: [], cta: ['h2', 'body'], video: ['video', 'caption'],
 };
 
 const BANNED = [

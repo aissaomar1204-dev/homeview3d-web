@@ -33,7 +33,7 @@ import { stripTags, countWords } from './lib/md.mjs';
 const t0 = Date.now();
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
-const DIST = path.join(ROOT, 'dist');
+const DIST = path.resolve(ROOT, process.env.OUT_DIR || 'dist'); // OUT_DIR lets parallel builds use separate folders
 const CONTENT = path.resolve(ROOT, process.env.CONTENT_DIR || path.join('build', 'content'));
 const STRICT = process.env.STRICT === '1';
 const VERBOSE = process.env.VERBOSE === '1';

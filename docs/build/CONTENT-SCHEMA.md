@@ -87,6 +87,7 @@ auto id (slug of the text) usable as `@page#slug`. Phrase H2s as questions where
 | `glossary` | (none) | Glossary page only (terms from build/data/glossary.mjs) |
 | `contactForm` | `h2?`, `intro?` | The quote form (contact page, home end) |
 | `cta` | `h2`, `body`, `service?` | Mid-page CTA band (the closing one is automatic) |
+| `video` | `h2?`, `intro?`, `video` (key in build/generated/videos.json, e.g. `villa-turntable`), `caption` | Click-to-play muted video with poster, pause control and a caption stating it is a 3D render |
 
 The engine automatically adds: header, breadcrumbs, hero (H1 + lead + hero visual), cajetín (facts),
 the FAQ (if not placed), "keep reading" (related), closing CTA, contact details in text, visible

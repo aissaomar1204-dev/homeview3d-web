@@ -16,3 +16,4 @@ source/villa3d/ar/
 docs/research/img/*.png
 source/villa3d/harness/
 scripts/fonts/src/
+dist-*/

@@ -17,7 +17,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const DIST = path.resolve(process.argv[2] || path.join(HERE, '..', 'dist'));
+const DIST = path.resolve(process.argv[2] || path.join(HERE, '..', process.env.OUT_DIR || 'dist'));
 const SRC_CSS = path.join(HERE, '..', 'src', 'css');
 const TOKENS_CSS = /(^|[-.])tokens\.css$/; // the ONLY source css file allowed to contain raw hex colours (00-tokens.css)
 const BUDGET = { htmlKB: 60, initialJsKB: 30, fontFiles: 3, fontKB: 60, lcpImageKB: 120, backdropFilters: 1 };
