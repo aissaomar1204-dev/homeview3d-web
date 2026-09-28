@@ -1,0 +1,39 @@
+﻿[villa] imported 631 mesh objects
+[villa] roles {'base': 530, 'alto': 131, 'corte': 76}
+[villa] textures OK: 39
+E:\ProyectosRealStateBlender\source\villa3d\blender\villa_render.py:239: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+[villa] light linking: stair objects excluded from ground shadow: 26
+00:05.453  cycles           | WARNING HIPEW initialization failed: Error opening HIP dynamic library
+[villa] compute device: OPTIX
+[villa] scene built in 7.1s
+Info: Saved as "villa_renders.blend"
+Info: Saved "villa_renders.blend"
+[villa] saved E:\ProyectosRealStateBlender\source\villa3d\blender\villa_renders.blend
+[villa] rendering villa_maqueta_iso (2800, 1800) samples 512 scale 100
+01:21.078  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_maqueta_iso.png'
+[villa] done villa_maqueta_iso in 70.9s {'size': [2800, 1800], 'alpha_cover': 0.28378551587301587, 'mean': 0.5853941190995642, 'clip': 0.0, 'black': 0.0039741888839751665}
+[villa] rendering villa_planta_cenital (2400, 3700) samples 512 scale 100
+03:03.796  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_planta_cenital.png'
+[villa] done villa_planta_cenital in 101.9s {'size': [2400, 3700], 'alpha_cover': 0.89082759009009, 'mean': 0.5320860022025351, 'clip': 1.3594213541440805e-06, 'black': 0.0009688595990984862}
+[villa] rendering villa_salon_dormitorio (2400, 1600) samples 384 scale 100
+03:39.875  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_salon_dormitorio.png'
+[villa] done villa_salon_dormitorio in 34.1s {'size': [2400, 1600], 'alpha_cover': 0.9928067708333334, 'mean': 0.6124257113133272, 'clip': 7.869826769373152e-07, 'black': 0.0023874431142688352}
+[villa] rendering villa_dormitorios (2400, 1600) samples 384 scale 100
+04:21.468  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_dormitorios.png'
+[villa] done villa_dormitorios in 40.4s {'size': [2400, 1600], 'alpha_cover': 0.713696875, 'mean': 0.5910120875496092, 'clip': 0.0, 'black': 0.0016866222284094268}
+[villa] rendering villa_bano_suite (2000, 1600) samples 384 scale 100
+04:51.609  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_bano_suite.png'
+[villa] done villa_bano_suite in 29.3s {'size': [2000, 1600], 'alpha_cover': 0.79611875, 'mean': 0.5234511413812399, 'clip': 1.295876990643768e-05, 'black': 0.01614898344340434}
+[villa] rendering villa_terraza (2400, 1600) samples 384 scale 100
+05:33.359  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_terraza.png'
+[villa] done villa_terraza in 41.0s {'size': [2400, 1600], 'alpha_cover': 0.6893869791666667, 'mean': 0.6317344650636236, 'clip': 1.5893696599662816e-06, 'black': 0.0029439099526725448}
+[villa] rendering og_image (1200, 630) samples 512 scale 100
+05:44.171  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\og_image.png'
+[villa] done og_image in 10.1s {'size': [1200, 630], 'alpha_cover': 1.0, 'mean': 0.7302761832329456, 'clip': 0.0, 'black': 0.0008174603174603175}
+[villa] rendering villa_muros_completos (2800, 1800) samples 512 scale 100
+06:57.750  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_muros_completos.png'
+[villa] done villa_muros_completos in 73.4s {'size': [2800, 1800], 'alpha_cover': 0.35097837301587304, 'mean': 0.6663019245106852, 'clip': 0.0, 'black': 0.006449865396170533}
+[villa] rendering villa_plano_lineas (2400, 3700) samples 32 scale 100
+07:06.015  render           | Saved: 'E:\ProyectosRealStateBlender\source\villa3d\renders\villa_plano_lineas.png'
+[villa] done villa_plano_lineas in 7.5s {'size': [2400, 3700], 'alpha_cover': 1.0, 'mean': 0.8771054467032424, 'clip': 0.4941108108108108, 'black': 0.07200518018018018}
+TOTAL seconds: 428

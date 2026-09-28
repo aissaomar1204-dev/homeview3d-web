@@ -1,0 +1,119 @@
+{
+ "villa_maqueta_iso": {
+  "seconds": 70.9,
+  "scale": 100,
+  "samples": 512,
+  "size": [
+   2800,
+   1800
+  ],
+  "alpha_cover": 0.28378551587301587,
+  "mean": 0.5853941190995642,
+  "clip": 0.0,
+  "black": 0.0039741888839751665
+ },
+ "villa_planta_cenital": {
+  "seconds": 101.9,
+  "scale": 100,
+  "samples": 512,
+  "size": [
+   2400,
+   3700
+  ],
+  "alpha_cover": 0.89082759009009,
+  "mean": 0.5320860022025351,
+  "clip": 1.3594213541440805e-06,
+  "black": 0.0009688595990984862
+ },
+ "villa_salon_dormitorio": {
+  "seconds": 34.1,
+  "scale": 100,
+  "samples": 384,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 0.9928067708333334,
+  "mean": 0.6124257113133272,
+  "clip": 7.869826769373152e-07,
+  "black": 0.0023874431142688352
+ },
+ "villa_dormitorios": {
+  "seconds": 40.4,
+  "scale": 100,
+  "samples": 384,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 0.713696875,
+  "mean": 0.5910120875496092,
+  "clip": 0.0,
+  "black": 0.0016866222284094268
+ },
+ "villa_bano_suite": {
+  "seconds": 29.3,
+  "scale": 100,
+  "samples": 384,
+  "size": [
+   2000,
+   1600
+  ],
+  "alpha_cover": 0.79611875,
+  "mean": 0.5234511413812399,
+  "clip": 1.295876990643768e-05,
+  "black": 0.01614898344340434
+ },
+ "villa_terraza": {
+  "seconds": 41.0,
+  "scale": 100,
+  "samples": 384,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 0.6893869791666667,
+  "mean": 0.6317344650636236,
+  "clip": 1.5893696599662816e-06,
+  "black": 0.0029439099526725448
+ },
+ "og_image": {
+  "seconds": 10.1,
+  "scale": 100,
+  "samples": 512,
+  "size": [
+   1200,
+   630
+  ],
+  "alpha_cover": 1.0,
+  "mean": 0.7302761832329456,
+  "clip": 0.0,
+  "black": 0.0008174603174603175
+ },
+ "villa_muros_completos": {
+  "seconds": 73.4,
+  "scale": 100,
+  "samples": 512,
+  "size": [
+   2800,
+   1800
+  ],
+  "alpha_cover": 0.35097837301587304,
+  "mean": 0.6663019245106852,
+  "clip": 0.0,
+  "black": 0.006449865396170533
+ },
+ "villa_plano_lineas": {
+  "seconds": 7.5,
+  "scale": 100,
+  "samples": 32,
+  "size": [
+   2400,
+   3700
+  ],
+  "alpha_cover": 1.0,
+  "mean": 0.8771054467032424,
+  "clip": 0.4941108108108108,
+  "black": 0.07200518018018018
+ }
+}

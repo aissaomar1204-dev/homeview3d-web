@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test visor villa</title>
+<meta name="robots" content="noindex">
+<!-- Local test page (not part of the site). Serve the PROJECT ROOT: node scripts/serve.mjs 8799
+     then open http://localhost:8799/source/villa3d/test-viewer.html
+     Query params: ?auto=1 (load without click) · ?src=/public/models/villa-ar.glb · ?cut=0 -->
+<link rel="icon" href="data:,">
+<!-- No <link rel=preload> for the poster: the <picture> is in the initial HTML, the preload scanner finds it and
+     fetchpriority="high" does the rest. A preload with a fixed href would download the wrong size. -->
+<style>
+  :root { color-scheme: light dark; --bg: #f4f2ee; --ink: #1d1f1c; --muted: #5d625a; --line: #d9d5cc; --accent: #56663f; --card: #fff; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #161815; --ink: #ecebe6; --muted: #a5aa9f; --line: #34372f; --accent: #a4b882; --card: #1f221d; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.5 system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  main { max-width: 1200px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) 300px; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  .stage { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #dcdad5; }
+  .stage > img, .stage > picture img, model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  model-viewer { --poster-color: transparent; background: #dcdad5; }
+  .load-btn { position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 2; }
+  button, .btn { font: inherit; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); cursor: pointer; }
+  button[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+  button:focus-visible, model-viewer:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  aside { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 10px; align-content: start; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; margin: 0; font-size: 13px; }
+  dt { color: var(--muted); } dd { margin: 0; font-variant-numeric: tabular-nums; word-break: break-word; }
+  .ok { color: #2f7d32; } .bad { color: #c62828; }
+  .hotspot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; background: #c62828; box-shadow: 0 1px 4px #0006; padding: 0; }
+  .hotspot span { position: absolute; left: 18px; top: -4px; white-space: nowrap; font-size: 11px; background: #000a; color: #fff; padding: 1px 5px; border-radius: 4px; }
+  .progress { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--accent); transform-origin: left; transform: scaleX(0); transition: transform .2s; z-index: 3; }
+  @media (prefers-reduced-motion: reduce) { .progress { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <section>
+    <h1>Villa en la Costa del Sol · visor 3D (prueba local)</h1>
+    <div class="stage" id="stage">
+      <!-- LCP element: plain responsive image, no JS needed -->
+      <picture>
+        <source type="image/avif" srcset="/public/img/villa/villa-poster-640.avif 640w, /public/img/villa/villa-poster-960.avif 960w, /public/img/villa/villa-poster-1400.avif 1400w" sizes="(max-width: 860px) 100vw, 880px">
+        <source type="image/webp" srcset="/public/img/villa/villa-poster-640.webp 640w, /public/img/villa/villa-poster-960.webp 960w, /public/img/villa/villa-poster-1400.webp 1400w" sizes="(max-width: 860px) 100vw, 880px">
+        <img id="poster" src="/public/img/villa/villa-poster-960.jpg" width="1400" height="1050" fetchpriority="high" decoding="async"
+             alt="Maqueta 3D de la planta alta de una villa en la Costa del Sol, con los muros cortados a 1,15 m: salón, tres dormitorios, dos baños y dos terrazas">
+      </picture>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <button class="load-btn" id="load">Explorar en 3D</button>
+    </div>
+  </section>
+  <aside aria-label="Controles y diagnóstico">
+    <div class="row">
+      <button id="cut" aria-pressed="true" disabled>Modo maqueta (corte 1,15 m)</button>
+    </div>
+    <label class="row">Luz <input id="exposure" type="range" min="0.4" max="1.8" step="0.05" value="1" disabled aria-label="Exposición"></label>
+    <div class="row">
+      <button id="viewTop" disabled>Vista cenital</button>
+      <button id="viewIso" disabled>Vista 3/4</button>
+    </div>
+    <dl id="diag">
+      <dt>Modelo</dt><dd id="d-src">—</dd>
+      <dt>JS visor</dt><dd id="d-js">—</dd>
+      <dt>Descarga GLB</dt><dd id="d-net">—</dd>
+      <dt>Carga total</dt><dd id="d-load">—</dd>
+      <dt>Materiales</dt><dd id="d-mats">—</dd>
+      <dt>Corte _Alto</dt><dd id="d-cut">—</dd>
+      <dt>Dimensiones</dt><dd id="d-dim">—</dd>
+      <dt>Errores</dt><dd id="d-err">0</dd>
+      <dt>AR</dt><dd id="d-ar">—</dd>
+    </dl>
+  </aside>
+</main>
+
+<script>
+  // Must run BEFORE the first <model-viewer> is created: point decoders to our own domain.
+  // Meshopt is OFF by default in model-viewer 4.x; setting the location enables it.
+  self.ModelViewerElement = Object.assign(self.ModelViewerElement || {}, {
+    meshoptDecoderLocation: '/public/lib/model-viewer/meshopt_decoder.js',
+    dracoDecoderLocation: '/public/lib/model-viewer/draco/',      // not used by our models, never fetched
+    ktx2TranscoderLocation: '/public/lib/model-viewer/basis/',    // not used by our models, never fetched
+  });
+  // Diagnostics captured for automated checks (playwright reads window.__viewerTest).
+  window.__viewerTest = { errors: [], loaded: false };
+  addEventListener('error', (e) => { window.__viewerTest.errors.push(String(e.message || e)); updErr(); });
+  addEventListener('unhandledrejection', (e) => { window.__viewerTest.errors.push('unhandled: ' + (e.reason && e.reason.message || e.reason)); updErr(); });
+  function updErr() { const n = window.__viewerTest.errors.length; const el = document.getElementById('d-err'); if (el) { el.textContent = n ? n + ': ' + window.__viewerTest.errors.join(' | ') : '0'; el.className = n ? 'bad' : 'ok'; } }
+</script>
+<script type="module">
+  const params = new URLSearchParams(location.search);
+  const SRC = params.get('src') || '/public/models/villa.glb';
+  const FALLBACK_SRC = '/public/models/villa-ar.glb';   // plain glTF, needs no decoder
+  const USDZ = '/public/models/villa_tamano_real.usdz';
+  const CUT_SUFFIX = '_Alto';
+  const $ = (id) => document.getElementById(id);
+  const T = window.__viewerTest;
+
+  let mv, cutMaterials = [], original = new Map(), cutOn = params.get('cut') !== '0';
+
+  async function start() {
+    $('load').disabled = true;
+    $('load').textContent = 'Cargando…';
+    const t0 = performance.now();
+    await import('/public/lib/model-viewer/model-viewer.min.js');
+    T.jsMs = Math.round(performance.now() - t0);
+    $('d-js').textContent = T.jsMs + ' ms (import + define)';
+
+    mv = document.createElement('model-viewer');
+    Object.assign(mv, { id: 'viewer' });
+    const attrs = {
+      src: SRC,
+      'ios-src': USDZ,
+      alt: $('poster').alt,
+      ar: '', 'ar-modes': 'webxr quick-look', 'ar-scale': 'auto', 'ar-placement': 'floor',
+      'camera-controls': '', 'touch-action': 'pan-y', 'interaction-prompt': 'none',
+      'camera-orbit': '-30deg 50deg auto', 'min-camera-orbit': 'auto 0deg auto', 'max-camera-orbit': 'auto 88deg auto',
+      'shadow-intensity': '0.8', 'shadow-softness': '0.8', exposure: '1', 'tone-mapping': 'neutral', 'environment-image': 'neutral',
+      loading: 'eager', reveal: 'auto',
+    };
+    for (const [k, v] of Object.entries(attrs)) mv.setAttribute(k, v);
+    // Hotspots at the plan corners: plan (x east, y north) -> glTF (x, height, -y). If these sit on the
+    // corners of the slab, world coordinates survived the optimization.
+    mv.innerHTML = `
+      <button class="hotspot" slot="hotspot-sw" data-position="0m 0m 0m" data-normal="0m 1m 0m" aria-label="Esquina suroeste (0, 0)"><span>SO 0,0</span></button>
+      <button class="hotspot" slot="hotspot-ne" data-position="9.1m 0m -14.05m" data-normal="0m 1m 0m" aria-label="Esquina noreste"><span>NE 9,1 · 14,05</span></button>`;
+    mv.addEventListener('progress', (e) => { $('progress').style.transform = `scaleX(${e.detail.totalProgress})`; });
+    let triedFallback = false;
+    mv.addEventListener('error', (e) => {
+      T.errors.push('model-viewer error: ' + (e.detail && e.detail.type)); updErr();
+      if (e.detail && e.detail.type === 'loadfailure' && !triedFallback) { triedFallback = true; mv.src = FALLBACK_SRC; }  // decoder/format failure -> plain GLB
+    });
+    mv.addEventListener('load', () => onLoad(t0), { once: true });
+    $('stage').append(mv);
+  }
+
+  function onLoad(t0) {
+    T.loaded = true;
+    T.loadMs = Math.round(performance.now() - t0);
+    const res = performance.getEntriesByType('resource').find((r) => r.name.includes(SRC.split('/').pop()));
+    if (res) { T.glbMs = Math.round(res.duration); T.glbTransfer = res.transferSize; T.glbBody = res.decodedBodySize; }
+    $('d-src').textContent = SRC.split('/').pop();
+    $('d-net').textContent = res ? `${T.glbMs} ms · ${(res.decodedBodySize / 1048576).toFixed(2)} MB (${(res.transferSize / 1048576).toFixed(2)} MB transfer)` : 'n/d';
+    $('d-load').textContent = `${T.loadMs} ms (clic → primer frame)`;
+    $('progress').style.transform = 'scaleX(0)';
+    $('load').remove();
+    document.querySelector('.stage picture').remove();
+
+    const mats = mv.model.materials;
+    cutMaterials = mats.filter((m) => m.name.endsWith(CUT_SUFFIX));
+    for (const m of cutMaterials) original.set(m, { alphaMode: m.getAlphaMode(), cutoff: m.getAlphaCutoff(), color: [...m.pbrMetallicRoughness.baseColorFactor] });
+    T.materials = mats.length;
+    T.cutMaterials = cutMaterials.map((m) => m.name);
+    $('d-mats').textContent = `${mats.length} (${new Set(mats.map((m) => m.name)).size} nombres)`;
+    $('d-cut').textContent = `${cutMaterials.length} materiales`;
+    $('d-cut').className = cutMaterials.length ? 'ok' : 'bad';
+    const d = mv.getDimensions(), c = mv.getBoundingBoxCenter();
+    T.dimensions = [d.x, d.y, d.z].map((v) => +v.toFixed(3));
+    T.center = [c.x, c.y, c.z].map((v) => +v.toFixed(3));
+    $('d-dim').textContent = `${d.x.toFixed(2)} × ${d.y.toFixed(2)} × ${d.z.toFixed(2)} m · centro ${T.center.join(', ')}`;
+    $('d-ar').textContent = mv.canActivateAR ? 'disponible' : 'no disponible en este dispositivo';
+    for (const id of ['cut', 'exposure', 'viewTop', 'viewIso']) $(id).disabled = false;
+    setCut(cutOn);
+  }
+
+  /** "Maqueta" mode: every material whose name ends in _Alto (geometry above 1.15 m) is discarded with alpha MASK. */
+  function setCut(on) {
+    cutOn = on;
+    for (const m of cutMaterials) {
+      const o = original.get(m);
+      if (on) {
+        m.setAlphaMode('MASK');
+        m.setAlphaCutoff(0.5);
+        m.pbrMetallicRoughness.setBaseColorFactor([o.color[0], o.color[1], o.color[2], 0]);
+      } else {
+        m.setAlphaMode(o.alphaMode);
+        m.setAlphaCutoff(o.cutoff);
+        m.pbrMetallicRoughness.setBaseColorFactor(o.color);
+      }
+    }
+    $('cut').setAttribute('aria-pressed', String(on));
+    T.cutOn = on;
+  }
+
+  $('load').addEventListener('click', start);
+  $('cut').addEventListener('click', () => setCut(!cutOn));
+  $('exposure').addEventListener('input', (e) => { mv.exposure = Number(e.target.value); });
+  $('viewTop').addEventListener('click', () => { mv.cameraOrbit = '0deg 0deg auto'; });
+  $('viewIso').addEventListener('click', () => { mv.cameraOrbit = '-30deg 50deg auto'; });
+  if (params.get('auto') === '1') start();
+</script>
+</body>
+</html>

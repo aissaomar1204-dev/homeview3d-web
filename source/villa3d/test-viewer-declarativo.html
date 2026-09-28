@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test visor declarativo</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
+<!-- Variant of test-viewer.html with the recommended PRODUCTION markup: <model-viewer> is in the HTML from the
+     start (alt, hotspots, AR button and poster are server-rendered), but its JS is only imported on intent
+     (hover/focus/click) or when the viewer approaches the viewport on a fast connection. Until then the
+     element is an unknown inline element and the slotted <picture> renders as a normal image (= LCP). -->
+<style>
+  body { margin: 0; font: 15px/1.5 system-ui, sans-serif; background: #f4f2ee; color: #1d1f1c; }
+  main { max-width: 900px; margin: 0 auto; padding: 16px; }
+  .viewer { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #dcdad5; }
+  model-viewer { display: block; width: 100%; height: 100%; --poster-color: transparent; }
+  /* Before the custom element is defined: reserve the box, show the poster picture full-size (no CLS). */
+  model-viewer:not(:defined) > :not([slot="poster"]) { display: none; }
+  model-viewer [slot="poster"], model-viewer [slot="poster"] img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .start { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%); font: inherit; padding: 10px 18px; border-radius: 999px; border: 0; background: #1d1f1c; color: #fff; cursor: pointer; }
+  .start[hidden] { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Villa en la Costa del Sol · visor (patrón declarativo)</h1>
+  <div class="viewer">
+    <model-viewer id="villa"
+      src="/public/models/villa.glb" ios-src="/public/models/villa_tamano_real.usdz"
+      alt="Maqueta 3D de la planta alta de una villa en la Costa del Sol, con los muros cortados a 1,15 m"
+      loading="lazy" reveal="manual"
+      camera-controls touch-action="pan-y" interaction-prompt="none"
+      camera-orbit="-30deg 50deg auto" min-camera-orbit="auto 0deg 2m" max-camera-orbit="auto 88deg auto"
+      shadow-intensity="0.8" tone-mapping="neutral" environment-image="neutral"
+      ar ar-modes="webxr quick-look" ar-placement="floor">
+      <picture slot="poster">
+        <source type="image/avif" srcset="/public/img/villa/villa-poster-640.avif 640w, /public/img/villa/villa-poster-960.avif 960w, /public/img/villa/villa-poster-1400.avif 1400w" sizes="(max-width: 900px) 100vw, 868px">
+        <source type="image/webp" srcset="/public/img/villa/villa-poster-640.webp 640w, /public/img/villa/villa-poster-960.webp 960w, /public/img/villa/villa-poster-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 868px">
+        <img src="/public/img/villa/villa-poster-960.jpg" width="1400" height="1050" fetchpriority="high" alt="">
+      </picture>
+      <button slot="hotspot-sw" class="hs" data-position="0m 0m 0m" data-normal="0m 1m 0m" aria-label="Esquina suroeste"></button>
+    </model-viewer>
+    <button class="start" id="start" type="button">Explorar en 3D</button>
+  </div>
+</main>
+<script>
+  self.ModelViewerElement = { meshoptDecoderLocation: '/public/lib/model-viewer/meshopt_decoder.js',
+    dracoDecoderLocation: '/public/lib/model-viewer/draco/', ktx2TranscoderLocation: '/public/lib/model-viewer/basis/' };
+  window.__viewerTest = { errors: [] };
+  addEventListener('error', (e) => window.__viewerTest.errors.push(String(e.message)));
+</script>
+<script type="module">
+  const mv = document.getElementById('villa');
+  const btn = document.getElementById('start');
+  let libPromise;
+  const loadLib = () => (libPromise ||= import('/public/lib/model-viewer/model-viewer.min.js'));
+  // Warm-up on intent: the ~260 KB JS is fetched while the pointer travels to the button.
+  for (const ev of ['pointerenter', 'focusin', 'touchstart']) mv.parentElement.addEventListener(ev, loadLib, { once: true, passive: true });
+  // Optional: also warm up when visible, but never on Save-Data / 2G.
+  const c = navigator.connection;
+  if (!(c && (c.saveData || /2g/.test(c.effectiveType)))) {
+    new IntersectionObserver((entries, io) => { if (entries.some((e) => e.isIntersecting)) { io.disconnect(); (self.requestIdleCallback || setTimeout)(loadLib); } }, { rootMargin: '200px' }).observe(mv);
+  }
+  btn.addEventListener('click', async () => {
+    const t0 = performance.now();
+    btn.textContent = 'Cargando…';
+    await loadLib();
+    await customElements.whenDefined('model-viewer');
+    mv.addEventListener('load', () => { window.__viewerTest.loadMs = Math.round(performance.now() - t0); window.__viewerTest.loaded = true; btn.hidden = true; }, { once: true });
+    mv.dismissPoster();   // with loading="lazy" + reveal="manual" this starts the GLB download
+  });
+  if (new URLSearchParams(location.search).get('auto') === '1') btn.click();
+</script>
+</body>
+</html>

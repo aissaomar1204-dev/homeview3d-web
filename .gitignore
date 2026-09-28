@@ -1,0 +1,16 @@
+node_modules/
+.playwright-cli/
+.venv-usd/
+dist/
+.netlify/
+__pycache__/
+*.pyc
+# Heavy 3D/render masters stay local (regenerable, see source/villa3d/blender/README.md).
+source/villa3d/renders/*.png
+source/villa3d/blender/*.blend
+source/villa3d/blender/*.blend1
+source/villa3d/blender/import/
+source/villa3d/gltf/
+source/villa3d/gltf-clean/
+source/villa3d/ar/
+docs/research/img/*.png

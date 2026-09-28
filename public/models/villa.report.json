@@ -1,0 +1,652 @@
+{
+  "generated": "2026-09-28T13:47:07.137Z",
+  "source": {
+    "file": "source/villa3d/gltf-clean/villa.gltf",
+    "bytes": 11258258,
+    "geometryBytes": 6163294,
+    "textureBytes": 5094964,
+    "stats": {
+      "nodes": 631,
+      "meshes": 631,
+      "drawCalls": 737,
+      "triangles": 178704,
+      "vertices": 156423,
+      "materials": 87,
+      "uniqueMaterialNames": 82,
+      "cutMaterials": 21,
+      "textures": 39,
+      "extensionsUsed": [
+        "KHR_materials_clearcoat"
+      ]
+    },
+    "bounds": {
+      "min": [
+        -0.029999999329447746,
+        -0.6000000238418579,
+        -14.074999809265137
+      ],
+      "max": [
+        9.130000114440918,
+        2.5999999046325684,
+        0.02500000037252903
+      ],
+      "size": [
+        9.160000113770366,
+        3.1999999284744263,
+        14.099999809637666
+      ]
+    }
+  },
+  "outputs": {
+    "web": {
+      "file": "villa.glb",
+      "bytes": 3132584,
+      "textureBytes": 1596474,
+      "stats": {
+        "nodes": 92,
+        "meshes": 92,
+        "drawCalls": 102,
+        "triangles": 178704,
+        "vertices": 151164,
+        "materials": 82,
+        "uniqueMaterialNames": 82,
+        "cutMaterials": 21,
+        "textures": 39,
+        "extensionsUsed": [
+          "KHR_materials_clearcoat",
+          "EXT_texture_webp",
+          "KHR_mesh_quantization",
+          "EXT_meshopt_compression"
+        ]
+      },
+      "bounds": {
+        "min": [
+          -0.03001483467969912,
+          -0.5998962750724275,
+          -14.074999809265137
+        ],
+        "max": [
+          9.13001494979117,
+          2.5998961558631377,
+          0.02500000037252903
+        ],
+        "size": [
+          9.160029784470868,
+          3.199792430935565,
+          14.099999809637666
+        ]
+      },
+      "textures": [
+        [
+          "rugbed_nrm",
+          "1024x1024 -> 512x512",
+          "webp q85 (normal)",
+          "310 KB -> 129 KB"
+        ],
+        [
+          "rugbed_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "182 KB -> 61 KB"
+        ],
+        [
+          "rug_nrm",
+          "1024x1024 -> 512x512",
+          "webp q85 (normal)",
+          "310 KB -> 129 KB"
+        ],
+        [
+          "rug_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "175 KB -> 59 KB"
+        ],
+        [
+          "blacktile_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "32 KB -> 6 KB"
+        ],
+        [
+          "blacktile_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "40 KB -> 5 KB"
+        ],
+        [
+          "olivetile_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "32 KB -> 6 KB"
+        ],
+        [
+          "olivetile_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "53 KB -> 7 KB"
+        ],
+        [
+          "walnut_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "96 KB -> 36 KB"
+        ],
+        [
+          "walnut_col",
+          "2048x2048 -> 2048x2048",
+          "webp q82",
+          "467 KB -> 76 KB"
+        ],
+        [
+          "fabric_nrm",
+          "512x512",
+          "kept image/jpeg (webp was 124 KB)",
+          "91 KB"
+        ],
+        [
+          "linen_white_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "49 KB -> 15 KB"
+        ],
+        [
+          "boucle_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "76 KB -> 37 KB"
+        ],
+        [
+          "pillow_teal_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "30 KB -> 2 KB"
+        ],
+        [
+          "botanical_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "86 KB -> 33 KB"
+        ],
+        [
+          "linen_gray_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "33 KB -> 2 KB"
+        ],
+        [
+          "lightwood_nrm",
+          "512x512 -> 512x512",
+          "webp q85 (normal)",
+          "13 KB -> 4 KB"
+        ],
+        [
+          "lightwood_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "132 KB -> 25 KB"
+        ],
+        [
+          "chevron_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "74 KB -> 25 KB"
+        ],
+        [
+          "cushion_gray_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "37 KB -> 8 KB"
+        ],
+        [
+          "throw_beige_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "60 KB -> 28 KB"
+        ],
+        [
+          "art_blue_col",
+          "768x1024 -> 768x1024",
+          "webp q82",
+          "64 KB -> 17 KB"
+        ],
+        [
+          "whitetile_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "81 KB -> 17 KB"
+        ],
+        [
+          "terrazzo_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "65 KB -> 48 KB"
+        ],
+        [
+          "terrazzo_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "337 KB -> 128 KB"
+        ],
+        [
+          "plaster_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "20 KB -> 6 KB"
+        ],
+        [
+          "plaster_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "27 KB -> 3 KB"
+        ],
+        [
+          "stairwood_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "85 KB -> 36 KB"
+        ],
+        [
+          "stairwood_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "129 KB -> 24 KB"
+        ],
+        [
+          "parapet_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "37 KB -> 6 KB"
+        ],
+        [
+          "parapet_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "61 KB -> 11 KB"
+        ],
+        [
+          "sofa_gray_col",
+          "512x512 -> 512x512",
+          "webp q82",
+          "43 KB -> 11 KB"
+        ],
+        [
+          "oak_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "96 KB -> 38 KB"
+        ],
+        [
+          "oak_col",
+          "2048x2048 -> 2048x2048",
+          "webp q82",
+          "455 KB -> 70 KB"
+        ],
+        [
+          "whitetile_nrm",
+          "1024x1024 -> 1024x1024",
+          "webp q85 (normal)",
+          "32 KB -> 6 KB"
+        ],
+        [
+          "grass_nrm",
+          "1024x1024 -> 512x512",
+          "webp q85 (normal)",
+          "427 KB -> 165 KB"
+        ],
+        [
+          "grass_col",
+          "1024x1024 -> 1024x1024",
+          "webp q82",
+          "288 KB -> 140 KB"
+        ],
+        [
+          "terracotta_nrm",
+          "2048x2048 -> 1024x1024",
+          "webp q85 (normal)",
+          "135 KB -> 8 KB"
+        ],
+        [
+          "terracotta_col",
+          "2048x2048 -> 2048x2048",
+          "webp q82",
+          "215 KB -> 39 KB"
+        ]
+      ],
+      "config": {
+        "textures": {
+          "format": "webp",
+          "colorMax": 2048,
+          "normalMax": 1024,
+          "colorQuality": 82,
+          "normalQuality": 85,
+          "overrides": [
+            {
+              "pattern": {},
+              "max": 512
+            }
+          ]
+        },
+        "meshopt": {
+          "level": "high",
+          "quantizationVolume": "scene",
+          "quantizePosition": 16,
+          "quantizeNormal": 10,
+          "quantizeTexcoord": 12
+        }
+      }
+    },
+    "ar": {
+      "file": "villa-ar.glb",
+      "bytes": 8270000,
+      "textureBytes": 2910808,
+      "stats": {
+        "nodes": 92,
+        "meshes": 92,
+        "drawCalls": 102,
+        "triangles": 178704,
+        "vertices": 151164,
+        "materials": 82,
+        "uniqueMaterialNames": 82,
+        "cutMaterials": 21,
+        "textures": 39,
+        "extensionsUsed": [
+          "KHR_materials_clearcoat"
+        ]
+      },
+      "bounds": {
+        "min": [
+          -0.029999999329447746,
+          -0.6000000238418579,
+          -14.074999809265137
+        ],
+        "max": [
+          9.130000114440918,
+          2.5999999046325684,
+          0.02500000037252903
+        ],
+        "size": [
+          9.160000113770366,
+          3.1999999284744263,
+          14.099999809637666
+        ]
+      },
+      "reencodedTextures": [
+        [
+          "rugbed_nrm",
+          "1024x1024 -> 512x512",
+          "jpeg q90 (normal)",
+          "310 KB -> 189 KB"
+        ],
+        [
+          "rugbed_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "182 KB -> 92 KB"
+        ],
+        [
+          "rug_nrm",
+          "1024x1024 -> 512x512",
+          "jpeg q90 (normal)",
+          "310 KB -> 189 KB"
+        ],
+        [
+          "rug_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "175 KB -> 88 KB"
+        ],
+        [
+          "blacktile_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 32 KB)",
+          "32 KB"
+        ],
+        [
+          "blacktile_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "40 KB -> 14 KB"
+        ],
+        [
+          "olivetile_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 32 KB)",
+          "32 KB"
+        ],
+        [
+          "olivetile_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "53 KB -> 21 KB"
+        ],
+        [
+          "walnut_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 126 KB)",
+          "96 KB"
+        ],
+        [
+          "walnut_col",
+          "2048x2048 -> 2048x2048",
+          "jpeg q85",
+          "467 KB -> 216 KB"
+        ],
+        [
+          "fabric_nrm",
+          "512x512",
+          "kept image/jpeg (jpeg was 167 KB)",
+          "91 KB"
+        ],
+        [
+          "linen_white_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "49 KB -> 23 KB"
+        ],
+        [
+          "boucle_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "76 KB -> 40 KB"
+        ],
+        [
+          "pillow_teal_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "30 KB -> 8 KB"
+        ],
+        [
+          "botanical_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "86 KB -> 52 KB"
+        ],
+        [
+          "linen_gray_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "33 KB -> 9 KB"
+        ],
+        [
+          "lightwood_nrm",
+          "512x512",
+          "kept image/jpeg (jpeg was 15 KB)",
+          "13 KB"
+        ],
+        [
+          "lightwood_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "132 KB -> 56 KB"
+        ],
+        [
+          "chevron_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "74 KB -> 42 KB"
+        ],
+        [
+          "cushion_gray_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "37 KB -> 13 KB"
+        ],
+        [
+          "throw_beige_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "60 KB -> 32 KB"
+        ],
+        [
+          "art_blue_col",
+          "768x1024 -> 768x1024",
+          "jpeg q85",
+          "64 KB -> 37 KB"
+        ],
+        [
+          "whitetile_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "81 KB -> 40 KB"
+        ],
+        [
+          "terrazzo_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 107 KB)",
+          "65 KB"
+        ],
+        [
+          "terrazzo_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "337 KB -> 196 KB"
+        ],
+        [
+          "plaster_nrm",
+          "1024x1024 -> 1024x1024",
+          "jpeg q90 (normal)",
+          "20 KB -> 15 KB"
+        ],
+        [
+          "plaster_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "27 KB -> 6 KB"
+        ],
+        [
+          "stairwood_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 115 KB)",
+          "85 KB"
+        ],
+        [
+          "stairwood_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "129 KB -> 58 KB"
+        ],
+        [
+          "parapet_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 40 KB)",
+          "37 KB"
+        ],
+        [
+          "parapet_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "61 KB -> 27 KB"
+        ],
+        [
+          "sofa_gray_col",
+          "512x512 -> 512x512",
+          "jpeg q85",
+          "43 KB -> 19 KB"
+        ],
+        [
+          "oak_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 127 KB)",
+          "96 KB"
+        ],
+        [
+          "oak_col",
+          "2048x2048 -> 2048x2048",
+          "jpeg q85",
+          "455 KB -> 209 KB"
+        ],
+        [
+          "whitetile_nrm",
+          "1024x1024",
+          "kept image/jpeg (jpeg was 32 KB)",
+          "32 KB"
+        ],
+        [
+          "grass_nrm",
+          "1024x1024 -> 512x512",
+          "jpeg q90 (normal)",
+          "427 KB -> 257 KB"
+        ],
+        [
+          "grass_col",
+          "1024x1024 -> 1024x1024",
+          "jpeg q85",
+          "288 KB -> 167 KB"
+        ],
+        [
+          "terracotta_nrm",
+          "2048x2048 -> 1024x1024",
+          "jpeg q90 (normal)",
+          "135 KB -> 49 KB"
+        ],
+        [
+          "terracotta_col",
+          "2048x2048 -> 2048x2048",
+          "jpeg q85",
+          "215 KB -> 98 KB"
+        ]
+      ]
+    },
+    "arMaqueta": {
+      "file": "villa-ar-maqueta.glb",
+      "bytes": 6952076,
+      "textureBytes": 2258754,
+      "stats": {
+        "nodes": 65,
+        "meshes": 64,
+        "drawCalls": 73,
+        "triangles": 162458,
+        "vertices": 128952,
+        "materials": 61,
+        "uniqueMaterialNames": 61,
+        "cutMaterials": 0,
+        "textures": 39,
+        "extensionsUsed": [
+          "KHR_materials_clearcoat"
+        ]
+      },
+      "bounds": {
+        "min": [
+          -0.0014999999664723875,
+          -0.030000001192092896,
+          -0.7037499904632569
+        ],
+        "max": [
+          0.4565000057220459,
+          0.12999742031097414,
+          0.0012500000186264515
+        ],
+        "size": [
+          0.4580000056885183,
+          0.15999742150306703,
+          0.7049999904818833
+        ]
+      },
+      "removedCutPrimitives": 131
+    },
+    "usdz": {
+      "file": "villa_tamano_real.usdz",
+      "bytes": 10723010
+    }
+  }
+}

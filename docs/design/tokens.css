@@ -1,0 +1,198 @@
+/* ==========================================================================
+   tokens.css · Direction B "Plano" (recommended) · canonical design tokens
+   Spec: docs/design/DESIGN-RULEBOOK.md (Part B2 and Part C).
+   This is the ONLY stylesheet allowed to contain raw colour values
+   (enforced by docs/design/design-lint.js). Every other file uses var(--*).
+   Contrast ratios in comments were measured (WCAG 2.x formula) on 2026-09-28.
+   ========================================================================== */
+
+/* ---------- Fonts: self-hosted, instanced + subset (rulebook A3) ---------- */
+/* archivo-var.woff2    = Archivo, wdth 100-125, wght 400-650, ES/EN subset, ~46 KB (preload) */
+/* geist-mono-var.woff2 = Geist Mono, wght 400-500, ES/EN subset, ~12 KB */
+@font-face {
+  font-family: "Archivo";
+  src: url("/assets/fonts/archivo-var.woff2") format("woff2");
+  font-weight: 400 650;
+  font-stretch: 100% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/geist-mono-var.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Metric-matched fallbacks, computed with fontTools against Arial.
+   Text = Archivo wdth 100 wght 400. Display S = wdth 106 wght 560 (<1024px).
+   Display L = wdth 118 wght 560 (>=1024px). They keep font-swap CLS near zero. */
+@font-face {
+  font-family: "Archivo Text Fallback";
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 98.4%;
+  ascent-override: 89.2%;
+  descent-override: 21.3%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Archivo Display S Fallback";
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 107.6%;
+  ascent-override: 81.6%;
+  descent-override: 19.5%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Archivo Display L Fallback";
+  src: local("Arial"), local("ArialMT");
+  size-adjust: 121.6%;
+  ascent-override: 72.2%;
+  descent-override: 17.3%;
+  line-gap-override: 0%;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* ---------- Colour: light (default) ---------- */
+  --color-bg: #F4F5F6;           /* Papel. Page background. ink 16.5:1 */
+  --color-surface: #FCFCFD;      /* Lámina. Inputs, menus, raised panels. ink 17.5:1 */
+  --color-stage: #E4E7EA;        /* Mesa. 3D viewer + render backdrop. ink-3 4.6:1 */
+  --color-ink: #14171B;          /* Grafito. Headings and body */
+  --color-ink-2: #434A52;        /* Secondary text. 8.2:1 on bg */
+  --color-ink-3: #5F6771;        /* Captions, meta. 5.3:1 on bg, 4.6:1 on stage */
+  --color-line: #D6DAE0;         /* Decorative hairlines ONLY (not a UI boundary) */
+  --color-line-strong: #79818B;  /* Input borders, dimension lines. 3.6 bg / 3.9 surface / 3.2 stage */
+  --color-accent: #2D4596;       /* Añil. CTA fill, focus ring, selected state. 8.0:1 on bg */
+  --color-accent-hover: #233A80; /* on-accent 10.3:1 */
+  --color-on-accent: #FCFCFD;    /* Text on accent. 8.5:1 */
+  --color-accent-soft: #E2E7F4;  /* Selected chip / active room row. ink 14.5:1, accent 7.1:1 */
+  --color-danger: #B3261E;       /* 6.4:1 on surface */
+  --color-success: #1F7245;      /* 5.8:1 on surface */
+  --color-scrim: rgb(20 23 27 / 0.56);
+  --shadow-pop: 0 1px 2px rgb(20 23 27 / 0.06), 0 12px 32px -12px rgb(20 23 27 / 0.22);
+
+  /* ---------- Type ---------- */
+  --font-sans: "Archivo", "Archivo Text Fallback", system-ui, sans-serif;
+  --font-display: "Archivo", "Archivo Display S Fallback", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
+  --stretch-display: 106%;       /* 118% from 1024px (hero H1, display) */
+  --stretch-h2: 112%;
+  --stretch-wordmark: 112%;      /* temporary text wordmark until the logo exists (BRAND-02) */
+  --wght-body: 400;
+  --wght-ui: 560;
+  --wght-heading: 600;
+  --wght-display: 560;
+  --wght-mono: 450;
+
+  --fs-meta: 0.8125rem;                                   /* 13px mono labels, captions */
+  --fs-sm: 0.9375rem;                                     /* 15px */
+  --fs-base: 1.0625rem;                                   /* 17px body */
+  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);/* 18 -> 21 */
+  --fs-h4: 1.1875rem;                                     /* 19 */
+  --fs-h3: clamp(1.3125rem, 1.2rem + 0.5vw, 1.625rem);    /* 21 -> 26 */
+  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);      /* 28 -> 44 */
+  --fs-h1: clamp(2.125rem, 1.45rem + 2.9vw, 4rem);        /* 34 -> 64 */
+  --fs-display: clamp(2.5rem, 1.5rem + 4.3vw, 5.25rem);   /* 40 -> 84, statements of <=5 words */
+
+  --lh-display: 1.04;
+  --lh-h2: 1.1;
+  --lh-h3: 1.2;
+  --lh-body: 1.6;
+  --lh-lead: 1.5;
+  --lh-meta: 1.4;
+
+  --tracking-display: -0.022em;
+  --tracking-h2: -0.018em;
+  --tracking-h3: -0.01em;
+  --tracking-mono: 0.01em;
+
+  /* ---------- Space (4px base, 8pt rhythm) ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 160px;
+
+  --gutter: clamp(16px, 4vw, 48px);
+  --container: 1320px;
+  --measure: 66ch;
+  --section-y: clamp(64px, 6vw + 40px, 136px);
+  --header-h: 64px;
+  --tap-min: 44px;
+
+  /* ---------- Shape: all-sharp system ---------- */
+  --radius-0: 0;    /* images, stage, sections, title blocks */
+  --radius-1: 2px;  /* buttons, inputs, chips, toggles, menus */
+
+  /* ---------- Motion ---------- */
+  --dur-press: 120ms;
+  --dur-hover: 180ms;
+  --dur-state: 260ms;
+  --dur-reveal: 480ms;
+  --dur-sequence: 900ms;
+  --stagger: 60ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---------- Layers ---------- */
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+  --z-skip: 500;
+
+  /* ---------- Focus ---------- */
+  --focus-width: 2px;
+  --focus-offset: 2px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --font-display: "Archivo", "Archivo Display L Fallback", system-ui, sans-serif;
+    --stretch-display: 118%;
+  }
+}
+
+/* ---------- Colour: dark (system preference) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0F1215;           /* ink 15.7:1 */
+    --color-surface: #161A1E;
+    --color-stage: #1B2025;
+    --color-ink: #E8EBEE;
+    --color-ink-2: #AEB5BD;        /* 9.1:1 on bg */
+    --color-ink-3: #8A929B;        /* 6.0:1 on bg, 5.2:1 on stage */
+    --color-line: #283038;
+    --color-line-strong: #66707B;  /* 3.7 bg / 3.5 surface / 3.3 stage */
+    --color-accent: #A2B3EA;       /* 8.5:1 on surface */
+    --color-accent-hover: #B8C5F2;
+    --color-on-accent: #0F1215;    /* 9.1:1 on accent */
+    --color-accent-soft: #1C2640;  /* ink 12.5:1, accent 7.3:1 */
+    --color-danger: #F2877E;       /* 7.1:1 on surface */
+    --color-success: #7FCB9E;      /* 9.1:1 on surface */
+    --color-scrim: rgb(5 7 9 / 0.64);
+    --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
+  }
+}
+
+/* ---------- Reduced motion: every duration collapses ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-press: 0ms;
+    --dur-hover: 0ms;
+    --dur-state: 0ms;
+    --dur-reveal: 0ms;
+    --dur-sequence: 0ms;
+    --stagger: 0ms;
+  }
+}

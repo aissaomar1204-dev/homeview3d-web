@@ -1,0 +1,29 @@
+{
+  "name": "estudio-3d-web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Static site + 3D/AR delivery pipeline (GLB/USDZ) for the 3D studio website.",
+  "type": "module",
+  "scripts": {
+    "model:clean": "node scripts/3d/clean-gltf.mjs",
+    "model:optimize": "node scripts/3d/optimize-glb.mjs",
+    "model:verify": "node scripts/3d/verify-glb.mjs",
+    "model:validate": "node scripts/3d/validate.mjs",
+    "model:all": "npm run model:clean && npm run model:optimize && npm run model:verify && npm run model:validate && npm run model:poster",
+    "vendor:viewer": "node scripts/3d/vendor-model-viewer.mjs",
+    "serve": "node scripts/serve.mjs",
+    "model:poster": "node scripts/3d/poster.mjs",
+    "model:usdz": "python scripts/3d/usdz_variants.py all"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.5.1",
+    "@gltf-transform/extensions": "^4.5.1",
+    "@gltf-transform/functions": "^4.5.1",
+    "gltf-validator": "^2.0.0-dev.3.10",
+    "meshoptimizer": "^1.3.0",
+    "sharp": "^0.35.5"
+  }
+}
