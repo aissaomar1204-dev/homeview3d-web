@@ -1,0 +1,18 @@
+/* @module tables table--stack table--wide
+   ==========================================================================
+   31-tables · data tables on phones (D-12): rows stack as labelled blocks;
+   wide comparison tables keep the scroll with an edge fade. Owner: ENGINE.
+   ========================================================================== */
+@media (max-width: 639px) {
+  /* Each row becomes a small block: row header as its title, every cell labelled by its column (data-label). */
+  .table--stack :is(table, tbody, tr, caption) { display: block; }
+  .table--stack thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .table--stack tr { padding-block: var(--space-3); border-bottom: 1px solid var(--color-line); }
+  .table--stack :is(th, td) { display: block; padding: var(--space-1) 0; border: 0; }
+  .table--stack tbody th { padding-bottom: var(--space-2); font-size: var(--fs-base); }
+  .table--stack td::before { content: attr(data-label); display: block; color: var(--color-ink-3); font-size: var(--fs-meta); }
+  .table--stack td.num { text-align: left; white-space: normal; }
+  .table--wide .table__scroll { -webkit-mask: linear-gradient(90deg, var(--color-ink) calc(100% - var(--space-6)), transparent); mask: linear-gradient(90deg, var(--color-ink) calc(100% - var(--space-6)), transparent); }
+  .table--wide table { min-width: 34rem; }
+  .table--wide :is(th, td):last-child { padding-right: var(--space-6); }
+}

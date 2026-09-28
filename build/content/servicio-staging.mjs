@@ -104,6 +104,7 @@ export default {
         type: 'answer',
         h2: '¿Sirve para viviendas usadas o solo para obra nueva?',
         answer: 'Para las dos. En obra nueva, el staging sobre el modelo sustituye al piso piloto. En vivienda usada, que es la mayor parte del mercado, sirve para pisos vacíos, con muebles anticuados o con una reforma pendiente: enseñas su potencial sin mover un mueble. Como trabajamos desde el plano, ni siquiera hace falta fotografiarla.',
+        body: 'En Marbella y la Costa del Sol se venden muchas villas de reventa amuebladas al gusto del propietario. El [home staging virtual en Marbella](@zona-marbella) cuesta lo mismo que en cualquier otra zona, {{extra:staging}} + IVA por estancia, y se hace en remoto. También trabajamos en [Málaga](@zona-malaga) y en el resto de la [Costa del Sol](@zona-costa-del-sol).',
       },
       {
         type: 'stat',
@@ -116,7 +117,7 @@ export default {
         type: 'callout',
         tone: 'honesty',
         title: 'Recreación virtual, siempre etiquetada',
-        body: 'Entregamos cada imagen con staging con la mención «Recreación virtual. Mobiliario no incluido». Mantenla en el anuncio y en el dosier: el comprador sabe qué verá en la visita. El staging no oculta defectos ni cambia la distribución, porque la geometría sale del plano.',
+        body: 'Entregamos cada imagen con staging con su mención, como texto para el pie de foto: «Recreación virtual. Mobiliario no incluido». Mantenla en el anuncio y en el dosier: el comprador sabe qué verá en la visita. El staging no oculta defectos ni cambia la distribución, porque la geometría sale del plano.',
       },
       {
         type: 'process',
@@ -139,11 +140,11 @@ export default {
       },
       {
         q: '¿Hay home staging virtual gratuito?',
-        a: 'Hay apps de IA con pruebas gratuitas o planes baratos, y algunos portales, como idealista, tienen su propia herramienta de staging virtual. Sirven para decorar una foto concreta de una vivienda que existe. Si todavía no existe, o quieres el mismo estilo en todas las vistas, en el visor y en la realidad aumentada, {{brand}} lo hace sobre el modelo 3D.',
+        a: 'Hay apps de IA con pruebas gratuitas o planes baratos. Sirven para decorar una foto concreta de una vivienda que existe, y conviene revisar que no alteren ventanas ni proporciones. Si todavía no existe, o quieres el mismo estilo en todas las vistas, en el visor y en la realidad aumentada, {{brand}} lo hace sobre el modelo 3D.',
       },
       {
         q: '¿Hay que avisar de que las fotos están decoradas virtualmente?',
-        a: 'Sí, y te lo recomendamos siempre. {{brand}} entrega cada imagen con staging con la mención «Recreación virtual», para que la mantengas en el anuncio y en el dosier. El comprador sabe que los muebles no se incluyen y llega a la visita sin falsas expectativas. No es asesoramiento legal: ante cualquier duda, consulta con tu asesor.',
+        a: 'Sí, y te lo recomendamos siempre. {{brand}} entrega cada imagen con staging con la mención «Recreación virtual. Mobiliario no incluido», para que la mantengas en el anuncio y en el dosier. El comprador sabe que los muebles no se incluyen y llega a la visita sin falsas expectativas. No es asesoramiento legal: ante cualquier duda, consulta con tu asesor.',
       },
       {
         q: '¿Se puede hacer home staging de una vivienda que aún no está construida?',
@@ -194,7 +195,7 @@ export default {
       ['What changes', 'Furniture, soft furnishings, floors, walls and finishes'],
       ['Where it shows', 'Renders, web viewer and augmented reality'],
       ['Input', '2D floor plan; photos of finishes optional'],
-      ['New builds', 'Yes, with no finished home or show flat'],
+      ['New builds', 'Yes, with no finished home or show home'],
       ['Labelling', '“Virtually staged” on every image'],
       ['Turnaround', 'With the model, {{delivery:maqueta}}'],
     ],
@@ -267,6 +268,7 @@ export default {
         type: 'answer',
         h2: 'Does it work for resale homes or only new builds?',
         answer: 'Both. For off-plan units, staging on the model replaces the show home. For resale homes, which make up most of the market, it suits empty flats, dated interiors or homes awaiting refurbishment: you show their potential without moving a stick of furniture. Because we work from the plan, you do not even need photos.',
+        body: 'In Marbella and across the Costa del Sol, many resale villas are still dressed in the owner’s furniture. [Virtual staging in Marbella](@zona-marbella) costs the same as anywhere else, {{extra:staging}} + VAT per room, and is done remotely.',
       },
       {
         type: 'stat',
@@ -279,7 +281,7 @@ export default {
         type: 'callout',
         tone: 'honesty',
         title: 'Virtually staged, always labelled',
-        body: 'Every staged image is delivered marked “Virtually staged. Furniture not included”. Keep that label in the listing and the brochure, so buyers know what they will find at the viewing. Staging never hides defects or changes the layout, because the geometry comes from the plan.',
+        body: 'Every staged image is delivered with its label, as caption text: “Virtually staged. Furniture not included.” Keep that label in the listing and the brochure, so buyers know what they will find at the viewing. Staging never hides defects or changes the layout, because the geometry comes from the plan.',
       },
       {
         type: 'process',
@@ -301,27 +303,27 @@ export default {
         a: '{{brand}} charges {{extra:staging}} + VAT per restyled room, added to the complete 3D model from {{price:maqueta}} + VAT, which already includes 6 renders, a web viewer and augmented reality. Physical staging, by contrast, means hiring, transporting and installing furniture. With 3D staging there is nothing to move and no rental period to manage.',
       },
       {
-        q: 'How to do virtual staging for free?',
-        a: 'AI apps offer free trials or low-cost plans, and some portals, such as idealista, have their own staging tools. They are fine for dressing one photo of a home that already exists. If the home is not built yet, or you need the same style in every view, the viewer and AR, {{brand}} stages it on the 3D model instead.',
+        q: 'How can I do virtual staging for free?',
+        a: 'AI apps offer free trials or low-cost plans. They are fine for dressing one photo of a home that already exists, as long as you check they have not moved windows or changed proportions. If the home is not built yet, or you need the same style in every view, the viewer and AR, {{brand}} stages it on the 3D model instead.',
       },
       {
-        q: 'Does ChatGPT do virtual staging?',
-        a: 'General AI image tools can restyle a room photo, but each result is a new picture: proportions drift, windows move and the next image will not match. That is fine for inspiration, not for a listing buyers will compare with the real home. {{brand}} stages on a to-scale 3D model, so every render, the viewer and AR show the same furniture.',
+        q: 'Could I use ChatGPT for virtual staging instead?',
+        a: 'Not for a listing. General AI image tools can restyle a room photo, but each result is a new picture: proportions drift, windows move and the next image will not match. That is fine for inspiration, not for a listing buyers will compare with the real home. {{brand}} stages on a to-scale 3D model, so every render, the viewer and AR show the same furniture.',
       },
       {
         q: 'Should virtually staged images be labelled in property listings?',
-        a: 'Yes, and we recommend it every time. {{brand}} delivers every staged image marked “Virtually staged”, so you can keep the label in the listing and the brochure. Buyers know the furniture is not included and arrive at the viewing with the right expectations. This is best practice, not legal advice: check with your adviser if in doubt.',
+        a: 'Yes, and we recommend it every time. {{brand}} delivers every staged image marked “Virtually staged. Furniture not included”, so you can keep the label in the listing and the brochure. Buyers know the furniture is not included and arrive at the viewing with the right expectations. This is best practice, not legal advice: check with your adviser if in doubt.',
       },
       {
         q: 'Can you stage a home that has not been built yet?',
-        a: 'Yes, and that is where staging on a 3D model has no real alternative. {{brand}} models the home from the architect’s plans and furnishes it before it exists, with no show flat. In the development package, from {{price:promocion}} + VAT, unit types already arrive furnished; each alternative style costs {{extra:staging}} + VAT per room.',
+        a: 'Yes, and that is where staging on a 3D model has no real alternative. {{brand}} models the home from the architect’s plans and furnishes it before it exists, with no show home. In the development package, from {{price:promocion}} + VAT, unit types already arrive furnished; each alternative style costs {{extra:staging}} + VAT per room.',
       },
       {
         q: 'Can you show the same property in different furniture styles?',
         a: 'Yes. On the same model, {{brand}} can prepare, for example, a family version and a version aimed at rental investors, and show both in renders and in the viewer. Each restyled room counts as one room of staging, at {{extra:staging}} + VAT. Layout and measurements are identical in both versions.',
       },
       {
-        q: 'Is virtual staging legit, or does it hide problems?',
+        q: 'Is virtual staging legitimate, or does it hide problems?',
         a: 'Done properly, it is simply furniture. {{brand}} dresses the geometry that comes from the plan: walls, openings, doors and floor areas are never altered, and nothing is retouched to hide defects. If you want to show a refurbishment with a different layout, that is separate work: we model it as its own version and quote it first.',
       },
       {

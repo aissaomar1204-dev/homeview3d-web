@@ -56,7 +56,7 @@ export default {
       {
         type: 'table',
         h2: '¿Cuánto tarda cada fase?',
-        intro: 'Calendario de la maqueta 3D completa, contado desde que tenemos el plano y una medida de referencia. Dentro de ese margen, lo que más mueve el plazo es el número de estancias y de muebles.',
+        intro: 'Calendario de la maqueta 3D completa. Los días cuentan desde que tenemos el plano y una medida de referencia, e incluyen las rondas de cambios si nos las envías en 24 h. Dentro de ese margen, lo que más mueve el plazo es el número de estancias y de muebles.',
         caption: 'Fases de la maqueta 3D completa y quién interviene en cada una',
         head: ['Fase', 'Cuándo', 'Qué hacemos', 'Qué haces tú'],
         rows: [
@@ -66,7 +66,7 @@ export default {
           ['Revisión', 'Día 4', 'Te enviamos el visor en un enlace privado y aplicamos tus cambios', 'Revisas y pides cambios: {{revisions:maqueta}}'],
           ['Entrega', 'Día 5', 'Renders en 4K, visor publicado, código iframe y archivos de realidad aumentada', 'Publicas en tu web, portales y redes'],
         ],
-        note: 'Con urgencia, las mismas fases se comprimen en 48 horas, con un recargo del {{extra:urgente}} sobre el total. Las promociones con varias tipologías tardan {{delivery:promocion}}.',
+        note: 'Con urgencia, las mismas fases se comprimen en 48 horas, con un recargo del {{extra:urgente}} sobre el total. Las promociones de hasta 3 tipologías tardan {{delivery:promocion}}.',
       },
       {
         type: 'table',
@@ -81,7 +81,7 @@ export default {
           [`[glTF 2.0](${SRC.gltf}) en [GLB](@glosario#glb)`, 'Modelo para el visor web y para Android', 'Estándar abierto de Khronos, sin royalties, que Khronos define como el «JPEG del 3D»'],
           ['[USDZ](@glosario#usdz)', 'Realidad aumentada en iPhone y iPad', 'El formato que abre AR Quick Look sin instalar nada'],
           [`[model-viewer](${SRC.mv})`, 'Visor 3D en tu web y botón de realidad aumentada', 'Componente web de código abierto de Google (Apache 2.0); solo se carga cuando el comprador lo pide'],
-          ['Claude, de Anthropic', 'Dirección técnica y escritura de los scripts de Python', 'Acelera el código; no genera la geometría ni las imágenes'],
+          ['Claude, de Anthropic', 'Escritura y depuración de los scripts de Python', 'Acelera el código; no genera la geometría ni las imágenes'],
         ],
       },
       {
@@ -146,7 +146,7 @@ export default {
         a: 'Ninguno. El visor de {{brand}} funciona en cualquier navegador actual, en el móvil y en el ordenador, y la realidad aumentada se abre con lo que ya trae el teléfono: [AR Quick Look](@glosario#ar-quick-look) en iPhone y iPad, [Scene Viewer](@glosario#scene-viewer) en Android con ARCore. Si quieres editar el modelo, el archivo .blend se abre con Blender, que es gratuito.',
       },
       {
-        q: '¿El visor 3D ralentiza mi web?',
+        q: '¿El visor hace más lenta la web donde lo incrusto?',
         a: 'No, si lo incrustas como te lo entregamos. El visor de {{brand}} muestra primero una imagen fija y solo descarga el modelo, de {{file:glb}} en la villa de demostración, cuando el visitante pulsa para explorarlo. Así la página carga como si tuviera una foto y el modelo no gasta datos a quien no lo abre.',
       },
       {
@@ -207,7 +207,7 @@ export default {
       {
         type: 'table',
         h2: 'How long does each stage take?',
-        intro: 'Schedule for the complete 3D model, counted from when we have the plan and one reference measurement. Within that window, the number of rooms and pieces of furniture is what moves the timing most.',
+        intro: 'Schedule for the complete 3D model. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Within that window, the number of rooms and pieces of furniture is what moves the timing most.',
         caption: 'Stages of the complete 3D model and who does what',
         head: ['Stage', 'When', 'What we do', 'What you do'],
         rows: [
@@ -217,7 +217,7 @@ export default {
           ['Review', 'Day 4', 'We send the viewer on a private link and apply your changes', 'Review and request changes: {{revisions:maqueta}}'],
           ['Delivery', 'Day 5', '4K renders, live viewer, iframe code and augmented reality files', 'Publish on your site, portals and social media'],
         ],
-        note: 'On a rush job the same stages are compressed into 48 hours, with a {{extra:urgente}} surcharge on the total. Developments with several unit types take {{delivery:promocion}}.',
+        note: 'On a rush job the same stages are compressed into 48 hours, with a {{extra:urgente}} surcharge on the total. Developments of up to 3 unit types take {{delivery:promocion}}.',
       },
       {
         type: 'table',
@@ -232,7 +232,7 @@ export default {
           [`[glTF 2.0](${SRC.gltf}) as [GLB](@glosario#glb)`, 'The model for the web viewer and for Android', 'Royalty-free open standard from Khronos, which calls it the “JPEG of 3D”'],
           ['[USDZ](@glosario#usdz)', 'Augmented reality on iPhone and iPad', 'The format AR Quick Look opens with nothing to install'],
           [`[model-viewer](${SRC.mv})`, 'The 3D viewer on your site and its AR button', 'Google’s open-source web component (Apache 2.0); it loads only when the buyer asks for it'],
-          ['Claude, by Anthropic', 'Technical direction and writing the Python scripts', 'It speeds up the code; it does not generate the geometry or the images'],
+          ['Claude, by Anthropic', 'Writing and debugging the Python scripts', 'It speeds up the code; it does not generate the geometry or the images'],
         ],
       },
       {
@@ -297,7 +297,7 @@ export default {
         a: 'None. The {{brand}} viewer runs in any current browser, on phones and computers, and augmented reality opens with what the phone already has: [AR Quick Look](@glosario#ar-quick-look) on iPhone and iPad, [Scene Viewer](@glosario#scene-viewer) on ARCore Android phones. If you want to edit the model, the .blend file opens in Blender, which is free.',
       },
       {
-        q: 'Will the 3D viewer slow down my website?',
+        q: 'Does the embedded viewer make my website slower?',
         a: 'Not if you embed it as we deliver it. The {{brand}} viewer shows a still image first and only downloads the model, {{file:glb}} for the demo villa, when the visitor taps to explore it. The page loads as if it held a photo, and the model uses no mobile data for visitors who never open it.',
       },
       {

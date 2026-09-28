@@ -51,7 +51,7 @@ export default {
         type: 'answer',
         h2: '¿Por qué un modelo 3D y no imágenes sueltas?',
         answer: 'Porque un modelo se hace una vez y sirve para todo. Las imágenes sueltas, sean renders por encargo o fotos decoradas con IA, no se pueden recorrer ni abrir en realidad aumentada, y cada una puede contar una vivienda algo distinta. Con el modelo, renders, visor, realidad aumentada y staging enseñan exactamente la misma casa.',
-        body: 'Lo demostramos con la [villa en la Costa del Sol](@caso-villa): {{villa:rooms}} estancias amuebladas, {{villa:textures}} texturas creadas para el proyecto y {{villa:renders}} renders, todo a partir de {{villa:input}}. Si quieres ver cómo trabajamos paso a paso, está en [cómo funciona](@como-funciona).',
+        body: 'Lo demostramos con la [villa en la Costa del Sol](@caso-villa): {{villa:rooms}} estancias amuebladas, {{villa:textures}} texturas creadas para el proyecto y {{villa:renders}} imágenes en render, todo a partir de {{villa:input}}. Si quieres ver cómo trabajamos, está en [nuestro método, paso a paso](@como-funciona).',
       },
       {
         type: 'deliverables',
@@ -100,12 +100,12 @@ export default {
         a: 'Aún no: las panorámicas 360° para gafas de realidad virtual y para la web están en preparación y las anunciaremos en esta página. Hoy {{brand}} ofrece el visor 3D, que se recorre en cualquier navegador, y la realidad aumentada sin app en iPhone, iPad y Android, ambos incluidos en la maqueta 3D completa desde {{price:maqueta}} + IVA.',
       },
       {
-        q: '¿Trabajáis fuera de la Costa del Sol?',
+        q: '¿Hacéis encargos fuera de la Costa del Sol?',
         a: 'Sí. {{brand}} tiene su base en la Costa del Sol, pero trabaja en remoto para inmobiliarias, promotoras y arquitectos de toda España y para agencias internacionales que venden aquí. Solo necesitamos el plano, así que la ubicación de la vivienda no cambia el precio ni el plazo: {{delivery:maqueta}} para la maqueta completa. Más en [zonas](@zonas).',
       },
       {
         q: '¿Cuánto tardáis en entregar?',
-        a: '{{brand}} entrega el plano 3D en {{delivery:plano3d}}, la maqueta 3D completa en {{delivery:maqueta}} y una promoción de hasta 3 tipologías en {{delivery:promocion}}, contando desde que recibimos el plano. Hay entrega urgente en 48 horas con un recargo del {{extra:urgente}}. Y pagas cuando recibes el trabajo terminado.',
+        a: '{{brand}} entrega el plano 3D en {{delivery:plano3d}}, la maqueta 3D completa en {{delivery:maqueta}} y una promoción de hasta 3 tipologías en {{delivery:promocion}}. Los días cuentan desde que tenemos el plano y una medida de referencia, e incluyen las rondas de cambios si nos las envías en 24 h. Hay entrega urgente en 48 horas con un recargo del {{extra:urgente}}. Y pagas cuando recibes el trabajo terminado.',
       },
     ],
     related: ['precios', 'caso-villa', 'como-funciona', 'faq', 'guias'],
@@ -115,7 +115,7 @@ export default {
     title: 'Real estate 3D visualisation services in Spain',
     description: 'Floor plan to 3D, property renders, interactive 3D floor plans, app-free AR and virtual staging from one real 3D model. Prices from {{price:plano3d}}.',
     h1: '3D visualisation services for estate agents and developers',
-    lead: 'Everything starts from a real 3D model built from the 2D floor plan, with no photos: the 3D floor plan, renders, web viewer, augmented reality and virtual staging all come from it. For estate agents, developers and architects in Spain and abroad, with public prices from {{price:plano3d}} + VAT and a 3D floor plan ready in {{delivery:plano3d}}.',
+    lead: 'Everything starts from a 3D model built from the 2D floor plan, with no photos: the 3D floor plan, renders, web viewer, augmented reality and virtual staging all come from it. For estate agents, developers and architects, with public prices from {{price:plano3d}} + VAT and a 3D floor plan ready in {{delivery:plano3d}}.',
     breadcrumb: 'Services',
     card: {
       title: 'Services',
@@ -125,7 +125,7 @@ export default {
       ['Input', 'One 2D floor plan, no photos or site visit'],
       ['Services', '3D floor plan, renders, 3D viewer, AR and staging'],
       ['Price from', '{{price:plano3d}} + VAT; complete model {{price:maqueta}}'],
-      ['Turnaround', '3D floor plan {{delivery:plano3d}}; full model {{delivery:maqueta}}'],
+      ['Turnaround', '3D floor plan {{delivery:plano3d}}; complete model {{delivery:maqueta}}'],
       ['Formats', '4K PNG and JPG, GLB, USDZ, link and iframe'],
       ['Coverage', 'Costa del Sol, all of Spain and remote clients abroad'],
       ['Languages', 'English and Spanish'],
@@ -155,7 +155,7 @@ export default {
         type: 'answer',
         h2: 'Why a 3D model rather than one-off images?',
         answer: 'Because a model is built once and does everything. One-off images, whether commissioned renders or photos restyled with AI, cannot be walked through or opened in AR, and each may tell a slightly different story about the home. With a model, the renders, viewer, AR and staging all show exactly the same property.',
-        body: 'We proved it with the [Costa del Sol villa](@caso-villa): {{villa:rooms}} furnished rooms, {{villa:textures}} textures made for the project and {{villa:renders}} renders, all from {{villa:input}}. The step-by-step is in [how it works](@como-funciona).',
+        body: 'We proved it with the [Costa del Sol villa](@caso-villa): {{villa:rooms}} furnished rooms, {{villa:textures}} textures made for the project and {{villa:renders}} rendered images, all from {{villa:input}}. The step-by-step is in [how we work, stage by stage](@como-funciona).',
       },
       {
         type: 'deliverables',
@@ -203,7 +203,7 @@ export default {
       },
       {
         q: 'How long does delivery take?',
-        a: '{{brand}} delivers a 3D floor plan in {{delivery:plano3d}}, the complete 3D model in {{delivery:maqueta}} and a development of up to 3 unit types in {{delivery:promocion}}, counted from receipt of the plan. Rush delivery in 48 hours is available for a {{extra:urgente}} surcharge. You pay when you receive the finished work.',
+        a: '{{brand}} delivers a 3D floor plan in {{delivery:plano3d}}, the complete 3D model in {{delivery:maqueta}} and a development of up to 3 unit types in {{delivery:promocion}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery in 48 hours is available for a {{extra:urgente}} surcharge. You pay when you receive the finished work.',
       },
     ],
     related: ['precios', 'caso-villa', 'como-funciona', 'faq', 'guias'],

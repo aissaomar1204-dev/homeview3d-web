@@ -28,7 +28,7 @@ const faqEs = [
   },
   {
     q: '¿Podéis modelar una villa grande o de varias plantas?',
-    a: 'Sí. {{brand}} modela cada planta a partir de su plano y la tarifa depende de la superficie: {{price:maqueta}} + IVA en el tramo de hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m². Para villas mayores, o con sótano, planta baja y planta alta, te damos un precio cerrado antes de empezar. Nuestro caso demostrativo es la planta alta de una villa.',
+    a: 'Sí. {{brand}} modela cada planta a partir de su plano y la tarifa depende de la superficie total de la vivienda, sumando todas sus plantas: {{price:maqueta}} + IVA hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m². Para villas de más de 300 m² te damos un precio cerrado antes de empezar. Nuestro caso demostrativo es la planta alta de una villa.',
   },
   {
     q: '¿En qué idiomas trabajáis?',
@@ -59,7 +59,7 @@ const faqEn = [
   },
   {
     q: 'Can you model a large villa over several floors?',
-    a: 'Yes. {{brand}} models each floor from its plan, and the price depends on floor area: {{price:maqueta}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m². For larger villas, or ones with a basement, ground and first floor, we give you a fixed quote before we start. Our demo case is the upper floor of a villa.',
+    a: 'Yes. {{brand}} models each floor from its plan, and the price depends on the home’s total floor area, all floors added together: {{price:maqueta}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m². For villas over 300 m², we give you a fixed quote before we start. Our demo case is the upper floor of a villa.',
   },
   {
     q: 'Do you also cover Estepona, Benahavís and Sotogrande?',
@@ -67,7 +67,7 @@ const faqEn = [
   },
   {
     q: 'Can buyers who can’t travel view the home in augmented reality?',
-    a: 'That is what it is for. With a {{brand}} viewer link, buyers tour the home room by room from their sofa in London or Stockholm, then place it on their table in augmented reality on an iPhone, iPad or Android phone, with no app. It doesn’t replace a viewing before they sign, but it helps them decide whether the trip is worth making.',
+    a: 'That is what it is for. With our viewer link, buyers tour the home room by room from their sofa in London or Stockholm, then place it on their table in augmented reality on an iPhone, iPad or Android phone, with no app. It doesn’t replace a viewing before they sign, but it helps them decide whether the trip is worth making.',
   },
   {
     q: 'Can you show what a dated villa would look like renovated?',
@@ -75,7 +75,7 @@ const faqEn = [
   },
   {
     q: 'Is the viewer available in English?',
-    a: 'Yes. The {{brand}} viewer for our demo case runs in English and Spanish, with translated room names, and we work with agencies in both languages. For buyers who speak neither, the viewer still makes sense on its own: they spin the home, tap a room to step into it and open it in augmented reality, with very little text involved.',
+    a: 'Yes. Our viewer for the demo case runs in English and Spanish, with translated room names, and we work with agencies in both languages. For buyers who speak neither, the viewer still makes sense on its own: they spin the home, tap a room to step into it and open it in augmented reality, with very little text involved.',
   },
 ];
 
@@ -89,7 +89,7 @@ export default {
     title: 'Render 3D y maqueta virtual en Marbella',
     description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano para agencias y promotoras de Marbella, sin visitas y en días. Desde {{price:maqueta}} + IVA.',
     h1: 'Render 3D y modelos 3D desde plano en Marbella',
-    lead: 'Convertimos el plano de villas, áticos y viviendas de obra nueva de Marbella en un modelo 3D amueblado con renders, visor para el anuncio y realidad aumentada sin app, para compradores que a menudo deciden desde otro país. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}, sin visitar la vivienda.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, convierte el plano de villas, áticos y viviendas de reventa u obra nueva en un modelo 3D amueblado con renders, visor para el anuncio y realidad aumentada sin app, para compradores que a menudo deciden desde otro país. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
     breadcrumb: 'Marbella',
     card: {
       title: 'Marbella',
@@ -138,7 +138,7 @@ export default {
       {
         type: 'prose',
         h2: '¿Qué tipo de viviendas modelamos en Marbella?',
-        body: '- **Villas con terrazas y porches** en Nueva Andalucía, la Milla de Oro o Elviria. Modelamos cada planta por separado, con sus terrazas, y el comprador recorre el salón o el porche a tamaño real en realidad aumentada.\n- **Áticos y apartamentos en urbanizaciones**, junto a Puerto Banús o en primera línea. Aquí el valor está en la terraza: el modelo enseña sus metros y cómo se conecta con el salón. Las vistas al mar no se modelan; esas las enseñan tus fotos.\n- **Viviendas para reformar**. Sobre el mismo modelo enseñas una propuesta de acabados y mobiliario con [home staging virtual](@servicio-staging), etiquetada como recreación virtual.\n- **Villas y promociones sobre plano**. Aunque en Marbella pesan menos que en Estepona, cada tipología se puede enseñar en 3D antes de construirla. Lo explicamos en [soluciones para promotoras](@sol-promotoras).',
+        body: '- **Villas con terrazas y porches** en Nueva Andalucía, la Milla de Oro o Elviria. Modelamos cada planta por separado, con sus terrazas, y el comprador recorre el salón o el porche a tamaño real en realidad aumentada.\n- **Áticos y apartamentos en urbanizaciones**, junto a Puerto Banús o en primera línea. Aquí el valor está en la terraza: el modelo enseña sus metros y cómo se conecta con el salón. Las vistas al mar no se modelan; esas las enseñan tus fotos.\n- **Viviendas para reformar**. Sobre el mismo modelo enseñas una propuesta de acabados y mobiliario con [home staging virtual](@servicio-staging), etiquetada como recreación virtual.\n- **Villas y promociones sobre plano**. Aunque en Marbella pesan menos que en Estepona, cada tipología se puede enseñar en 3D antes de construirla. Lo explicamos en [soluciones para promotoras](@sol-promotoras) y en la guía [vender obra nueva antes de construirla](@guia-sobre-plano).',
       },
       {
         type: 'prose',
@@ -157,7 +157,7 @@ export default {
         head: ['Vivienda', 'Qué te recomendamos', 'Precio'],
         rows: [
           ['Apartamento o ático de hasta 150 m²', 'Maqueta 3D completa: modelo, renders, visor y realidad aumentada', '{{price:maqueta}}'],
-          ['Villa de 150 a 300 m²', 'Maqueta 3D completa, planta a planta', '{{price:maqueta:1}}'],
+          ['Villa de 150 a 300 m² en total', 'Maqueta 3D completa, con todas sus plantas', '{{price:maqueta:1}}'],
           ['Vivienda con decoración antigua o por reformar', 'Maqueta más home staging virtual en las estancias clave', '{{extra:staging}} por estancia'],
           ['Piso de reventa con buenas fotos', '[Plano 3D](@servicio-plano) para explicar la distribución', '{{price:plano3d}} por planta'],
           ['Varias captaciones en la zona', 'Pack cartera de 5 maquetas 3D completas', '{{volume}}'],
@@ -185,7 +185,7 @@ export default {
     title: '3D rendering in Marbella and on the Costa del Sol',
     description: '3D models, CGI, a listing viewer and app-free AR from the floor plan for agents and developers in Marbella and the Costa del Sol, from {{price:maqueta}} + VAT.',
     h1: '3D rendering, 3D models and AR in Marbella',
-    lead: 'We turn floor plans of villas, penthouses and off-plan homes in Marbella and along the Costa del Sol into furnished 3D models with photoreal renders, a viewer for your listing and app-free augmented reality, for buyers who often decide from abroad. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}, with no site visit.',
+    lead: '{{brand}}, a 3D visualisation studio based in Marbella, turns floor plans of villas, penthouses and resale or off-plan homes along the Costa del Sol into furnished 3D models with renders, a listing viewer and app-free AR, for buyers who often decide from abroad. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
     breadcrumb: 'Marbella',
     card: {
       title: 'Marbella and the Costa del Sol',
@@ -228,7 +228,7 @@ export default {
         note: 'Ministry figures come from notarial deeds, are counted by the municipality where the home is and add up the four quarters of 2025. The Registradores foreign share refers to purchases registered in the quarter.',
         sources: [
           { label: 'Spanish Ministry of Housing and Urban Agenda: property transactions by municipality and by buyer residence', url: MIVAU },
-          { label: 'Colegio de Registradores (Spain’s Land Registrars): Estadística Registral Inmobiliaria, Q2 2026', url: ERI },
+          { label: 'Colegio de Registradores (Spain’s association of land registrars): Estadística Registral Inmobiliaria, Q2 2026', url: ERI },
         ],
       },
       {
@@ -280,7 +280,7 @@ export default {
         head: ['Property', 'What we recommend', 'Price'],
         rows: [
           ['Apartment or penthouse up to 150 m²', 'Complete 3D model: model, renders, viewer and augmented reality', '{{price:maqueta}}'],
-          ['Villa of 150 to 300 m²', 'Complete 3D model, floor by floor', '{{price:maqueta:1}}'],
+          ['Villa of 150 to 300 m² in total', 'Complete 3D model, all floors included', '{{price:maqueta:1}}'],
           ['Dated home or renovation project', 'Model plus virtual staging in the key rooms', '{{extra:staging}} per room'],
           ['Resale flat with good photos', '[3D floor plan](@servicio-plano) to explain the layout', '{{price:plano3d}} per floor'],
           ['Several instructions in the area', 'Portfolio pack of 5 complete 3D models', '{{volume}}'],

@@ -30,6 +30,8 @@ const enc = encodeURIComponent;
 const esc = (s) => String(s ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const fill = (str, vars = {}) => String(str).replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
+/** JSON for a single-quoted attribute value: only & and ' need escaping (about a third lighter than &quot;). */
+const jsonAttr = (v) => `'${JSON.stringify(v).replace(/&/g, '&amp;').replace(/'/g, '&#39;')}'`;
 
 const strings = (ctx) => uiViewer[ctx.lang] || uiViewer.es;
 function tx(ctx, key, vars) {
@@ -160,9 +162,22 @@ export function qrSvg(text, label) {
   const key = `${text}\n${label}`;
   if (qrCache.has(key)) return qrCache.get(key);
   const { d, size } = qrPath(text);
-  const svg = `<svg class="vw-qr" viewBox="0 0 ${size} ${size}" width="168" height="168" role="img" aria-label="${esc(label)}" shape-rendering="crispEdges" focusable="false"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1"/></svg>`;
+  const svg = `<svg class="vw-qr" viewBox="0 0 ${size} ${size}" width="168" height="168" role="img" aria-label="${esc(label)}" shape-rendering="crispEdges"><path d="${d}" fill="none" stroke="currentColor" stroke-width="1"/></svg>`;
   qrCache.set(key, svg);
   return svg;
+}
+
+/**
+ * QR as a separate, cached SVG file referenced by <img> (keeps ~3 KB out of every page with AR choices).
+ * Dark modules on a light quiet zone in both themes, so every camera app decodes it; crispEdges keeps it sharp.
+ * Falls back to the inline SVG when the context cannot emit files.
+ */
+function qrImg(ctx, text, label) {
+  if (typeof ctx.emitAsset !== 'function') return qrSvg(text, label);
+  const { d, size } = qrPath(text);
+  const file = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges"><rect width="${size}" height="${size}" fill="rgb(252 252 253)"/><path d="${d}" fill="none" stroke="rgb(20 23 27)" stroke-width="1"/></svg>`;
+  const url = ctx.emitAsset(`/assets/img/qr-ar-villa-${ctx.lang}.svg`, file);
+  return `<img class="vw-qr" src="${esc(url)}" width="168" height="168" alt="${esc(label)}" loading="lazy" decoding="async">`;
 }
 
 /* ─── AR choices (shared by the toolbar dialog, the `ar` block and /ar/villa/) ─── */
@@ -211,7 +226,7 @@ export function renderArChoices(ctx, o = {}) {
     item(links.androidMesa, '', s.arMesa, meta(mesaNote, 'GLB', f.glbArMesa), ' target="_top"')
     + item(links.androidReal, '', s.arReal, meta(realNote, 'GLB', f.glbAr), ' target="_top"'));
   const desktop = `<div class="vw-ar__group vw-ar__group--desktop"><h${L} class="vw-ar__label">${esc(s.desktop)}</h${L}>`
-    + `<figure class="vw-ar__qr">${qrSvg(links.qr, s.qrLabel)}<figcaption><p>${inline(ctx, s.qrHow)}</p>`
+    + `<figure class="vw-ar__qr">${qrImg(ctx, links.qr, s.qrLabel)}<figcaption><p>${inline(ctx, s.qrHow)}</p>`
     + `<ul class="vw-ar__modes"><li><strong>${esc(s.arMesa)}.</strong> ${esc(mesaNote)}.</li><li><strong>${esc(s.arReal)}.</strong> ${esc(realNote)}.</li></ul>`
     + (o.qrLink === false ? '' : `<p><a href="${esc(ctx.href('ar-villa'))}">${esc(s.qrLink)}</a></p>`)
     + '</figcaption></figure>'
@@ -235,20 +250,24 @@ function viewerCore(ctx, o) {
   const rooms = roomRows(ctx);
   const terraces = rooms.filter((r) => r.ext).length;
   const L = o.railLevel || 3;
-  const links = arLinks(ctx);
 
   const alt = fill(s.alt, { rooms: villa.specs.rooms, bedrooms: villa.specs.bedrooms, terraces, cut });
   const posterName = ctx.images && ctx.images.villa_viewer_poster ? 'villa_viewer_poster' : 'villa_maqueta_iso';
+  // Portrait phones get the 4:5 capture from the same camera (D-01): no scale hack, no jump on swap.
+  const mobile = !o.embed && ctx.images && ctx.images.villa_viewer_poster_mobile
+    ? [{ media: '(max-width: 767px) and (orientation: portrait)', name: 'villa_viewer_poster_mobile', sizes: '100vw' }] : [];
   const poster = ctx.img(posterName, {
     alt: fill(s.posterAlt, { cut }),
-    sizes: o.embed ? '100vw' : '(min-width: 1024px) 72vw, 100vw',
+    sizes: o.embed ? '100vw' : o.stack ? '(min-width: 1320px) 700px, (min-width: 1024px) 56vw, 100vw' : '(min-width: 1320px) 910px, (min-width: 1024px) 70vw, 100vw',
     eager: !!o.eager,
     className: 'vw-poster',
+    sources: mobile,
   }).replace(/^\s*<(picture|img)\b/, '<$1 slot="poster"');
 
+  // The default note and the error title are already in the markup: viewer.js reads them from there.
   const i18n = {
-    preparing: s.preparing, loading: s.loading, pct: s.pct, loaded: s.loaded, error: s.error,
-    noWebgl: s.noWebgl, tour: s.tour, tourPause: s.tourPause, tourResume: s.tourResume, note: s.note,
+    preparing: s.preparing, loading: s.loading, pct: s.pct, loaded: s.loaded,
+    noWebgl: s.noWebgl, tour: s.tour, tourPause: s.tourPause, tourResume: s.tourResume,
   };
 
   const summary = fill(s.roomsSummary, {
@@ -256,47 +275,53 @@ function viewerCore(ctx, o) {
     interior: `${ctx.fmtNumber(villa.specs.interiorM2)}${NBSP}m²`,
     terraces: `${ctx.fmtNumber(villa.specs.terracesM2)}${NBSP}m²`,
   });
-  const roomItems = rooms.map((r) => `<li><button type="button" class="vw-room${r.ext ? ' is-ext' : ''}" data-room="${r.id}"`
-    + ` data-x="${r.x}" data-y="${r.y}" data-span="${r.span}" data-text="${esc(r.text)}" aria-pressed="false">`
-    + `<span class="vw-room__n">${r.n}</span><span class="vw-room__name">${esc(r.name)}</span>`
+  // Camera data and descriptions for all rooms in one attribute (viewer.js reads it by index); the buttons stay light.
+  const roomData = rooms.map((r) => [r.x, r.y, r.span, r.text]);
+  // Room numbers are a CSS counter (the same numbers as the hotspots), not markup.
+  const roomItems = rooms.map((r) => `<li><button type="button" class="vw-room${r.ext ? ' is-ext' : ''}" data-room="${r.id}">`
+    + `<span class="vw-room__name">${esc(r.name)}</span>`
     + `<span class="vw-room__m2">${r.areaLabel}</span></button></li>`).join('');
 
   const renders = ctx.route && ctx.route.id === 'caso-villa'
     ? `<p class="vw-error__alt">${esc(s.rendersBelow)}</p>`
     : `<p class="vw-error__alt"><a href="${esc(ctx.href('caso-villa'))}">${esc(s.renders)}</a></p>`;
 
-  const mv = `<model-viewer class="vw-mv" src="${esc(villa.files.glb.url)}" ios-src="${esc(links.iosMesa)}" alt="${esc(alt)}"`
+  // No `ar` attributes: AR opens from our own chooser (Quick Look / Scene Viewer links), so model-viewer never
+  // probes WebXR (that probe blocks the back/forward cache, P1-B).
+  const mv = `<model-viewer class="vw-mv" src="${esc(villa.files.glb.url)}" alt="${esc(alt)}"`
     + ' loading="lazy" reveal="manual" camera-controls touch-action="pan-y" interaction-prompt="none"'
     + ` camera-orbit="${v.cameraOrbit}" camera-target="${v.cameraTarget}" min-camera-orbit="${v.minCameraOrbit}" max-camera-orbit="${v.maxCameraOrbit}"`
     + ` field-of-view="${v.fieldOfView}" interpolation-decay="120" environment-image="neutral" tone-mapping="${v.toneMapping}"`
     + ` exposure="${v.exposure}" shadow-intensity="${v.shadowIntensity}" shadow-softness="${v.shadowSoftness}"`
-    + ' ar ar-modes="webxr quick-look" ar-placement="floor" ar-scale="auto"'
-    + ` a11y="${esc(JSON.stringify(s.a11y))}">`
+    + ` a11y=${jsonAttr(s.a11y)}>`
     + poster
     + '<div slot="progress-bar" class="vw-progress" aria-hidden="true"><span class="vw-progress__bar" data-vw-bar></span></div>'
-    + '<span slot="ar-button" class="vw-native-ar" hidden></span>'
     + '</model-viewer>';
 
   const tool = (attrs, label, pressed) => `<button type="button" class="btn btn--neutral vw-tool" ${attrs}${pressed == null ? '' : ` aria-pressed="${pressed}"`}>${label}</button>`;
   const iconBtn = (attrs, label, name, glyph) => `<button type="button" class="btn btn--neutral vw-tool vw-icon" ${attrs} aria-label="${esc(label)}">${icon(ctx, name) || glyph}</button>`;
 
-  return `<div class="vw${o.embed ? ' vw--embed' : ''}" id="${id}-app" data-vw data-state="poster"`
-    + ` data-mv="${esc(ctx.asset(v.modelViewer))}" data-meshopt="${esc(ctx.asset(v.meshoptDecoder))}"`
+  return `<div class="vw${o.embed ? ' vw--embed' : ''}${o.stack ? ' vw--stack' : ''}" id="${id}-app" data-vw data-state="poster"`
+    + ` data-mv="${esc(ctx.asset(v.modelViewer))}" data-meshopt="${esc(ctx.asset(v.meshoptDecoder))}" data-live="${esc(ctx.asset('/assets/css/viewerlive.css'))}"`
     + ` data-fallback="${esc(villa.files.glbAr.url)}" data-preload="${o.preload || 'visible'}"`
     + ` data-orbit="${v.cameraOrbit}" data-target="${v.cameraTarget}" data-top-orbit="${v.topOrbit}" data-top-target="${v.topTarget}"`
     + ` data-cut-suffix="${v.cutMaterialSuffix}" data-label-y="${v.labelHeight.cut} ${v.labelHeight.full}" data-exposure="${v.exposure}"`
     + ` data-footprint="${villa.specs.footprint.w} ${villa.specs.footprint.d}" data-fov="${parseFloat(v.fieldOfView)}"`
-    + ` data-contact="${esc(links.contact)}" data-i18n="${esc(JSON.stringify(i18n))}">`
+    + ` data-rooms=${jsonAttr(roomData)} data-i18n=${jsonAttr(i18n)}`
+    // Live dimension lines (S3): footprint w × d, wall and cut heights, with their labels in ctx.lang.
+    + ` data-dims=${jsonAttr([villa.specs.footprint.w, villa.specs.footprint.d, villa.specs.wallHeight, villa.specs.cutHeight,
+      metres(ctx, villa.specs.footprint.w, 2), metres(ctx, villa.specs.footprint.d, 2), wallLabel(ctx), cut])}>`
 
-    // Room rail: real HTML for crawlers and the gesture alternative (A11Y-05, GEO-01).
+    // Stage first in the DOM: "Ver la villa en 3D" is the first stop (P2-8). Model-viewer is an unknown element
+    // until viewer.js imports it; the poster paints as a plain <picture>. The start button is the only control on it.
+    + `<div class="vw-stage" data-vw-stage>${mv}`
+    + `<button type="button" class="btn btn--primary vw-start" data-vw-start aria-describedby="${id}-size">${esc(s.start)}</button></div>`
+
+    // Room rail: real HTML for crawlers and the gesture alternative (A11Y-05, GEO-01). Chips below the stage
+    // (COMP-08 mobile), a column beside it from 1280px (grid areas in 50-viewer.css).
     + `<div class="vw-rail"><div class="vw-rail__head"><h${L} class="vw-rail__title" id="${id}-rooms">${esc(s.roomsTitle)}</h${L}>`
     + `<p class="vw-rail__sum">${esc(summary)}</p></div>`
     + `<ol class="vw-rooms" aria-labelledby="${id}-rooms">${roomItems}</ol></div>`
-
-    // Stage: model-viewer is an unknown element until viewer.js imports it; the poster paints as a plain <picture>.
-    // The start button is the only control on the poster (a facade control; gone once the model is live).
-    + `<div class="vw-stage" data-vw-stage>${mv}`
-    + `<button type="button" class="btn btn--primary vw-start" data-vw-start aria-describedby="${id}-size">${esc(s.start)}</button></div>`
 
     // Toolbar below the stage, never over the model (COMP-08).
     + '<div class="vw-bar">'
@@ -309,6 +334,7 @@ function viewerCore(ctx, o) {
     + tool('data-vw-view="home"', esc(s.overview), true)
     + tool('data-vw-view="top"', esc(s.plan), false)
     + tool('data-vw-tour', esc(s.tour))
+    + tool('data-vw-dims', esc(s.dims), false)
     + '</div>'
     + `<div class="vw-group vw-seg" role="group" aria-label="${esc(s.walls)}">`
     + tool('data-vw-cut="1"', esc(fill(s.cut, { h: cut })), true)
@@ -320,15 +346,15 @@ function viewerCore(ctx, o) {
     + iconBtn('data-vw-zoom="1.25"', s.zoomOut, 'minus', '\u2212')
     + iconBtn('data-vw-zoom="0.8"', s.zoomIn, 'plus', '+')
     + '</div></div>'
-    + `<a class="btn btn--neutral vw-tool vw-ar-open" href="${esc(ctx.href('ar-villa'))}" data-vw-ar aria-haspopup="dialog">${esc(s.arOpen)}</a>`
+    + `<a class="btn btn--neutral vw-tool vw-ar-open" href="${esc(ctx.href('ar-villa'))}" data-vw-ar aria-haspopup="dialog">${icon(ctx, 'cube')}${esc(s.arOpen)}</a>`
     + '</div>'
 
     + `<div class="vw-info"><p class="vw-note" data-vw-note aria-live="polite">${esc(s.note)}</p>`
     + `<p class="vw-hint">${esc(s.hint)} <span class="vw-keys">${esc(s.keys)}</span></p></div>`
 
     // AR chooser: a native <dialog> shell. viewer.js fills it on first open with the choices of /ar/villa/
-    // (same build-time QR and links, ~7 KB kept out of every page with a viewer); without JS, or if that
-    // fetch fails, the link above simply opens /ar/villa/.
+    // (same build-time QR and links, plus that page's AR stylesheet); without JS, or if that fetch fails,
+    // the link above simply opens /ar/villa/.
     + `<dialog class="vw-dialog" id="${id}-ar" aria-labelledby="${id}-ar-title"><div class="vw-dialog__body">`
     + `<div class="vw-dialog__head"><h2 class="vw-dialog__title" id="${id}-ar-title">${esc(s.arTitle)}</h2>`
     + `${iconBtn('data-vw-close', s.close, 'close', '\u00D7')}</div>`
@@ -358,11 +384,13 @@ export function renderViewerBand(ctx, block = {}) {
 export function renderViewerApp(ctx, opts = {}) {
   const s = strings(ctx);
   const sectionId = uid(ctx, opts.id || 'visor');
-  return section('viewer', { id: sectionId, label: s.appLabel, band: true, cls: `vw-app${opts.embed ? ' vw-app--embed' : ''}` },
-    viewerCore(ctx, {
-      id: sectionId, embed: !!opts.embed, eager: opts.eager !== false,
-      railLevel: opts.railLevel || 2, preload: opts.embed ? 'intent' : 'visible',
-    }));
+  const core = viewerCore(ctx, {
+    id: sectionId, embed: !!opts.embed, eager: opts.eager !== false, stack: !!(opts.bare || opts.embed),
+    railLevel: opts.railLevel || 2, preload: opts.embed ? 'intent' : 'visible',
+  });
+  // bare: the app alone, for the case hero (the template owns the section and its id).
+  if (opts.bare) return core;
+  return section('viewer', { id: sectionId, label: s.appLabel, band: true, cls: `vw-app${opts.embed ? ' vw-app--embed' : ''}` }, core);
 }
 
 /** `ar` block: iPhone/iPad Quick Look links, Android Scene Viewer intents, desktop QR. */
@@ -399,10 +427,11 @@ export function renderFormats(ctx, block = {}) {
   const hd = blockHead(ctx, block.h2 || ui(ctx, 'h2.formats', t.caption), block);
   const cap = uid(ctx, 'tabla');
   const head = t.head.map((c) => `<th scope="col">${esc(c)}</th>`).join('');
-  const rows = t.rows.map((row) => `<tr><th scope="row">${inline(ctx, row[0])}</th><td>${inline(ctx, row[1])}</td>`
-    + `<td>${inline(ctx, row[2])}</td><td class="num">${esc(row[3])}</td></tr>`).join('');
+  const lb = (i) => ` data-label="${esc(t.head[i])}"`;
+  const rows = t.rows.map((row) => `<tr><th scope="row">${inline(ctx, row[0])}</th><td${lb(1)}>${inline(ctx, row[1])}</td>`
+    + `<td${lb(2)}>${inline(ctx, row[2])}</td><td class="num"${lb(3)}>${esc(row[3] || '')}</td></tr>`).join('');
   return section('formats', { labelledby: hd.id }, hd.html
-    + `<div class="table"><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${cap}">`
+    + `<div class="table table--stack"><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${cap}">`
     + `<table><caption id="${cap}">${esc(t.caption)}</caption><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div></div>`);
 }
 
@@ -425,7 +454,7 @@ export function renderEmbedCode(ctx, block = {}) {
     + ' width="1200" height="560" loading="lazy" allow="xr-spatial-tracking; fullscreen"></iframe>'
     + `<figcaption>${esc(s.embedPreview)}</figcaption></figure>`
     + `<div class="vw-code"><p class="vw-code__label" id="${codeId}-label">${esc(s.embedCode)}</p>`
-    + `<pre aria-labelledby="${codeId}-label"><code id="${codeId}" translate="no">${esc(embedSnippet(ctx))}</code></pre>`
+    + `<pre role="region" tabindex="0" aria-labelledby="${codeId}-label"><code id="${codeId}" translate="no">${esc(embedSnippet(ctx))}</code></pre>`
     + `<p class="vw-code__actions"><button type="button" class="btn btn--neutral vw-tool" data-vw-copy="${codeId}" data-ok="${esc(s.copied)}" data-fail="${esc(s.copyFail)}">${icon(ctx, 'copy')}${esc(s.copy)}</button>`
     + ' <span role="status" aria-live="polite" data-vw-copied></span></p></div>'
     + '</div>');

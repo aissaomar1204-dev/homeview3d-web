@@ -68,7 +68,7 @@ h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--t
 .eyebrow, .mono, .cajetin__head, .cajetin dt, .cota, .table caption, .step__time, .compare__hint, .compare__labels,
 .despiece__legend, .bento__formats, .bento__soon span, .pack__flag, .pack__meta dt, .calc__total-label, .form__progress,
 .alt__k, .specs dt, .toc__title, .az__title, .az__letters, .byline, .dateline, .footer-col__title, .site-footer__contact dt,
-.lang-link, .notfound__code, .toc__list a::before {
+.lang-link, .notfound__code, .toc__list a::before, .lamina-label dt, .lamina__lbl {
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   font-weight: var(--wght-mono);
@@ -78,8 +78,8 @@ h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--t
 }
 .eyebrow, .cajetin__head, .cajetin dt, .table caption, .step__time, .compare__hint, .despiece__legend, .bento__formats,
 .bento__soon span, .pack__meta dt, .calc__total-label, .form__progress, .alt__k, .specs dt, .toc__title, .az__title,
-.byline, .dateline, .footer-col__title, .site-footer__contact dt, .notfound__code, figcaption, .field__hint,
-.hero__caption, .index__arrow, .form__privacy, .calc__note, .pricing__vat, .table__note, .sources__note { color: var(--color-ink-3); }
+.byline, .dateline, .footer-col__title, .site-footer__contact dt, .notfound__code, figcaption, .field__hint, .lamina-label dt,
+.hero__caption, .index__arrow, .form__privacy, .calc__note, .pricing__vat, .table__note, .sources__note, .table__caption { color: var(--color-ink-3); }
 .eyebrow { margin-bottom: var(--space-3); }
 figcaption, .field__hint, .hero__caption, .form__privacy, .calc__note, .pricing__vat, .table__note { font-size: var(--fs-sm); line-height: var(--lh-meta); }
 

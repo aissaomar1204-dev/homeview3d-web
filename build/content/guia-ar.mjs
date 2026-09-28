@@ -359,7 +359,7 @@ export default {
       },
       {
         q: 'Can I view a property in AR on a laptop?',
-        a: 'No: desktop browsers don’t open Apple’s or Google’s augmented reality viewers. On a computer, the property page shows a QR code instead; scan it with your phone’s camera and AR opens on the phone. Meanwhile, on the big screen you can explore the home in the {{brand}} 3D viewer, room by room.',
+        a: 'No: desktop browsers don’t open Apple’s or Google’s augmented reality viewers. On a computer, the property page shows a QR code instead; scan it with your phone’s camera and AR opens on the phone. Meanwhile, on the big screen you can explore the home in our 3D viewer, room by room.',
       },
       {
         q: 'How much space do I need to see the home at real size?',

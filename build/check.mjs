@@ -29,7 +29,7 @@ import { routes, routeById, redirects as routeRedirects } from './data/routes.mj
 import { pricing, formatPrice } from './data/pricing.mjs';
 import { villa } from './data/villa.mjs';
 import {
-  routeIndexable, embedPrefixes, ALLOWED_AGENTS, BLOCKED_AGENTS, CRITICAL_AGENTS, inlineScriptHashes, LLMS_FULL,
+  routeIndexable, embedPrefixes, ALLOWED_AGENTS, BLOCKED_AGENTS, CRITICAL_AGENTS, inlineScriptHashes, LLMS_FULL, LLMS_INDEX, EMBED_ROBOTS, CONTENT_SIGNAL,
 } from './lib/machine.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -325,6 +325,22 @@ function walkJson(v, fn, pathStr = '') {
   else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walkJson(x, fn, pathStr ? `${pathStr}.${k}` : k);
 }
 const isRefOnly = (o) => o && typeof o === 'object' && !Array.isArray(o) && Object.keys(o).length === 1 && '@id' in o;
+const hasClass = (html, cls) => [...html.matchAll(/class=["']([^"']+)["']/g)].some((m) => m[1].split(/\s+/).includes(cls));
+/** «Desde 149 €» / «desde 1.490 €» / "From €149" in a meta description → 149 (null when there is none). */
+const fromPriceIn = (desc) => {
+  const m = decode(desc || '').replace(/[\u00a0\u202f]/g, ' ').match(/\b(?:desde|from)\s+(?:€\s?([\d.,]+)|([\d.,]+)\s?€)/i);
+  return m ? Number((m[1] || m[2]).replace(/[.,](?=\d{3}\b)/g, '').replace(',', '.')) : null;
+};
+/** Absolute own-domain URL whose page exists in dist and, with a #fragment, has that id. */
+const pageAnchorExists = (u) => {
+  const c = classify(String(u), '/');
+  if (c.kind !== 'internal') return true;
+  const f = distFile(c.path);
+  if (!f) return false;
+  if (!c.hash) return true;
+  const pg = pages.get(c.path.endsWith('/') ? c.path : `${c.path}/`);
+  return !pg || pg.ids.has(c.hash);
+};
 const visiblePriceIn = (p, price) => {
   const lang = p.lang || 'es';
   const f = formatPrice(Number(price), lang).replace(/[\u00a0\u202f]/g, ' ');
@@ -401,6 +417,14 @@ for (const p of pages.values()) {
     }
     if (t.includes('Article')) {
       need(p, n, ['headline', 'image', 'datePublished', 'dateModified', 'author', 'publisher']);
+      // wordCount: > 0 or absent (G-01). It is counted from the content (Markdown mirror): flag a count far from <main>.
+      if ('wordCount' in n) {
+        if (!(Number(n.wordCount) > 0)) err('schema', p.where, `Article wordCount ${n.wordCount} (must be > 0 or absent)`);
+        else {
+          const mainWords = words(textOf((p.html.match(/<main\b[\s\S]*?<\/main>/i) || [''])[0]));
+          if (mainWords && (n.wordCount < mainWords * 0.5 || n.wordCount > mainWords * 1.5)) warn('schema', p.where, `Article wordCount ${n.wordCount} far from the ${mainWords} words in <main>`);
+        }
+      }
       const h1 = textOf((p.html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '');
       if (n.headline && norm(n.headline) !== norm(h1)) err('schema', p.where, `Article headline «${n.headline}» ≠ h1 «${h1}»`);
       if (n.headline && n.headline.length > 110) err('schema', p.where, 'Article headline > 110 chars');
@@ -409,6 +433,13 @@ for (const p of pages.values()) {
     if (t.includes('Service')) {
       if (n['@id']) need(p, n, ['provider', 'areaServed', 'name']);
       if (n['@id'] && !n.offers) warn('schema', p.where, `Service ${n['@id']} without offers (the page does not show a price token)`);
+      // G-02: the lowest Offer price is the «desde / from» figure the meta description quotes.
+      const offerPrices = [].concat(n.offers || []).map((o) => Number(o.price)).filter((x) => Number.isFinite(x));
+      const from = fromPriceIn(p.description);
+      // Not an Offer at all = the graph contradicts the page (error, GEO); an Offer but not the lowest = the
+      // description understates what the lead prices (content: quote the lowest price or drop the cheaper pack from the lead).
+      if (n['@id'] && offerPrices.length && from != null && !offerPrices.includes(from)) err('schema', p.where, `the meta description's «desde/from» price ${from} is not an Offer of the Service (offers: ${offerPrices.join(', ')})`);
+      else if (n['@id'] && offerPrices.length && from != null && Math.min(...offerPrices) !== from) warn('schema', p.where, `meta description says «desde/from» ${from} but the lead also prices ${Math.min(...offerPrices)} (Service offers: ${offerPrices.join(', ')}): quote the lowest price in the description`, 'content');
     }
     if (t.includes('Offer')) {
       if (n.price == null && !n.priceSpecification) err('schema', p.where, `Offer ${n.name || ''} without price/priceSpecification`);
@@ -433,6 +464,20 @@ for (const p of pages.values()) {
       const u = n.contentUrl || n.url;
       if (!u && !isRefOnly(n)) err('schema', p.where, 'ImageObject without contentUrl/url');
       else if (u && !urlExists(u)) err('schema', p.where, `ImageObject ${u} does not exist in dist`);
+      for (const k of ['license', 'acquireLicensePage']) if (n[k] && !pageAnchorExists(n[k])) err('schema', p.where, `ImageObject ${k} ${n[k]} does not resolve to a page (and anchor) in dist`);
+    }
+    if (t.includes('VideoObject')) {
+      need(p, n, ['name', 'description', 'thumbnailUrl', 'uploadDate']);
+      for (const k of ['thumbnailUrl', 'contentUrl']) for (const u of [].concat(n[k] || [])) if (!urlExists(u)) err('schema', p.where, `VideoObject ${k} ${u} does not exist in dist`);
+      if (!n.contentUrl && !n.embedUrl) err('schema', p.where, 'VideoObject needs contentUrl or embedUrl');
+      if (n.duration && !/^PT(\d+H)?(\d+M)?(\d+(\.\d+)?S)?$/.test(n.duration)) err('schema', p.where, `VideoObject duration ${n.duration} is not ISO 8601 (PT8S)`);
+      if (!/<video\b/i.test(p.html)) warn('schema', p.where, 'VideoObject but no <video> element in the served HTML (Google needs the video on the page: render <video preload="none" poster> server-side, play on click)', 'engine');
+    }
+    if (t.includes('SpeakableSpecification')) {
+      for (const sel of [].concat(n.cssSelector || [])) {
+        const cls = (String(sel).match(/^\.([\w-]+)$/) || [])[1];
+        if (cls && !hasClass(p.html, cls)) err('schema', p.where, `speakable selector ${sel} matches nothing on the page`);
+      }
     }
     if (t.includes('HowTo')) { need(p, n, ['name']); if (!(n.step || []).length) err('schema', p.where, 'HowTo without steps'); }
     if (t.includes('DefinedTermSet') && !(n.hasDefinedTerm || []).length) err('schema', p.where, 'DefinedTermSet without terms');
@@ -598,7 +643,8 @@ else {
   const star = groups.find((g) => g.agents.includes('*'));
   if (!star) err('discovery', 'robots.txt', 'no "User-agent: *" group');
   if (!sitemaps.includes(`${DOMAIN}/sitemap.xml`)) err('discovery', 'robots.txt', `no "Sitemap: ${DOMAIN}/sitemap.xml" line`);
-  if (!/Content-Signal/i.test(robots)) warn('discovery', 'robots.txt', 'no Content-Signal line');
+  // Content-Signal must be a record of the groups (a "# Content-Signal" comment signals nothing).
+  if (!star?.rules.some((r) => r === `content-signal:${CONTENT_SIGNAL}`)) warn('discovery', 'robots.txt', `no "Content-Signal: ${CONTENT_SIGNAL}" record in the * group`);
   const rulesKey = (g) => JSON.stringify([...g.rules].sort());
   for (const a of ALLOWED_AGENTS) {
     const g = groupOf(a);
@@ -613,7 +659,9 @@ else {
     const g = groupOf(a); if (!g) continue;
     for (const p of indexablePages) for (const d of disallows(g)) if (p.urlPath.startsWith(d)) err('discovery', 'robots.txt', `${a} cannot crawl indexable page ${p.urlPath} (Disallow: ${d})`);
   }
-  for (const d of ['/models/', ...embedPrefixes()]) if (star && !disallows(star).includes(d)) err('discovery', 'robots.txt', `missing "Disallow: ${d}" for all bots`);
+  if (star && !disallows(star).includes('/models/')) err('discovery', 'robots.txt', 'missing "Disallow: /models/" for all bots');
+  // The iframe viewer must stay crawlable: Google renders it inside partner pages (noindex, indexifembedded).
+  for (const d of embedPrefixes()) if (star && disallows(star).some((x) => d.startsWith(x) && x !== '/')) err('discovery', 'robots.txt', `"Disallow: ${d}" hides the embedded viewer from Google in partner pages (use X-Robots-Tag: ${EMBED_ROBOTS})`);
 }
 // sitemaps
 const smIndex = readDist('sitemap.xml');
@@ -651,27 +699,53 @@ else {
   for (const m of smImages.matchAll(/<image:loc>([^<]+)<\/image:loc>/g)) { const u = decode(m[1]); const c = classify(u, '/'); if (c.kind === 'internal' && !distFile(c.path)) err('discovery', 'sitemap-images.xml', `image missing: ${u}`); }
   for (const m of smImages.matchAll(/<loc>([^<]+)<\/loc>/g)) { const u = decode(m[1]); const c = classify(u, '/'); if (c.kind !== 'internal' || !pages.get(c.path)?.indexable) err('discovery', 'sitemap-images.xml', `page URL not indexable/built: ${u}`); }
 }
-// llms.txt / llms-full.txt
+// sitemap-video.xml (only when a page renders a `video` block): listed in the index, files exist, pages indexable.
+const smVideo = readDist('sitemap-video.xml');
+const pagesWithVideo = indexablePages.filter((p) => /<video\b/i.test(p.html) && p.graph.some((n) => typesOf(n).includes('VideoObject')));
+if (smVideo) {
+  if (smIndex && !locsOf(smIndex).includes(`${DOMAIN}/sitemap-video.xml`)) err('discovery', 'sitemap.xml', 'sitemap-video.xml exists but is not in the index');
+  for (const b of [...smVideo.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1])) {
+    const loc = decode((b.match(/<loc>([^<]+)<\/loc>/) || [])[1] || '');
+    const c = classify(loc, '/');
+    if (c.kind !== 'internal' || !pages.get(c.path)?.indexable) err('discovery', 'sitemap-video.xml', `page URL not indexable/built: ${loc}`);
+    for (const m of b.matchAll(/<video:(thumbnail_loc|content_loc)>([^<]+)<\/video:\1>/g)) { const u = decode(m[2]); const cc = classify(u, '/'); if (cc.kind === 'internal' && !distFile(cc.path)) err('discovery', 'sitemap-video.xml', `${m[1]} missing: ${u}`); }
+    for (const k of ['thumbnail_loc', 'title', 'description']) if (!new RegExp(`<video:${k}>[^<]+</video:${k}>`).test(b)) err('discovery', 'sitemap-video.xml', `video for ${loc} without video:${k}`);
+  }
+} else if (pagesWithVideo.length) warn('discovery', 'sitemap-video.xml', `missing (${pagesWithVideo.length} page(s) with a VideoObject)`);
+// llms.txt: one index per language (LLMS_INDEX policy in build/lib/machine.mjs), each ≤ 10 KB target;
+// the root one links every llms-full file and the other languages' indexes.
 const mdLinks = (s) => [...String(s).matchAll(/\]\((https?:\/\/[^)\s]+)\)/g)].map((m) => m[1]);
 const llms = readDist('llms.txt');
 if (!llms) err('discovery', 'llms.txt', 'missing');
-else {
-  const hasPreview = /^<!--[\s\S]*?-->/.test(llms.trimStart());
-  const body = llms.trimStart().replace(/^<!--[\s\S]*?-->\s*/, '');
-  if (!body.startsWith('# ')) err('discovery', 'llms.txt', 'must start with "# <name>" (after the optional preview comment)');
-  if (!/^> /m.test(body)) err('discovery', 'llms.txt', 'no "> " summary blockquote');
-  if (PLACEHOLDERS && !hasPreview) err('discovery', 'llms.txt', 'placeholders are active but llms.txt has no preview comment');
-  if (!PLACEHOLDERS && hasPreview) err('discovery', 'llms.txt', 'preview comment left in a launch build');
-  if (/\{\{|\}\}|\bundefined\b|\bNaN\b/.test(llms)) err('discovery', 'llms.txt', 'unresolved token / undefined');
-  if (Buffer.byteLength(llms) > 10 * 1024) warn('discovery', 'llms.txt', `${kb(Buffer.byteLength(llms))} (> 10 KB target)`);
-  for (const u of mdLinks(llms)) {
+for (const lang of site.langs) {
+  const fp = LLMS_INDEX.path(lang).slice(1);
+  const idx = lang === site.defaultLang ? llms : readDist(fp);
+  if (!idx) {
+    if (lang !== site.defaultLang && indexablePages.some((p) => p.lang === lang)) err('discovery', fp, `missing (${lang} pages exist)`);
+    continue;
+  }
+  const hasPreview = /^<!--[\s\S]*?-->/.test(idx.trimStart());
+  const body = idx.trimStart().replace(/^<!--[\s\S]*?-->\s*/, '');
+  if (!body.startsWith('# ')) err('discovery', fp, 'must start with "# <name>" (after the optional preview comment)');
+  if (!/^> /m.test(body)) err('discovery', fp, 'no "> " summary blockquote');
+  if (PLACEHOLDERS && !hasPreview) err('discovery', fp, `placeholders are active but ${fp} has no preview comment`);
+  if (!PLACEHOLDERS && hasPreview) err('discovery', fp, 'preview comment left in a launch build');
+  if (/\{\{|\}\}|\bundefined\b|\bNaN\b/.test(idx)) err('discovery', fp, 'unresolved token / undefined');
+  if (Buffer.byteLength(idx) > LLMS_INDEX.targetBytes) warn('discovery', fp, `${kb(Buffer.byteLength(idx))} (> ${kb(LLMS_INDEX.targetBytes)} target)`);
+  for (const u of mdLinks(idx)) {
     const c = classify(u, '/');
     if (c.kind !== 'internal') continue;
     const pg = pages.get(c.path);
-    if (!pg && !distFile(c.path)) err('discovery', 'llms.txt', `link does not resolve: ${u}`);
-    else if (pg && !pg.indexable) err('discovery', 'llms.txt', `links to a non-indexable page: ${u}`);
+    if (!pg && !distFile(c.path)) err('discovery', fp, `link does not resolve: ${u}`);
+    else if (pg && !pg.indexable) err('discovery', fp, `links to a non-indexable page: ${u}`);
   }
-  if (/[\u2013\u2014]/.test(llms)) warn('discovery', 'llms.txt', 'em/en dash found');
+  // Every indexable page of the language except hubs and the home is listed (hubs only repeat their children).
+  for (const p of indexablePages.filter((x) => x.lang === lang && !['hub', 'home'].includes(x.template))) {
+    const u = DOMAIN + p.urlPath;
+    if (![')', ' ', '\n'].some((end) => idx.includes(u + end))) warn('discovery', fp, `page not listed: ${p.urlPath}`);
+  }
+  if (lang !== site.defaultLang && llms && !llms.includes(`${DOMAIN}${LLMS_INDEX.path(lang)}`)) warn('discovery', 'llms.txt', `does not link ${LLMS_INDEX.path(lang)}`);
+  if (/[–—]/.test(idx)) warn('discovery', fp, 'em/en dash found');
 }
 // llms-full: one file per language (LLMS_FULL policy in build/lib/machine.mjs), each ≤ 400 KB target.
 for (const lang of site.langs) {
@@ -802,6 +876,7 @@ if (hRules.length) {
     if (isEmbed && !/frame-ancestors \*/.test(v)) err('headers', p.where, 'embed page CSP must have frame-ancestors *');
     if (!isEmbed && !/frame-ancestors 'self'/.test(v)) err('headers', p.where, "CSP must have frame-ancestors 'self'");
     if (isEmbed && !headerValues(p.urlPath, 'x-robots-tag').some((x) => /noindex/.test(x))) err('headers', p.where, 'embed page without X-Robots-Tag: noindex');
+    else if (isEmbed && !headerValues(p.urlPath, 'x-robots-tag').some((x) => /indexifembedded/.test(x))) warn('headers', p.where, `embed page X-Robots-Tag without indexifembedded (expected "${EMBED_ROBOTS}")`);
     const script = (v.match(/script-src ([^;]+)/) || [])[1] || '';
     if (/'unsafe-inline'/.test(script)) warn('headers', p.where, "script-src uses 'unsafe-inline'");
     else for (const h of inlineScriptHashes(p.html)) if (!script.includes(`'sha256-${h}'`)) err('headers', p.where, `inline script sha256-${h.slice(0, 12)}… not allowed by the CSP (it would be blocked)`);
@@ -814,7 +889,7 @@ if (hRules.length) {
     noindexCheck(u, rel(f));
     if (!headerValues(u, 'content-type').some((x) => /text\/markdown/.test(x))) err('headers', rel(f), 'no Content-Type: text/markdown');
   }
-  for (const u of ['/llms.txt', ...site.langs.map((l) => LLMS_FULL.path(l)), '/indexnow-manifest.json', '/indexnow-pending.json']) if (distFile(u)) noindexCheck(u, u.slice(1));
+  for (const u of [...site.langs.map((l) => LLMS_INDEX.path(l)), ...site.langs.map((l) => LLMS_FULL.path(l)), '/indexnow-manifest.json', '/indexnow-pending.json']) if (distFile(u)) noindexCheck(u, u.slice(1));
   for (const f of allFiles.filter((x) => /\.(glb|usdz)$/i.test(x))) {
     const u = `/${rel(f)}`;
     const want = f.toLowerCase().endsWith('.glb') ? 'model/gltf-binary' : 'model/vnd.usdz+zip';

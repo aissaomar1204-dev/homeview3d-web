@@ -45,6 +45,7 @@ const es = {
   zoom: 'Zoom',
   zoomIn: 'Acercar',
   zoomOut: 'Alejar',
+  dims: 'Medidas',
   hint: 'Arrastra para girar. Pellizca o usa la rueda para acercar.',
   keys: 'Teclado: flechas para girar, Re Pág y Av Pág para acercar, Esc para parar el recorrido.',
   a11y: {
@@ -153,6 +154,7 @@ const en = {
   zoom: 'Zoom',
   zoomIn: 'Zoom in',
   zoomOut: 'Zoom out',
+  dims: 'Dimensions',
   hint: 'Drag to rotate. Pinch or scroll to zoom.',
   keys: 'Keyboard: arrow keys to rotate, Page Up and Page Down to zoom, Esc to stop the tour.',
   a11y: {

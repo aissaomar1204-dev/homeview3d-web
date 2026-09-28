@@ -1,0 +1,47 @@
+/* @module calc calc
+   ==========================================================================
+   45-calc · volume calculator (COMP-16, S6): stepper + live total; the tier row
+   that applies takes the room-rail active style. Owner: ENGINE.
+   ========================================================================== */
+.calc { display: grid; gap: var(--space-7); }
+.calc__text .table { margin-top: 0; }
+.calc__widget { display: grid; gap: var(--space-4); align-content: start; padding: var(--space-6) var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line-strong); }
+.calc__label { font-size: var(--fs-sm); font-weight: var(--wght-ui); }
+.stepper { display: inline-grid; grid-template-columns: var(--tap-min) minmax(0, 6rem) var(--tap-min); justify-self: start; border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); }
+.stepper:focus-within { outline: var(--focus-width) solid var(--color-accent); outline-offset: var(--focus-offset); }
+/* Feedback: hover tint and 1px press on the stepper buttons. */
+.stepper__btn { display: grid; place-items: center; min-height: var(--tap-min); background: none; border: 0; transition: background-color var(--dur-hover) var(--ease-out), transform var(--dur-press) var(--ease-out); }
+.stepper__btn:active { transform: translateY(1px); }
+.stepper :focus-visible { outline-offset: -3px; }
+@media (hover: hover) and (pointer: fine) {
+  .stepper__btn:hover { background: var(--color-stage); }
+}
+.stepper__input { width: 100%; min-height: var(--tap-min); text-align: center; font-size: var(--fs-h4); font-weight: var(--wght-heading); background: var(--color-surface); border: 0; border-inline: 1px solid var(--color-line-strong); }
+.stepper__input { appearance: textfield; }
+.stepper__input::-webkit-inner-spin-button, .stepper__input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.calc__priced { display: contents; }
+.calc__out { display: grid; gap: var(--space-1); padding-block: var(--space-4); border-block: 1px solid var(--color-line); font-size: var(--fs-sm); }
+.calc__unit, .calc__vat, .calc__total, .calc__save { color: var(--color-ink-2); }
+.calc__total { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-2); }
+.calc__total strong {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--wght-display);
+  font-stretch: var(--stretch-h2);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-h2);
+  color: var(--color-ink);
+}
+.calc__total-label { flex-basis: 100%; }
+.calc__save { font-variant-numeric: tabular-nums; }
+.calc__save strong { color: var(--color-ink); }
+.calc__quote { color: var(--color-ink); font-size: var(--fs-base); font-weight: var(--wght-ui); }
+.calc__cta .btn { width: 100%; }
+.calc__widget[data-over] .calc__priced, .calc__widget:not([data-over]) .calc__quote { display: none; }
+/* Selected state: the tier that applies, like the active room in the viewer rail. */
+.table--calc tr[aria-current] > * { background: var(--color-accent-soft); }
+.table--calc tr[aria-current] > :first-child { padding-left: var(--space-3); border-left: 2px solid var(--color-accent); }
+@media (min-width: 1024px) {
+  .calc { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-8); align-items: start; }
+  .calc__widget { position: sticky; top: calc(var(--header-h) + var(--space-6)); margin-top: var(--space-9); }
+}

@@ -111,7 +111,7 @@ export default {
       {
         type: 'prose',
         h2: '¿Qué sale de un solo plano? Nuestro caso',
-        body: 'Para enseñar lo que da de sí un plano, tomamos la planta publicada de una villa en la Costa del Sol, un único plano 2D sin fotos del interior ni cotas, y la modelamos entera en una sola sesión de trabajo. El resultado tiene {{villa:rooms}} estancias, unos {{villa:interiorM2}} m² interiores y {{villa:terracesM2}} m² de terrazas estimados a escala, {{villa:textures}} texturas [PBR](@glosario#pbr) procedurales y {{villa:triangles}} triángulos.\n\nDe ese modelo salieron {{villa:renders}} [renders](@glosario#render), la planta cenital, la planta 2D redibujada que ves arriba, un visor web y los archivos de realidad aumentada para iPhone y Android. Puedes [girar el modelo y verlo en tu salón](@caso-villa#visor). El caso está anonimizado: no reproducimos el plano original.',
+        body: 'Para enseñar lo que da de sí un plano, tomamos la planta publicada de una villa en la Costa del Sol, un único plano 2D sin fotos del interior ni cotas, y la modelamos entera en una sola sesión de trabajo. El resultado tiene {{villa:rooms}} estancias, unos {{villa:interiorM2}} m² interiores y {{villa:terracesM2}} m² de terrazas estimados a escala, {{villa:textures}} texturas [PBR](@glosario#pbr) procedurales y {{villa:triangles}} triángulos.\n\nDe ese modelo salieron 6 [renders](@glosario#render), la planta cenital, la planta 2D redibujada que ves arriba, una imagen para redes, un visor web y los archivos de realidad aumentada para iPhone y Android. Puedes [girar el modelo y verlo en tu salón](@caso-villa#visor). El caso está anonimizado: no reproducimos el plano original.',
       },
       {
         type: 'callout',
@@ -165,7 +165,7 @@ export default {
       },
       {
         q: '¿Cuánto cuesta que un estudio convierta mi plano a 3D?',
-        a: 'Un plano 3D cuesta en España entre 100 y 800 € por planta según el nivel de acabado, y hay plataformas online desde 40 €. En {{brand}}, el plano 3D cuesta {{price:plano3d}} + IVA por planta de hasta 150 m² y la maqueta completa con renders, visor y realidad aumentada, desde {{price:maqueta}} + IVA. Tienes todos los rangos en [cuánto cuesta un plano 3D](@guia-precio-plano).',
+        a: 'Un plano 3D cuesta en España entre 100 y 800 € por planta según el nivel de acabado, y hay plataformas en línea desde 40 €. En {{brand}}, el plano 3D cuesta {{price:plano3d}} + IVA por planta de hasta 150 m² y la maqueta completa con renders, visor y realidad aumentada, desde {{price:maqueta}} + IVA. Tienes todos los rangos en [cuánto cuesta un plano 3D](@guia-precio-plano).',
       },
       {
         q: '¿Qué tengo que revisar en un plano 3D antes de publicarlo?',

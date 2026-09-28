@@ -18,6 +18,7 @@ const es = {
     versionLabel: 'Versión en español',
     homeLabel: '{{brand}}, inicio',
     theme: 'Estudio de visualización 3D',
+    feed: '{{brand}}: guías y casos',
   },
   nav: {
     label: 'Navegación principal',
@@ -37,6 +38,7 @@ const es = {
     estimate: 'Calcular precio',
     send: 'Enviar solicitud',
     whatsapp: 'Escribir por WhatsApp',
+    whatsappShort: 'WhatsApp',
     sending: 'Enviando…',
     whatsappText: 'Hola, quiero ver el plano de una vivienda en 3D.',
     barLabel: 'Acciones rápidas',
@@ -51,6 +53,14 @@ const es = {
   hero: {
     caption: 'Render generado a partir del plano 2D, sin fotos.',
     alt: 'Maqueta 3D seccionada de la planta alta de una villa en la Costa del Sol, vista aérea en tres cuartos. Render generado a partir del plano 2D.',
+    drawing: {
+      scope: 'Dibujo',
+      scopeValue: 'Planta alta, maqueta cortada a {cut}',
+      footprint: 'Huella',
+      footprintValue: '{w} × {d} m aprox.',
+      source: 'Origen',
+      sourceValue: 'Render 3D generado del plano 2D, sin fotos',
+    },
   },
   img: {
     renderLabel: 'Render 3D generado a partir del plano 2D',
@@ -116,6 +126,10 @@ const es = {
     altModel: 'Planta cenital a color de la misma villa: render 3D generado a partir del plano 2D, con la misma cámara.',
     caption: 'Misma cámara y misma escala: la planta redibujada desde el modelo y el render cenital a color.',
     hint: 'Arrastra el control o usa las flechas del teclado.',
+    scale: 'Escala gráfica de la planta: 0, 1, 2 y 5 metros',
+    legend: 'Estancias y superficies aproximadas',
+    more: '+ {n} estancias más',
+    total: '{n} en total',
   },
   pricing: {
     from: 'Desde',
@@ -148,7 +162,9 @@ const es = {
     head: ['Viviendas', 'Precio por vivienda'],
     range: 'De {from} a {to}',
     rangeOpen: '{from} o más',
-    note: 'Para viviendas de hasta 150 m² por planta. Precios sin IVA.',
+    note: 'Para viviendas de hasta 150 m² en total. Precios sin IVA.',
+    save: 'Ahorras {amount} frente al precio de una vivienda suelta',
+    quote: 'Más de {max} viviendas: te damos un precio cerrado por escrito.',
   },
   form: {
     step: 'Paso {n} de 2',
@@ -222,6 +238,8 @@ const es = {
     errSend: 'No hemos podido enviar tu solicitud. Revisa tu conexión y vuelve a intentarlo, o escríbenos por WhatsApp.',
     unsaved: 'Tienes una solicitud sin enviar.',
     toolDescription: 'Solicita una demo gratis o un presupuesto para convertir el plano 2D de una vivienda en un modelo 3D con renders, visor web y realidad aumentada.',
+    tipoParam: 'Tipo de cliente que pide la demo: inmobiliaria, promotora, arquitecto (o interiorista), particular (propietario o alquiler vacacional) u otro.',
+    rgpdParam: 'Aceptación de la política de privacidad, obligatoria para enviar la solicitud. Solo la marca la persona que envía el formulario.',
     altTitle: 'Otras formas de contactar',
     altEmail: 'Email',
     altPhone: 'Teléfono',
@@ -230,6 +248,8 @@ const es = {
     altReply: 'Contesta una persona, en español o en inglés.',
   },
   faq: { more: 'Todas las preguntas frecuentes' },
+  video: { play: 'Reproducir', pause: 'Pausar', label: 'Vídeo: {caption}' },
+  answers: { price: 'Precio', delivery: 'Entrega en {days}.', fact: 'Dato' },
   guide: {
     byline: 'Equipo de {{brand}}',
     by: 'Por',
@@ -313,6 +333,7 @@ const en = {
     versionLabel: 'English version',
     homeLabel: '{{brand}}, home',
     theme: '3D visualisation studio',
+    feed: '{{brand}}: guides and case studies',
   },
   nav: {
     label: 'Main navigation',
@@ -332,6 +353,7 @@ const en = {
     estimate: 'Estimate price',
     send: 'Send request',
     whatsapp: 'Message on WhatsApp',
+    whatsappShort: 'WhatsApp',
     sending: 'Sending…',
     whatsappText: 'Hello, I would like to see a floor plan in 3D.',
     barLabel: 'Quick actions',
@@ -346,6 +368,14 @@ const en = {
   hero: {
     caption: 'Render generated from the 2D floor plan, no photos.',
     alt: 'Cut-away 3D model of the upper floor of a villa on the Costa del Sol, three-quarter aerial view. Render generated from the 2D floor plan.',
+    drawing: {
+      scope: 'Drawing',
+      scopeValue: 'Upper floor, model cut at {cut}',
+      footprint: 'Footprint',
+      footprintValue: '{w} × {d} m approx.',
+      source: 'Source',
+      sourceValue: '3D render generated from the 2D plan, no photos',
+    },
   },
   img: {
     renderLabel: '3D render generated from the 2D floor plan',
@@ -411,6 +441,10 @@ const en = {
     altModel: 'Colour top-down plan of the same villa: 3D render generated from the 2D floor plan, with the same camera.',
     caption: 'Same camera, same scale: the plan redrawn from the model and the colour top-down render.',
     hint: 'Drag the handle or use the arrow keys.',
+    scale: 'Scale bar of the floor plan: 0, 1, 2 and 5 metres',
+    legend: 'Rooms and approximate areas',
+    more: '+ {n} more rooms',
+    total: '{n} in total',
   },
   pricing: {
     from: 'From',
@@ -443,7 +477,9 @@ const en = {
     head: ['Homes', 'Price per home'],
     range: '{from} to {to}',
     rangeOpen: '{from} or more',
-    note: 'For homes up to 150 m² per floor. Prices exclude VAT.',
+    note: 'For homes up to 150 m² in total. Prices exclude VAT.',
+    save: 'You save {amount} on the single-home price',
+    quote: 'More than {max} homes: we send you a fixed price in writing.',
   },
   form: {
     step: 'Step {n} of 2',
@@ -517,6 +553,8 @@ const en = {
     errSend: 'We could not send your request. Check your connection and try again, or message us on WhatsApp.',
     unsaved: 'You have an unsent request.',
     toolDescription: 'Request a free demo or a quote to turn a home’s 2D floor plan into a 3D model with renders, a web viewer and augmented reality.',
+    tipoParam: 'Type of client asking for the demo: estate agency, developer, architect (or interior designer), owner (or holiday let) or other.',
+    rgpdParam: 'Acceptance of the privacy policy, required to send the request. Only the person sending the form ticks it.',
     altTitle: 'Other ways to reach us',
     altEmail: 'Email',
     altPhone: 'Phone',
@@ -525,6 +563,8 @@ const en = {
     altReply: 'A real person replies, in English or Spanish.',
   },
   faq: { more: 'All frequently asked questions' },
+  video: { play: 'Play', pause: 'Pause', label: 'Video: {caption}' },
+  answers: { price: 'Price', delivery: 'Delivery in {days}.', fact: 'Key fact' },
   guide: {
     byline: '{{brand}} team',
     by: 'By',

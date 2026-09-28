@@ -1,0 +1,106 @@
+/* @module ar vw-ar vw-embedcode vw-arpage
+   ==========================================================================
+   51-ar.css · AR choices (viewer dialog, `ar` block, /ar/villa/), embed code
+   block (COMP-25). Owner: VIEWER. The viewer dialog loads this sheet on first
+   open (src/js/viewer.js), so pages with a viewer do not pay for it upfront.
+   ========================================================================== */
+/* ---------- AR chooser dialog (native <dialog>: Esc closes, focus returns) ---------- */
+.vw-dialog {
+  width: min(100% - 2 * var(--gutter), 720px);
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--space-5));
+  padding: var(--space-5);
+  color: var(--color-ink);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-pop);
+  overscroll-behavior: contain;
+}
+.vw-dialog::backdrop { background: var(--color-scrim); }
+.vw-dialog__body { display: grid; gap: var(--space-4); }
+.vw-dialog__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.vw-dialog__title { margin: 0; font-size: var(--fs-h3); }
+.vw-dialog__intro { margin: 0; color: var(--color-ink-2); }
+
+/* ---------- AR choices (dialog, `ar` block, /ar/villa/) ---------- */
+.vw-ar, .vw-ar__group { display: grid; gap: var(--space-6); align-content: start; }
+.vw-ar__group { gap: var(--space-3); }
+.vw-ar__label { margin: 0; font: var(--wght-heading) var(--fs-h4)/var(--lh-h3) var(--font-sans); font-stretch: 100%; letter-spacing: 0; }
+.vw-ar__how { margin: 0; font-size: var(--fs-sm); color: var(--color-ink-2); }
+.vw-ar__links, .vw-ar__modes { display: grid; gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+@media (min-width: 640px) { .vw-ar__links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.vw-arlink {
+  display: grid;
+  grid-template-columns: var(--space-9) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--space-9);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  font-weight: var(--wght-ui);
+  line-height: 1.25;
+  color: var(--color-ink);
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  touch-action: manipulation;
+  transition: border-color var(--dur-hover) var(--ease-out), transform var(--dur-press) var(--ease-out);
+}
+.vw-arlink:active { transform: translateY(1px); }
+@media (hover: hover) and (pointer: fine) { .vw-arlink:hover { border-color: var(--color-accent); } }
+.vw-arlink--text { grid-template-columns: minmax(0, 1fr); min-height: var(--space-8); padding-left: var(--space-4); }
+.vw-arlink > :is(img, picture), .vw-arlink > picture img { display: block; width: var(--space-9); height: var(--space-8); object-fit: cover; background: var(--color-stage); }
+.vw-arlink__meta { margin: var(--space-2) 0 0; font: var(--wght-mono) var(--fs-meta)/var(--lh-meta) var(--font-mono); color: var(--color-ink-3); }
+.vw-ar--big .vw-arlink { grid-template-columns: var(--space-10) minmax(0, 1fr); min-height: var(--space-10); font-size: var(--fs-lead); }
+.vw-ar--big .vw-arlink--text { grid-template-columns: minmax(0, 1fr); min-height: var(--space-9); }
+.vw-ar--big .vw-arlink > :is(img, picture), .vw-ar--big .vw-arlink > picture img { width: var(--space-10); height: var(--space-9); }
+
+.vw-ar__qr { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: var(--space-5); margin: 0; }
+.vw-ar__qr figcaption { display: grid; gap: var(--space-3); max-width: 48ch; font-size: var(--fs-sm); color: var(--color-ink-2); }
+.vw-ar__qr figcaption p { margin: 0; }
+.vw-ar__modes { gap: var(--space-2); }
+.vw-ar__modes li { padding-left: var(--space-3); border-left: 1px solid var(--color-line-strong); }
+.vw-ar__modes strong { color: var(--color-ink); font-weight: var(--wght-ui); }
+/* The QR stays dark on light in both themes so every camera app decodes it. */
+.vw-qr { display: block; width: 168px; height: 168px; padding: var(--space-2); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line); }
+.vw-qr path { fill: none; stroke: currentColor; }
+@media (prefers-color-scheme: dark) { .vw-qr { color: var(--color-bg); background: var(--color-ink); } }
+.vw-ar__notice { margin: 0; padding: var(--space-3) var(--space-4); font-size: var(--fs-sm); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-left: 2px solid var(--color-accent); }
+
+/* Platform (data-platform from viewer.js). Without JS: both mobile groups, the QR on fine pointers only. */
+.vw-ar__group--desktop,
+.vw-ar[data-platform="ios"] :is(.vw-ar__group--android, .vw-ar__group--desktop),
+.vw-ar[data-platform="android"] :is(.vw-ar__group--ios, .vw-ar__group--desktop),
+.vw-ar[data-platform="desktop"] :is(.vw-ar__group--ios, .vw-ar__group--android) { display: none; }
+.vw-ar[data-platform="desktop"] .vw-ar__group--desktop { display: grid; }
+@media (hover: hover) and (pointer: fine) { .vw-ar:not([data-platform]) .vw-ar__group--desktop { display: grid; } }
+
+/* ---------- Embed code: live iframe + snippet (COMP-25) ---------- */
+.vw-embedcode { display: grid; gap: var(--space-6); }
+@media (min-width: 1024px) {
+  .vw-embedcode { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); align-items: start; }
+  .vw-embedcode__preview { grid-column: 1 / span 7; }
+  .vw-code { grid-column: 8 / -1; }
+}
+.vw-embedcode__preview { margin: 0; }
+.vw-embedcode__preview iframe { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; background: var(--color-stage); border: 1px solid var(--color-line); }
+@media (min-width: 768px) { .vw-embedcode__preview iframe { aspect-ratio: 4 / 3; } }
+.vw-embedcode__preview figcaption { margin-top: var(--space-2); }
+.vw-code { display: grid; gap: var(--space-3); min-width: 0; }
+.vw-code__label, .vw-code__actions { margin: 0; }
+.vw-code__label { font-weight: var(--wght-ui); }
+.vw-code pre { margin: 0; padding: var(--space-4); font: var(--fs-meta)/1.6 var(--font-mono); white-space: pre-wrap; word-break: break-all; background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); }
+.vw-code__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); font-size: var(--fs-sm); color: var(--color-ink-2); }
+
+/* ---------- /ar/villa/ landing ---------- */
+.vw-arpage .wrap { display: grid; gap: var(--space-7); }
+.vw-arpage__head > * + * { margin-top: var(--space-3); }
+.vw-arpage__how h2 { margin-bottom: var(--space-4); }
+.vw-steps { display: grid; gap: var(--space-3); max-width: var(--measure); margin: 0; padding-left: var(--space-5); }
+.vw-steps li::marker { font-family: var(--font-mono); color: var(--color-ink-3); }
+.vw-arpage__links { margin: 0; }
+@media (max-width: 559px) { .vw-ar__qr { grid-template-columns: minmax(0, 1fr); } }
+/* /ar/villa/ is where QR scans land: the two AR choices come first (D-23). */
+.vw-arpage h1 { font-size: var(--fs-h2); font-stretch: var(--stretch-h2); line-height: var(--lh-h2); letter-spacing: var(--tracking-h2); }
+@media (forced-colors: active) { .vw-qr { forced-color-adjust: none; } }

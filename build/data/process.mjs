@@ -21,8 +21,8 @@ export const process = {
     },
     {
       id: 'revision',
-      es: { title: 'Revisas y ajustamos', body: 'Te enviamos el visor en un enlace privado. Pides cambios de mobiliario, materiales o distribución y los aplicamos en dos rondas.', time: 'Día 4' },
-      en: { title: 'You review, we adjust', body: 'You get the viewer on a private link. Ask for changes to furniture, materials or layout and we apply them in two rounds.', time: 'Day 4' },
+      es: { title: 'Revisas y ajustamos', body: 'Te enviamos el visor en un enlace privado. Pides cambios de mobiliario, materiales o distribución y los aplicamos en dos rondas si nos envías cada lista en 24 h.', time: 'Día 4' },
+      en: { title: 'You review, we adjust', body: 'You get the viewer on a private link. Ask for changes to furniture, materials or layout and we apply them in two rounds if you send each list within 24 hours.', time: 'Day 4' },
     },
     {
       id: 'entrega',

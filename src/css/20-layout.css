@@ -101,7 +101,7 @@
   .js .site-nav__extra .btn { flex: 1 1 100%; }
   .menu-open { overflow: hidden; }
   .site-header.is-open { z-index: var(--z-overlay); }
-  .menu-open .bottom-bar { visibility: hidden; }
+  .menu-open .bottom-bar, .menu-open .site-header__actions .lang-link { visibility: hidden; }
   /* No JS: the links stay reachable as a scrollable row under the bar. */
   html:not(.js) .site-header__bar { flex-wrap: wrap; height: auto; padding-block: var(--space-2); }
   html:not(.js) .site-nav { order: 3; width: 100%; overflow-x: auto; }
@@ -121,6 +121,12 @@
 .crumbs__list { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-2); }
 .crumbs__list li + li::before { content: "/"; margin-right: var(--space-2); color: var(--color-line-strong); }
 .crumbs__list a { color: var(--color-ink-2); }
+@media (max-width: 1023px) {
+  .crumbs { padding-top: var(--space-1); }
+  .crumbs__list, .crumbs__list li { align-items: center; }
+  .crumbs__list li { display: flex; }
+  .crumbs__list a, .site-footer__contact a, .table__sources a { display: inline-flex; align-items: center; min-height: var(--tap-min); }
+}
 .crumbs__list [aria-current] { color: var(--color-ink); }
 
 /* ---------- Sections ---------- */
@@ -130,10 +136,10 @@
 .band--stage { background: var(--color-stage); --cota-bg: var(--color-stage); }
 .block__head { margin-bottom: var(--space-6); padding-top: var(--space-5); border-top: 1px solid var(--color-line); }
 .block__head > * { max-width: var(--measure); }
-.block__head > h2 { max-width: 24ch; }
+.block__head > h2 { max-width: min(32ch, 100%); }
 .band .block__head { border: 0; padding: 0; }
 .block__intro { margin-top: var(--space-4); color: var(--color-ink-2); }
-.block__intro > * + *, .hero__text > * + *, .article__head .wrap > * + * { margin-top: var(--space-4); }
+.block__intro > * + *, .hero__text > * + * { margin-top: var(--space-4); }
 @media (min-width: 1024px) {
   .block { margin-block: var(--space-9); }
   .band { margin-block: 0; }
@@ -151,14 +157,41 @@
 .hero--home .hero__grid { display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) var(--gutter); row-gap: var(--space-7); }
 .hero--home .hero__text { grid-column: 2; }
 .hero--home .hero__visual { grid-column: 1 / -1; }
-.hero__stage { display: grid; place-items: center; aspect-ratio: 5 / 4; padding: var(--space-4); background: var(--color-stage); }
-.hero__stage .pic { width: 100%; }
-.hero__caption { margin-top: var(--space-3); padding-inline: var(--gutter); }
+.hero__stage { display: grid; place-items: center; padding: var(--space-4); background: var(--color-stage); }
+/* Lámina (S1): the render cropped to the maqueta by build-time geometry (home.mjs), with static cotas.
+   --m* = mobile crop (model + shadow), --d* = desktop crop (model + dimension lines). The edge fade
+   keeps the shadow catcher's faint alpha from drawing a rectangle on the stage. */
+.lamina {
+  --fade: linear-gradient(90deg, transparent, var(--color-ink) 3% 97%, transparent), linear-gradient(transparent, var(--color-ink) 3% 97%, transparent);
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--mr);
+  overflow: hidden;
+  -webkit-mask: var(--fade);
+  -webkit-mask-composite: source-in;
+  mask: var(--fade);
+  mask-composite: intersect;
+}
+.lamina__frame { position: absolute; left: var(--ml); top: var(--mt); width: var(--mw); }
+.lamina__cotas, .lamina__lbl { display: none; }
+.lamina__cotas { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--color-line-strong); }
+.lamina__cotas path { vector-effect: non-scaling-stroke; }
+.lamina__lbl { position: absolute; padding: 0 var(--space-2); background: var(--color-stage); color: var(--color-ink-2); white-space: nowrap; transform: translate(-50%, -50%); }
+.lamina-label { display: grid; border-top: 1px solid var(--color-line-strong); }
+.lamina-label div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--space-3); padding-block: var(--space-2); border-bottom: 1px solid var(--color-line); }
+.lamina-label dd { color: var(--color-ink-2); }
+.hero__caption { margin-top: var(--space-3); padding-inline: var(--gutter); max-width: none; }
 @media (min-width: 768px) {
-  .hero__stage { aspect-ratio: 16 / 10; padding: var(--space-6); }
+  .hero__stage { aspect-ratio: 16 / 10; padding: var(--space-6); container-type: size; }
+  .lamina { aspect-ratio: var(--dr); width: min(100cqw, 100cqh * var(--dr)); }
+  .lamina__frame { left: var(--dl); top: var(--dt); width: var(--dw); }
+  .lamina__cotas, .lamina__lbl { display: block; }
+  .lamina-label { grid-template-columns: repeat(3, auto); justify-content: start; border-bottom: 1px solid var(--color-line); }
+  .lamina-label div { display: block; padding: var(--space-2) var(--space-5) var(--space-2) var(--space-4); border: 0; border-left: 1px solid var(--color-line); }
+  .lamina-label div:first-child { padding-left: 0; border: 0; }
 }
 @media (min-width: 1024px) {
-  .hero--home { padding-top: var(--space-8); }
+  .hero--home { padding-top: var(--space-7); }
   .hero--home .hero__grid {
     --c: calc(min(100%, var(--container)) - 2 * var(--gutter));
     grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, calc(var(--c) * 6 / 12 - var(--space-5))) var(--space-7) minmax(0, calc(var(--c) * 6 / 12 - var(--space-7) + var(--space-5))) minmax(var(--gutter), 1fr);
@@ -168,41 +201,13 @@
   .hero--home .hero__visual { grid-area: 1 / 4 / 2 / 6; }
   /* The home H1 is sized by its column so it keeps two lines at every desktop width (TYPE-05). */
   .hero--home h1 { font-size: min(var(--fs-h1), 9cqi); }
-  .hero__stage { aspect-ratio: auto; height: min(62dvh, 38vw); padding: var(--space-7) var(--space-8); }
-  .hero__stage .pic, .hero__img { height: 100%; }
-  .hero__img { object-fit: contain; }
+  .hero__stage { aspect-ratio: auto; height: min(72dvh, 44vw); padding: var(--space-5); }
   .hero__caption { padding: 0; }
 }
 
-/* Inner pages: left-aligned text hero with an optional side figure. */
-.hero--text { padding-block: var(--space-7) var(--space-4); }
-.hero--text .hero__grid { display: grid; gap: var(--space-7); }
-.hero__figure .figure__media { background: var(--color-stage); }
-@media (min-width: 1024px) {
-  .hero--text { padding-block: var(--space-9) var(--space-6); }
-  .hero--figure .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; gap: var(--space-8); }
-  .hero--text h1 { max-width: 20ch; }
-  .hero--text .h1--long { max-width: 26ch; }
-}
-
-/* ---------- Guide / article ---------- */
-.article__head { padding-block: var(--space-7) var(--space-5); }
-.article__head .wrap > * { max-width: 72ch; }
+/* ---------- Byline / date line ---------- */
 .byline, .dateline { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); }
-.byline__by, .dateline__by { color: var(--color-ink-2); }
-.article__hero { margin-block: var(--space-5); }
-.article__hero .figure { max-width: 56rem; }
-.article__layout { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
-.article__body { min-width: 0; max-width: 50rem; }
-.article__body .wrap { padding: 0; max-width: none; }
-.article__body .block { margin-block: var(--space-7); }
-.article__body > :first-child { margin-top: 0; }
-@media (min-width: 1024px) {
-  .article__head { padding-top: var(--space-9); }
-  .article__layout { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); column-gap: var(--space-8); }
-  .article__layout--solo { grid-template-columns: minmax(0, 1fr); }
-  .article__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); align-self: start; }
-}
+.dateline__by { color: var(--color-ink-2); }
 
 /* ---------- Footer (COMP-20) ---------- */
 .site-footer { padding-block: var(--space-8) var(--space-6); background: var(--color-surface); border-top: 1px solid var(--color-line); font-size: var(--fs-sm); }
@@ -215,7 +220,8 @@
 .site-footer__contact div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: var(--space-4); align-items: baseline; padding-block: var(--space-2); border-bottom: 1px solid var(--color-line); }
 .site-footer__contact dd { overflow-wrap: anywhere; }
 .site-footer__cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-7) var(--space-5); }
-.footer-col__title { margin-bottom: var(--space-2); }
+.footer-col__title { display: flex; align-items: center; min-height: var(--tap-min); }
+.footer-col__title a { color: var(--color-ink); }
 .footer-col a, .site-footer__legal a { display: inline-flex; align-items: center; min-height: var(--tap-min); color: var(--color-ink-2); }
 .footer-col a { text-decoration: none; }
 .site-footer__bottom {
@@ -234,39 +240,44 @@
   .footer-col a, .site-footer__legal a { min-height: calc(var(--tap-min) - var(--space-3)); }
 }
 @media (min-width: 768px) {
-  .site-footer__cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .site-footer__cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (min-width: 1024px) {
   .site-footer { padding-top: var(--space-9); }
   .site-footer__top { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
 }
 
-/* ---------- Mobile action bar (COMP-06) ---------- */
+/* ---------- Mobile action bar (COMP-06): one line, height locked to --bar-h ---------- */
+:root { --bar-h: calc(var(--tap-min) + 2 * var(--space-2) + env(safe-area-inset-bottom)); }
 .bottom-bar {
   position: fixed;
   inset: auto 0 0;
   z-index: var(--z-sticky);
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-2);
+  height: var(--bar-h);
   padding: var(--space-2) var(--space-4) calc(var(--space-2) + env(safe-area-inset-bottom));
   background: var(--color-surface);
   border-top: 1px solid var(--color-line);
-  /* State change: slides away while the form or the footer is in view. */
+  /* State change: slides away while the hero CTA, the form or the footer is in view. */
   transition: transform var(--dur-state) var(--ease-out), visibility 0s var(--dur-state);
 }
-.bottom-bar .btn { padding-inline: var(--space-4); }
-.bottom-bar .btn--neutral span { white-space: normal; line-height: 1.15; }
-.bottom-bar.is-hidden { transform: translateY(110%); visibility: hidden; }
+.bottom-bar .btn { height: var(--tap-min); padding-inline: var(--space-3); }
+/* With JS the bar waits for the first observer answer, so it never flashes over the hero CTA. */
+.bottom-bar.is-hidden, .js .bottom-bar:not(.is-ready) { transform: translateY(110%); visibility: hidden; }
 .bottom-bar:not(.is-hidden) { transition-delay: 0s; }
 @media (max-width: 767px) {
-  body:has(> .bottom-bar) { padding-bottom: calc(var(--tap-min) + 2 * var(--space-2) + env(safe-area-inset-bottom)); }
-  html { scroll-padding-bottom: calc(var(--tap-min) + 2 * var(--space-2) + env(safe-area-inset-bottom)); }
+  body:has(> .bottom-bar) { padding-bottom: var(--bar-h); }
+  html { scroll-padding-bottom: calc(var(--bar-h) + var(--space-2)); }
 }
 @media (min-width: 768px) {
   .bottom-bar { display: none; }
 }
 
-/* ---------- Date line (GEO-02) ---------- */
+/* ---------- Date line (GEO-02): closes the last content block, before the CTA band ---------- */
 .dateline-wrap { margin-top: var(--space-8); }
 .dateline { padding-block: var(--space-5); border-top: 1px solid var(--color-line); }
+
+/* Rendering: off-screen sections skip style and layout until they come near the viewport (P1-D). */
+.main > section:not(:first-child) { content-visibility: auto; contain-intrinsic-size: auto 900px; }

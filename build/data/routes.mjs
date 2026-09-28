@@ -6,13 +6,16 @@
    - Content lives in build/content/<id>.mjs (see docs/build/CONTENT-SCHEMA.md).
    - Links in content use the page id: [texto](@servicio-plano).
    - `index: false` → noindex + excluded from sitemap/llms.
+   - `pack`: the pricing pack (or extra) of the page's headline «desde / from» price, i.e. the one
+     its meta description quotes. It feeds the services-index card price and the first Offer of the
+     page's Service in JSON-LD (build/lib/schema.mjs); without it the description's price token decides.
    ═══════════════════════════════════════════════════════════════ */
 
 export const routes = [
   // ── Core ──────────────────────────────────────────────────────
   { id: 'home',              template: 'home',     parent: null,         es: '/',                                   en: '/en/',                                   priority: 1.0 },
   { id: 'servicios',         template: 'hub',      parent: 'home',       es: '/servicios/',                         en: '/en/services/',                          priority: 0.9 },
-  { id: 'servicio-plano',    template: 'service',  parent: 'servicios',  es: '/servicios/plano-2d-a-3d/',           en: '/en/floor-plan-to-3d-model/',            priority: 0.9, pack: 'maqueta' },
+  { id: 'servicio-plano',    template: 'service',  parent: 'servicios',  es: '/servicios/plano-2d-a-3d/',           en: '/en/floor-plan-to-3d-model/',            priority: 0.9, pack: 'plano3d' },
   { id: 'servicio-renders',  template: 'service',  parent: 'servicios',  es: '/servicios/renders-inmobiliarios/',   en: '/en/real-estate-3d-rendering/',          priority: 0.9, pack: 'maqueta' },
   { id: 'servicio-tour',     template: 'service',  parent: 'servicios',  es: '/servicios/tour-virtual-3d/',         en: '/en/interactive-3d-floor-plans/',        priority: 0.9, pack: 'maqueta' },
   { id: 'servicio-ar',       template: 'service',  parent: 'servicios',  es: '/servicios/realidad-aumentada-inmobiliaria/', en: '/en/augmented-reality-real-estate/', priority: 0.9, pack: 'maqueta' },
@@ -21,9 +24,9 @@ export const routes = [
   // ── Audiences ─────────────────────────────────────────────────
   { id: 'soluciones',        template: 'hub',      parent: 'home',       es: '/soluciones/',                        en: null,                                     priority: 0.7 },
   { id: 'sol-inmobiliarias', template: 'audience', parent: 'soluciones', es: '/soluciones/inmobiliarias/',           en: '/en/for-estate-agents/',                 priority: 0.8 },
-  { id: 'sol-promotoras',    template: 'audience', parent: 'soluciones', es: '/soluciones/promotoras-obra-nueva/',   en: '/en/off-plan-3d-visualisation/',         priority: 0.8 },
+  { id: 'sol-promotoras',    template: 'audience', parent: 'soluciones', es: '/soluciones/promotoras-obra-nueva/',   en: '/en/off-plan-3d-visualisation/',         priority: 0.8, pack: 'promocion' },
   { id: 'sol-arquitectos',   template: 'audience', parent: 'soluciones', es: '/soluciones/arquitectos-interioristas/', en: null,                                  priority: 0.6 },
-  { id: 'sol-vacacional',    template: 'audience', parent: 'soluciones', es: '/soluciones/alquiler-vacacional/',    en: null,                                     priority: 0.5 },
+  { id: 'sol-vacacional',    template: 'audience', parent: 'soluciones', es: '/soluciones/alquiler-vacacional/',    en: null,                                     priority: 0.5, pack: 'plano3d' },
 
   // ── Proof, process, prices ────────────────────────────────────
   { id: 'caso-villa',        template: 'case',     parent: 'home',       es: '/casos/villa-costa-del-sol/',         en: '/en/case-studies/costa-del-sol-villa/',  priority: 0.9 },

@@ -1,7 +1,8 @@
 // Case study (template `case`): the anonymised Costa del Sol villa, our central proof page.
-// Only REAL facts: build/data/villa.mjs (tokens), docs/research/06-3d-ar-pipeline.md (model:all ≈ 26 s,
-// validator 0 errors, web GLB under a third of the Blender export) and 07-renders.md (9 Cycles stills in
-// ≈ 7 min on an RTX 4060, plan/render overlay within ±3 px, < 0.002 % clipped pixels, known model limits).
+// Only REAL facts: build/data/villa.mjs (tokens), docs/research/06-3d-ar-pipeline.md (validator 0 errors,
+// web GLB under a third of the Blender export) and 07-renders.md (9 Cycles images in ≈ 7 min on an RTX 4060:
+// 6 views + top-down plan + line plan + og_image; plan/render overlay within ±3 px, < 0.002 % clipped pixels,
+// known model limits). The "≈ 26 s rebuild" claim was removed until it is re-measured (content audit F-34).
 // No hours per phase: they were not timed separately. The honesty notice is villa.notice (single source).
 
 import { villa } from '../data/villa.mjs';
@@ -17,7 +18,10 @@ export default {
     title: 'Villa en la Costa del Sol en 3D: caso desde el plano',
     description: 'Caso demostrativo: villa en la Costa del Sol modelada en 3D desde un único plano, sin fotos: {{villa:rooms}} estancias amuebladas, renders, visor web y AR.',
     h1: 'Villa en la Costa del Sol: del plano 2D al 3D',
-    lead: 'Modelamos en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², {{villa:renders}} renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado; un encargo así cuesta desde {{price:maqueta}} + IVA.',
+    lead: '{{brand}} modeló en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado; un encargo así cuesta desde {{price:maqueta}} + IVA.',
+    // Hero (D-07/V-07): ≤ 20 words so the viewer stage reaches the first screen on phones. The full lead
+    // (price + GEO sentence) is the first answer block below and stays the Markdown/llms summary.
+    heroLead: 'Una villa real de la Costa del Sol, modelada en 3D desde un único plano 2D. Gírala aquí.',
     breadcrumb: 'Villa en la Costa del Sol',
     card: {
       title: 'Caso: villa en la Costa del Sol',
@@ -28,12 +32,17 @@ export default {
       ['Alcance', 'Planta alta de una villa, con dos terrazas'],
       ['Superficie', '≈ {{villa:interiorM2}} m² interiores y ≈ {{villa:terracesM2}} m² de terrazas'],
       ['Estancias', '{{villa:rooms}}, con {{villa:bedrooms}} dormitorios'],
-      ['Renders', '{{villa:renders}}, en unos {{villa:renderMinutes}} minutos de cálculo'],
+      ['Imágenes', '{{villa:renders}} en unos {{villa:renderMinutes}} minutos de cálculo en total'],
       ['Modelo web', '{{file:glb}}, con recorrido y modo maqueta'],
       ['Realidad aumentada', 'iPhone, iPad y Android: 1:20 y tamaño real'],
       ['Trabajo', 'Una sola sesión, del plano a la exportación'],
     ],
     blocks: [
+      {
+        type: 'answer',
+        h2: '¿Qué hicimos con esta villa?',
+        answer: '{{brand}} modeló en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado; un encargo así cuesta desde {{price:maqueta}} + IVA.',
+      },
       {
         type: 'answer',
         h2: '¿Por qué partir de un plano y no de fotos?',
@@ -51,12 +60,12 @@ export default {
           ['Terrazas', '≈ {{villa:terracesM2}} m², en dos terrazas'],
           ['Estancias', '{{villa:rooms}}, terrazas, escalera y lavadero incluidos'],
           ['Dormitorios', '{{villa:bedrooms}}'],
-          ['Baños', '{{villa:bathrooms}}'],
+          ['Baños', '2: el de la suite, con bañera y ducha de lluvia, y el completo'],
           ['Texturas PBR procedurales', '{{villa:textures}}, creadas para este modelo'],
           ['Materiales', '{{villa:materials}}'],
           ['Triángulos', '{{villa:triangles}}'],
           ['Altura de muros', '{{villa:wallHeight}} m; corte de maqueta a {{villa:cutHeight}} m'],
-          ['Renders', '{{villa:renders}} imágenes, unos {{villa:renderMinutes}} minutos de Cycles en total'],
+          ['Imágenes', '{{villa:renders}}: 6 vistas, planta cenital, planta de líneas e imagen para redes; unos {{villa:renderMinutes}} minutos de Cycles en total'],
           ['Modelo web', '{{file:glb}}, GLB con compresión Meshopt y texturas WebP'],
           ['Realidad aumentada en iPhone', '{{file:usdzMesa}} la maqueta 1:20 y {{file:usdzReal}} el tamaño real (USDZ)'],
           ['Realidad aumentada en Android', '{{file:glbArMesa}} la maqueta 1:20 y {{file:glbAr}} el tamaño real (GLB)'],
@@ -66,7 +75,7 @@ export default {
       {
         type: 'gallery',
         h2: 'Los renders de la villa',
-        intro: 'Calculamos {{villa:renders}} imágenes con Cycles y la misma luz de media tarde mediterránea. Ninguna es una foto ni una imagen generada con IA: son cálculos de luz sobre el modelo. Aquí van seis; la planta cenital y la planta de líneas están en el comparador de más abajo. Así trabajamos los [renders inmobiliarios](@servicio-renders).',
+        intro: 'Las {{villa:renders}} imágenes del caso (6 vistas, la planta cenital, la planta de líneas y la imagen para redes) se calcularon con Cycles en unos {{villa:renderMinutes}} minutos en total, con la misma luz de media tarde mediterránea. Ninguna es una foto ni una imagen generada con IA. Aquí van las 6 vistas; las dos plantas están en el comparador de más abajo. Así trabajamos los [renders inmobiliarios](@servicio-renders).',
         items: [
           { image: 'villa_maqueta_iso', alt: 'Maqueta 3D de la planta alta de la villa seccionada a {{villa:cutHeight}} m, vista aérea en tres cuartos con las estancias amuebladas. Render 3D de la villa anonimizada de la Costa del Sol.', caption: 'Maqueta seccionada a {{villa:cutHeight}} m, vista aérea en tres cuartos. Render 3D.' },
           { image: 'villa_salon_dormitorio', alt: 'Render 3D del salón con sofá rinconera y del dormitorio principal de la villa anonimizada, con luz de media tarde.', caption: 'Salón y dormitorio principal. Render 3D.' },
@@ -77,6 +86,12 @@ export default {
         ],
       },
       {
+        type: 'video',
+        video: 'villa-turntable',
+        h2: '¿Cómo se ve la maqueta en movimiento?',
+        caption: 'Una vuelta de cámara alrededor de la maqueta seccionada a {{villa:cutHeight}} m, con la misma luz que los renders. Animación 3D calculada con Cycles, sin sonido; no es una grabación.',
+      },
+      {
         type: 'compare',
         h2: 'La planta: redibujada y en color',
         intro: 'El plano original es de terceros y no lo publicamos. A la izquierda ves la planta 2D redibujada desde nuestro modelo; a la derecha, el render cenital a color. Salen de la misma cámara ortográfica y los contornos coinciden con un margen de ±3 px, el grosor de la línea.',
@@ -84,7 +99,7 @@ export default {
       {
         type: 'steps',
         h2: '¿Cómo se hizo, paso a paso?',
-        intro: 'Cronología real del trabajo, hecha en una sola sesión. Solo damos tiempos donde los medimos: no cronometramos cada fase por separado, así que no nos inventamos horas. El proceso estándar, con sus plazos, está en [cómo funciona](@como-funciona).',
+        intro: 'Cronología real del trabajo, hecha en una sola sesión. Solo damos tiempos donde los medimos: no cronometramos cada fase por separado, así que no nos inventamos horas. El proceso estándar, con sus plazos, está en [cómo trabajamos un encargo](@como-funciona).',
         items: [
           {
             title: 'Lectura del plano',
@@ -101,12 +116,11 @@ export default {
           {
             title: 'Luz y renders',
             time: '≈ {{villa:renderMinutes}} min',
-            body: 'Luz de media tarde mediterránea: sol cálido y bajo, y cielo físico. [Cycles](@glosario#cycles) calculó las {{villa:renders}} imágenes en unos {{villa:renderMinutes}} minutos en total en una tarjeta gráfica RTX 4060, con control automático de píxeles quemados y de texturas que no cargan.',
+            body: 'Luz de media tarde mediterránea: sol cálido y bajo, y cielo físico. [Cycles](@glosario#cycles) calculó las {{villa:renders}} imágenes (6 vistas, las dos plantas y la imagen para redes) en unos {{villa:renderMinutes}} minutos en total en una tarjeta gráfica RTX 4060, con control automático de píxeles quemados y de texturas que no cargan.',
           },
           {
             title: 'Exportación a web y realidad aumentada',
-            time: '≈ 26 s',
-            body: 'Exportamos a [glTF](@glosario#gltf) y un proceso automático limpia, comprime y valida el modelo: el archivo web queda en {{file:glb}}, menos de un tercio del export original, con los mismos {{villa:triangles}} triángulos y {{villa:materials}} materiales. Rehacerlo entero después de un cambio tarda unos 26 segundos. Aparte generamos los [USDZ](@glosario#usdz) para iPhone y los [GLB](@glosario#glb) para Android.',
+            body: 'Exportamos a [glTF](@glosario#gltf) y un proceso automático limpia, comprime y valida el modelo: el archivo web queda en {{file:glb}}, menos de un tercio del export original, con los mismos {{villa:triangles}} triángulos y {{villa:materials}} materiales. Después de un cambio, basta con volver a ejecutar ese proceso, sin retoques a mano. Aparte generamos los [USDZ](@glosario#usdz) para iPhone y los [GLB](@glosario#glb) para Android.',
           },
           {
             title: 'Visor y comprobación',
@@ -134,7 +148,7 @@ export default {
       {
         type: 'ar',
         h2: 'Ábrela en realidad aumentada',
-        intro: 'En iPhone o iPad se abre con [AR Quick Look](@glosario#ar-quick-look); en Android, con [Scene Viewer](@glosario#scene-viewer). Elige la maqueta 1:20 para ponerla sobre la mesa o el tamaño real para recorrerla. En un ordenador, escanea el código QR con el móvil. Así funciona nuestra [realidad aumentada sin app](@servicio-ar).',
+        intro: 'En iPhone o iPad se abre con [AR Quick Look](@glosario#ar-quick-look); en Android, con [Scene Viewer](@glosario#scene-viewer). Elige la maqueta 1:20 para ponerla sobre la mesa o el tamaño real para recorrerla. En un ordenador, escanea el código QR con el móvil. Así funciona nuestra [realidad aumentada sin app](@servicio-ar); si no se abre, sigue [cómo ver una vivienda en realidad aumentada paso a paso](@guia-ar).',
       },
       { type: 'faq' },
     ],
@@ -149,7 +163,7 @@ export default {
       },
       {
         q: '¿Cuánto se tardó en hacer?',
-        a: 'El modelado, las texturas y la exportación se hicieron en una sola sesión de trabajo, y los {{villa:renders}} renders se calcularon en unos {{villa:renderMinutes}} minutos en total. Un encargo real de {{brand}} lleva {{delivery:maqueta}} porque incluye tu revisión: te enviamos el visor en un enlace privado y aplicamos {{revisions:maqueta}} antes de la entrega.',
+        a: 'El modelado, las texturas y la exportación se hicieron en una sola sesión de trabajo, y las {{villa:renders}} imágenes del caso (6 vistas, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Un encargo real de {{brand}} lleva {{delivery:maqueta}} porque incluye tu revisión: te enviamos el visor en un enlace privado y aplicamos {{revisions:maqueta}} antes de la entrega.',
       },
       {
         q: '¿Son exactas las superficies que aparecen en el visor?',
@@ -185,7 +199,8 @@ export default {
     title: 'Costa del Sol villa in 3D: a floor plan case study',
     description: 'Case study: a Costa del Sol villa modelled in 3D from a single floor plan, with no photos: {{villa:rooms}} furnished rooms, renders, web viewer and AR.',
     h1: 'Costa del Sol villa: from 2D floor plan to 3D',
-    lead: 'We modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², {{villa:renders}} renders, a web viewer and augmented reality. It is our anonymised demonstration case, and a project like it starts at {{price:maqueta}} + VAT.',
+    lead: '{{brand}} modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², renders, a web viewer and augmented reality. It is our anonymised demonstration case, and a project like it starts at {{price:maqueta}} + VAT.',
+    heroLead: 'A real Costa del Sol villa, modelled in 3D from a single 2D floor plan. Spin it here.',
     breadcrumb: 'Costa del Sol villa',
     card: {
       title: 'Case study: Costa del Sol villa',
@@ -196,12 +211,17 @@ export default {
       ['Scope', 'Upper floor of a villa, with two terraces'],
       ['Floor area', '≈ {{villa:interiorM2}} m² indoors and ≈ {{villa:terracesM2}} m² of terraces'],
       ['Rooms', '{{villa:rooms}}, including {{villa:bedrooms}} bedrooms'],
-      ['Renders', '{{villa:renders}}, in about {{villa:renderMinutes}} minutes of compute'],
+      ['Images', '{{villa:renders}} in about {{villa:renderMinutes}} minutes of compute in total'],
       ['Web model', '{{file:glb}}, with guided tour and cut-away mode'],
       ['Augmented reality', 'iPhone, iPad and Android: 1:20 and real size'],
       ['Work', 'A single session, from plan to export'],
     ],
     blocks: [
+      {
+        type: 'answer',
+        h2: 'What did we do with this villa?',
+        answer: '{{brand}} modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², renders, a web viewer and augmented reality. It is our anonymised demonstration case, and a project like it starts at {{price:maqueta}} + VAT.',
+      },
       {
         type: 'answer',
         h2: 'Why start from a floor plan rather than photos?',
@@ -219,12 +239,12 @@ export default {
           ['Terraces', '≈ {{villa:terracesM2}} m², across two terraces'],
           ['Rooms', '{{villa:rooms}}, counting terraces, stairs and laundry'],
           ['Bedrooms', '{{villa:bedrooms}}'],
-          ['Bathrooms', '{{villa:bathrooms}}'],
+          ['Bathrooms', '2: the en-suite, with a tub and rain shower, and a family bathroom'],
           ['Procedural PBR textures', '{{villa:textures}}, created for this model'],
           ['Materials', '{{villa:materials}}'],
           ['Triangles', '{{villa:triangles}}'],
           ['Wall height', '{{villa:wallHeight}} m; cut-away at {{villa:cutHeight}} m'],
-          ['Renders', '{{villa:renders}} images, about {{villa:renderMinutes}} minutes of Cycles in total'],
+          ['Images', '{{villa:renders}}: 6 views, top-down plan, line plan and social image; about {{villa:renderMinutes}} minutes of Cycles in total'],
           ['Web model', '{{file:glb}}, GLB with Meshopt compression and WebP textures'],
           ['AR on iPhone', '{{file:usdzMesa}} for the 1:20 tabletop model and {{file:usdzReal}} at real size (USDZ)'],
           ['AR on Android', '{{file:glbArMesa}} for the 1:20 tabletop model and {{file:glbAr}} at real size (GLB)'],
@@ -234,7 +254,7 @@ export default {
       {
         type: 'gallery',
         h2: 'The villa’s renders',
-        intro: 'We computed {{villa:renders}} images in Cycles under the same Mediterranean late-afternoon light. None is a photo or an AI-generated picture: each is a light calculation on the model. Six are shown here; the top-down plan and the line plan are in the comparison slider below. This is how we approach [real estate 3D rendering](@servicio-renders).',
+        intro: 'The case’s {{villa:renders}} images (6 views, the top-down plan, the line plan and the social media image) were computed in Cycles in about {{villa:renderMinutes}} minutes in total, under the same Mediterranean late-afternoon light. None is a photo or an AI-generated picture. The 6 views are shown here; both plans are in the comparison slider below. This is how we approach [real estate 3D rendering](@servicio-renders).',
         items: [
           { image: 'villa_maqueta_iso', alt: 'Cut-away 3D model of the villa’s upper floor at {{villa:cutHeight}} m, three-quarter aerial view with furnished rooms. 3D render of the anonymised Costa del Sol villa.', caption: 'Cut-away model at {{villa:cutHeight}} m, three-quarter aerial view. 3D render.' },
           { image: 'villa_salon_dormitorio', alt: '3D render of the living room with a corner sofa and the main bedroom of the anonymised villa, in late-afternoon light.', caption: 'Living room and main bedroom. 3D render.' },
@@ -245,6 +265,12 @@ export default {
         ],
       },
       {
+        type: 'video',
+        video: 'villa-turntable',
+        h2: 'What does the model look like in motion?',
+        caption: 'One camera orbit around the model, cut away at {{villa:cutHeight}} m, under the same light as the renders. 3D animation computed in Cycles, with no sound; it is not filmed footage.',
+      },
+      {
         type: 'compare',
         h2: 'The floor plan, redrawn and in colour',
         intro: 'The original plan belongs to a third party and we do not publish it. On the left is the 2D plan redrawn from our model; on the right, the colour top-down render. Both come from the same orthographic camera, and the outlines match within ±3 px, the width of the line.',
@@ -252,7 +278,7 @@ export default {
       {
         type: 'steps',
         h2: 'How was it made, step by step?',
-        intro: 'The real sequence of work, done in a single session. We only give times where we measured them: we did not time each stage separately, so we are not going to invent hours. The standard process and its timings are on [how it works](@como-funciona).',
+        intro: 'The real sequence of work, done in a single session. We only give times where we measured them: we did not time each stage separately, so we are not going to invent hours. The standard process and its timings are in [how we run a project](@como-funciona).',
         items: [
           {
             title: 'Reading the plan',
@@ -269,12 +295,11 @@ export default {
           {
             title: 'Lighting and renders',
             time: '≈ {{villa:renderMinutes}} min',
-            body: 'Mediterranean late-afternoon light: a warm, low sun and a physical sky. [Cycles](@glosario#cycles) computed the {{villa:renders}} images in about {{villa:renderMinutes}} minutes in total on an RTX 4060 graphics card, with automatic checks for blown-out pixels and textures that fail to load.',
+            body: 'Mediterranean late-afternoon light: a warm, low sun and a physical sky. [Cycles](@glosario#cycles) computed the {{villa:renders}} images (6 views, both plans and the social media image) in about {{villa:renderMinutes}} minutes in total on an RTX 4060 graphics card, with automatic checks for blown-out pixels and textures that fail to load.',
           },
           {
             title: 'Export for web and augmented reality',
-            time: '≈ 26 s',
-            body: 'We export to [glTF](@glosario#gltf) and an automated pipeline cleans, compresses and validates the model: the web file comes out at {{file:glb}}, under a third of the original export, with the same {{villa:triangles}} triangles and {{villa:materials}} materials. Rebuilding it from scratch after a change takes about 26 seconds. We also produce the [USDZ](@glosario#usdz) files for iPhone and the [GLB](@glosario#glb) files for Android.',
+            body: 'We export to [glTF](@glosario#gltf) and an automated pipeline cleans, compresses and validates the model: the web file comes out at {{file:glb}}, under a third of the original export, with the same {{villa:triangles}} triangles and {{villa:materials}} materials. After a change, we simply run that pipeline again, with no manual clean-up. We also produce the [USDZ](@glosario#usdz) files for iPhone and the [GLB](@glosario#glb) files for Android.',
           },
           {
             title: 'Viewer and checks',
@@ -302,7 +327,7 @@ export default {
       {
         type: 'ar',
         h2: 'Open it in augmented reality',
-        intro: 'On iPhone or iPad it opens in [AR Quick Look](@glosario#ar-quick-look); on Android, in [Scene Viewer](@glosario#scene-viewer). Choose the 1:20 model to place it on a table, or real size to walk through it. On a computer, scan the QR code with your phone. This is how our [app-free AR](@servicio-ar) works.',
+        intro: 'On iPhone or iPad it opens in [AR Quick Look](@glosario#ar-quick-look); on Android, in [Scene Viewer](@glosario#scene-viewer). Choose the 1:20 model to place it on a table, or real size to walk through it. On a computer, scan the QR code with your phone. This is how our [app-free AR](@servicio-ar) works; if it does not open, follow [how to view a property in AR, step by step](@guia-ar).',
       },
       { type: 'faq' },
     ],
@@ -317,7 +342,7 @@ export default {
       },
       {
         q: 'How long did it take?',
-        a: 'Modelling, texturing and export were done in a single work session, and the {{villa:renders}} renders took about {{villa:renderMinutes}} minutes to compute in total. A real {{brand}} project takes {{delivery:maqueta}} because it includes your review: we send you the viewer on a private link and apply {{revisions:maqueta}} before delivery.',
+        a: 'Modelling, texturing and export were done in a single work session, and the case’s {{villa:renders}} images (6 views, both plans and the social media image) took about {{villa:renderMinutes}} minutes to compute in total. A real {{brand}} project takes {{delivery:maqueta}} because it includes your review: we send you the viewer on a private link and apply {{revisions:maqueta}} before delivery.',
       },
       {
         q: 'Are the floor areas in the viewer exact?',

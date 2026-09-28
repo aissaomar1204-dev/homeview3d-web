@@ -58,7 +58,9 @@ let glossary = [];
   const g = await optionalImport(path.join(HERE, 'data', 'glossary.mjs'), { label: 'build/data/glossary.mjs', warn });
   if (g.mod) glossary = g.mod.glossary || g.mod.default || [];
 }
-const data = { pricing, villa, process: processData, deliverables, comingSoon, glossary, ui: UI };
+let videos = {};
+try { videos = JSON.parse(fs.readFileSync(path.join(HERE, 'generated', 'videos.json'), 'utf8')); } catch { /* optional: video blocks are skipped */ }
+const data = { pricing, villa, process: processData, deliverables, comingSoon, glossary, videos, ui: UI };
 
 const docs = new Map();
 const docFiles = new Map();
@@ -144,6 +146,7 @@ const fontPath = '/assets/fonts/archivo-var.woff2';
 const exists = (p) => fs.existsSync(path.join(ROOT, 'public', p));
 const pageAssets = {
   css: css.url,
+  cssModules: css.modules,
   js: { main: js.main && js.main.url, viewer: js.viewer && js.viewer.url },
   font: assets.assetMap.has(fontPath) ? assets.asset(fontPath) : null,
   meshopt: assets.asset(villa.viewer.meshoptDecoder),
@@ -153,7 +156,7 @@ const pageAssets = {
 };
 if (!pageAssets.font) warn(`! ${fontPath} not in public/: fonts fall back to the metric-matched system faces`);
 const themeColors = readThemeColors(path.join(ROOT, 'src', 'css', '00-tokens.css'));
-console.log(`  assets: ${pub.count} public file(s), css ${kb(css.bytes)}, js ${Object.entries(js).map(([k, v]) => `${k} ${kb(v.bytes)}`).join(', ') || 'none'}`);
+console.log(`  assets: ${pub.count} public file(s), css ${kb(css.bytes)} + modules ${css.modules.map((m) => `${m.name} ${kb(m.bytes)}`).join(', ') || 'none'}, js ${Object.entries(js).map(([k, v]) => `${k} ${kb(v.bytes)}`).join(', ') || 'none'}`);
 
 /* ─── 4. Render ───────────────────────────────────────────────── */
 const entries = [];
@@ -202,7 +205,7 @@ report();
 function baseContext(route, lang, doc) {
   return createContext({
     lang, route, doc, site, ui: UI, data, routes, routeById, rendered, docs,
-    assets: { asset: assets.asset, picture: assets.picture }, images: assets.images,
+    assets: { asset: assets.asset, picture: assets.picture, register: assets.register }, images: assets.images,
   });
 }
 
@@ -249,6 +252,8 @@ function renderPage(route, lang) {
     datePublished: doc.datePublished || null,
     dateModified: doc.dateModified || null,
     faq: ctx.collect.faq.slice(),
+    // Click-to-play videos on the page (video block): { key, name, caption, contentUrl, embedUrl, thumbnailUrl, duration, width, height }
+    videos: ctx.collect.videos.slice(),
     blocks: page.blocks || [],
     page, doc,
     headings: ctx.collect.headings.slice(),
@@ -269,8 +274,14 @@ function renderPage(route, lang) {
     }
   } else graph = fallbackGraph(entry);
 
+  // The date line closes the last content block: before the closing CTA band when there is one, so the band runs
+  // straight into the footer on one surface with a single hairline (D-22).
   const dl = index && layout !== 'bare' ? `<div class="wrap dateline-wrap">${dateLine(ctx)}</div>` : '';
-  const html = renderDocument(ctx, { main, layout, bodyClass: out.bodyClass, entry, graph, assets: pageAssets, themeColors, placeholders, dateline: dl });
+  let body = main;
+  const band = main.lastIndexOf('<section class="block block--cta cta-band"');
+  if (dl && band > -1 && !main.startsWith('<section class="block block--cta cta-band cta-band--inline"', band)) body = main.slice(0, band) + dl + main.slice(band);
+  else body = main + dl;
+  const html = renderDocument(ctx, { main: body, layout, bodyClass: out.bodyClass, entry, graph, assets: pageAssets, themeColors, placeholders, dateline: '' });
   entry.html = html;
   entry.wordCount = countWords(stripTags((html.match(/<main[\s\S]*<\/main>/) || [''])[0]));
   writePage(route[lang], html);
@@ -329,15 +340,16 @@ function report() {
   console.log(`  pages: ${Object.entries(counts).map(([l, n]) => `${l} ${n}`).join(' · ') || 'none'} (+ ${notFound.length} × 404)`);
   if (home) {
     const htmlB = Buffer.byteLength(home.html);
+    const cssB = [...home.html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].reduce((s, m) => s + size(m[1]), 0);
     const jsB = [...home.html.matchAll(/<script\b[^>]*src="([^"]+)"/g)].reduce((s, m) => s + size(m[1]), 0);
     const fontB = [...assets.assetMap.values()].filter((p) => p.endsWith('.woff2')).reduce((s, p) => s + size(p), 0);
     const lcp = (home.html.match(/<img\b[^>]*fetchpriority="high"[^>]*>/) || [''])[0];
     const lcpName = (home.images[0] || {}).name;
     const m = lcpName && assets.images && assets.images[lcpName];
     const lcpB = m && m.bytes ? (m.bytes['avif-1200'] || m.bytes['webp-1200'] || 0) : 0;
-    console.log(`  home: HTML ${kb(htmlB)} · CSS ${kb(css.bytes)} · initial JS ${kb(jsB)} · fonts ${kb(fontB)} · LCP image ${lcp ? (lcpB ? `${kb(lcpB)} (avif 1200w)` : 'n/a (no manifest bytes)') : 'none'}`);
+    console.log(`  home: HTML ${kb(htmlB)} · CSS ${kb(cssB)} (shared ${kb(css.bytes)}) · initial JS ${kb(jsB)} · fonts ${kb(fontB)} · LCP image ${lcp ? (lcpB ? `${kb(lcpB)} (avif 1200w)` : 'n/a (no manifest bytes)') : 'none'}`);
     if (htmlB > 60 * 1024) warn(`! home HTML ${kb(htmlB)} > 60 KB budget`);
-    if (css.bytes > 40 * 1024) warn(`! CSS ${kb(css.bytes)} > 40 KB budget`);
+    if (cssB > 40 * 1024) warn(`! home CSS ${kb(cssB)} > 40 KB budget`);
     if (js.main && js.main.bytes > 15 * 1024) warn(`! main.js ${kb(js.main.bytes)} > 15 KB budget`);
   }
   if (placeholders) console.warn('\n  ⚠  PLACEHOLDERS: brand/domain/contact/legal data in build/data/site.mjs are placeholders.\n     Every page is rendered "noindex, follow". Production deploys fail unless ALLOW_PLACEHOLDERS=1.');
@@ -366,7 +378,7 @@ function validateContent(allDocs) {
     figure: ['image', 'alt', 'caption'], gallery: ['items'], compare: [], viewer: [], ar: [], formats: [], embedCode: [],
     deliverables: [], comingSoon: [], process: [], needs: [], services: [], audiences: [], pages: ['ids'], pricing: ['variant'],
     calculator: [], guarantees: [], stat: ['value', 'label', 'source', 'year'], callout: ['body'], specs: ['items'],
-    sources: ['items'], faq: [], faqGroups: ['groups'], glossary: [], contactForm: [], cta: ['h2', 'body'],
+    sources: ['items'], faq: [], faqGroups: ['groups'], glossary: [], contactForm: [], cta: ['h2', 'body'], video: ['video', 'caption'],
   };
   const BANNED = [
     /\binnovador(a|es|as)?\b/i, /\brevolucionari[oa]s?\b/i, /de última generación/i, /solución integral/i, /\bsin precedentes\b/i,
@@ -464,6 +476,7 @@ function validateContent(allDocs) {
       if (b.type === 'answer' && b.answer) { const w = words(b.answer); if (w < 25 || w > 75) W(id, lang, `answer block "${b.h2}" ${w} words (40–60)`); }
       if (b.type === 'stat' && !/^https:\/\//.test(b.source?.url || '')) E(id, lang, 'stat needs source.url (https)');
       if (b.type === 'pricing' && !['excerpt', 'full'].includes(b.variant)) E(id, lang, 'pricing.variant must be excerpt|full');
+      if (b.type === 'video' && b.video && !videos[b.video]) E(id, lang, `video block: unknown video "${b.video}" (build/generated/videos.json)`);
     }
     if (L.faq) {
       if (!NO_FAQ.has(t) && (L.faq.length < 6 || L.faq.length > 10)) W(id, lang, `faq ${L.faq.length} items (6–10)`);

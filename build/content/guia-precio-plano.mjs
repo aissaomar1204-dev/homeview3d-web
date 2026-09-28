@@ -23,16 +23,16 @@ export default {
 
   es: {
     title: '¿Cuánto cuesta un plano 3D? Precios en España 2026',
-    description: 'Un plano 3D cuesta en España de 100 a 800 € por planta según el nivel, y 40 € en plataformas online. Precios 2026 con fuentes, factores y ejemplos.',
+    description: 'Un plano 3D cuesta en España de 100 a 800 € por planta según el nivel, y 40 € en plataformas en línea. Precios 2026 con fuentes, factores y ejemplos.',
     h1: '¿Cuánto cuesta un plano 3D de una vivienda?',
-    lead: 'Un plano 3D de vivienda cuesta en España entre 100 y 800 € por planta, según las tarifas publicadas en 2026: de 100 a 250 € uno básico, de 250 a 400 € uno amueblado y de 400 a 800 € o más uno fotorrealista. Las plataformas online bajan a 40 €. En {{brand}}, desde {{price:plano3d}} + IVA en {{delivery:plano3d}}.',
+    lead: 'Un plano 3D cuesta en España entre 100 y 800 € por planta, según las tarifas publicadas en 2026: de 100 a 250 € uno básico, de 250 a 400 € uno amueblado y de 400 a 800 € o más uno fotorrealista. En línea, desde 40 €. En {{brand}}, desde {{price:plano3d}} + IVA en {{delivery:plano3d}}.',
     breadcrumb: 'Precio de un plano 3D',
     card: {
       title: '¿Cuánto cuesta un plano 3D?',
-      summary: 'Precios por planta en 2026, de la plataforma online al plano fotorrealista, con fuentes, factores y tres ejemplos.',
+      summary: 'Precios por planta en 2026, de la plataforma en línea al plano fotorrealista, con fuentes, factores y tres ejemplos.',
     },
     facts: [
-      ['Plataforma online', '40 € por planta'],
+      ['Plataforma en línea', '40 € por planta'],
       ['Plano 3D básico', '100 a 250 €'],
       ['Amueblado estándar', '250 a 400 €'],
       ['Fotorrealista', '400 a 800 € o más'],
@@ -50,7 +50,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Cuánto vale hacer una casa en 3D?',
-        answer: 'Hacer una casa en 3D vale entre 100 y 800 € por planta si hablamos de un plano 3D, es decir, una imagen de la vivienda vista desde arriba o en perspectiva. El precio depende del realismo, del mobiliario y de la superficie. Una plataforma online cobra 40 € por planta; un estudio, de 250 a 400 € por un plano amueblado estándar.',
+        answer: 'Hacer una casa en 3D vale entre 100 y 800 € por planta si hablamos de un plano 3D, es decir, una imagen de la vivienda vista desde arriba o en perspectiva. El precio depende del realismo, del mobiliario y de la superficie. Una plataforma en línea cobra 40 € por planta; un estudio, de 250 a 400 € por un plano amueblado estándar.',
         body: 'Conviene separar dos productos que a menudo se llaman igual. Un **plano 3D** es una imagen: la planta con suelos, muros cortados y muebles. Un **modelo 3D** es la geometría de toda la vivienda, de la que salen el plano, los renders, un [visor que el comprador gira](@servicio-tour) y la [realidad aumentada](@servicio-ar).\n\nEsta guía trata del primero. Si quieres el precio de imágenes interiores y exteriores, está en [cuánto cuesta un render 3D en España](@guia-precio-render); nuestras tarifas completas, en [precios](@precios).',
       },
       {
@@ -60,20 +60,20 @@ export default {
         caption: 'Precio de un plano 3D por planta en España (septiembre de 2026)',
         head: ['Tipo de plano 3D', 'Precio publicado', 'Fuente'],
         rows: [
-          ['A color, plataforma online', '40 € por planta, en 24 horas', `[boxbrownie.com](${SRC.box})`],
-          ['A medida, plataforma online', 'Desde 200 €, en 48 horas', `[boxbrownie.com](${SRC.box})`],
-          ['A color y amueblado, hasta 60 m²', '119,95 € por planta', `[homestagerdesign.com](${SRC.hsd})`],
+          ['A color, plataforma en línea', '40 € por planta, en 48 horas', `[boxbrownie.com](${SRC.box})`],
+          ['A medida, plataforma en línea', 'Desde 200 €', `[boxbrownie.com](${SRC.box})`],
+          ['A color y amueblado, plano de unos 60 m²', '119,95 € por planta', `[homestagerdesign.com](${SRC.hsd})`],
           ['Básico, sin mobiliario detallado', '100 a 250 €', `[inmofotomadrid.es](${SRC.imf}), 12 feb 2026`],
           ['Estándar, con mobiliario básico y colores', '250 a 400 €', `[inmofotomadrid.es](${SRC.imf}), 12 feb 2026`],
           ['Premium, fotorrealista', '400 a 800 € o más', `[inmofotomadrid.es](${SRC.imf}), 12 feb 2026`],
           ['Planta cenital con cotas y materiales', '300 a 800 €', `[estudio3dbs.com](${SRC.bs}), 2026`],
           ['Plano 3D inmobiliario', 'Desde 165 € + IVA', `[tucasaapunto.com](${SRC.tcp})`],
-          ['Plano 3D «humanizado»', 'Desde 250 €', `[studiomkdesign.es](${SRC.mk})`],
+          ['Plano 3D «humanizado»', 'Desde 250 € por ambiente', `[studiomkdesign.es](${SRC.mk})`],
           ['Render de plano, low-cost', '50 a 100 € (estimado)', `[renders.es](${SRC.rend})`],
           ['Plano a render con IA, en suscripción', 'Unos 0,58 € por imagen (2 créditos de un plan de 29 €/mes con 100)', `[pedra.ai](${SRC.pedra})`],
           ['Plano 3D de {{brand}}', '{{price:plano3d}} + IVA hasta 150 m² y {{price:plano3d:1}} + IVA hasta 300 m²', '[Nuestros precios](@precios)'],
         ],
-        note: 'BoxBrownie y Pedra son plataformas online; el resto son estudios y fotógrafos que trabajan en España. Solo tucasaapunto.com y {{brand}} dicen de forma expresa que el precio es sin IVA; en las demás fuentes, confírmalo. renders.es indica que sus precios son estimados.',
+        note: 'BoxBrownie y Pedra son plataformas en línea; el resto son estudios y fotógrafos que trabajan en España. Solo tucasaapunto.com y {{brand}} dicen de forma expresa que el precio es sin IVA; en las demás fuentes, confírmalo. renders.es indica que sus precios son estimados.',
       },
       {
         type: 'table',
@@ -82,7 +82,7 @@ export default {
         caption: 'Qué incluye un plano 3D según su precio',
         head: ['Nivel', 'Qué recibes', 'Para qué sirve'],
         rows: [
-          ['Plataforma online, unos 40 €', 'Una imagen cenital a color, en 24 horas', 'Anuncios de segunda mano que necesitan volumen y rapidez'],
+          ['Plataforma en línea, unos 40 €', 'Una imagen cenital a color, en 48 horas', 'Anuncios de segunda mano que necesitan volumen y rapidez'],
           ['Básico, de 100 a 250 €', 'Suelos y muros en 3D, sin mobiliario detallado', 'Presentaciones iniciales y catálogos sencillos'],
           ['Estándar, de 250 a 400 €', 'Mobiliario básico, colores y estancias rotuladas', 'Fichas de venta y portales'],
           ['Premium, de 400 a 800 € o más', 'Materiales, luz y sombras fotorrealistas', 'Dosieres comerciales y campañas de promoción'],
@@ -112,7 +112,7 @@ export default {
         h2: '¿Cuánto costaría en tres viviendas concretas?',
         intro: 'Tres ejemplos calculados con las tarifas publicadas de esta guía. Sirven para ordenar el presupuesto; el precio final lo da cada proveedor.',
         caption: 'Tres ejemplos de precio de un plano 3D (septiembre de 2026)',
-        head: ['Vivienda', 'Plataforma online', 'Estudio, nivel estándar', 'Con {{brand}}'],
+        head: ['Vivienda', 'Plataforma en línea', 'Estudio, nivel estándar', 'Con {{brand}}'],
         rows: [
           ['Piso de 90 m² en una planta', '40 €', '250 a 400 €', '{{price:plano3d}} + IVA'],
           ['Adosado de 2 plantas de 80 m² cada una', '80 € (2 × 40 €)', '500 a 800 € (2 × 250 a 400 €)', '{{price:plano3d}} + IVA por cada planta'],
@@ -130,7 +130,7 @@ export default {
         type: 'answer',
         h2: '¿Dónde encaja nuestro plano 3D?',
         answer: '{{brand}} cobra {{price:plano3d}} + IVA por planta de hasta 150 m² y {{price:plano3d:1}} + IVA hasta 300 m². Incluye planta cenital a color y vista isométrica amueblada en 4K, planta 2D redibujada en limpio y {{revisions:plano3d}}, con entrega en {{delivery:plano3d}}. Está en la franja básica del mercado, pero sale de un modelo 3D real.',
-        body: 'Que salga de un modelo tiene dos consecuencias prácticas. La cenital y la isométrica coinciden entre sí porque son dos cámaras sobre la misma geometría, no dos dibujos. Y si más adelante quieres renders, visor o realidad aumentada de esa vivienda, el modelo ya existe.\n\nTambién hay casos en los que no somos la mejor opción. Si solo necesitas una cenital rápida de un piso de segunda mano para completar un anuncio, una plataforma online de 40 € puede bastarte.',
+        body: 'Que salga de un modelo tiene dos consecuencias prácticas. La cenital y la isométrica coinciden entre sí porque son dos cámaras sobre la misma geometría, no dos dibujos. Y si más adelante quieres renders, visor o realidad aumentada de esa vivienda, el modelo ya existe.\n\nTambién hay casos en los que no somos la mejor opción. Si solo necesitas una cenital rápida de un piso de segunda mano para completar un anuncio, una plataforma en línea de 40 € puede bastarte.',
       },
       {
         type: 'figure',
@@ -168,7 +168,7 @@ export default {
           { label: 'boxbrownie.com: planos 2D y 3D', url: SRC.box, note: 'Consultado el 28 sep 2026.' },
           { label: 'homestagerdesign.com: planos 3D', url: SRC.hsd, note: 'Precio por plano de 60 m² y planta. Consultado el 28 sep 2026.' },
           { label: 'inmofotomadrid.es: ¿Cuánto cuesta un plano en 3D? (12 feb 2026)', url: SRC.imf, note: 'Precios orientativos. Consultado el 28 sep 2026.' },
-          { label: 'estudio3dbs.com: precio de un render 3D profesional en España (2026)', url: SRC.bs, note: 'Incluye la planta 3D con cotas y materiales. Consultado el 28 sep 2026.' },
+          { label: 'estudio3dbs.com: precio de un render 3D profesional en España (2026)', url: SRC.bs, note: 'Incluye el plano 3D con cotas y materiales. Consultado el 28 sep 2026.' },
           { label: 'tucasaapunto.com: plano 3D', url: SRC.tcp, note: 'Consultado el 28 sep 2026.' },
           { label: 'studiomkdesign.es: precios', url: SRC.mk, note: 'Consultado el 28 sep 2026.' },
           { label: 'renders.es: precios', url: SRC.rend, note: 'Precios estimados según la propia página. Consultado el 28 sep 2026.' },
@@ -189,7 +189,7 @@ export default {
       },
       {
         q: '¿Cuánto se tarda en hacer un plano 3D?',
-        a: 'Entre 24 horas y unos pocos días. BoxBrownie entrega su plano 3D estándar en 24 horas y el plano a medida en 48, y homestagerdesign.com indica desde 72 horas. {{brand}} entrega el plano 3D en {{delivery:plano3d}} y la maqueta 3D completa en {{delivery:maqueta}}, con opción de urgencia en 48 horas por un recargo del {{extra:urgente}} sobre el total.',
+        a: 'Entre 48 horas y unos pocos días. BoxBrownie entrega su plano 3D a color en 48 horas y homestagerdesign.com indica desde 72 horas. {{brand}} entrega el plano 3D en {{delivery:plano3d}} y la maqueta 3D completa en {{delivery:maqueta}}, con opción de urgencia en 48 horas por un recargo del {{extra:urgente}} sobre el total.',
       },
       {
         q: '¿Qué necesito para encargar un plano 3D?',
@@ -209,7 +209,7 @@ export default {
       },
       {
         q: '¿Cuánto cuesta una casa en 3D completa, con renders y visor?',
-        a: 'Un modelo 3D completo de la vivienda, con renders, visor web y realidad aumentada, cuesta en {{brand}} desde {{price:maqueta}} + IVA hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m², con entrega en {{delivery:maqueta}}. Incluye 6 renders en 4K, la planta cenital a color y {{revisions:maqueta}}. Los rangos de mercado de los renders están en nuestra guía de precios de render.',
+        a: 'Un modelo 3D completo de la vivienda, con renders, visor web y realidad aumentada, cuesta en {{brand}} desde {{price:maqueta}} + IVA hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m², con entrega en {{delivery:maqueta}}. Incluye 6 renders en 4K, la planta cenital a color y {{revisions:maqueta}}. Los rangos de mercado de los renders están en [cuánto cuesta un render 3D en España](@guia-precio-render).',
       },
     ],
     related: ['guia-precio-render', 'servicio-plano', 'guia-plano-2d-3d', 'precios', 'caso-villa'],

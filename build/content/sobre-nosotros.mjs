@@ -62,7 +62,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Qué hace la IA en nuestro trabajo y qué no?',
-        answer: 'La IA nos ayuda a programar, no a dibujar. Usamos Claude, de Anthropic, para la dirección técnica del proyecto y para escribir y depurar los scripts de Python. La geometría la construyen esos scripts a partir de las medidas de tu plano y las imágenes se calculan con Cycles, así que no hay ventanas inventadas.',
+        answer: 'La IA nos ayuda a programar, no a dibujar. Usamos Claude, de Anthropic, para escribir y depurar los scripts de Python. La geometría la construyen esos scripts a partir de las medidas de tu plano y las imágenes se calculan con Cycles, así que no hay ventanas inventadas.',
         body: 'Esta es nuestra política, por escrito:\n\n- **Geometría construida, no generada.** Cada muro está donde dice el plano. Si una medida es estimada, la marcamos con ≈.\n- **Revisión humana.** Una persona revisa cada entrega contra el plano antes de enviarla.\n- **Vídeos con IA, etiquetados.** Cuando lancemos los vídeos cinematográficos generados con IA a partir de nuestros renders, que todavía no están disponibles, irán etiquetados como contenido generado con IA, en línea con las obligaciones de transparencia del [artículo 50 del Reglamento europeo de inteligencia artificial](' + SRC.aiActEs + ').\n- **Staging etiquetado.** El mobiliario virtual se entrega identificado como recreación virtual, para que tu anuncio lo indique.\n\nSi quieres la comparación completa entre un modelo 3D y las herramientas de IA, está en [IA o modelo 3D real](@guia-ia-vs-3d).',
       },
       {
@@ -124,7 +124,7 @@ export default {
       },
       {
         q: '¿Qué pasa con mi plano cuando termina el encargo?',
-        a: 'Lo conservamos mientras dura el encargo y sus revisiones, sin publicarlo ni compartirlo con nadie para otros fines. Si quieres que lo borremos, basta con pedirlo por email a {{email}}. {{brand}} trata los datos conforme al RGPD; el detalle está en la [política de privacidad](@privacidad).',
+        a: 'Lo conservamos mientras dura el encargo y el alojamiento del visor; si no llegas a encargar nada, 12 meses desde nuestro último contacto. No lo publicamos ni lo compartimos con nadie para otros fines, y puedes pedir que lo borremos antes escribiendo a {{email}}. {{brand}} trata los datos conforme al RGPD; el detalle está en la [política de privacidad](@privacidad).',
       },
       {
         q: '¿Vais a usar IA generativa en el futuro?',
@@ -168,7 +168,7 @@ export default {
         type: 'answer',
         h2: 'Who are we?',
         answer: 'A small, new studio, founded in 2026, working from the Costa del Sol for agents, developers and architects across Spain and abroad. We do not have a client portfolio to show yet, and we are not going to make one up: our proof is the villa you can explore on this site, with its figures, its method and its limits.',
-        body: '{{entity}}\n\nThe studio grew out of something you can see on any property portal: plenty of off-plan units, empty homes and properties marketed to buyers who live abroad go online with little more than a floor plan. And the alternatives force a choice between a cheap flat image, a visualisation studio that takes weeks and publishes no prices, or an AI tool that restyles photos but has no idea where a window goes.\n\nWe do something else: we build the home’s 3D model from its floor plan, to scale, and everything else comes out of that model. The renders, the [interactive 3D viewer](@servicio-tour) and the [augmented reality](@servicio-ar) all show the same home, with the same furniture and the same light.',
+        body: '{{entity}}\n\nThe studio grew out of something you can see on any property portal: plenty of off-plan units, empty homes and properties marketed to buyers who live abroad go online with little more than a floor plan. And the alternatives force a choice between a cheap, static image, a visualisation studio that takes weeks and publishes no prices, or an AI tool that restyles photos but has no idea where a window goes.\n\nWe do something else: we build the home’s 3D model from its floor plan, to scale, and everything else comes out of that model. The renders, the [interactive 3D viewer](@servicio-tour) and the [augmented reality](@servicio-ar) all show the same home, with the same furniture and the same light.',
       },
       {
         type: 'steps',
@@ -186,7 +186,7 @@ export default {
       {
         type: 'answer',
         h2: 'What does AI do in our work, and what does it not do?',
-        answer: 'AI helps us write code, not draw. We use Anthropic’s Claude for the project’s technical direction and to write and debug the Python scripts. Those scripts build the geometry from your plan’s measurements, and the images are computed in Cycles, so there are no made-up windows.',
+        answer: 'AI helps us write code, not draw. We use Anthropic’s Claude to write and debug the Python scripts. Those scripts build the geometry from your plan’s measurements, and the images are computed in Cycles, so there are no made-up windows.',
         body: 'This is our policy, in writing:\n\n- **Built geometry, not generated.** Every wall sits where the plan puts it. If a measurement is estimated, we mark it with ≈.\n- **Human review.** A person checks every delivery against the plan before it goes out.\n- **AI videos, labelled.** When we launch cinematic videos generated with AI from our renders, which are not available yet, they will be labelled as AI-generated content, in line with the transparency obligations in [Article 50 of the EU Artificial Intelligence Act](' + SRC.aiActEn + ').\n- **Staging, labelled.** Virtual furniture is delivered marked as a virtual recreation, so your listing can say so.\n\nFor the full comparison between a real 3D model and AI tools, see [AI floor plan to 3D](@guia-ia-vs-3d).',
       },
       {
@@ -248,7 +248,7 @@ export default {
       },
       {
         q: 'What happens to my floor plan once the project is finished?',
-        a: 'We keep it while the project and its revisions last, without publishing it or sharing it with anyone for other purposes. If you want it deleted, just ask by email at {{email}}. {{brand}} handles personal data under the GDPR; the details are in our [privacy policy](@privacidad).',
+        a: 'We keep it while the project and its viewer hosting last; if no project follows, for 12 months from our last contact. We never publish it or share it for other purposes, and you can ask us to delete it sooner by emailing {{email}}. {{brand}} handles personal data under the GDPR; the details are in our [privacy policy](@privacidad).',
       },
       {
         q: 'Will you use generative AI in the future?',

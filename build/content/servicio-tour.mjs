@@ -29,7 +29,7 @@ export default {
       ['Entrada', 'Plano 2D, sin visita ni cámara 360'],
       ['Funciones', 'Estancias con m², recorrido guiado, modo maqueta y luz'],
       ['Publicación', 'Enlace, iframe en tu web y código QR'],
-      ['Peso del modelo', '{{file:glb}}, solo al pulsar «Explorar en 3D»'],
+      ['Peso del modelo', '{{file:glb}}, solo si el visitante pulsa el botón del visor'],
       ['Alojamiento', '12 meses incluidos; después, {{extra:hosting}} + IVA al año'],
       ['Realidad aumentada', 'Incluida en iPhone, iPad y Android, sin app'],
       ['Precio desde', '{{price:maqueta}} + IVA, en la maqueta completa'],
@@ -82,14 +82,14 @@ export default {
       {
         type: 'answer',
         h2: '¿El visor 3D ralentiza mi web?',
-        answer: 'No. La página carga solo una imagen fija; el código del visor y el modelo de {{file:glb}} se descargan cuando alguien pulsa «Explorar en 3D». Así la ficha abre igual de rápido, la velocidad que mide Google no se resiente y solo gasta datos quien quiere recorrer la vivienda.',
+        answer: 'No. La página carga solo una imagen fija; el código del visor y el modelo de {{file:glb}} se descargan solo cuando el visitante pulsa el botón del visor. Así la ficha abre igual de rápido, la velocidad que mide Google no debería resentirse y solo gasta datos quien quiere recorrer la vivienda.',
         body: 'Lo mismo pasa con el código para incrustar: el iframe no se carga hasta que el visitante se acerca a esa parte de la página.',
       },
       {
         type: 'answer',
         h2: '¿Para qué sirve un tour virtual si el comprador vive fuera?',
         answer: 'Para que decida si merece la pena la visita antes de coger un avión. El comprador que vive en Londres, Ámsterdam o Estocolmo recorre la vivienda desde su casa, entiende la distribución y llega con las dudas resueltas. Tú dedicas las visitas a quien de verdad encaja y compartes el enlace en segundos.',
-        body: 'Cómo encaja en el trabajo diario de una agencia, con portales, WhatsApp y captación de exclusivas, lo contamos en [soluciones para inmobiliarias](@sol-inmobiliarias).',
+        body: 'Cómo encaja en el trabajo diario de una agencia, con portales, WhatsApp y captación de exclusivas, lo contamos en [soluciones para inmobiliarias](@sol-inmobiliarias). Si vendes obra nueva a compradores de fuera, sigue con [cómo vender una promoción antes de construirla](@guia-sobre-plano).\n\nTrabajamos en remoto desde Marbella para toda España, con especial foco en la costa malagueña: [tour virtual en Marbella](@zona-marbella), [Málaga capital](@zona-malaga) y el resto de la [Costa del Sol](@zona-costa-del-sol).',
       },
       {
         type: 'stat',
@@ -127,7 +127,7 @@ export default {
       },
       {
         q: '¿Cuánto tiempo está publicado el visor?',
-        a: 'La maqueta 3D completa de {{brand}} incluye 12 meses de alojamiento del visor, con su enlace y su código para incrustar. Si la vivienda sigue a la venta, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año. Con la maqueta recibes también los archivos del modelo en GLB y USDZ.',
+        a: 'La maqueta 3D completa de {{brand}} incluye 12 meses de alojamiento del visor, con su enlace y su código para incrustar. Si la vivienda sigue a la venta, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año. Con la maqueta recibes también el modelo en GLB, USDZ y BLEND.',
       },
       {
         q: '¿El tour virtual funciona en el móvil?',
@@ -155,13 +155,13 @@ export default {
 
   en: {
     title: 'Interactive 3D floor plans to embed in your listings',
-    description: 'An interactive 3D floor plan built from the 2D plan, with a room list, guided tour, cut-away view and embed code. From {{price:maqueta}} + VAT.',
+    description: 'An interactive 3D floor plan built from the 2D plan, with a room list, guided tour, cut-away mode and embed code. From {{price:maqueta}} + VAT.',
     h1: 'Interactive 3D floor plans for property listings',
     lead: 'We build an interactive 3D floor plan from the home’s 2D plan, with no visit and no camera: a web viewer buyers tour room by room, with the walls cut away. Share it as a link or embed it on your site. Included in the complete 3D model, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
     breadcrumb: 'Interactive 3D floor plans',
     card: {
       title: 'Interactive 3D floor plans',
-      summary: 'An embeddable 3D viewer for your listing, with rooms, a guided tour and a cut-away view, built from the plan.',
+      summary: 'An embeddable 3D viewer for your listing, with rooms, a guided tour and cut-away mode, built from the plan.',
     },
     hero: {
       image: 'villa_muros_completos',
@@ -170,9 +170,9 @@ export default {
     },
     facts: [
       ['Input', '2D floor plan, no visit and no 360 camera'],
-      ['Features', 'Rooms with m², guided tour, cut-away view and lighting'],
+      ['Features', 'Rooms with m², guided tour, cut-away mode and lighting'],
       ['Publishing', 'Link, iframe embed and QR code'],
-      ['Model size', '{{file:glb}}, loaded only when “Explore in 3D” is tapped'],
+      ['Model size', '{{file:glb}}, loaded only when the visitor taps the viewer button'],
       ['Hosting', '12 months included; then {{extra:hosting}} + VAT a year'],
       ['Augmented reality', 'Included on iPhone, iPad and Android, no app'],
       ['Price from', '{{price:maqueta}} + VAT, with the complete model'],
@@ -183,18 +183,18 @@ export default {
         type: 'answer',
         h2: 'What is an interactive 3D floor plan?',
         answer: 'It is a 3D model of the home that buyers explore in their browser: they rotate it, zoom in, jump from room to room and see the layout from above with the walls cut away. Unlike a 360 tour, the home does not need to exist and nobody visits it with a camera: the floor plan is enough.',
-        body: 'Listings call it many things: a 3D walkthrough, a dollhouse view, a virtual tour from the floor plan. It runs on phones, tablets and computers, and on a phone buyers can switch to [app-free augmented reality](@servicio-ar) with one tap.',
+        body: 'Listings call it many things: a 3D walkthrough, a 3D virtual tour, a virtual tour from the floor plan. It runs on phones, tablets and computers, and on a phone buyers can switch to [app-free augmented reality](@servicio-ar) with one tap.',
       },
       {
         type: 'viewer',
         h2: 'Try the viewer with our demo villa',
-        intro: 'This is the same viewer we deliver: {{villa:rooms}} rooms with their floor areas, a guided tour, the cut-away view and a lighting control. What you see first is an image; the model ({{file:glb}}) only downloads when you tap.',
+        intro: 'This is the same viewer we deliver: {{villa:rooms}} rooms with their floor areas, a guided tour, cut-away mode and a lighting control. What you see first is an image; the model ({{file:glb}}) only downloads when you tap.',
       },
       {
         type: 'answer',
-        h2: 'What is the cut-away (dollhouse) view?',
-        answer: 'It is a view that slices every wall at {{villa:cutHeight}} m, like an architect’s model. From above, buyers see all the furnished rooms at once, how they connect and where the terraces are. One tap restores the full {{villa:wallHeight}} m walls, so they can see the home as it will be lived in.',
-        body: 'The [cut-away view](@glosario#modo-maqueta) sits alongside a guided tour that stops at each room with its name and floor area, a top-down plan view and a lighting control. The room list is also plain text on the page, so search engines and screen readers can read it.',
+        h2: 'What is cut-away mode in the viewer?',
+        answer: 'It is a mode that slices every wall at {{villa:cutHeight}} m, like an architect’s model. From above, buyers see all the furnished rooms at once, how they connect and where the terraces are. One tap restores the full {{villa:wallHeight}} m walls, so they can see the home as it will be lived in.',
+        body: '[Cut-away mode](@glosario#modo-maqueta), close to what Matterport calls a dollhouse view, sits alongside a guided tour that stops at each room with its name and floor area, a top-down plan view and a lighting control. The room list is also plain text on the page, so search engines and screen readers can read it.',
       },
       {
         type: 'embedCode',
@@ -217,7 +217,7 @@ export default {
           ['What it needs', 'The 2D floor plan', 'A finished home, a 360 camera and a visit', 'A finished home, a scanning camera and a visit'],
           ['Off-plan, not yet built', 'Yes', 'No', 'No'],
           ['What it shows', 'The home furnished and finished to the plan', 'The home as it was on the day', 'The home as it was, with scanned measurements'],
-          ['Whole-home overview', 'Cut-away view with sliced walls', 'No: buyers hop between panoramas', 'Yes, the scan’s dollhouse view'],
+          ['Whole-home overview', 'Cut-away mode with sliced walls', 'No: buyers hop between panoramas', 'Yes, the scan’s dollhouse view'],
           ['App-free augmented reality', 'Included', 'No', 'Depends on the platform'],
         ],
         note: 'If the home exists and its finishes are a selling point, a scan shows reality as it is and is the honest choice. When each one makes sense: [3D model vs Matterport](@guia-matterport).',
@@ -225,20 +225,20 @@ export default {
       {
         type: 'answer',
         h2: 'Will the 3D viewer slow down my website?',
-        answer: 'No. The page loads a single still image; the viewer code and the {{file:glb}} model only download when someone taps “Explore in 3D”. The listing opens just as fast, Core Web Vitals are unaffected, and only buyers who want to walk through the home use their data.',
+        answer: 'No. The page loads a single still image; the viewer code and the {{file:glb}} model only download when the visitor taps the viewer button. The listing opens just as fast, Core Web Vitals should not suffer, and only buyers who want to walk through the home use their data.',
         body: 'The embed behaves the same way: the iframe does not load until the visitor scrolls to it.',
       },
       {
         type: 'answer',
         h2: 'Why does it matter when buyers live abroad?',
         answer: 'Because they can decide whether a viewing is worth a flight. A buyer in London, Amsterdam or Stockholm tours the home from their sofa, understands the layout and arrives with their questions answered. You spend viewing days on buyers who are a real fit, and you share the link in seconds.',
-        body: 'How it fits an agency’s daily routine, from portal listings to WhatsApp follow-ups, is covered in [3D for estate agents](@sol-inmobiliarias).',
+        body: 'How it fits an agency’s daily routine, from portal listings to WhatsApp follow-ups, is covered in [3D for estate agents](@sol-inmobiliarias).\n\nWe work remotely from our Marbella base for clients across Spain and abroad; for the local market, see [3D tours and renders in Marbella](@zona-marbella).',
       },
       {
         type: 'stat',
         value: '37.01%',
         label: 'of home sales registered in Málaga province in Q2 2026 were to foreign buyers; only Alicante had a higher share (46.43%)',
-        source: { label: 'Colegio de Registradores (Spanish Land Registry), Estadística Registral Inmobiliaria', url: ERI },
+        source: { label: 'Colegio de Registradores (Spain’s association of land registrars), Estadística Registral Inmobiliaria', url: ERI },
         year: 'Q2 2026',
       },
       {
@@ -258,7 +258,7 @@ export default {
     faq: [
       {
         q: 'What can I use instead of Matterport?',
-        a: 'When the home cannot be scanned, because it is off-plan, tenanted, abroad or unfinished, a 3D model built from the floor plan does the same job. {{brand}} delivers it with a guided tour, a cut-away view and app-free AR, from {{price:maqueta}} + VAT in {{delivery:maqueta}}. If the home exists and looks good, a scan remains a fair choice.',
+        a: 'When the home cannot be scanned, because it is off-plan, tenanted, abroad or unfinished, a 3D model built from the floor plan does the same job. {{brand}} delivers it with a guided tour, cut-away mode and app-free AR, from {{price:maqueta}} + VAT in {{delivery:maqueta}}. If the home exists and looks good, a scan remains a fair choice.',
       },
       {
         q: 'Can I get a 3D virtual tour from a floor plan alone?',
@@ -270,7 +270,7 @@ export default {
       },
       {
         q: 'How long is the viewer hosted?',
-        a: 'The {{brand}} complete 3D model includes 12 months of viewer hosting, with its link and embed code. If the property is still on the market, renewal costs {{extra:hosting}} + VAT per home per year. The complete model also comes with its GLB and USDZ files.',
+        a: 'The {{brand}} complete 3D model includes 12 months of viewer hosting, with its link and embed code. If the property is still on the market, renewal costs {{extra:hosting}} + VAT per home per year. The complete model comes with GLB, USDZ and BLEND files.',
       },
       {
         q: 'Does the 3D viewer work on phones?',
@@ -286,7 +286,7 @@ export default {
       },
       {
         q: 'How much does a virtual tour from a floor plan cost?',
-        a: 'At {{brand}}, the interactive 3D floor plan comes with the complete 3D model, from {{price:maqueta}} + VAT per home up to 150 m², together with 6 renders and augmented reality. It includes 12 months of hosting, then {{extra:hosting}} + VAT a year. For agency portfolios there is a 5-home pack at {{volume}} + VAT.',
+        a: 'At {{brand}}, the interactive 3D floor plan comes with the complete 3D model, from {{price:maqueta}} + VAT per home up to 150 m², together with 6 renders and augmented reality. It includes 12 months of hosting, then {{extra:hosting}} + VAT a year. For agency portfolios there is a 5-home Portfolio pack at {{volume}} + VAT.',
       },
     ],
     related: ['servicio-ar', 'servicio-plano', 'caso-villa', 'precios', 'guia-matterport'],

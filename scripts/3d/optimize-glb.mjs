@@ -8,6 +8,8 @@
 //   public/models/villa_tamano_real.usdz iOS AR Quick Look, copied as-is from source/villa3d/ar/
 //   public/models/villa.report.json      sizes/stats consumed by the site build (schema contentSize, case-study figures)
 //
+// Usage: node scripts/3d/optimize-glb.mjs [--only web,ar,arMaqueta]   (no flag = every output)
+//
 // Invariants (checked again by verify-glb.mjs):
 //   - Material NAMES are preserved. The viewer's "maqueta" cut finds materials whose name ends with "_Alto".
 //     Materials are only merged when name AND every property are identical (dedup keepUniqueNames:true),
@@ -38,8 +40,10 @@ const CONFIG = {
     // volume = one grid for all nodes, so no cracks between walls/floors of different meshes.
     meshopt: { level: process.env.MESHOPT_LEVEL || 'high', quantizationVolume: 'scene', quantizePosition: Number(process.env.QUANT_POS || 16), quantizeNormal: 10, quantizeTexcoord: 12 },
   },
-  // Scene Viewer: plain glTF, JPEG/PNG only, textures <= 2048 px.
-  ar: { textures: { format: 'jpeg', colorMax: 2048, normalMax: 1024, colorQuality: 85, normalQuality: 90, overrides: [NOISY_NORMALS] } },
+  // Scene Viewer: plain glTF, JPEG/PNG only. Colour capped at 1024 px like the tabletop file (2026-09-28): the
+  // 2048 px maps (oak, walnut, terracotta) cost ~0.4 MB on a phone download, and Scene Viewer shows them at
+  // screen resolution anyway. Normal maps stay at 1024 (512 for the noisy ones) for close-ups at real size.
+  ar: { textures: { format: 'jpeg', colorMax: 1024, normalMax: 1024, colorQuality: 85, normalQuality: 90, overrides: [NOISY_NORMALS] } },
   // Tabletop 1:20 (46 x 70 cm): 1024 px colour / 512 px normals are plenty at arm's length.
   arMaqueta: { scale: 1 / 20, textures: { format: 'jpeg', colorMax: 1024, normalMax: 512, colorQuality: 85, normalQuality: 90 } },
 };
@@ -121,8 +125,17 @@ function summary(label, doc, file) {
   return { file: path.relative(P.modelsDir, file).replace(/\\/g, '/'), bytes, textureBytes: imageBytes(doc), stats, bounds };
 }
 
+// `--only web,ar,arMaqueta` rebuilds just those GLBs; the other files and their report entries are kept as they are.
+const ONLY = (() => {
+  const i = process.argv.indexOf('--only');
+  return i >= 0 ? new Set((process.argv[i + 1] || '').split(',').map((s) => s.trim()).filter(Boolean)) : null;
+})();
+const want = (key) => !ONLY || ONLY.has(key);
+
 fs.mkdirSync(P.modelsDir, { recursive: true });
-const report = { generated: new Date().toISOString(), source: {}, outputs: {} };
+const previous = ONLY && fs.existsSync(P.report) ? JSON.parse(fs.readFileSync(P.report, 'utf8')) : null;
+const report = { generated: new Date().toISOString(), source: {}, outputs: { ...(previous?.outputs || {}) } };
+if (ONLY) log(`--only ${[...ONLY].join(',')}: other outputs untouched`);
 
 // ---- source numbers ------------------------------------------------------
 {
@@ -135,7 +148,7 @@ const report = { generated: new Date().toISOString(), source: {}, outputs: {} };
 }
 
 // ---- web GLB ----------------------------------------------------------------
-{
+if (want('web')) {
   const doc = await io.read(P.cleanGltf);
   await baseOptimize(doc);
   const tex = await encodeTextures(doc, CONFIG.web.textures);
@@ -147,17 +160,18 @@ const report = { generated: new Date().toISOString(), source: {}, outputs: {} };
 }
 
 // ---- Scene Viewer GLB (real size) ---------------------------------------------
-{
+if (want('ar')) {
   const doc = await io.read(P.cleanGltf);
   await baseOptimize(doc);
   const tex = await encodeTextures(doc, CONFIG.ar.textures);
   doc.getRoot().getAsset().generator = 'glTF-Transform (scripts/3d/optimize-glb.mjs) from Blender glTF I/O 5.2 export';
   await io.write(P.arGlb, doc);
-  report.outputs.ar = { ...summary('ar (Scene Viewer)', doc, P.arGlb), reencodedTextures: tex.filter((r) => r[2] !== 'kept') };
+  report.outputs.ar = { ...summary('ar (Scene Viewer)', doc, P.arGlb), reencodedTextures: tex.filter((r) => !r[2].startsWith('kept')), config: CONFIG.ar };
+  console.table(tex.map(([name, dims, how, size]) => ({ name, dims, how, size })));
 }
 
 // ---- Scene Viewer GLB tabletop 1:20, cut at 1.15 m -----------------------------
-{
+if (want('arMaqueta')) {
   const doc = await io.read(P.cleanGltf);
   const root = doc.getRoot();
   let removed = 0;

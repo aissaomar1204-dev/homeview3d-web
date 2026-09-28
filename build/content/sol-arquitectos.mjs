@@ -5,8 +5,8 @@
 
 const faq = [
   {
-    q: '¿Qué formatos de plano aceptáis?',
-    a: '{{brand}} trabaja con DWG y DXF, que son los más precisos, y también con PDF, JPG o PNG de las plantas. Con un archivo CAD acotado, el modelo sale a medida. Con una imagen sin cotas, estimamos las medidas con la escala del plano y lo marcamos con ≈. Si tienes alzados o secciones, envíalos también: ayudan con alturas, huecos y carpinterías.',
+    q: '¿Podéis trabajar con mis archivos DWG o DXF?',
+    a: 'Sí. {{brand}} trabaja con DWG y DXF, que son los más precisos, y también con PDF, JPG o PNG de las plantas. Con un archivo CAD acotado, el modelo sale a medida. Con una imagen sin cotas, estimamos las medidas con la escala del plano y lo marcamos con ≈. Si tienes alzados o secciones, envíalos también: ayudan con alturas, huecos y carpinterías.',
   },
   {
     q: '¿Cuánto tarda una ronda de cambios?',
@@ -18,7 +18,7 @@ const faq = [
   },
   {
     q: '¿Me entregáis el modelo 3D para seguir trabajando con él?',
-    a: 'Sí. Además de los renders 4K y del visor web, {{brand}} entrega los archivos 3D del modelo: GLB para web y Android, USDZ para iPhone y, si lo necesitas, el archivo de Blender. Así puedes reutilizar la geometría amueblada en tus presentaciones o pedirnos nuevas vistas más adelante, cada render adicional a {{extra:render}} + IVA.',
+    a: 'Sí. Además de los renders 4K y del visor web, {{brand}} entrega el modelo en GLB para web y Android, en USDZ para iPhone y en BLEND, el archivo editable de Blender. Así puedes reutilizar la geometría amueblada en las presentaciones de ese proyecto o pedirnos nuevas vistas más adelante, cada render adicional a {{extra:render}} + IVA.',
   },
   {
     q: '¿Cuál es la mejor IA para renders arquitectónicos?',
@@ -101,7 +101,7 @@ export default {
           { title: 'Nos pasas las plantas', body: 'DWG o DXF si los tienes; si no, PDF o imagen. Con cotas, el modelo sale a medida; sin ellas, estimamos a escala y lo marcamos (≈).' },
           { title: 'Acordamos el criterio', body: 'Estilo de mobiliario, paleta de materiales y vistas clave. Si tienes referencias o una memoria de acabados, las seguimos; si no, te proponemos una línea.' },
           { title: 'Revisas en el visor', body: 'Te enviamos un enlace privado con el modelo. Marcas los cambios de distribución, mobiliario o materiales y los aplicamos en {{revisions:maqueta}}.' },
-          { title: 'Recibes los archivos', body: 'Renders 4K, visor web con código de inserción, archivos de realidad aumentada en [USDZ](@glosario#usdz) y [GLB](@glosario#glb) y, si lo necesitas, el archivo de Blender.' },
+          { title: 'Recibes los archivos', body: 'Renders 4K, visor web con código de inserción y el modelo en [USDZ](@glosario#usdz), [GLB](@glosario#glb) y BLEND, listo para abrir en Blender.' },
         ],
       },
       {

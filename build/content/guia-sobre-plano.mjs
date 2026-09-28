@@ -26,7 +26,7 @@ export default {
     title: 'Cómo vender viviendas sobre plano: guía para promotoras',
     description: 'Qué necesita ver un comprador sobre plano, qué exige la ley a la publicidad y 8 pasos para la preventa con renders, visor y AR. Desde {{price:promocion}} + IVA.',
     h1: '¿Cómo vender viviendas sobre plano? Guía para promotoras',
-    lead: 'Vender sobre plano es lograr reservas de viviendas que aún no existen: el comprador debe entender distribución, acabados y amplitud, y tu publicidad, ajustarse a lo que construirás. Aquí tienes qué enseñar, qué exige la ley y cómo montar la preventa. Con {{brand}}, 3 tipologías en 3D desde {{price:promocion}} + IVA, en {{delivery:promocion}}.',
+    lead: 'Vender sobre plano es lograr reservas de viviendas que aún no existen: el comprador tiene que entender la vivienda y tu publicidad, ajustarse a lo que construirás. Aquí tienes qué enseñar, qué exige la ley y cómo montar la preventa. Con {{brand}}, 3 tipologías en 3D desde {{price:promocion}} + IVA, en {{delivery:promocion}}.',
     breadcrumb: 'Vender sobre plano',
     card: {
       title: 'Cómo vender viviendas sobre plano',
@@ -57,7 +57,7 @@ export default {
       {
         type: 'stat',
         value: '37,01 %',
-        label: 'de las compras de vivienda en la provincia de Málaga en el segundo trimestre de 2026 fueron de extranjeros, el segundo porcentaje de España tras Alicante.',
+        label: 'de las compras de vivienda en la provincia de Málaga en el segundo trimestre de 2026 fueron de extranjeros, el segundo porcentaje de España tras Alicante',
         source: { label: 'Colegio de Registradores, Estadística Registral Inmobiliaria, p. 44', url: ERI },
         year: '2.º trimestre de 2026',
       },
@@ -125,7 +125,7 @@ export default {
         intro: 'Para revisar el material antes de publicarlo: obligaciones legales, con su norma, y buenas prácticas nuestras.',
         items: [
           'Acabados del render iguales a los de la memoria: suelos, carpinterías, sanitarios, cocina y fachada.',
-          'Mobiliario y decoración marcados como no incluidos, con una mención visible del tipo «Infografía orientativa; mobiliario no incluido».',
+          'Mobiliario y decoración marcados como no incluidos, con una mención visible como la que entregamos con cada render: «Render 3D. Imagen orientativa, no contractual; mobiliario no incluido».',
           'Estado de la vivienda: en proyecto, en construcción o terminada (RD 515/1989, art. 2).',
           'Superficie útil de cada tipología si describes dormitorios o estancias, no solo la construida (Decreto 218/2005, art. 5).',
           'Identidad del promotor y ubicación de la promoción (Decreto 218/2005, art. 5).',
@@ -145,7 +145,7 @@ export default {
           { title: 'Encarga el modelo 3D de cada tipología', body: 'Plantas en DWG, DXF o PDF y la memoria. Sin cotas, las superficies son estimaciones (≈) y así se indica.', time: '{{delivery:promocion}} para 3 tipologías' },
           { title: 'Revisa con arquitectura y con dirección comercial', body: 'Un enlace privado al visor para pedir cambios de mobiliario, acabados o distribución. El pack incluye {{revisions:promocion}}.' },
           { title: 'Monta la web de la promoción', body: 'Una página por tipología con renders, plano 3D, superficie útil, visor incrustado y formulario. La documentación legal, descargable.' },
-          { title: 'Prepara el dosier y los anuncios', body: 'Renders y plantas en el dosier y los portales. Los portales solo publican tours 3D de sus proveedores homologados: el visor va en tu web, por enlace o con un código QR.' },
+          { title: 'Prepara el dosier y los anuncios', body: 'Renders y plantas en el dosier y los portales. idealista solo publica tours 3D de sus proveedores compatibles: el visor va en tu web, por enlace, con un código QR o en el campo de tour virtual de los portales que acepten enlaces externos.' },
           { title: 'Equipa la sala de ventas y las ferias', body: 'Una tableta con cada tipología en realidad aumentada a escala 1:20 y un código QR en el stand que abra el visor en el móvil del visitante.' },
           { title: 'Da el mismo material a las agencias colaboradoras', body: 'Mismo enlace, mismos renders y mismas fichas: ninguna enseña una memoria antigua ni redondea superficies.' },
           { title: 'Actualiza durante la obra', body: 'Si cambia un acabado, se actualiza el modelo y se reexportan renders, visor y AR. Al terminar la obra, cambia los renders por fotos reales.', time: 'Hasta la entrega' },

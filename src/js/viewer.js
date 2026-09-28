@@ -3,12 +3,17 @@
    ES module, no dependencies. Loaded only on pages with a viewer, ar,
    formats or embedCode block. Markup: build/lib/viewer.mjs.
    - model-viewer (hashed URL in data-mv) is imported on intent:
-     pointer/focus/touch on the viewer, or visible + idle on a fast
-     connection (never with Save-Data or 2G/3G). The GLB is requested
-     only on "Ver la villa en 3D" (loading=lazy + reveal=manual).
+     pointer/focus/touch on the viewer, or (desktop only: fine pointer,
+     ≥ 1024 px, 4G, no Save-Data, ≥ 4 GB) visible + idle after the first
+     scroll or pointer move (P1-A). The GLB is requested only on
+     "Ver la villa en 3D" (loading=lazy + reveal=manual).
+   - No model-viewer AR: our chooser opens Quick Look / Scene Viewer
+     links, so WebXR is never probed (keeps the back/forward cache).
    - On load: cut at 1.15 m (materials ending in _Alto → alpha MASK,
      base colour alpha 0), hotspots, controls. Fallback GLB on loadfailure.
    - Reduced motion: camera jumps, tour steps every 6 s, nothing autoplays.
+   - "Medidas" (S3): real dimension lines on the model (footprint, wall or
+     cut height), hotspots + one SVG updated on camera-change.
    ═══════════════════════════════════════════════════════════════ */
 const doc = document;
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -21,6 +26,11 @@ const PLATFORM = QUICK_LOOK || /iP(hone|ad|od)/.test(UA) || (navigator.platform 
   ? 'ios' : /android/i.test(UA) ? 'android' : 'desktop';
 const IN_APP = /FBAN|FBAV|Instagram|LinkedInApp|Line\/|WhatsApp|GSA\//.test(UA);
 const slowNet = () => { const c = navigator.connection; return !!(c && (c.saveData || /2g|3g/.test(c.effectiveType || ''))); };
+/** Warm the library on visibility only where it cannot hurt: desktop class device on a fast link (P1-A). */
+const capable = () => matchMedia('(pointer: fine) and (min-width: 1024px)').matches && !slowNet()
+  && (!navigator.connection || navigator.connection.effectiveType === '4g') && (navigator.deviceMemory || 8) >= 4;
+/** Resolves on the first scroll or pointer move: nothing is fetched for visitors who only read the first screen. */
+const engaged = new Promise((ok) => { for (const ev of ['scroll', 'pointermove', 'keydown']) addEventListener(ev, ok, { once: true, passive: true }); });
 const idle = (fn) => (self.requestIdleCallback ? self.requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 1500));
 const afterLoad = (fn) => (doc.readyState === 'complete' ? fn() : addEventListener('load', fn, { once: true }));
 const toContact = (url) => { if (url) location.href = url; };
@@ -40,13 +50,26 @@ function arChoices(url) {
     arCache.set(url, fetch(url, { credentials: 'same-origin' })
       .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.text(); })
       .then((html) => {
-        const el = new DOMParser().parseFromString(html, 'text/html').querySelector('[data-vw-arblock]');
+        const page = new DOMParser().parseFromString(html, 'text/html');
+        const el = page.querySelector('[data-vw-arblock]');
         if (!el) throw new Error('no AR block');
-        return el;
+        // The choices are styled by the AR module stylesheet of that page (51-ar.css): add it once, wait for it.
+        const css = [...page.querySelectorAll('link[rel="stylesheet"]')].map((l) => l.getAttribute('href')).find((h) => /\/ar\.[\w]+\.css$/.test(h));
+        if (!css || doc.querySelector(`link[href="${css}"]`)) return el;
+        const link = Object.assign(doc.createElement('link'), { rel: 'stylesheet', href: css });
+        return new Promise((ok) => { link.onload = link.onerror = () => ok(el); doc.head.append(link); });
       })
       .catch((e) => { arCache.delete(url); throw e; }));
   }
   return arCache.get(url);
+}
+
+/* Styles of the live viewer (toolbar, hotspots, loading line), fetched with the library, never render-blocking. */
+let live = null;
+function loadLive(href) {
+  if (!href || doc.querySelector(`link[href="${href}"]`)) return live || Promise.resolve();
+  live = new Promise((ok) => { const l = Object.assign(doc.createElement('link'), { rel: 'stylesheet', href }); l.onload = l.onerror = ok; doc.head.append(l); });
+  return live;
 }
 
 /* One model-viewer import per page, shared by every viewer on it. */
@@ -79,10 +102,16 @@ function initViewer(root) {
   const pctEl = q('[data-vw-pct]');
   const bar = q('[data-vw-bar]');
   const note = q('[data-vw-note]');
+  T.note = note ? note.textContent : '';
+  T.error = (q('[data-vw-error] strong') || {}).textContent || '';
   const tourBtn = q('[data-vw-tour]');
   const light = q('[data-vw-light]');
   const stage = q('[data-vw-stage]');
   const rooms = qa('[data-room]');
+  // Camera data and notes for every room, one attribute on the app: [x, y, span, text] by rail order.
+  const roomData = JSON.parse(ds.rooms || '[]');
+  const rd = (b) => roomData[rooms.indexOf(b)] || [0, 0, 4, ''];
+  for (const b of rooms) b.setAttribute('aria-pressed', 'false');
   const src = mv.getAttribute('src');
   const [labelCut, labelFull] = (ds.labelY || '1.35 2.85').split(' ').map(Number);
   const exposure0 = Number(ds.exposure) || 1;
@@ -107,17 +136,20 @@ function initViewer(root) {
     if (bar) bar.style.transform = `scaleX(${p || 0})`;
   };
   const jump = () => { if (reduce && mv.jumpCameraToGoal) mv.jumpCameraToGoal(); };
-  const labelPos = (b) => `${b.dataset.x}m ${cutOn ? labelCut : labelFull}m ${-Number(b.dataset.y)}m`;
+  const labelPos = (b) => `${rd(b)[0]}m ${cutOn ? labelCut : labelFull}m ${-rd(b)[1]}m`;
 
   /* ── Intent: fetch the ~230 KB (brotli) library before the click ── */
-  const warm = () => { if (!libFailed) loadLib(ds.mv, ds.meshopt).catch(() => {}); };
+  const warm = () => { loadLive(ds.live); if (!libFailed) loadLib(ds.mv, ds.meshopt).catch(() => {}); };
   for (const ev of ['pointerenter', 'focusin', 'touchstart']) root.addEventListener(ev, warm, { once: true, passive: true });
   if ('IntersectionObserver' in self) {
     let warmed = false;
-    new IntersectionObserver((entries) => {
+    const auto = ds.preload === 'visible' && capable();
+    const io = new IntersectionObserver((entries) => {
       if (!entries.some((e) => e.isIntersecting)) { pauseTour(); return; }
-      if (!warmed && ds.preload === 'visible' && !slowNet()) { warmed = true; afterLoad(() => idle(warm)); }
-    }, { rootMargin: '200px' }).observe(stage);
+      if (!warmed && auto) { warmed = true; afterLoad(() => idle(warm)); }
+    }, { rootMargin: '200px' });
+    // Touch devices rely on the intent listeners above; desktops arm the observer after the first interaction.
+    if (auto) engaged.then(() => io.observe(stage)); else io.observe(stage);
   }
 
   /* ── Load ── */
@@ -129,7 +161,7 @@ function initViewer(root) {
     say(T.preparing);
     pct(0);
     try {
-      await loadLib(ds.mv, ds.meshopt, libFailed ? tries : 0);
+      await Promise.all([loadLib(ds.mv, ds.meshopt, libFailed ? tries : 0), loadLive(ds.live)]);
     } catch {
       libFailed = true;
       fail();
@@ -154,7 +186,6 @@ function initViewer(root) {
     });
     mv.addEventListener('pointerdown', pauseTour, { passive: true });
     mv.addEventListener('wheel', pauseTour, { passive: true });
-    mv.addEventListener('quick-look-button-tapped', () => toContact(ds.contact));
   }
 
   function onLoad() {
@@ -226,6 +257,56 @@ function initViewer(root) {
     }
     for (const b of qa('[data-vw-cut]')) b.setAttribute('aria-pressed', String((b.dataset.vwCut === '1') === on));
     if (hotspots) for (const b of rooms) mv.updateHotspot({ name: `hotspot-${b.dataset.room}`, position: labelPos(b) });
+    if (dimsOn) placeDims();
+  }
+
+  /* ── Medidas: footprint and height as measured lines (data, not decoration) ── */
+  const [dw, dd, wallH, cutH, lw, ld, lWall, lCut] = JSON.parse(ds.dims || '[9.1,14.1,2.6,1.15,"","","",""]');
+  const NS = 'http://www.w3.org/2000/svg';
+  let dimsOn = false;
+  let svg = null;
+  const dimH = () => (cutOn ? cutH : wallH);
+  // [name, position] (glTF: x east, y up, z = -north): cotas on the ground 0.8 m outside the base, like a drawing,
+  // the height beside the south-east corner, and a label at each midpoint.
+  const G = -0.6; const O = 0.8;
+  const dimSpots = () => [['w1', `0m ${G}m ${O}m`], ['w2', `${dw}m ${G}m ${O}m`], ['d1', `${-O}m ${G}m 0m`], ['d2', `${-O}m ${G}m ${-dd}m`],
+    ['h1', `${dw + O / 2}m 0m 0m`], ['h2', `${dw + O / 2}m ${dimH()}m 0m`],
+    ['lw', `${dw / 2}m ${G}m ${O}m`], ['ld', `${-O}m ${G}m ${-dd / 2}m`], ['lh', `${dw + O / 2}m ${dimH() / 2}m 0m`]];
+  function placeDims() {
+    for (const [n, pos] of dimSpots()) mv.updateHotspot({ name: `hotspot-dim-${n}`, position: pos });
+    const lh = mv.querySelector('[slot="hotspot-dim-lh"]');
+    if (lh) lh.textContent = cutOn ? lCut : lWall;
+    drawDims();
+  }
+  function drawDims() {
+    if (!svg) return;
+    const pt = (n) => { const h = mv.queryHotspot(`hotspot-dim-${n}`); return h ? h.canvasPosition : { x: 0, y: 0 }; };
+    [['w1', 'w2'], ['d1', 'd2'], ['h1', 'h2']].forEach(([f, t], i) => {
+      const l = svg.children[i]; const p = pt(f); const q = pt(t);
+      l.setAttribute('x1', p.x); l.setAttribute('y1', p.y); l.setAttribute('x2', q.x); l.setAttribute('y2', q.y);
+    });
+  }
+  function setDims(on) {
+    dimsOn = on;
+    root.toggleAttribute('data-dims-on', on);
+    for (const b of qa('[data-vw-dims]')) b.setAttribute('aria-pressed', String(on));
+    if (on && !svg) {
+      svg = doc.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'vw-dims');
+      svg.setAttribute('aria-hidden', 'true');
+      for (let i = 0; i < 3; i++) svg.append(doc.createElementNS(NS, 'line'));
+      stage.append(svg);
+      for (const [n, pos] of dimSpots()) {
+        const h = doc.createElement('span');
+        h.slot = `hotspot-dim-${n}`;
+        h.className = n[0] === 'l' ? 'vw-dim' : 'vw-dim-pt';
+        h.dataset.position = pos;
+        h.textContent = { lw, ld, lh: cutOn ? lCut : lWall }[n] || '';
+        mv.append(h);
+      }
+      mv.addEventListener('camera-change', () => { if (dimsOn) drawDims(); });
+    }
+    if (on) requestAnimationFrame(placeDims);
   }
 
   /* ── Hotspots: created only after load (labels are data, not decoration) ── */
@@ -285,8 +366,8 @@ function initViewer(root) {
   }
 
   function focusRoom(b) {
-    const span = Number(b.dataset.span);
-    mv.cameraTarget = `${b.dataset.x}m 0.4m ${-Number(b.dataset.y)}m`;
+    const [x, y, span, text] = rd(b);
+    mv.cameraTarget = `${x}m 0.4m ${-y}m`;
     mv.cameraOrbit = `-28deg 46deg ${Math.max(4.5, span * 1.35 + 3)}m`;
     jump();
     const id = b.dataset.room;
@@ -294,7 +375,7 @@ function initViewer(root) {
     for (const h of mv.querySelectorAll('.vw-hs')) h.classList.toggle('is-on', h.dataset.hs === id);
     const strong = doc.createElement('strong');
     strong.textContent = `${rooms.indexOf(b) + 1}. ${b.querySelector('.vw-room__name').textContent}`;
-    note.replaceChildren(strong, `, ${b.querySelector('.vw-room__m2').textContent}. ${b.dataset.text}`);
+    note.replaceChildren(strong, `, ${b.querySelector('.vw-room__m2').textContent}. ${text}`);
     pressView(null);
     // Keep the active chip in view in the mobile scroller (click/timer handler, not a scroll handler).
     const list = b.closest('ol');
@@ -349,6 +430,7 @@ function initViewer(root) {
   for (const b of qa('[data-vw-cut]')) b.addEventListener('click', () => { pauseTour(); setCut(b.dataset.vwCut === '1'); });
   for (const b of qa('[data-vw-zoom]')) b.addEventListener('click', () => { pauseTour(); zoom(Number(b.dataset.vwZoom)); });
   if (tourBtn) tourBtn.addEventListener('click', playTour);
+  for (const b of qa('[data-vw-dims]')) b.addEventListener('click', () => { pauseTour(); run(() => setDims(!dimsOn)); });
   const retryBtn = q('[data-vw-retry]');
   if (retryBtn) retryBtn.addEventListener('click', retry);
   if (light) {
@@ -357,7 +439,7 @@ function initViewer(root) {
     light.addEventListener('input', () => { pauseTour(); mv.exposure = Number(light.value); valueText(); });
   }
   root.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') pauseTour();
+    if (e.key === 'Escape' && (tourTimer || tourIdx)) { stopTour(); pressView(null); }
     if (e.target === mv && state === 'ready' && !e.altKey && !e.ctrlKey && !e.metaKey) {
       if (e.key === '+' || e.key === '=') zoom(0.8);
       else if (e.key === '-') zoom(1.25);

@@ -16,7 +16,7 @@ const faqEs = [
   },
   {
     q: '¿Podéis modelar todas las tipologías de la promoción?',
-    a: 'Sí. El pack de promoción de {{brand}} incluye varias tipologías en un mismo visor, con un selector para pasar de una a otra, y cada tipología adicional cuesta {{extra:tipologia}} + IVA. Todas comparten materiales, mobiliario y criterio de luz, así que los renders de la promoción son coherentes entre sí y con lo que el comprador ve en realidad aumentada.',
+    a: 'Sí. El pack de promoción de {{brand}} incluye hasta 3 tipologías en un mismo visor, con un selector para pasar de una a otra, y cada tipología adicional cuesta {{extra:tipologia}} + IVA. Todas comparten materiales, mobiliario y criterio de luz, así que los renders de la promoción son coherentes entre sí y con lo que el comprador ve en realidad aumentada.',
   },
   {
     q: '¿Qué pasa si cambia el proyecto durante la comercialización?',
@@ -24,7 +24,7 @@ const faqEs = [
   },
   {
     q: '¿Cómo se usa en la sala de ventas o en una feria?',
-    a: 'Con una tablet o con el móvil del propio comprador. {{brand}} entrega cada vivienda en realidad aumentada en dos escalas: maqueta 1:20 sobre la mesa y tamaño real para recorrer el salón. En una feria, un código QR abre el visor y la AR en el móvil de cada visitante, sin instalar nada, en iPhone, iPad y móviles Android compatibles con ARCore.',
+    a: 'Con una tableta o con el móvil del propio comprador. {{brand}} entrega cada vivienda en realidad aumentada en dos escalas: maqueta 1:20 sobre la mesa y tamaño real para recorrer el salón. En una feria, un código QR abre el visor y la AR en el móvil de cada visitante, sin instalar nada, en iPhone, iPad y móviles Android compatibles con ARCore.',
   },
   {
     q: '¿Se puede incrustar el visor en la web de la promoción?',
@@ -51,11 +51,11 @@ const faqEn = [
   },
   {
     q: 'Can you model every unit type in a development and keep them consistent?',
-    a: 'Yes. The {{brand}} development package puts several unit types in one viewer with a selector to switch between them, and each extra unit type costs {{extra:tipologia}} + VAT. All of them share the same materials, furniture and lighting, so the CGI across the development is consistent, and it matches what buyers see in augmented reality.',
+    a: 'Yes. The {{brand}} development package covers up to 3 unit types in one viewer, with a selector to switch between them, and each extra unit type costs {{extra:tipologia}} + VAT. All of them share the same materials, furniture and lighting, so the CGI across the development is consistent, and it matches what buyers see in augmented reality.',
   },
   {
     q: 'Can foreign buyers explore an off-plan home before travelling to Spain?',
-    a: 'That is exactly what it is for. With a {{brand}} viewer link, a buyer in Manchester or Utrecht moves through the unit room by room and opens it in augmented reality on an iPhone, iPad or ARCore-compatible Android phone, with no app. It doesn’t replace a visit before signing, but it helps buyers decide whether the development deserves the trip.',
+    a: 'That is exactly what it is for. With our viewer link, a buyer in Manchester or Utrecht moves through the unit room by room and opens it in augmented reality on an iPhone, iPad or ARCore-compatible Android phone, with no app. It doesn’t replace a visit before signing, but it helps buyers decide whether the development deserves the trip.',
   },
   {
     q: 'What happens if the plans change during sales?',
@@ -89,7 +89,7 @@ export default {
     title: 'Renders e infografías 3D para promotoras de obra nueva',
     description: 'Cada tipología de tu promoción en 3D: renders, maqueta virtual interactiva y realidad aumentada para vender sobre plano. Desde {{price:promocion}} + IVA.',
     h1: 'Renders y maqueta virtual para promotoras de obra nueva',
-    lead: 'Modelamos cada tipología de tu promoción desde los planos del proyecto: renders 4K, una maqueta virtual interactiva con selector de tipología y realidad aumentada para la sala de ventas y las ferias, para vender sobre plano sin piso piloto. Desde {{price:promocion}} + IVA hasta 3 tipologías, en {{delivery:promocion}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, modela cada tipología de tu promoción desde los planos del proyecto: renders 4K, una maqueta virtual interactiva con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Desde {{price:promocion}} + IVA hasta 3 tipologías, en {{delivery:promocion}}.',
     breadcrumb: 'Promotoras',
     card: {
       title: 'Para promotoras de obra nueva',
@@ -115,14 +115,14 @@ export default {
         type: 'answer',
         h2: '¿Cómo se vende una vivienda que todavía no existe?',
         answer: 'Enseñándola antes de construirla. Con el modelo 3D de cada tipología, el comprador recorre la vivienda en el visor, ve los acabados en renders 4K y la coloca sobre la mesa, o a tamaño real, con su móvil. Es lo que hace un piso piloto, pero sin esperar a la obra ni montar un piso de muestra.',
-        body: 'En la preventa, el comprador firma una reserva con un plano y una memoria de calidades. Cuanto mejor entiende la vivienda, menos dudas llegan a la sala de ventas y menos tiempo pasa tu equipo explicando planos. La guía [cómo vender viviendas sobre plano](@guia-sobre-plano) desarrolla el proceso comercial completo.',
+        body: 'En la preventa, el comprador firma una reserva con un plano y una memoria de calidades. Cuanto mejor entiende la vivienda, menos dudas llegan a la sala de ventas y menos tiempo pasa tu equipo explicando planos. El proceso comercial completo, de la preventa a la escritura, está en la [guía para vender una promoción sobre plano](@guia-sobre-plano).',
       },
       {
         type: 'stat',
         value: '11.727',
-        label: 'compraventas de vivienda nueva registradas en la provincia de Málaga en los 12 meses hasta el segundo trimestre de 2026: la tercera provincia de España, tras Madrid y Barcelona.',
-        source: { label: 'Colegio de Registradores, Estadística Registral Inmobiliaria, 2.º trimestre de 2026', url: ERI },
-        year: '2026',
+        label: 'compraventas de vivienda nueva registradas en la provincia de Málaga en los 12 meses hasta el segundo trimestre de 2026: la tercera provincia de España, tras Madrid y Barcelona',
+        source: { label: 'Colegio de Registradores, Estadística Registral Inmobiliaria', url: ERI },
+        year: '2.º trimestre de 2026',
       },
       {
         type: 'table',
@@ -132,7 +132,7 @@ export default {
         head: ['Momento', 'El problema', 'Qué aporta el modelo 3D'],
         rows: [
           ['Preventa sobre plano', 'No hay piso piloto y el comprador reserva con un plano', 'Recorre cada tipología amueblada en el visor y en realidad aumentada'],
-          ['Sala de ventas', 'La maqueta física enseña el edificio, no el interior de cada vivienda', 'Con una tablet, la vivienda a escala 1:20 sobre la mesa o el salón a tamaño real'],
+          ['Sala de ventas', 'La maqueta física enseña el edificio, no el interior de cada vivienda', 'Con una tableta, la vivienda a escala 1:20 sobre la mesa o el salón a tamaño real'],
           ['Ferias y presentaciones', 'Llevar toda la promoción a un stand de pocos metros', 'Un código QR que abre el visor y la AR en el móvil de cada visitante'],
           ['Compradores extranjeros', 'Reservan a distancia y viajan una vez, si viajan', 'El enlace por WhatsApp o email con el visor y la realidad aumentada'],
           ['Cambios de proyecto', 'Un tabique o un acabado cambian a mitad de la comercialización', 'El modelo se genera por script: el cambio se reconstruye en minutos'],
@@ -147,7 +147,7 @@ export default {
       {
         type: 'stat',
         value: '27,9 %',
-        label: 'de las compraventas de vivienda de la provincia de Málaga en 2025 las firmaron compradores que no residen en España (10.079 de 36.128). La media nacional fue del 7,4 %.',
+        label: 'de las compraventas de vivienda de la provincia de Málaga en 2025 las firmaron compradores que no residen en España (10.079 de 36.128), frente a una media nacional del 7,4 %',
         source: { label: 'Ministerio de Vivienda y Agenda Urbana, transacciones inmobiliarias según residencia del comprador', url: MIVAU },
         year: '2025',
       },
@@ -191,7 +191,7 @@ export default {
         type: 'callout',
         tone: 'honesty',
         title: 'Imágenes orientativas',
-        body: 'Los renders de obra nueva muestran la vivienda amueblada y con los acabados propuestos. Recomendamos publicarlos con la mención «infografía orientativa, no contractual» y mantener la memoria de calidades como referencia. Si el plano no trae cotas, las superficies son estimaciones a escala (≈).',
+        body: 'Los renders de obra nueva muestran la vivienda amueblada y con los acabados propuestos. Los entregamos con su mención, como texto para el pie de foto: «Render 3D. Imagen orientativa, no contractual; mobiliario no incluido». Mantenla al publicarlos y usa la memoria de calidades como referencia. Si el plano no trae cotas, las superficies son estimaciones a escala (≈).',
       },
       { type: 'faq' },
     ],
@@ -208,7 +208,7 @@ export default {
     title: 'Off-plan 3D visualisation for developers in Spain',
     description: 'Every unit type as a 3D model with 4K CGI, an interactive viewer and app-free AR for your sales suite and fairs. From {{price:promocion}} + VAT.',
     h1: 'Off-plan 3D visualisation for property developers',
-    lead: 'We model every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and property fairs, so buyers can walk in before they fly in. From {{price:promocion}} + VAT for up to 3 unit types, in {{delivery:promocion}}.',
+    lead: '{{brand}}, a 3D visualisation studio based in Marbella, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and property fairs. From {{price:promocion}} + VAT for up to 3 unit types, in {{delivery:promocion}}.',
     breadcrumb: 'Developers',
     card: {
       title: 'For developers selling off-plan',
@@ -239,9 +239,9 @@ export default {
       {
         type: 'stat',
         value: '11,727',
-        label: 'new-build home sales were registered in Málaga province in the 12 months to the end of Q2 2026, the third-highest total of any Spanish province after Madrid and Barcelona.',
-        source: { label: 'Colegio de Registradores (Spain’s Land Registrars), Estadística Registral Inmobiliaria, Q2 2026', url: ERI },
-        year: '2026',
+        label: 'new-build home sales were registered in Málaga province in the 12 months to the end of Q2 2026, the third-highest total of any Spanish province after Madrid and Barcelona',
+        source: { label: 'Colegio de Registradores (Spain’s association of land registrars), Estadística Registral Inmobiliaria', url: ERI },
+        year: 'Q2 2026',
       },
       {
         type: 'table',
@@ -266,7 +266,7 @@ export default {
       {
         type: 'stat',
         value: '27.9%',
-        label: 'of home sales in Málaga province in 2025 were signed by buyers who don’t live in Spain (10,079 out of 36,128). The Spanish average was 7.4%.',
+        label: 'of home sales in Málaga province in 2025 were signed by buyers who don’t live in Spain (10,079 out of 36,128), against a Spanish average of 7.4%',
         source: { label: 'Spanish Ministry of Housing and Urban Agenda, property transactions by buyer residence', url: MIVAU },
         year: '2025',
       },
@@ -310,7 +310,7 @@ export default {
         type: 'callout',
         tone: 'honesty',
         title: 'Indicative images',
-        body: 'Off-plan CGI shows each home furnished and with the proposed finishes. We recommend publishing it with a clear “indicative image, not contractual” note and keeping the specification sheet as the reference. If the plans carry no dimensions, areas are scale estimates (≈).',
+        body: 'Off-plan CGI shows each home furnished and with the proposed finishes. We deliver it with its label, as caption text: “3D render. Indicative image, not contractual; furniture not included.” Keep it when you publish, and use the specification sheet as the reference. If the plans carry no dimensions, areas are scale estimates (≈).',
       },
       { type: 'faq' },
     ],

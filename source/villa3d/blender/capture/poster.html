@@ -7,6 +7,7 @@
   Frames from <model-viewer> with the SITE defaults (build/data/villa.mjs → villa.viewer), cut applied,
   transparent background. Served by capture-server.mjs (it saves the POSTed PNGs).
     ?w=1600&h=1100&scale=2                     poster → source/villa3d/renders/villa_viewer_poster.png
+    ?w=1200&h=1500&scale=2&name=_poster_mobile_2x.png   4:5 poster for the portrait (mobile) stage
     ?mode=turntable&w=1280&h=800&frames=240    frames → CAPTURE_TMP/turntable/f_0001.png …
   `scale` renders at N× (fake devicePixelRatio) for supersampling; the PNG is saved at w×h·scale and
   downscaled by the caller (sharp), which gives cleaner edges than the WebGL MSAA alone.

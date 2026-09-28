@@ -1,0 +1,22 @@
+/* @module herotext hero--text
+   ==========================================================================
+   21-hero-text · inner pages: left-aligned text hero with an optional side
+   figure; the case hero holds the viewer app (D-07). Owner: ENGINE.
+   ========================================================================== */
+/* Inner pages: left-aligned text hero with an optional side figure. */
+.hero--text { padding-block: var(--space-7) var(--space-4); }
+.hero--text .hero__grid { display: grid; gap: var(--space-7); }
+.hero__figure .figure__media { background: var(--color-stage); }
+/* Case (D-07): the viewer facade is the hero; text in cols 1-5, the app in cols 6-12. */
+.hero--case .vw-stage { background: var(--color-stage); }
+@media (min-width: 1024px) {
+  .hero--text { padding-block: var(--space-9) var(--space-6); }
+  .hero--figure .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; gap: var(--space-8); }
+  .hero--case { padding-block: var(--space-7) var(--space-5); }
+  .hero--case .hero__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); align-items: start; gap: var(--space-7); }
+  .hero--case .hero__text { padding-top: var(--space-6); }
+  .hero--text h1 { max-width: 20ch; }
+  .hero--text .h1--long { max-width: 26ch; }
+}
+.hero--text + .cajetin-band { padding-top: var(--space-5); }
+.hero--contact .lead { max-width: 56ch; }

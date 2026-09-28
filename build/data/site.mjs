@@ -59,6 +59,13 @@ export const site = {
   // Off-site profiles for Organization.sameAs (fill as they are created).
   sameAs: [],
 
+  // The real person behind the studio (E-E-A-T, 04-geo §9 and §11). null until decided: pages keep
+  // "Equipo de {{brand}}" as author. Once filled, schema.mjs emits a Person (@id /sobre-nosotros/#founder)
+  // used as Organization.founder and as the author of the guides and the case, and index.md names it.
+  // Shape: { name: 'Nombre Apellido', jobTitle: { es: 'Fundador y director técnico', en: 'Founder and technical director' },
+  //          image: '/assets/img/founder.jpg' (square, ≥ 400 px, in public/), sameAs: ['https://www.linkedin.com/in/…'] }
+  founder: null,
+
   // Search engine / indexing keys.
   indexNowKey: '4f7a2c9e8b1d4e6fa3c5b7d9e1f20a3c',  // 32 hex, served as /<key>.txt
 

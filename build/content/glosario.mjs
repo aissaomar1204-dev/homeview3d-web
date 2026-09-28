@@ -1,5 +1,5 @@
 // Glossary page (ES + EN). The terms themselves live in build/data/glossary.mjs
-// (30 terms, each with a primary source linked in its body). This file holds the
+// (30 terms; a primary source is linked in the body where one exists). This file holds the
 // page frame: hero, key facts, one explanatory answer block and the glossary block.
 
 export default {
@@ -13,7 +13,7 @@ export default {
     title: 'Glosario de visualización 3D inmobiliaria',
     description: 'Qué es un render, un USDZ, un GLB, AR Quick Look o el modo maqueta: 30 términos de 3D y realidad aumentada inmobiliaria, en menos de 40 palabras cada uno.',
     h1: 'Glosario de 3D y realidad aumentada inmobiliaria',
-    lead: 'Los 30 términos que aparecen al pasar el plano 2D de una vivienda a un modelo 3D y al enseñarla en un visor web o en realidad aumentada, definidos en pocas líneas para inmobiliarias, promotoras y arquitectos. Todos se aplican en la maqueta 3D completa, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
+    lead: 'Los 30 términos que aparecen al pasar el plano 2D de una vivienda a un modelo 3D y al enseñarla en un visor web o en realidad aumentada, definidos en pocas líneas para inmobiliarias, promotoras y arquitectos. La mayoría se aplican en la maqueta 3D completa, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
     breadcrumb: 'Glosario',
     card: {
       title: 'Glosario de 3D inmobiliario',
@@ -25,7 +25,7 @@ export default {
       ['Realidad aumentada', 'AR Quick Look, Scene Viewer, ARCore, ARKit y WebXR'],
       ['Imagen y modelo', 'Render, infografía 3D, PBR, Cycles y planta cenital'],
       ['Venta', 'Venta sobre plano, piso piloto virtual y home staging virtual'],
-      ['Cada definición', 'Menos de 40 palabras, con su fuente oficial enlazada'],
+      ['Cada definición', 'Menos de 40 palabras; fuente oficial enlazada cuando existe'],
     ],
     blocks: [
       {
@@ -61,7 +61,7 @@ export default {
       ['Augmented reality', 'AR Quick Look, Scene Viewer, ARCore, ARKit and WebXR'],
       ['Images and models', 'Render, CGI, PBR, Cycles and top-down plan'],
       ['Selling', 'Off-plan sales, virtual show homes and virtual staging'],
-      ['Each definition', 'Under 40 words, with its official source linked'],
+      ['Each definition', 'Under 40 words; official source linked where one exists'],
     ],
     blocks: [
       {

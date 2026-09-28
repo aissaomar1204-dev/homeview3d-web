@@ -1,0 +1,14 @@
+/* @module pages legal hero--404 steps--compact
+   ==========================================================================
+   61-utility-pages · legal reading column, 404 links, thanks steps. Owner: ENGINE.
+   ========================================================================== */
+/* Legal: plain reading column with modest headings. */
+.legal .block { margin-block: var(--space-6); }
+.legal .block__head { border: 0; padding: 0; margin-bottom: var(--space-4); }
+.legal h2 { font: var(--wght-heading) var(--fs-h3) var(--font-sans); letter-spacing: var(--tracking-h3); }
+.page-404 .index__title { font: var(--wght-heading) var(--fs-h3) var(--font-sans); }
+
+/* Thanks: numbered next steps. */
+.page-thanks .steps { max-width: var(--measure); counter-reset: n; }
+.page-thanks .step { grid-template-columns: var(--space-6) minmax(0, 1fr); column-gap: var(--space-3); }
+.page-thanks .step::before { counter-increment: n; content: counter(n); padding-top: 0.3em; font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--color-ink-3); }

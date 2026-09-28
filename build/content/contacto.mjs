@@ -97,7 +97,7 @@ export default {
       },
       {
         q: '¿Cómo pido presupuesto para varias viviendas o una promoción?',
-        a: 'Indica en el formulario cuántas viviendas o tipologías son. Para agencias con cartera, {{brand}} tiene un pack de 5 maquetas 3D completas por {{volume}} + IVA ({{volumeUnit}} por vivienda), para usar en 6 meses. Las promociones de obra nueva de hasta 3 tipologías cuestan desde {{price:promocion}} + IVA, y cada tipología adicional, {{extra:tipologia}}. El [calculador de precios](@precios) te da el total antes de escribirnos.',
+        a: 'Indica en el formulario cuántas viviendas o tipologías son. Para agencias con cartera, {{brand}} tiene un pack de 5 maquetas 3D completas por {{volume}} + IVA ({{volumeUnit}} por vivienda), para usar en 6 meses. Las promociones de obra nueva de hasta 3 tipologías cuestan desde {{price:promocion}} + IVA, y cada tipología adicional, {{extra:tipologia}}. La [calculadora de precios](@precios) te da el total antes de escribirnos.',
       },
       {
         q: '¿Es confidencial el plano que os envío?',
@@ -117,7 +117,7 @@ export default {
 
   en: {
     title: 'Get a quote: upload your floor plan',
-    description: 'Upload your floor plan and get a fixed price and delivery date within one working day, or a free one-room 3D demo. Full model from {{price:maqueta}} + VAT.',
+    description: 'Upload your floor plan and get a fixed price and delivery date within one working day, or a free one-room 3D demo. Complete model from {{price:maqueta}} + VAT.',
     h1: 'Get a quote or a free demo from your floor plan',
     lead: 'Upload the floor plan (PDF, JPG, PNG or DWG) and tell us what you need. A real person replies within one working day with a fixed price and delivery date, plus a free one-room 3D demo if you would like to see it first. The complete 3D model starts at {{price:maqueta}} + VAT, delivered in {{delivery:maqueta}}.',
     breadcrumb: 'Contact',
@@ -144,7 +144,7 @@ export default {
       {
         type: 'prose',
         h2: 'Prefer WhatsApp, email or a phone call?',
-        body: 'Use whichever suits you. Every channel reaches the same team and gets the same reply time.\n\n- **WhatsApp ({{whatsapp}})**: quickest if the plan is on your phone. Send the PDF or a sharp photo, the approximate floor area and the service you are after.\n- **Email ({{email}})**: best for large files, DWG drawings or several unit types in one development. If they are too big to attach, paste a download link.\n- **Phone ({{phone}})**: if you would rather talk it through before sending anything. We will tell you which pack fits and what it costs.\n\nWe work on Spanish time, one hour ahead of the UK, and reply in English or Spanish. While you wait, explore [our demo villa in 3D](@caso-villa) or check our [published prices](@precios).',
+        body: 'Use whichever suits you. Every channel reaches the same team and gets the same reply time.\n\n- **WhatsApp ({{whatsapp}})**: quickest if the plan is on your phone. Send the PDF or a sharp photo, the approximate floor area and the service you are after.\n- **Email ({{email}})**: best for large files, DWG drawings or several unit types in one development. If they are too big to attach, paste a download link.\n- **Phone ({{phone}})**: if you would rather talk it through before sending anything. We will tell you which package fits and what it costs.\n\nWe work on Spanish time, one hour ahead of the UK, and reply in English or Spanish. While you wait, explore [our demo villa in 3D](@caso-villa) or check our [published prices](@precios).',
       },
       {
         type: 'needs',
@@ -163,7 +163,7 @@ export default {
           },
           {
             title: 'You get a fixed price and delivery date',
-            body: 'By email or WhatsApp: the pack that fits the property, what it includes and the delivery date. The rates are the ones on our [pricing page](@precios), excluding VAT, which is added to the invoice where it applies.',
+            body: 'By email or WhatsApp: the package that fits the property, what it includes and the delivery date. The rates are the ones on our [pricing page](@precios), excluding VAT, which is added to the invoice where it applies.',
             time: 'Within one working day',
           },
           {
@@ -204,7 +204,7 @@ export default {
       },
       {
         q: 'Can you quote for a whole portfolio or an off-plan development?',
-        a: 'Yes. Tell us in the form how many homes or unit types there are. For agencies with several listings, {{brand}} offers a pack of 5 complete 3D models for {{volume}} + VAT ({{volumeUnit}} per home), to be used within 6 months. Off-plan developments with up to 3 unit types start at {{price:promocion}} + VAT, and each extra unit type costs {{extra:tipologia}}. The [price calculator](@precios) shows the total before you get in touch.',
+        a: 'Yes. Tell us in the form how many homes or unit types there are. For agencies with several listings, {{brand}} offers a Portfolio pack of 5 complete 3D models for {{volume}} + VAT ({{volumeUnit}} per home), to be used within 6 months. Off-plan developments with up to 3 unit types start at {{price:promocion}} + VAT, and each extra unit type costs {{extra:tipologia}}. The [price calculator](@precios) shows the total before you get in touch.',
       },
       {
         q: 'Is my floor plan kept confidential?',
@@ -216,7 +216,7 @@ export default {
       },
       {
         q: 'Can I speak to someone before sending anything?',
-        a: 'Of course. Call {{phone}} or message {{whatsapp}} on WhatsApp and tell us about the property: type, approximate floor area, where you will use it (listing, website or sales suite) and your deadline. {{brand}} will tell you which pack fits and what it costs. We are on Spanish time, one hour ahead of the UK. Rush delivery in 48 hours carries a {{extra:urgente}} surcharge.',
+        a: 'Of course. Call {{phone}} or message {{whatsapp}} on WhatsApp and tell us about the property: type, approximate floor area, where you will use it (listing, website or sales suite) and your deadline. {{brand}} will tell you which package fits and what it costs. We are on Spanish time, one hour ahead of the UK. Rush delivery in 48 hours carries a {{extra:urgente}} surcharge.',
       },
     ],
     related: ['precios', 'como-funciona', 'caso-villa', 'servicio-plano'],

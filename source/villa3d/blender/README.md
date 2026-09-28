@@ -14,7 +14,7 @@ como alternativa) y denoiser OpenImageDenoise en GPU.
 | `villa_renders.blend` | Escena guardada, con rutas de textura relativas. Tiene todas las cámaras `CAM_*` y las colecciones `Maqueta` / `Alto (sobre 1,15 m)` / `Corte seccion`. |
 | `villa_despiece.py` | Despiece del home/proceso: 3 capas RGBA registradas al píxel con la cámara y la luz del hero (`villa_despiece_1..3.png`, 1600×1030). |
 | `villa_turntable.py` + `encode_turntable.mjs` | Vuelta de 8 s de la maqueta (Cycles, 240 fotogramas) y su codificación a MP4/WebM + póster (`public/assets/video/`). |
-| `capture/` | `capture-server.mjs` + `poster.html`: fotogramas de `<model-viewer>` con los valores del sitio (`villa_viewer_poster.png`). |
+| `capture/` | `capture-server.mjs` + `poster.html`: fotogramas de `<model-viewer>` con los valores del sitio (`villa_viewer_poster.png` 16:11 y `villa_viewer_poster_mobile.png` 4:5). |
 | `usdz_web.py` + `usdz_textures.mjs` | USDZ publicados en `public/models/`: tamaño real con el suelo en y = 0 y maqueta 1:20, normales en JPEG. |
 | `probe.py` | Diagnóstico: lista objetos, materiales y dispositivos GPU. |
 | `../renders/` | PNG de salida, `_timings.json` (tiempo y estadísticas de cada toma) y `_render_log.txt`. |
@@ -50,6 +50,12 @@ node source/villa3d/blender/capture/capture-server.mjs 8802        # en otra ter
 playwright-cli open "http://127.0.0.1:8802/source/villa3d/blender/capture/poster.html?w=1600&h=1100&scale=2&name=_poster_2x.png"
 playwright-cli eval "async () => JSON.stringify(await window.__result)"
 node source/villa3d/blender/capture/finish-poster.mjs    # _poster_2x.png (3200×2200) -> villa_viewer_poster.png (1600×1100)
+# póster vertical 4:5 para el escenario móvil (≤ 767 px): mismo encuadre que el visor en vivo (model-viewer
+# abre el FOV vertical a 36,9° en retrato), así que el cambio póster -> modelo no salta
+playwright-cli goto "http://127.0.0.1:8802/source/villa3d/blender/capture/poster.html?w=1200&h=1500&scale=2&name=_poster_mobile_2x.png"
+playwright-cli eval "async () => JSON.stringify(await window.__result)"
+node source/villa3d/blender/capture/finish-poster.mjs _poster_mobile_2x.png villa_viewer_poster_mobile.png 1200x1500
+cd E:\ProyectosRealStateBlender; npm run images
 
 # 6) USDZ para AR Quick Look (usd-core en un venv; texturas con sharp)
 .venv-usd\Scripts\python source\villa3d\blender\usdz_web.py all      # real + maqueta -> public/models/

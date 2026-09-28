@@ -1,0 +1,51 @@
+/* @module pricing packs guarantees volume
+   ==========================================================================
+   44-pricing · packs, tier/extras tables, volume, guarantees (COMP-16). Owner: ENGINE.
+   The featured tile is wider with an accent outline; every tile shares the same
+   seven rows (subgrid) so names, prices, lists and CTAs line up.
+   ========================================================================== */
+.packs { display: grid; gap: var(--space-5); }
+.pack { display: grid; align-content: start; gap: var(--space-4); padding: var(--space-6) var(--space-5); border: 1px solid var(--color-line-strong); }
+.pack--featured { background: var(--color-surface); border: 2px solid var(--color-accent); }
+.pack__flag { min-height: 1.4em; color: var(--color-accent); }
+@media (max-width: 1023px) {
+  .pack__flag--empty { display: none; }
+}
+.pack__summary, .pack__from, .pack__vat, .volume__unit { color: var(--color-ink-2); }
+.pack__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-2); padding-block: var(--space-3); border-block: 1px solid var(--color-line); font-size: var(--fs-sm); }
+.pack__price strong, .volume__price strong {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--wght-display);
+  font-stretch: var(--stretch-h2);
+  line-height: 1.1;
+  letter-spacing: var(--tracking-h2);
+  color: var(--color-ink);
+}
+.pack__unit { flex-basis: 100%; color: var(--color-ink-3); }
+.pack__meta, .pack__includes { display: grid; align-content: start; gap: var(--space-2); font-size: var(--fs-sm); }
+.pack__meta div { display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: var(--space-3); }
+.pack__cta { align-self: end; padding-top: var(--space-3); }
+.pack__cta .btn { width: 100%; }
+.pricing__vat { margin-top: var(--space-5); }
+.pricing__tables { display: grid; gap: var(--space-6); margin-top: var(--space-8); }
+.volume { display: grid; gap: var(--space-2) var(--space-6); margin-top: var(--space-7); padding: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line-strong); }
+.volume__name { font-size: var(--fs-h4); font-weight: var(--wght-heading); }
+.volume__price strong { font-size: var(--fs-h3); }
+.pricing__guarantees { margin-top: var(--space-8); }
+@media (min-width: 1024px) {
+  .packs { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 1fr); column-gap: var(--space-4); }
+  /* The grid children are the list items: they carry the shared rows down to the tiles (D-05). */
+  .packs__item { display: grid; grid-row: span 7; grid-template-rows: subgrid; }
+  .pack { grid-row: 1 / -1; grid-template-rows: subgrid; padding: var(--space-6); }
+  .pricing__tables { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--space-8); align-items: start; }
+  .volume { grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; }
+  .volume__cta { grid-area: 1 / 3 / span 2; }
+}
+
+/* Guarantees: 3 short facts in plain text, no icons in circles. */
+.guarantees { display: grid; gap: var(--space-4); }
+.guarantees li { max-width: 40ch; padding-top: var(--space-4); border-top: 1px solid var(--color-line-strong); }
+@media (min-width: 768px) {
+  .guarantees { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+}

@@ -1,0 +1,50 @@
+/* @module process process
+   ==========================================================================
+   42-process · process with the despiece (COMP-15, B2 signature). Owner: ENGINE.
+   ========================================================================== */
+.process { display: grid; gap: var(--space-7); }
+.despiece__stage { display: grid; padding: var(--space-9) var(--space-4) var(--space-4); background: var(--color-stage); overflow: hidden; }
+.despiece--static .despiece__stage { padding-top: var(--space-4); }
+/* The baked shadow catcher fades to nothing at the frame edges, so no faint rectangle shows on the stage. */
+.despiece__layer {
+  --fade: linear-gradient(90deg, transparent, var(--color-ink) 4% 96%, transparent), linear-gradient(transparent, var(--color-ink) 4% 96%, transparent);
+  grid-area: 1 / 1;
+  -webkit-mask: var(--fade);
+  -webkit-mask-composite: source-in;
+  mask: var(--fade);
+  mask-composite: intersect;
+}
+/* The legend reads like drawing notes: one row per layer, a short leader, the layer name. */
+.despiece__legend { display: grid; gap: var(--space-1); margin-top: var(--space-3); counter-reset: l; }
+.despiece__legend li { display: grid; grid-template-columns: 2ch var(--space-5) minmax(0, 1fr); align-items: center; gap: var(--space-2); }
+.despiece__legend li::before { counter-increment: l; content: counter(l); color: var(--color-ink); }
+.despiece__legend li::after { content: ""; grid-area: 1 / 2; height: 1px; background: var(--color-line-strong); }
+.despiece__legend li > * { grid-column: 3; }
+@media (min-width: 1024px) {
+  .process { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); align-items: start; }
+  .process__drawing { grid-column: 1 / 7; position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+  .process__steps { grid-column: 8 / 13; }
+  .despiece__stage { padding-top: var(--space-10); }
+}
+/* Storytelling: plan → walls → furnished, the layers assemble with the scroll (view timeline). */
+.process { --d2: calc(-1 * var(--space-7)); --d3: calc(-1 * var(--space-9)); }
+@media (min-width: 1024px) {
+  .process { --d2: calc(-1 * var(--space-8)); --d3: calc(-1 * var(--space-10)); }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .process { view-timeline-name: --despiece; }
+    .despiece__layer--2, .despiece__layer--3 { animation: d2 linear both; animation-timeline: --despiece; animation-range: entry 10% cover 50%; }
+    .despiece__layer--3 { animation-name: d3; }
+  }
+}
+@keyframes d2 { from { transform: translateY(var(--d2)); } }
+@keyframes d3 { from { transform: translateY(var(--d3)); } }
+/* Fallback without scroll-driven animations: one transition when the drawing enters the viewport. */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal-ready .despiece__layer { transition: transform var(--dur-sequence) var(--ease-out); }
+    .reveal-ready .despiece:not(.is-in) .despiece__layer--2 { transform: translateY(var(--d2)); }
+    .reveal-ready .despiece:not(.is-in) .despiece__layer--3 { transform: translateY(var(--d3)); }
+  }
+}

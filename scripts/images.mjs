@@ -55,16 +55,26 @@ const OVERRIDES = [
   // Line art on white: otherwise the 1.6 px Freestyle lines ring and grey out.
   [/^villa_plano_lineas$/, { avif: { quality: 82, chromaSubsampling: '4:4:4' }, webp: { quality: 90 } }],
   // Hero/LCP objects on transparent film: mostly empty pixels, so high quality stays far below budget.
-  [/^villa_(maqueta_iso|viewer_poster|despiece_\d)$/, { avif: { quality: 82, chromaSubsampling: '4:4:4' } }],
+  // villa_viewer_poster_mobile: the same model-viewer capture framed 4:5 for the portrait stage (≤ 767 px).
+  [/^villa_(maqueta_iso|viewer_poster(_mobile)?|despiece_\d)$/, { avif: { quality: 82, chromaSubsampling: '4:4:4' } }],
   [/^villa_(maqueta_iso|muros_completos)(_opaco)?$/, { avif: { quality: 76, chromaSubsampling: '4:4:4' } }],
-  // Colour plan: thin black walls between coloured floors.
-  [/^villa_planta_cenital(_opaco)?$/, { avif: { quality: 70, chromaSubsampling: '4:4:4' } }],
+  // Colour plan: thin black walls between coloured floors, so 4:4:4. It is a tall 2400×3700 plate used as the
+  // LCP hero of guides/zones: q66 at effort 9 (≈3× slower, same bytes) keeps SSIM within 0.001 of the old
+  // q70/effort 6 (no visible difference on 3× crops, shadow alpha unbanded) and brings 1200w 114 → 100 KB,
+  // 1600w 169 → 148 KB (2026-09-28).
+  [/^villa_planta_cenital(_opaco)?$/, { avif: { quality: 66, effort: 9, chromaSubsampling: '4:4:4' } }],
 ];
 const overridesFor = (name) => OVERRIDES.find(([re]) => re.test(name))?.[1];
 // Byte budgets per variant (BUILD-SPEC §10/§11, rulebook IMG-05/PERF-04).
+const POSTER_BUDGET = { 'avif-1200': 120 * 1024, 'avif-800': 80 * 1024 };
+// LCP plates: the lint measures the AVIF closest to 1200w (phones); 1600w is what DPR-2 desktops pick.
+const PLAN_BUDGET = { 'avif-1200': 110 * 1024, 'avif-1600': 150 * 1024 };
 const BUDGETS = {
-  villa_maqueta_iso: { 'avif-1200': 120 * 1024, 'avif-800': 80 * 1024 },
-  villa_viewer_poster: { 'avif-1200': 120 * 1024, 'avif-800': 80 * 1024 },
+  villa_maqueta_iso: POSTER_BUDGET,
+  villa_viewer_poster: POSTER_BUDGET,
+  villa_viewer_poster_mobile: POSTER_BUDGET,
+  villa_planta_cenital: PLAN_BUDGET,
+  villa_planta_cenital_opaco: PLAN_BUDGET,
 };
 // Group budgets: sum of variants across several images.
 const GROUP_BUDGETS = [

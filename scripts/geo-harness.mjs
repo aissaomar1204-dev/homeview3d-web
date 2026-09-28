@@ -3,6 +3,7 @@
    GEO harness (owner: GEO): exercises build/lib/{schema,markdown,machine}.mjs
    and build/check.mjs WITHOUT the engine, using fake registry entries.
      node scripts/geo-harness.mjs [outDir]      (default: <tmp>/geo-harness-dist)
+     node scripts/geo-harness.mjs --live <url>  HTTP smoke test of a deploy (see liveChecks below)
    1. builds fake content docs + a fake ctx that follows BUILD-SPEC §3
    2. unit-asserts schemaGraph() and blocksToMarkdown() outputs
    3. writes a tiny fake dist (HTML from the Markdown mirror) and runs
@@ -21,6 +22,76 @@ import { blocksToMarkdown, resolveTokensFallback, stripMd, imageManifest, fmtMB,
 import { writeMachineOutputs, robotsTxt, buildCsp } from '../build/lib/machine.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+
+/* ── --live <base-url>: HTTP smoke test of a real deploy (Netlify deploy preview or production) ──
+   Checks what only the host can prove (audit G-13): trailing-slash 301 with pretty_urls=false, the
+   Accept: text/markdown edge function, per-language 404s, the generated _headers and _redirects.
+     node scripts/geo-harness.mjs --live https://deploy-preview-12--<site>.netlify.app
+   Exit 1 when a check fails. Works against `node build/serve.mjs` too (no edge function there). */
+const liveAt = process.argv.indexOf('--live');
+if (liveAt >= 0) {
+  process.exit(await liveChecks(process.argv[liveAt + 1]));
+}
+async function liveChecks(baseArg) {
+  if (!/^https?:\/\//.test(baseArg || '')) { console.error('usage: node scripts/geo-harness.mjs --live https://<deploy-url>'); return 2; }
+  const base = baseArg.replace(/\/+$/, '');
+  let fails = 0;
+  const ok = (cond, msg, detail = '') => { if (cond) console.log(`  ✓ ${msg}`); else { fails++; console.log(`  ✗ ${msg}${detail ? `  (${detail})` : ''}`); } };
+  // node:http(s) without keep-alive (agent: false): no redirects followed, no sockets left open at exit.
+  const { request: httpRequest } = await import(base.startsWith('https:') ? 'node:https' : 'node:http');
+  const req = (p, headers = {}, method = 'GET') => new Promise((resolve) => {
+    const r = httpRequest(base + p, { method, agent: false, timeout: 15000, headers: { 'user-agent': 'geo-harness (+scripts/geo-harness.mjs)', 'accept-encoding': 'identity', ...headers } }, (res) => {
+      const chunks = [];
+      res.on('data', (c) => chunks.push(c));
+      res.on('end', () => resolve({ status: res.statusCode, h: (k) => [].concat(res.headers[k.toLowerCase()] || '').join(', '), body: Buffer.concat(chunks).toString('utf8') }));
+    });
+    r.on('timeout', () => r.destroy(new Error('timeout')));
+    r.on('error', (e) => resolve({ status: 0, h: () => '', body: '', error: e.message }));
+    r.end();
+  });
+  const pricing = routeById.precios.es;
+  const noSlash = pricing.replace(/\/$/, '');
+  // build/serve.mjs has no edge functions and drops HSTS on localhost: those checks only mean something on Netlify.
+  const local = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:|\/|$)/.test(base);
+  const hostOnly = (cond, msg, detail) => (local ? console.log(`  - ${msg}: skipped on a local server`) : ok(cond, msg, detail));
+  console.log(`\n[live] ${base}`);
+  const r1 = await req(noSlash);
+  ok([301, 308].includes(r1.status) && new URL(r1.h('location'), base).pathname === pricing, `${noSlash} → 301 ${pricing}`, `${r1.status} ${r1.h('location') || r1.error || ''}`);
+  const r2 = await req(pricing, { accept: 'text/markdown' });
+  hostOnly(r2.status === 200 && /text\/markdown/.test(r2.h('content-type')) && r2.body.startsWith('# '), `Accept: text/markdown on ${pricing} → Markdown (edge function)`, `${r2.status} ${r2.h('content-type')}`);
+  hostOnly(/accept/i.test(r2.h('vary')) && r2.h('link').includes(`${base}${pricing}>; rel="canonical"`) && /noindex/.test(r2.h('x-robots-tag')), 'Markdown response: Vary: Accept, Link rel=canonical, X-Robots-Tag noindex', `vary="${r2.h('vary')}" link="${r2.h('link')}"`);
+  const r3 = await req(pricing, { accept: 'text/html,application/xhtml+xml,*/*;q=0.8' });
+  ok(r3.status === 200 && /text\/html/.test(r3.h('content-type')) && /frame-ancestors 'self'/.test(r3.h('content-security-policy')), `browser request on ${pricing} → HTML with its CSP`, `${r3.status} ${r3.h('content-type')}`);
+  for (const [p, lang] of [['/__geo-harness-404__/', site.defaultLang], ...site.langs.filter((l) => l !== site.defaultLang).map((l) => [`/${l}/__geo-harness-404__/`, l])]) {
+    const r = await req(p);
+    ok(r.status === 404 && new RegExp(`<html[^>]*lang="${lang}`).test(r.body), `${p} → 404 with the ${lang} 404 page`, `${r.status}`);
+  }
+  const { redirects } = await import('../build/data/routes.mjs');
+  for (const rd of redirects) {
+    const r = await req(rd.from);
+    ok(r.status === (rd.status || 301) && new URL(r.h('location') || '/', base).pathname === rd.to, `${rd.from} → ${rd.status || 301} ${rd.to}`, `${r.status} ${r.h('location')}`);
+  }
+  const robots = await req('/robots.txt');
+  ok(robots.status === 200 && /^Content-Signal: /m.test(robots.body) && !/^Disallow: \/(en\/)?embed\//m.test(robots.body), 'robots.txt: Content-Signal record, /embed/ crawlable', `${robots.status}`);
+  for (const p of ['/llms.txt', '/en/llms.txt', '/index.md']) {
+    const r = await req(p);
+    ok(r.status === 200 && /noindex/.test(r.h('x-robots-tag')) && /text\/(plain|markdown)/.test(r.h('content-type')), `${p}: 200, text, X-Robots-Tag noindex`, `${r.status} ${r.h('content-type')} ${r.h('x-robots-tag')}`);
+  }
+  const embed = routeById['embed-villa']?.es;
+  if (embed) {
+    const r = await req(embed);
+    ok(r.status === 200 && /indexifembedded/.test(r.h('x-robots-tag')) && /frame-ancestors \*/.test(r.h('content-security-policy')), `${embed}: framable, X-Robots-Tag noindex, indexifembedded`, `${r.h('x-robots-tag')}`);
+  }
+  const glb = await req('/models/villa.glb', {}, 'HEAD');
+  ok(glb.status === 200 && /model\/gltf-binary/.test(glb.h('content-type')) && glb.h('access-control-allow-origin') === '*', '/models/villa.glb: model/gltf-binary + CORS', `${glb.status} ${glb.h('content-type')}`);
+  const home = await req('/');
+  hostOnly(home.status === 200 && /max-age=\d{7,}/.test(home.h('strict-transport-security')) && /nosniff/.test(home.h('x-content-type-options')), '/: HSTS + nosniff', `${home.status}`);
+  const sm = await req('/sitemap.xml');
+  ok(sm.status === 200 && /<sitemapindex\b/.test(sm.body), '/sitemap.xml: sitemap index', `${sm.status}`);
+  console.log(`\nlive checks: ${fails ? `${fails} FAILED` : 'all passed'}`);
+  return fails ? 1 : 0;
+}
+
 const OUT = path.resolve(process.argv[2] || path.join(os.tmpdir(), 'geo-harness-dist'));
 let failures = 0;
 const assert = (cond, msg) => { if (!cond) { failures++; console.log(`  ✗ ${msg}`); } else console.log(`  ✓ ${msg}`); };
@@ -127,7 +198,11 @@ const byType = (graph, t) => graph.filter((n) => [].concat(n['@type']).includes(
   assert(byType(home, 'FAQPage').length === 1, 'home: FAQPage (FAQ rendered)');
   const svc = g('servicio-plano');
   const s = byType(svc, 'Service')[0];
-  assert(s?.offers?.priceSpecification?.valueAddedTaxIncluded === false && s.offers.price === 490, 'service: Offer 490 + UnitPriceSpecification VAT excluded');
+  const offers = [].concat(s?.offers || []);
+  assert(offers.length && offers.every((o) => o.priceSpecification?.valueAddedTaxIncluded === false), 'service: Offers with UnitPriceSpecification VAT excluded');
+  assert(offers[0]?.price === 149 && offers.some((o) => o.price === 490), `service: headline pack first (route.pack plano3d 149), then the lead's maqueta 490 (got ${offers.map((o) => o.price).join(', ')})`);
+  const rs = [].concat(byType(g('servicio-renders'), 'Service')[0]?.offers || []);
+  assert(rs.length === 1 && rs[0].price === 490, 'service renders: one Offer (490), the only pack its description/lead price');
   assert(Object.keys(svc.find((n) => n['@id'] === `${site.domain}/#organization`)).length <= 4, 'service: Organization is a stub (full only on home/about/contact)');
   assert(byType(svc, 'BreadcrumbList')[0]?.itemListElement.length === 3, 'service: 3-level breadcrumb');
   const st = byType(g('servicio-staging'), 'Service')[0];
@@ -135,6 +210,18 @@ const byType = (graph, t) => graph.filter((n) => [].concat(n['@type']).includes(
   const pr = g('precios');
   const cat = byType(pr, 'OfferCatalog')[0];
   assert(cat && cat.itemListElement.length >= 8, `pricing: OfferCatalog with ${cat?.itemListElement.length} offers`);
+  assert(cat.itemListElement[0].itemOffered?.['@id'] === `${site.domain}/servicios/plano-2d-a-3d/#service`, 'pricing: plano3d itemOffered → the floor-plan Service @id');
+  const aboutOrg = byType(g('sobre-nosotros'), 'ProfessionalService')[0];
+  assert(aboutOrg?.contactPoint?.contactType === 'sales' && aboutOrg.image === byType(g('home'), 'ProfessionalService')[0].image, 'organization: contactType sales + one fixed image on every page');
+  const legal = g('aviso-legal').find((n) => n['@id']?.endsWith('#webpage'));
+  assert(!legal.speakable, 'legal: no speakable (no .lead/.cajetin to read)');
+  const terms = byType(g('glosario'), 'DefinedTermSet')[0]?.hasDefinedTerm || [];
+  assert(terms.length && terms.every((t) => !t.url && !t.inDefinedTermSet), 'glossary: DefinedTerm without url / inDefinedTermSet');
+  const primary = byType(g('caso-villa'), 'ImageObject').find((n) => n['@id']?.endsWith('#primaryimage'));
+  assert(/\/aviso-legal\/(#|$)/.test(primary?.license || '') && /\/contacto\/$/.test(primary?.acquireLicensePage || ''), 'images: license + acquireLicensePage on #primaryimage');
+  const e0 = { ...get('guia-precio-render'), wordCount: 0 };
+  const wc = byType(schemaGraph(e0, e0.ctx), 'Article')[0]?.wordCount;
+  assert(wc > 0, `guide: wordCount computed from the content when the engine has none yet (${wc})`);
   const caseG = g('caso-villa', 'en');
   const model = byType(caseG, '3DModel')[0];
   assert(model?.encoding?.some((e) => e.encodingFormat === 'model/vnd.usdz+zip') && model.encoding.some((e) => e.encodingFormat === 'model/gltf-binary'), 'case: 3DModel with GLB + USDZ encodings');
@@ -151,6 +238,22 @@ const byType = (graph, t) => graph.filter((n) => [].concat(n['@type']).includes(
   assert(!byType(thanks, 'FAQPage').length && !byType(thanks, 'Service').length, 'thanks (noindex): minimal graph');
   const all = JSON.stringify(entries.map((e) => schemaGraph(e, e.ctx)));
   assert(!/null|\[\]|""|\{\{|undefined|NaN/.test(all), 'no null / [] / "" / {{ / undefined in any graph');
+  // Video block → VideoObject referenced from the Article
+  const vc = get('caso-villa');
+  const withVideo = { ...vc, page: { ...vc.page, blocks: [...vc.page.blocks, { type: 'video', video: 'villa-turntable', h2: '¿Cómo se ve la maqueta en movimiento?', caption: 'Una vuelta de cámara alrededor de la maqueta. Animación 3D calculada con Cycles.' }] } };
+  const vg = schemaGraph(withVideo, vc.ctx);
+  const vo = byType(vg, 'VideoObject')[0];
+  assert(vo && vo.duration === 'PT8S' && vo.uploadDate === vc.datePublished && /\.mp4$/.test(vo.contentUrl) && /poster/.test(vo.thumbnailUrl) && byType(vg, 'Article')[0].video?.['@id'] === vo['@id'], 'video: VideoObject (PT8S, uploadDate = datePublished, mp4, poster) linked from the Article');
+  const vmd = blocksToMarkdown(withVideo, vc.ctx, { entries });
+  assert(vmd.includes('## ¿Cómo se ve la maqueta en movimiento?') && /\[Ver el vídeo \(MP4, 8 s, [^\]]+\]\([^)]+\.mp4\)/.test(vmd) && vmd.includes('*Una vuelta de cámara'), 'video: Markdown mirror links the MP4 and keeps the caption');
+  // Founder (Person) only once site.founder is filled in
+  site.founder = { name: 'Nombre Apellido', jobTitle: { es: 'Fundador', en: 'Founder' }, sameAs: ['https://www.linkedin.com/in/ejemplo'] };
+  const person = byType(g('sobre-nosotros'), 'Person')[0];
+  const author = byType(g('guia-precio-render'), 'Article')[0].author;
+  const fOrg = byType(g('home'), 'ProfessionalService')[0].founder;
+  site.founder = null;
+  assert(person?.['@id'] === `${site.domain}/sobre-nosotros/#founder` && author?.['@id'] === person['@id'] && fOrg?.['@id'] === person['@id'], 'founder: Person on the about page, Article author and Organization founder');
+  assert(!byType(g('sobre-nosotros'), 'Person').length, 'founder: no Person while site.founder is null');
   const tag = schemaScript(get('home'), get('home').ctx);
   assert(!tag.slice(tag.indexOf('>') + 1, tag.lastIndexOf('</')).includes('<'), 'schemaScript escapes "<"');
 }
@@ -174,7 +277,8 @@ console.log('\n[blocksToMarkdown]');
 console.log('\n[robots + CSP]');
 {
   const r = robotsTxt();
-  assert(/User-agent: \*\nAllow: \/\nDisallow: \/models\/\nDisallow: \/embed\/\nDisallow: \/en\/embed\//.test(r), 'robots: * group with /models/ and embed dirs');
+  assert(/User-agent: \*\nContent-Signal: search=yes, ai-input=yes, ai-train=yes\nAllow: \/\nDisallow: \/models\/\n/.test(r), 'robots: * group with a real Content-Signal record and /models/ closed');
+  assert(!/Disallow: \/(en\/)?embed\//.test(r), 'robots: /embed/ crawlable (partner iframes render; noindex, indexifembedded header)');
   assert(/User-agent: Bytespider\nDisallow: \//.test(r) && r.includes(`Sitemap: ${site.domain}/sitemap.xml`), 'robots: Bytespider blocked + Sitemap');
   const csp = buildCsp({ hashes: ['abc='] });
   assert(csp.includes("'wasm-unsafe-eval'") && csp.includes("'sha256-abc='") && csp.includes("frame-ancestors 'self'"), 'CSP: wasm-unsafe-eval + hashes + frame-ancestors');
@@ -234,6 +338,9 @@ const llms = fs.readFileSync(path.join(OUT, 'llms.txt'), 'utf8');
 assert(llms.startsWith('<!--') && /\n# /.test(llms) && Buffer.byteLength(llms) < 10240, `llms.txt preview comment + H1, ${Buffer.byteLength(llms)} bytes`);
 const hdr = fs.readFileSync(path.join(OUT, '_headers'), 'utf8');
 assert(hdr.includes('/embed/*') && hdr.includes('frame-ancestors *') && !/^\s+X-Frame-Options:/mi.test(hdr), '_headers: embed rule, no X-Frame-Options');
+assert(/\/embed\/\*\n[^\n]*\n\s+X-Robots-Tag: noindex, indexifembedded/.test(hdr), '_headers: embed X-Robots-Tag noindex, indexifembedded');
+const llmsEn = fs.readFileSync(path.join(OUT, 'en', 'llms.txt'), 'utf8');
+assert(llms.includes('## Respuestas rápidas') && llmsEn.includes('## Quick answers') && llms.includes(`${site.domain}/en/llms.txt`) && Buffer.byteLength(llmsEn) < 10240 && hdr.includes('/en/llms.txt'), `llms: ES + EN indexes with quick answers (${Buffer.byteLength(llmsEn)} bytes EN)`);
 const fullEs = fs.readFileSync(path.join(OUT, 'llms-full.txt'), 'utf8');
 const fullEn = fs.readFileSync(path.join(OUT, 'en', 'llms-full.txt'), 'utf8');
 assert(fullEs.includes(`URL canónica: ${site.domain}/precios/`) && !fullEs.includes('Canonical URL: ') && fullEn.includes(`Canonical URL: ${site.domain}/en/pricing/`) && !fullEn.includes('URL canónica: '), 'llms-full: one file per language');

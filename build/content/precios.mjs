@@ -87,13 +87,13 @@ export default {
       {
         type: 'answer',
         h2: '¿Cuánto cuesta una promoción de obra nueva?',
-        answer: 'Desde {{price:promocion}} + IVA por hasta 3 tipologías modeladas y amuebladas, con 12 renders en 4K, un visor 3D con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Cada tipología adicional cuesta {{extra:tipologia}} + IVA. El plazo es de {{delivery:promocion}} desde que recibimos los planos.',
-        body: 'Una promoción no se vende con una sola imagen: el comprador quiere comparar el bajo con jardín y el ático, y ver su tipología amueblada antes de que exista. Lo contamos en la página para [promotoras de obra nueva](@sol-promotoras), y la comercialización completa, en [cómo vender viviendas sobre plano](@guia-sobre-plano).',
+        answer: 'Desde {{price:promocion}} + IVA por hasta 3 tipologías modeladas y amuebladas, con 12 renders en 4K, un visor 3D con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Cada tipología adicional cuesta {{extra:tipologia}} + IVA. El plazo es de {{delivery:promocion}}, contado desde que tenemos los planos y una medida de referencia.',
+        body: 'Una promoción no se vende con una sola imagen: el comprador quiere comparar el bajo con jardín y el ático, y ver su tipología amueblada antes de que exista. Lo contamos en la página para [promotoras de obra nueva](@sol-promotoras), y la comercialización completa, en la [guía para vender obra nueva sobre plano](@guia-sobre-plano).',
       },
       {
         type: 'answer',
         h2: '¿Hay precio especial para agencias con varias viviendas?',
-        answer: 'Sí. El pack cartera incluye 5 maquetas 3D completas por {{volume}} + IVA, {{volumeUnit}} por vivienda, para usar en 6 meses en viviendas de hasta 150 m². Si trabajas con más volumen, el precio va por tramos: el unitario baja a partir de la quinta vivienda y vuelve a bajar a partir de la décima. La calculadora te da el total.',
+        answer: 'Sí. El pack cartera incluye 5 maquetas 3D completas por {{volume}} + IVA, {{volumeUnit}} por vivienda, para usar en 6 meses en viviendas de hasta 150 m². Si encargas más a la vez, la calculadora aplica el precio por tramos a todas las viviendas del encargo, no solo a partir de la quinta: de 5 a 9, {{volumeUnit}} + IVA cada una, y desde 10, menos todavía. La calculadora te da el total.',
       },
       {
         type: 'calculator',
@@ -117,8 +117,8 @@ export default {
         caption: 'Precios publicados de visualización inmobiliaria en España (septiembre de 2026)',
         head: ['Servicio', 'Precio publicado', 'Qué entrega', 'Fuente'],
         rows: [
-          ['Plano 3D en plataforma online', '40 € por planta', 'Una imagen 3D a color de la planta, en 48 horas', `[boxbrownie.com](${SRC.box})`],
-          ['Plano 3D amueblado en tienda online', '119,95 € por planta de unos 60 m²', 'Una imagen 3D a color, 1 revisión, desde 72 horas', `[homestagerdesign.com](${SRC.hsd})`],
+          ['Plano 3D en plataforma en línea', '40 € por planta', 'Una imagen 3D a color de la planta, en 48 horas', `[boxbrownie.com](${SRC.box})`],
+          ['Plano 3D amueblado en tienda en línea', '119,95 € por planta de unos 60 m²', 'Una imagen 3D a color, 1 revisión, desde 72 horas', `[homestagerdesign.com](${SRC.hsd})`],
           ['Plano 3D de estudio, de básico a premium', '100 a 800 € o más', 'Imagen estática; sube con el detalle y el fotorrealismo', `[inmofotomadrid.es](${SRC.imf}), 12 feb 2026`],
           ['Render interior de estudio', '200 a 450 € por imagen', 'Una imagen fija de una estancia', `[ararenders.com](${SRC.ara}), 13 jun 2026`],
           ['Renders con IA a partir de fotos', '129 € sin IVA por inmueble, hasta 6 estancias', 'Fotos del piso redecoradas con IA; no hay modelo 3D', `[vistastudiodesign.com](${SRC.vista})`],
@@ -133,8 +133,8 @@ export default {
       {
         type: 'answer',
         h2: '¿Dónde encaja nuestro precio?',
-        answer: 'En la franja intermedia, con más entregables. Un plano 3D online cuesta de 40 a 120 € y es una imagen; un render de estudio, de 200 a 450 € por imagen; una plataforma 3D interactiva, desde unos 2.700 US$. Por {{price:maqueta}} + IVA, {{brand}} entrega el modelo 3D con 6 renders, visor web y realidad aumentada, en {{delivery:maqueta}}.',
-        body: 'No lo conseguimos recortando calidad, sino automatizando: los muros, huecos y muebles se colocan con scripts de Python en Blender y los materiales son procedurales, así que un cambio cuesta minutos y no una tarde. La prueba está en nuestro [caso demostrativo](@caso-villa): {{villa:rooms}} estancias, {{villa:textures}} texturas creadas para ese modelo y {{villa:renders}} renders calculados en unos {{villa:renderMinutes}} minutos. El proceso completo, en [cómo funciona](@como-funciona).',
+        answer: 'En la franja intermedia, con más entregables. Un plano 3D en línea cuesta de 40 a 120 € y es una imagen; un render de estudio, de 200 a 450 € por imagen; una plataforma 3D interactiva, desde unos 2.700 US$. Por {{price:maqueta}} + IVA, {{brand}} entrega el modelo 3D con 6 renders, visor web y realidad aumentada, en {{delivery:maqueta}}.',
+        body: 'No lo conseguimos recortando calidad, sino automatizando: los muros, huecos y muebles se colocan con scripts de Python en Blender y los materiales son procedurales, así que un cambio cuesta minutos y no una tarde. La prueba está en nuestro [caso demostrativo](@caso-villa): {{villa:rooms}} estancias, {{villa:textures}} texturas creadas para ese modelo y {{villa:renders}} imágenes (6 vistas, las dos plantas y la imagen para redes) calculadas en unos {{villa:renderMinutes}} minutos. El proceso completo, en [nuestro proceso, paso a paso](@como-funciona).',
       },
       {
         type: 'callout',
@@ -159,7 +159,7 @@ export default {
       },
       {
         q: '¿Qué pasa con el visor 3D después de los 12 meses?',
-        a: 'La maqueta 3D completa de {{brand}} incluye 12 meses de alojamiento del visor. Si la vivienda sigue a la venta o quieres conservarlo como muestra para futuras captaciones, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año. Si no renuevas, retiramos el visor, pero conservas los renders y los archivos GLB y USDZ que te entregamos.',
+        a: 'La maqueta 3D completa de {{brand}} incluye 12 meses de alojamiento del visor. Si la vivienda sigue a la venta o quieres conservarlo como muestra para futuras captaciones, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año. Si no renuevas, retiramos el visor, pero conservas los renders y el modelo en GLB, USDZ y BLEND que te entregamos.',
       },
       {
         q: '¿Cómo funciona el pack cartera de 5 viviendas?',
@@ -167,7 +167,7 @@ export default {
       },
       {
         q: '¿Puedo usar los renders y el visor donde quiera?',
-        a: 'Sí, para comercializar la vivienda: en tu web, en portales, en redes sociales, en el dosier de venta o en cartelería, sin pagar más por cada uso. {{brand}} solo te pide permiso para enseñar el trabajo como ejemplo en su propia web, y si no lo das, no lo publicamos. Los renders se entregan identificados como tales.',
+        a: 'Sí, para comercializar esa vivienda en cualquier canal: web, portales, redes sociales, dosier de venta, prensa y cartelería, sin pagar más por cada uso. {{brand}} solo te pide permiso para enseñar el trabajo como ejemplo en su propia web, y si no lo das, no lo publicamos. Los renders se entregan identificados como tales.',
       },
       {
         q: '¿Cómo se calcula la superficie para el precio?',
@@ -189,7 +189,7 @@ export default {
   // ─────────────────────────────────────────────────────────────── EN
   en: {
     title: '3D floor plan, 3D model and render pricing 2026',
-    description: '3D floor plans from {{price:plano3d}}; a full 3D model with renders, viewer and AR from {{price:maqueta}}, ex VAT. Packages, extras, volume and market rates.',
+    description: '3D floor plans from {{price:plano3d}}; the complete 3D model with renders, viewer and AR from {{price:maqueta}}, ex VAT. Extras, volume and market rates.',
     h1: 'Pricing for 3D floor plans, renders and AR',
     lead: 'A 3D floor plan costs {{price:plano3d}} + VAT per floor, and the complete 3D model, with 6 renders, a web viewer and augmented reality, {{price:maqueta}} + VAT per home, delivered in {{delivery:maqueta}}. Public, fixed prices: for a typical property there is no quote to wait for.',
     breadcrumb: 'Pricing',
@@ -218,7 +218,7 @@ export default {
         type: 'table',
         h2: 'What is included, and what is not?',
         intro: 'Most agents choose between the 3D floor plan and the complete model. Here is the difference, line by line.',
-        caption: '{{brand}} 3D floor plan and complete 3D model: what each includes (prices ex VAT)',
+        caption: 'Our 3D floor plan and complete 3D model: what each includes (prices ex VAT)',
         head: ['What you get', '3D floor plan', 'Complete 3D model'],
         rows: [
           ['Furnished 3D model, to scale', 'Used to produce the images; not delivered', 'Yes, as GLB, USDZ and BLEND'],
@@ -252,13 +252,13 @@ export default {
       {
         type: 'answer',
         h2: 'How much does an off-plan development cost?',
-        answer: 'From {{price:promocion}} + VAT for up to 3 unit types, modelled and furnished, with 12 renders in 4K, a 3D viewer with a unit-type selector and augmented reality for the sales suite and property fairs. Each extra unit type costs {{extra:tipologia}} + VAT. Turnaround is {{delivery:promocion}} from receipt of the plans.',
+        answer: 'From {{price:promocion}} + VAT for up to 3 unit types, modelled and furnished, with 12 renders in 4K, a 3D viewer with a unit-type selector and augmented reality for the sales suite and property fairs. Each extra unit type costs {{extra:tipologia}} + VAT. Turnaround is {{delivery:promocion}}, counted from when we have the plans and one reference measurement.',
         body: 'A development does not sell on a single image: buyers want to compare the ground-floor unit with a garden against the penthouse, and to see their own unit furnished before it exists. More on our page about [off-plan 3D visualisation](@sol-promotoras).',
       },
       {
         type: 'answer',
         h2: 'Do you offer volume pricing for agencies?',
-        answer: 'Yes. The portfolio pack covers 5 complete 3D models for {{volume}} + VAT, {{volumeUnit}} per home, to be used within 6 months on homes up to 150 m². For higher volumes, pricing is tiered: the unit price drops from the fifth property and again from the tenth. The calculator below works out the total.',
+        answer: 'Yes. The portfolio pack covers 5 complete 3D models for {{volume}} + VAT, {{volumeUnit}} per home, to be used within 6 months on homes up to 150 m². Order more at once and the calculator applies tiered pricing to every home in the order, not just from the fifth: from 5 to 9 homes each costs {{volumeUnit}} + VAT, and from 10 it drops again. The calculator below works out the total.',
       },
       {
         type: 'calculator',
@@ -299,7 +299,7 @@ export default {
         type: 'answer',
         h2: 'Where does our price sit?',
         answer: 'In the middle band, with more deliverables. An online 3D floor plan costs €40 to €120 and is one image; a studio render, €200 to €450 per image; an interactive 3D platform, from about US$2,700. For {{price:maqueta}} + VAT, {{brand}} delivers the 3D model with 6 renders, a web viewer and augmented reality, in {{delivery:maqueta}}.',
-        body: 'We get there by automating, not by cutting corners: walls, openings and furniture are placed by Python scripts in Blender and the materials are procedural, so a change takes minutes rather than an afternoon. The proof is our [case study](@caso-villa): {{villa:rooms}} rooms, {{villa:textures}} textures made for that model and {{villa:renders}} renders computed in about {{villa:renderMinutes}} minutes. The full process is on [how it works](@como-funciona).',
+        body: 'We get there by automating, not by cutting corners: walls, openings and furniture are placed by Python scripts in Blender and the materials are procedural, so a change takes minutes rather than an afternoon. The proof is our [case study](@caso-villa): {{villa:rooms}} rooms, {{villa:textures}} textures made for that model and {{villa:renders}} images (6 views, both plans and the social media image) computed in about {{villa:renderMinutes}} minutes. The full process is in [our step-by-step process](@como-funciona).',
       },
       {
         type: 'callout',
@@ -324,15 +324,15 @@ export default {
       },
       {
         q: 'What happens to the 3D viewer after 12 months?',
-        a: 'The {{brand}} complete 3D model includes 12 months of viewer hosting. If the property is still on the market, or you want to keep it as a sample for future valuations, renewal costs {{extra:hosting}} + VAT per home per year. If you do not renew, we take the viewer down, but you keep the renders and the GLB and USDZ files we delivered.',
+        a: 'The {{brand}} complete 3D model includes 12 months of viewer hosting. If the property is still on the market, or you want to keep it as a sample for future valuations, renewal costs {{extra:hosting}} + VAT per home per year. If you do not renew, we take the viewer down, but you keep the renders and the GLB, USDZ and BLEND files we delivered.',
       },
       {
         q: 'How does the 5-home portfolio pack work?',
-        a: 'You pay {{volume}} + VAT for 5 complete 3D models, {{volumeUnit}} per home instead of {{price:maqueta}}, and use them over the following 6 months on homes up to 150 m². Each model in the {{brand}} pack includes the same as a single one: 6 renders, a web viewer, augmented reality and {{revisions:maqueta}}.',
+        a: 'You pay {{volume}} + VAT for 5 complete 3D models, {{volumeUnit}} per home instead of {{price:maqueta}}, and use them over the following 6 months on homes up to 150 m². Each model in the Portfolio pack includes the same as a single one: 6 renders, a web viewer, augmented reality and {{revisions:maqueta}}.',
       },
       {
         q: 'Can I use the renders and the viewer anywhere?',
-        a: 'Yes, to market the property: on your website, portals, social media, sales brochures or signage, with no extra fee per use. {{brand}} only asks your permission to show the work as an example on our own site, and if you say no, we do not publish it. Renders are delivered clearly labelled as renders.',
+        a: 'Yes, to market that property in any channel: website, portals, social media, sales brochures, press and signage, with no extra fee per use. {{brand}} only asks your permission to show the work as an example on our own site, and if you say no, we do not publish it. Renders are delivered clearly labelled as renders.',
       },
       {
         q: 'How is floor area measured for pricing?',

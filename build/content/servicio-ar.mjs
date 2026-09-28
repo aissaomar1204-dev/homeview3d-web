@@ -15,7 +15,7 @@ export default {
   dateModified: '2026-09-28',
 
   es: {
-    title: 'Realidad aumentada inmobiliaria, sin app ni descargas',
+    title: 'Realidad aumentada inmobiliaria sin app ni instalación',
     description: 'Tu comprador ve la vivienda sobre su mesa a escala 1:20 o a tamaño real desde iPhone o Android, sin instalar nada. Incluida desde {{price:maqueta}} + IVA.',
     h1: 'Realidad aumentada inmobiliaria: la vivienda en tu mesa',
     lead: 'Tu comprador coloca la vivienda sobre su mesa como una maqueta a escala 1:20, o a tamaño real en el suelo, desde su iPhone, iPad o Android y sin instalar ninguna app. La creamos a partir del plano 2D y va incluida en la maqueta 3D completa, desde {{price:maqueta}} + IVA, con entrega en {{delivery:maqueta}}.',
@@ -54,7 +54,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Tienen que instalar una app para verla?',
-        answer: 'No. Usamos los visores que ya traen los teléfonos: [AR Quick Look](@glosario#ar-quick-look) en iPhone y iPad, que abre archivos [USDZ](@glosario#usdz) desde Safari, y [Scene Viewer](@glosario#scene-viewer) en Android, que abre archivos [GLB](@glosario#glb) en móviles compatibles con ARCore. El comprador toca un botón y la vivienda aparece, sin descargas ni registros.',
+        answer: 'No. Usamos los visores que ya traen los teléfonos: [AR Quick Look](@glosario#ar-quick-look) en iPhone y iPad, que abre archivos [USDZ](@glosario#usdz) desde Safari, y [Scene Viewer](@glosario#scene-viewer) en Android, que abre archivos [GLB](@glosario#glb) en móviles compatibles con ARCore. El comprador toca un botón y la vivienda aparece, sin instalar nada ni registrarse.',
         body: 'Lo documentan Apple en su página de [AR Quick Look](' + APPLE + ') y Google en la de [Scene Viewer](' + SCENE + '). En Apple hace falta iOS o iPadOS 12 o posterior; en Android, la versión 7.0 o posterior y los servicios de Google Play para realidad aumentada.',
       },
       {
@@ -69,7 +69,7 @@ export default {
         caption: 'Dos formas de ver la vivienda en realidad aumentada',
         head: ['Modo', 'Escala', 'Para qué sirve'],
         rows: [
-          ['Maqueta sobre la mesa', '1:20', 'Entender la distribución de un vistazo, en la oficina de ventas, en una feria o en casa del comprador'],
+          ['Maqueta sobre la mesa', '1:20', 'Entender la distribución de un vistazo, en la sala de ventas, en una feria o en casa del comprador'],
           ['Tamaño real', '1:1', 'Recorrer el salón o la terraza en el suelo y hacerse una idea del espacio'],
         ],
         note: 'A tamaño real, la planta de la villa ocupa unos {{villa:footprint}}: en un salón normal se recorren una o dos estancias; en un jardín o una parcela, la vivienda entera.',
@@ -77,8 +77,8 @@ export default {
       {
         type: 'answer',
         h2: '¿Qué es la realidad aumentada y cómo se usa en inmobiliaria?',
-        answer: 'La realidad aumentada superpone un objeto 3D a lo que ve la cámara del móvil, anclado a la mesa o al suelo. En inmobiliaria sirve para enseñar una vivienda que no existe o que está lejos: en la oficina de ventas, en ferias, en la visita a un solar o por WhatsApp a un comprador que vive en otro país.',
-        body: 'Ese comprador extranjero pesa cada vez más: en el segundo trimestre de 2026, británicos (6,99 %), neerlandeses (6,94 %) y alemanes (6,11 %) encabezaron las compras de vivienda de extranjeros en España, según la [Estadística Registral Inmobiliaria](' + ERI + ').\n\nPara promotoras es una alternativa ligera al piso piloto: cada tipología cabe en una mesa. Lo contamos en [visualización 3D para promotoras](@sol-promotoras). Y si quieres el paso a paso para enseñárselo a un cliente, tienes la guía [cómo ver una vivienda en realidad aumentada](@guia-ar).',
+        answer: 'La realidad aumentada superpone un objeto 3D a lo que ve la cámara del móvil, anclado a la mesa o al suelo. En inmobiliaria sirve para enseñar una vivienda que no existe o que está lejos: en la sala de ventas, en ferias, en la visita a un solar o por WhatsApp a un comprador que vive en otro país.',
+        body: 'Ese comprador extranjero pesa cada vez más: en el segundo trimestre de 2026, británicos (6,99 %), neerlandeses (6,94 %) y alemanes (6,11 %) encabezaron las compras de vivienda de extranjeros en España, según la [Estadística Registral Inmobiliaria](' + ERI + ').\n\nPara promotoras es una alternativa ligera al piso piloto: cada tipología cabe en una mesa. Lo contamos en [visualización 3D para promotoras](@sol-promotoras). Y si quieres el paso a paso para enseñárselo a un cliente, tienes la guía [cómo ver una vivienda en realidad aumentada](@guia-ar).\n\nTrabajamos en remoto desde Marbella para toda España, y sobre todo en la costa malagueña: [realidad aumentada en Marbella](@zona-marbella), [Málaga](@zona-malaga) y el resto de la [Costa del Sol](@zona-costa-del-sol).',
       },
       {
         type: 'stat',
@@ -109,7 +109,7 @@ export default {
     ],
     faq: [
       {
-        q: '¿Puedo usar la realidad aumentada en una feria o en la oficina de ventas?',
+        q: '¿Puedo usar la realidad aumentada en una feria o en la sala de ventas?',
         a: 'Sí, y es donde más luce. Con la maqueta a escala 1:20, cualquier mesa sirve de expositor: el comercial abre la vivienda en una tableta o en el móvil del cliente y la rodean juntos, sin gafas ni equipos especiales. {{brand}} incluye la realidad aumentada en la maqueta completa, desde {{price:maqueta}} + IVA, y en cada tipología del pack de promoción.',
       },
       {
@@ -134,11 +134,11 @@ export default {
       },
       {
         q: '¿Puedo enviar la realidad aumentada por WhatsApp?',
-        a: 'Sí. Envías el enlace de la vivienda y el comprador toca «Ver en tu salón». Si WhatsApp lo abre en su navegador interno y la realidad aumentada no arranca, basta con abrirlo en Safari o Chrome. El mismo enlace de {{brand}} sirve para crear un código QR para folletos, carteles o la mesa de la oficina de ventas.',
+        a: 'Sí. Envías el enlace de la vivienda y el comprador toca «Ver en tu salón». Si WhatsApp lo abre en su navegador interno y la realidad aumentada no arranca, basta con abrirlo en Safari o Chrome. El mismo enlace de {{brand}} sirve para crear un código QR para folletos, carteles o la mesa de la sala de ventas.',
       },
       {
-        q: '¿Sirve para vender obra nueva sobre plano?',
-        a: 'Sí. {{brand}} modela cada tipología desde los planos del proyecto, antes de que exista nada construido, y el comprador la ve sobre la mesa de la oficina de ventas o en su casa. El pack de promoción incluye 3 tipologías con renders, visor con selector y realidad aumentada, desde {{price:promocion}} + IVA en {{delivery:promocion}}.',
+        q: '¿Sirve la realidad aumentada para vender obra nueva sobre plano?',
+        a: 'Sí. {{brand}} modela cada tipología desde los planos del proyecto, antes de que exista nada construido, y el comprador la ve sobre la mesa de la sala de ventas o en su casa. El pack de promoción incluye 3 tipologías con renders, visor con selector y realidad aumentada, desde {{price:promocion}} + IVA en {{delivery:promocion}}.',
       },
     ],
     related: ['servicio-tour', 'sol-promotoras', 'caso-villa', 'guia-ar', 'precios'],
@@ -188,7 +188,7 @@ export default {
       {
         type: 'answer',
         h2: 'Do buyers need to install an app?',
-        answer: 'No. We use the viewers already built into phones: [AR Quick Look](@glosario#ar-quick-look) on iPhone and iPad, which opens [USDZ](@glosario#usdz) files from Safari, and [Scene Viewer](@glosario#scene-viewer) on Android, which opens [GLB](@glosario#glb) files on ARCore-compatible phones. Buyers tap a button and the home appears, with no download and no sign-up.',
+        answer: 'No. We use the viewers already built into phones: [AR Quick Look](@glosario#ar-quick-look) on iPhone and iPad, which opens [USDZ](@glosario#usdz) files from Safari, and [Scene Viewer](@glosario#scene-viewer) on Android, which opens [GLB](@glosario#glb) files on ARCore-compatible phones. Buyers tap a button and the home appears, with nothing to install and no sign-up.',
         body: 'Apple documents it on its [AR Quick Look](' + APPLE + ') page and Google on its [Scene Viewer](' + SCENE + ') page. Apple devices need iOS or iPadOS 12 or later; Android phones need version 7.0 or later with Google Play Services for AR.',
       },
       {
@@ -212,13 +212,13 @@ export default {
         type: 'answer',
         h2: 'How is augmented reality used in property marketing?',
         answer: 'To show a home that does not exist yet or is far away. Developers put unit types on the table in the sales suite and at property fairs; agents send a link over WhatsApp to buyers in the UK, the Netherlands or Germany, who open the home on their own phone before deciding whether to fly out for a viewing.',
-        body: 'Those buyers matter: in Q2 2026, British (6.99%), Dutch (6.94%) and German (6.11%) buyers led foreign home purchases in Spain, according to the Land Registry’s [Estadística Registral Inmobiliaria](' + ERI + ').\n\nFor developers it is a light alternative to a show flat: every unit type fits on a table. More in [off-plan 3D visualisation](@sol-promotoras). For a step-by-step you can send a client, see [how to view a property in AR](@guia-ar).',
+        body: 'Those buyers matter: in Q2 2026, British (6.99%), Dutch (6.94%) and German (6.11%) buyers led foreign home purchases in Spain, according to the [Estadística Registral Inmobiliaria](' + ERI + ') of the Colegio de Registradores (Spain’s association of land registrars).\n\nFor developers it is a light alternative to a show home: every unit type fits on a table. More in [off-plan 3D visualisation](@sol-promotoras). For a step-by-step you can send a client, see [how to view a property in AR](@guia-ar).\n\nWe work remotely from Marbella for clients across Spain and abroad; for the local market, see [AR and 3D rendering in Marbella](@zona-marbella).',
       },
       {
         type: 'stat',
         value: '15.98%',
         label: 'of home purchases in Spain in Q2 2026 were by foreign buyers, just over 26,800 sales and the highest share on record',
-        source: { label: 'Colegio de Registradores (Spanish Land Registry), Estadística Registral Inmobiliaria', url: ERI },
+        source: { label: 'Colegio de Registradores (Spain’s association of land registrars), Estadística Registral Inmobiliaria', url: ERI },
         year: 'Q2 2026',
       },
       {

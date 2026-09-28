@@ -10,7 +10,7 @@ const SRC = {
   rgpd: 'https://eur-lex.europa.eu/eli/reg/2016/679/oj',
   lopdgdd: 'https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673',
   netlify: 'https://www.netlify.com/privacy/',
-  netlifySub: 'https://www.netlify.com/legal/subprocessors/',
+  netlifySub: 'https://trust.netlify.com/?itemUid=e3fae2ca-94a9-416b-b577-5c90e382df57', // subprocessor list (old /legal/subprocessors/ 301s here; checked 2026-09-28)
   dpf: 'https://www.dataprivacyframework.gov/list',
   whatsapp: 'https://www.whatsapp.com/legal/privacy-policy-eea',
   aepd: 'https://www.aepd.es/',

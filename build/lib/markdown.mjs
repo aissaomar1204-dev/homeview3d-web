@@ -36,6 +36,16 @@ export function imageManifest() {
   catch { IMAGES = {}; }
   return IMAGES;
 }
+let VIDEOS = null;
+/** build/generated/videos.json (key → { width, height, duration, sources[{src,type,bytes}], poster, posterJpg }), {} if absent. */
+export function videoManifest() {
+  if (VIDEOS) return VIDEOS;
+  try { VIDEOS = JSON.parse(fs.readFileSync(path.join(ROOT, 'build', 'generated', 'videos.json'), 'utf8')); }
+  catch { VIDEOS = {}; }
+  return VIDEOS;
+}
+/** The founder (site.founder) once filled in, else null (same rule as schema.mjs). */
+const founderOf = () => (site.founder && site.founder.name && !site.founder.placeholder ? site.founder : null);
 
 export const LOCALE = { es: 'es-ES', en: 'en-GB' };
 export const brandName = () => site.brand.name;
@@ -165,7 +175,8 @@ const LABELS = {
     compare: 'Del plano 2D al modelo 3D', gallery: 'Galería de renders', glossary: 'Glosario',
     device: 'Dispositivo', opens: 'Cómo se abre', format: 'Formato', size: 'Tamaño',
     pack: 'Pack', priceNoVat: 'Precio sin IVA', delivery: 'Plazo', includes: 'Incluye', unit: 'Unidad', area: 'Superficie',
-    extra: 'Extra', units: 'Viviendas', perUnit: 'Precio por vivienda', from: 'desde', upTo: (n) => `hasta ${n} m²`, range: (a, b) => `de ${a} a ${b} m²`,
+    extra: 'Extra', units: 'Viviendas', perUnit: 'Precio por vivienda', from: 'desde', upTo: (n) => `hasta ${n} m²`, range: (a, b) => `más de ${a} y hasta ${b} m²`,
+    videoStill: 'Fotograma del vídeo', videoLink: (s, mb) => `Ver el vídeo (MP4, ${s} s, ${mb})`,
     vatNote: (r) => `Todos los precios son sin IVA (IVA aplicable: ${r} %).`, source: 'Fuente', related2: 'Relacionado', render: 'Render',
     comingSoonTag: 'próximamente', total: (d) => `Plazo total: ${d}.`, rendersNote: 'Imágenes generadas a partir del modelo 3D (renders), no fotografías.',
     unitsRange: (a, b) => (b ? `${a} a ${b}` : `${a} o más`), plan2d: 'Plano 2D', model3d: 'Modelo 3D',
@@ -186,7 +197,8 @@ const LABELS = {
     compare: 'From 2D floor plan to 3D model', gallery: 'Render gallery', glossary: 'Glossary',
     device: 'Device', opens: 'How it opens', format: 'Format', size: 'Size',
     pack: 'Package', priceNoVat: 'Price excl. VAT', delivery: 'Turnaround', includes: 'Includes', unit: 'Unit', area: 'Floor area',
-    extra: 'Extra', units: 'Homes', perUnit: 'Price per home', from: 'from', upTo: (n) => `up to ${n} m²`, range: (a, b) => `${a} to ${b} m²`,
+    extra: 'Extra', units: 'Homes', perUnit: 'Price per home', from: 'from', upTo: (n) => `up to ${n} m²`, range: (a, b) => `over ${a} and up to ${b} m²`,
+    videoStill: 'Video still', videoLink: (s, mb) => `Watch the video (MP4, ${s} s, ${mb})`,
     vatNote: (r) => `All prices exclude VAT (Spanish VAT: ${r}%).`, source: 'Source', related2: 'Related', render: 'Render',
     comingSoonTag: 'coming soon', total: (d) => `Total turnaround: ${d}.`, rendersNote: 'Images generated from the 3D model (renders), not photographs.',
     unitsRange: (a, b) => (b ? `${a} to ${b}` : `${a} or more`), plan2d: '2D floor plan', model3d: '3D model',
@@ -417,6 +429,19 @@ function blockMd(b, h, ctxInfo) {
       out.push(L.rendersNote);
       break;
     }
+    case 'video': {
+      // Click-to-play render video (build/generated/videos.json): poster image + direct MP4 link + caption.
+      const v = videoManifest()[b.video];
+      head(); intro();
+      if (v) {
+        const mp4 = (v.sources || []).find((s) => /mp4/.test(s.type || s.src)) || (v.sources || [])[0];
+        const poster = v.posterJpg || v.poster;
+        if (poster) out.push(`![${L.videoStill}](${h.assetUrl(poster)})`);
+        if (mp4) out.push(`[${L.videoLink(fmtNumber(v.duration, h.lang), fmtMB(mp4.bytes || 0, h.lang))}](${h.assetUrl(mp4.src)})`);
+      }
+      if (b.caption) out.push(`*${h.plain(b.caption)}*`);
+      break;
+    }
     case 'compare': {
       head(L.compare); intro();
       const a = h.imageUrl('villa_plano_lineas'); const c = h.imageUrl('villa_planta_cenital_opaco') || h.imageUrl('villa_planta_cenital');
@@ -497,7 +522,8 @@ export function blocksToMarkdown(entry, ctx = entry?.ctx, opts = {}) {
   const out = [];
   out.push(`# ${h.plain(page.h1 || entry.h1 || entry.title)}`);
   const meta = [`${L.canonical}: ${url}`];
-  meta.push(`${L.language}: ${LOCALE[lang]} · ${L.updated}: ${entry.dateModified || doc.dateModified || ''} · ${L.author}: ${L.team(brand)}`);
+  const f = founderOf();
+  meta.push(`${L.language}: ${LOCALE[lang]} · ${L.updated}: ${entry.dateModified || doc.dateModified || ''} · ${L.author}: ${f ? `${f.name}, ${brand}` : L.team(brand)}`);
   const otherLang = lang === 'es' ? 'en' : 'es';
   const twin = entry.alternates?.[otherLang] || route[otherLang];
   if (twin && route.index !== false) meta.push(`${L.twin}: ${h.abs(twin)}`);

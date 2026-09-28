@@ -9,7 +9,8 @@
      ctx.card(id)           { title, summary, href } of a page in ctx.lang
      ctx.data               { pricing, villa, process, deliverables, comingSoon, glossary, routes, routeById }
      ctx.docs               Map id → content doc
-     ctx.icon(name, cls?)   inline <svg><use> from the sprite (arrow, arrowDown, plus, minus, check, close, menu, copy, upload, chat)
+     ctx.icon(name, cls?)   inline <svg><use> from the sprite (arrow, arrowDown, plus, minus, check, close, menu, copy, upload,
+                            chat, external, arrowsH, play, pause, cube)
      ctx.esc(str)           HTML escape
      ctx.fmtDate(iso)       "28 sep 2026" / "28 Sep 2026"
      ctx.uid(prefix)        unique id within the page
@@ -17,7 +18,8 @@
      ctx.fill(str, vars)    replaces {name} placeholders
      ctx.whatsappUrl(text?) wa.me link with a prefilled message
      ctx.revisions(packId), ctx.volume(), ctx.volumeUnit()
-     ctx.collect            { images: [], faq: [], headings: [] } filled while rendering
+     ctx.collect            { images: [], faq: [], headings: [], videos: [] } filled while rendering
+     ctx.emitAsset(p, text) writes a generated file as a hashed asset, returns its URL
      ctx.images             image manifest (or null)
      ctx.otherLang, ctx.twinPath
    ═══════════════════════════════════════════════════════════════ */
@@ -51,7 +53,9 @@ export const fmtPrice = (n, lang) => formatPrice(n, lang).replace(/ /g, NBSP);
 
 export function fmtBytes(bytes, lang) {
   const mb = bytes / 1e6;
-  const s = new Intl.NumberFormat(locale(lang), { maximumFractionDigits: mb < 10 ? 1 : 0 }).format(mb);
+  // One decimal below 10 MB, always shown (7,0 MB next to 5,3 MB), whole numbers above.
+  const dec = mb < 10 ? 1 : 0;
+  const s = new Intl.NumberFormat(locale(lang), { minimumFractionDigits: dec, maximumFractionDigits: dec }).format(mb);
   return `${s}${NBSP}MB`;
 }
 
@@ -80,6 +84,10 @@ const ICONS = {
   upload: 'M128 152V40M216 152v56H40v-56M88 80l40-40 40 40',
   chat: 'M79.93 211.11a96 96 0 1 0-35-35L32.42 213.46a8 8 0 0 0 10.12 10.12Z',
   external: 'M64 192 192 64M88 64h104v104',
+  arrowsH: 'M48 128h160M80 96l-32 32 32 32M176 96l32 32-32 32',
+  play: 'M72 39.88v176.24a8 8 0 0 0 12.15 6.88l144.08-88.12a7.82 7.82 0 0 0 0-13.76L84.15 33a8 8 0 0 0-12.15 6.88Z',
+  pause: 'M168 40h32a8 8 0 0 1 8 8v160a8 8 0 0 1-8 8h-32a8 8 0 0 1-8-8V48a8 8 0 0 1 8-8ZM56 40h32a8 8 0 0 1 8 8v160a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8V48a8 8 0 0 1 8-8Z',
+  cube: 'M224 177.32V78.68a8 8 0 0 0-4.07-7l-88-49.5a8 8 0 0 0-7.86 0l-88 49.5a8 8 0 0 0-4.07 7v98.64a8 8 0 0 0 4.07 7l88 49.5a8 8 0 0 0 7.86 0l88-49.5a8 8 0 0 0 4.07-7ZM32.55 74.54 128 128l95.45-53.46M128 128v107.9',
 };
 
 /** Inline SVG sprite with only the icons used on the page (placed once at the top of <body>). */
@@ -88,12 +96,12 @@ export function sprite(html = null) {
   const symbols = Object.entries(ICONS).filter(([id]) => used.has(id))
     .map(([id, d]) => `<symbol id="i-${id}" viewBox="0 0 256 256"><path d="${d}"/></symbol>`)
     .join('');
-  return symbols ? `<svg class="sprite" aria-hidden="true" focusable="false"><defs>${symbols}</defs></svg>` : '';
+  return symbols ? `<svg class="sprite" aria-hidden="true"><defs>${symbols}</defs></svg>` : '';
 }
 
 export const icon = (name, cls = '') => {
   if (!ICONS[name]) throw new Error(`Unknown icon "${name}"`);
-  return `<svg class="icon${cls ? ` ${cls}` : ''}" aria-hidden="true" focusable="false"><use href="#i-${name}"/></svg>`;
+  return `<svg class="icon${cls ? ` ${cls}` : ''}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 };
 
 /**
@@ -112,7 +120,7 @@ export function createContext(o) {
     lang, route, doc, page, site, ui,
     entryPath: route ? route[lang] : null,
     needs: new Set(),
-    collect: { images: [], faq: [], headings: [] },
+    collect: { images: [], faq: [], headings: [], videos: [] },
     data: { ...data, routes: o.routes, routeById },
     docs,
     images: o.images || null,
@@ -185,6 +193,8 @@ export function createContext(o) {
   ctx.abs = (p) => (/^https?:\/\//.test(p) ? p : site.domain + p);
   ctx.asset = (p) => assets.asset(p);
   ctx.img = (name, opts = {}) => assets.picture(name, opts, ctx);
+  /** Write a generated file as a hashed, cached asset (e.g. the AR QR code) and return its public URL. */
+  ctx.emitAsset = (publicPath, content) => (assets.register ? assets.register(publicPath, Buffer.from(content)) : null);
 
   ctx.md = (str, opts) => renderMd(str, tokenEnv, opts);
   ctx.mdInline = (str) => renderInline(str, tokenEnv);

@@ -16,6 +16,9 @@
      ${url}#howto              HowTo (process)
      ${url}#set / ${url}#<id>  DefinedTermSet / DefinedTerm (glossary)
      ${url}#faq                FAQPage wherever a FAQ is rendered (text = visible text)
+     ${url}#video              VideoObject for each `video` block (+ Article/WebPage `video`)
+     ${url}#list               ItemList (hubs; guides: a `table` block with `itemList: true`)
+     ${aboutUrl}#founder       Person (only when site.founder is filled): about page, Article author
    Only what is visible on the page; empty values are stripped.
    The entry may be partial (no html yet): the layout calls this while rendering <head>.
    ═══════════════════════════════════════════════════════════════ */
@@ -25,11 +28,17 @@ import { pricing, packById } from '../data/pricing.mjs';
 import { villa } from '../data/villa.mjs';
 import { process as proc } from '../data/process.mjs';
 import { deliverables } from '../data/deliverables.mjs';
-import { helpers, LOCALE, fmtMB, glossaryTerms } from './markdown.mjs';
+import { slugify } from './md.mjs';
+import { helpers, LOCALE, fmtMB, glossaryTerms, imageManifest, videoManifest, blocksToMarkdown, stripMd, countWords } from './markdown.mjs';
 
 const WD = (q) => `https://www.wikidata.org/wiki/${q}`;
 export const ORG_ID = `${site.domain}/#organization`;
 export const WEBSITE_ID = `${site.domain}/#website`;
+/** The founder (a real person, 04-geo §9): null until site.founder is filled in. */
+export const founder = () => (site.founder && site.founder.name && !site.founder.placeholder ? site.founder : null);
+const ABOUT_ID = 'sobre-nosotros';
+/** One @id for the founder in both languages (the default-language about page). */
+export const FOUNDER_ID = routeById[ABOUT_ID] ? `${site.domain}${routeById[ABOUT_ID][site.defaultLang]}#founder` : `${site.domain}/#founder`;
 
 const PLACES = {
   Marbella: { type: 'City', q: 'Q484799' },
@@ -41,20 +50,34 @@ const PLACES = {
 const place = (name) => { const p = PLACES[name]; return p ? { '@type': p.type, name, sameAs: WD(p.q) } : { '@type': 'Place', name }; };
 const SPAIN = (lang) => place(lang === 'es' ? 'España' : 'Spain');
 
+// Wikidata ids verified against wikidata.org (labels checked 2026-09-28).
 const KNOWS_ABOUT = [
   { q: 'Q254183', es: 'Realidad aumentada', en: 'Augmented reality' },
   { q: 'Q28135989', es: 'glTF', en: 'glTF' },
+  { q: 'Q54809843', es: 'USDZ', en: 'USDZ' },
   { q: 'Q16911860', es: 'Renderizado 3D', en: '3D rendering' },
   { q: 'Q28401684', es: 'Home staging virtual', en: 'Virtual home staging' },
   { q: 'Q18965', es: 'Plano de planta', en: 'Floor plan' },
+  { q: 'Q173136', es: 'Blender', en: 'Blender' },
 ];
 // Glossary term ids that map to a Wikidata item (only verified ids, 04-geo §6.1).
 const TERM_WIKIDATA = {
   gltf: 'Q28135989', glb: 'Q28135989', 'gltf-glb': 'Q28135989',
+  usdz: 'Q54809843',
   'realidad-aumentada': 'Q254183', ar: 'Q254183', 'augmented-reality': 'Q254183',
   render: 'Q16911860', renderizado: 'Q16911860', 'render-3d': 'Q16911860',
   'home-staging-virtual': 'Q28401684', 'virtual-staging': 'Q28401684', staging: 'Q28401684',
-  plano: 'Q18965', 'plano-de-planta': 'Q18965', 'floor-plan': 'Q18965',
+  plano: 'Q18965', 'plano-2d': 'Q18965', 'plano-de-planta': 'Q18965', 'floor-plan': 'Q18965',
+  blender: 'Q173136',
+  'gemelo-digital': 'Q25099680',
+};
+/**
+ * Pricing packs / extras → the page whose Service node sells them (OfferCatalog itemOffered, 04-geo §6.3).
+ * maqueta → the floor-plan service (the pack that page prices), promocion → the developers' page.
+ */
+const PACK_SERVICE_PAGE = {
+  plano3d: 'servicio-plano', maqueta: 'servicio-plano', promocion: 'sol-promotoras',
+  staging: 'servicio-staging', render: 'servicio-renders',
 };
 
 const SERVICE_TYPE = {
@@ -118,7 +141,8 @@ function offerFor(id, lang, h, { atId, tiers = false } = {}) {
     if (tiers && pack.tiers?.length > 1) {
       pack.tiers.slice(1).forEach((t, i) => {
         const prev = pack.tiers[i].maxM2;
-        specs.push(unitSpec(t.price, `${pack.unit[lang]}, ${lang === 'es' ? `de ${prev} a ${t.maxM2} m²` : `${prev} to ${t.maxM2} m²`}`));
+        // "over 150 and up to 300 m²": a 150 m² home belongs to the first band only (content audit F-38).
+        specs.push(unitSpec(t.price, `${pack.unit[lang]}, ${lang === 'es' ? `más de ${prev} y hasta ${t.maxM2} m²` : `over ${prev} and up to ${t.maxM2} m²`}`));
       });
     }
     return { ...common, name: pack.name[lang], description: pack.summary[lang], price: pack.price, priceSpecification: specs.length === 1 ? specs[0] : specs };
@@ -134,8 +158,38 @@ function offerFor(id, lang, h, { atId, tiers = false } = {}) {
 function pageShowsPrice(page, packId) {
   const s = JSON.stringify(page || {});
   if (new RegExp(`\\{\\{(price|delivery):${packId}\\b`).test(s)) return true;
-  if (packId === 'staging' && /\{\{extra:staging\}\}/.test(s)) return true;
+  if (!packById(packId) && new RegExp(`\\{\\{extra:${packId}\\}\\}`).test(s)) return true;
   return (page?.blocks || []).some((b) => b.type === 'pricing' || b.type === 'calculator');
+}
+const firstPriceToken = (s) => (String(s || '').match(/\{\{(?:price|extra):([\w-]+)[:}]/) || [])[1] || null;
+/**
+ * The page's headline ("desde / from") pack: route.pack, else the pack priced in the meta description,
+ * else in the lead. Its Offer comes first and is the lowest price the description quotes.
+ */
+export function primaryPack(route, page) {
+  return route?.pack || firstPriceToken(page?.description) || firstPriceToken(page?.lead) || 'maqueta';
+}
+/**
+ * Service.offers (G-02): one Offer per pack the page's answer-first summary prices (meta description +
+ * lead), headline pack first. Packs only priced further down (e.g. the 149 € floor plan in a table of an
+ * agents page whose headline is «desde 490 €») stay out, so the lowest Offer is always the «desde /
+ * from» figure of the description (build/check.mjs checks it) and every Offer price is visible.
+ * Service pages only list packs that include that service (pricing.packs[].services).
+ * One offer → a single object, several → an array.
+ */
+function serviceOffers(entry, route, page, lang, h, url, template) {
+  const primary = primaryPack(route, page);
+  const s = `${page?.description || ''} ${page?.lead || ''}`;
+  const priced = (id) => new RegExp(`\\{\\{price:${id}[:}]`).test(s);
+  const ids = [];
+  if (pageShowsPrice(page, primary)) ids.push(primary);
+  for (const p of pricing.packs) {
+    if (ids.includes(p.id) || !priced(p.id)) continue;
+    if (template === 'service' && !(p.services || []).includes(entry.id)) continue;
+    ids.push(p.id);
+  }
+  const offers = ids.map((id, i) => offerFor(id, lang, h, { atId: i === 0 ? `${url}#offer` : `${url}#offer-${id}` })).filter(Boolean);
+  return offers.length > 1 ? offers : offers[0];
 }
 
 /* ── Organization / WebSite ───────────────────────────────────── */
@@ -144,22 +198,26 @@ function orgNode(entry, lang, h, full) {
   if (!full) return stub;
   const catalog = h.absHref('precios');
   const legalOk = !site.legal.placeholder && site.brand.legalName && !/^\[/.test(site.brand.legalName);
+  const logo = site.brand.logo ? h.assetUrl(site.brand.logo) : undefined;
+  const f = founder();
   return {
     ...stub,
     legalName: legalOk ? site.brand.legalName : undefined,
     description: h.plain(site.entity[lang]),
     foundingDate: site.facts?.founded ? String(site.facts.founded) : undefined,
-    logo: site.brand.logo ? { '@type': 'ImageObject', url: h.assetUrl(site.brand.logo) } : undefined,
-    image: entry.image?.url,
+    founder: f ? ref(FOUNDER_ID) : undefined,
+    logo: logo ? { '@type': 'ImageObject', url: logo } : undefined,
+    // One fixed image for the global entity on every page (the logo once it exists, the OG render until then).
+    image: logo || entityImage(h),
     email: site.contact.email,
     telephone: site.contact.phoneE164,
     address: { '@type': 'PostalAddress', addressLocality: site.base.locality, addressRegion: site.base.region, addressCountry: site.base.country },
     areaServed: (site.areaServed[lang] || site.areaServed.es).map(place),
-    knowsAbout: [...KNOWS_ABOUT.map((k) => ({ '@type': 'Thing', name: k[lang], sameAs: WD(k.q) })), 'USDZ', 'Blender'],
+    knowsAbout: KNOWS_ABOUT.map((k) => ({ '@type': 'Thing', name: k[lang], sameAs: WD(k.q) })),
     knowsLanguage: site.langs.map((l) => LOCALE[l]),
     contactPoint: {
       '@type': 'ContactPoint',
-      contactType: lang === 'es' ? 'ventas' : 'sales',
+      contactType: 'sales', // schema.org examples and Google use English values in every language
       email: site.contact.email,
       telephone: site.contact.phoneE164,
       availableLanguage: site.langs.map((l) => LOCALE[l]),
@@ -180,6 +238,87 @@ function websiteNode(lang, h, entry) {
     inLanguage: site.langs.map((l) => LOCALE[l]),
     publisher: ref(ORG_ID),
   };
+}
+/** Absolute URL of the site-wide OG render (build/generated/images.json og_image.og), or undefined. */
+function entityImage(h) {
+  const og = imageManifest().og_image?.og;
+  return og ? h.assetUrl(og) : undefined;
+}
+
+/* ── Founder (Person) ─────────────────────────────────────────── */
+/** Full Person node (about page) or a compact one (Article author). null while site.founder is empty. */
+function personNode(lang, h, full) {
+  const f = founder();
+  if (!f) return null;
+  const about = h.absHref(ABOUT_ID);
+  const base = { '@type': 'Person', '@id': FOUNDER_ID, name: f.name, url: about || undefined };
+  if (!full) return base;
+  return {
+    ...base,
+    jobTitle: typeof f.jobTitle === 'object' ? f.jobTitle[lang] : f.jobTitle,
+    image: f.image ? h.assetUrl(f.image) : undefined,
+    sameAs: f.sameAs?.length ? f.sameAs : undefined,
+    worksFor: ref(ORG_ID),
+    knowsLanguage: site.langs.map((l) => LOCALE[l]),
+  };
+}
+/** Article author: the founder once there is one, the organisation until then. */
+const authorOf = (lang, h) => personNode(lang, h, false) || ref(ORG_ID);
+
+/* ── Image licence (Google Images "Licensable", 04-geo §6.4) ──── */
+/**
+ * license → the intellectual-property section of the legal notice (anchor = the engine's heading slug),
+ * acquireLicensePage → contact. Undefined when the legal page is not built.
+ */
+function imageRights(lang, h) {
+  const legal = h.absHref('aviso-legal');
+  if (!legal) return {};
+  let anchor = '';
+  try {
+    const blocks = h.ctx?.docs?.get?.('aviso-legal')?.[lang]?.blocks || [];
+    const b = blocks.find((x) => /propiedad intelectual|intellectual property/i.test(x.h2 || ''));
+    if (b) anchor = `#${slugify(h.plain(b.h2))}`;
+  } catch { /* no docs in this ctx: page URL only */ }
+  return { license: `${legal}${anchor}`, acquireLicensePage: h.absHref('contacto') || undefined };
+}
+
+/* ── Video (build/generated/videos.json, `video` block) ───────── */
+function videoNodes(page, lang, h, url, datePublished) {
+  const blocks = (page.blocks || []).filter((b) => b.type === 'video' && b.video);
+  const man = videoManifest();
+  return blocks.map((b, i) => {
+    const v = man[b.video];
+    if (!v) return null;
+    const mp4 = (v.sources || []).find((s) => /mp4/.test(s.type || s.src)) || (v.sources || [])[0];
+    const caption = h.plain(b.caption || '');
+    return {
+      '@type': 'VideoObject', '@id': `${url}#video${i ? `-${i + 1}` : ''}`,
+      name: h.plain(b.h2 || '') || caption,
+      description: [caption, h.plain(b.intro || '')].filter(Boolean).join(' ') || undefined,
+      thumbnailUrl: h.assetUrl(v.posterJpg || v.poster),
+      contentUrl: mp4 ? h.assetUrl(mp4.src) : undefined,
+      uploadDate: datePublished,
+      duration: v.duration ? `PT${Math.round(v.duration)}S` : undefined,
+    };
+  }).filter(Boolean);
+}
+
+/* ── Article word count (G-01) ────────────────────────────────── */
+/**
+ * The engine fills entry.wordCount only after the page is rendered (after this graph is built), so the
+ * count comes from the Markdown mirror of the same content: lead, key facts, blocks and FAQ, without
+ * the header lines, URLs and the contact block. Undefined (never 0) when it cannot be computed.
+ */
+function articleWordCount(entry, ctx) {
+  if (entry.wordCount > 0) return entry.wordCount;
+  try {
+    const md = blocksToMarkdown(entry, ctx);
+    const body = md.split(/\n## (?:Contacto|Contact)\s*\n/)[0]
+      .split('\n').filter((l) => !/^(URL canónica|Canonical URL|Idioma|Language|English|Español):/.test(l)).join('\n')
+      .replace(/\]\([^)\s]*\)/g, ']').replace(/https?:\/\/\S+/g, ' ');
+    const n = countWords(stripMd(body));
+    return n > 0 ? n : undefined;
+  } catch { return undefined; }
 }
 
 /* ── FAQ (plain text identical to what is rendered) ───────────── */
@@ -219,11 +358,13 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
 
   // Primary image
   const primaryId = entry.image?.url ? `${url}#primaryimage` : undefined;
+  const rights = indexable ? imageRights(lang, h) : {};
   if (primaryId) {
     nodes.push({
       '@type': 'ImageObject', '@id': primaryId, contentUrl: entry.image.url,
       width: entry.image.width || 1200, height: entry.image.height || 630, caption: entry.image.alt,
       creator: ref(ORG_ID), creditText: site.brand.name, copyrightNotice: `© ${year} ${site.brand.name}`,
+      license: rights.license, acquireLicensePage: rights.acquireLicensePage,
     });
   }
 
@@ -242,6 +383,10 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
   const faqAsPage = template === 'faq';
   const faqId = faq.length && !faqAsPage ? `${url}#faq` : undefined;
 
+  // Speakable: only selectors the page really renders (legal pages have neither a lead block nor a cajetín).
+  const facts = entry.facts?.length ? entry.facts : page.facts;
+  const speakSel = template === 'legal' ? [] : ['.lead', ...(facts?.length ? ['.cajetin'] : [])];
+
   // WebPage
   const webpage = {
     '@type': PAGE_TYPE[template] || 'WebPage',
@@ -256,7 +401,7 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
     datePublished,
     dateModified,
     breadcrumb: ref(breadcrumbId),
-    speakable: indexable ? { '@type': 'SpeakableSpecification', cssSelector: ['.lead', '.cajetin'] } : undefined,
+    speakable: indexable && speakSel.length ? { '@type': 'SpeakableSpecification', cssSelector: speakSel } : undefined,
     hasPart: ref(faqId),
     mainEntity: fullOrg && template !== 'home' ? ref(ORG_ID) : undefined,
   };
@@ -270,20 +415,21 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
   if (!indexable) return finalize(nodes);
 
   // ── Template-specific nodes ──
-  const serviceNode = (packId, extra = {}) => {
-    const offer = packId ? offerFor(packId, lang, h, { atId: `${url}#offer` }) : undefined;
-    return {
-      '@type': 'Service', '@id': `${url}#service`, name: h1, url,
-      serviceType: (SERVICE_TYPE[entry.id] || GENERIC_SERVICE)[lang],
-      description,
-      provider: ref(ORG_ID),
-      areaServed: [SPAIN(lang), place('Costa del Sol')],
-      audience: { '@type': 'BusinessAudience', audienceType: (AUDIENCE[entry.id] || AUDIENCE.default)[lang] },
-      image: ref(primaryId),
-      offers: offer,
-      ...extra,
-    };
-  };
+  const serviceNode = (extra = {}) => ({
+    '@type': 'Service', '@id': `${url}#service`, name: h1, url,
+    serviceType: (SERVICE_TYPE[entry.id] || GENERIC_SERVICE)[lang],
+    description,
+    provider: ref(ORG_ID),
+    areaServed: [SPAIN(lang), place('Costa del Sol')],
+    audience: { '@type': 'BusinessAudience', audienceType: (AUDIENCE[entry.id] || AUDIENCE.default)[lang] },
+    image: ref(primaryId),
+    offers: serviceOffers(entry, route, page, lang, h, url, template),
+    ...extra,
+  });
+  // Videos (`video` blocks): one VideoObject each, referenced from the Article (case, guides) or the WebPage.
+  const videos = videoNodes(page, lang, h, url, datePublished || dateModified);
+  const videoRefs = videos.map((v) => ref(v['@id']));
+  let videoOwner = webpage;
 
   switch (template) {
     case 'home': {
@@ -306,44 +452,51 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       break;
     }
     case 'service': {
-      const packId = route.pack || 'maqueta';
       const related = SERVICE_IDS.filter((s) => s !== entry.id).map((s) => h.absHref(s)).filter(Boolean).map((u) => ref(`${u}#service`));
-      nodes.push(serviceNode(pageShowsPrice(page, packId) ? packId : null, { isRelatedTo: related }));
+      nodes.push(serviceNode({ isRelatedTo: related }));
       webpage.mainEntity = ref(`${url}#service`);
       break;
     }
     case 'audience': {
-      const packId = route.pack || 'maqueta';
-      nodes.push(serviceNode(pageShowsPrice(page, packId) ? packId : null));
+      nodes.push(serviceNode());
       webpage.mainEntity = ref(`${url}#service`);
       break;
     }
     case 'zone': {
-      const packId = route.pack || 'maqueta';
       const zp = ZONE_PLACE[entry.id];
-      const s = serviceNode(pageShowsPrice(page, packId) ? packId : null);
+      const s = serviceNode();
       if (zp) { s.areaServed = place(zp); webpage.contentLocation = place(zp); }
       nodes.push(s);
       webpage.mainEntity = ref(`${url}#service`);
       break;
     }
+    case 'about': {
+      const person = personNode(lang, h, true);
+      if (person) nodes.push(person);
+      break;
+    }
     case 'case': {
       const articleId = `${url}#article`;
       const modelId = `${url}#model`;
-      // Gallery renders: URL + caption only (creator/copyright are stated once on #primaryimage and by the
-      // Article's author/publisher); the image sitemap lists every render as well. Keeps the graph small.
+      // Gallery renders: URL + caption + licence (creator/copyright and acquireLicensePage are stated once on
+      // #primaryimage and by the Article's author/publisher; `license` alone makes an image eligible for the
+      // Licensable badge). The image sitemap lists every render as well. Keeps the graph small.
+      // One entry per render: art-directed crops of the same image (e.g. villa_viewer_poster_mobile) are skipped.
       const seenImg = new Set([entry.image?.url]);
-      const renders = (entry.images || []).filter((im) => im?.url && !seenImg.has(im.url) && seenImg.add(im.url)).slice(0, 10)
-        .map((im) => ({ '@type': 'ImageObject', contentUrl: im.url, caption: im.caption || im.alt }));
-      nodes.push({
-        '@type': 'Article', '@id': articleId, headline: h1, description,
+      const names = new Set((entry.images || []).map((im) => im?.name).filter(Boolean));
+      const crop = (im) => /_mobile$/.test(im.name || '') && names.has(im.name.replace(/_mobile$/, ''));
+      const renders = (entry.images || []).filter((im) => im?.url && !crop(im) && !seenImg.has(im.url) && seenImg.add(im.url)).slice(0, 10)
+        .map((im) => ({ '@type': 'ImageObject', contentUrl: im.url, caption: im.caption || im.alt, license: rights.license }));
+      const article = {
+        '@type': 'Article', '@id': articleId, headline: h1, // description: on the WebPage (mainEntity → this Article)
         image: [ref(primaryId), ...renders],
         datePublished, dateModified, inLanguage,
-        author: ref(ORG_ID), publisher: ref(ORG_ID),
-        mainEntityOfPage: ref(`${url}#webpage`),
+        author: authorOf(lang, h), publisher: ref(ORG_ID),
         about: ref(modelId),
-        wordCount: entry.wordCount,
-      });
+        wordCount: articleWordCount(entry, ctx),
+      };
+      nodes.push(article);
+      videoOwner = article;
       const f = villa.files;
       const enc = (k, fmt) => ({ '@type': 'MediaObject', name: f[k].label[lang], contentUrl: h.abs(f[k].url), encodingFormat: fmt, contentSize: fmtMB(f[k].bytes, lang) });
       const sp = villa.specs;
@@ -356,8 +509,8 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
           : `Photorealistic, furnished 3D model rebuilt from ${sp.input.en}: ${sp.rooms} rooms, ${sp.textures} procedural PBR textures, about ${num(sp.interiorM2)} m² indoors and ${num(sp.terracesM2)} m² of terraces (areas estimated from the plan's scale).`,
         url: h.absHref('caso-villa', 'visor') || url,
         encoding: [enc('glb', 'model/gltf-binary'), enc('usdzMesa', 'model/vnd.usdz+zip'), enc('usdzReal', 'model/vnd.usdz+zip'), enc('glbArMesa', 'model/gltf-binary'), enc('glbAr', 'model/gltf-binary')],
-        thumbnailUrl: entry.image?.url,
-        creator: ref(ORG_ID), copyrightHolder: ref(ORG_ID),
+        image: ref(primaryId),
+        copyrightHolder: ref(ORG_ID), // creator: the Article author/publisher
         dateCreated: datePublished,
         contentLocation: place('Costa del Sol'),
         isPartOf: ref(articleId),
@@ -376,14 +529,30 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       const seen = new Set();
       const uniq = citations.filter((c) => (seen.has(c.url) ? false : seen.add(c.url)));
       const about = (page.related || []).filter((id) => routeById[id]?.template === 'service').map((id) => h.absHref(id)).filter(Boolean).map((u) => ref(`${u}#service`));
-      nodes.push({
+      // Ranked / comparison lists ("best studios", 04-geo §8.2): a `table` block with `itemList: true`
+      // becomes an ItemList, one ListItem per row (name = first cell, url = its first https link).
+      const lists = (page.blocks || []).filter((b) => b.type === 'table' && b.itemList && Array.isArray(b.rows) && b.rows.length);
+      const listIds = lists.map((b, li) => {
+        const id = `${url}#list${li ? `-${li + 1}` : ''}`;
+        nodes.push({
+          '@type': 'ItemList', '@id': id, name: h.plain(b.caption || b.h2 || ''), numberOfItems: b.rows.length,
+          itemListElement: b.rows.map((row, i) => {
+            const cell = String(row[0] ?? '');
+            const link = (cell.match(/\]\((https:\/\/[^)\s]+)\)/) || [])[1];
+            return { '@type': 'ListItem', position: i + 1, name: h.plain(cell), url: link };
+          }),
+        });
+        return ref(id);
+      });
+      const article = {
         '@type': 'Article', '@id': articleId, headline: h1, description,
         image: entry.image?.url ? [entry.image.url] : undefined,
         datePublished, dateModified, inLanguage,
-        author: ref(ORG_ID), publisher: ref(ORG_ID),
-        mainEntityOfPage: ref(`${url}#webpage`),
-        citation: uniq, about, wordCount: entry.wordCount,
-      });
+        author: authorOf(lang, h), publisher: ref(ORG_ID),
+        citation: uniq, about, hasPart: listIds.length ? listIds : undefined, wordCount: articleWordCount(entry, ctx),
+      };
+      nodes.push(article);
+      videoOwner = article;
       webpage.mainEntity = ref(articleId);
       break;
     }
@@ -403,16 +572,21 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
     case 'pricing': {
       const catalogId = `${url}#catalog`;
       const brand = site.brand.name;
+      // itemOffered → the Service node of the page that sells the pack (G-10), anonymous Service otherwise.
+      const offered = (id, name, desc) => {
+        const u = PACK_SERVICE_PAGE[id] ? h.absHref(PACK_SERVICE_PAGE[id]) : null;
+        return u ? ref(`${u}#service`) : { '@type': 'Service', name, description: desc };
+      };
       // Compact offers (the catalog repeats ~10 of them: keep the JSON-LD near the 8 KB budget).
       const slim = (o, itemOffered) => ({ '@type': 'Offer', name: o.name, price: o.price, priceCurrency: o.priceCurrency, priceSpecification: o.priceSpecification, itemOffered });
-      const items = pricing.packs.map((p) => slim(offerFor(p.id, lang, h, { tiers: true }), { '@type': 'Service', name: p.name[lang], description: p.summary[lang] }));
-      for (const x of pricing.extras.filter((e) => e.price != null)) items.push(slim(offerFor(x.id, lang, h), { '@type': 'Service', name: x.name[lang] }));
+      const items = pricing.packs.map((p) => slim(offerFor(p.id, lang, h, { tiers: true }), offered(p.id, p.name[lang], p.summary[lang])));
+      for (const x of pricing.extras.filter((e) => e.price != null)) items.push(slim(offerFor(x.id, lang, h), offered(x.id, x.name[lang])));
       const v = pricing.volume;
       items.push({
         '@type': 'Offer', name: v.name[lang], description: v.note[lang], price: v.price, priceCurrency: pricing.currency,
         priceSpecification: unitSpec(v.price, lang === 'es' ? `${v.units} viviendas` : `${v.units} homes`),
         eligibleQuantity: { '@type': 'QuantitativeValue', value: v.units },
-        itemOffered: { '@type': 'Service', name: packById(v.packId).name[lang] },
+        itemOffered: offered(v.packId, packById(v.packId).name[lang]),
       });
       nodes.push({
         '@type': 'OfferCatalog', '@id': catalogId, url,
@@ -428,11 +602,13 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       const terms = glossaryTerms().filter((t) => t[lang]);
       if (terms.length) {
         const setId = `${url}#set`;
+        // Terms carry only @id (= the visible anchor URL), name, description and Wikidata sameAs:
+        // `url` would repeat the @id and `inDefinedTermSet` is implied by hasDefinedTerm.
         nodes.push({
           '@type': 'DefinedTermSet', '@id': setId, name: h1, url, inLanguage,
           hasDefinedTerm: terms.map((t) => ({
             '@type': 'DefinedTerm', '@id': `${url}#${t.id}`, name: t[lang].term, description: h.plain(t[lang].definition),
-            url: `${url}#${t.id}`, inDefinedTermSet: ref(setId), sameAs: TERM_WIKIDATA[t.id] ? WD(TERM_WIKIDATA[t.id]) : undefined,
+            sameAs: TERM_WIKIDATA[t.id] ? WD(TERM_WIKIDATA[t.id]) : undefined,
           })),
         });
         webpage.mainEntity = ref(setId);
@@ -440,6 +616,10 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       break;
     }
     default: break;
+  }
+  if (videos.length) {
+    nodes.push(...videos);
+    videoOwner.video = videoRefs.length === 1 ? videoRefs[0] : videoRefs;
   }
   return finalize(nodes);
 }

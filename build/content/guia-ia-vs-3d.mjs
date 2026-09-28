@@ -23,7 +23,7 @@ export default {
     title: '¿Puede la IA convertir un plano en 3D? Guía 2026',
     description: 'La IA convierte un plano en una imagen 3D en segundos, pero no en un modelo con medidas. Qué hace ChatGPT, qué no y cómo usamos la IA con Blender.',
     h1: '¿Puede la IA convertir un plano en 3D? IA vs modelo real',
-    lead: 'Sí, pero en imagen. La IA generativa, como ChatGPT o Gemini, convierte un plano en una imagen con aspecto 3D en segundos; no crea un modelo con medidas, coherente entre vistas ni apto para realidad aumentada. {{brand}} usa la IA para escribir el código que construye ese modelo en Blender, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
+    lead: 'Sí, pero en imagen. La IA generativa, como ChatGPT o Gemini, convierte un plano en una imagen con aspecto 3D; no crea un modelo medible, coherente entre vistas ni apto para realidad aumentada. {{brand}} usa la IA para escribir el código que construye ese modelo en Blender, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
     breadcrumb: 'IA o modelo 3D',
     card: {
       title: '¿Puede la IA convertir un plano en 3D?',
@@ -108,7 +108,7 @@ export default {
       {
         type: 'prose',
         h2: '¿Qué sale de un modelo que no sale de una imagen?',
-        body: 'Nuestro [caso demostrativo](@caso-villa) es una villa en la Costa del Sol construida desde un único plano 2D, sin fotos del interior ni cotas. El modelo tiene {{villa:rooms}} estancias con su superficie estimada, {{villa:triangles}} triángulos y {{villa:materials}} materiales. De esa geometría salieron, en una sola sesión de trabajo:\n\n- {{villa:renders}} renders coherentes entre sí.\n- La planta cenital a color y la planta 2D redibujada.\n- Un [visor web](@servicio-tour) con lista de estancias, recorrido guiado y [modo maqueta](@glosario#modo-maqueta), que corta los muros a {{villa:cutHeight}} m.\n- Archivos de [realidad aumentada](@servicio-ar) para ver la villa sobre la mesa a escala 1:20 o a tamaño real.\n\nNinguna de esas salidas se puede obtener de una imagen generada. Lo puedes comprobar en el [visor del caso](@caso-villa#visor).',
+        body: 'Nuestro [caso demostrativo](@caso-villa) es una villa en la Costa del Sol construida desde un único plano 2D, sin fotos del interior ni cotas. El modelo tiene {{villa:rooms}} estancias con su superficie estimada, {{villa:triangles}} triángulos y {{villa:materials}} materiales. De esa geometría salieron, en una sola sesión de trabajo:\n\n- 6 renders coherentes entre sí y una imagen para redes.\n- La planta cenital a color y la planta 2D redibujada.\n- Un [visor web](@servicio-tour) con lista de estancias, recorrido guiado y [modo maqueta](@glosario#modo-maqueta), que corta los muros a {{villa:cutHeight}} m.\n- Archivos de [realidad aumentada](@servicio-ar) para ver la villa sobre la mesa a escala 1:20 o a tamaño real.\n\nNinguna de esas salidas se puede obtener de una imagen generada. Lo puedes comprobar en el [visor del caso](@caso-villa#visor).',
       },
       {
         type: 'answer',
@@ -200,7 +200,7 @@ export default {
     title: 'Can AI turn a floor plan into 3D? An honest 2026 guide',
     description: 'Generative AI turns a floor plan into a 3D-looking image in seconds, not a measurable model. What ChatGPT can and can’t do, and how we use AI with Blender.',
     h1: 'Can AI turn a floor plan into a 3D model?',
-    lead: 'Yes, but only as a picture. Generative AI such as ChatGPT or Gemini turns a floor plan into a 3D-looking image in seconds; it does not create a model with real measurements, consistent views or AR support. {{brand}} uses AI to write the code that builds that model in Blender, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    lead: 'Yes, but only as a picture. Generative AI such as ChatGPT or Gemini turns a floor plan into a 3D-looking image; it does not create a measurable model, consistent views or AR support. {{brand}} uses AI to write the code that builds that model in Blender, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
     breadcrumb: 'AI or a real 3D model',
     card: {
       title: 'Can AI turn a floor plan into 3D?',
@@ -291,7 +291,7 @@ export default {
       {
         type: 'prose',
         h2: 'What do you get from a model that you cannot get from an image?',
-        body: 'Our [demonstration case](@caso-villa) is a Costa del Sol villa built from a single 2D floor plan, with no interior photos and no dimensions. The model has {{villa:rooms}} rooms with estimated areas, {{villa:triangles}} triangles and {{villa:materials}} materials. In a single work session, that geometry produced:\n\n- {{villa:renders}} renders that match each other.\n- The colour top-down plan and the redrawn 2D plan.\n- A [web viewer](@servicio-tour) with a room list, a guided tour and a [cut-away mode](@glosario#modo-maqueta) that slices the walls at {{villa:cutHeight}} m.\n- [Augmented reality](@servicio-ar) files to place the villa on a table at 1:20 scale or at real size.\n\nNone of that can come from a generated image. You can check for yourself in the [case study viewer](@caso-villa#visor).',
+        body: 'Our [demonstration case](@caso-villa) is a Costa del Sol villa built from a single 2D floor plan, with no interior photos and no dimensions. The model has {{villa:rooms}} rooms with estimated areas, {{villa:triangles}} triangles and {{villa:materials}} materials. In a single work session, that geometry produced:\n\n- 6 renders that match each other, plus a social media image.\n- The colour top-down plan and the redrawn 2D plan.\n- A [web viewer](@servicio-tour) with a room list, a guided tour and a [cut-away mode](@glosario#modo-maqueta) that slices the walls at {{villa:cutHeight}} m.\n- [Augmented reality](@servicio-ar) files to place the villa on a table at 1:20 scale or at real size.\n\nNone of that can come from a generated image. You can check for yourself in the [case study viewer](@caso-villa#visor).',
       },
       {
         type: 'answer',

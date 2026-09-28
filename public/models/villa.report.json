@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-28T13:47:07.137Z",
+  "generated": "2026-09-28T19:02:48.330Z",
   "source": {
     "file": "source/villa3d/gltf-clean/villa.gltf",
     "bytes": 11258258,
@@ -337,8 +337,8 @@
     },
     "ar": {
       "file": "villa-ar.glb",
-      "bytes": 8270000,
-      "textureBytes": 2910808,
+      "bytes": 7925864,
+      "textureBytes": 2566669,
       "stats": {
         "nodes": 92,
         "meshes": 92,
@@ -396,22 +396,10 @@
           "175 KB -> 88 KB"
         ],
         [
-          "blacktile_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 32 KB)",
-          "32 KB"
-        ],
-        [
           "blacktile_col",
           "1024x1024 -> 1024x1024",
           "jpeg q85",
           "40 KB -> 14 KB"
-        ],
-        [
-          "olivetile_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 32 KB)",
-          "32 KB"
         ],
         [
           "olivetile_col",
@@ -420,22 +408,10 @@
           "53 KB -> 21 KB"
         ],
         [
-          "walnut_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 126 KB)",
-          "96 KB"
-        ],
-        [
           "walnut_col",
-          "2048x2048 -> 2048x2048",
+          "2048x2048 -> 1024x1024",
           "jpeg q85",
-          "467 KB -> 216 KB"
-        ],
-        [
-          "fabric_nrm",
-          "512x512",
-          "kept image/jpeg (jpeg was 167 KB)",
-          "91 KB"
+          "467 KB -> 74 KB"
         ],
         [
           "linen_white_col",
@@ -466,12 +442,6 @@
           "512x512 -> 512x512",
           "jpeg q85",
           "33 KB -> 9 KB"
-        ],
-        [
-          "lightwood_nrm",
-          "512x512",
-          "kept image/jpeg (jpeg was 15 KB)",
-          "13 KB"
         ],
         [
           "lightwood_col",
@@ -510,12 +480,6 @@
           "81 KB -> 40 KB"
         ],
         [
-          "terrazzo_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 107 KB)",
-          "65 KB"
-        ],
-        [
           "terrazzo_col",
           "1024x1024 -> 1024x1024",
           "jpeg q85",
@@ -534,22 +498,10 @@
           "27 KB -> 6 KB"
         ],
         [
-          "stairwood_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 115 KB)",
-          "85 KB"
-        ],
-        [
           "stairwood_col",
           "1024x1024 -> 1024x1024",
           "jpeg q85",
           "129 KB -> 58 KB"
-        ],
-        [
-          "parapet_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 40 KB)",
-          "37 KB"
         ],
         [
           "parapet_col",
@@ -564,22 +516,10 @@
           "43 KB -> 19 KB"
         ],
         [
-          "oak_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 127 KB)",
-          "96 KB"
-        ],
-        [
           "oak_col",
-          "2048x2048 -> 2048x2048",
+          "2048x2048 -> 1024x1024",
           "jpeg q85",
-          "455 KB -> 209 KB"
-        ],
-        [
-          "whitetile_nrm",
-          "1024x1024",
-          "kept image/jpeg (jpeg was 32 KB)",
-          "32 KB"
+          "455 KB -> 73 KB"
         ],
         [
           "grass_nrm",
@@ -601,11 +541,26 @@
         ],
         [
           "terracotta_col",
-          "2048x2048 -> 2048x2048",
+          "2048x2048 -> 1024x1024",
           "jpeg q85",
-          "215 KB -> 98 KB"
+          "215 KB -> 39 KB"
         ]
-      ]
+      ],
+      "config": {
+        "textures": {
+          "format": "jpeg",
+          "colorMax": 1024,
+          "normalMax": 1024,
+          "colorQuality": 85,
+          "normalQuality": 90,
+          "overrides": [
+            {
+              "pattern": {},
+              "max": 512
+            }
+          ]
+        }
+      }
     },
     "arMaqueta": {
       "file": "villa-ar-maqueta.glb",

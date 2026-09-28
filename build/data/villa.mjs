@@ -18,7 +18,7 @@ export const villa = {
     footprint: { w: 9.1, d: 14.1 },   // metres, as modelled
     rooms: 12,
     bedrooms: 3,
-    bathrooms: { es: '2 + ducha', en: '2 + shower' },
+    bathrooms: { es: '2 (suite con bañera y ducha)', en: '2 (en-suite with tub and shower)' },
     textures: 39,                     // procedural PBR textures created for this model
     triangles: 178704,
     materials: 82,                    // unique material names in the web model
@@ -33,7 +33,7 @@ export const villa = {
   // Delivery files (sizes in bytes, measured). Paths are public URLs (unhashed, see _headers).
   files: {
     glb:        { url: '/models/villa.glb',                bytes: 3132584,  label: { es: 'Modelo web (GLB, Meshopt + WebP)', en: 'Web model (GLB, Meshopt + WebP)' } },
-    glbAr:      { url: '/models/villa-ar.glb',             bytes: 8270000,  label: { es: 'Android, tamaño real (GLB)', en: 'Android, real size (GLB)' } },
+    glbAr:      { url: '/models/villa-ar.glb',             bytes: 7925864,  label: { es: 'Android, tamaño real (GLB)', en: 'Android, real size (GLB)' } },
     glbArMesa:  { url: '/models/villa-ar-maqueta.glb',     bytes: 6952076,  label: { es: 'Android, maqueta 1:20 (GLB)', en: 'Android, 1:20 tabletop model (GLB)' } },
     usdzMesa:   { url: '/models/villa_maqueta_1a20.usdz',  bytes: 5255570,  label: { es: 'iPhone/iPad, maqueta 1:20 (USDZ)', en: 'iPhone/iPad, 1:20 tabletop model (USDZ)' } },
     usdzReal:   { url: '/models/villa_tamano_real.usdz',   bytes: 8239444,  label: { es: 'iPhone/iPad, tamaño real (USDZ)', en: 'iPhone/iPad, real size (USDZ)' } },
@@ -41,8 +41,8 @@ export const villa = {
 
   // <model-viewer> defaults (tuned in the original viewer).
   viewer: {
-    cameraOrbit: '-32deg 50deg 92%',
-    cameraTarget: 'auto auto auto',
+    cameraOrbit: '-32deg 50deg 108%',
+    cameraTarget: '4.55m 0.3m -7.02m',     // footprint centre (x = w/2, z = -d/2): the villa sits centred, shadow included (V-01)
     topOrbit: '0deg 0deg 26m',
     topTarget: '4.55m 0m -7.02m',
     minCameraOrbit: 'auto 0deg 2m',

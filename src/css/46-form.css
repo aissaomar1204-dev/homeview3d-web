@@ -1,0 +1,86 @@
+/* @module form form
+   ==========================================================================
+   46-form · lead form + contact alternatives (COMP-18/19, A11Y-09). Owner: ENGINE.
+   ========================================================================== */
+.contact { display: grid; gap: var(--space-8); }
+.contact__main { min-width: 0; }
+.form { display: grid; gap: var(--space-7); max-width: 44rem; }
+.form__step, .field { display: grid; gap: var(--space-5); min-width: 0; margin: 0; padding: 0; border: 0; }
+/* Fields never stretch with a taller neighbour (an error under one input keeps the row aligned). */
+.field { gap: var(--space-2); align-content: start; }
+.form__legend, .field--choice legend { float: left; width: 100%; padding: 0; }
+.form__legend { padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-line); font: var(--wght-display) var(--fs-h3) var(--font-display); font-stretch: var(--stretch-h2); }
+:is(.form__legend, .field--choice legend) + * { clear: both; }
+.field--choice legend { margin-bottom: var(--space-2); }
+.form__row { display: grid; gap: var(--space-5); align-items: start; }
+.field__label { font-size: var(--fs-sm); font-weight: var(--wght-ui); }
+.field__req, .field__opt { font-weight: var(--wght-body); color: var(--color-ink-3); }
+.field__error, .form__status { font-size: var(--fs-sm); font-weight: var(--wght-ui); color: var(--color-danger); }
+.field--short .input { max-width: 12rem; }
+.input {
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  line-height: var(--lh-meta);
+}
+.input::placeholder { color: var(--color-ink-3); opacity: 1; }
+.input:focus-visible { outline-offset: 0; }
+[aria-invalid="true"] { border-color: var(--color-danger); }
+textarea.input { min-height: 7.5rem; resize: vertical; }
+select.input {
+  appearance: none;
+  padding-right: var(--space-8);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+input[type="number"] { appearance: textfield; }
+input::-webkit-inner-spin-button, input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.choices { display: grid; gap: var(--space-2); }
+.choice, .check { display: flex; align-items: center; gap: var(--space-3); min-height: var(--tap-min); cursor: pointer; }
+.choice { padding: var(--space-2) var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); }
+.choice input, .check input { width: 20px; height: 20px; margin: 0; flex: none; accent-color: var(--color-accent); }
+/* Selected state: accent border + soft fill (A11Y-12: a border, not only a fill). */
+.choice:has(:checked) { background: var(--color-accent-soft); border-color: var(--color-accent); box-shadow: inset 0 0 0 1px var(--color-accent); }
+.choice:has(:focus-visible), .file:has(:focus-visible) { outline: var(--focus-width) solid var(--color-accent); outline-offset: var(--focus-offset); }
+.choice input:focus-visible { outline: none; }
+.check { align-items: flex-start; font-size: var(--fs-sm); color: var(--color-ink-2); }
+.check input { margin-top: 0.1em; }
+.file { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); min-height: calc(var(--tap-min) + var(--space-5)); padding: var(--space-3) var(--space-4); background: var(--color-surface); border: 1px dashed var(--color-line-strong); border-radius: var(--radius-1); }
+.file__input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.file__ui { display: inline-flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--color-ink-2); overflow-wrap: anywhere; }
+.file.has-file { border-style: solid; }
+.file.has-file .file__ui { color: var(--color-ink); }
+.file__remove { position: relative; z-index: var(--z-raised); margin-left: auto; min-height: var(--tap-min); padding-inline: var(--space-3); background: none; border: 0; text-decoration: underline; text-underline-offset: 4px; }
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.form__status:empty { display: none; }
+.form__nav { margin: 0; }
+/* The step button is the only action of step 1: filled like the primary, not counted as a CTA label (COMP-03). */
+.btn--step { background: var(--color-accent); color: var(--color-on-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .btn--step:hover { background: var(--color-accent-hover); }
+  .btn--step:hover .icon { transform: translateX(3px); }
+}
+.btn--step .icon { transition: transform var(--dur-hover) var(--ease-out); }
+.form__submit { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-6); }
+.contact__alt { align-self: start; padding-top: var(--space-5); border-top: 1px solid var(--color-line-strong); }
+.alt__title { font-size: var(--fs-h4); }
+.alt { display: grid; margin-top: var(--space-4); border-top: 1px solid var(--color-line); }
+.alt li { display: grid; gap: var(--space-1); padding-block: var(--space-4); border-bottom: 1px solid var(--color-line); }
+.alt .btn { justify-self: start; }
+.alt__note { margin-top: var(--space-4); font-size: var(--fs-sm); color: var(--color-ink-3); }
+@media (max-width: 639px) {
+  .btn--step { width: 100%; }
+}
+@media (min-width: 640px) {
+  .choices, .form__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .contact { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--space-9); }
+  .contact__alt { position: sticky; top: calc(var(--header-h) + var(--space-6)); margin-top: var(--space-10); }
+}

@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    main.js · progressive enhancement for every page (≤ 15 KB min). Owner: ENGINE.
    header hairline · menu sheet · reveals · compare slider · despiece fallback ·
-   calculator · lead form · copy buttons · mobile action bar.
+   calculator · lead form · copy buttons · video plates · mobile action bar.
    No scroll listeners, no layout reads in scroll/input handlers (PERF-08).
    The viewer lives in viewer.js (VIEWER), loaded only where needed.
    ═══════════════════════════════════════════════════════════════ */
@@ -58,24 +58,17 @@
     if (wide.addEventListener) wide.addEventListener('change', onWide);
   }
 
-  /* ─── Reveals (MOTION-06): one observer, once, stagger ≤ 6 per group ─── */
+  /* ─── Reveals (MOTION-06): one observer, once; the stagger lives in CSS (nth-child) ─── */
+  // No style writes and no layout reads here (P1-C): the observer's first callback marks what is already on
+  // screen, and only then do reveals arm, so on-screen content never animates in (MOTION-05).
   var reveals = $$('[data-reveal]');
   if (hasIO && reveals.length) {
-    var groups = new Map();
-    reveals.forEach(function (el) {
-      var p = el.parentElement;
-      var n = groups.get(p) || 0;
-      if (el.getAttribute('data-reveal') !== 'line') el.style.setProperty('--i', String(Math.min(n, 5)));
-      groups.set(p, n + 1);
-    });
-    // Everything already on screen is shown at its final state (MOTION-05): one layout read at start-up.
-    var vh = window.innerHeight;
-    reveals.forEach(function (el) { if (el.getBoundingClientRect().top < vh) el.classList.add('is-in'); });
+    var armed = false;
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      es.forEach(function (e) { if (e.isIntersecting || (!armed && e.boundingClientRect.top < 0)) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      if (!armed) { armed = true; requestAnimationFrame(function () { root.classList.add('reveal-ready'); }); }
     }, { threshold: 0.15 });
-    reveals.forEach(function (el) { if (!el.classList.contains('is-in')) io.observe(el); });
-    root.classList.add('reveal-ready');
+    reveals.forEach(function (el) { io.observe(el); });
   }
 
   /* ─── Despiece fallback (no scroll-driven animations) ─── */
@@ -93,10 +86,13 @@
     var range = $('input[type="range"]', stage);
     if (!range) return;
     var tpl = stage.getAttribute('data-valuetext') || '{n} %';
+    var chip = $('[data-compare-chip]', stage.parentElement);
     var update = function () {
+      var t = tpl.replace('{n}', range.value);
       stage.classList.remove('is-peek');
       stage.style.setProperty('--pos', range.value + '%');
-      range.setAttribute('aria-valuetext', tpl.replace('{n}', range.value));
+      range.setAttribute('aria-valuetext', t);
+      if (chip) chip.textContent = t;
     };
     range.addEventListener('input', update);
     if (hasIO && !reduced) {
@@ -127,23 +123,33 @@
       var s = new Intl.NumberFormat(locale, { minimumFractionDigits: dec, maximumFractionDigits: dec, useGrouping: 'always' }).format(n);
       return locale === 'es-ES' ? s + ' €' : '€' + s;
     };
+    var rows = $$('[data-tier]', w.parentElement);
+    var save = out('save');
+    var saveTpl = w.getAttribute('data-save') || '';
     var calc = function () {
       var n = Math.round(+input.value);
       if (!isFinite(n) || n < min) n = min;
-      if (n > max) n = max;
-      var unit = steps[0].unit;
-      steps.forEach(function (s) { if (n >= s.from) unit = s.unit; });
+      var tier = 0;
+      steps.forEach(function (s, i) { if (n >= s.from) tier = i; });
+      var unit = steps[tier].unit;
       var total = unit * n;
+      var over = n > max;
+      // Above the last tier the page stops pricing and offers a written quote (D-21).
+      w.toggleAttribute('data-over', over);
+      rows.forEach(function (r) { if (!over && +r.getAttribute('data-tier') === tier) r.setAttribute('aria-current', 'true'); else r.removeAttribute('aria-current'); });
       out('unit').textContent = money(unit, 0) + ' ' + perUnit;
       out('total').textContent = money(total, 0);
       var withVat = Math.round(total * (1 + vat) * 100) / 100;
       out('vat').textContent = money(withVat, withVat % 1 ? 2 : 0);
+      var saved = (steps[0].unit - unit) * n;
+      save.hidden = !saved;
+      save.textContent = saveTpl.replace('{amount}', money(saved, 0));
       out('cta').setAttribute('href', href + (href.indexOf('?') < 0 ? '?' : '&') + 'unidades=' + n + (anchor ? '#' + anchor : ''));
       return n;
     };
     $$('[data-step]', w).forEach(function (b) {
       b.addEventListener('click', function () {
-        var n = Math.min(max, Math.max(min, (Math.round(+input.value) || min) + +b.getAttribute('data-step')));
+        var n = Math.max(min, (Math.round(+input.value) || min) + +b.getAttribute('data-step'));
         input.value = String(n);
         calc();
       });
@@ -187,14 +193,23 @@
     var status = $('[data-form-status]', form);
     var dirty = false;
 
-    var errorEl = function (field) {
+    var errorEl = function (field, create) {
       var ids = (field.getAttribute('aria-describedby') || '').split(/\s+/);
       for (var i = 0; i < ids.length; i++) { var el = d.getElementById(ids[i]); if (el && el.hasAttribute('data-error')) return el; }
       var fs = field.closest('fieldset.field');
-      return fs ? $('[data-error]', fs) : null;
+      if (fs) return $('[data-error]', fs);
+      if (!create || !field.id) return null;
+      // Created on first error and referenced from the field (fewer bytes in every page's HTML).
+      el = d.createElement('p');
+      el.className = 'field__error';
+      el.id = field.id + '-error';
+      el.setAttribute('data-error', '');
+      field.closest('.field').appendChild(el);
+      field.setAttribute('aria-describedby', (ids.join(' ') + ' ' + el.id).trim());
+      return el;
     };
     var setError = function (field, msg) {
-      var el = errorEl(field);
+      var el = errorEl(field, !!msg);
       var group = field.type === 'radio' ? $$('input[name="' + field.name + '"]', form) : [field];
       group.forEach(function (g) { if (msg) g.setAttribute('aria-invalid', 'true'); else g.removeAttribute('aria-invalid'); });
       if (el) { el.textContent = msg || ''; el.hidden = !msg; }
@@ -251,7 +266,9 @@
       show(1);
       var next = $('[data-next]', form);
       if (next) next.addEventListener('click', function () {
-        if (!validate(steps[0])) return;
+        // A failed step says so in the form's live region too (P2-5), then clears once the step passes.
+        if (!validate(steps[0])) { if (status) status.textContent = form.getAttribute('data-msg-summary') || ''; return; }
+        if (status) status.textContent = '';
         show(2);
         var f = $('input:not([type="hidden"]), select, textarea', steps[1]);
         if (f) f.focus();
@@ -317,14 +334,30 @@
     });
   });
 
-  /* ─── Mobile action bar hides over the form and the footer (COMP-06) ─── */
+  /* ─── Video plates (IMG-10, MOTION-08): click to play, visible pause, never autoplay ─── */
+  $$('[data-video]').forEach(function (fig) {
+    var v = $('video', fig);
+    var btn = $('[data-video-toggle]', fig);
+    if (!v || !btn) return;
+    v.removeAttribute('controls');
+    var sync = function () { fig.toggleAttribute('data-playing', !v.paused); };
+    var toggle = function () { v.loop = !reduced; if (v.paused) v.play().catch(function () {}); else v.pause(); };
+    btn.addEventListener('click', toggle);
+    v.addEventListener('click', toggle);
+    ['play', 'pause', 'ended'].forEach(function (t) { v.addEventListener(t, sync); });
+    if (hasIO) new IntersectionObserver(function (es) { if (!es[0].isIntersecting) v.pause(); }).observe(v);
+  });
+
+  /* ─── Mobile action bar hides over the hero CTA, the form and the footer (COMP-06) ─── */
   var bar = $('[data-bottom-bar]');
+  if (bar && !hasIO) bar.classList.add('is-ready');
   if (bar && hasIO) {
-    var targets = $$('.form-section, [data-footer]');
+    var targets = $$('.form-section, [data-footer], [data-hero-actions]');
     var visible = new Set();
     var o = new IntersectionObserver(function (es) {
       es.forEach(function (e) { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
       bar.classList.toggle('is-hidden', visible.size > 0);
+      bar.classList.add('is-ready');
     });
     targets.forEach(function (t) { o.observe(t); });
   }

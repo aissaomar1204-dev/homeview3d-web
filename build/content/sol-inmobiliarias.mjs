@@ -18,7 +18,7 @@ const faqEs = [
   },
   {
     q: '¿Hacéis descuentos por volumen para agencias?',
-    a: 'Sí. {{brand}} ofrece el pack cartera: 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda. Con más viviendas, el precio unitario sigue bajando; la calculadora de esta página te da el total al momento. Cada maqueta incluye el modelo 3D amueblado, los renders, el visor web para tu anuncio y la realidad aumentada para iPhone y Android.',
+    a: 'Sí. {{brand}} ofrece el pack cartera: 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda de hasta 150 m². Con 10 o más, el precio vuelve a bajar y se aplica a todas las viviendas del encargo; la calculadora de esta página te da el total al momento. Cada maqueta incluye el modelo 3D amueblado, los renders, el visor web para tu anuncio y la realidad aumentada para iPhone y Android.',
   },
   {
     q: '¿Tengo que ir a la vivienda a hacer fotos o a medir?',
@@ -41,35 +41,35 @@ const faqEs = [
 const faqEn = [
   {
     q: 'What does an estate agent gain from a 3D model of a property?',
-    a: 'With a {{brand}} 3D model, you walk into the valuation with something the other agents don’t offer, and you publish a listing that explains the home better than photos can: furnished renders, a room-by-room 3D viewer and app-free augmented reality. Buyers understand the layout before they ask to view. It costs from {{price:maqueta}} + VAT per home, delivered in {{delivery:maqueta}}.',
+    a: 'With our 3D model, you walk into the valuation with something the other agents don’t offer, and you publish a listing that explains the home better than photos can: furnished renders, a room-by-room 3D viewer and app-free augmented reality. Buyers understand the layout before they ask to view. It costs from {{price:maqueta}} + VAT per home, delivered in {{delivery:maqueta}}.',
   },
   {
-    q: 'Can I put the 3D viewer on Idealista, Kyero or Rightmove?',
-    a: 'Not inside the portal page itself. Idealista only accepts tours from its approved multimedia providers, and {{brand}} won’t promise otherwise for any portal. What you can do: upload the renders and the colour plan as listing photos, embed the viewer on your own website with an iframe, send the link by WhatsApp or email, and paste it into a portal’s virtual tour field where the portal accepts an external URL.',
+    q: 'Can I put the 3D viewer on idealista, Kyero or Rightmove?',
+    a: 'Not inside the portal page itself. idealista only accepts tours from its approved multimedia providers, and {{brand}} won’t promise otherwise for any portal. What you can do: upload the renders and the colour plan as listing photos, embed the viewer on your own website with an iframe, send the link by WhatsApp or email, and paste it into a portal’s virtual tour field where the portal accepts an external URL.',
   },
   {
     q: 'Does it work for an empty or dated property?',
     a: 'That is where it helps most. {{brand}} furnishes the 3D model from the floor plan, so you no longer depend on photos of bare rooms or tired décor. With virtual staging ({{extra:staging}} + VAT per room) you can show a different style on the same model. Those images should be labelled as a virtual recreation in the listing, because the furniture is not part of the sale.',
   },
   {
-    q: 'Do you offer volume pricing for agencies?',
-    a: 'Yes. {{brand}} has a portfolio pack: 5 complete 3D models for {{volume}} + VAT, which works out at {{volumeUnit}} per home. With more homes the unit price keeps falling, and the calculator on this page gives you the total straight away. Every model includes the furnished 3D model, the renders, the web viewer for your listing and augmented reality for iPhone and Android.',
+    q: 'Is there a discount if my agency orders several models?',
+    a: 'Yes. {{brand}} has a Portfolio pack: 5 complete 3D models for {{volume}} + VAT, which works out at {{volumeUnit}} per home up to 150 m². From 10 homes the unit price drops again and applies to every home in the order; the calculator on this page gives you the total straight away. Every model includes the furnished 3D model, the renders, the web viewer for your listing and augmented reality for iPhone and Android.',
   },
   {
-    q: 'Do you need to visit the property?',
+    q: 'Do I have to go back to the property to measure or take photos?',
     a: 'No. {{brand}} works from the floor plan: a PDF, an image or the listing link is enough. A reference dimension or the approximate floor area improves accuracy; without one, we estimate measurements from the plan’s scale and mark them as approximate (≈). Photos of the finishes are optional and help us get floors, kitchen and bathrooms right.',
   },
   {
     q: 'How do buyers abroad view the property?',
-    a: 'Through a link. Buyers open the {{brand}} 3D viewer on their phone or computer, move through the home room by room and, with one tap, place it on their table in augmented reality: AR Quick Look on iPhone and iPad, Scene Viewer on Android. There is no app to install. On a computer they see a QR code that opens the model on their phone.',
+    a: 'Through a link. Buyers open our 3D viewer on their phone or computer, move through the home room by room and, with one tap, place it on their table in augmented reality: AR Quick Look on iPhone and iPad, Scene Viewer on Android. There is no app to install. On a computer they see a QR code that opens the model on their phone.',
   },
   {
     q: 'What happens to the viewer once the property sells?',
-    a: 'The {{brand}} complete 3D model includes the first year of viewer hosting. If the home sells sooner, we take the viewer down whenever you ask. If you want to keep it online for longer, for example to show vendors at future valuations what you do for your listings, renewal costs {{extra:hosting}} + VAT per home per year.',
+    a: 'Our complete 3D model includes the first year of viewer hosting. If the home sells sooner, we take the viewer down whenever you ask. If you want to keep it online for longer, for example to show vendors at future valuations what you do for your listings, renewal costs {{extra:hosting}} + VAT per home per year.',
   },
   {
     q: 'What is the difference between a 3D floor plan and the complete 3D model?',
-    a: 'The {{brand}} 3D floor plan ({{price:plano3d}} + VAT per floor) gives you images: a colour top-down plan and a furnished isometric view. The complete 3D model ({{price:maqueta}} + VAT) adds renders of each room, the web viewer for your listing and augmented reality. For a resale flat that already has good photos, the 3D floor plan is often enough.',
+    a: 'Our 3D floor plan ({{price:plano3d}} + VAT per floor) gives you images: a colour top-down plan and a furnished isometric view. The complete 3D model ({{price:maqueta}} + VAT) adds renders of each room, the web viewer for your listing and augmented reality. For a resale flat that already has good photos, the 3D floor plan is often enough.',
   },
 ];
 
@@ -80,10 +80,10 @@ export default {
   dateModified: '2026-09-28',
 
   es: {
-    title: 'Modelos 3D y realidad aumentada para inmobiliarias',
+    title: 'Modelo 3D y AR: capta exclusivas y vende a distancia',
     description: 'Maqueta 3D, renders, visor para tu anuncio y AR sin app desde el plano, para captar exclusivas y vender a distancia. Desde {{price:maqueta}} + IVA.',
     h1: 'Maqueta 3D, renders y realidad aumentada para inmobiliarias',
-    lead: 'Convertimos el plano de cada vivienda que captas en un modelo 3D amueblado con renders, visor para tu anuncio y realidad aumentada sin app, para que el comprador entienda la casa antes de visitarla. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, convierte el plano de cada vivienda que captas en un modelo 3D amueblado con renders, visor para tu anuncio y realidad aumentada sin app, para que el comprador entienda la casa antes de visitarla. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
     breadcrumb: 'Inmobiliarias',
     card: {
       title: 'Para inmobiliarias',
@@ -118,7 +118,7 @@ export default {
         caption: 'Situaciones habituales de una agencia y qué aporta el modelo 3D',
         head: ['Situación', 'Qué le falta al anuncio', 'Qué aporta el modelo 3D'],
         rows: [
-          ['El propietario está entrevistando a tres agencias', 'Una razón para firmar la exclusiva contigo', 'Le enseñas en la tablet cómo se verá su casa en 3D y en realidad aumentada'],
+          ['El propietario está entrevistando a tres agencias', 'Una razón para firmar la exclusiva contigo', 'Le enseñas en la tableta cómo se verá su casa en 3D y en realidad aumentada'],
           ['La vivienda está vacía o sin reformar', 'Fotos de habitaciones desnudas que no transmiten tamaño ni uso', 'Renders amueblados y [home staging virtual](@servicio-staging) sobre el mismo modelo, etiquetados como recreación'],
           ['El comprador vive en Londres, Oslo o Madrid', 'Una forma de entender la casa sin coger un avión', 'El enlace al visor por WhatsApp y la vivienda sobre su mesa en realidad aumentada'],
           ['Llegan visitas que no encajan', 'Contexto: cómo se conectan las estancias y cuánto miden las terrazas', 'Planta cenital a color y recorrido por estancias antes de concertar la visita'],
@@ -161,7 +161,7 @@ export default {
           },
           {
             title: 'En la oficina y en la visita',
-            body: 'Con una tablet enseñas la maqueta a escala 1:20 o recorres el salón a tamaño real. También sirve para explicar una posible reforma: el comprador ve la propuesta sobre el mismo modelo, etiquetada como recreación virtual.',
+            body: 'Con una tableta enseñas la maqueta a escala 1:20 o recorres el salón a tamaño real. También sirve para explicar una posible reforma: el comprador ve la propuesta sobre el mismo modelo, etiquetada como recreación virtual.',
           },
         ],
       },
@@ -204,9 +204,9 @@ export default {
 
   en: {
     title: '3D floor plans and AR for estate agents in Spain',
-    description: 'A furnished 3D model, renders, a listing viewer and app-free AR from the floor plan, to win instructions and sell abroad. From {{price:maqueta}} + VAT.',
+    description: 'A 3D floor plan from {{price:plano3d}} + VAT, or a complete 3D model with renders, a listing viewer and app-free AR, to win instructions and sell abroad.',
     h1: '3D floor plans, renders and AR for estate agents',
-    lead: 'We turn the floor plan of every home you list into a furnished 3D model with renders, a viewer for your listing and app-free augmented reality, so buyers understand the property before they book a viewing, or a flight. From {{price:maqueta}} + VAT per home, in {{delivery:maqueta}}.',
+    lead: '{{brand}}, a 3D visualisation studio based in Marbella, turns the floor plan of every home you list into a 3D floor plan from {{price:plano3d}} + VAT per floor in {{delivery:plano3d}}, or a complete 3D model with renders, a listing viewer and app-free AR from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
     breadcrumb: 'Estate agents',
     card: {
       title: 'For estate agents',
@@ -277,7 +277,7 @@ export default {
           },
           {
             title: 'On the listing',
-            body: 'Upload the renders and the colour plan to Idealista, Kyero or Rightmove as photos. The 3D viewer goes on the property page of your own website with an iframe, and the link goes into a portal’s virtual tour field where the portal accepts an external URL.',
+            body: 'Upload the renders and the colour plan to idealista, Kyero or Rightmove as photos. The 3D viewer goes on the property page of your own website with an iframe, and the link goes into a portal’s virtual tour field where the portal accepts an external URL.',
           },
           {
             title: 'With the buyer',
@@ -293,7 +293,7 @@ export default {
         type: 'callout',
         tone: 'honesty',
         title: 'What we don’t promise',
-        body: 'We don’t embed the viewer inside Idealista or any portal that only accepts named providers. We don’t invent measurements: if the plan has no dimensions, areas are scale estimates (≈) and we say so. And images with virtual furniture should always be labelled as a virtual recreation.',
+        body: 'We don’t embed the viewer inside idealista or any portal that only accepts named providers. We don’t invent measurements: if the plan has no dimensions, areas are scale estimates (≈) and we say so. And images with virtual furniture should always be labelled as a virtual recreation.',
       },
       {
         type: 'answer',

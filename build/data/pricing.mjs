@@ -51,8 +51,8 @@ export const pricing = {
       revisions: 2,
       featured: true,
       includes: {
-        es: ['Modelo 3D amueblado con materiales a medida', '6 renders fotorrealistas en 4K', 'Planta cenital a color y planta 2D redibujada', 'Visor 3D web con estancias, recorrido y modo maqueta', 'Realidad aumentada en iPhone y Android: maqueta 1:20 y tamaño real', 'Alojamiento del visor 12 meses', '2 rondas de cambios'],
-        en: ['Furnished 3D model with custom materials', '6 photorealistic 4K renders', 'Colour top-down plan and redrawn 2D plan', 'Web 3D viewer with rooms, guided tour and cut-away mode', 'Augmented reality on iPhone and Android: 1:20 tabletop and real size', '12 months of viewer hosting', '2 rounds of changes'],
+        es: ['Modelo 3D amueblado con materiales a medida, en GLB, USDZ y BLEND', '6 renders fotorrealistas en 4K', 'Planta cenital a color y planta 2D redibujada', 'Visor 3D web con estancias, recorrido y modo maqueta', 'Realidad aumentada en iPhone y Android: maqueta 1:20 y tamaño real', 'Alojamiento del visor 12 meses', '2 rondas de cambios'],
+        en: ['Furnished 3D model with custom materials, as GLB, USDZ and BLEND', '6 photorealistic 4K renders', 'Colour top-down plan and redrawn 2D plan', 'Web 3D viewer with rooms, guided tour and cut-away mode', 'Augmented reality on iPhone and Android: 1:20 tabletop and real size', '12 months of viewer hosting', '2 rounds of changes'],
       },
       services: ['servicio-plano', 'servicio-renders', 'servicio-tour', 'servicio-ar'],
     },

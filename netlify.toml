@@ -30,3 +30,8 @@
 # Accept header asks for text/markdown, so browsers never invoke it.
 # The IndexNow ping (netlify/functions/deploy-succeeded.mjs) is an event-triggered function: its
 # file name is the event, no declaration needed; it only acts in the production context.
+#
+# What only Netlify can prove (trailing-slash 301 with pretty_urls = false, the Accept: text/markdown
+# edge function, per-language 404s, the generated _headers): run on the first deploy preview and after
+# the first production deploy, expecting 0 failures (README.md, section 3):
+#   node scripts/geo-harness.mjs --live https://deploy-preview-<n>--<site>.netlify.app

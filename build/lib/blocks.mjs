@@ -11,6 +11,7 @@ import { optionalImport } from './context.mjs';
 import {
   cls, head, section, figure, table, faqSection, faqList, indexList, routePrice, ctaBand, compare, cajetin, related,
   processBlock, deliverablesBlock, pricingBlock, guaranteesBlock, calculator, contactForm, hasImage, linkArrow, tableHtml,
+  btnPrimary, contactHref, defaultAlt, renderCaption,
 } from './components.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -65,16 +66,69 @@ function indexBlock(ctx, b, type, ids, opts) {
   return section(ctx, { type, labelledby: hd.id, inner: `${hd.html}${indexList(ctx, ids, opts)}` });
 }
 
+/* ─── Answers on inner pages (D-09): answer + aside, alternating sides, one stage band ─── */
+
+/** Templates whose answers get the two-column layout (guides keep their reading column). */
+const SPLIT = new Set(['service', 'audience', 'zone', 'pricing', 'process', 'about']);
+/** Renders offered to asides and the stage band, in order of preference (interiors first). */
+const ASIDE_IMAGES = ['villa_salon_dormitorio', 'villa_terraza', 'villa_bano_suite', 'villa_dormitorios', 'villa_muros_completos', 'villa_planta_cenital', 'villa_maqueta_iso'];
+
+function nextImage(ctx) {
+  const used = new Set(ctx.collect.images.map((i) => String(i.name).replace(/_opaco$/, '')));
+  // Each page starts the rotation at a different render, so neighbouring pages do not open on the same image.
+  const start = [...ctx.route.id].reduce((t, ch) => t + ch.charCodeAt(0), 0) % ASIDE_IMAGES.length;
+  const order = ASIDE_IMAGES.slice(start).concat(ASIDE_IMAGES.slice(0, start));
+  return order.find((n) => hasImage(ctx, n) && !used.has(n)) || null;
+}
+
+function asideFigure(ctx, name, sizes) {
+  const cap = renderCaption(ctx, name);
+  return `<figure class="figure figure--stage"><div class="figure__media">${ctx.img(name, { alt: defaultAlt(ctx, name), sizes, widths: [480, 800, 1200] })}</div>${cap ? `<figcaption>${esc(cap)}. ${esc(ctx.t('img.renderLabel'))}.</figcaption>` : ''}</figure>`;
+}
+
+function priceCard(ctx, o) {
+  const r = ctx.route;
+  const packs = ctx.data.pricing.packs;
+  const packId = r.pack && packs.some((p) => p.id === r.pack) ? r.pack : null;
+  const price = routePrice(ctx, r.id) || esc(ctx.t('services.from', { price: ctx.price('plano3d') }));
+  const days = ctx.delivery(packId || 'plano3d');
+  return `<div class="answer-card"><p class="mono">${esc(ctx.t('answers.price'))}</p><p class="answer-card__price">${price}</p>`
+    + `<p>${esc(ctx.t('answers.delivery', { days }))}</p><p class="actions">${btnPrimary(ctx, contactHref(ctx, o.service), ctx.t('cta.demo'))}</p></div>`;
+}
+
+function answerAside(ctx, n, o) {
+  const facts = ctx.page.facts || [];
+  if (n % 4 === 2) return priceCard(ctx, o);
+  if (n % 4 === 0 && facts.length) {
+    const [k, v] = facts[(n / 4) % facts.length];
+    return `<p class="answer-fact"><span class="mono">${ctx.mdInline(k)}</span><strong>${ctx.mdInline(v)}</strong></p>`;
+  }
+  const img = nextImage(ctx);
+  return img ? asideFigure(ctx, img, '(min-width: 1320px) 390px, (min-width: 1024px) 30vw, 100vw') : priceCard(ctx, o);
+}
+
+/** Full-bleed stage band with one render, after the second answer: breaks the run of text blocks. */
+function plateBand(ctx) {
+  const img = nextImage(ctx);
+  if (!img) return '';
+  return section(ctx, { type: 'plate', band: 'stage', inner: asideFigure(ctx, img, '(min-width: 1320px) 1224px, 100vw') });
+}
+
 const R = {
   prose(ctx, b) {
     const hd = head(ctx, { h2: b.h2 });
     return section(ctx, { type: 'prose', labelledby: hd.id, inner: `${hd.html}<div class="prose">${ctx.md(b.body)}</div>` });
   },
 
-  answer(ctx, b) {
+  answer(ctx, b, o) {
     const hd = head(ctx, { h2: b.h2 });
     const body = b.body ? `<div class="prose">${ctx.md(b.body)}</div>` : '';
-    return section(ctx, { type: 'answer', labelledby: hd.id, inner: `${hd.html}<div class="answer" data-answer>${ctx.md(b.answer)}</div>${body}` });
+    const main = `${hd.html}<div class="answer" data-answer>${ctx.md(b.answer)}</div>${body}`;
+    if (!SPLIT.has(ctx.route.template)) return section(ctx, { type: 'answer', labelledby: hd.id, inner: main });
+    const n = (o.state.answers = (o.state.answers || 0) + 1);
+    const aside = answerAside(ctx, n, o);
+    const inner = `<div class="answer-split${n % 2 === 0 ? ' answer-split--flip' : ''}"><div class="answer-split__main">${main}</div><aside class="answer-split__aside">${aside}</aside></div>`;
+    return section(ctx, { type: 'answer', labelledby: hd.id, inner }) + (n === 2 ? plateBand(ctx) : '');
   },
 
   table(ctx, b) {
@@ -105,12 +159,34 @@ const R = {
       // Plates: odd count starts with a full-width plate; pairs alternate 7/5 and 5/7 (no equal widths side by side).
       const k = n % 2 ? i - 1 : i;
       const span = n % 2 && i === 0 ? 'full' : (Math.floor(k / 2) % 2 === 0 ? (k % 2 === 0 ? 'wide' : 'narrow') : (k % 2 === 0 ? 'narrow' : 'wide'));
-      return `<li class="plate plate--${span}" data-reveal>${figure(ctx, { image: it.image, alt: ctx.tok(it.alt), caption: it.caption, sizes: span === 'full' ? '(min-width: 1320px) 1224px, 100vw' : '(min-width: 1024px) 58vw, 100vw' })}</li>`;
+      const sizes = { full: '(min-width: 1320px) 1224px, 100vw', wide: '(min-width: 1320px) 704px, (min-width: 1024px) 54vw, 100vw', narrow: '(min-width: 1320px) 496px, (min-width: 1024px) 38vw, 100vw' }[span];
+      return `<li class="plate plate--${span}" data-reveal>${figure(ctx, { image: it.image, alt: ctx.tok(it.alt), caption: it.caption, sizes })}</li>`;
     }).join('');
     return section(ctx, { type: 'gallery', labelledby: hd.id, inner: `${hd.html}<ul class="plates" role="list">${items}</ul>` });
   },
 
   compare(ctx, b, o) { return compare(ctx, b, { eyebrow: o.eyebrows?.compare }); },
+
+  /** Click-to-play render video: poster, preload none, muted, playsinline, visible play/pause, caption. */
+  video(ctx, b) {
+    const v = ctx.data.videos && ctx.data.videos[b.video];
+    if (!v) return '';
+    ctx.needs.add('video');
+    const hd = head(ctx, { h2: b.h2, intro: b.intro });
+    const caption = ctx.tok(b.caption);
+    const mp4 = (v.sources || []).find((x) => /mp4/.test(x.type)) || v.sources[0];
+    const poster = ctx.asset(v.poster);
+    ctx.collect.videos.push({
+      key: b.video, name: ctx.tok(b.h2 || caption), caption, width: v.width, height: v.height, duration: v.duration,
+      contentUrl: ctx.abs(ctx.asset(mp4.src)), thumbnailUrl: ctx.abs(poster), embedUrl: null,
+    });
+    const sources = (v.sources || []).map((x) => `<source src="${esc(ctx.asset(x.src))}" type="${esc(x.type)}">`).join('');
+    // `controls` for no-JS visitors; main.js swaps them for the play/pause button below the frame.
+    const fig = `<figure class="video" data-video><div class="video__frame"><video controls muted playsinline preload="none" poster="${esc(poster)}" width="${v.width}" height="${v.height}" aria-label="${esc(ctx.t('video.label', { caption }))}">${sources}</video></div>`
+      + `<button type="button" class="btn btn--neutral video__btn" data-video-toggle><span data-when="paused">${ctx.icon('play')}${esc(ctx.t('video.play'))}</span><span data-when="playing">${ctx.icon('pause')}${esc(ctx.t('video.pause'))}</span></button>`
+      + `<figcaption>${ctx.mdInline(b.caption)}</figcaption></figure>`;
+    return section(ctx, { type: 'video', labelledby: hd.id, inner: `${hd.html}${fig}` });
+  },
 
   viewer(ctx, b, o) {
     ctx.needs.add('viewer');

@@ -1,0 +1,26 @@
+/* @module embed vw-embed
+   ==========================================================================
+   52-embed · /embed/villa/ (bare layout inside third-party iframes). Owner: VIEWER.
+   Partners paste width="100%" height="560" (embedSnippet in build/lib/viewer.mjs), so the page is
+   one viewport-high grid that never scrolls in either axis (V-04): header · app, and inside the app
+   stage (takes whatever height is left) · one row of room chips · one toolbar row. The embed is a
+   stacked app (.vw--stack), so the 1280px rail column of 50-viewer.css never applies here.
+   ========================================================================== */
+.vw-embed { display: grid; grid-template-rows: auto minmax(0, 1fr); height: 100vh; height: 100dvh; background: var(--color-stage); }
+.vw-embed__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--space-4); }
+.vw-embed .vw-embed__title { font-size: var(--fs-base); font-stretch: 100%; line-height: var(--lh-h3); letter-spacing: 0; }
+.vw-embed__by { display: inline-flex; align-items: center; min-height: var(--tap-min); font-size: var(--fs-meta); color: var(--color-ink-2); }
+.vw-app--embed { display: grid; min-height: 0; padding-block: 0 var(--space-3); }
+.vw-app--embed > .wrap { display: grid; min-height: 0; }
+.vw--embed { grid-template-rows: minmax(0, 1fr) auto auto; gap: var(--space-2); min-height: 0; }
+/* The stage takes the rest of the frame: no aspect ratio, no full-bleed gutter, never wider than the frame. */
+.vw--embed .vw-stage { aspect-ratio: auto; width: 100%; max-width: 100%; height: auto; min-height: 0; max-height: none; margin-inline: 0; }
+/* Rooms: one row of chips at every width, scrolling sideways; the rail title stays for screen readers. */
+.vw--embed .vw-rail__head, .vw--embed .vw-info { position: absolute; width: 1px; height: 1px; margin: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.vw--embed .vw-rooms { margin: 0; padding: var(--space-1) 0 var(--space-2); scroll-padding-inline: 0; }
+/* Toolbar: one row that scrolls sideways in narrow frames (padding keeps the focus ring inside the scroller). */
+.vw--embed .vw-bar { flex-wrap: nowrap; align-items: center; padding-block: var(--space-1); overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.vw--embed :is(.vw-tools, .vw-group) { flex: none; flex-wrap: nowrap; min-width: 0; }
+.vw--embed .vw-size { flex: 1 1 12rem; }
+.vw--embed .vw-ar-open { flex: none; order: 0; margin-left: auto; white-space: nowrap; }
+.vw--embed .vw-error { flex: 1 0 100%; }

@@ -29,7 +29,7 @@ const faq = [
   },
   {
     q: '¿Podéis modelar todas las tipologías de una promoción en Estepona?',
-    a: 'Sí. El pack de promoción de {{brand}} incluye varias tipologías en un mismo visor, con selector para pasar de una a otra, renders 4K y realidad aumentada para la sala de ventas y las ferias. Cada tipología adicional cuesta {{extra:tipologia}} + IVA. Solo necesitamos las plantas del proyecto y, si existe, la memoria de calidades.',
+    a: 'Sí. El pack de promoción de {{brand}} incluye hasta 3 tipologías en un mismo visor, con selector para pasar de una a otra, renders 4K y realidad aumentada para la sala de ventas y las ferias. Cada tipología adicional cuesta {{extra:tipologia}} + IVA. Solo necesitamos las plantas del proyecto y, si existe, la memoria de calidades.',
   },
   {
     q: '¿Sirve para villas con jardín y piscina?',
@@ -40,8 +40,8 @@ const faq = [
     a: 'De fuentes oficiales, con enlace. Las compraventas por municipio son del Ministerio de Vivienda y Agenda Urbana, que las elabora a partir de escrituras notariales; en esta página sumamos los cuatro trimestres de 2025. El peso de los compradores extranjeros es del Colegio de Registradores. {{brand}} no publica cifras de terceros sin fuente ni estadísticas de resultados que no pueda comprobar.',
   },
   {
-    q: '¿Tenéis un caso real en la Costa del Sol?',
-    a: 'Sí: nuestro caso demostrativo es la planta alta de una villa en la Costa del Sol, modelada por {{brand}} a partir de un único plano publicado, sin fotos del interior. Está anonimizado, así que no indicamos el municipio ni la dirección, y el plano original no se reproduce. Puedes recorrerla en el visor y abrirla en realidad aumentada en la página del caso.',
+    q: '¿Tenéis algún caso en la Costa del Sol?',
+    a: 'Tenemos un caso demostrativo, no un encargo de cliente: la planta alta de una villa real de la Costa del Sol, modelada por {{brand}} a partir de su plano publicado, sin fotos del interior. Está anonimizado, así que no indicamos el municipio ni la dirección, y el plano original no se reproduce. Puedes recorrerla en el visor y abrirla en realidad aumentada en la página del caso.',
   },
 ];
 
@@ -55,7 +55,7 @@ export default {
     title: 'Renders e infografías 3D en la Costa del Sol',
     description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano en Estepona, Benahavís, Mijas, Fuengirola, Nerja o Sotogrande. Desde {{price:maqueta}} + IVA.',
     h1: 'Renders y modelos 3D en la Costa del Sol',
-    lead: 'Hacemos renders, modelos 3D con visor web y realidad aumentada sin app a partir del plano de viviendas de toda la Costa del Sol, de Sotogrande a Nerja, para agencias y promotoras que venden a compradores de aquí y de fuera. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, hace renders, modelos 3D con visor web y realidad aumentada sin app a partir del plano de viviendas de toda la Costa del Sol, de Sotogrande a Nerja, para agencias y promotoras. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
     breadcrumb: 'Costa del Sol',
     card: {
       title: 'Costa del Sol',
@@ -80,7 +80,7 @@ export default {
         type: 'answer',
         h2: '¿Por qué la Costa del Sol necesita otra forma de enseñar las viviendas?',
         answer: 'Porque la mayor parte de las operaciones de la provincia de Málaga ocurre en la costa y muchos compradores no viven aquí. Málaga capital solo concentra el 18,09 % de las compraventas de vivienda de la provincia, y en 2025 el 27,9 % de las compraventas provinciales las firmaron personas que no residen en España.',
-        body: 'Para una agencia o una promotora de la costa, eso significa vender a alguien que hace la primera visita desde el móvil, en otro país y en otro idioma. Un modelo 3D con visor por enlace y realidad aumentada le enseña la vivienda antes del viaje. Si trabajas en [Marbella](@zona-marbella) o en [Málaga capital](@zona-malaga), tienen su propia página.',
+        body: 'Para una agencia o una promotora de la costa, eso significa vender a alguien que hace la primera visita desde el móvil, en otro país y en otro idioma. Un modelo 3D con visor por enlace y realidad aumentada le enseña la vivienda antes del viaje. Si trabajas en Marbella o en Málaga capital, tienen su propia página: [modelos 3D y renders en Marbella](@zona-marbella) y [render 3D en Málaga](@zona-malaga).',
       },
       {
         type: 'table',
@@ -109,7 +109,7 @@ export default {
       {
         type: 'prose',
         h2: 'Estepona: obra nueva y venta sobre plano',
-        body: 'Estepona registró 888 compraventas de vivienda nueva en 2025, la segunda cifra de la provincia después de Málaga capital y más que Marbella, Manilva, Casares y Benahavís juntos. Es el municipio del oeste de la costa donde más se vende sobre plano: promociones de apartamentos y adosados, muchas dirigidas a compradores extranjeros.\n\nAquí el entregable útil es cada tipología en 3D, con un visor con selector para la web de la promoción y realidad aumentada para la sala de ventas y las ferias. Lo explicamos en [soluciones para promotoras](@sol-promotoras).',
+        body: 'Estepona registró 888 compraventas de vivienda nueva en 2025, la segunda cifra de la provincia después de Málaga capital y más que Marbella, Manilva, Casares y Benahavís juntos. Es el municipio del oeste de la costa donde más se vende sobre plano: promociones de apartamentos y adosados, muchas dirigidas a compradores extranjeros.\n\nAquí el entregable útil es cada tipología en 3D, con un visor con selector para la web de la promoción y realidad aumentada para la sala de ventas y las ferias. Lo explicamos en [soluciones para promotoras](@sol-promotoras), y el proceso comercial completo, en la [guía de venta sobre plano](@guia-sobre-plano).',
       },
       {
         type: 'prose',
@@ -139,7 +139,7 @@ export default {
       {
         type: 'ar',
         h2: '¿Cómo ve la vivienda un comprador que está fuera?',
-        intro: 'Con el móvil, sin instalar nada. Abre en realidad aumentada la villa de nuestro [caso demostrativo](@caso-villa), una villa en la Costa del Sol modelada desde un único plano: con [AR Quick Look](@glosario#ar-quick-look) en iPhone o iPad y con [Scene Viewer](@glosario#scene-viewer) en Android.',
+        intro: 'Con el móvil, sin instalar nada. Abre en realidad aumentada la villa de nuestro [caso demostrativo](@caso-villa), una villa en la Costa del Sol modelada desde un único plano: con [AR Quick Look](@glosario#ar-quick-look) en iPhone o iPad y con [Scene Viewer](@glosario#scene-viewer) en Android. ¿No se abre? Mira [cómo ver una vivienda en realidad aumentada paso a paso](@guia-ar).',
       },
       {
         type: 'callout',

@@ -1,0 +1,73 @@
+/* @module viewerlive vw-live
+   ==========================================================================
+   53-viewer-live · what exists only once the 3D model is requested: loading
+   line, error box, hotspots, "Medidas" lines and the toolbar controls. Owner: VIEWER.
+   Never linked in the HTML: src/js/viewer.js adds it with model-viewer on intent
+   (data-live on the app), so pages with a viewer do not block on it (COMP-07 spirit).
+   ========================================================================== */
+/* Loading: 2px accent line at the stage bottom, driven by transform (COMP-10). */
+.vw-progress {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  opacity: 0;
+  pointer-events: none;
+  /* Feedback: the line fades out once the model is ready. */
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+.vw[data-state="loading"] .vw-progress { opacity: 1; }
+.vw-progress__bar {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  /* Feedback: smooths the jumps between progress events. */
+  transition: transform var(--dur-hover) var(--ease-out);
+}
+
+/* Hotspots: numbered room labels (data on the stage, IMG-08 exception), created after load. */
+.vw-hs {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 28px;
+  min-height: 28px;
+  padding: 0 var(--space-2);
+  font: var(--wght-mono) var(--fs-meta)/1 var(--font-mono);
+  color: var(--color-ink);
+  white-space: nowrap;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  /* State change: labels facing away from the camera fade out. */
+  transition: opacity var(--dur-state) var(--ease-out);
+}
+.vw-hs::after { content: ""; position: absolute; inset: -8px; }
+.vw-hs:not([data-visible]) { opacity: 0; pointer-events: none; }
+.vw-hs:not(.is-on) .vw-hs__name { display: none; }
+.vw-hs.is-on, .vw-hs.is-on .vw-hs__n { color: var(--color-on-accent); background: var(--color-accent); border-color: var(--color-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .vw-hs:hover { z-index: var(--z-raised); }
+  .vw-hs:hover .vw-hs__name { display: inline; }
+}
+
+/* Medidas (S3): measured lines drawn on the live model; labels are hotspots (data on the stage, IMG-08). */
+.vw-dims { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; stroke: var(--color-ink); stroke-width: 1.5; }
+.vw:not([data-dims-on]) :is(.vw-dims, .vw-dim) { display: none; }
+.vw-dim-pt { width: 1px; height: 1px; pointer-events: none; }
+.vw-dim { padding: 0 var(--space-2); font: var(--wght-mono) var(--fs-meta)/1.6 var(--font-mono); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); pointer-events: none; white-space: nowrap; }
+
+.vw-group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.vw-seg { flex-wrap: nowrap; gap: 0; }
+.vw-seg .vw-tool + .vw-tool { margin-left: -1px; }
+.vw-tool[aria-pressed="true"] { position: relative; z-index: var(--z-raised); }
+[data-vw-tour] { min-inline-size: 16ch; }
+.vw-light label { font-weight: var(--wght-ui); font-size: var(--fs-sm); }
+.vw-light input { width: var(--space-10); height: var(--tap-min); margin: 0; accent-color: var(--color-accent); cursor: pointer; }
+.vw-error { display: grid; gap: var(--space-2); width: 100%; padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-left: 2px solid var(--color-danger); }
+.vw-error p { margin: 0; font-size: var(--fs-sm); }
+.vw-error strong { color: var(--color-danger); }

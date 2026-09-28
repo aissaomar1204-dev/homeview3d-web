@@ -36,6 +36,7 @@ Mientras quede un dato provisional (`placeholder: true` en `site.mjs`):
 | `legal.razonSocial`, `legal.nif`, `legal.domicilio`, `legal.registro`, `legal.email` | Datos LSSI-CE (aviso legal, privacidad). Si queda un `[NIF]` o similar, el QA de producción falla. | `legal.placeholder: false` |
 | `entity.es`, `entity.en` | La **frase canónica**: idéntica en la web, `llms.txt`, LinkedIn, YouTube, Google Business Profile y directorios. Revísala cuando haya nombre. | — |
 | `sameAs` | URL de cada perfil a medida que exista (LinkedIn, YouTube, Instagram, GBP, Clutch, Sortlist, Houzz, Behance, Sketchfab, GitHub…). Van a `Organization.sameAs`. | Rebuild |
+| `founder` | La persona real detrás del estudio (E-E-A-T, `04-geo-2026.md` §9): `{ name, jobTitle: { es, en }, image: '/assets/img/founder.jpg', sameAs: ['https://www.linkedin.com/in/…'] }`. Con él, el schema publica un `Person` (`/sobre-nosotros/#founder`) como fundador de la organización y autor de las guías y del caso, y los `index.md` lo citan como autor. `null` = «Equipo de …». Falta que la plantilla muestre «Revisado por …» en las guías y una sección en «Sobre nosotros» con foto. | Rebuild |
 | `indexNowKey` | Puede quedarse. Para una nueva: `node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"`. Se publica sola como `/<clave>.txt`. | — |
 | `analytics` | `null` (sin analítica, sin banner) o `{ provider: 'plausible', domain: 'tudominio.com' }` (sin cookies; la CSP se amplía sola). | — |
 | `facts` | Año de fundación, idiomas y herramientas: comprueba que siguen siendo ciertos. | — |
@@ -75,11 +76,14 @@ Requisitos: Node 24 (vale ≥ 20) y `npm install` una vez.
 | `npm run indexnow` | Lista las URL pendientes de IndexNow (ver §6). |
 | `npm run images` | Regenera AVIF/WebP/OG desde los renders. |
 | `node scripts/geo-harness.mjs` | Prueba aislada de los módulos GEO (schema, Markdown, ficheros para máquinas) con datos falsos. |
+| `node scripts/geo-harness.mjs --live <url>` | Prueba HTTP de un deploy (vista previa de Netlify o producción): barra final (301), Markdown por `Accept`, 404 por idioma, redirecciones, cabeceras de `robots`, `llms`, embed y modelos (ver §3). Con `http://localhost:<puerto>` (`build/serve.mjs`) omite lo que solo existe en Netlify. |
 
 **Qué comprueba `npm run check`:** enlaces, recursos y anclas rotos; un solo `h1` y orden de encabezados;
 canonical autorreferente; hreflang recíproco con `x-default`; títulos y descripciones únicos y con
 longitud correcta; JSON-LD (se parsea, campos obligatorios por tipo, `@id` resueltos, FAQ del schema =
-FAQ visible, precios del schema visibles en la página); `.lead` y datos clave; imágenes con `alt`,
+FAQ visible, precios del schema visibles en la página, el precio «desde» de la descripción es una `Offer` del
+`Service`, `wordCount` > 0, `speakable` solo con selectores que existen, licencia de imágenes y vídeo que
+resuelven); `.lead` y datos clave; imágenes con `alt`,
 `width`/`height` y una sola `fetchpriority="high"`; páginas huérfanas; sitemaps, `robots.txt`, `llms*.txt`,
 espejos `index.md`, feeds e IndexNow; `_headers` (CSP con los *hash* de los scripts en línea, embed
 enmarcable, MIME y CORS de los modelos); `_redirects` (sin bucles, 404 por idioma); formulario de Netlify;
@@ -127,14 +131,27 @@ servicio, el caso, precios, una guía y contacto).
 3. **Dominio**: *Domain management* → añade el dominio, apunta el DNS (o usa Netlify DNS) y activa HTTPS.
    La versión principal (con o sin `www`) tiene que ser la misma que `site.domain`; Netlify redirige la otra.
 4. **Deploy previews**: cada *pull request* genera una vista previa con el mismo QA.
-5. **Comprobaciones tras el primer deploy** (sustituye el dominio):
+5. **Comprobaciones en la primera vista previa (deploy preview) y tras el primer deploy de producción.**
+   En local todo esto ya pasa con `build/serve.mjs`, pero Netlify decide dos cosas por su cuenta: la barra
+   final con `pretty_urls = false` y la *edge function* de Markdown. Automático:
+
+```bash
+node scripts/geo-harness.mjs --live https://deploy-preview-1--<sitio>.netlify.app   # 0 fallos
+```
+
+   Lo mínimo que tiene que dar (a mano, sustituye la URL):
+   `curl -sI $D/precios` → `301` con `location: /precios/`;
+   `curl -sI -H "Accept: text/markdown" $D/precios/` → `200`, `content-type: text/markdown`, `vary: Accept`,
+   `link: <…/precios/>; rel="canonical"`; `curl -sI $D/en/no-such-page/` → `404` con la página 404 en inglés.
+   Si algo falla, no lances la web: revisa `netlify.toml` y `netlify/edge-functions/markdown.js`.
+   Más comprobaciones:
 
 ```bash
 D=https://www.tudominio.com
 curl -sI $D/ | grep -i -E "content-security-policy|strict-transport|x-content-type"
 curl -sI $D/models/villa.glb | grep -i -E "content-type|access-control|cache-control"      # model/gltf-binary
 curl -sI $D/models/villa_maqueta_1a20.usdz | grep -i content-type                          # model/vnd.usdz+zip
-curl -sI $D/embed/villa/ | grep -i -E "content-security-policy|x-robots-tag"                # frame-ancestors *
+curl -sI $D/embed/villa/ | grep -i -E "content-security-policy|x-robots-tag"                # frame-ancestors * · noindex, indexifembedded
 curl -sI $D/no-existe/ | head -1                                                           # HTTP/2 404 (404 en español)
 curl -sI $D/en/no-such-page/ | head -1                                                     # HTTP/2 404 (404 en inglés)
 curl -s -H "Accept: text/markdown" $D/precios/ | head -5                                   # Markdown (edge function)
@@ -186,8 +203,8 @@ npm run indexnow -- --all            # revisa la lista (no envía nada)
 npm run indexnow -- --all --submit   # comprueba que /<clave>.txt está publicado y envía todas las URL
 ```
 
-3. Después es **automático**: el build compara el *hash* del Markdown de cada página con el manifiesto
-   publicado (`/indexnow-manifest.json`) y escribe `/indexnow-pending.json`; al publicarse cada deploy de
+3. Después es **automático**: el build compara el *hash* de cada página (su Markdown, título, descripción
+   y JSON-LD) con el manifiesto publicado (`/indexnow-manifest.json`) y escribe `/indexnow-pending.json`; al publicarse cada deploy de
    **producción**, `netlify/functions/deploy-succeeded.mjs` envía solo las URL nuevas, cambiadas o
    eliminadas. Se ve en *Logs → Functions → deploy-succeeded* (`[indexnow] HTTP 200 · N URL(s)`).
 4. Cada mes: informe **AI Performance** de Bing (citas, páginas citadas y *grounding queries*: son ideas
@@ -275,14 +292,14 @@ del panel. Con esos datos: una guía o un caso nuevo al mes y revisión trimestr
 
 | Fichero | Para qué |
 |---|---|
-| `/robots.txt` | Todo abierto a buscadores y asistentes de IA con una sola lista de reglas (grupo `*` y grupo explícito idénticos); cerrados `/models/` y `/embed/`; `Bytespider` bloqueado; `Content-Signal` y `Sitemap:`. |
-| `/sitemap.xml` → `/sitemap-pages.xml`, `/sitemap-images.xml` | Páginas indexables con `hreflang` y `lastmod` = fecha real del contenido; renders. |
-| `/llms.txt` | Índice bilingüe para agentes (< 10 KB): frase canónica, datos clave con precios y plazos, enlaces. |
+| `/robots.txt` | Todo abierto a buscadores y asistentes de IA con una sola lista de reglas (grupo `*` y grupo explícito idénticos, con el registro `Content-Signal: search=yes, ai-input=yes, ai-train=yes`); cerrado `/models/`; `/embed/` abierto para que Google pinte el visor dentro de las webs que lo incrustan; `Bytespider` bloqueado; `Sitemap:`. |
+| `/sitemap.xml` → `/sitemap-pages.xml`, `/sitemap-images.xml` (+ `/sitemap-video.xml`) | Páginas indexables con `hreflang` y `lastmod` = fecha real del contenido; renders; el vídeo del caso cuando una página tiene un bloque `video`. |
+| `/llms.txt`, `/en/llms.txt` | Índice para agentes por idioma (< 10 KB cada uno): frase canónica (ES y EN en el raíz), datos clave con precios y plazos, **respuestas rápidas** con forma de pregunta, cada página con su nota (en las guías, la respuesta y la cifra con que abre). El raíz enlaza el índice inglés. |
 | `/llms-full.txt`, `/en/llms-full.txt` | Todo el contenido en Markdown, **un fichero por idioma** (≤ 400 KB cada uno, unas 100 000 *tokens*: cabe en una sola lectura de un asistente). Sin índices ni legales (siguen en `llms.txt`); el contenido compartido se cita una vez. |
 | `/<ruta>/index.md` | Versión Markdown de cada página indexable; también se sirve en la URL de la página con `Accept: text/markdown`. |
 | `/feed.xml`, `/en/feed.xml` | RSS de guías y del caso. |
 | `/<clave>.txt`, `/indexnow-manifest.json`, `/indexnow-pending.json` | IndexNow (§6). |
-| `/_headers` | Seguridad (HSTS, CSP por página con los *hash* de los scripts en línea, sin `X-Frame-Options`), `/embed/*` enmarcable (`frame-ancestors *`) y `noindex`, MIME y CORS de los modelos 3D, caché inmutable de `/assets/` y `/lib/`, `noindex` en los ficheros para máquinas. |
+| `/_headers` | Seguridad (HSTS, CSP por página con los *hash* de los scripts en línea, sin `X-Frame-Options`), `/embed/*` enmarcable (`frame-ancestors *`) con `X-Robots-Tag: noindex, indexifembedded` (no sale sola en Google, pero cuenta dentro de la página que la incrusta), MIME y CORS de los modelos 3D, caché inmutable de `/assets/` y `/lib/`, `noindex` en los ficheros para máquinas. |
 | `/_redirects` | 301 de `routes.mjs` y 404 por idioma (`/en/*` → `/en/404.html`, `/*` → `/404.html`, con estado 404). Sin reglas comodín con estado 200. |
 | `/site.webmanifest` | Nombre, colores e iconos PNG 192 y 512 (`any maskable`). |
 

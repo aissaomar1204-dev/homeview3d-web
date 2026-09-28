@@ -89,7 +89,7 @@ export function heroActions(ctx, { service, secondary = 'villa' } = {}) {
   const primary = btnPrimary(ctx, contactHref(ctx, service), ctx.t('cta.demo'));
   let sec = '';
   if (secondary === 'villa' && ctx.has('caso-villa') && ctx.route.id !== 'caso-villa') sec = linkArrow(ctx, ctx.href('caso-villa', 'visor'), ctx.t('cta.villa'));
-  return `<p class="actions">${primary}${sec}</p>`;
+  return `<p class="actions" data-hero-actions>${primary}${sec}</p>`;
 }
 
 /** Left-aligned text hero with an optional side figure (page.hero). */
@@ -97,7 +97,7 @@ export function textHero(ctx, { actions = false, service, meta = '', figureSide 
   const p = ctx.page;
   const hero = figureSide && p.hero && p.hero.image ? p.hero : null;
   const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p>${meta}${actions ? heroActions(ctx, { service }) : ''}</div>`;
-  const fig = hero ? `<figure class="hero__figure${isAlpha(ctx, hero.image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(hero.image, { alt: hero.alt ?? defaultAlt(ctx, hero.image), sizes: '(min-width: 1024px) 40vw, 100vw', eager: true, max: 1200 })}</div>${hero.caption ? `<figcaption>${ctx.mdInline(hero.caption)}</figcaption>` : ''}</figure>` : '';
+  const fig = hero ? `<figure class="hero__figure${isAlpha(ctx, hero.image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(hero.image, { alt: hero.alt ?? defaultAlt(ctx, hero.image), sizes: '(min-width: 1320px) 500px, (min-width: 1024px) 38vw, 100vw', eager: true, max: 1200 })}</div>${hero.caption ? `<figcaption>${ctx.mdInline(hero.caption)}</figcaption>` : ''}</figure>` : '';
   return `<section class="${cls('hero hero--text', hero && 'hero--figure', className)}" aria-labelledby="titulo"><div class="wrap hero__grid">${text}${fig}</div></section>`;
 }
 
@@ -114,26 +114,44 @@ export function cajetin(ctx, facts, { date } = {}) {
 
 /* ─── Tables (GEO-03) ─────────────────────────────────────────── */
 
+/** Tables with five or more columns keep a horizontal scroll on phones; narrower ones stack by row. */
+const WIDE_COLS = 5;
+const label = (html) => esc(String(html).replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').trim());
+
+/** Shared shell: stacked tables keep <caption>; wide tables label the table from a caption above the scroller. */
+function tableShell(ctx, { id, caption, thead, tbody, wide, stack = true, className, after = '' }) {
+  if (wide) {
+    return `<div class="${cls('table table--wide', className)}"><p class="table__caption mono" id="${id}">${caption}</p><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${id}"><table aria-labelledby="${id}">${thead}${tbody}</table></div>${after}</div>`;
+  }
+  return `<div class="${cls('table', stack && 'table--stack', className)}"><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${id}"><table><caption id="${id}">${caption}</caption>${thead}${tbody}</table></div>${after}</div>`;
+}
+
 export function table(ctx, { caption, head: cols, rows, note, sources, className = '', rowHeaders = true }) {
   const id = ctx.uid('tabla');
-  const thead = `<thead><tr>${cols.map((c) => `<th scope="col">${ctx.mdInline(String(c))}</th>`).join('')}</tr></thead>`;
-  const tbody = `<tbody>${rows.map((r) => `<tr>${r.map((c, i) => (i === 0 && rowHeaders ? `<th scope="row">${ctx.mdInline(String(c))}</th>` : `<td>${ctx.mdInline(String(c))}</td>`)).join('')}</tr>`).join('')}</tbody>`;
+  const heads = cols.map((c) => ctx.mdInline(String(c)));
+  const wide = cols.length >= WIDE_COLS;
+  const stack = !wide && cols.length > 2;
+  const thead = `<thead><tr>${heads.map((c) => `<th scope="col">${c}</th>`).join('')}</tr></thead>`;
+  const tbody = `<tbody>${rows.map((r) => `<tr>${r.map((c, i) => (i === 0 && rowHeaders ? `<th scope="row">${ctx.mdInline(String(c))}</th>` : `<td${stack ? ` data-label="${label(heads[i])}"` : ''}>${ctx.mdInline(String(c))}</td>`)).join('')}</tr>`).join('')}</tbody>`;
   const src = sources && sources.length ? `<p class="table__sources">${esc(ctx.t('stat.source'))}: ${sources.map((s) => `<a href="${esc(s.url)}" rel="noopener">${esc(ctx.tok(s.label))}</a>`).join(', ')}</p>` : '';
   const nt = note ? `<div class="table__note">${ctx.md(note)}</div>` : '';
-  return `<div class="${cls('table', className)}"><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${id}"><table><caption id="${id}">${ctx.mdInline(caption)}</caption>${thead}${tbody}</table></div>${nt}${src}</div>`;
+  return tableShell(ctx, { id, caption: ctx.mdInline(caption), thead, tbody, wide, stack, className, after: nt + src });
 }
 
 /** Same as table() but with pre-rendered HTML cells (no md processing). */
-export function tableHtml(ctx, { caption, cols, rows, className = '', rowHeaders = true }) {
+export function tableHtml(ctx, { caption, cols, rows, className = '', rowHeaders = true, rowAttrs }) {
   const id = ctx.uid('tabla');
+  const wide = cols.length >= WIDE_COLS;
+  // Two-column tables (calculator) fit a phone as they are: no row labels needed.
+  const labels = !wide && cols.length > 2;
   const numCol = cols.map((_, i) => i > 0 && rows.every((r) => r[i] && typeof r[i] === 'object' && r[i].num));
   const thead = `<thead><tr>${cols.map((c, i) => `<th scope="col"${numCol[i] ? ' class="num"' : ''}>${c}</th>`).join('')}</tr></thead>`;
-  const tbody = `<tbody>${rows.map((r) => `<tr>${r.map((c, i) => {
+  const tbody = `<tbody>${rows.map((r, ri) => `<tr${rowAttrs ? rowAttrs(ri) : ''}>${r.map((c, i) => {
     const cell = typeof c === 'object' && c !== null ? c : { html: c };
     const span = cell.colspan ? ` colspan="${cell.colspan}"` : '';
-    return i === 0 && rowHeaders ? `<th scope="row"${span}>${cell.html}</th>` : `<td${span}${cell.num ? ' class="num"' : ''}>${cell.html}</td>`;
+    return i === 0 && rowHeaders ? `<th scope="row"${span}>${cell.html}</th>` : `<td${span}${cell.num ? ' class="num"' : ''}${labels ? ` data-label="${label(cols[i])}"` : ''}>${cell.html}</td>`;
   }).join('')}</tr>`).join('')}</tbody>`;
-  return `<div class="${cls('table', className)}"><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${id}"><table><caption id="${id}">${caption}</caption>${thead}${tbody}</table></div></div>`;
+  return tableShell(ctx, { id, caption, thead, tbody, wide, stack: labels, className });
 }
 
 /* ─── FAQ (COMP-17) ───────────────────────────────────────────── */
@@ -150,10 +168,10 @@ export function faqList(ctx, items, { openCount = 3 } = {}) {
   return `<div class="faq${cols.length > 1 ? ' faq--2' : ''}">${cols.map((c) => `<div class="faq__col">${c.join('')}</div>`).join('')}</div>`;
 }
 
-export function faqSection(ctx, items, { eyebrow, h2 } = {}) {
+export function faqSection(ctx, items, { eyebrow, h2, openCount } = {}) {
   if (!items || !items.length) return '';
   const hd = head(ctx, { h2: h2 || ctx.t('h2.faq'), eyebrow });
-  return section(ctx, { type: 'faq', labelledby: hd.id, inner: `${hd.html}${faqList(ctx, items)}` });
+  return section(ctx, { type: 'faq', labelledby: hd.id, inner: `${hd.html}${faqList(ctx, items, openCount == null ? {} : { openCount })}` });
 }
 
 /* ─── Index lists (related, pages, audiences, services) ───────── */
@@ -192,7 +210,7 @@ export function ctaBand(ctx, { h2, body, service, image = 'villa_terraza', class
   const hd = head(ctx, { h2: h2 || ctx.t('cta_band.h2') });
   const text = ctx.md(body || ctx.t('cta_band.body'));
   const fig = image && hasImage(ctx, image)
-    ? `<figure class="cta-band__figure${isAlpha(ctx, image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(image, { alt: ctx.t('cta_band.alt'), sizes: '(min-width: 1024px) 40vw, 100vw', max: 1200 })}</div></figure>`
+    ? `<figure class="cta-band__figure${isAlpha(ctx, image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(image, { alt: ctx.t('cta_band.alt'), sizes: '(min-width: 1320px) 520px, (min-width: 1024px) 40vw, 100vw', max: 1200 })}</div></figure>`
     : '';
   const inner = `<div class="cta-band__grid${fig ? '' : ' cta-band__grid--solo'}"><div class="cta-band__text">${hd.html}<div class="cta-band__body">${text}</div><p class="actions">${btnPrimary(ctx, contactHref(ctx, service), ctx.t('cta.demo'))}${whatsappLink(ctx)}</p></div>${fig}</div>`;
   return section(ctx, { type: 'cta', className: cls('cta-band', className), labelledby: hd.id, inner });
@@ -207,22 +225,39 @@ export function dateLine(ctx, { author = false } = {}) {
   return `<p class="dateline">${by}<span>${esc(ctx.t('date.updated'))} <time datetime="${esc(d)}">${esc(ctx.fmtDate(d))}</time></span></p>`;
 }
 
-/* ─── Compare slider (COMP-12) ────────────────────────────────── */
+/* ─── Compare slider (COMP-12, S2 "Calco") ─────────────────────── */
+
+/* Top plan camera (source/villa3d/blender/villa_render.py, kind "top"): orthographic, ortho_scale spans the
+   vertical 14,11 m × 1,07 on the 2400 × 3700 frame, so one metre is 3700 / 15,1 px, a fixed share of the width. */
+const PLAN = { W: 2400, H: 3700, spanM: Math.max((14.08 + 0.03) * 1.07, (9.13 + 0.03) * 1.07 * 3700 / 2400) };
+const metreShare = () => (PLAN.H / PLAN.spanM) / PLAN.W;
 
 export function compare(ctx, block = {}, { eyebrow } = {}) {
   ctx.needs.add('slider');
   const hd = head(ctx, { h2: block.h2 || ctx.t('h2.compare'), intro: block.intro, eyebrow });
   const id = ctx.uid('comparar');
-  const under = ctx.img('villa_plano_lineas', { alt: ctx.t('compare.altPlan'), sizes: '(min-width: 1024px) 560px, 100vw', imgClass: 'compare__img', max: 1200 });
-  const over = ctx.img('villa_planta_cenital_opaco', { alt: ctx.t('compare.altModel'), sizes: '(min-width: 1024px) 560px, 100vw', imgClass: 'compare__img', max: 1200 });
+  const sizes = '(min-width: 1024px) 460px, 100vw';
+  const under = ctx.img('villa_plano_lineas', { alt: ctx.t('compare.altPlan'), sizes, imgClass: 'compare__img', max: 1200 });
+  // The RGBA render over the same sheet as the plan (no grey plate, no seam, no cast shadow off the edge).
+  const overName = hasImage(ctx, 'villa_planta_cenital') ? 'villa_planta_cenital' : 'villa_planta_cenital_opaco';
+  const over = ctx.img(overName, { alt: ctx.t('compare.altModel'), sizes, imgClass: 'compare__img', max: 1200 });
   const vt = ctx.t('compare.valuetext', { n: 50 });
-  const fig = `<figure class="compare__figure"><div class="compare__labels" aria-hidden="true"><span>${esc(ctx.t('compare.plan'))}</span><span>${esc(ctx.t('compare.model'))}</span></div>`
+  const m = metreShare();
+  const marks = [0, 1, 2, 5].map((n) => `<span style="--x:${+(n * 20).toFixed(1)}%">${n}${n === 5 ? '&nbsp;m' : ''}</span>`).join('');
+  const scale = `<p class="scalebar mono" style="width:${+(m * 500).toFixed(2)}%" role="img" aria-label="${esc(ctx.t('compare.scale'))}">${marks}</p>`;
+  const fig = `<figure class="compare__figure"><div class="compare__labels mono" aria-hidden="true"><span>${esc(ctx.t('compare.plan'))}</span><span>${esc(ctx.t('compare.model'))}</span></div>`
     + `<div class="compare__stage" data-compare data-valuetext="${esc(ctx.t('compare.valuetext'))}">`
     + `<div class="compare__layer compare__layer--under">${under}</div><div class="compare__layer compare__layer--over">${over}</div>`
-    + `<span class="compare__handle" aria-hidden="true"></span>`
+    + `<span class="compare__handle" aria-hidden="true"><span class="compare__grip">${ctx.icon('arrowsH')}</span></span>`
     + `<input class="compare__range" type="range" id="${id}" name="${id}" min="0" max="100" step="1" value="50" aria-label="${esc(ctx.t('compare.aria'))}" aria-valuetext="${esc(vt)}">`
-    + `</div><figcaption>${esc(ctx.t('compare.caption'))}</figcaption></figure>`;
-  const inner = `<div class="compare"><div class="compare__text">${hd.html}<p class="compare__hint">${esc(ctx.t('compare.hint'))}</p></div>${fig}</div>`;
+    + `</div><div class="compare__foot">${scale}<span class="compare__chip mono" data-compare-chip aria-hidden="true">${esc(vt)}</span></div>`
+    + `<figcaption>${esc(ctx.t('compare.caption'))}</figcaption></figure>`;
+  // Room legend with m² in the sticky column (the same data as the viewer rail).
+  const rooms = ctx.data.villa.rooms;
+  const shown = rooms.slice(0, 6);
+  const legend = `<ul class="legend" role="list" aria-label="${esc(ctx.t('compare.legend'))}">${shown.map((r) => `<li><span>${esc(r[ctx.lang].name)}</span><span class="num mono">≈${' '}${esc(ctx.fmtNumber(r.area, 1))}${' '}m²</span></li>`).join('')}`
+    + `<li class="legend__more"><span>${esc(ctx.t('compare.more', { n: rooms.length - shown.length }))}</span><span class="mono">${esc(ctx.t('compare.total', { n: rooms.length }))}</span></li></ul>`;
+  const inner = `<div class="compare"><div class="compare__text">${hd.html}<p class="compare__hint">${esc(ctx.t('compare.hint'))}</p>${legend}</div>${fig}</div>`;
   return section(ctx, { type: 'compare', band: 'stage', labelledby: hd.id, inner });
 }
 
@@ -254,7 +289,7 @@ export function processBlock(ctx, block = {}) {
   let drawing;
   if (have) {
     const stages = ctx.t('process.stages');
-    drawing = `<figure class="despiece" data-despiece><div class="despiece__stage">${layers.map((l, i) => `<div class="despiece__layer despiece__layer--${i + 1}">${ctx.img(l, { alt: i === 0 ? ctx.t('process.layerAlt') : '', sizes: '(min-width: 1024px) 50vw, 100vw', max: 1200 })}</div>`).join('')}</div><figcaption><ol class="despiece__legend" role="list">${stages.map((s) => `<li>${esc(s)}</li>`).join('')}</ol></figcaption></figure>`;
+    drawing = `<figure class="despiece" data-despiece><div class="despiece__stage">${layers.map((l, i) => `<div class="despiece__layer despiece__layer--${i + 1}">${ctx.img(l, { alt: i === 0 ? ctx.t('process.layerAlt') : '', sizes: '(min-width: 1320px) 610px, (min-width: 1024px) 46vw, 100vw', max: 1200 })}</div>`).join('')}</div><figcaption><ol class="despiece__legend" role="list">${stages.map((s) => `<li><span>${esc(s)}</span></li>`).join('')}</ol></figcaption></figure>`;
   } else {
     drawing = `<figure class="despiece despiece--static"><div class="despiece__stage">${ctx.img('villa_maqueta_iso', { alt: ctx.t('process.fallbackAlt'), sizes: '(min-width: 1024px) 50vw, 100vw', max: 1200 })}</div><figcaption>${esc(ctx.t('hero.caption'))}</figcaption></figure>`;
   }
@@ -271,7 +306,7 @@ export function deliverablesBlock(ctx, block = {}) {
     const L = d[ctx.lang];
     const title = ctx.has(d.page) ? `<a href="${esc(ctx.href(d.page))}">${esc(L.title)}</a>` : esc(L.title);
     const formats = String(L.formats || '').split(/\s*·\s*/).filter(Boolean).map((f) => `<li>${esc(f)}</li>`).join('');
-    const img = ctx.img(d.image, { alt: defaultAlt(ctx, d.image), sizes: i === 0 ? '(min-width: 1024px) 60vw, 100vw' : '(min-width: 1024px) 40vw, 100vw', max: i === 0 ? 1600 : 1200 });
+    const img = ctx.img(d.image, { alt: defaultAlt(ctx, d.image), sizes: i === 0 ? '(min-width: 1320px) 700px, (min-width: 1024px) 55vw, 100vw' : '(min-width: 1320px) 400px, (min-width: 1024px) 32vw, (min-width: 768px) 60vw, 100vw', max: i === 0 ? 1600 : 1200 });
     return `<li class="bento__cell bento__cell--${i + 1}" data-reveal><div class="bento__media${isAlpha(ctx, d.image) || !hasImage(ctx, d.image) ? ' figure--stage' : ''}">${img}</div><div class="bento__text"><h3 class="bento__title">${title}</h3><p>${ctx.mdInline(L.body)}</p>${formats ? `<ul class="bento__formats" role="list" aria-label="${esc(ctx.t('deliverables.formats'))}">${formats}</ul>` : ''}</div></li>`;
   }).join('');
   const soon = ctx.data.comingSoon || [];
@@ -354,22 +389,25 @@ export function calculator(ctx, block = {}) {
     const label = to === s.from ? String(s.from) : ctx.t('calc.range', { from: s.from, to });
     return [esc(label), { html: `${esc(ctx.fmtPrice(s.unit))} ${esc(ctx.t('calc.plusVat'))}`, num: true }];
   });
-  const tbl = tableHtml(ctx, { caption: esc(ctx.t('calc.caption')), cols: ctx.t('calc.head').map(esc), rows, className: 'table--calc' });
+  // The tier that applies is marked by main.js (aria-current on its row, S6).
+  const tbl = tableHtml(ctx, { caption: esc(ctx.t('calc.caption')), cols: ctx.t('calc.head').map(esc), rows, className: 'table--calc', rowAttrs: (i) => ` data-tier="${i}"${i === 0 ? ' aria-current="true"' : ''}` });
   const inputId = ctx.uid('calc-unidades');
   const unit0 = steps[0].unit;
   const vat = pricing.vatRate;
   const base = contactHref(ctx, c.packId).split('#')[0];
   const widget = `<div class="calc__widget" data-calc hidden`
     + ` data-steps="${esc(JSON.stringify(steps))}" data-min="${c.minUnits}" data-max="${c.maxUnits}" data-vat="${vat}"`
-    + ` data-locale="${ctx.lang === 'es' ? 'es-ES' : 'en-GB'}" data-per-unit="${esc(ctx.t('calc.perUnit'))}" data-href="${esc(base)}" data-anchor="${formAnchor(ctx)}">`
+    + ` data-locale="${ctx.lang === 'es' ? 'es-ES' : 'en-GB'}" data-per-unit="${esc(ctx.t('calc.perUnit'))}" data-save="${esc(ctx.t('calc.save'))}" data-href="${esc(base)}" data-anchor="${formAnchor(ctx)}">`
     + `<label class="calc__label" for="${inputId}">${esc(ctx.t('calc.units'))}</label>`
     + `<div class="stepper"><button type="button" class="stepper__btn" data-step="-1" aria-label="${esc(ctx.t('calc.less'))}" aria-controls="${inputId}">${ctx.icon('minus')}</button>`
-    + `<input class="stepper__input num" type="number" id="${inputId}" name="unidades" inputmode="numeric" min="${c.minUnits}" max="${c.maxUnits}" step="1" value="1" autocomplete="off">`
+    + `<input class="stepper__input num" type="number" id="${inputId}" name="unidades" inputmode="numeric" min="${c.minUnits}" step="1" value="1" autocomplete="off">`
     + `<button type="button" class="stepper__btn" data-step="1" aria-label="${esc(ctx.t('calc.more'))}" aria-controls="${inputId}">${ctx.icon('plus')}</button></div>`
-    + `<output class="calc__out" for="${inputId}" aria-live="polite">`
+    + `<output class="calc__out" for="${inputId}" aria-live="polite"><span class="calc__priced">`
     + `<span class="calc__unit" data-out="unit">${esc(ctx.fmtPrice(unit0))} ${esc(ctx.t('calc.perUnit'))}</span>`
     + `<span class="calc__total"><span class="calc__total-label">${esc(ctx.t('calc.total'))}</span> <strong class="num" data-out="total">${esc(ctx.fmtPrice(unit0))}</strong> <span>${esc(ctx.t('calc.plusVat'))}</span></span>`
     + `<span class="calc__vat"><span class="num" data-out="vat">${esc(ctx.fmtPrice(Math.round(unit0 * (1 + vat) * 100) / 100))}</span> ${esc(ctx.t('calc.vatIncl'))}</span>`
+    + `<span class="calc__save" data-out="save" hidden></span></span>`
+    + `<span class="calc__quote">${esc(ctx.t('calc.quote', { max: c.maxUnits }))}</span>`
     + `</output><p class="calc__cta"><a class="btn btn--primary" data-out="cta" href="${esc(`${base}${base.includes('?') ? '&' : '?'}unidades=1#${formAnchor(ctx)}`)}">${esc(ctx.t('cta.demo'))}</a></p></div>`;
   const inner = `<div class="calc"><div class="calc__text">${hd.html}${tbl}<p class="calc__note">${esc(ctx.t('calc.note'))}</p></div>${widget}</div>`;
   return section(ctx, { type: 'calculator', id: calcAnchor(ctx), labelledby: hd.id, inner });
@@ -385,21 +423,22 @@ export function contactForm(ctx, block = {}, { alternatives = true } = {}) {
   const u = (name) => ctx.uid(`f-${name}`);
   const ids = Object.fromEntries(['tipo', 'servicio', 'unidades', 'nombre', 'empresa', 'email', 'tel', 'plano', 'enlace', 'mensaje', 'origen', 'rgpd', 'hp'].map((k) => [k, u(k)]));
   const err = (k) => `<p class="field__error" id="${ids[k]}-error" data-error hidden></p>`;
+  // Other fields get their error <p> from main.js when a message exists (fewer bytes, same aria-describedby wiring).
   const hint = (k, text) => `<p class="field__hint" id="${ids[k]}-hint">${text}</p>`;
 
   const tipos = Object.entries(ctx.t('form.tipos'));
-  const tipo = `<fieldset class="field field--choice" id="${ids.tipo}" aria-describedby="${ids.tipo}-error"><legend class="field__label">${f('tipo')} ${req}</legend><div class="choices">${tipos.map(([v, l], i) => `<label class="choice" for="${ids.tipo}-${v}"><input type="radio" id="${ids.tipo}-${v}" name="tipo" value="${v}"${i === 0 ? ' required data-m="choice"' : ''}><span>${esc(l)}</span></label>`).join('')}</div>${err('tipo')}</fieldset>`;
+  const tipo = `<fieldset class="field field--choice" id="${ids.tipo}" aria-describedby="${ids.tipo}-error"><legend class="field__label">${f('tipo')} ${req}</legend><div class="choices">${tipos.map(([v, l], i) => `<label class="choice" for="${ids.tipo}-${v}"><input type="radio" id="${ids.tipo}-${v}" name="tipo" value="${v}" aria-describedby="${ids.tipo}-error"${i === 0 ? ` required data-m="choice" toolparamdescription="${f('tipoParam')}"` : ''}><span>${esc(l)}</span></label>`).join('')}</div>${err('tipo')}</fieldset>`;
   const servicio = `<div class="field"><label class="field__label" for="${ids.servicio}">${f('servicio')} ${opt}</label><select id="${ids.servicio}" name="servicio" class="input" data-preselect="servicio">${Object.entries(ctx.t('form.servicios')).map(([v, l]) => `<option value="${v}"${v === (block.service || 'maqueta') ? ' selected' : ''}>${esc(l)}</option>`).join('')}</select></div>`;
   const unidades = `<div class="field field--short"><label class="field__label" for="${ids.unidades}">${f('unidades')} ${opt}</label><input id="${ids.unidades}" name="unidades" class="input num" type="number" inputmode="numeric" min="1" max="500" step="1" autocomplete="off" data-preselect="unidades" aria-describedby="${ids.unidades}-hint">${hint('unidades', f('unidadesHint'))}</div>`;
 
   const text = (k, { type = 'text', autocomplete, inputmode, required, spell, ph = true, msg } = {}) =>
-    `<div class="field"><label class="field__label" for="${ids[k]}">${f(k)} ${required ? req : opt}</label><input id="${ids[k]}" name="${k}" class="input" type="${type}"${autocomplete ? ` autocomplete="${autocomplete}"` : ''}${inputmode ? ` inputmode="${inputmode}"` : ''}${spell === false ? ' spellcheck="false"' : ''}${required ? ' required' : ''}${ph ? ` placeholder="${f(`${k}Ph`)}"` : ''}${msg ? ` data-m="${msg}"` : ''} aria-describedby="${ids[k]}-error">${err(k)}</div>`;
+    `<div class="field"><label class="field__label" for="${ids[k]}">${f(k)} ${required ? req : opt}</label><input id="${ids[k]}" name="${k}" class="input" type="${type}"${autocomplete ? ` autocomplete="${autocomplete}"` : ''}${inputmode ? ` inputmode="${inputmode}"` : ''}${spell === false ? ' spellcheck="false"' : ''}${required ? ' required' : ''}${ph ? ` placeholder="${f(`${k}Ph`)}"` : ''}${msg ? ` data-m="${msg}"` : ''}></div>`;
 
-  const plano = `<div class="field field--file"><label class="field__label" for="${ids.plano}">${f('plano')} ${opt}</label><div class="file"><input id="${ids.plano}" name="plano" class="file__input" type="file" accept=".pdf,.jpg,.jpeg,.png,.dwg,.dxf" data-max="8000000" data-m="file" aria-describedby="${ids.plano}-hint ${ids.plano}-error"><span class="file__ui" aria-hidden="true">${ctx.icon('upload')}<span data-file-name>${f('plano')}</span></span><button type="button" class="file__remove" data-file-remove hidden>${f('planoRemove')}</button></div>${hint('plano', f('planoHint'))}${err('plano')}</div>`;
+  const plano = `<div class="field field--file"><label class="field__label" for="${ids.plano}">${f('plano')} ${opt}</label><div class="file"><input id="${ids.plano}" name="plano" class="file__input" type="file" accept=".pdf,.jpg,.jpeg,.png,.dwg,.dxf" data-max="8000000" data-m="file" aria-describedby="${ids.plano}-hint"><span class="file__ui" aria-hidden="true">${ctx.icon('upload')}<span data-file-name>${f('plano')}</span></span><button type="button" class="file__remove" data-file-remove hidden>${f('planoRemove')}</button></div>${hint('plano', f('planoHint'))}</div>`;
   const enlace = text('enlace', { type: 'url', autocomplete: 'url', inputmode: 'url', spell: false, msg: 'url' });
   const mensaje = `<div class="field"><label class="field__label" for="${ids.mensaje}">${f('mensaje')} ${opt}</label><textarea id="${ids.mensaje}" name="mensaje" class="input" rows="4" autocomplete="off" placeholder="${f('mensajePh')}"></textarea></div>`;
   const origen = `<div class="field"><label class="field__label" for="${ids.origen}">${f('origen')} ${opt}</label><select id="${ids.origen}" name="origen" class="input"><option value="">${f('origenPh')}</option>${Object.entries(ctx.t('form.origenes')).map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join('')}</select></div>`;
-  const rgpd = `<div class="field field--check"><label class="check" for="${ids.rgpd}"><input id="${ids.rgpd}" name="rgpd" type="checkbox" value="si" required data-m="rgpd" aria-describedby="${ids.rgpd}-error"><span>${ctx.tHtml('form.rgpd')}</span></label>${err('rgpd')}</div>`;
+  const rgpd = `<div class="field field--check"><label class="check" for="${ids.rgpd}"><input id="${ids.rgpd}" name="rgpd" type="checkbox" value="si" required data-m="rgpd" toolparamdescription="${f('rgpdParam')}"><span>${ctx.tHtml('form.rgpd')}</span></label></div>`;
   const hp = `<p class="hp" aria-hidden="true"><label for="${ids.hp}">${f('honeypot')}</label><input id="${ids.hp}" name="bot-field" type="text" tabindex="-1" autocomplete="off"></p>`;
   const hidden = ['utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing'].map((n) => `<input type="hidden" name="${n}" value="">`).join('')
     + `<input type="hidden" name="form-name" value="presupuesto"><input type="hidden" name="idioma" value="${ctx.lang}">`;
@@ -412,7 +451,7 @@ export function contactForm(ctx, block = {}, { alternatives = true } = {}) {
     + ` data-msg-summary="${f('errSummary')}" data-msg-unsaved="${f('unsaved')}" data-sending="${esc(ctx.t('cta.sending'))}">`
     + hidden + hp
     + `<p class="form__progress" data-form-progress aria-live="polite" hidden>${esc(ctx.t('form.step', { n: 1 }))}</p>`
-    + `<fieldset class="form__step" data-step="1"><legend class="form__legend">${f('legend1')}</legend>${tipo}${servicio}${unidades}<p class="form__nav" data-step-nav hidden><button type="button" class="link-arrow link-arrow--button" data-next><span>${f('next')}</span>${ctx.icon('arrow')}</button></p></fieldset>`
+    + `<fieldset class="form__step" data-step="1"><legend class="form__legend">${f('legend1')}</legend>${tipo}${servicio}${unidades}<p class="form__nav" data-step-nav hidden><button type="button" class="btn btn--step" data-next>${f('next')}${ctx.icon('arrow')}</button></p></fieldset>`
     + `<fieldset class="form__step" data-step="2"><legend class="form__legend">${f('legend2')}</legend>`
     + `<div class="form__row">${text('nombre', { autocomplete: 'name', required: true })}${text('empresa', { autocomplete: 'organization' })}</div>`
     + `<div class="form__row">${text('email', { type: 'email', autocomplete: 'email', inputmode: 'email', spell: false, required: true })}${text('tel', { type: 'tel', autocomplete: 'tel', inputmode: 'tel' })}</div>`

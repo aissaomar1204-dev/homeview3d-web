@@ -11,10 +11,11 @@ export default {
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
-    title: 'Modelo 3D desde el plano para inmobiliarias | {{brand}}',
-    description: 'Convertimos el plano 2D de una vivienda en un modelo 3D amueblado, con renders, visor web y realidad aumentada sin app. Desde {{price:maqueta}} + IVA, en días.',
+    title: 'Estudio de visualización 3D inmobiliaria | {{brand}}',
+    description: '{{brand}} convierte el plano 2D de una vivienda en modelo 3D amueblado, renders, visor web y AR sin app. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
     h1: 'Del plano 2D al modelo 3D, sin fotos',
-    lead: 'Convertimos el plano de una vivienda en un modelo 3D amueblado, con renders, visor web y realidad aumentada sin app. Para inmobiliarias, promotoras y arquitectos: desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
+    lead: '{{brand}}, estudio de visualización 3D en Marbella: modelo 3D fotorrealista, visor web y realidad aumentada a partir del plano de la vivienda. En días.',
     breadcrumb: 'Inicio',
     facts: [
       ['Entrada', 'Un plano 2D, sin fotos ni visita'],
@@ -29,7 +30,7 @@ export default {
       {
         type: 'compare',
         h2: 'Del plano al 3D',
-        intro: '{{entity}}\n\nCompruébalo en esta imagen. A un lado, la planta redibujada desde nuestro modelo; al otro, el render cenital a color, con la misma cámara y la misma escala. Todo salió de {{villa:input}}.',
+        intro: 'Misma cámara, misma escala: a la izquierda, la planta redibujada desde el modelo; a la derecha, el render. Arrastra y compara. Todo salió de {{villa:input}}.',
       },
       {
         type: 'deliverables',
@@ -40,7 +41,7 @@ export default {
         type: 'process',
         variant: 'despiece',
         h2: '¿Cómo se convierte un plano en un modelo 3D?',
-        intro: 'Cinco pasos y {{delivery:maqueta}} de principio a fin. La geometría no la inventa una IA: la levantamos con scripts de Python en Blender, a escala, y la revisas antes de la entrega. Herramientas, plazos por fase y control de calidad, en [cómo funciona](@como-funciona).',
+        intro: 'Cinco pasos y {{delivery:maqueta}} de principio a fin. La geometría no la inventa una IA: la levantamos con scripts de Python en Blender, a escala, y la revisas antes de la entrega. Herramientas, plazos por fase y control de calidad, en [el proceso completo, fase a fase](@como-funciona).',
       },
       {
         type: 'viewer',
@@ -50,7 +51,7 @@ export default {
       {
         type: 'audiences',
         h2: '¿Para quién trabajamos?',
-        intro: 'El mismo modelo resuelve problemas distintos: una vivienda vacía que no se vende por foto, una promoción sin piso piloto, un proyecto que el cliente no entiende en planta o un apartamento turístico que aún no está amueblado.',
+        intro: 'El mismo modelo resuelve problemas distintos: una vivienda vacía que no se vende por foto, una promoción sin piso piloto, un proyecto que el cliente no entiende en planta o un apartamento turístico que aún no está amueblado. [Ver todas las soluciones](@soluciones).\n\nDónde trabajamos: tenemos la base en Marbella ([render 3D en Marbella](@zona-marbella)) y trabajamos en remoto, sin visitar la vivienda, en [Málaga](@zona-malaga), en toda la [Costa del Sol](@zona-costa-del-sol) y en el resto de España, con el mismo precio y plazo.',
       },
       {
         type: 'pricing',
@@ -60,7 +61,7 @@ export default {
       },
       {
         type: 'calculator',
-        intro: 'Si tienes varias viviendas en cartera, el precio de la maqueta completa baja a partir de la quinta. Cambia el número y verás el total con y sin IVA.',
+        intro: 'Con 5 o más maquetas completas de viviendas de hasta 150 m², el precio baja para todas las del encargo, no solo a partir de la quinta, y con 10 o más vuelve a bajar. Cambia el número y verás el total con y sin IVA.',
       },
       { type: 'faq' },
       {
@@ -72,11 +73,11 @@ export default {
     faq: [
       {
         q: '¿Cuánto cuesta convertir el plano de una vivienda en 3D?',
-        a: 'En {{brand}}, el plano 3D amueblado cuesta {{price:plano3d}} + IVA por planta de hasta 150 m². La maqueta 3D completa, con 6 renders, visor web y realidad aumentada, cuesta {{price:maqueta}} + IVA por vivienda de hasta 150 m² y {{price:maqueta:1}} hasta 300 m². Las promociones de obra nueva empiezan en {{price:promocion}} + IVA. Todas las tarifas y extras están en [precios](@precios).',
+        a: 'En {{brand}}, el plano 3D cuesta {{price:plano3d}} + IVA por planta, y la maqueta 3D completa, con renders, visor web y realidad aumentada, {{price:maqueta}} + IVA por vivienda de hasta 150 m². Las promociones de obra nueva empiezan en {{price:promocion}} + IVA. Qué incluye cada opción, en [plano 2D a 3D](@servicio-plano); tarifas y extras, en [precios](@precios).',
       },
       {
         q: '¿En cuánto tiempo tengo el modelo 3D?',
-        a: '{{brand}} entrega la maqueta 3D completa en {{delivery:maqueta}} y el plano 3D en {{delivery:plano3d}}, contando desde que recibimos el plano y resolvemos las dudas. Si el anuncio tiene que salir ya, la entrega urgente en 48 horas lleva un recargo del {{extra:urgente}} sobre el total. Las promociones con varias tipologías tardan {{delivery:promocion}}.',
+        a: '{{brand}} entrega la maqueta 3D completa en {{delivery:maqueta}} y el plano 3D en {{delivery:plano3d}}. Los días cuentan desde que tenemos el plano y una medida de referencia, e incluyen las rondas de cambios si nos las envías en 24 h. Con entrega urgente, 48 horas por un {{extra:urgente}} más sobre el total.',
       },
       {
         q: '¿Qué necesitáis para empezar: plano, fotos, medidas?',
@@ -99,10 +100,6 @@ export default {
         a: 'La maqueta 3D completa incluye {{revisions:maqueta}} y el plano 3D, {{revisions:plano3d}}. Como {{brand}} construye el modelo con scripts, cambiar un suelo, un mueble o mover un tabique se rehace en minutos y se actualiza a la vez en los renders, el visor y la realidad aumentada. Si la distribución cambia después de la entrega, te pasamos presupuesto antes de tocar nada.',
       },
       {
-        q: '¿Cuándo se paga el trabajo?',
-        a: 'Cuando lo recibes terminado, no por adelantado. Antes de empezar, {{brand}} te confirma por escrito el precio cerrado sin IVA y el plazo; el IVA del 21 % se añade en la factura. Si prefieres probar primero, modelamos gratis una estancia de tu plano y te la enviamos con realidad aumentada, sin compromiso.',
-      },
-      {
         q: '¿Qué hacéis con mi plano? ¿Es confidencial?',
         a: 'Tu plano se usa solo para tu encargo. {{brand}} no lo publica ni enseña el resultado como ejemplo sin tu permiso por escrito, y trata tus datos conforme al RGPD. Si eres promotora y lo necesitas, firmamos un acuerdo de confidencialidad antes de recibir los planos. Nuestro propio caso de demostración está anonimizado por la misma razón.',
       },
@@ -112,16 +109,17 @@ export default {
 
   // ─────────────────────────────────────────────────────────────── EN
   en: {
-    title: 'Floor plan to 3D model, renders and AR in Spain | {{brand}}',
-    description: 'We turn a home’s 2D floor plan into a furnished 3D model with renders, a web viewer and app-free AR, for agents and developers. From {{price:maqueta}} + VAT.',
+    title: '3D visualisation studio for real estate in Spain | {{brand}}',
+    description: '{{brand}} turns a home’s 2D floor plan into a furnished 3D model, renders, web viewer and app-free AR. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
     h1: 'From 2D floor plan to 3D, no photos',
-    lead: 'We turn a home’s floor plan into a furnished 3D model, with renders, a web viewer and augmented reality that needs no app. For estate agents, developers and architects: from {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
+    // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
+    lead: '{{brand}}, a 3D visualisation studio based in Marbella: photoreal 3D model, web viewer and augmented reality from the property’s floor plan. In days.',
     breadcrumb: 'Home',
     facts: [
       ['Input', 'One 2D floor plan, no photos or visit'],
       ['Deliverables', '3D model, 4K renders, web viewer and AR'],
       ['Turnaround', '{{delivery:maqueta}}'],
-      ['From', '{{price:plano3d}} + VAT; full model {{price:maqueta}}'],
+      ['From', '{{price:plano3d}} + VAT; complete model {{price:maqueta}}'],
       ['Augmented reality', 'iPhone, iPad and Android, no app'],
       ['Coverage', 'Costa del Sol, all of Spain and abroad'],
       ['Languages', 'English and Spanish'],
@@ -130,7 +128,7 @@ export default {
       {
         type: 'compare',
         h2: 'From plan to 3D',
-        intro: '{{entity}}\n\nSee it for yourself. On one side, the plan redrawn from our model; on the other, the colour top-down render, shot with the same camera at the same scale. All of it came from {{villa:input}}.',
+        intro: 'Same camera, same scale: on the left, the plan redrawn from the model; on the right, the render. Drag to compare. All of it came from {{villa:input}}.',
       },
       {
         type: 'deliverables',
@@ -141,7 +139,7 @@ export default {
         type: 'process',
         variant: 'despiece',
         h2: 'How does a floor plan become a 3D model?',
-        intro: 'Five steps and {{delivery:maqueta}} from start to finish. The geometry is not made up by an AI: we build it to scale with Python scripts in Blender, and you review it before delivery. Tools, timings per stage and quality checks are on [how it works](@como-funciona).',
+        intro: 'Five steps and {{delivery:maqueta}} from start to finish. The geometry is not made up by an AI: we build it to scale with Python scripts in Blender, and you review it before delivery. Tools, timings per stage and quality checks are in [our process, stage by stage](@como-funciona).',
       },
       {
         type: 'viewer',
@@ -151,7 +149,7 @@ export default {
       {
         type: 'audiences',
         h2: 'Who is it for?',
-        intro: 'Estate agents with homes that do not sell on photos alone, and developers selling off-plan to buyers who are still in London, Amsterdam or Stockholm. Your buyer opens the same model on their phone, wherever they are.',
+        intro: 'Estate agents with homes that do not sell on photos alone, and developers selling off-plan to buyers who are still in London, Amsterdam or Stockholm. Your buyer opens the same model on their phone, wherever they are. [See all our services](@servicios).\n\nWhere we work: we are based in Marbella ([3D rendering in Marbella](@zona-marbella)) and work remotely, with no site visit, across the Costa del Sol, the rest of Spain and abroad, at the same price and turnaround.',
       },
       {
         type: 'pricing',
@@ -161,7 +159,7 @@ export default {
       },
       {
         type: 'calculator',
-        intro: 'If you have several properties on your books, the price of the complete model drops from the fifth one. Change the number to see the total with and without VAT.',
+        intro: 'Order 5 or more complete models for homes up to 150 m² and the unit price drops for every home in the order, not just from the fifth; from 10 it drops again. Change the number to see the total with and without VAT.',
       },
       { type: 'faq' },
       {
@@ -173,11 +171,11 @@ export default {
     faq: [
       {
         q: 'How much does it cost to turn a floor plan into a 3D model?',
-        a: 'At {{brand}}, a furnished 3D floor plan costs {{price:plano3d}} + VAT per floor up to 150 m². The complete 3D model, with 6 renders, a web viewer and augmented reality, costs {{price:maqueta}} + VAT per home up to 150 m², or {{price:maqueta:1}} up to 300 m². New-build developments start at {{price:promocion}} + VAT. Every rate and extra is on our [pricing page](@precios).',
+        a: 'At {{brand}}, a 3D floor plan costs {{price:plano3d}} + VAT per floor, and the complete 3D model, with renders, a web viewer and augmented reality, {{price:maqueta}} + VAT per home up to 150 m². New-build developments start at {{price:promocion}} + VAT. What each option includes is on [floor plan to 3D model](@servicio-plano); every rate and extra, on our [pricing page](@precios).',
       },
       {
         q: 'How quickly will I get the 3D model?',
-        a: '{{brand}} delivers the complete 3D model in {{delivery:maqueta}} and a 3D floor plan in {{delivery:plano3d}}, counted from when we receive the plan and any questions are answered. If the listing has to go live now, rush delivery in 48 hours carries a {{extra:urgente}} surcharge on the total. Developments with several unit types take {{delivery:promocion}}.',
+        a: '{{brand}} delivers the complete 3D model in {{delivery:maqueta}} and a 3D floor plan in {{delivery:plano3d}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery takes 48 hours, with a {{extra:urgente}} surcharge on the total.',
       },
       {
         q: 'What do you need from me: a plan, photos, measurements?',
@@ -193,15 +191,11 @@ export default {
       },
       {
         q: 'Where can I show the model: my website, portals, WhatsApp?',
-        a: 'On your website, with an embed code for the viewer; by link, on WhatsApp or by email; and through a QR code in the window or on a brochure. The renders are images you can upload to any portal. {{brand}} does not promise an embedded viewer inside Idealista, Rightmove or Kyero, which decide which tour providers they accept; where a portal takes a tour link, ours works.',
+        a: 'On your website, with an embed code for the viewer; by link, on WhatsApp or by email; and through a QR code in the window or on a brochure. The renders are images you can upload to any portal. {{brand}} does not promise an embedded viewer inside idealista, Rightmove or Kyero, which decide which tour providers they accept; where a portal takes a tour link, ours works.',
       },
       {
         q: 'How many rounds of changes are included?',
         a: 'The complete 3D model includes {{revisions:maqueta}} and the 3D floor plan {{revisions:plano3d}}. Because {{brand}} builds each model with scripts, swapping a floor, a piece of furniture or moving a partition is rebuilt in minutes and updates the renders, the viewer and the AR at once. If the layout changes after delivery, we quote before touching anything.',
-      },
-      {
-        q: 'When do I pay?',
-        a: 'When you receive the finished work, not up front. Before we start, {{brand}} confirms the fixed price excluding VAT and the turnaround in writing; Spanish VAT at 21% is added on the invoice, and EU business clients should check how it applies to them. If you would rather try us first, we model one room of your plan free of charge and send it in AR.',
       },
       {
         q: 'What do you do with my floor plan? Is it confidential?',

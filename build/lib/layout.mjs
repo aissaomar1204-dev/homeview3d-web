@@ -5,6 +5,7 @@
 import { esc } from './md.mjs';
 import { sprite } from './context.mjs';
 import { contactHref, formAnchor } from './components.mjs';
+import { modulesFor } from './assets.mjs';
 
 /** Inline scripts emitted by the layout (their sha256 goes into the CSP, see build.mjs). */
 export const JS_FLAG_SCRIPT = "document.documentElement.classList.add('js')";
@@ -42,7 +43,8 @@ function langLink(ctx, { className = 'lang-link', long = false } = {}) {
   const oui = ctx.data.ui ? ctx.data.ui[other] : null;
   const label = oui ? oui.meta.versionLabel : other.toUpperCase();
   const text = long ? label : (oui ? oui.meta.langShort : other.toUpperCase());
-  return `<a class="${className}" href="${esc(target)}" hreflang="${other}" lang="${other}"${long ? '' : ` aria-label="${esc(label)}"`}>${esc(text)}</a>`;
+  // Label in name (WCAG 2.5.3): the accessible name starts with the visible "EN"/"ES".
+  return `<a class="${className}" href="${esc(target)}" hreflang="${other}" lang="${other}"${long ? '' : ` aria-label="${esc(`${text}, ${label}`)}"`}>${esc(text)}</a>`;
 }
 
 export function header(ctx) {
@@ -69,12 +71,12 @@ export function header(ctx) {
 
 /* ─── Breadcrumbs (GEO-06) ────────────────────────────────────── */
 
-export function breadcrumbs(ctx, crumbs) {
+export function breadcrumbs(ctx, crumbs, { hidden = false } = {}) {
   if (!crumbs || crumbs.length < 2) return '';
   const items = crumbs.map((c, i) => (i === crumbs.length - 1
     ? `<li><span aria-current="page">${esc(c.name)}</span></li>`
     : `<li><a href="${esc(c.path)}">${esc(c.name)}</a></li>`)).join('');
-  return `<nav class="crumbs" aria-label="${esc(ctx.t('crumbs.label'))}"><div class="wrap"><ol class="crumbs__list" role="list">${items}</ol></div></nav>`;
+  return `<nav class="crumbs${hidden ? ' sr-only' : ''}" aria-label="${esc(ctx.t('crumbs.label'))}"><div class="wrap"><ol class="crumbs__list" role="list">${items}</ol></div></nav>`;
 }
 
 /** Breadcrumb trail [{ name, path }] from routes.mjs parents. */
@@ -92,11 +94,12 @@ export function crumbTrail(ctx) {
   return out.map(({ name, path }) => ({ name, path }));
 }
 
-/* ─── Footer (COMP-20) ────────────────────────────────────────── */
+/* ─── Footer (COMP-20): three link groups; hub headings are links (inbound links to the hubs) ─── */
 
-function col(ctx, title, ids) {
+function col(ctx, title, ids, hub) {
   const links = ids.filter((id) => ctx.has(id)).map((id) => `<li><a href="${esc(ctx.href(id))}">${esc(id === 'faq' ? ctx.t('footer.faqLabel') : ctx.label(id))}</a></li>`).join('');
-  return links ? `<div class="footer-col"><h2 class="footer-col__title">${esc(title)}</h2><ul role="list">${links}</ul></div>` : '';
+  const head = hub && ctx.has(hub) ? `<a href="${esc(ctx.href(hub))}">${esc(title)}</a>` : esc(title);
+  return links ? `<div class="footer-col"><h2 class="footer-col__title">${head}</h2><ul role="list">${links}</ul></div>` : '';
 }
 
 export function footer(ctx) {
@@ -104,11 +107,10 @@ export function footer(ctx) {
   const L = ctx.lang;
   const routes = ctx.data.routes;
   const byTemplate = (t) => routes.filter((r) => r.template === t && r[L]).map((r) => r.id);
-  const studio = ['sobre-nosotros', 'contacto', ...(ctx.has('zonas') ? ['zonas'] : byTemplate('zone'))];
+  const studio = ['caso-villa', ...(ctx.has('zonas') ? ['zonas'] : byTemplate('zone')), 'guias', 'glosario', 'faq', 'sobre-nosotros', 'contacto'];
   const cols = [
-    col(ctx, ctx.t('footer.services'), byTemplate('service')),
-    col(ctx, ctx.t('footer.solutions'), byTemplate('audience')),
-    col(ctx, ctx.t('footer.resources'), ['guias', 'glosario', 'faq', 'caso-villa']),
+    col(ctx, ctx.t('footer.services'), byTemplate('service'), 'servicios'),
+    col(ctx, ctx.t('footer.solutions'), byTemplate('audience'), 'soluciones'),
     col(ctx, ctx.t('footer.studio'), studio),
   ].join('');
   const legal = ['aviso-legal', 'privacidad', 'cookies'].filter((id) => ctx.has(id)).map((id) => `<li><a href="${esc(ctx.href(id))}">${esc(ctx.label(id))}</a></li>`).join('');
@@ -137,7 +139,8 @@ export function footer(ctx) {
 export function bottomBar(ctx) {
   const onContact = ctx.route && ctx.route.id === 'contacto';
   const demoHref = onContact ? `#${formAnchor(ctx)}` : contactHref(ctx);
-  return `<div class="bottom-bar" data-bottom-bar role="region" aria-label="${esc(ctx.t('cta.barLabel'))}"><a class="btn btn--primary" href="${esc(demoHref)}">${esc(ctx.t('cta.demo'))}</a><a class="btn btn--neutral" href="${esc(ctx.whatsappUrl())}" rel="noopener">${ctx.icon('chat')}<span>${esc(ctx.t('cta.whatsapp'))}</span></a></div>`;
+  // One line at every width: the visible label is "WhatsApp", the accessible name is the full COMP-03 label (it contains it).
+  return `<div class="bottom-bar" data-bottom-bar role="region" aria-label="${esc(ctx.t('cta.barLabel'))}"><a class="btn btn--primary" href="${esc(demoHref)}">${esc(ctx.t('cta.demo'))}</a><a class="btn btn--neutral" href="${esc(ctx.whatsappUrl())}" rel="noopener" aria-label="${esc(ctx.t('cta.whatsapp'))}">${ctx.icon('chat')}<span>${esc(ctx.t('cta.whatsappShort'))}</span></a></div>`;
 }
 
 /* ─── Document ────────────────────────────────────────────────── */
@@ -157,6 +160,15 @@ export function renderDocument(ctx, o) {
     : '';
   const og = entry.image;
   const ogType = ['guide', 'case'].includes(entry.template) ? 'article' : 'website';
+  const articleMeta = ogType === 'article'
+    ? (entry.datePublished ? `<meta property="article:published_time" content="${esc(entry.datePublished)}">` : '')
+      + (entry.dateModified ? `<meta property="article:modified_time" content="${esc(entry.dateModified)}">` : '')
+    : '';
+  const feed = A.markdown && o.layout !== 'bare'
+    ? `<link rel="alternate" type="application/rss+xml" title="${esc(ctx.t('meta.feed'))}" href="${L === ctx.site.defaultLang ? '/feed.xml' : `/${L}/feed.xml`}">`
+    : '';
+  // Shared stylesheet + the feature modules this page uses (build/lib/assets.mjs buildCss).
+  const styles = [A.css, ...modulesFor(o.main, A.cssModules).map((m) => m.url)].map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join('');
   const locales = ctx.site.locale;
   const ogAlt = Object.keys(alt).filter((k) => k !== L && k !== 'x-default' && locales[k]).map((k) => `<meta property="og:locale:alternate" content="${locales[k]}">`).join('');
   const ld = o.graph && o.graph.length
@@ -192,18 +204,17 @@ export function renderDocument(ctx, o) {
     + `<meta property="og:url" content="${esc(entry.url)}">`
     + `<meta property="og:title" content="${esc(entry.title)}">`
     + `<meta property="og:description" content="${esc(entry.description)}">`
+    + articleMeta
     + (og && og.url ? `<meta property="og:image" content="${esc(og.url)}"><meta property="og:image:width" content="${og.width}"><meta property="og:image:height" content="${og.height}"><meta property="og:image:alt" content="${esc(og.alt)}">` : '')
+    // X/Twitter reads og:title, og:description and og:image when its own tags are absent: only the card type is needed.
     + `<meta name="twitter:card" content="summary_large_image">`
-    + `<meta name="twitter:title" content="${esc(entry.title)}">`
-    + `<meta name="twitter:description" content="${esc(entry.description)}">`
-    + (og && og.url ? `<meta name="twitter:image" content="${esc(og.url)}">` : '')
     + `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${o.themeColors.light}">`
     + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.dark}">`
     + `<meta name="color-scheme" content="light dark">`
     + `<meta name="format-detection" content="telephone=no">`
     + (A.font ? `<link rel="preload" href="${esc(A.font)}" as="font" type="font/woff2" crossorigin>` : '')
-    + `<link rel="stylesheet" href="${esc(A.css)}">`
-    + icons + mdAlt
+    + styles
+    + icons + mdAlt + feed
     + `<script>${JS_FLAG_SCRIPT}</script>`
     + ld
     + (A.js.main ? `<script src="${esc(A.js.main)}" defer></script>` : '')
@@ -215,14 +226,15 @@ export function renderDocument(ctx, o) {
   if (o.layout === 'bare') {
     body = `<main id="main" class="main main--bare">${o.main}</main>`;
   } else {
-    const crumbs = entry.template === 'home' ? '' : breadcrumbs(ctx, entry.breadcrumbs);
+    const utility = entry.template === 'ar';
+    const crumbs = entry.template === 'home' ? '' : breadcrumbs(ctx, entry.breadcrumbs, { hidden: utility });
     body = `<a class="skip" href="#main">${esc(ctx.t('meta.skip'))}</a>`
       + `<div class="header-sentinel" data-header-sentinel aria-hidden="true"></div>`
       + header(ctx)
       + crumbs
       + `<main id="main" class="main" tabindex="-1">${o.main}${o.dateline || ''}</main>`
       + footer(ctx)
-      + bottomBar(ctx);
+      + (utility ? '' : bottomBar(ctx));
   }
   body = sprite(body) + body;
   return `<!doctype html><html lang="${L}" dir="ltr"><head>${headHtml}</head><body class="${esc(bodyClass)}">${body}</body></html>\n`;

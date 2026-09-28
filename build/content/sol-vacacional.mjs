@@ -6,15 +6,15 @@
 const faq = [
   {
     q: '¿Sirve para un alquiler vacacional en Airbnb o Booking?',
-    a: 'Sí, con matices. En los portales de reservas subes los renders y la planta 3D de {{brand}} como imágenes del anuncio, que es lo que todos admiten. El visor 3D y la realidad aumentada van en tu web de reservas directas y en los canales que gestionas tú, como WhatsApp o el email. Revisa las normas de cada plataforma sobre enlaces externos antes de publicar ninguno.',
+    a: 'Sí, con matices. En los portales de reservas subes los renders y el plano 3D de {{brand}} como imágenes del anuncio, que es lo que todos admiten. El visor 3D y la realidad aumentada van en tu web de reservas directas y en los canales que gestionas tú, como WhatsApp o el email. Revisa las normas de cada plataforma sobre enlaces externos antes de publicar ninguno.',
   },
   {
     q: '¿Puedo anunciar el apartamento antes de amueblarlo?',
-    a: 'Sí, y es el caso en el que más rinde. {{brand}} modela y amuebla la vivienda desde el plano, así que puedes abrir el calendario con renders del modelo mientras terminas la obra o esperas los muebles. Publícalos como recreación virtual y sustitúyelos por fotos reales cuando la vivienda esté lista, para que el huésped encuentre lo que ha visto.',
+    a: 'Sí, y es el caso en el que más rinde. {{brand}} modela y amuebla la vivienda desde el plano, así que puedes abrir el calendario con renders del modelo mientras terminas la obra o esperas los muebles. Publícalos con su mención de render y sustitúyelos por fotos reales cuando la vivienda esté lista, para que el huésped encuentre lo que ha visto.',
   },
   {
     q: '¿Hay que indicar que las imágenes son virtuales?',
-    a: 'Sí. Si publicas renders o home staging virtual, indícalo en el anuncio con una mención como «recreación virtual» o «imagen generada por ordenador». {{brand}} recomienda usar el modelo para enseñar la distribución y el estilo, nunca para prometer muebles o vistas que el huésped no va a encontrar. Es una cuestión de confianza y de reseñas.',
+    a: 'Sí. {{brand}} entrega cada imagen con su mención para el pie de foto: «Render 3D. Imagen orientativa; mobiliario no incluido» en los renders y «Recreación virtual. Mobiliario no incluido» en el home staging virtual. Mantenla en el anuncio. Recomendamos usar el modelo para enseñar la distribución y el estilo, nunca para prometer muebles o vistas que el huésped no va a encontrar. Es una cuestión de confianza y de reseñas.',
   },
   {
     q: '¿Cuánto cuesta un plano 3D para un apartamento turístico?',
@@ -25,8 +25,8 @@ const faq = [
     a: 'Para gestoras y propietarios con varias viviendas, {{brand}} ofrece el pack cartera: 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda. Si varias viviendas comparten distribución, como en un edificio de apartamentos, te lo decimos al presupuestar: repetir tipología cuesta menos trabajo que modelar una vivienda nueva.',
   },
   {
-    q: '¿Necesitáis visitar la vivienda?',
-    a: 'No. {{brand}} trabaja en remoto desde el plano de la vivienda, en PDF o imagen. Si nos envías fotos de los acabados, como el suelo, la cocina o los baños, el modelo se parecerá más a la realidad; si todavía no existen, proponemos materiales. Las dudas se resuelven por email, WhatsApp o videollamada.',
+    q: '¿Tenéis que venir al apartamento?',
+    a: 'No. {{brand}} trabaja en remoto desde el plano del apartamento o de la villa, en PDF o imagen. Si nos envías fotos de los acabados, como el suelo, la cocina o los baños, el modelo se parecerá más a la realidad; si todavía no existen, proponemos materiales. Las dudas se resuelven por email, WhatsApp o videollamada.',
   },
   {
     q: '¿Pueden los huéspedes ver la vivienda en realidad aumentada?',
@@ -42,13 +42,13 @@ export default {
 
   es: {
     title: 'Plano 3D y visor 3D para alquiler vacacional',
-    description: 'Planta 3D a color, renders y visor para tu apartamento turístico o villa de alquiler, incluso antes de amueblarla. Plano 3D desde {{price:plano3d}} + IVA.',
+    description: 'Plano 3D a color, renders y visor para tu apartamento turístico o villa de alquiler, incluso antes de amueblarla. Plano 3D desde {{price:plano3d}} + IVA.',
     h1: 'Plano 3D, renders y visor para alquiler vacacional',
-    lead: 'Convertimos el plano de tu apartamento turístico o de tu villa de alquiler en una planta 3D a color, renders y un visor 3D para tu web de reservas, para lanzar el anuncio antes de amueblar y que el huésped sepa qué reserva. Plano 3D desde {{price:plano3d}} + IVA, en {{delivery:plano3d}}.',
+    lead: 'Convertimos el plano de tu apartamento turístico o de tu villa de alquiler en un plano 3D a color y, si lo necesitas, en renders y un visor 3D para tu web de reservas, para anunciarla antes de amueblar. Plano 3D desde {{price:plano3d}} + IVA, en {{delivery:plano3d}}; con renders y visor, desde {{price:maqueta}} + IVA.',
     breadcrumb: 'Alquiler vacacional',
     card: {
       title: 'Para alquiler vacacional',
-      summary: 'Lanza el anuncio antes de amueblar y enseña la distribución con planta 3D, renders y visor para reservas directas.',
+      summary: 'Lanza el anuncio antes de amueblar y enseña la distribución con plano 3D, renders y visor para reservas directas.',
     },
     hero: {
       image: 'villa_terraza',
@@ -87,7 +87,7 @@ export default {
       },
       {
         type: 'prose',
-        h2: '¿Qué preguntas del huésped responde una planta 3D?',
+        h2: '¿Qué preguntas del huésped responde un plano 3D?',
         body: 'Las que llegan por mensaje antes de reservar, y las que terminan en una reseña regular cuando la respuesta no era la esperada:\n\n- ¿Qué dormitorio tiene baño propio?\n- ¿Las camas son dobles o individuales, y dónde está el sofá cama?\n- ¿La terraza da al salón o a un dormitorio?\n- ¿Hay que atravesar una habitación para llegar al baño?\n- ¿Cabe una familia de cinco sin que nadie duerma en el salón?\n\nUna planta cenital a color con el mobiliario dibujado responde a todas de un vistazo, y sin traducir nada: sirve igual para un huésped alemán que para uno de Sevilla.',
       },
       {
@@ -105,7 +105,7 @@ export default {
           { title: 'Portales de reservas', body: 'Subes los renders y la planta a color como fotos del anuncio. Revisa las normas de cada plataforma sobre enlaces externos: lo que siempre puedes publicar son imágenes.' },
           { title: 'Tu web de reservas directas', body: 'Incrustas el visor 3D con un iframe. El huésped gira la vivienda, entra en cada estancia y, desde el móvil, la coloca sobre la mesa en realidad aumentada. Es un argumento que los portales no te dan.' },
           { title: 'Mensajes con huéspedes', body: 'En los canales que gestionas tú, como WhatsApp o el email, envías el enlace del visor a quien pregunta por la distribución, las camas o la terraza.' },
-          { title: 'Antes de abrir', body: 'Si la vivienda está a medio amueblar, publicas con renders del modelo etiquetados como recreación virtual y los sustituyes por fotos reales cuando esté lista.' },
+          { title: 'Antes de abrir', body: 'Si la vivienda está a medio amueblar, publicas con renders del modelo, cada uno con su mención de render, y los sustituyes por fotos reales cuando esté lista.' },
         ],
       },
       {
@@ -117,7 +117,7 @@ export default {
         type: 'callout',
         tone: 'honesty',
         title: 'Recreación virtual',
-        body: 'Si publicas renders o home staging virtual, indícalo en el anuncio («recreación virtual» o «imagen generada por ordenador»). El huésped debe encontrar lo que ha visto: usa el modelo para enseñar la distribución y el estilo, no para prometer muebles que no vas a poner. Las vistas desde la terraza no se modelan: esas las enseñan tus fotos.',
+        body: 'Cada imagen te llega con su mención para el pie de foto: «Render 3D. Imagen orientativa; mobiliario no incluido» en los renders y «Recreación virtual. Mobiliario no incluido» en el home staging virtual. Mantenla en el anuncio. El huésped debe encontrar lo que ha visto: usa el modelo para enseñar la distribución y el estilo, no para prometer muebles que no vas a poner. Las vistas desde la terraza no se modelan: esas las enseñan tus fotos.',
       },
       {
         type: 'answer',

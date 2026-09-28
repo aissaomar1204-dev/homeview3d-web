@@ -17,7 +17,7 @@ const SRC = {
   arcoreDevices: 'https://developers.google.com/ar/devices',
   arkit: 'https://developer.apple.com/news/?id=06052017b',
   blender: 'https://www.blender.org/about/',
-  cycles: 'https://docs.blender.org/manual/en/2.91/render/cycles/introduction.html',
+  cycles: 'https://docs.blender.org/manual/en/latest/render/cycles/index.html',
   gltf: 'https://www.khronos.org/gltf/',
   gltfSpec: 'https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html',
   iframe: 'https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe',
@@ -198,9 +198,9 @@ export const glossary = [
       body: `Con los muros completos, a {{villa:wallHeight}} m, la vivienda es un volumen cerrado. Con el corte, el comprador ve de un vistazo cómo se conectan salón, dormitorios, baños y terrazas, algo que ni las fotos ni un [tour virtual 360](@glosario#tour-virtual-360) enseñan. Pruébalo en la [villa de nuestro caso](@caso-villa#visor).`,
     },
     en: {
-      term: 'Cut-away mode (dollhouse view)',
-      definition: 'A {{brand}} 3D viewer mode that slices every wall at {{villa:cutHeight}} m, so you look down into each room and read the layout and furniture, like an architect’s scale model.',
-      body: `With full-height walls, at {{villa:wallHeight}} m, the home reads as a closed box. With the cut, buyers see at a glance how the living room, bedrooms, bathrooms and terraces connect, which neither photos nor a [360° virtual tour](@glosario#tour-virtual-360) can show. Try it on the [villa in our case study](@caso-villa#visor).`,
+      term: 'Cut-away mode',
+      definition: 'A mode of our 3D viewer that slices every wall at {{villa:cutHeight}} m, so you look down into each room and read the layout and furniture, like an architect’s scale model.',
+      body: `With full-height walls, at {{villa:wallHeight}} m, the home reads as a closed box. With the cut, buyers see at a glance how the living room, bedrooms, bathrooms and terraces connect, which neither photos nor a [360° virtual tour](@glosario#tour-virtual-360) can show. Matterport calls its similar overview of a scan a dollhouse view. Try it on the [villa in our case study](@caso-villa#visor).`,
     },
   },
   {
@@ -214,7 +214,7 @@ export const glossary = [
     en: {
       term: 'Iframe',
       definition: 'An HTML element that places another web page inside the current one, in a frame. It is the standard way to embed a 3D viewer, a map or a video on an estate agent’s website.',
-      body: `{{brand}} delivers the viewer with iframe code ready to paste into the property page, on any website that accepts HTML, with lazy loading and permission for full screen and augmented reality. On portals it depends on each one: Idealista only accepts 3D tours from its approved providers. Technical reference on [MDN](${SRC.iframe}).`,
+      body: `{{brand}} delivers the viewer with iframe code ready to paste into the property page, on any website that accepts HTML, with lazy loading and permission for full screen and augmented reality. On portals it depends on each one: idealista only accepts 3D tours from its approved providers. Technical reference on [MDN](${SRC.iframe}).`,
     },
   },
 
@@ -353,12 +353,12 @@ export const glossary = [
     es: {
       term: 'Cycles',
       definition: 'Motor de render de Blender basado en trazado de rayos (path tracing): simula cómo rebota la luz para producir imágenes físicamente correctas. Calcula en el procesador o en la tarjeta gráfica.',
-      body: `Con Cycles, la luz del sol entra por las ventanas y rebota en suelos y paredes como en la realidad, sin sombras pintadas a mano. Los {{villa:renders}} renders de nuestro [caso demostrativo](@caso-villa) tardaron {{villa:renderMinutes}} minutos en total en una RTX 4060. El [manual de Blender](${SRC.cycles}) lo define como un trazador de rayos físico para producción.`,
+      body: `Con Cycles, la luz del sol entra por las ventanas y rebota en suelos y paredes como en la realidad, sin sombras pintadas a mano. Las {{villa:renders}} imágenes de nuestro [caso demostrativo](@caso-villa), vistas y plantas incluidas, tardaron unos {{villa:renderMinutes}} minutos en total en una RTX 4060. El [manual de Blender](${SRC.cycles}) lo define como un trazador de rayos físico para producción.`,
     },
     en: {
       term: 'Cycles',
       definition: 'Blender’s render engine based on path tracing: it simulates how light bounces to produce physically correct images. It can run on the processor or the graphics card.',
-      body: `With Cycles, sunlight comes through the windows and bounces off floors and walls as it would in reality, with no hand-painted shadows. The {{villa:renders}} renders in our [case study](@caso-villa) took {{villa:renderMinutes}} minutes in total on an RTX 4060. The [Blender manual](${SRC.cycles}) calls it a physically based path tracer for production rendering.`,
+      body: `With Cycles, sunlight comes through the windows and bounces off floors and walls as it would in reality, with no hand-painted shadows. The {{villa:renders}} images in our [case study](@caso-villa), views and plans included, took about {{villa:renderMinutes}} minutes in total on an RTX 4060. The [Blender manual](${SRC.cycles}) calls it a physically based path tracer for production rendering.`,
     },
   },
 

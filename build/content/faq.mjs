@@ -53,7 +53,7 @@ export default {
               },
               {
                 q: '¿En qué formatos entregáis los archivos?',
-                a: '{{brand}} entrega los renders y las plantas en PNG o JPG a 4K; el modelo 3D en [GLB](@glosario#glb) para la web y Android, en [USDZ](@glosario#usdz) para iPhone y iPad, y en BLEND si trabajas con Blender. El visor llega como enlace y como código iframe para tu web. En nuestra villa de demostración, el modelo web pesa {{file:glb}}.',
+                a: '{{brand}} entrega los renders y las plantas en PNG o JPG a 4K; el modelo 3D en [GLB](@glosario#glb) para la web y Android, en [USDZ](@glosario#usdz) para iPhone y iPad, y en BLEND, el archivo editable de Blender. El visor llega como enlace y como código iframe para tu web. En nuestra villa de demostración, el modelo web pesa {{file:glb}}.',
               },
               {
                 q: '¿Tenéis vídeos con IA o recorridos en realidad virtual?',
@@ -82,7 +82,7 @@ export default {
               },
               {
                 q: '¿Qué precio tiene encargar varias viviendas al año?',
-                a: 'Baja con el volumen. El pack cartera de {{brand}} incluye 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda, para usar en 6 meses en viviendas de hasta 150 m². A partir de 10 viviendas, el precio unitario vuelve a bajar. La calculadora de la página de [precios](@precios) te da el total exacto según el número de viviendas.',
+                a: 'Baja con el volumen. El pack cartera de {{brand}} incluye 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda, para usar en 6 meses en viviendas de hasta 150 m². Si encargas más a la vez, el tramo se aplica a todas las viviendas del encargo: de 5 a 9, {{volumeUnit}} cada una, y desde 10, menos todavía. La calculadora de la página de [precios](@precios) te da el total exacto según el número de viviendas.',
               },
               {
                 q: '¿Cuánto cuestan los extras, como un render más o la entrega urgente?',
@@ -95,7 +95,7 @@ export default {
             items: [
               {
                 q: '¿Desde cuándo se cuentan los días de entrega?',
-                a: 'Desde que tenemos el plano y las dudas resueltas: la superficie o una medida de referencia y el estilo de mobiliario. A partir de ahí, {{brand}} entrega el plano 3D en {{delivery:plano3d}}, la maqueta completa en {{delivery:maqueta}} y una promoción de hasta 3 tipologías en {{delivery:promocion}}. Son días laborables, y la primera revisión con tus cambios ya entra en ese plazo.',
+                a: 'Desde que tenemos el plano y una medida de referencia, como la superficie total. A partir de ahí, {{brand}} entrega el plano 3D en {{delivery:plano3d}}, la maqueta completa en {{delivery:maqueta}} y una promoción de hasta 3 tipologías en {{delivery:promocion}}. Son días laborables e incluyen las rondas de cambios si nos las envías en 24 h.',
               },
               {
                 q: '¿Qué tengo que mandaros para pedir presupuesto?',
@@ -132,7 +132,7 @@ export default {
               },
               {
                 q: '¿El modelo reproduce los muebles y acabados reales?',
-                a: 'Solo si nos los enseñas. Con fotos de suelos, cocina, baños o carpinterías, {{brand}} reproduce esos acabados en el modelo. El mobiliario, en cambio, suele ser propuesto: amueblamos cada estancia con un estilo coherente con la vivienda y su precio, o con el que nos pidas. Por eso las imágenes con muebles se publican como recreación virtual, ya que esos muebles no entran en la venta.',
+                a: 'Solo si nos los enseñas. Con fotos de suelos, cocina, baños o carpinterías, {{brand}} reproduce esos acabados en el modelo. El mobiliario, en cambio, suele ser propuesto: amueblamos cada estancia con un estilo coherente con la vivienda y su precio, o con el que nos pidas. Por eso cada render lleva la mención «mobiliario no incluido», ya que esos muebles no entran en la venta.',
               },
               {
                 q: '¿El modelo 3D vale como plano técnico o para una tasación?',
@@ -182,11 +182,11 @@ export default {
               },
               {
                 q: '¿Tengo que indicar en el anuncio que las imágenes son renders?',
-                a: 'Te lo recomendamos siempre. En la venta de vivienda, la publicidad no puede inducir a error y sus datos son exigibles aunque no figuren en el contrato, según el [Real Decreto 515/1989](' + RD515 + '). Una mención como «Recreación virtual» o «Imagen orientativa» evita malentendidos con muebles y acabados. En {{brand}} la aplicamos a todo el mobiliario virtual. No es asesoramiento legal.',
+                a: 'Te lo recomendamos siempre. En la venta de vivienda, la publicidad no puede inducir a error y sus datos son exigibles aunque no figuren en el contrato, según el [Real Decreto 515/1989](' + RD515 + '). {{brand}} entrega cada render con la mención «Render 3D. Imagen orientativa; mobiliario no incluido», con «no contractual» en obra nueva, y cada imagen con staging con «Recreación virtual. Mobiliario no incluido». Así evitas malentendidos con muebles y acabados. No es asesoramiento legal.',
               },
               {
                 q: '¿Puedo poner un código QR del visor en el escaparate o en un cartel?',
-                a: 'Sí. El enlace del visor de {{brand}} funciona como cualquier URL, así que puedes convertirlo en un código QR para el escaparate, el cartel de «Se vende», un folleto o la mesa de la oficina de ventas. Quien lo escanea abre la vivienda en 3D en su móvil y, si el teléfono es compatible, la coloca en realidad aumentada sobre la mesa o a tamaño real.',
+                a: 'Sí. El enlace del visor de {{brand}} funciona como cualquier URL, así que puedes convertirlo en un código QR para el escaparate, el cartel de «Se vende», un folleto o la mesa de la sala de ventas. Quien lo escanea abre la vivienda en 3D en su móvil y, si el teléfono es compatible, la coloca en realidad aumentada sobre la mesa o a tamaño real.',
               },
             ],
           },
@@ -235,15 +235,15 @@ export default {
     title: 'FAQ: floor plan to 3D model, viewer and AR',
     description: 'Prices from {{price:plano3d}} + VAT, {{delivery:maqueta}} turnaround, measurement accuracy, app-free AR, property portals and confidentiality: 33 answers.',
     h1: 'Floor plan to 3D: frequently asked questions',
-    lead: 'Straight answers for estate agents, developers and architects, in Spain or abroad, before ordering: what you get, what it costs (a 3D floor plan from {{price:plano3d}} + VAT, the complete 3D model from {{price:maqueta}} + VAT), how long it takes ({{delivery:maqueta}}), how accurate it is and how buyers view it on your site, on portals and in AR.',
+    lead: 'Straight answers for estate agents, developers and architects before ordering: what you get, what it costs (a 3D floor plan from {{price:plano3d}} + VAT, the complete 3D model from {{price:maqueta}} + VAT), how long it takes ({{delivery:maqueta}}), how accurate it is and how buyers view it online and in AR.',
     breadcrumb: 'FAQ',
     card: {
       title: 'Frequently asked questions',
       summary: '33 short answers on deliverables, pricing, turnaround, accuracy, augmented reality, portals and confidentiality.',
     },
     facts: [
-      ['Price from', '{{price:plano3d}} + VAT per floor; full model {{price:maqueta}} + VAT'],
-      ['Full model turnaround', '{{delivery:maqueta}}'],
+      ['Price from', '{{price:plano3d}} + VAT per floor; complete model {{price:maqueta}} + VAT'],
+      ['Complete model turnaround', '{{delivery:maqueta}}'],
       ['Revisions', '{{revisions:maqueta}} with the complete model'],
       ['Input', 'One 2D floor plan, no photos or site visit'],
       ['Augmented reality', 'iPhone, iPad and Android, no app'],
@@ -270,11 +270,11 @@ export default {
               },
               {
                 q: 'Can you work from photos alone, with no floor plan?',
-                a: 'Not reliably. Photos show finishes but not how rooms connect or how big they are, and {{brand}} builds every model to scale from a plan. With no plan, a clear hand sketch with the main measurements, or the plan from an old brochure or listing, is usually enough to start. Send us what you have and we will tell you whether it works; the full model then takes {{delivery:maqueta}}.',
+                a: 'Not reliably. Photos show finishes but not how rooms connect or how big they are, and {{brand}} builds every model to scale from a plan. With no plan, a clear hand sketch with the main measurements, or the plan from an old brochure or listing, is usually enough to start. Send us what you have and we will tell you whether it works; the complete model then takes {{delivery:maqueta}}.',
               },
               {
                 q: 'Which file formats do you deliver?',
-                a: 'Renders and plans come as 4K PNG or JPG files. The 3D model comes as [GLB](@glosario#glb) for the web and Android, [USDZ](@glosario#usdz) for iPhone and iPad, and BLEND if you work in Blender. The viewer arrives as a shareable link plus iframe code for your website. For reference, the web model of the {{brand}} demo villa weighs {{file:glb}}.',
+                a: 'Renders and plans come as 4K PNG or JPG files. The 3D model comes as [GLB](@glosario#glb) for the web and Android, [USDZ](@glosario#usdz) for iPhone and iPad, and BLEND, the editable Blender file. The viewer arrives as a shareable link plus iframe code for your website. For reference, the web model of our demo villa weighs {{file:glb}}.',
               },
             ],
           },
@@ -299,7 +299,7 @@ export default {
               },
               {
                 q: 'How much does it cost for several homes a year?',
-                a: 'Less per home. The {{brand}} portfolio pack covers 5 complete 3D models for {{volume}} + VAT, or {{volumeUnit}} per home, to be used within 6 months on homes up to 150 m². From 10 homes the unit price drops again. Developments use a separate package from {{price:promocion}} + VAT, with each extra unit type at {{extra:tipologia}} + VAT. The calculator on our [pricing page](@precios) gives exact totals.',
+                a: 'Less per home. The {{brand}} portfolio pack covers 5 complete 3D models for {{volume}} + VAT, or {{volumeUnit}} per home, to be used within 6 months on homes up to 150 m². Order more at once and the tier applies to every home in the order: from 5 to 9 homes each costs {{volumeUnit}}, and from 10 it drops again. Developments use a separate package from {{price:promocion}} + VAT, with each extra unit type at {{extra:tipologia}} + VAT. The calculator on our [pricing page](@precios) gives exact totals.',
               },
             ],
           },
@@ -308,11 +308,11 @@ export default {
             items: [
               {
                 q: 'How does the process work, step by step?',
-                a: 'Five steps. You send the plan; {{brand}} models the home to scale in Blender; we furnish it and build the materials; you review the viewer on a private link and ask for changes; and we deliver renders, the viewer and augmented reality files ready to publish. For the complete 3D model, all of that fits into {{delivery:maqueta}}. Each stage is explained in [how it works](@como-funciona).',
+                a: 'Five steps. You send the plan; {{brand}} models the home to scale in Blender; we furnish it and build the materials; you review the viewer on a private link and ask for changes; and we deliver renders, the viewer and augmented reality files ready to publish. For the complete 3D model, all of that fits into {{delivery:maqueta}}. Each stage is explained on [our process page](@como-funciona).',
               },
               {
                 q: 'When does the turnaround clock start?',
-                a: 'Once we have the plan and any questions are answered: the floor area or one reference measurement, and the furniture style. From then, {{brand}} delivers a 3D floor plan in {{delivery:plano3d}}, the complete 3D model in {{delivery:maqueta}} and a development of up to 3 unit types in {{delivery:promocion}}. These are working days, and your first review with changes is already built in.',
+                a: 'Once we have the plan and one reference measurement, such as the total floor area. From then, {{brand}} delivers a 3D floor plan in {{delivery:plano3d}}, the complete 3D model in {{delivery:maqueta}} and a development of up to 3 unit types in {{delivery:promocion}}. These are working days, and they include the rounds of changes if you send them within 24 hours.',
               },
               {
                 q: 'Do we need to meet in person?',
@@ -329,7 +329,7 @@ export default {
             items: [
               {
                 q: 'Can I advertise the floor area shown in the 3D model?',
-                a: 'Better not. The area in your listing should come from an official source, such as the Land Registry extract, the Catastro or a surveyor’s measurement: under Spain’s [Royal Decree 515/1989](' + RD515 + '), details in housing advertising are binding on the seller. {{brand}} model areas are a guide and, without dimensions on the plan, approximate (≈). This is not legal advice.',
+                a: 'Better not. The area in your listing should come from an official source, such as the Land Registry extract, the Catastro or a surveyor’s measurement: under Spain’s [Royal Decree 515/1989](' + RD515 + '), details in housing advertising are binding on the seller. Our model areas are a guide and, without dimensions on the plan, approximate (≈). This is not legal advice.',
               },
               {
                 q: 'How do you know the ceiling height if the plan does not show it?',
@@ -341,7 +341,7 @@ export default {
               },
               {
                 q: 'Is the 3D model valid as a technical drawing or for a valuation?',
-                a: 'No. A {{brand}} 3D model is marketing material, made to show and sell a home. It does not replace an architect’s drawings and is not valid for planning applications, valuations, certificates or official measurements; when the plan has no [dimensions](@glosario#cota), its areas are estimates. For technical documents, hire an architect or surveyor, and we can then model from their plans.',
+                a: 'No. Our 3D model is marketing material, made to show and sell a home. It does not replace an architect’s drawings and is not valid for planning applications, valuations, certificates or official measurements; when the plan has no [dimensions](@glosario#cota), its areas are estimates. For technical documents, hire an architect or surveyor, and we can then model from their plans.',
               },
             ],
           },
@@ -350,15 +350,15 @@ export default {
             items: [
               {
                 q: 'What does a buyer need to open the home in AR?',
-                a: 'A phone and the link, with no app to download. Buyers open the {{brand}} home in augmented reality straight from the browser: [AR Quick Look](@glosario#ar-quick-look) on an iPhone or iPad with iOS 12 or later, and [Scene Viewer](@glosario#scene-viewer) on Android 7.0 or later phones that support [ARCore](@glosario#arcore). Good light and a clear table or floor help. AR is included in the complete 3D model from {{price:maqueta}} + VAT.',
+                a: 'A phone and the link, with no app to download. Buyers open the home in augmented reality straight from the browser: [AR Quick Look](@glosario#ar-quick-look) on an iPhone or iPad with iOS 12 or later, and [Scene Viewer](@glosario#scene-viewer) on Android 7.0 or later phones that support [ARCore](@glosario#arcore). Good light and a clear table or floor help. AR is included in the complete 3D model from {{price:maqueta}} + VAT.',
               },
               {
                 q: 'What is the difference between the 1:20 tabletop model and real size?',
                 a: 'The 1:20 tabletop model puts the whole home on a table, like an architect’s model, so the layout makes sense at a glance. Real size sets it on the floor at 1:1, so buyers can walk into the living room or out to the terrace and feel the space; it needs room to move. {{brand}} delivers both, for iPhone and Android, with the complete 3D model.',
               },
               {
-                q: 'What is the cut-away (dollhouse) view?',
-                a: 'It is the {{brand}} viewer mode that slices every wall at {{villa:cutHeight}} m, so you look down into the home like an architect’s model and see each room’s layout and furniture at once. One button restores the full-height {{villa:wallHeight}} m walls. It comes with every complete 3D model, and you can try it now on the [demo villa](@caso-villa#visor).',
+                q: 'What is cut-away mode?',
+                a: 'It is the mode of our viewer that slices every wall at {{villa:cutHeight}} m, so you look down into the home like an architect’s model and see each room’s layout and furniture at once. One button restores the full-height {{villa:wallHeight}} m walls. It comes with every complete 3D model, and you can try it now on the [demo villa](@caso-villa#visor).',
               },
               {
                 q: 'Does embedding the viewer affect my site’s page speed?',
@@ -370,7 +370,7 @@ export default {
               },
               {
                 q: 'What do people see on a desktop computer?',
-                a: 'The full 3D viewer: they can rotate the home, move through it room by room and switch to cut-away or plan view. What a computer cannot do is augmented reality, because it lacks a phone’s camera and motion sensors. Instead, {{brand}} shows a QR code that opens the same home on their phone in one step, ready to place on a table or at real size.',
+                a: 'The full 3D viewer: they can rotate the home, move through it room by room and switch to cut-away mode or the plan view. What a computer cannot do is augmented reality, because it lacks a phone’s camera and motion sensors. Instead, {{brand}} shows a QR code that opens the same home on their phone in one step, ready to place on a table or at real size.',
               },
             ],
           },
@@ -379,7 +379,7 @@ export default {
             items: [
               {
                 q: 'What can I upload to property portals?',
-                a: 'The images: 4K renders, the colour top-down plan and the isometric view upload like any listing photo, on Idealista, Fotocasa, Kyero or Rightmove. The {{brand}} 3D viewer does not embed inside Idealista, which only accepts 3D tours from its approved providers. Instead, paste its link into a portal’s virtual tour field where external URLs are accepted, and embed it on your own website.',
+                a: 'The images: 4K renders, the colour top-down plan and the isometric view upload like any listing photo, on idealista, Fotocasa, Kyero or Rightmove. Our 3D viewer does not embed inside idealista, which only accepts 3D tours from its approved providers. Instead, paste its link into a portal’s virtual tour field where external URLs are accepted, and embed it on your own website.',
               },
               {
                 q: 'How do I add the viewer to a listing on my own website?',
@@ -387,7 +387,7 @@ export default {
               },
               {
                 q: 'Should renders of an off-plan home be labelled in listings?',
-                a: 'We recommend it every time. Under Spain’s [Royal Decree 515/1989](' + RD515 + '), housing advertising must not mislead, and its details are binding even when the contract leaves them out. A caption such as “Computer-generated image” or “Virtual recreation” avoids disputes over furniture and finishes. {{brand}} applies that practice to all virtual furniture. This is not legal advice.',
+                a: 'We recommend it every time. Under Spain’s [Royal Decree 515/1989](' + RD515 + '), housing advertising must not mislead, and its details are binding even when the contract leaves them out. {{brand}} delivers every render captioned “3D render. Indicative image; furniture not included”, adding “not contractual” for off-plan homes, and every staged image “Virtually staged. Furniture not included.” That avoids disputes over furniture and finishes. This is not legal advice.',
               },
               {
                 q: 'Can I share the 3D home by WhatsApp, email or QR code?',

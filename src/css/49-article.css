@@ -1,0 +1,26 @@
+/* @module article article
+   ==========================================================================
+   49-article · guide layout: 66ch body, sticky table of contents. Owner: ENGINE.
+   ========================================================================== */
+.article__head { padding-block: var(--space-7) var(--space-5); }
+.article__head .wrap > * { max-width: 72ch; }
+.article__head .wrap > * + * { margin-top: var(--space-4); }
+.byline__by { color: var(--color-ink-2); }
+.article__hero { margin-block: var(--space-5); }
+.article__hero .figure { max-width: 56rem; }
+.article__layout { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
+.article__body { min-width: 0; max-width: 50rem; }
+.article__body .wrap { padding: 0; max-width: none; }
+.article__body .block { margin-block: var(--space-7); }
+.article__body > :first-child { margin-top: 0; }
+.toc { padding-top: var(--space-4); border-top: 1px solid var(--color-line-strong); }
+.toc__list { margin-top: var(--space-3); counter-reset: t; }
+.toc__list li { border-bottom: 1px solid var(--color-line); }
+.toc__list a { display: grid; grid-template-columns: 2ch minmax(0, 1fr); gap: var(--space-3); align-items: center; min-height: var(--tap-min); padding-block: var(--space-2); font-size: var(--fs-sm); color: var(--color-ink-2); text-decoration: none; }
+.toc__list a::before { counter-increment: t; content: counter(t); color: var(--color-ink-3); }
+@media (min-width: 1024px) {
+  .article__head { padding-top: var(--space-9); }
+  .article__layout { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); column-gap: var(--space-8); }
+  .article__layout--solo { grid-template-columns: minmax(0, 1fr); }
+  .article__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); align-self: start; }
+}

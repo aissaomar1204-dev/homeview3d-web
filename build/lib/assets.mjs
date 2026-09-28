@@ -42,7 +42,8 @@ export function createAssets({ root, dist, warn = console.warn }) {
     for (const file of walk(pub)) {
       const rel = '/' + toPosix(path.relative(pub, file));
       if (/(^|\/)(\.DS_Store|Thumbs\.db|desktop\.ini)$/i.test(rel)) continue;
-      const buf = fs.readFileSync(file);
+      let buf = fs.readFileSync(file);
+      if (/^\/lib\/.+\.js$/.test(rel)) buf = cleanVendorJs(buf);
       let out = rel;
       if (rel.startsWith('/assets/') || rel.startsWith('/lib/')) {
         out = hashedName(rel, buf);
@@ -79,22 +80,43 @@ export function createAssets({ root, dist, warn = console.warn }) {
     return out;
   }
 
-  /** src/css/*.css → site.<hash>.css. Returns the public URL. */
+  /**
+   * src/css/*.css → one shared stylesheet + optional per-feature modules.
+   * A source file whose first comment holds `@module <name> <class> [<class>…]` becomes
+   * /assets/css/<name>.<hash>.css and is linked only on pages whose HTML uses one of those
+   * classes (see modulesFor). Every other file goes into /assets/css/site.<hash>.css.
+   * Custom property aliases are computed over all files so names match across stylesheets.
+   * Returns { url, bytes, files, modules: [{ name, url, bytes, classes }] }.
+   */
   function buildCss() {
     const dir = path.join(root, 'src', 'css');
     const files = fs.existsSync(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith('.css')).sort() : [];
     const parts = files.map((f) => {
       let css = fs.readFileSync(path.join(dir, f), 'utf8');
+      const mod = css.match(/@module\s+([\w-]+)((?:[ \t]+[\w-]+)*)/);
       // tokens.css is the only file with colour literals (COLOR-01). The bundle ships them as rgb()
-      // so the single bundled stylesheet stays free of hex literals for the design lint.
+      // so the bundled stylesheets stay free of hex literals for the design lint.
       if (/tokens/.test(f)) css = css.replace(/#([0-9a-fA-F]{6})\b/g, (m, h) => `rgb(${parseInt(h.slice(0, 2), 16)} ${parseInt(h.slice(2, 4), 16)} ${parseInt(h.slice(4, 6), 16)})`);
-      return `/* ${f} */\n${css}`;
+      return { f, module: mod ? mod[1] : null, classes: mod ? mod[2].trim().split(/\s+/).filter(Boolean) : [], css: minifyCss(css) };
     });
-    let css = minifyCss(parts.join('\n'));
-    if (process.env.NO_SHORTEN !== '1') css = shortenCustomProps(css, keepNames(root));
-    css = css.replace(/url\(\s*(['"]?)(\/(?:assets|lib)\/[^'")]+)\1\s*\)/g, (m, q, p) => `url(${q}${asset(p)}${q})`);
-    const url = register('/assets/css/site.css', Buffer.from(css));
-    return { url, bytes: Buffer.byteLength(css), files };
+    if (process.env.NO_SHORTEN !== '1') inlineStaticTokens(parts, keepNames(root));
+    const alias = process.env.NO_SHORTEN === '1' ? new Map() : customPropAliases(parts.map((p) => p.css).join('\n'), keepNames(root));
+    const finish = (css) => applyAliases(css, alias)
+      .replace(/url\(\s*(['"]?)(\/(?:assets|lib)\/[^'")]+)\1\s*\)/g, (m, q, p) => `url(${q}${asset(p)}${q})`);
+    const core = finish(parts.filter((p) => !p.module).map((p) => p.css).join(''));
+    const url = register('/assets/css/site.css', Buffer.from(core));
+    const byName = new Map();
+    for (const p of parts.filter((x) => x.module)) {
+      const m = byName.get(p.module) || { name: p.module, classes: [], css: '' };
+      m.classes.push(...p.classes);
+      m.css += p.css;
+      byName.set(p.module, m);
+    }
+    const modules = [...byName.values()].map((m) => {
+      const css = finish(m.css);
+      return { name: m.name, classes: [...new Set(m.classes)], url: register(`/assets/css/${m.name}.css`, Buffer.from(css)), bytes: Buffer.byteLength(css) };
+    });
+    return { url, bytes: Buffer.byteLength(core), files, modules };
   }
 
   /** src/js/*.js → /assets/js/<name>.<hash>.js. Returns { name: url }. */
@@ -171,13 +193,26 @@ export function createAssets({ root, dist, warn = console.warn }) {
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="rgb(228 231 234)"/><text x="50%" y="50%" text-anchor="middle" font-family="monospace" font-size="${Math.round(width / 28)}" fill="rgb(95 103 113)">${label}: ${name}</text></svg>`;
       return `<picture class="${wrapCls} pic--missing" data-missing="${esc(name)}"><img src="data:image/svg+xml,${encodeURIComponent(svg)}" width="${width}" height="${height}" alt="${alt}"${cls}${loading}${fetch}></picture>`;
     }
-    const cap = opts.max || 1600;
-    let widths = (opts.widths ? m.widths.filter((w) => opts.widths.includes(w)) : m.widths.filter((w) => w <= cap)).slice().sort((a, b) => a - b);
-    if (!widths.length) widths = [Math.min(...m.widths)];
-    const srcset = (ext) => widths.map((w) => `${srcFor(m, w, ext)} ${w}w`).join(', ');
-    const formats = (m.formats || ['avif', 'webp']).filter((f) => f !== 'webp');
-    const sources = [...formats, 'webp'].filter((f) => (m.formats || ['avif', 'webp']).includes(f))
-      .map((f) => `<source type="image/${f}" srcset="${srcset(f)}" sizes="${sizes}">`).join('');
+    const pick = (mm, o) => {
+      const c = o.max || 1600;
+      let ws = (o.widths ? mm.widths.filter((w) => o.widths.includes(w)) : mm.widths.filter((w) => w <= c)).slice().sort((a, b) => a - b);
+      if (!ws.length) ws = [Math.min(...mm.widths)];
+      return ws;
+    };
+    const widths = pick(m, opts);
+    const srcset = (mm, ws, ext) => ws.map((w) => `${srcFor(mm, w, ext)} ${w}w`).join(', ');
+    // Modern formats only in <source> (AVIF is supported by every current browser); the WebP <img src>
+    // is the fallback for the rest. One srcset per image keeps the HTML light (PERF budget 60 KB).
+    const modern = (mm) => { const all = mm.formats || ['avif', 'webp']; const x = all.filter((f) => f !== 'webp'); return x.length ? x : all; };
+    // Art direction: opts.sources = [{ media, name, sizes?, widths?, max? }] placed before the default source.
+    const art = (opts.sources || []).map((s) => {
+      const mm = images && images[s.name];
+      if (!mm) return '';
+      if (ctx) ctx.collect.images.push({ name: s.name, url: largest(s.name), alt: opts.alt });
+      const ws = pick(mm, s);
+      return modern(mm).map((f) => `<source media="${s.media}" type="image/${f}" srcset="${srcset(mm, ws, f)}" sizes="${s.sizes || sizes}" width="${mm.width}" height="${mm.height}">`).join('');
+    }).join('');
+    const sources = art + modern(m).map((f) => `<source type="image/${f}" srcset="${srcset(m, widths, f)}" sizes="${sizes}">`).join('');
     const fallback = m.fallback ? asset(m.fallback) : srcFor(m, widths[Math.min(widths.length - 1, 2)], 'webp');
     if (ctx) ctx.collect.images.push({ name, url: largest(name), alt: opts.alt });
     const extra = opts.attrs ? ` ${opts.attrs}` : '';
@@ -185,7 +220,7 @@ export function createAssets({ root, dist, warn = console.warn }) {
   }
 
   return {
-    assetMap, sizes, copyPublic, asset, buildCss, buildJs, loadImages, picture, largest, og,
+    assetMap, sizes, copyPublic, asset, register, buildCss, buildJs, loadImages, picture, largest, og,
     get images() { return images; },
     missing,
   };
@@ -208,13 +243,19 @@ export function minifyCss(css) {
     out += c; i++;
   }
   // Whitespace before ":" is kept (it is a descendant combinator in ".a :focus-visible").
-  return out
+  out = out
     .replace(/\s+/g, ' ')
     .replace(/\s*([{};,>])\s*/g, '$1')
     .replace(/:\s+/g, ':')
     .replace(/;}/g, '}')
     .replace(/\s*!important/g, '!important')
     .trim();
+  // Value-level squeezes, never inside strings: "0.5" → ".5", "16 / 9" → "16/9", "-1 * 12px" → "-1*12px"
+  // (only + and - need spaces inside calc()).
+  return out.split(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/).map((part, i) => (i % 2 ? part : part
+    .replace(/([\s:(,])0\.(\d)/g, '$1.$2')
+    .replace(/ ?\/ ?/g, '/')
+    .replace(/([\d)]) \* (?=[\d(]|var\()/g, '$1*'))).join('');
 }
 
 /**
@@ -239,6 +280,47 @@ function keepNames(root) {
  * Source files keep their readable token names; only dist/ is affected. Names used from JS/HTML are kept.
  */
 export function shortenCustomProps(css, keep = new Set()) {
+  return applyAliases(css, customPropAliases(css, keep));
+}
+
+/**
+ * Bundle-level token inlining: a token declared once in :root (never redeclared in a media query, a theme or a
+ * component), with a short literal value (16px, 560, 2px…), is written as its value where it is used, and its
+ * declaration is dropped when nothing else reads it. Sources keep using tokens (SPACE-01 etc.); only dist/ changes.
+ * Mutates parts[].css.
+ */
+export function inlineStaticTokens(parts, keep = new Set()) {
+  const all = parts.map((p) => p.css).join('\n');
+  const count = new Map();
+  for (const m of all.matchAll(/(?:^|[{;(\s])(--[a-zA-Z][\w-]*)\s*:/g)) count.set(m[1], (count.get(m[1]) || 0) + 1);
+  const values = new Map();
+  for (const p of parts) {
+    const root = p.css.match(/(?:^|})\s*:root\{([^}]*)\}/);
+    if (!root) continue;
+    for (const d of root[1].split(';')) {
+      const m = d.match(/^\s*(--[a-zA-Z][\w-]*)\s*:\s*([^;]+?)\s*$/);
+      if (!m || count.get(m[1]) !== 1 || keep.has(m[1])) continue;
+      if (/^-?[\d.]+(px|em|rem|ch|ms|%)?$/.test(m[2]) && m[2].length <= 7) values.set(m[1], m[2]);
+    }
+  }
+  if (!values.size) return parts;
+  const re = new RegExp(`var\\((${[...values.keys()].sort((a, b) => b.length - a.length).map((n) => n.replace(/-/g, '\\-')).join('|')})\\)`, 'g');
+  for (const p of parts) p.css = p.css.replace(re, (m, n) => values.get(n));
+  const still = parts.map((p) => p.css).join('\n');
+  for (const p of parts) {
+    p.css = p.css.replace(/(:root\{)([^}]*)(\})/g, (m, a, body, c) => {
+      const kept = body.split(';').filter((d) => {
+        const n = (d.match(/^\s*(--[a-zA-Z][\w-]*)\s*:/) || [])[1];
+        return !n || !values.has(n) || still.includes(`var(${n})`) || still.includes(`var(${n},`);
+      });
+      return `${a}${kept.join(';')}${c}`;
+    });
+  }
+  return parts;
+}
+
+/** Alias map (long name → short name) for the custom properties declared in css. */
+export function customPropAliases(css, keep = new Set()) {
   const declared = new Map();
   for (const m of css.matchAll(/(?:^|[{;(\s])(--[a-zA-Z][\w-]*)\s*:/g)) declared.set(m[1], (declared.get(m[1]) || 0) + 1);
   for (const m of css.matchAll(/@property\s+(--[\w-]+)/g)) keep.add(m[1]);
@@ -254,9 +336,32 @@ export function shortenCustomProps(css, keep = new Set()) {
     do { a = short(i++); } while (declared.has(a) || keep.has(a));
     alias.set(n, a);
   }
-  if (!alias.size) return css;
+  return alias;
+}
+
+export function applyAliases(css, alias) {
+  if (!alias || !alias.size) return css;
   const re = new RegExp(`(${[...alias.keys()].sort((a, b) => b.length - a.length).map((n) => n.replace(/[-]/g, '\\-')).join('|')})(?![\\w-])`, 'g');
   return css.replace(re, (m) => alias.get(m));
+}
+
+/** Stylesheet modules a page needs: those whose trigger classes appear in its HTML. */
+export function modulesFor(html, modules = []) {
+  const used = new Set();
+  for (const m of String(html).matchAll(/\sclass="([^"]+)"/g)) for (const c of m[1].split(/\s+/)) used.add(c);
+  return modules.filter((m) => m.classes.some((c) => used.has(c)));
+}
+
+/**
+ * Vendored libraries under public/lib: drop debug console.log calls (model-viewer ships a few
+ * hundred lines of logs per session) and the sourceMappingURL comment of a map we do not ship.
+ */
+function cleanVendorJs(buf) {
+  let s = buf.toString('utf8');
+  const before = s;
+  s = s.replace(/(?<![.\w$])console\.log\(/g, '(()=>{})(').replace(/\n?\/\/# sourceMappingURL=\S+\s*$/, '\n');
+  if (s === before) return buf;
+  return checkSyntax(s, 'vendor') ? Buffer.from(s) : buf;
 }
 
 /** Light JS minifier: strips comments and indentation, keeps line breaks (ASI-safe). */
@@ -298,6 +403,18 @@ export function minifyJs(src) {
         while (j < n && /[a-z]/i.test(src[j])) j++;
         out += src.slice(i, j); i = j; lastSig = '/'; continue;
       }
+    }
+    // Spaces and tabs (outside strings, templates and regexes) survive only between two word characters,
+    // or between two identical + / - signs (a + +b must not become a++b). Newlines are kept (ASI-safe).
+    if (c === ' ' || c === '\t') {
+      let j = i;
+      while (j < n && (src[j] === ' ' || src[j] === '\t')) j++;
+      const p = out[out.length - 1] || '\n';
+      const q = src[j] || '\n';
+      const word = /[\w$]/;
+      if ((word.test(p) && word.test(q)) || (p === q && (p === '+' || p === '-'))) out += ' ';
+      i = j;
+      continue;
     }
     out += c;
     if (!/\s/.test(c)) lastSig = c;

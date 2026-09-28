@@ -1,0 +1,29 @@
+/* @module data callout stat specs sources
+   ==========================================================================
+   35-data · callout, stat, specs sheet and sources list. Owner: ENGINE.
+   ========================================================================== */
+.callout, .stat, .sources { max-width: var(--measure); }
+.callout { padding: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line); border-left: 2px solid var(--color-ink); }
+.callout__title { margin-bottom: var(--space-2); font-weight: var(--wght-heading); }
+.callout__body { color: var(--color-ink-2); }
+.callout__body > * + * { margin-top: var(--space-3); }
+.stat { display: grid; gap: var(--space-3); padding-top: var(--space-5); border-top: 1px solid var(--color-line-strong); }
+.stat__value {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: var(--wght-display);
+  font-stretch: var(--stretch-display);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+.stat__label { font-size: var(--fs-lead); }
+.stat__source, .sources { font-size: var(--fs-sm); color: var(--color-ink-3); }
+.specs { display: grid; border-top: 1px solid var(--color-line); }
+.specs__row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--space-4); padding-block: var(--space-3); border-bottom: 1px solid var(--color-line); }
+.specs dt { padding-top: 0.2em; }
+@media (min-width: 1024px) {
+  .specs { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-7); }
+}
+.sources { padding-left: 1.5em; color: var(--color-ink); }
+.sources li + li { margin-top: var(--space-3); }
+.sources__note { display: block; }
