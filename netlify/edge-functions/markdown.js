@@ -58,5 +58,5 @@ export const config = {
   path: '/*',
   excludedPath: ['/assets/*', '/lib/*', '/models/*', '/.netlify/*', '/*.md', '/*.txt', '/*.xml', '/*.json', '/*.webmanifest', '/*.ico', '/*.png', '/*.svg'],
   header: { accept: 'text/markdown' }, // regex on the Accept header: invoked only when Markdown is requested
-  method: ['GET', 'HEAD'],
+  method: ['GET'],
 };
