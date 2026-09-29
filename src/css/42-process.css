@@ -22,24 +22,25 @@
 .despiece__legend li > * { grid-column: 3; }
 @media (min-width: 1024px) {
   .process { grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--space-5); align-items: start; }
-  .process__drawing { grid-column: 1 / 7; position: sticky; top: calc(var(--header-h) + var(--space-6)); }
-  .process__steps { grid-column: 8 / 13; }
-  .despiece__stage { padding-top: var(--space-10); }
+  .process__drawing { grid-column: 1 / 8; position: sticky; top: calc(var(--header-h) + var(--space-5)); }
+  .process__steps { grid-column: 9 / 13; }
+  .despiece__stage { padding-top: calc(-1 * var(--d3) + var(--space-6)); padding-inline: var(--space-3); }
 }
 /* Storytelling: plan → walls → furnished, the layers assemble with the scroll (view timeline). */
-.process { --d2: calc(-1 * var(--space-7)); --d3: calc(-1 * var(--space-9)); }
+.process { --d2: -3.75rem; --d3: -7.5rem; }
+.despiece__stage { padding-top: calc(-1 * var(--d3) + var(--space-5)); }
 @media (min-width: 1024px) {
-  .process { --d2: calc(-1 * var(--space-8)); --d3: calc(-1 * var(--space-10)); }
+  .process { --d2: -7.5rem; --d3: -15rem; }
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .process { view-timeline-name: --despiece; }
-    .despiece__layer--2, .despiece__layer--3 { animation: d2 linear both; animation-timeline: --despiece; animation-range: entry 10% cover 50%; }
+    .despiece__layer--2, .despiece__layer--3 { animation: d2 linear both; animation-timeline: --despiece; animation-range: entry 20% cover 72%; }
     .despiece__layer--3 { animation-name: d3; }
   }
 }
 @keyframes d2 { from { transform: translateY(var(--d2)); } }
-@keyframes d3 { from { transform: translateY(var(--d3)); } }
+@keyframes d3 { from { transform: translateY(var(--d3)); opacity: .55; } }
 /* Fallback without scroll-driven animations: one transition when the drawing enters the viewport. */
 @supports not (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
