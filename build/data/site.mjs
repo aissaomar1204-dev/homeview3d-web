@@ -25,7 +25,7 @@ export const site = {
 
   // Contact. WhatsApp in international format without "+".
   contact: {
-    email: 'homeview3d@gmail.com',
+    email: 'homeview3d.contacto@gmail.com',
     phoneE164: '+34685494982',
     phoneDisplay: '+34 685 49 49 82',
     whatsapp: '34685494982',
@@ -53,7 +53,7 @@ export const site = {
     nif: 'en trámite (sociedad en constitución)',
     domicilio: 'Calle San Daniel 12, 29651 Mijas Costa (Málaga), España',
     registro: 'Inscripción en el Registro Mercantil de Málaga en trámite',
-    email: 'homeview3d@gmail.com',
+    email: 'homeview3d.contacto@gmail.com',
     placeholder: false,
     pending: true,
   },
