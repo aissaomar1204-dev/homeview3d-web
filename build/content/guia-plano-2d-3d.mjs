@@ -12,6 +12,8 @@ const SRC = {
   sku: 'https://sketchup.trimble.com/en/plans-and-pricing/sketchup-free',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-plano-2d-3d',
   image: 'villa_plano_lineas',
@@ -124,6 +126,7 @@ export default {
         h2: '¿Qué necesitamos si lo hacemos nosotros?',
         intro: 'Si prefieres encargarlo, esto es todo lo que nos hace falta. No visitamos la vivienda.',
       },
+      plate('es', 'villa_maqueta_iso_opaco'),
       { type: 'faq' },
       {
         type: 'sources',

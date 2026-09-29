@@ -7,6 +7,7 @@
    Content file optional: h1/lead come from ctx.page or ui.pages.ar.
    ═══════════════════════════════════════════════════════════════ */
 import { renderArChoices, viewerStrings } from '../lib/viewer.mjs';
+import { heroAttrs } from '../lib/components.mjs';
 
 const esc = (s) => String(s ?? '')
   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -17,13 +18,14 @@ function pick(ctx, field, key) {
 }
 
 export default function render(ctx) {
+  ctx.chapters = {}; // the page is one drafting sheet (build/lib/chapters.mjs)
   ctx.needs.add('viewer');
   const s = viewerStrings(ctx);
   const h1 = pick(ctx, 'h1', 'pages.ar.h1') || esc(s.arTitle);
   const lead = pick(ctx, 'lead', 'pages.ar.lead') || esc(s.arIntro);
   const steps = s.arSteps.map((x) => `<li>${esc(x)}</li>`).join('');
 
-  const main = '<section class="block vw-arpage"><div class="wrap">'
+  const main = `<section class="block vw-arpage"${heroAttrs(ctx)}><div class="wrap">`
     + `<header class="vw-arpage__head"><h1>${h1}</h1><p class="lead">${lead}</p></header>`
     + renderArChoices(ctx, { level: 2, big: true, qrLink: false, desktopNote: true })
     + `<div class="vw-arpage__how"><h2>${esc(s.arStepsTitle)}</h2><ol class="vw-steps">${steps}</ol></div>`

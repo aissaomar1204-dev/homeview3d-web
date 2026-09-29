@@ -12,6 +12,8 @@ const SRC = {
   vista: 'https://vistastudiodesign.com/',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-ia-vs-3d',
   image: 'villa_maqueta_iso_opaco',
@@ -141,6 +143,7 @@ export default {
         title: 'Somos parte interesada',
         body: 'Construimos modelos 3D, así que nos interesa que una imagen no te baste. Por eso decimos también cuándo la IA es suficiente, usamos la IA en nuestro propio trabajo y no inventamos pruebas que no hemos hecho. Los precios de terceros enlazan a la página que los publica.',
       },
+      plate('es', 'villa_interior_dormitorio'),
       { type: 'faq' },
       {
         type: 'sources',
@@ -324,6 +327,7 @@ export default {
         title: 'We have a stake in this',
         body: 'We build 3D models, so we have an interest in an image not being enough for you. That is why we also say when AI will do, why we use AI in our own work and why we do not claim tests we have not run. Third-party prices link to the page that publishes them.',
       },
+      plate('en', 'villa_interior_dormitorio'),
       { type: 'faq' },
       {
         type: 'sources',

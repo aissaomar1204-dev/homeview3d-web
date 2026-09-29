@@ -13,6 +13,8 @@ const SRC = {
   mv: 'https://modelviewer.dev/',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'sobre-nosotros',
   image: 'villa_dormitorios_opaco',
@@ -65,6 +67,7 @@ export default {
         answer: 'La IA nos ayuda a programar, no a dibujar. Usamos Claude, de Anthropic, para escribir y depurar los scripts de Python. La geometría la construyen esos scripts a partir de las medidas de tu plano y las imágenes se calculan con Cycles, así que no hay ventanas inventadas.',
         body: 'Esta es nuestra política, por escrito:\n\n- **Geometría construida, no generada.** Cada muro está donde dice el plano. Si una medida es estimada, la marcamos con ≈.\n- **Revisión humana.** Una persona revisa cada entrega contra el plano antes de enviarla.\n- **Vídeos con IA, etiquetados.** Cuando lancemos los vídeos cinematográficos generados con IA a partir de nuestros renders, que todavía no están disponibles, irán etiquetados como contenido generado con IA, en línea con las obligaciones de transparencia del [artículo 50 del Reglamento europeo de inteligencia artificial](' + SRC.aiActEs + ').\n- **Staging etiquetado.** El mobiliario virtual se entrega identificado como recreación virtual, para que tu anuncio lo indique.\n\nSi quieres la comparación completa entre un modelo 3D y las herramientas de IA, está en [IA o modelo 3D real](@guia-ia-vs-3d).',
       },
+      plate('es', 'villa_interior_dormitorio'),
       {
         type: 'answer',
         h2: '¿Qué hacemos con los planos de tus clientes?',
@@ -189,6 +192,7 @@ export default {
         answer: 'AI helps us write code, not draw. We use Anthropic’s Claude to write and debug the Python scripts. Those scripts build the geometry from your plan’s measurements, and the images are computed in Cycles, so there are no made-up windows.',
         body: 'This is our policy, in writing:\n\n- **Built geometry, not generated.** Every wall sits where the plan puts it. If a measurement is estimated, we mark it with ≈.\n- **Human review.** A person checks every delivery against the plan before it goes out.\n- **AI videos, labelled.** When we launch cinematic videos generated with AI from our renders, which are not available yet, they will be labelled as AI-generated content, in line with the transparency obligations in [Article 50 of the EU Artificial Intelligence Act](' + SRC.aiActEn + ').\n- **Staging, labelled.** Virtual furniture is delivered marked as a virtual recreation, so your listing can say so.\n\nFor the full comparison between a real 3D model and AI tools, see [AI floor plan to 3D](@guia-ia-vs-3d).',
       },
+      plate('en', 'villa_interior_dormitorio'),
       {
         type: 'answer',
         h2: 'What do we do with your clients’ floor plans?',

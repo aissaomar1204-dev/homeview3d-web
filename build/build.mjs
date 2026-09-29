@@ -29,6 +29,7 @@ import { createAssets } from './lib/assets.mjs';
 import { renderDocument, crumbTrail, robotsFor } from './lib/layout.mjs';
 import { dateLine, renderCaption, defaultAlt } from './lib/components.mjs';
 import { viewerStatus } from './lib/blocks.mjs';
+import { lastTone, DARK } from './lib/chapters.mjs';
 import { loadHero } from './lib/hero.mjs';
 import { stripTags, countWords } from './lib/md.mjs';
 
@@ -285,9 +286,11 @@ function renderPage(route, lang) {
 
   // The date line closes the last content block: before the closing CTA band when there is one, so the band runs
   // straight into the footer on one surface with a single hairline (D-22).
-  const dl = index && layout !== 'bare' ? `<div class="wrap dateline-wrap">${dateLine(ctx)}</div>` : '';
+  // After a dark last chapter (home: the contact chapter) the date line continues that surface (data-on).
+  // Pages with chapters (every template): the date line follows the LAST chapter, on its surface (dark → data-on, light → data-sheet).
+  const dl = index && layout !== 'bare' ? `<div class="wrap dateline-wrap"${DARK.has(lastTone(ctx)) ? ` data-on="${lastTone(ctx)}"` : ctx.chapters ? ' data-sheet' : ''}>${dateLine(ctx)}</div>` : '';
   let body = main;
-  const band = main.lastIndexOf('<section class="block block--cta cta-band"');
+  const band = ctx.chapters ? -1 : main.lastIndexOf('<section class="block block--cta cta-band"');
   if (dl && band > -1 && !main.startsWith('<section class="block block--cta cta-band cta-band--inline"', band)) body = main.slice(0, band) + dl + main.slice(band);
   else body = main + dl;
   const html = renderDocument(ctx, { main: body, layout, bodyClass: out.bodyClass, entry, graph, assets: pageAssets, themeColors, placeholders, dateline: '' });
@@ -356,7 +359,7 @@ function report() {
     const lcpName = (home.images[0] || {}).name;
     const m = lcpName && assets.images && assets.images[lcpName];
     const lcpB = m && m.bytes ? (m.bytes['avif-1200'] || m.bytes['webp-1200'] || 0) : 0;
-    const B = (machineMod && machineMod.BUDGETS) || { htmlRawKB: 72, htmlBrotliKB: 16, brotliQuality: 11, cssSharedKB: 25, cssPageKB: 45, cssBlockingMax: 2 };
+    const B = (machineMod && machineMod.BUDGETS) || { htmlRawKB: 90, htmlBrotliKB: 19, brotliQuality: 11, cssSharedKB: 42, cssPageKB: 72, cssBlockingMax: 2 };
     const brB = zlib.brotliCompressSync(Buffer.from(home.html), { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: B.brotliQuality } }).length;
     console.log(`  home: HTML ${kb(htmlB)} (${kb(brB)} br) · CSS ${kb(cssB)} (shared ${kb(css.bytes)}) · initial JS ${kb(jsB)} · fonts ${kb(fontB)} · LCP image ${lcp ? (lcpB ? `${kb(lcpB)} (avif 1200w)` : 'n/a (no manifest bytes)') : 'none'}`);
     console.log(`  css bundles: ${assets.bundles.size} module set(s) · ≤ ${B.cssBlockingMax} render-blocking stylesheets per page`);
@@ -368,7 +371,7 @@ function report() {
     if (js.main && js.main.bytes > 15 * 1024) warn(`! main.js ${kb(js.main.bytes)} > 15 KB budget`);
   }
   let worst = null;
-  const PB = (machineMod && machineMod.BUDGETS) || { cssPageKB: 45, cssBlockingMax: 2 };
+  const PB = (machineMod && machineMod.BUDGETS) || { cssPageKB: 72, cssBlockingMax: 2 };
   for (const e of [...entries, ...notFound]) {
     const links = [...e.html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map((m) => m[1]);
     const bytes = links.reduce((s, u) => s + size(u), 0);
@@ -401,7 +404,7 @@ function validateContent(allDocs) {
   ]);
   const BLOCKS = {
     prose: ['body'], answer: ['h2', 'answer'], table: ['caption', 'head', 'rows'], steps: ['h2', 'items'], checklist: ['h2', 'items'],
-    figure: ['image', 'alt', 'caption'], gallery: ['items'], compare: [], viewer: [], ar: [], formats: [], embedCode: [],
+    figure: ['image', 'alt', 'caption'], gallery: ['items'], plate: ['images'], compare: [], viewer: [], ar: [], formats: [], embedCode: [],
     deliverables: [], comingSoon: [], process: [], needs: [], services: [], audiences: [], pages: ['ids'], pricing: ['variant'],
     calculator: [], guarantees: [], stat: ['value', 'label', 'source', 'year'], callout: ['body'], specs: ['items'],
     sources: ['items'], faq: [], faqGroups: ['groups'], glossary: [], contactForm: [], cta: ['h2', 'body'], video: ['video', 'caption'],
@@ -497,6 +500,14 @@ function validateContent(allDocs) {
       for (const k of BLOCKS[b.type]) if (b[k] == null || b[k] === '') E(id, lang, `block #${i} (${b.type}) missing ${k}`);
       if (b.type === 'figure' && !IMAGES.has(b.image)) E(id, lang, `block #${i}: unknown image ${b.image}`);
       if (b.type === 'gallery') for (const it of b.items || []) if (!IMAGES.has(it.image)) E(id, lang, `gallery: unknown image ${it.image}`);
+      if (b.type === 'plate') {
+        if (!Array.isArray(b.images) || b.images.length < 1 || b.images.length > 2) E(id, lang, `block #${i} (plate): images must hold 1 (full bleed) or 2 (diptych) items`);
+        for (const it of b.images || []) {
+          if (!IMAGES.has(it.image)) E(id, lang, `plate: unknown image ${it.image}`);
+          if (!it.alt || !it.caption) E(id, lang, `plate ${it.image}: alt and caption are required (the caption states that it is a render)`);
+        }
+      }
+      if (b.type === 'contactForm' && b.image && !IMAGES.has(b.image)) E(id, lang, `contactForm: unknown image ${b.image}`);
       if (b.type === 'pages') for (const pid of b.ids || []) if (!routeById[pid]?.[lang]) E(id, lang, `pages block: @${pid} missing in ${lang}`);
       if (b.type === 'table' && Array.isArray(b.head) && Array.isArray(b.rows)) for (const row of b.rows) if (row.length !== b.head.length) E(id, lang, `table "${b.caption}": row has ${row.length} cells, head has ${b.head.length}`);
       if (b.type === 'answer' && b.answer) { const w = words(b.answer); if (w < 25 || w > 75) W(id, lang, `answer block "${b.h2}" ${w} words (40–60)`); }

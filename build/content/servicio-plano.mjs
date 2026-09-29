@@ -6,6 +6,8 @@ const ERI = {
   url: 'https://www.registradores.org/documents/d/guest/eri_2t_2026',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'servicio-plano',
   image: 'villa_planta_cenital_opaco',
@@ -55,6 +57,7 @@ export default {
         answer: 'El plano 3D son imágenes fijas en 4K: la planta cenital a color y una vista isométrica amueblada. La maqueta 3D completa es el modelo navegable: incluye esas plantas, 6 renders fotorrealistas, el visor web para tu anuncio y la realidad aumentada en iPhone y Android.',
         body: 'Los dos parten del mismo trabajo: modelar la vivienda en 3D a partir del plano. El plano 3D basta para la ficha de un portal o un dosier de venta. La maqueta compensa cuando el comprador necesita recorrer la vivienda: obra nueva, compradores que viven fuera o pisos sin amueblar.\n\nDe ese mismo modelo salen los [renders inmobiliarios fotorrealistas](@servicio-renders) y el [recorrido virtual desde el plano](@servicio-tour), sin volver a empezar.',
       },
+      plate('es', 'villa_interior_salon'),
       {
         type: 'table',
         h2: '¿Plano 3D, render con IA o tour 360? Qué obtienes con cada opción',
@@ -197,6 +200,7 @@ export default {
         answer: 'A 3D floor plan is a set of 4K stills: a colour top-down plan and a furnished isometric view. The complete 3D model is the navigable version: it includes those plans plus 6 photorealistic renders, a web viewer for your listing and augmented reality on iPhone and Android.',
         body: 'Both start with the same work: modelling the home in 3D from the plan. A 3D floor plan is enough for a portal listing or a sales brochure. The complete model pays off when the buyer needs to walk through the home: off-plan sales, buyers based in the UK, the Netherlands or Scandinavia, or empty properties.\n\nThe same model produces our [real estate 3D renders](@servicio-renders) and an [interactive 3D floor plan](@servicio-tour) for your listing, with no extra modelling.',
       },
+      plate('en', 'villa_interior_salon'),
       {
         type: 'table',
         h2: '3D floor plan, AI render or 360 tour: what do you actually get?',

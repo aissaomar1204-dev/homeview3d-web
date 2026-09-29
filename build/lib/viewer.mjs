@@ -24,6 +24,7 @@
 import { encode } from 'uqr';
 import { villa } from '../data/villa.mjs';
 import { uiViewer } from '../data/ui-viewer.mjs';
+import { chapter } from './chapters.mjs';
 
 const NBSP = '\u00A0';
 const enc = encodeURIComponent;
@@ -76,9 +77,9 @@ function blockHead(ctx, text, block, { eyebrow = '', extra = '' } = {}) {
   const eb = eyebrow ? `<p class="eyebrow">${esc(eyebrow)}</p>` : '';
   return { id: h.id, html: `<div class="block__head">${eb}${h.html}${intro(ctx, block)}${extra}</div>` };
 }
-/** Section wrapper, same classes as the engine's section(). */
-const section = (type, { id = '', labelledby = '', label = '', band = false, cls = '' }, inner) => `<section class="block block--${type}${band ? ' band band--stage' : ''}${cls ? ` ${cls}` : ''}"`
-  + `${id ? ` id="${id}"` : ''}${labelledby ? ` aria-labelledby="${labelledby}"` : ''}${label ? ` aria-label="${esc(label)}"` : ''}><div class="wrap">${inner}</div></section>`;
+/** Section wrapper, same classes as the engine's section(). `ch` = the chapter of the page (build/lib/chapters.mjs) or null: a chapter drops the band classes. */
+const section = (type, { id = '', labelledby = '', label = '', band = false, cls = '', ch = null }, inner) => `<section class="block block--${type}${band && !ch ? ' band band--stage' : ''}${cls ? ` ${cls}` : ''}"`
+  + `${id ? ` id="${id}"` : ''}${labelledby ? ` aria-labelledby="${labelledby}"` : ''}${label ? ` aria-label="${esc(label)}"` : ''}${ch ? ch.attrs : ''}>${ch && ch.axes ? ch.axes : ''}<div class="wrap"${ch ? ch.wrapAttr : ''}>${inner}</div></section>`;
 
 /* ─── Numbers (all from build/data/villa.mjs) ─────────────────── */
 const metres = (ctx, n, d) => `${ctx.fmtNumber(n, d)}${NBSP}m`;
@@ -371,11 +372,11 @@ function viewerCore(ctx, o) {
 export function renderViewerBand(ctx, block = {}) {
   const s = strings(ctx);
   const sectionId = uid(ctx, 'demo');
-  const eyebrow = ctx.route && ctx.route.id === 'home' ? ui(ctx, 'eyebrow.viewer', '') : '';
+  const eyebrow = ctx.route && ctx.route.id === 'home' && !ctx.chapters ? ui(ctx, 'eyebrow.viewer', '') : '';
   const caseLink = ctx.route && ctx.route.id === 'caso-villa' ? ''
     : `<p class="vw-band__link">${linkArrow(ctx, ctx.href('caso-villa'), s.caseLink)}</p>`;
   const hd = blockHead(ctx, block.h2 || ui(ctx, 'h2.viewer', s.bandTitle), block, { eyebrow, extra: caseLink });
-  return section('viewer', { id: sectionId, labelledby: hd.id, band: true },
+  return section('viewer', { id: sectionId, labelledby: hd.id, band: true, ch: chapter(ctx, 'viewer') },
     hd.html + viewerCore(ctx, { id: sectionId, railLevel: 3, eager: false, preload: 'visible' }));
 }
 
@@ -399,7 +400,7 @@ export function renderViewerApp(ctx, opts = {}) {
 export function renderArBlock(ctx, block = {}) {
   ctx.needs.add('viewer');
   const hd = blockHead(ctx, block.h2 || ui(ctx, 'h2.ar', tx(ctx, 'arTitle')), block);
-  return section('ar', { labelledby: hd.id }, hd.html + renderArChoices(ctx, { level: 3 }));
+  return section('ar', { labelledby: hd.id, ch: chapter(ctx, 'ar') }, hd.html + renderArChoices(ctx, { level: 3 }));
 }
 
 /** Plain compatibility table (for the HTML block and the Markdown mirror). */
@@ -432,7 +433,7 @@ export function renderFormats(ctx, block = {}) {
   const lb = (i) => ` data-label="${esc(t.head[i])}"`;
   const rows = t.rows.map((row) => `<tr><th scope="row">${inline(ctx, row[0])}</th><td${lb(1)}>${inline(ctx, row[1])}</td>`
     + `<td${lb(2)}>${inline(ctx, row[2])}</td><td class="num"${lb(3)}>${esc(row[3] || '')}</td></tr>`).join('');
-  return section('formats', { labelledby: hd.id }, hd.html
+  return section('formats', { labelledby: hd.id, ch: chapter(ctx, 'formats') }, hd.html
     + `<div class="table table--stack"><div class="table__scroll" role="region" tabindex="0" aria-labelledby="${cap}">`
     + `<table><caption id="${cap}">${esc(t.caption)}</caption><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div></div>`);
 }
@@ -450,7 +451,7 @@ export function renderEmbedCode(ctx, block = {}) {
   const hd = blockHead(ctx, block.h2 || ui(ctx, 'h2.embedCode', s.embedCode), block);
   const codeId = uid(ctx, 'vw-embed-code');
   const title = fill(s.embedTitle, { name: villa.name[ctx.lang] });
-  return section('embedCode', { labelledby: hd.id }, hd.html
+  return section('embedCode', { labelledby: hd.id, ch: chapter(ctx, 'embedCode') }, hd.html
     + '<div class="vw-embedcode">'
     + `<figure class="vw-embedcode__preview"><iframe src="${esc(ctx.href('embed-villa'))}" title="${esc(title)}"`
     + ' width="1200" height="560" loading="lazy" allow="xr-spatial-tracking; fullscreen"></iframe>'

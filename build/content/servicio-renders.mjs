@@ -4,6 +4,8 @@
 
 const INE = 'https://www.ine.es/dyngs/Prensa/ETDP0726.htm';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'servicio-renders',
   image: 'villa_interior_salon',
@@ -85,6 +87,7 @@ export default {
         answer: 'Porque todas las imágenes salen de la misma geometría: la ventana del salón está en el mismo sitio en cada render, en el visor y en la realidad aumentada. La IA sobre fotos genera cada imagen por separado, necesita que la vivienda exista y puede inventar huecos o cambiar proporciones sin avisar.',
         body: 'La IA es rápida y barata para redecorar una foto concreta, y a veces basta. Para obra nueva, para una promoción con varias tipologías o para un dosier que el comprador va a revisar con lupa, compensa que cada imagen sea fiel al plano. Lo comparamos a fondo en [IA o modelo 3D real](@guia-ia-vs-3d).',
       },
+      plate('es', 'villa_dormitorios_opaco', 'villa_bano_suite_opaco'),
       {
         type: 'table',
         h2: '¿Render desde un modelo 3D, IA sobre fotos o estudio de infografía?',
@@ -256,6 +259,7 @@ export default {
         answer: 'Because every image comes from the same geometry: the living room window sits in the same place in each render, in the viewer and in AR. AI staging on photos generates each image separately, needs the home to exist, and can quietly invent openings or change proportions.',
         body: 'AI is quick and cheap for restyling a single photo, and sometimes that is all you need. For off-plan sales, a development with several unit types, or a brochure a buyer in London or Amsterdam will study closely, it pays for every image to match the plan. Our [AI vs real 3D model guide](@guia-ia-vs-3d) goes into detail.',
       },
+      plate('en', 'villa_dormitorios_opaco', 'villa_bano_suite_opaco'),
       {
         type: 'table',
         h2: 'Model-based renders, AI on photos or a CGI studio?',

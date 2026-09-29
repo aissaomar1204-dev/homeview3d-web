@@ -1,0 +1,32 @@
+async page => {
+  const pages = ['/', '/servicios/plano-2d-a-3d/', '/precios/', '/contacto/', '/preguntas-frecuentes/', '/guias/cuanto-cuesta-un-render-3d/', '/casos/villa-costa-del-sol/', '/soluciones/promotoras-obra-nueva/', '/zonas/marbella/', '/en/', '/como-funciona/', '/glosario/', '/servicios/', '/aviso-legal/'];
+  const widths = [320, 375, 768];
+  const res = [];
+  for (const w of widths) {
+    await page.setViewportSize({ width: w, height: w < 500 ? 800 : 900 });
+    for (const p of pages) {
+      await page.goto('http://localhost:8913' + p, { waitUntil: 'load' });
+      await page.waitForTimeout(150);
+      const r = await page.evaluate(async () => {
+        const sl = ms => new Promise(r => setTimeout(r, ms));
+        const st = document.createElement('style'); st.textContent = 'section,footer{content-visibility:visible !important;contain-intrinsic-size:none !important}'; document.head.appendChild(st);
+        const h = () => document.documentElement.scrollHeight;
+        for (let y = 0; y < h(); y += 900) { window.scrollTo(0, y); await sl(25); }
+        window.scrollTo(0, 0); await sl(150);
+        const vw = document.documentElement.clientWidth; const out = [];
+        for (const el of document.querySelectorAll('.main h1,.main h2,.main h3,.main p,.main a,.main button,.main li,.main td,.main th,.main label,.main input,.main select,.main img,.main figcaption,.main summary,.site-footer *,.site-header *')) {
+          if (el.closest('[aria-hidden=true],svg,.sr-only')) continue;
+          const cs = getComputedStyle(el); if (cs.display === 'none' || cs.visibility === 'hidden') continue;
+          const r = el.getBoundingClientRect(); if (r.width < 2 || r.height < 2) continue;
+          // ignore things inside a scroll container or a carousel
+          let sc = false; for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) { const o = getComputedStyle(a).overflowX; if (o === 'auto' || o === 'scroll') { sc = true; break; } }
+          if (sc) continue;
+          if (r.right > vw + 1.5 || r.left < -1.5) out.push(el.tagName.toLowerCase() + '.' + String(el.className).split(' ')[0] + ' [' + Math.round(r.left) + ',' + Math.round(r.right) + '] ' + (el.textContent || '').trim().slice(0, 30));
+        }
+        return out.slice(0, 6);
+      });
+      if (r.length) res.push({ w, p, r });
+    }
+  }
+  return JSON.stringify({ n: res.length, res });
+}

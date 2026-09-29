@@ -16,6 +16,8 @@ const LOE = 'https://www.boe.es/buscar/act.php?id=BOE-A-1999-21567#daprimera';
 const BOJA = 'https://www.juntadeandalucia.es/boja/2005/217/1';
 const ERI = 'https://www.registradores.org/documents/d/guest/eri_2t_2026';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-sobre-plano',
   image: 'villa_bano_suite_opaco',
@@ -157,6 +159,7 @@ export default {
         answer: 'Con {{brand}}, el pack de promoción cuesta desde {{price:promocion}} + IVA e incluye 3 tipologías modeladas y amuebladas, 12 renders en 4K, visor con selector de tipología y realidad aumentada para la sala de ventas, en {{delivery:promocion}}. Cada tipología adicional cuesta {{extra:tipologia}} + IVA.',
         body: 'Los rangos que publican otros estudios, con su fuente, están en [cuánto cuesta un render 3D en España](@guia-precio-render). El detalle de cada pack, en [precios](@precios), y un ejemplo terminado en el [caso de la villa en la Costa del Sol](@caso-villa): {{villa:rooms}} estancias modeladas desde {{villa:input}}. Cómo trabajamos con tu equipo, en [visualización para promotoras](@sol-promotoras).',
       },
+      plate('es', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',

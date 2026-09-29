@@ -4,6 +4,8 @@
 // The `pages` block skips any guide whose content file is not rendered yet; counts are deliberately not written in copy.
 // No statistics here: the guides carry their own sourced figures.
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guias',
   image: 'villa_planta_cenital_opaco',
@@ -58,6 +60,7 @@ export default {
         intro: 'Ordenadas desde la decisión de presupuesto hasta el uso con el comprador.',
         ids: ['guia-precio-render', 'guia-precio-plano', 'guia-plano-2d-3d', 'guia-ia-vs-3d', 'guia-matterport', 'guia-mejores', 'guia-sobre-plano', 'guia-ar'],
       },
+      plate('es', 'villa_interior_salon'),
       {
         type: 'prose',
         h2: '¿Cómo hacemos estas guías?',
@@ -134,6 +137,7 @@ export default {
         intro: 'From setting a budget to putting the home on your buyer’s coffee table.',
         ids: ['guia-precio-render', 'guia-precio-plano', 'guia-ia-vs-3d', 'guia-matterport', 'guia-mejores', 'guia-ar'],
       },
+      plate('en', 'villa_interior_salon'),
       {
         type: 'prose',
         h2: 'How do we write these guides?',

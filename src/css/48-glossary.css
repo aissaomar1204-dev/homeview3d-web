@@ -7,7 +7,17 @@
 .az__letters li { border: solid var(--color-line); border-width: 0 1px 1px 0; }
 .az__letters :is(a, span) { display: grid; place-items: center; min-height: var(--tap-min); text-decoration: none; }
 .az__letters span { color: var(--color-line-strong); }
-.term { padding-block: var(--space-6); border-top: 1px solid var(--color-line); }
+/* Drawing set: the index is a sheet, every term a numbered plate (two columns from tablets). */
+.az { padding: var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line-strong); }
+.glossary__terms { display: grid; gap: var(--space-4); counter-reset: term; align-content: start; }
+.term { position: relative; counter-increment: term; padding: var(--space-5) var(--space-5) var(--space-6); background: var(--color-surface); border: 1px solid var(--color-line-strong); }
+.term::after {
+  content: counter(term, decimal-leading-zero); content: counter(term, decimal-leading-zero) / "";
+  position: absolute; top: var(--space-3); right: var(--space-4); font: 650 2.5rem / 1 var(--font-display); font-stretch: 125%; color: transparent; -webkit-text-stroke: 1px var(--color-line-strong); pointer-events: none;
+}
+.term h2 { padding-right: 4.5rem; }
+@media (min-width: 768px) { .glossary__terms { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (forced-colors: active) { .term::after { display: none; } }
 .term h2 { font-size: var(--fs-h3); }
 .term__def { max-width: var(--measure); margin-top: var(--space-3); font-size: var(--fs-lead); line-height: var(--lh-lead); }
 .term__body, .term__related { margin-top: var(--space-3); color: var(--color-ink-2); }

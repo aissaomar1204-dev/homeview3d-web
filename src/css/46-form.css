@@ -84,3 +84,16 @@ input::-webkit-inner-spin-button, input::-webkit-outer-spin-button { appearance:
   .contact { grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--space-9); }
   .contact__alt { position: sticky; top: calc(var(--header-h) + var(--space-6)); margin-top: var(--space-10); }
 }
+
+/* Contact chapter: an interior render beside the form (dark), the alternatives as a plate under it. */
+.contact__fig { position: relative; margin: 0 0 var(--space-5); }
+.contact__fig .figure__media { position: relative; aspect-ratio: 4 / 5; background: var(--color-stage); }
+.contact__fig .pic, .contact__fig img { width: 100%; height: 100%; }
+.contact__fig img { object-fit: cover; object-position: 30% 50%; }
+.contact__fig .figure__media::after {
+  --cm: linear-gradient(var(--color-ink-2), var(--color-ink-2));
+  content: ""; position: absolute; inset: 12px; pointer-events: none;
+  background: var(--cm) 0 0 / 14px 1px, var(--cm) 0 0 / 1px 14px, var(--cm) 100% 0 / 14px 1px, var(--cm) 100% 0 / 1px 14px, var(--cm) 0 100% / 14px 1px, var(--cm) 0 100% / 1px 14px, var(--cm) 100% 100% / 14px 1px, var(--cm) 100% 100% / 1px 14px;
+  background-repeat: no-repeat;
+}
+.main > [data-ch] .contact__alt { padding: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line-strong); }

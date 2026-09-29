@@ -11,13 +11,17 @@
 .answer-card .actions { margin: 0; }
 .answer-fact { display: grid; gap: var(--space-2); padding-top: var(--space-4); border-top: 1px solid var(--color-line-strong); }
 .answer-fact strong { font: var(--wght-display) var(--fs-h3)/var(--lh-h3) var(--font-display); font-stretch: var(--stretch-h2); letter-spacing: var(--tracking-h3); }
-.block--plate { margin-block: 0; }
-/* The figure is as wide as the drawn picture (V-13): height-capped renders are centred and the caption starts at the
-   image's left edge. The caption never widens the figure (inline-size containment). */
-.block--plate .figure { width: fit-content; max-width: 100%; margin-inline: auto; }
-.block--plate .pic img { width: auto; max-height: 78svh; }
-.block--plate figcaption { max-width: none; contain: inline-size; }
+/* Drawing set: the aside is a plate on the sheet. The price card and the fact sit on the surface with a crop-mark frame, the render
+   in a keyline with an offset outline (a second sheet peeking out). The aside is opaque so the chapter numeral never runs under its text. */
+.answer-card, .answer-fact { position: relative; background: var(--color-surface); border: 1px solid var(--color-line-strong); }
+.answer-fact { padding: var(--space-5); }
+.answer-split__aside .figure__media { border: 1px solid var(--color-line-strong); outline: 1px solid var(--color-line-strong); outline-offset: 7px; }
+.answer-split__aside .figure { margin: 8px; }
+.answer-card::before, .answer-fact::before { content: ""; position: absolute; inset: 6px; border: 1px solid var(--color-line); pointer-events: none; }
 @media (min-width: 1024px) {
+  /* The chapter numeral sits above the aside (left side when the answer is flipped): the aside starts below it, the copy never runs over the outline. */
+  .main > [data-n]:has(.answer-split--flip)::before { right: auto; left: calc(var(--ch-edge) - .05em); }
+  .main > [data-n] .answer-split__aside { margin-top: calc(var(--chapter-num) * .72); }
   .answer-split { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-5); align-items: start; }
   .answer-split__main { grid-column: 1 / 8; }
   .answer-split__aside { grid-column: 9 / 13; margin: 0; padding-top: var(--space-5); position: sticky; top: calc(var(--header-h) + var(--space-6)); }

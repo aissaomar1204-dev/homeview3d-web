@@ -17,6 +17,8 @@ const SRC = {
   cubi: 'https://www.cubi.casa/pricing/',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-precio-plano',
   image: 'villa_planta_cenital',
@@ -169,6 +171,7 @@ export default {
         title: 'Un plano 3D es material comercial, no un plano técnico',
         body: 'Si el plano original no trae cotas, las medidas se estiman a partir de su escala (≈) y así debe indicarse al publicarlo. Un plano 3D no sustituye a la documentación técnica de la vivienda. En nuestro [caso demostrativo](@caso-villa) todas las superficies son estimaciones y lo decimos en la ficha.',
       },
+      plate('es', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',
@@ -378,6 +381,7 @@ export default {
         title: 'A 3D floor plan is a marketing image, not a survey',
         body: 'If the original plan has no dimensions, measurements are estimated from its scale (≈), and the listing should say so. A 3D floor plan does not replace the property’s technical documentation, and the official floor area is the one to quote in a listing. Every area in our [demonstration case](@caso-villa) is an estimate, and we say so on the page.',
       },
+      plate('en', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',

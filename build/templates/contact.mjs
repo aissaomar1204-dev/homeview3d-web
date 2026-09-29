@@ -1,8 +1,9 @@
-/* Contact: H1 + lead → form + alternatives (WhatsApp, email, phone, booking) → other blocks → FAQ → cajetín. ContactPage on the GEO side. */
+/* Contact: hero sheet → form (graphite chapter, a render beside the contact list) + alternatives (WhatsApp, email, phone, booking) → other blocks → FAQ → key facts. ContactPage on the GEO side. */
 import { textHero, contactForm, cajetin } from '../lib/components.mjs';
 import { standardPage } from '../lib/blocks.mjs';
 
 export default function render(ctx) {
+  ctx.chapters = {}; // a drawing set (build/lib/chapters.mjs)
   const p = ctx.page;
   const hasForm = (p.blocks || []).some((b) => b.type === 'contactForm');
   const { html } = standardPage(ctx, {

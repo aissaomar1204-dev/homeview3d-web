@@ -15,6 +15,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { uiHero } from '../data/ui-hero.mjs';
+import { seriesOf } from './chapters.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const pad = (i, n = 3) => String(i).padStart(n, '0');
@@ -211,6 +212,13 @@ export function heroStage(ctx) {
   // data-t: cota labels (long side | short side); data-u: length unit; data-r: label of the replay button (built by hero.js).
   const attrs = `data-hero data-g="${esc(geoUrl)}" data-j="${esc(jsUrl)}" data-c="${esc(ctx.asset('/assets/css/herolive.css'))}" data-t="${fmt(villa.footprint.d)}|${fmt(villa.footprint.w)}" data-u="${esc(ui.unit)}" data-r="${esc(ui.replay)}"`;
   return `<figure class="hs" ${attrs}><div class="hs__stage">${art}</div>${strip}</figure>`;
+}
+
+/** North arrow, scale bar and sheet id under the hero copy (decoration: aria-hidden, drawn by 24-chapters.css). */
+export function heroLegend(ctx) {
+  // The sheet id follows the page's series (home A-00, a service S-00, a guide G-00…, see chapters.mjs).
+  const sheet = ctx.t('hero.legend.sheet').replace(/[A-Z]-00$/, `${seriesOf(ctx)}-00`);
+  return `<div class="hv-leg" aria-hidden="true"><i class="hv-na"></i><span class="hv-sb"><b>0</b><b>2</b><b>5 m</b></span><p>${ctx.esc(ctx.t('hero.legend.scale'))}<br>${ctx.esc(sheet)}</p></div>`;
 }
 
 /**

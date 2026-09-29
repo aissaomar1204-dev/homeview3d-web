@@ -1,0 +1,27 @@
+
+> estudio-3d-web@0.1.0 check
+> node build/check.mjs
+
+
+QA check · E:\ProyectosRealStateBlender\dist · mode: preview/local
+70 HTML files (62 indexable, 6 utility, 2 other)
+
+■ LAUNCH: 0 error(s), 2 warning(s)   (humans before launch: build/data/site.mjs, build/data/pricing.mjs (README.md, section 1))
+  ! [placeholders] build/data/pricing.mjs: prices are a PROPOSAL (confirmed: false)
+  ! [placeholders] build/data/site.mjs: NIF y datos registrales en trámite (legal.pending): cuando la sociedad esté inscrita, rellena legal.nif y legal.registro y pon legal.pending en false
+
+By category (errors/warnings): placeholders 0/2
+
+Budgets (§11):
+  ✓ HTML raw (largest page)                 78.5 KB  / 90.0 KB    /
+  ✓ HTML brotli q11 (largest page)          16.7 KB  / 19.0 KB    /
+  ✓ CSS shared sheet                        35.2 KB  / 42.0 KB    site.5148bb4b.css
+  ✓ CSS per page (largest)                  65.7 KB  / 72.0 KB    /en/
+  ✓ Render-blocking CSS requests (max)            2  / 2          /404.html
+  ✓ Fonts (all woff2)                       60.3 KB  / 110.0 KB 
+  ✓ Home initial JS                         28.4 KB  / 30.0 KB  
+  ✓ Home LCP image (1200w AVIF)             50.0 KB  / 150.0 KB 
+  · IndexNow pending: 62 URL(s) (all URLs (live manifest unavailable: Unexpected token '<', "<!DOCTYPE "... is not valid JSON))
+  · design lint: Design lint: 0 errors, 0 warnings
+
+✓ 0 error(s), 2 warning(s)

@@ -201,8 +201,10 @@ export function footer(ctx) {
   const legal = ['aviso-legal', 'privacidad', 'cookies'].filter((id) => ctx.has(id)).map((id) => `<li><a href="${esc(ctx.href(id))}">${esc(ctx.label(id))}</a></li>`).join('');
   const wa = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(ctx.t('cta.whatsappText'))}`;
   const year = new Date().getFullYear();
+  // The long section (villa-section-long.svg) stands on the ground line above the footer content; the brand name is the outlined masthead (data-w).
   return `<footer class="site-footer" data-footer><div class="wrap">`
-    + `<div class="site-footer__top">`
+    + `<div class="site-footer__cut" data-l="${esc(ctx.t('footer.cut'))}" aria-hidden="true"></div>`
+    + `<div class="site-footer__top" data-w="${esc(ctx.site.brand.name)}">`
     + `<div class="site-footer__about">${LOCKUP ? footerLogo() : `<p class="brand__word brand__word--footer">${esc(ctx.site.brand.name)}</p>`}`
     + `<p class="site-footer__entity">${esc(ctx.tok(ctx.site.entity[L]))}</p>`
     + `<p class="site-footer__base">${esc(ctx.t('footer.base'))}</p>`
@@ -274,7 +276,8 @@ export function renderDocument(ctx, o) {
     : '';
   // Shared stylesheet + ONE bundle of the feature modules this page uses (build/lib/assets.mjs buildCss / cssBundle):
   // never more than two render-blocking CSS requests (V-21).
-  const mods = modulesFor(o.main, A.cssModules);
+  // The <body> classes count too (a module may be keyed on the template, e.g. the inner-page decoration `page-service`).
+  const mods = modulesFor(`${o.main}<i class="${o.bodyClass || ''}"></i>`, A.cssModules);
   const bundle = mods.length ? (A.cssBundle ? A.cssBundle(mods) : null) : null;
   const styles = [A.css, ...(bundle ? [bundle.url] : mods.map((m) => m.url))].map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join('');
   const locales = ctx.site.locale;

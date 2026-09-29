@@ -33,7 +33,7 @@ const IMAGES = new Set([
 
 const BLOCKS = {
   prose: ['body'], answer: ['h2', 'answer'], table: ['caption', 'head', 'rows'], steps: ['h2', 'items'], checklist: ['h2', 'items'],
-  figure: ['image', 'alt', 'caption'], gallery: ['items'], compare: [], viewer: [], ar: [], formats: [], embedCode: [],
+  figure: ['image', 'alt', 'caption'], gallery: ['items'], plate: ['images'], compare: [], viewer: [], ar: [], formats: [], embedCode: [],
   deliverables: [], comingSoon: [], process: [], needs: [], services: [], audiences: [], pages: ['ids'], pricing: ['variant'],
   calculator: [], guarantees: [], stat: ['value', 'label', 'source', 'year'], callout: ['body'], specs: ['items'],
   sources: ['items'], faq: [], faqGroups: ['groups'], glossary: [], contactForm: [], cta: ['h2', 'body'], video: ['video', 'caption'],
@@ -143,6 +143,14 @@ function checkLang(doc, route, lang, seen) {
     for (const k of BLOCKS[b.type]) if (b[k] == null || b[k] === '') E(id, lang, `block #${i} (${b.type}) missing ${k}`);
     if (b.type === 'figure' && !IMAGES.has(b.image)) E(id, lang, `block #${i}: unknown image ${b.image}`);
     if (b.type === 'gallery') for (const it of b.items || []) if (!IMAGES.has(it.image)) E(id, lang, `gallery: unknown image ${it.image}`);
+    if (b.type === 'plate') {
+      if (!Array.isArray(b.images) || b.images.length < 1 || b.images.length > 2) E(id, lang, `block #${i} (plate): images must hold 1 (full bleed) or 2 (diptych) items`);
+      for (const it of b.images || []) {
+        if (!IMAGES.has(it.image)) E(id, lang, `plate: unknown image ${it.image}`);
+        if (!it.alt || !it.caption) E(id, lang, `plate ${it.image}: alt and caption are required (the caption states that it is a render)`);
+      }
+    }
+    if (b.type === 'contactForm' && b.image && !IMAGES.has(b.image)) E(id, lang, `contactForm: unknown image ${b.image}`);
     if (b.type === 'pages') for (const pid of b.ids || []) if (!routeById[pid]?.[lang]) E(id, lang, `pages block: @${pid} missing in ${lang}`);
     if (b.type === 'table' && Array.isArray(b.head) && Array.isArray(b.rows)) for (const r of b.rows) if (r.length !== b.head.length) E(id, lang, `table "${b.caption}": row has ${r.length} cells, head has ${b.head.length}`);
     if (b.type === 'answer' && b.answer) { const w = words(b.answer); if (w < 25 || w > 75) W(id, lang, `answer block "${b.h2}" ${w} words (40–60)`); }

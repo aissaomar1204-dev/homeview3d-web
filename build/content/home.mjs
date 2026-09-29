@@ -33,6 +33,12 @@ export default {
         intro: 'Misma cámara, misma escala: a la izquierda, la planta redibujada desde el modelo; a la derecha, el render. Arrastra y compara. Todo salió de {{villa:input}}.',
       },
       {
+        type: 'plate',
+        images: [
+          { image: 'villa_interior_salon', alt: 'Salón de la villa a la altura de los ojos, con sofá rinconera y hojas correderas hacia la terraza. Render 3D de la villa anonimizada.', caption: 'Salón hacia la terraza. Render 3D de la villa anonimizada.' },
+        ],
+      },
+      {
         type: 'deliverables',
         h2: '¿Qué recibes a partir de un solo plano?',
         intro: 'Modelamos la vivienda una vez y de ese modelo salen cinco entregables coherentes entre sí: si cambias el suelo del salón, cambia en los [renders](@glosario#render), en el visor y en la realidad aumentada. Los cuatro primeros van en la [maqueta 3D completa](@servicio-plano); el home staging virtual se añade por estancia.',
@@ -47,6 +53,13 @@ export default {
         type: 'viewer',
         h2: 'La villa en 3D',
         intro: 'Es el entregable real, no un vídeo: la planta alta de una villa en la Costa del Sol, modelada desde su plano. Gira, acércate, recorre sus {{villa:rooms}} estancias o corta los muros a {{villa:cutHeight}} m con el [modo maqueta](@glosario#modo-maqueta). El modelo pesa {{file:glb}} y solo se descarga si pulsas. Cifras y método, en el [caso demostrativo](@caso-villa).',
+      },
+      {
+        type: 'plate',
+        images: [
+          { image: 'villa_interior_dormitorio', alt: 'Dormitorio principal de la villa con cabecero de obra, mesillas con lámparas y salida a la terraza. Render 3D de la villa anonimizada.', caption: 'Dormitorio principal. Render 3D de la villa anonimizada.' },
+          { image: 'villa_interior_bano', alt: 'Baño en suite de la villa con bañera exenta redonda y porcelánico negro. Render 3D de la villa anonimizada.', caption: 'Baño en suite. Render 3D de la villa anonimizada.' },
+        ],
       },
       {
         type: 'audiences',
@@ -68,6 +81,9 @@ export default {
         type: 'contactForm',
         h2: 'Pide tu demo: una estancia de tu plano en 3D',
         intro: 'Adjunta el plano o pega el enlace del anuncio. Te respondemos con precio cerrado y plazo y, si quieres, con una estancia modelada en 3D que puedes abrir en realidad aumentada. Gratis y sin compromiso. Contesta una persona.',
+        image: 'villa_interior_dormitorio',
+        imageAlt: 'Dormitorio principal de la villa con cabecero de obra, mesillas con lámparas y salida a la terraza. Render 3D de la villa anonimizada.',
+        imageCaption: 'Dormitorio principal. Render 3D de la villa anonimizada.',
       },
     ],
     faq: [
@@ -131,6 +147,12 @@ export default {
         intro: 'Same camera, same scale: on the left, the plan redrawn from the model; on the right, the render. Drag to compare. All of it came from {{villa:input}}.',
       },
       {
+        type: 'plate',
+        images: [
+          { image: 'villa_interior_salon', alt: 'Living room of the villa at eye level, with a corner sofa and sliding panels towards the terrace. 3D render of the anonymised villa.', caption: 'Living room towards the terrace. 3D render of the anonymised villa.' },
+        ],
+      },
+      {
         type: 'deliverables',
         h2: 'What do you get from a single floor plan?',
         intro: 'We model the home once, and five consistent deliverables come out of that model: change the living-room floor and it changes in the [renders](@glosario#render), in the viewer and in augmented reality. The first four come with the [complete 3D model](@servicio-plano); virtual staging is added per room.',
@@ -145,6 +167,13 @@ export default {
         type: 'viewer',
         h2: 'The villa in 3D',
         intro: 'This is the actual deliverable, not a video: the upper floor of a Costa del Sol villa, modelled from its floor plan. Orbit, zoom, tour its {{villa:rooms}} rooms or cut the walls at {{villa:cutHeight}} m in [cut-away mode](@glosario#modo-maqueta). The model weighs {{file:glb}} and only downloads when you tap. Figures and method are in the [case study](@caso-villa).',
+      },
+      {
+        type: 'plate',
+        images: [
+          { image: 'villa_interior_dormitorio', alt: 'Main bedroom of the villa with a built-in headboard, bedside lamps and terrace access. 3D render of the anonymised villa.', caption: 'Main bedroom. 3D render of the anonymised villa.' },
+          { image: 'villa_interior_bano', alt: 'En-suite bathroom of the villa with a round freestanding tub and black porcelain tiles. 3D render of the anonymised villa.', caption: 'En-suite bathroom. 3D render of the anonymised villa.' },
+        ],
       },
       {
         type: 'audiences',
@@ -166,6 +195,9 @@ export default {
         type: 'contactForm',
         h2: 'Get your demo: one room of your plan in 3D',
         intro: 'Attach the floor plan or paste the listing link. We reply with a fixed price and turnaround and, if you like, one room modelled in 3D that you can open in augmented reality. Free, with no obligation. A real person replies.',
+        image: 'villa_interior_dormitorio',
+        imageAlt: 'Main bedroom of the villa with a built-in headboard, bedside lamps and terrace access. 3D render of the anonymised villa.',
+        imageCaption: 'Main bedroom. 3D render of the anonymised villa.',
       },
     ],
     faq: [

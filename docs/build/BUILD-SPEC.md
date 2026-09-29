@@ -28,15 +28,16 @@ build/
   check.mjs                 GEO     post-build QA (SEO/GEO/a11y-lint/perf budgets) + runs scripts/design-lint.mjs
   validate-content.mjs      (exists) content contract validator; build.mjs must run the same checks and fail on errors
   serve.mjs                 ENGINE  preview server for dist/ (reuse scripts/serve.mjs logic; trailing slash, real 404, MIME for glb/usdz/avif/md)
-  data/                     shared data: site, routes, pricing, villa, process, deliverables (exist) · ui.mjs (ENGINE) · glossary.mjs (CONTENT)
+  data/                     shared data: site, routes, pricing, villa, process, deliverables (exist) · ui.mjs (ENGINE) · glossary.mjs (CONTENT) · plates.mjs (CONTENT: honest alt and caption of each render, `plate(lang, key…)`)
   content/<id>.mjs          CONTENT pages (see CONTENT-SCHEMA.md)
   generated/images.json     ASSETS image manifest (committed)
   lib/
     context.mjs             ENGINE  ctx factory (§3)
     md.mjs                  ENGINE  md-lite → HTML, token + link resolution
     assets.mjs              ENGINE  hashing, asset(), img()/picture()
-    layout.mjs              ENGINE  <head>, header, footer, breadcrumbs, bottom bar
-    blocks.mjs              ENGINE  block renderers (delegates viewer/ar/formats/embedCode to viewer.mjs)
+    layout.mjs              ENGINE  <head>, header, footer (masthead + long section), breadcrumbs, bottom bar
+    chapters.mjs            ENGINE  chapter engine: tone table CHAPTERS, chapter(ctx, type) → data attributes, sheet series per template (rulebook O3)
+    blocks.mjs              ENGINE  block renderers (delegates viewer/ar/formats/embedCode to viewer.mjs; `plate` block)
     components.mjs          ENGINE  cajetín, compare slider, despiece, calculator, form, faq, cta, related, tables
     viewer.mjs              VIEWER  renderViewerBand, renderViewerApp, renderArBlock, renderFormats, renderEmbedCode, arLinks
     schema.mjs              GEO     schemaGraph(entry, ctx) → JSON-LD @graph nodes
@@ -44,7 +45,7 @@ build/
     machine.mjs             GEO     writeMachineOutputs(entries, env): robots, sitemaps, llms*, md mirrors, feeds, indexnow, _headers, _redirects
   templates/<name>.mjs      ENGINE (home, hub, service, audience, zone, case, process, pricing, guide, glossary, faq, about, contact, thanks, legal, notfound) · VIEWER (ar, embed)
 src/
-  css/00-tokens.css … 90-utilities.css   concatenated in filename order into one site.css (ENGINE owns all but 50-viewer.css = VIEWER)
+  css/00-tokens.css … 90-utilities.css   concatenated in filename order into one site.css (ENGINE owns all but 50-viewer.css = VIEWER); 24-chapters.css = the drawing set, 56-cards.css = image cards (module), 57-inner.css = the inner-page decoration (module keyed on the `<body>` class of the inner templates)
   js/main.js                ENGINE  ≤ 15 KB min: nav, reveals, faq, compare slider, despiece fallback, calculator, form enhancements, copy buttons
   js/viewer.js              VIEWER  module, loaded only on pages with a viewer/ar block; dynamic-imports model-viewer
 public/                     copied to dist/ (assets hashed): assets/fonts, assets/img, lib/model-viewer, models, favicons
@@ -133,13 +134,14 @@ CTA vocabulary (lint-enforced): "Pide tu demo" / "Get your demo" (→ contacto),
 
 ## 6. Templates (section order)
 
-- **home** (rulebook C5): hero split 5/7 (H1 ≤ 36 chars, lead, "Pide tu demo" + "Ver la villa en 3D"; visual = `villa_maqueta_iso` RGBA on `--color-stage`, eager/fetchpriority=high, caption "Render generado a partir del plano 2D, sin fotos") → cajetín (facts) → content blocks in order (expected: compare, deliverables, process[despiece], viewer (id `demo`), audiences, pricing[excerpt] + calculator, faq, contactForm). No closing CTA (the form is the end). 
-- **hub**: text hero → cajetín optional → blocks (typically `services`/`pages`/`comingSoon`) → related → closing CTA.
+- **home** (rulebook C5 + O1 hero + O3 drawing set): hero sheet (animated plan to 3D, north arrow and scale bar) → cajetín as the graphite «Datos clave» strip → chapters in order: compare (mat), `plate` (living room), deliverables (white, láminas), process[despiece] (graphite), viewer (id `demo`, mat), `plate` diptych, audiences (white, image cards), pricing[excerpt] (cinema over the dusk terrace), calculator (mat), faq (white, grey plates), contactForm (graphite, render beside the form) → date line → footer (long section, masthead). No closing CTA (the form is the end). See rulebook O3 and CONTENT-SCHEMA §9. 
+- **Every inner template is a drawing set** (rulebook O3, rollout 2026-09-29): it opts in with `ctx.chapters = {}`; the text hero is the first sheet (`data-ch="h"`, line drawing per template through `data-d`, legend, sheet series letter), the cajetín the graphite strip, every block a chapter (tones in `CHAPTERS`, neighbours always differ), a full-bleed render plate on every long page, the closing CTA a cinema chapter, the date line the continuation of the last chapter. Guides keep their reading column (see below); legal pages are quiet (white and paper only, no outlined numerals); `embed` is untouched.
+- **hub**: text hero → cajetín optional → blocks (typically `services`/`pages`/`comingSoon`, as image cards when every page has a render) → related → closing CTA.
 - **service / audience / zone**: text hero with optional side figure (`page.hero`) → cajetín → blocks → FAQ (if not placed) → related → closing CTA (preselected service).
 - **case** (`caso-villa`): H1 + lead → **viewer app** (`renderViewerApp`, id `visor`, poster eager) → cajetín → blocks (specs, gallery, timeline via steps, notice callout, embedCode, ar…) → FAQ → related → CTA "Quiero esto para mi promoción".
 - **process**: text hero → cajetín → blocks (process[despiece], needs, …) → FAQ → CTA. Emits HowTo schema.
 - **pricing**: text hero → cajetín → blocks (pricing[full], calculator, guarantees, tables…) → FAQ → CTA.
-- **guide**: article layout, 66ch column, visible "Actualizado el <time>" + author line ("Equipo de {{brand}}"), auto table of contents from block `h2`s (≥ 4), blocks, FAQ, sources, related, CTA.
+- **guide**: hero sheet with the hero render beside the title and the byline ("Equipo de {{brand}}" + "Actualizado el <time>"), key facts strip, then ONE white article sheet: 66ch reading column with numbered heads, auto table of contents drawn as a sticky sheet (from block `h2`s, ≥ 4), blocks, FAQ, sources; `plate` blocks (or an automatic one) full bleed after the article, related, cinema CTA.
 - **glossary**: A–Z index + one `<section id="<term id>">` per term (term H2, definition first sentence ≤ 40 words, body, related link). DefinedTermSet schema.
 - **faq**: grouped `<details>` (first 3 of each group open), FAQPage schema.
 - **about**: text hero → blocks → CTA. AboutPage schema.
@@ -210,9 +212,9 @@ place, `BUDGETS` in `build/lib/machine.mjs`; exceeding one is an error unless no
 
 | Budget | Limit | How it is measured |
 |---|---|---|
-| HTML per page | ≤ 72 KB raw **and** ≤ 16 KB brotli | every HTML file; brotli at quality 11 |
-| Shared stylesheet | ≤ 25 KB | `site.<hash>.css`, the sheet every page links |
-| CSS per page | ≤ 45 KB | sum of the stylesheets the page links (shared sheet + its bundle) |
+| HTML per page | ≤ 90 KB raw **and** ≤ 19 KB brotli | every HTML file; brotli at quality 11 |
+| Shared stylesheet | ≤ 42 KB | `site.<hash>.css`, the sheet every page links |
+| CSS per page | ≤ 72 KB | sum of the stylesheets the page links (shared sheet + its bundle) |
 | Render-blocking stylesheet requests | ≤ 2 per page | `<link rel="stylesheet">` not `disabled` and without `media="print"`/`"not all"`, plus their `@import`s |
 | Initial JS | ≤ 30 KB (target 15) | scripts referenced by the home's HTML |
 | Fonts | ≤ 110 KB | all woff2 (design lint: ≤ 3 files, ≤ 60 KB each) |
@@ -233,6 +235,21 @@ The shared sheet (≤ 25 KB, about 24 KB today) is what every first paint waits 
 about 43 KB on the home today) caps what a bundle can add. Brotli is measured at quality 11, what a host that compresses static
 files once serves; a CDN compressing on the fly at a lower quality adds about 10 % (the home is 14.3 KB at q11 and
 15.8 KB at q5).
+
+**Why the HTML and CSS budgets were re-baselined a second time (2026-09-29, «client-requested decoration»).** The
+client called the first build «demasiado simple» with a «fondo muy triste», and the orchestrator chose the drawing-set
+direction (rulebook O3): chapter tones, crop marks, drafting grids, outlined numerals, render plates, láminas, a
+cinematic pricing chapter, a deep footer with a long section. Measured after the change: the shared sheet went from
+22.6 KB to about 35 KB (chapter engine, header, hero sheet, strip, plates, footer, FAQ plates; every page pays it
+once, cached), the home bundle from 22 KB to about 29 KB (láminas, process numerals, pricing cinema, calculator frame,
+contact figure, audience image cards), and the home HTML from 71.6 KB to about 78.5 KB raw (16.7 KB brotli), all of
+it picture markup for the plates, the cards, the cinema band and the contact render (the chapter furniture itself is
+generated by CSS from data attributes, about 60 bytes per chapter). The limits keep the same shape, with about 10 %
+headroom over the heaviest page: HTML 90 KB and 19 KB brotli, shared CSS 42 KB, CSS per page 72 KB; blocking
+stylesheets (2), initial JS (30 KB), fonts and the LCP image are unchanged. Guards that stay: nothing decorative may be
+the LCP (the hero line plan still is), below-the-fold decoration is lazy or in `content-visibility: auto` sections,
+and Lighthouse mobile Performance on the home must stay at 95 or more (98 after the change).
+The inner pages joined the drawing set later the same day (rulebook O3.1) with no change of limits: the heaviest inner page is 62.8 KB of CSS and 72.3 KB of HTML (the case), and Lighthouse mobile scored 100 on a service page and on a guide.
 
 ## 12. Definition of done (all agents)
 

@@ -15,3 +15,19 @@
   .cta-band__grid--solo { grid-template-columns: minmax(0, 1fr); }
 }
 
+
+/* ---------- Cinema call to action (pages with chapters): white type on graphite over a darkened render (alt="" picture, .ch-bg) ---------- */
+.cta-band--cine { --ch-open: 0px; border: 0; }
+.main > .cta-band--cine[data-ch] { --chapter-y: clamp(72px, 6vw + 32px, 128px); }
+.cta-band--cine .ch-bg { height: 100%; }
+/* The scrim holds 92 % graphite under the copy (which is at most 44ch wide) and only then lets the render through; on phones the copy
+   spans the whole width, so the scrim is even. Measured on pixels: white-ish type (gr-ink-2) keeps 4.5:1 on the brightest render. */
+.cta-band--cine .ch-bg::before {
+  background: var(--ch-grain) 0 0 / 256px 256px, linear-gradient(90deg, color-mix(in srgb, var(--gr-bg) 97%, transparent) 0, color-mix(in srgb, var(--gr-bg) 92%, transparent) 62%, color-mix(in srgb, var(--gr-bg) 34%, transparent) 100%),
+    linear-gradient(0deg, var(--gr-bg) 0, transparent 26%);
+}
+@media (max-width: 767px) {
+  .cta-band--cine .ch-bg::before { background: var(--ch-grain) 0 0 / 256px 256px, linear-gradient(0deg, color-mix(in srgb, var(--gr-bg) 92%, transparent), color-mix(in srgb, var(--gr-bg) 92%, transparent)); }
+}
+.cta-band--cine .ch-bg img { object-position: 62% 46%; }
+.cta-band--cine .cta-band__body { max-width: 44ch; }

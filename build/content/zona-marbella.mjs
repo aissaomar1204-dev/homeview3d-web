@@ -79,6 +79,8 @@ const faqEn = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'zona-marbella',
   image: 'villa_terraza_opaco',
@@ -135,6 +137,7 @@ export default {
           { label: 'Colegio de Registradores: Estadística Registral Inmobiliaria, 2.º trimestre de 2026', url: ERI },
         ],
       },
+      plate('es', 'villa_interior_terraza'),
       {
         type: 'prose',
         h2: '¿Qué tipo de viviendas modelamos en Marbella?',
@@ -231,6 +234,7 @@ export default {
           { label: 'Colegio de Registradores (Spain’s association of land registrars): Estadística Registral Inmobiliaria, Q2 2026', url: ERI },
         ],
       },
+      plate('en', 'villa_interior_terraza'),
       {
         type: 'prose',
         h2: 'Who buys on the Costa del Sol, and how do they decide?',

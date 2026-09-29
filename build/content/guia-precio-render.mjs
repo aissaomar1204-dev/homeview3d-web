@@ -15,6 +15,8 @@ const SRC = {
   blender: 'https://www.blender.org/about/',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-precio-render',
   image: 'villa_salon_dormitorio',
@@ -178,6 +180,7 @@ export default {
         title: 'Somos parte interesada',
         body: 'Vendemos visualización 3D, así que esta guía no es neutral. Para compensarlo, cada cifra de mercado enlaza a la página que la publica, indicamos la fecha de consulta y marcamos qué rangos son estimados. No citamos precios que solo aparecen en resúmenes de buscadores o de IA. Si lo que comparas son proveedores, y no solo precios, tienes una [lista de estudios y herramientas de visualización 3D en España](@guia-mejores) con los criterios a la vista.',
       },
+      plate('es', 'villa_interior_dormitorio'),
       { type: 'faq' },
       {
         type: 'sources',
@@ -394,6 +397,7 @@ export default {
         title: 'We have a stake in this',
         body: 'We sell 3D visualisation, so this guide is not neutral. To offset that, every market figure links to the page that publishes it, we state when we checked it and we flag ranges that are estimates. We do not quote prices that only appear in search engine or AI summaries. If you are comparing providers rather than prices, see our [list of 3D visualisation studios and tools in Spain](@guia-mejores), with the criteria in plain view.',
       },
+      plate('en', 'villa_interior_dormitorio'),
       { type: 'faq' },
       {
         type: 'sources',

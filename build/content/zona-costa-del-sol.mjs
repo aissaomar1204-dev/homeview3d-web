@@ -45,6 +45,8 @@ const faq = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'zona-costa-del-sol',
   image: 'villa_dormitorios_opaco',
@@ -106,6 +108,7 @@ export default {
         note: 'Fuente: Ministerio de Vivienda y Agenda Urbana, transacciones inmobiliarias de vivienda por municipios, a partir de escrituras notariales (suma de los cuatro trimestres de 2025). Los datos de San Roque, en la provincia de Cádiz, incluyen todo el municipio y no solo Sotogrande.',
         sources: [{ label: 'Ministerio de Vivienda y Agenda Urbana: transacciones inmobiliarias por municipios', url: MIVAU }],
       },
+      plate('es', 'villa_terraza_opaco'),
       {
         type: 'prose',
         h2: 'Estepona: obra nueva y venta sobre plano',

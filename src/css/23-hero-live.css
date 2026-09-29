@@ -11,7 +11,7 @@
 .hs__l { stroke: var(--color-ink-3); }
 .hs__rt, .hs__rl { stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .hs__rv { position: absolute; inset: 0 auto 0 0; width: 28px; height: 100%; fill: none; stroke: var(--color-line-strong); }
-.hs__c, .hs__tb, .hs__lb { position: absolute; left: 0; top: 0; color: var(--color-ink-3); white-space: nowrap; }
+.hs__c, .hs__tb, .hs__lb { position: absolute; left: 0; top: 0; color: var(--color-ink-2); white-space: nowrap; }
 .hs__c { padding: 2px 6px; background: var(--color-stage); color: var(--color-ink-2); transform: translate(calc(var(--x) * 100cqw - 50%), calc(var(--y) * 100cqh - 50%)); }
 .hs__c--l { transform: translate(calc(var(--x) * 100cqw - 50%), calc(var(--y) * 100cqh - 100% - 6px)); }
 .hs__c b { font-weight: inherit; }

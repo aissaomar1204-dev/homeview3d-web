@@ -1,0 +1,449 @@
+/ @1440 light: 395 text runs, 17 below threshold
+  1.72 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 A
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 A
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 E
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 E
+  3.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 C
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 B
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 B
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 B
+  3.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 C
+  3.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 C
+  4.45 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=480 10
+  4.49 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=622 15
+/servicios/plano-2d-a-3d/ @1440 light: 349 text runs, 26 below threshold
+  1.72 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=3266 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=3266 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=3266 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9123 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9123 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9123 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=13469 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=13469 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=13469 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 A
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 E
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 B
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 C
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 B
+  3.22 (<4.5) 13px [aria-hidden] [ch=c] y=14710 [sheet] Hoja S-13
+  3.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9123 B
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9123 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=13469 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=3266 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=3266 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=13469 C
+/precios/ @1440 light: 417 text runs, 31 below threshold
+  1.71 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--checklist] y=5054 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--checklist] y=5054 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=10548 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14054 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14054 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14054 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=6602 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=6602 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=6602 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9206 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=10548 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=10548 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--checklist] y=5054 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 A
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9206 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9206 E
+  3.21 (<4.5) 13px [aria-hidden] [ch=c] y=15295 [sheet] Hoja T-13
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 B
+  3.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--checklist] y=5054 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9206 B
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14054 C
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--checklist] y=5054 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14054 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=6602 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=6602 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=9206 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=10548 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=10548 C
+/contacto/ @1440 light: 168 text runs, 10 below threshold
+  1.72 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=3682 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=3682 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=3682 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 A
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 E
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 B
+  3.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=3682 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=3682 C
+/preguntas-frecuentes/ @1440 light: 204 text runs, 17 below threshold
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=3663 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=3663 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=5512 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=1987 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=1987 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=3663 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=5512 A
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=1987 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=5512 D
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=1987 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=1987 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=3663 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=3663 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=5512 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=5512 C
+  3.95 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--text] y=589 Hoja Q-00
+  4.07 (<4.5) 13px [aria-hidden] [ch=c] y=9234 [sheet] Hoja Q-09
+/guias/cuanto-cuesta-un-render-3d/ @1440 light: 337 text runs, 1 below threshold
+  4.08 (<4.5) 13px [aria-hidden] [ch=c] y=13153 [sheet] Hoja G-02
+/casos/villa-costa-del-sol/ @1440 light: 319 text runs, 36 below threshold
+  1.71 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 D
+  1.72 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=2026 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=2026 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=2026 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--gallery] y=3347 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--gallery] y=3347 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--gallery] y=3347 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=10935 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=10935 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--embedCode] y=12068 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--embedCode] y=12068 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--embedCode] y=12068 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14945 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14945 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=10935 A
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14945 E
+  3.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 C
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 B
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 C
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 B
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=2026 B
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=2026 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--gallery] y=3347 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=10935 C
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=10935 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--gallery] y=3347 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--embedCode] y=12068 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--embedCode] y=12068 C
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14945 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=14945 C
+  4.07 (<4.5) 13px [aria-hidden] [ch=c] y=16186 [sheet] Hoja V-13
+/soluciones/promotoras-obra-nueva/ @1440 light: 309 text runs, 16 below threshold
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=11893 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=11893 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=11893 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=5290 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=5290 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=5290 E
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 B
+  3.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=11893 C
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=11893 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=5290 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--steps] y=5290 C
+  3.95 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--text] y=713 Hoja C-00
+/zonas/marbella/ @1440 light: 266 text runs, 21 below threshold
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=1974 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=1974 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=1974 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=8634 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=8634 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=8634 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--prose] y=3682 A
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--prose] y=3682 D
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--prose] y=3682 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 A
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 E
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 B
+  3.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--prose] y=3682 B
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=8634 C
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=1974 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=1974 C
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--related] y=8634 B
+  3.3 (<4.5) 17px [aria-hidden] [ch=p.block.block--prose] y=3682 C
+  4.07 (<4.5) 13px [aria-hidden] [ch=c] y=9875 [sheet] Hoja Z-09
+/en/ @1440 light: 385 text runs, 17 below threshold
+  1.72 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 A
+  1.75 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 A
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 E
+  1.76 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 E
+  3.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 C
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 B
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 B
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 B
+  3.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 C
+  3.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 C
+  4.45 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=480 10
+  4.49 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=622 15
+/como-funciona/ @1440 light: 322 text runs, 21 below threshold
+  1.71 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=5369 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=5369 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=5369 E
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=10861 A
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=10861 D
+  1.73 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=10861 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 A
+  1.74 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 E
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=8908 D
+  1.74 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=8908 E
+  1.75 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=8908 A
+  3.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 C
+  3.22 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 B
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=5369 C
+  3.28 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=8908 C
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--table] y=5369 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--answer] y=8908 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=10861 B
+  3.29 (<4.5) 17px [aria-hidden] [ch=p.block.block--faq] y=10861 C
+  4.08 (<4.5) 13px [aria-hidden] [ch=c] y=12967 [sheet] Hoja P-12
+/glosario/ @1440 light: 449 text runs, 15 below threshold
+  3.22 (<4.5) 13px [aria-hidden] [ch=c] y=12525 [sheet] Hoja L-04
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2650 D
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2650 E
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2695 F
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2695 J
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 K
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 L
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 N
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 O
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2785 Q
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2830 X
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2830 Y
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2875 Z
+  3.95 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--text] y=589 Hoja L-00
+  4.08 (<4.5) 13px [aria-hidden] [ch=c] y=2008 [sheet] Hoja L-02
+/ @390 light: 349 text runs, 2 below threshold
+  4.41 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=588 10
+  4.49 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=656 15
+/servicios/plano-2d-a-3d/ @390 light: 314 text runs, 4 below threshold
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6282 Opción
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6338 Qué obtienes
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6394 Qué hace falta
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6450 ¿Sirve sin la vivienda construida?
+/precios/ @390 light: 377 text runs, 7 below threshold
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6859 Qué recibes
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6915 Plano 3D
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6971 Maqueta 3D completa
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=15754 Servicio
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=15810 Precio publicado
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=15866 Qué entrega
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=15922 Fuente
+/contacto/ @390 light: 148 text runs, 0 below threshold
+/preguntas-frecuentes/ @390 light: 181 text runs, 3 below threshold
+  1.89 (<4.5) 13px [ch=k.cajetin-band] y=762 maqueta, 490 € + IVA
+  2.01 (<4.5) 13px [ch=k.cajetin-band] y=823 Revisiones
+  2.01 (<4.5) 13px [ch=k.cajetin-band] y=823 Entrada
+/guias/cuanto-cuesta-un-render-3d/ @390 light: 329 text runs, 13 below threshold
+  1.01 (<4.5) 15px [block.block--table] y=3393 Tipo de imagen
+  1.01 (<4.5) 15px [block.block--table] y=3449 Precio publicado
+  1.01 (<4.5) 15px [block.block--table] y=3505 Fuente
+  1.01 (<4.5) 15px [block.block--table] y=6830 Encargo
+  1.01 (<4.5) 15px [block.block--table] y=6886 Precio publicado
+  1.01 (<4.5) 15px [block.block--table] y=6942 Fuente
+  1.01 (<4.5) 15px [block.block--table] y=9286 Factor
+  1.01 (<4.5) 15px [block.block--table] y=9342 Qué cambia
+  1.01 (<4.5) 15px [block.block--table] y=9398 Efecto en el precio
+  1.01 (<4.5) 15px [block.block--table] y=12036 Encargo
+  1.01 (<4.5) 15px [block.block--table] y=12092 Tarifas de estudio
+  1.01 (<4.5) 15px [block.block--table] y=12148 Tarifas low-cost
+  1.01 (<4.5) 15px [block.block--table] y=12204 Con Home View 3D
+/casos/villa-costa-del-sol/ @390 light: 271 text runs, 1 below threshold
+  3.95 (<4.5) 13px [ch=h.hero.hero--text] y=958 12 estancias: ≈ 75 m² interiores y ≈ 28 m² de te
+/soluciones/promotoras-obra-nueva/ @390 light: 264 text runs, 3 below threshold
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=3650 Momento
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=3706 El problema
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=3762 Qué aporta el modelo 3D
+/zonas/marbella/ @390 light: 216 text runs, 7 below threshold
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=8813 Vivienda
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=8869 Qué te recomendamos
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=8925 Precio
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=3009 Dato
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=3065 Cifra
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=3121 Periodo
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=3177 Fuente
+/en/ @390 light: 339 text runs, 2 below threshold
+  4.41 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=615 10
+  4.49 (<4.5) 13px [aria-hidden] [ch=h.hero.hero--seq] y=683 15
+/como-funciona/ @390 light: 292 text runs, 14 below threshold
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=5834 Fase
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=5890 Cuándo
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=5946 Qué hacemos
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=6002 Qué haces tú
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=13801 Entregable
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=13857 Formato
+  1.01 (<4.5) 15px [ch=w.block.block--table] y=13913 Para qué sirve
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=884 Enviar el plano y revisar el visor
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=902 No hace falta
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=7671 Herramienta
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=7727 Para qué la usamos
+  1.11 (<4.5) 15px [ch=p.block.block--table] y=7783 Por qué esta
+  1.66 (<4.5) 13px [ch=k.cajetin-band] y=860 Visita a la vivienda
+  4.23 (<4.5) 13px [ch=k.cajetin-band] y=860 Tu parte
+/glosario/ @390 light: 441 text runs, 17 below threshold
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=770 Scene Viewer
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=770 , ARCore, ARKit y
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=748 Render, infografía 3D, PBR,
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=770 Cycles
+  1.11 (<4.5) 17px [ch=k.cajetin-band] y=770 y planta cenital
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2539 D
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2539 E
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2539 F
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 J
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 K
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 L
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 N
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2629 O
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2629 Q
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2674 X
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2674 Y
+  3.42 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2674 Z
+/ @1440 dark: 395 text runs, 12 below threshold
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 B
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 B
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 C
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 C
+  4.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 C
+  4.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 B
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 E
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 E
+  4.38 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 E
+  4.41 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 A
+  4.41 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=7017 A
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=12431 A
+/servicios/plano-2d-a-3d/ @1440 dark: 349 text runs, 9 below threshold
+  3.43 (<4.5) 13px [aria-hidden] [ch=c] y=14710 [sheet] Hoja S-13
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 C
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 B
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 C
+  4.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 B
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 E
+  4.38 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 E
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=2064 A
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=7542 A
+/precios/ @1440 dark: 417 text runs, 5 below threshold
+  3.42 (<4.5) 13px [aria-hidden] [ch=c] y=15295 [sheet] Hoja T-13
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 B
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 C
+  4.35 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 E
+  4.4 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=8400 A
+/contacto/ @1440 dark: 168 text runs, 4 below threshold
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 B
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 C
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 E
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=2849 A
+/preguntas-frecuentes/ @1440 dark: 204 text runs, 1 below threshold
+  4.31 (<4.5) 13px [aria-hidden] [ch=c] y=9234 [sheet] Hoja Q-09
+/guias/cuanto-cuesta-un-render-3d/ @1440 dark: 337 text runs, 1 below threshold
+  4.31 (<4.5) 13px [aria-hidden] [ch=c] y=13153 [sheet] Hoja G-02
+/casos/villa-costa-del-sol/ @1440 dark: 319 text runs, 9 below threshold
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 C
+  4.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 C
+  4.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 B
+  4.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 B
+  4.31 (<4.5) 13px [aria-hidden] [ch=c] y=16186 [sheet] Hoja V-13
+  4.38 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 E
+  4.38 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 E
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=7930 A
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--ar] y=13170 A
+/soluciones/promotoras-obra-nueva/ @1440 dark: 309 text runs, 4 below threshold
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 B
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 C
+  4.35 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 E
+  4.39 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=3513 A
+/zonas/marbella/ @1440 dark: 266 text runs, 5 below threshold
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 B
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 C
+  4.31 (<4.5) 13px [aria-hidden] [ch=c] y=9875 [sheet] Hoja Z-09
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 E
+  4.41 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=5320 A
+/en/ @1440 dark: 385 text runs, 12 below threshold
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 B
+  4.2 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 B
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 C
+  4.21 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 C
+  4.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 C
+  4.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 B
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 E
+  4.37 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 E
+  4.38 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 E
+  4.41 (<4.5) 17px [aria-hidden] [ch=g.block.block--compare] y=1349 A
+  4.41 (<4.5) 17px [aria-hidden] [ch=g.block.block--viewer] y=6900 A
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--calculator] y=11771 A
+/como-funciona/ @1440 dark: 322 text runs, 5 below threshold
+  4.23 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 C
+  4.24 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 B
+  4.31 (<4.5) 13px [aria-hidden] [ch=c] y=12967 [sheet] Hoja P-12
+  4.38 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 E
+  4.42 (<4.5) 17px [aria-hidden] [ch=g.block.block--needs] y=3508 A
+/glosario/ @1440 dark: 449 text runs, 14 below threshold
+  3.43 (<4.5) 13px [aria-hidden] [ch=c] y=12525 [sheet] Hoja L-04
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2650 D
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2650 E
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2695 F
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2695 J
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 K
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 L
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 N
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2740 O
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2785 Q
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2830 X
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2830 Y
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2875 Z
+  4.31 (<4.5) 13px [aria-hidden] [ch=c] y=2008 [sheet] Hoja L-02
+/ @390 dark: 349 text runs, 0 below threshold
+/servicios/plano-2d-a-3d/ @390 dark: 314 text runs, 0 below threshold
+/precios/ @390 dark: 377 text runs, 0 below threshold
+/contacto/ @390 dark: 148 text runs, 0 below threshold
+/preguntas-frecuentes/ @390 dark: 181 text runs, 2 below threshold
+  1 (<4.5) 13px [ch=k.cajetin-band] y=823 Revisiones
+  1.07 (<4.5) 13px [ch=k.cajetin-band] y=762 maqueta, 490 € + IVA
+/guias/cuanto-cuesta-un-render-3d/ @390 dark: 329 text runs, 0 below threshold
+/casos/villa-costa-del-sol/ @390 dark: 271 text runs, 0 below threshold
+/soluciones/promotoras-obra-nueva/ @390 dark: 264 text runs, 0 below threshold
+/zonas/marbella/ @390 dark: 216 text runs, 0 below threshold
+/en/ @390 dark: 339 text runs, 0 below threshold
+/como-funciona/ @390 dark: 292 text runs, 2 below threshold
+  1 (<4.5) 13px [ch=k.cajetin-band] y=860 Tu parte
+  1.81 (<4.5) 17px [ch=k.cajetin-band] y=884 Enviar el plano y revisar el visor
+/glosario/ @390 dark: 441 text runs, 14 below threshold
+  1.81 (<4.5) 17px [ch=k.cajetin-band] y=770 , ARCore, ARKit y
+  1.81 (<4.5) 17px [ch=k.cajetin-band] y=814 WebXR
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2539 D
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2539 E
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2539 F
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 J
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 K
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 L
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2584 N
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2629 O
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2629 Q
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2674 X
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2674 Y
+  3.73 (<4.5) 13px [aria-hidden] [ch=w.block.block--glossary] y=2674 Z
+CBATCH_DONE

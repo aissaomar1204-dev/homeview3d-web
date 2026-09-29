@@ -33,6 +33,9 @@ export default {
         type: 'contactForm',
         h2: '¿Qué vivienda quieres ver en 3D?',
         intro: 'Dos pasos: primero la vivienda, después tus datos. Solo son obligatorios el tipo de cliente, tu nombre, tu email y la casilla de privacidad. El plano puedes adjuntarlo ahora o mandarlo después por WhatsApp o por email.',
+        image: 'villa_interior_salon',
+        imageAlt: 'Salón de la villa a la altura de los ojos, con sofá rinconera y hojas correderas hacia la terraza. Render 3D de la villa anonimizada.',
+        imageCaption: 'Salón hacia la terraza. Render 3D de la villa anonimizada.',
       },
       {
         type: 'prose',
@@ -140,6 +143,9 @@ export default {
         type: 'contactForm',
         h2: 'Which property would you like to see in 3D?',
         intro: 'Two short steps: the property first, then your details. Only your client type, name, email and the privacy box are required. You can attach the plan now or send it later by WhatsApp or email.',
+        image: 'villa_interior_salon',
+        imageAlt: 'Living room of the villa at eye level, with a corner sofa and sliding panels towards the terrace. 3D render of the anonymised villa.',
+        imageCaption: 'Living room towards the terrace. 3D render of the anonymised villa.',
       },
       {
         type: 'prose',

@@ -20,6 +20,8 @@ const MPCAM = 'https://matterport.com/cameras';
 const AG = 'https://andreasgrunau.com/precios-matterport-espana/';
 const CRONO = 'https://www.cronoshare.com/cuanto-cuesta/tour-virtual-360';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-matterport',
   image: 'villa_muros_completos_opaco',
@@ -149,6 +151,7 @@ export default {
         title: 'Lo que un modelo desde plano no enseña',
         body: 'El estado real de la vivienda: desgaste, humedades, las vistas exactas desde cada ventana o el ruido de la calle. Un modelo enseña el proyecto o la propuesta, no el inmueble tal como está hoy. Si el comprador necesita eso, la visita, el escaneo o un buen reportaje fotográfico siguen siendo imprescindibles.',
       },
+      plate('es', 'villa_salon_dormitorio_opaco'),
       { type: 'faq' },
       {
         type: 'sources',
@@ -324,6 +327,7 @@ export default {
         title: 'What a model from the plan can’t show',
         body: 'The home’s real condition: wear and tear, damp, the exact view from each window or the noise from the street. A model shows the project or the proposal, not the property as it stands today. If buyers need that, a viewing, a scan or a good photo shoot is still essential.',
       },
+      plate('en', 'villa_salon_dormitorio_opaco'),
       { type: 'faq' },
       {
         type: 'sources',

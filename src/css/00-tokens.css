@@ -87,6 +87,41 @@
   --color-qr-ink: #14171B;       /* QR modules and quiet zone: dark on light in every theme (scanners) */
   --color-qr-paper: #FCFCFD;
 
+  /* ---------- Chapters (client-requested decoration, 2026-09-29; see the rulebook, Overrides O3) ----------
+     Every home section is a chapter with a tone. Sheets (light chapters): white, paper, mat (grey cutting mat).
+     Graphite set (dark chapters, footer, plate captions, the recommended pack): a full replacement for the
+     --color-* tokens of the element, so buttons, inputs, tables and the viewer rail re-theme themselves.
+     Measured: gr-ink 16.6:1, gr-ink-2 9.8:1, gr-ink-3 6.3:1 on gr-bg (5.5:1 on gr-stage), gr-accent 9.2:1,
+     gr-line-strong 4.0:1 (graphics), white on gr-brand 8.5:1. In the dark theme the sheets sink one step and
+     graphite goes near-black, so the rhythm survives (white 1B2026, paper 12161A, mat 232A31, graphite 07090B: steps of 1.10 to 1.13:1 between
+     neighbours, 1.22 to 1.25:1 one tone apart, 1.37:1 end to end; the mat cannot go higher, ink-3 needs 4.5:1 on it, and paper cannot go higher, cards on it use the 161A1E surface).
+     A 1px hairline on the top edge of every chapter (--ch-hair-a: none in light, 14 % ink in dark) carries the rest of the rhythm. */
+  --sheet-white: #FCFCFD;        /* Hoja blanca. ink 17.5:1 */
+  --sheet-paper: #EDEFF2;        /* Papel. ink 15.8:1, ink-3 5.0:1 */
+  --sheet-mat: #E4E7EA;          /* Mesa de corte. ink 14.5:1, ink-3 4.6:1 */
+  --gr-bg: #0E1114;              /* Grafito. Dark chapter */
+  --gr-surface: #14181C;
+  --gr-stage: #1A1F25;
+  --gr-deep: #080A0C;            /* Footer, deepest */
+  --gr-ink: #EEF0F3;
+  --gr-ink-2: #B4BBC3;
+  --gr-ink-3: #8E969F;
+  --gr-line: #262D35;            /* Decorative hairlines ONLY */
+  --gr-line-strong: #6A747F;     /* Graphics on graphite. 4.0:1 */
+  --gr-accent: #A2B3EA;          /* Añil on graphite */
+  --gr-accent-hover: #B8C5F2;
+  --gr-accent-soft: #1C2640;
+  --gr-brand: #2D4596;           /* Añil plate (recommended pack) */
+  --gr-brand-hover: #233A80;
+  --gr-brand-ink: #FCFCFD;       /* on gr-brand 8.5:1 */
+  --gr-brand-ink-2: #DCE3F6;     /* 6.8:1 */
+  --gr-brand-ink-3: #C4CFF0;     /* 5.6:1 */
+  --gr-danger: #F2877E;          /* form errors inside graphite chapters. 7.4:1 on gr-surface */
+  --gr-success: #7FCB9E;
+  --ch-hair-a: 0%;               /* alpha of the 1px hairline on the top edge of every chapter (24-chapters): none on light sheets, 14% ink in dark */
+  --chapter-y: clamp(72px, 7vw + 32px, 152px);
+  --chapter-num: clamp(6.5rem, 13vw, 15rem);
+
   /* ---------- Type ---------- */
   --font-sans: "Archivo", "Archivo Text Fallback", system-ui, sans-serif;
   --font-display: "Archivo", "Archivo Display S Fallback", system-ui, sans-serif;
@@ -199,6 +234,15 @@
     --color-scrim: rgb(5 7 9 / 0.64);
     --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
     --plan-invert: 0.91;
+    --sheet-white: #1B2026;        /* ink-3 5.2:1 */
+    --sheet-paper: #12161A;        /* ink-3 5.8:1; the plates on white sheets */
+    --sheet-mat: #232A31;          /* ink-3 4.6:1 */
+    --gr-bg: #07090B;
+    --gr-surface: #0B0E10;
+    --gr-stage: #101418;
+    --gr-deep: #030405;
+    --gr-line: #1C2329;
+    --ch-hair-a: 14%;
   }
 }
 
@@ -222,6 +266,15 @@
   --color-scrim: rgb(5 7 9 / 0.64);
   --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
   --plan-invert: 0.91;
+  --sheet-white: #1B2026;        /* ink-3 5.2:1 */
+  --sheet-paper: #12161A;        /* ink-3 5.8:1; the plates on white sheets */
+  --sheet-mat: #232A31;          /* ink-3 4.6:1 */
+  --gr-bg: #07090B;
+  --gr-surface: #0B0E10;
+  --gr-stage: #101418;
+  --gr-deep: #030405;
+  --gr-line: #1C2329;
+  --ch-hair-a: 14%;
 }
 
 /* ---------- Reduced motion: every duration collapses ---------- */

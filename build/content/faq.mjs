@@ -7,6 +7,8 @@
 
 const RD515 = 'https://www.boe.es/buscar/act.php?id=BOE-A-1989-11181';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'faq',
   image: 'villa_planta_cenital_opaco',
@@ -221,6 +223,7 @@ export default {
           },
         ],
       },
+      plate('es', 'villa_interior_dormitorio'),
     ],
     related: ['precios', 'como-funciona', 'caso-villa', 'glosario', 'contacto'],
     cta: {
@@ -422,6 +425,7 @@ export default {
           },
         ],
       },
+      plate('en', 'villa_interior_dormitorio'),
     ],
     related: ['precios', 'como-funciona', 'caso-villa', 'glosario', 'contacto'],
     cta: {

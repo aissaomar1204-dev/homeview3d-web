@@ -136,9 +136,12 @@ figcaption { margin-top: var(--space-3); max-width: var(--measure); }
   .checks--grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-7); }
 }
 
-/* ---------- FAQ (COMP-17): native details, 2 columns on desktop ---------- */
-.faq { border-bottom: 1px solid var(--color-line); }
-.faq__item { border-top: 1px solid var(--color-line); }
+/* ---------- FAQ (COMP-17): native details on grey plates, 2 columns on desktop ---------- */
+.faq { display: grid; gap: var(--space-3); }
+.main > [data-ch] .faq { margin-top: var(--space-6); }
+.faq__item { padding-inline: var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line); }
+/* Selected state: the open question takes a 3px ink edge. */
+.faq__item[open] { border-color: var(--color-line-strong); box-shadow: inset 3px 0 0 var(--color-ink); }
 .faq__item summary {
   display: flex;
   justify-content: space-between;
@@ -158,14 +161,15 @@ figcaption { margin-top: var(--space-3); max-width: var(--measure); }
 /* State change: the plus turns into a minus when the answer opens. */
 .faq__icon::after { transform: rotate(90deg); transition: transform var(--dur-state) var(--ease-in-out); }
 [open] > summary .faq__icon::after { transform: none; }
+.faq__icon { color: var(--color-ink); }
 .faq__a { max-width: var(--measure); padding-bottom: var(--space-5); color: var(--color-ink-2); }
 @media (hover: hover) and (pointer: fine) {
   .faq__item summary:hover { color: var(--color-accent); }
 }
 @media (min-width: 1024px) {
-  /* Balanced columns (V-08): items flow down the first column, then the second; each item closes with its own rule. */
-  .faq--2 { columns: 2; column-gap: var(--space-8); border-bottom: 0; }
-  .faq--2 .faq__item { break-inside: avoid; margin-bottom: -1px; border-bottom: 1px solid var(--color-line); }
+  /* Balanced columns (V-08): items flow down the first column, then the second; every plate keeps its own frame. */
+  .faq--2 { display: block; columns: 2; column-gap: var(--space-5); }
+  .faq--2 .faq__item { break-inside: avoid; margin-bottom: var(--space-3); }
 }
 
 /* ---------- Index lists (related, services, audiences, pages) ---------- */

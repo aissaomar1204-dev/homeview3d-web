@@ -1,0 +1,4 @@
+# regenerable intermediates (see README in docs/design/deco)
+_cache/
+__pycache__/
+board.html

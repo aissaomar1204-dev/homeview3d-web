@@ -108,13 +108,18 @@ export const LLMS_INDEX = {
  * limit (brotli at quality 11, what a static host serves; a CDN compressing on the fly at a lower quality adds
  * about 10 %). CSS: the shared sheet stays small because every page downloads it before first paint, a page's
  * total CSS has a ceiling, and at most 2 render-blocking stylesheet requests per page (shared + one bundle).
+ * Re-baselined again on 2026-09-29, reason "client-requested decoration": the drawing-set chapters (tones, crop
+ * marks, grids, outlined numerals, plates, láminas, cinema pricing, footer section) added about 12 KB to the shared
+ * sheet, about 20 KB to the home bundle and 8 KB (0.9 KB brotli) of picture markup to the home HTML. Nothing
+ * decorative loads above the fold except the hero watermark (desktop only) and nothing decorative is the LCP.
+ * Limits: HTML 90 KB raw and 19 KB brotli, shared CSS 42 KB, CSS per page 72 KB (BUILD-SPEC §11).
  */
 export const BUDGETS = {
-  htmlRawKB: 72,          // per HTML page, uncompressed
-  htmlBrotliKB: 16,       // per HTML page, brotli quality 11
+  htmlRawKB: 90,          // per HTML page, uncompressed
+  htmlBrotliKB: 19,       // per HTML page, brotli quality 11
   brotliQuality: 11,
-  cssSharedKB: 25,        // the stylesheet every page links (site.<hash>.css)
-  cssPageKB: 45,          // all the stylesheets one page links
+  cssSharedKB: 42,        // the stylesheet every page links (site.<hash>.css)
+  cssPageKB: 72,          // all the stylesheets one page links
   cssBlockingMax: 2,      // render-blocking stylesheet requests per page (<link rel=stylesheet> without a non-matching media, + @import)
   initialJsKB: 30,        // scripts referenced by the initial HTML
   fontsKB: 110,           // all woff2 files

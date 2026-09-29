@@ -27,3 +27,17 @@
 .sources { padding-left: 1.5em; color: var(--color-ink); }
 .sources li + li { margin-top: var(--space-3); }
 .sources__note { display: block; }
+
+/* ---------- Drawing set: a note with a section-cut hatch edge, the figure as a giant number ---------- */
+.callout { position: relative; max-width: 60rem; padding-left: calc(var(--space-5) + 18px); border-left: 0; }
+.callout::before { content: ""; position: absolute; inset: -1px auto -1px -1px; width: 14px; border: 1px solid var(--color-ink); background: repeating-linear-gradient(135deg, var(--color-ink) 0 1px, transparent 1px 6px); }
+.main > [data-ch]:has(.stat)::before { display: none; }
+.main > [data-ch] .stat { max-width: none; padding-top: 0; border-top: 0; }
+.main > [data-ch] .stat__value { font-size: clamp(4.25rem, 12.5vw, 13rem); line-height: .9; letter-spacing: -.035em; }
+.main > [data-ch] .stat__label { max-width: 34ch; }
+@media (min-width: 900px) {
+  .main > [data-ch] .stat { grid-template-columns: auto minmax(0, 36ch); align-items: end; column-gap: var(--space-8); }
+}
+/* In a guide the figure is a graphite plate inside the reading column. */
+.article__body .stat { max-width: none; padding: var(--space-6); border: 0; background: var(--gr-bg); }
+.article__body .stat__value { font-size: clamp(3.5rem, 9vw, 6.5rem); line-height: .95; letter-spacing: -.03em; }

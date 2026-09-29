@@ -79,6 +79,8 @@ const faqEn = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'sol-promotoras',
   image: 'villa_maqueta_iso_opaco',
@@ -174,6 +176,7 @@ export default {
         answer: 'Muy poco en proporción. Ejemplo con supuestos: 24 viviendas de 3 tipologías a un precio medio de 350.000 € suman 8,4 millones de euros en ventas. El pack de promoción cuesta {{price:promocion}} + IVA, menos del 0,1 % de ese volumen. Un piso piloto físico, además, exige obra terminada o un local donde montarlo.',
         body: 'No te prometemos que vendas antes: eso depende del producto, el precio y tu equipo comercial. Lo que sí puedes medir es cuántas dudas dejan de llegar a la sala de ventas y cuántos compradores reservan sin haber visitado.\n\nSi estás comparando proveedores, nuestra [guía de estudios de visualización 3D en España](@guia-mejores) reúne a los que trabajan para promotoras, con lo que publica cada uno.',
       },
+      plate('es', 'villa_interior_dormitorio'),
       {
         type: 'table',
         caption: 'Ejemplo ilustrativo para una promoción (supuestos, no resultados)',
@@ -293,6 +296,7 @@ export default {
         answer: 'Very little, proportionally. A worked example with assumptions: 24 homes across 3 unit types at an average of €350,000 add up to €8.4 million in sales. The development package costs {{price:promocion}} + VAT, under 0.1% of that. A physical show home also needs a finished unit, or premises to build one in.',
         body: 'We won’t promise you’ll sell faster; that depends on product, price and your sales team. What you can track is how many questions stop reaching the sales suite, and how many buyers reserve without having visited.\n\nIf you are comparing suppliers, our [guide to the best 3D visualisation studios in Spain](@guia-mejores) covers those that work with developers, and what each one publishes.',
       },
+      plate('en', 'villa_interior_dormitorio'),
       {
         type: 'table',
         caption: 'Illustrative example for a development (assumptions, not results)',

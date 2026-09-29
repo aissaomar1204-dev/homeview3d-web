@@ -43,6 +43,8 @@ const faq = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'zona-malaga',
   image: 'villa_interior_terraza',
@@ -104,6 +106,7 @@ export default {
         h2: 'Del plano del piso a la infografía 3D',
         intro: 'Arrastra el control: debajo, la planta 2D redibujada; encima, la planta cenital a color que sale del modelo 3D. Es la misma geometría, así que las medidas coinciden.',
       },
+      plate('es', 'villa_interior_salon'),
       {
         type: 'prose',
         h2: '¿Qué encargan en Málaga promotoras, agencias y reformistas?',

@@ -4,6 +4,8 @@
 
 const ERI = 'https://www.registradores.org/documents/d/guest/eri_2t_2026';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'servicio-tour',
   image: 'villa_maqueta_iso_opaco',
@@ -53,6 +55,7 @@ export default {
         answer: 'Es una vista que corta todos los muros a {{villa:cutHeight}} m de altura, como la maqueta de un arquitecto. Desde arriba se ven a la vez las estancias amuebladas, los pasos entre ellas y las terrazas. Con un toque vuelves a los muros completos de {{villa:wallHeight}} m para ver la vivienda como se vive.',
         body: 'El [modo maqueta](@glosario#modo-maqueta) se combina con un recorrido guiado que pasa por cada estancia con su nombre y su superficie, una vista de planta cenital y un control de luz. La lista de estancias está también como texto en la página, para buscadores y lectores de pantalla.',
       },
+      plate('es', 'villa_salon_dormitorio_opaco'),
       {
         type: 'embedCode',
         h2: '¿Puedo poner el visor 3D en mi web?',
@@ -196,6 +199,7 @@ export default {
         answer: 'It is a mode that slices every wall at {{villa:cutHeight}} m, like an architect’s model. From above, buyers see all the furnished rooms at once, how they connect and where the terraces are. One tap restores the full {{villa:wallHeight}} m walls, so they can see the home as it will be lived in.',
         body: '[Cut-away mode](@glosario#modo-maqueta), close to what Matterport calls a dollhouse view, sits alongside a guided tour that stops at each room with its name and floor area, a top-down plan view and a lighting control. The room list is also plain text on the page, so search engines and screen readers can read it.',
       },
+      plate('en', 'villa_salon_dormitorio_opaco'),
       {
         type: 'embedCode',
         h2: 'Can I embed the 3D viewer on my website?',

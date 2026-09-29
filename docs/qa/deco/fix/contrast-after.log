@@ -1,0 +1,54 @@
+/ @1440 light: 395 text runs, 15 below threshold
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=1343 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=1343 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=1343 C
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=1343 D
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--viewer] y=7011 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--viewer] y=7011 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--viewer] y=7011 C
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--viewer] y=7011 D
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--viewer] y=7011 E
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=12339 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=12339 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=12339 C
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=12339 D
+/ @1440 dark: 395 text runs, 0 below threshold
+/ @390 light: 349 text runs, 0 below threshold
+/ @390 dark: 349 text runs, 0 below threshold
+/ @768 dark: 374 text runs, 2 below threshold
+  4.06 (<4.5) 23.04px [ch=w.block.block--audiences] y=10789 Para arquitectos e interioristas
+  4.18 (<4.5) 23.04px [ch=w.block.block--audiences] y=10790 Para promotoras de obra nueva
+/precios/ @1440 light: 417 text runs, 6 below threshold
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=8308 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=8308 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=8308 C
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=8308 D
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--calculator] y=8308 E
+  4.28 (<4.5) 13px [aria-hidden] [ch=c] y=15222 [sheet] Hoja T-13
+/precios/ @390 dark: 377 text runs, 0 below threshold
+/servicios/tour-virtual-3d/ @1440 light: 357 text runs, 10 below threshold
+  2.11 (<4.5) 13px [aria-hidden] [ch=p.block.block--embedCode] y=4639 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=p.block.block--embedCode] y=4639 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=p.block.block--embedCode] y=4639 C
+  2.11 (<4.5) 13px [aria-hidden] [ch=p.block.block--embedCode] y=4639 D
+  2.11 (<4.5) 13px [aria-hidden] [ch=p.block.block--embedCode] y=4639 E
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--process] y=9278 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--process] y=9278 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--process] y=9278 C
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--process] y=9278 D
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--process] y=9278 E
+/servicios/tour-virtual-3d/ @1440 dark: 357 text runs, 0 below threshold
+/servicios/tour-virtual-3d/ @390 dark: 292 text runs, 0 below threshold
+/casos/villa-costa-del-sol/ @390 light: 271 text runs, 0 below threshold
+/casos/villa-costa-del-sol/ @1440 light: 319 text runs, 5 below threshold
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=7925 A
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=7925 B
+  2.11 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=7925 C
+  2.12 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=7925 D
+  2.12 (<4.5) 13px [aria-hidden] [ch=g.block.block--compare] y=7925 E
+/casos/villa-costa-del-sol/ @1440 dark: 319 text runs, 0 below threshold
+/servicios/renders-inmobiliarios/ @1440 dark: 316 text runs, 0 below threshold
+/contacto/ @1440 dark: 168 text runs, 0 below threshold
+/guias/cuanto-cuesta-un-plano-3d/ @1440 dark: 306 text runs, 1 below threshold
+  4.49 (<4.5) 13px [aria-hidden] [ch=c] y=12938 [sheet] Hoja G-02
+/faq/ @1440 dark: 52 text runs, 0 below threshold

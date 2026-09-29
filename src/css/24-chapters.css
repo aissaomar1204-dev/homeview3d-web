@@ -1,0 +1,261 @@
+/* ==========================================================================
+   24-chapters · the drawing set. Client-requested decoration, 2026-09-29 (rulebook Overrides O3). Owner: ENGINE.
+   Every block of a page with chapters is a full-bleed band with a tone (data-ch, see build/lib/chapters.mjs):
+     h hero sheet · w white sheet · p paper · g grey cutting mat · k graphite · c cinema · plate render plates
+   Furniture of a chapter, all from pseudo-elements and data attributes (aria-hidden, no HTML weight):
+     crop marks (background layers) · dotted / grid paper · section::before the outlined numeral (data-n)
+     section::after the index row with its dimension line (data-n + data-l) · .wrap::before the sheet id (data-s).
+   Dark tones re-declare the --color-* tokens from the --gr-* set (00-tokens.css), so every component inside
+   re-themes itself: no component knows about the chapters. Also here: header rule, hero sheet, key-facts strip,
+   render plates, date line, footer masthead and the long section above it. Component decoration lives in the
+   component's own module (43-bento, 42-process, 44-pricing, 45-calc, 46-form, 56-cards, 30-components).
+   ========================================================================== */
+:root {
+  --ch-edge: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  --ch-hatch: repeating-linear-gradient(135deg, var(--gr-line-strong) 0 1px, transparent 1px 7px);
+  --ch-grain: url(/assets/deco/paper-grain.png);
+  --ch-ring: var(--color-accent); /* focus ring for cards that carry their own dark tokens (56-cards): the ring of the page around them */
+}
+
+/* ---------- Chapter engine ---------- */
+.main > [data-ch] {
+  --ch-bg: var(--sheet-white); --ch-i: 20px; --ch-ns: 42%;
+  --ch-gl: color-mix(in srgb, var(--color-ink) 8%, transparent); --ch-gl2: color-mix(in srgb, var(--color-ink) 4.5%, transparent);
+  --ch-mark: color-mix(in srgb, var(--color-ink) 34%, transparent);
+  --ch-cm: linear-gradient(var(--ch-mark), var(--ch-mark));
+  /* The tones of the dark theme sit ~1.1:1 apart: a 1px hairline on the top edge of the chapter (alpha --ch-hair-a: 0 in light, 14% in dark) marks each change. */
+  --ch-hair: color-mix(in srgb, var(--color-ink) var(--ch-hair-a), transparent);
+  /* Crop marks: 8 hairlines 16px long in the four corners, inset --ch-i; first layer, the top hairline. */
+  --ch-crop: linear-gradient(var(--ch-hair), var(--ch-hair)) left top / 100% 1px no-repeat, var(--ch-cm) left var(--ch-i) top var(--ch-i) / 16px 1px no-repeat, var(--ch-cm) left var(--ch-i) top var(--ch-i) / 1px 16px no-repeat,
+    var(--ch-cm) right var(--ch-i) top var(--ch-i) / 16px 1px no-repeat, var(--ch-cm) right var(--ch-i) top var(--ch-i) / 1px 16px no-repeat,
+    var(--ch-cm) left var(--ch-i) bottom var(--ch-i) / 16px 1px no-repeat, var(--ch-cm) left var(--ch-i) bottom var(--ch-i) / 1px 16px no-repeat,
+    var(--ch-cm) right var(--ch-i) bottom var(--ch-i) / 16px 1px no-repeat, var(--ch-cm) right var(--ch-i) bottom var(--ch-i) / 1px 16px no-repeat;
+  /* Drafting grid: 24px minor and 120px major lines, faded toward the edges by a vignette in the chapter colour. */
+  --ch-grid: linear-gradient(var(--ch-gl) 1px, transparent 1px) 50% 0 / 120px 120px, linear-gradient(90deg, var(--ch-gl) 1px, transparent 1px) 50% 0 / 120px 120px,
+    linear-gradient(var(--ch-gl2) 1px, transparent 1px) 50% 0 / 24px 24px, linear-gradient(90deg, var(--ch-gl2) 1px, transparent 1px) 50% 0 / 24px 24px;
+  --ch-vig: radial-gradient(ellipse 85% 70% at 78% 26%, transparent 22%, var(--ch-bg) 100%);
+  --color-bg: var(--ch-bg); --cota-bg: var(--ch-bg);
+  position: relative; isolation: isolate; margin: 0; color: var(--color-ink); background: var(--ch-crop), var(--ch-bg);
+  overflow-x: clip; /* watermarks and numerals may lean out of the sheet; the page never widens (clip keeps sticky children working) */
+}
+.main > [data-ch]:not([data-ch=h], [data-ch=plate]) { padding-block: var(--chapter-y); }
+/* A chapter without an index row (a callout, a lone figure, the glossary) needs less air. */
+.main > [data-ch]:not([data-n], [data-ch=h], [data-ch=plate], [data-ch=c]) { padding-block: var(--space-8); }
+.main > [data-ch] > .wrap { position: relative; z-index: 2; }
+/* ---------- The graphite token set: dark chapters, footer, date line, plate captions (after the base rule: equal specificity, later wins) ---------- */
+:is(.main > :is([data-ch=k], [data-ch=c]), .site-footer, .dateline-wrap[data-on], .block--vista figcaption, .article__body .block--stat .stat) {
+  --ch-bg: var(--gr-bg); --color-bg: var(--gr-bg); --color-surface: var(--gr-surface); --color-stage: var(--gr-stage);
+  --color-ink: var(--gr-ink); --color-ink-2: var(--gr-ink-2); --color-ink-3: var(--gr-ink-3);
+  --color-line: var(--gr-line); --color-line-strong: var(--gr-line-strong);
+  --color-accent: var(--gr-accent); --color-accent-hover: var(--gr-accent-hover); --color-on-accent: var(--gr-bg); --color-accent-soft: var(--gr-accent-soft);
+  --color-danger: var(--gr-danger); --color-success: var(--gr-success);
+  --plan-invert: .91; --cota-bg: var(--gr-stage); --ch-ring: var(--gr-accent); color-scheme: dark; color: var(--color-ink);
+}
+
+.main > [data-ch=w] {
+  --ch-bg: var(--sheet-white); --color-surface: var(--sheet-paper);
+  background: var(--ch-crop), radial-gradient(circle, color-mix(in srgb, var(--color-ink) 22%, transparent) 1px, transparent 1.6px) 12px 12px / 24px 24px, var(--ch-bg);
+}
+/* Line art on the white sheets (desktop): the isometric drawing leans out of the viewport edge behind the content, faint ink through a mask (aria-hidden pseudo-element, no HTML,
+   fetched only when the chapter renders: content-visibility). The FAQ gets the long section instead, low on the sheet. */
+@media (min-width: 1024px) {
+  .main > [data-ch=w] > .wrap::after {
+    content: ""; position: absolute; z-index: -1; top: var(--space-6); right: calc(50% - 50vw - 2vw); width: min(42vw, 700px); aspect-ratio: 1729 / 1564; pointer-events: none;
+    background: var(--color-ink); opacity: .07; -webkit-mask: url(/assets/deco/villa-iso-lines.svg) center / contain no-repeat; mask: url(/assets/deco/villa-iso-lines.svg) center / contain no-repeat;
+  }
+  .main > .block--faq[data-ch=w] > .wrap::after {
+    top: auto; bottom: calc(var(--chapter-y) * -.5); right: calc(50% - 50vw - 3vw); width: min(70vw, 1080px); aspect-ratio: 1402 / 508; opacity: .075;
+    -webkit-mask-image: url(/assets/deco/villa-section.svg); mask-image: url(/assets/deco/villa-section.svg);
+  }
+}
+.main > [data-ch=p] { --ch-bg: var(--sheet-paper); }
+.main > [data-ch=g] {
+  --ch-bg: var(--sheet-mat); --color-stage: var(--sheet-mat);
+  --ch-gl: color-mix(in srgb, var(--color-surface) 92%, transparent); --ch-gl2: color-mix(in srgb, var(--color-surface) 55%, transparent);
+}
+.main > :is([data-ch=p], [data-ch=g]) { background: var(--ch-crop), var(--ch-vig), var(--ch-grid), var(--ch-bg); }
+.main > [data-ch=k] {
+  --ch-ns: 30%; --ch-glow: color-mix(in srgb, var(--color-ink) 9%, transparent);
+  --ch-gl: color-mix(in srgb, var(--color-ink) 5.5%, transparent); --ch-gl2: color-mix(in srgb, var(--color-ink) 3%, transparent);
+  background: var(--ch-crop), radial-gradient(70% 55% at 14% 0, var(--ch-glow), transparent 72%), var(--ch-grain) 0 0 / 256px 256px, var(--ch-vig), var(--ch-grid), var(--ch-bg);
+}
+/* Cinema: graphite under a render (.ch-bg, first child). The image, its scrim, the grain and the marks live inside .ch-bg. */
+.main > [data-ch=c] { --ch-ns: 30%; background: var(--ch-bg); }
+
+/* Cinema chapter: an opener. The render fills the top band (--ch-open tall, all the chapter furniture starts below it) and
+   melts into the graphite; the type never sits over the image, so 4.5:1 holds whatever the render. Film grain, top crop marks. */
+.main > [data-ch=c] { --ch-open: clamp(200px, 20vw, 300px); --ch-pad: clamp(72px, 7vw + 32px, 152px); --chapter-y: calc(var(--ch-open) + var(--ch-pad)); }
+.main > [data-ch=c]:is([data-ch]) { padding-bottom: var(--ch-pad); }
+.ch-bg { position: absolute; inset: 0 0 auto; z-index: -1; height: calc(var(--ch-open) + 340px); overflow: hidden; pointer-events: none; }
+.ch-bg .pic, .ch-bg img { width: 100%; height: 100%; }
+.ch-bg img { object-fit: cover; object-position: 60% 42%; }
+/* The pricing opener must fill its box for object-position to work: `.pic img` (30-components, height auto) is as specific as `.ch-bg img` and comes later, so the render was top-anchored and the band
+   showed only sky, horizon and the olive canopy. Filled, the crop is lowered so the lounge furniture sits in the visible band before the melt. */
+.block--pricing .ch-bg .pic img { height: 100%; object-position: 60% 94%; }
+.ch-bg::before {
+  content: ""; position: absolute; inset: 0;
+  background: var(--ch-grain) 0 0 / 256px 256px, linear-gradient(90deg, color-mix(in srgb, var(--gr-bg) 40%, transparent), color-mix(in srgb, var(--gr-bg) 6%, transparent) 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--gr-bg) 10%, transparent) 0, color-mix(in srgb, var(--gr-bg) 18%, transparent) calc(var(--ch-open) * .55), color-mix(in srgb, var(--gr-bg) 88%, transparent) calc(var(--ch-open) + 60px), var(--gr-bg) 100%);
+}
+.ch-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: var(--ch-cm) left var(--ch-i) top var(--ch-i) / 16px 1px no-repeat, var(--ch-cm) left var(--ch-i) top var(--ch-i) / 1px 16px no-repeat, var(--ch-cm) right var(--ch-i) top var(--ch-i) / 16px 1px no-repeat, var(--ch-cm) right var(--ch-i) top var(--ch-i) / 1px 16px no-repeat;
+}
+
+/* The outlined chapter numeral, on the container's right edge. */
+.main > [data-n]::before {
+  content: attr(data-n); content: attr(data-n) / "";
+  position: absolute; z-index: 0; top: calc(var(--chapter-y) + 28px); right: calc(var(--ch-edge) - .05em);
+  font: 650 var(--chapter-num) / .8 var(--font-display); font-stretch: 125%; letter-spacing: -.045em;
+  color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-ink) var(--ch-ns), transparent);
+  pointer-events: none; user-select: none;
+}
+/* The index row: "03  PROCESO" over a dimension line with end ticks; the sheet id (.wrap::before) sits at the right end. */
+.main > [data-n]::after {
+  content: attr(data-n) "  " attr(data-l); content: attr(data-n) "  " attr(data-l) / "";
+  position: absolute; z-index: 1; top: var(--chapter-y); left: var(--ch-edge); right: var(--ch-edge); padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-line-strong); white-space: pre;
+  font: var(--wght-mono) var(--fs-meta) / 1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--color-ink-2);
+  background: linear-gradient(var(--color-line-strong), var(--color-line-strong)) 0 100% / 1px 9px no-repeat, linear-gradient(var(--color-line-strong), var(--color-line-strong)) 100% 100% / 1px 9px no-repeat;
+  pointer-events: none;
+}
+.main > [data-n] > .wrap { padding-top: calc(var(--space-7) + var(--space-5)); }
+.main > [data-n] > .wrap::before {
+  content: attr(data-s); content: attr(data-s) / "";
+  position: absolute; z-index: 1; top: 0; right: var(--gutter);
+  font: var(--wght-mono) var(--fs-meta) / 1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--color-ink-3);
+}
+/* Over the film grain and the render the sheet id takes the full ink of the graphite set (16:1 on graphite), not ink-3: measured on pixels, ink-3 fell to 3.2:1 on the
+   CTA render and ink-2 to 4.3:1 where the scrim lets the render through (right end of the row). */
+.main > [data-ch=c] > .wrap::before { color: var(--color-ink); }
+.main > [data-ch] .block__head { padding-top: 0; border-top: 0; }
+.main > [data-ch] :is(.block__head > h2, .cta-band__text h2) { max-width: 20ch; font-size: clamp(2rem, 1rem + 3.2vw, 3.75rem); line-height: 1.04; letter-spacing: -.024em; font-stretch: 118%; }
+.main > [data-ch] .block__intro { font-size: var(--fs-lead); line-height: var(--lh-lead); }
+
+/* Drawing axes A to E (grey mat and paper): dash-dot lines with bubbles, fading out downward. */
+.ch-ax {
+  position: absolute; z-index: 0; inset: 0 calc(var(--ch-edge) - 30px) auto; height: min(52%, 340px); display: flex; justify-content: space-between; pointer-events: none;
+  -webkit-mask: linear-gradient(var(--color-ink) 30%, transparent); mask: linear-gradient(var(--color-ink) 30%, transparent);
+}
+/* The markup is <i>A</i>: the letter is the i's own text (ink-2, 4.5:1 measured on pixels), the dash-dot line is a half-transparent pseudo-element, so the opacity never dims the letter. */
+.ch-ax i { position: relative; width: 1px; color: var(--color-ink-2); font: normal 500 var(--fs-meta) / 1 var(--font-mono); padding-top: 8px; text-indent: 8px; white-space: nowrap; }
+.ch-ax i:last-child { text-indent: -1.3em; }
+.ch-ax i::before { content: ""; position: absolute; inset: 0; opacity: .5; background: repeating-linear-gradient(180deg, var(--color-ink-3) 0 14px, transparent 14px 18px, var(--color-ink-3) 18px 20px, transparent 20px 24px); }
+.ch-ax b { position: absolute; top: calc(var(--chapter-y) * .3); left: -14px; display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid var(--color-ink-3); border-radius: 50%; background: var(--ch-bg); font: 500 var(--fs-meta) / 1 var(--font-mono); color: var(--color-ink-2); }
+
+/* ---------- Header: a 3px graphite rule on top, hairline always on ---------- */
+.site-header { background: var(--sheet-white); box-shadow: inset 0 3px 0 var(--gr-bg); }
+.site-header::after { opacity: 1; }
+.crumbs { position: relative; z-index: 2; padding-bottom: var(--space-3); background: var(--sheet-white); }
+
+/* ---------- Hero sheet: grid, ruler, watermark plan, north arrow and scale bar ---------- */
+.main > [data-ch=h] {
+  --ch-gl: color-mix(in srgb, var(--color-ink) 11%, transparent); --ch-gl2: color-mix(in srgb, var(--color-ink) 6%, transparent);
+  --ch-vig: radial-gradient(ellipse 80% 105% at 30% 48%, transparent 38%, var(--ch-bg) 100%);
+  background: var(--ch-vig), var(--ch-grid), var(--ch-bg);
+}
+.main > [data-ch=h]::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 14px; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, var(--color-line-strong) 1px, transparent 0) 50% 0 / 120px 14px repeat-x, linear-gradient(90deg, var(--color-line-strong) 1px, transparent 0) 50% 0 / 24px 6px repeat-x;
+}
+@media (min-width: 1024px) {
+  /* The line plan as a watermark behind the copy: a mask tinted by the ink, so it works in both themes. */
+  .main > [data-ch=h]::after {
+    content: ""; position: absolute; z-index: -1; left: -8%; bottom: -30%; width: min(60vw, 900px); aspect-ratio: 1402 / 2143; transform: rotate(-90deg); pointer-events: none;
+    background: var(--color-ink); opacity: .06; -webkit-mask: url(/assets/deco/villa-plan-lines.svg) center / contain no-repeat; mask: url(/assets/deco/villa-plan-lines.svg) center / contain no-repeat;
+  }
+}
+.hs, .hero__figure, .hero__app { position: relative; }
+:is(.hs, .hero__figure, .hero__app)::before, :is(.hs, .hero__figure, .hero__app)::after {
+  content: ""; position: absolute; left: -11px; width: 21px; height: 21px; z-index: 3; pointer-events: none; color: var(--color-ink-2);
+  background: linear-gradient(currentColor, currentColor) 50% 0 / 1px 100% no-repeat, linear-gradient(currentColor, currentColor) 0 50% / 100% 1px no-repeat;
+}
+:is(.hs, .hero__figure, .hero__app)::before { top: -11px; }
+.hs::after { bottom: -11px; }
+.hs__strip { background: var(--color-bg); }
+/* The viewer rail of the case hero sits on the drafting grid: its summary keeps a sheet-coloured backplate so 4.5:1 holds over the lines. */
+[data-ch=h] .vw-rail__sum { background: var(--ch-bg); }
+.hv-leg { display: flex; align-items: flex-end; gap: var(--space-5); margin-top: var(--space-8); color: var(--color-ink-2); font: var(--wght-mono) var(--fs-meta) / 1.25 var(--font-mono); }
+.hv-leg p { margin: 0; }
+.hv-na { flex: none; width: 34px; height: 44px; color: var(--color-ink-2); background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 44' fill='none' stroke='black'%3E%3Ccircle cx='17' cy='27' r='15'/%3E%3Cpath d='M17 9l6 18-6-5z' fill='black'/%3E%3Cpath d='M17 9l-6 18 6-5z'/%3E%3Cpath d='M17 22v20'/%3E%3Cpath d='M14 5h6l-6-4h6' stroke-width='1.3'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 44' fill='none' stroke='black'%3E%3Ccircle cx='17' cy='27' r='15'/%3E%3Cpath d='M17 9l6 18-6-5z' fill='black'/%3E%3Cpath d='M17 9l-6 18 6-5z'/%3E%3Cpath d='M17 22v20'/%3E%3Cpath d='M14 5h6l-6-4h6' stroke-width='1.3'/%3E%3C/svg%3E") center / contain no-repeat; }
+.hv-sb { position: relative; display: flex; justify-content: space-between; width: 148px; padding-bottom: 12px; color: var(--color-ink-2); }
+.hv-sb b { font-weight: inherit; }
+.hv-sb::after { content: ""; position: absolute; inset: auto 0 0; height: 6px; border: 1px solid var(--color-ink-2); background: linear-gradient(90deg, var(--color-ink-2) 40%, transparent 0); }
+
+/* ---------- Key-facts strip: graphite, a section-cut hatch on its top edge ---------- */
+.main > .cajetin-band[data-ch] { padding-block: calc(var(--space-8) + 14px) var(--space-8); }
+.main > .cajetin-band[data-ch]::before { content: ""; position: absolute; inset: 0 0 auto; height: 14px; background: var(--ch-hatch); border-bottom: 1px solid var(--gr-line); }
+.cajetin-band[data-ch] .cajetin { background: transparent; }
+.cajetin-band[data-ch] .cajetin dt { color: var(--color-accent); }
+
+/* ---------- Render plates: full bleed, caption strip on graphite with the plate number ---------- */
+.block--vista { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; margin: 0; background: var(--gr-bg); }
+.block--vista figure { display: grid; grid-template-rows: 1fr auto; margin: 0; background: var(--gr-bg); }
+.block--vista picture { display: block; overflow: hidden; }
+.block--vista .pic img { width: 100%; height: clamp(300px, 46vw, 660px); object-fit: cover; transition: transform 1.2s var(--ease-out); }
+.block--vista figcaption { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); align-items: baseline; max-width: none; margin: 0; padding: var(--space-4) var(--ch-edge); background: var(--gr-bg); font-size: var(--fs-sm); }
+.block--vista2 figcaption { padding-inline: var(--gutter); }
+.block--vista figcaption::before {
+  content: attr(data-p) " " attr(data-n); content: attr(data-p) " " attr(data-n) / "";
+  font: var(--wght-mono) var(--fs-meta) / 1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--gr-accent);
+}
+@media (min-width: 768px) {
+  .block--vista2 { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .block--vista2 .pic img { height: clamp(320px, 38vw, 560px); }
+}
+@media (hover: hover) and (pointer: fine) { .block--vista figure:hover .pic img { transform: scale(1.025); } }
+
+/* ---------- Date line: continues a dark last chapter ---------- */
+.dateline-wrap[data-on] { max-width: none; margin: 0; padding: 0 var(--ch-edge) var(--space-6); background: var(--gr-bg); }
+.dateline-wrap[data-on] .dateline { border-top: 0; }
+/* After a light last chapter the date line stays on the sheet. */
+.dateline-wrap[data-sheet] { max-width: none; margin: 0; padding: 0 var(--ch-edge) var(--space-6); background: var(--sheet-white); }
+.dateline-wrap[data-sheet] .dateline { border-top: 0; }
+
+/* ---------- Footer: deepest graphite, a long section on the ground line, the outlined masthead ---------- */
+.site-footer { position: relative; overflow: hidden; background: var(--gr-deep); border-top: 0; --ch-bg: var(--gr-deep); --color-bg: var(--gr-deep); content-visibility: auto; contain-intrinsic-size: auto 900px; }
+.site-footer__cut {
+  position: relative; height: clamp(120px, 22vw, 300px); margin: 0 calc(-1 * var(--gutter)) var(--space-9); border-bottom: 1px solid var(--gr-line-strong);
+  color: var(--gr-ink); pointer-events: none;
+}
+.site-footer__cut::before {
+  content: ""; position: absolute; inset: 0; background: currentColor; opacity: .55;
+  -webkit-mask: url(/assets/deco/villa-section-long.svg) center bottom / auto 100% no-repeat; mask: url(/assets/deco/villa-section-long.svg) center bottom / auto 100% no-repeat;
+}
+.site-footer__cut::after {
+  content: attr(data-l); content: attr(data-l) / "";
+  position: absolute; left: var(--gutter); top: 100%; margin-top: var(--space-3); font: var(--wght-mono) var(--fs-meta) / 1 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--gr-ink-3);
+}
+.site-footer__top::before {
+  content: attr(data-w); content: attr(data-w) / ""; grid-column: 1 / -1; display: block; margin-bottom: var(--space-4);
+  font: 650 clamp(2.25rem, 9.3vw, 9.5rem) / .9 var(--font-display); font-stretch: 125%; letter-spacing: -.04em; white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1px var(--gr-line-strong); text-transform: uppercase;
+}
+.footer-col__title { color: var(--gr-accent); }
+.site-footer__contact, .site-footer__contact div, .site-footer__bottom { border-color: var(--gr-line); }
+
+/* Two-column chapters whose right column starts at the heading (plan slider, contact): it starts under the numeral. */
+@media (min-width: 1024px) {
+  .main > [data-ch] .compare__figure { margin-top: calc(var(--chapter-num) * .5); }
+  .main > [data-ch] .contact__alt { margin-top: calc(var(--chapter-num) * .8); }
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 767px) {
+  .main > [data-ch] { --ch-i: 10px; }
+  .ch-ax, .hv-leg, .hs::before, .hs::after, .hero__figure::before, .hero__figure::after, .hero__app::before, .hero__app::after { display: none; }
+  .main > [data-n]::before { --chapter-num: 4.25rem; top: 12px; right: 16px; }
+  .main > [data-n]::after { left: var(--gutter); right: var(--gutter); }
+  .main > [data-n] > .wrap { padding-top: calc(var(--space-6) + var(--space-5)); }
+  .site-footer__top::before { font-size: 9.6vw; }
+}
+@media (prefers-reduced-motion: reduce) { .block--vista .pic img { transition: none; } }
+/* Forced colours turn outlined text into solid text: the decorative numerals and the masthead are dropped, the index row and plate captions stay.
+   The system recolours background-color, not gradients: the glow, vignette, grain, grid and crop-mark layers (and their --gr-* custom-property colours) would
+   survive as a white-to-black blob with a text backplate behind every line, so every chapter surface falls back to a plain Canvas panel. */
+@media (forced-colors: active) {
+  .main > [data-n]::before, .site-footer__top::before, .ch-bg, .site-footer__cut { display: none; } /* the long section is a mask painted in Canvas colour here: a blank band with an orphan caption */
+  .main > [data-ch], .site-footer, .dateline-wrap { background-image: none; }
+}

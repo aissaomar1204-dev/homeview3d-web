@@ -49,3 +49,20 @@
 @media (min-width: 768px) {
   .guarantees { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
 }
+
+/* Drawing-set pricing: bigger figures, a marker on the recommended pack. */
+.pack { background: var(--color-surface); border-color: var(--color-line); }
+
+.pack--featured .pack__flag::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: var(--space-2); background: currentColor; }
+.pack__price strong { font-size: clamp(2.25rem, 1.6rem + 1.8vw, 3.25rem); }
+.pricing__vat { color: var(--color-ink-2); }
+/* Cinema chapter (pricing over the dusk terrace): plates on the image, the recommended pack is an añil plate. */
+.main > [data-ch=c] .pack { background: color-mix(in srgb, var(--gr-surface) 86%, transparent); border-color: var(--gr-line-strong); }
+.main > [data-ch=c] .pack--featured {
+  --color-surface: var(--gr-brand); --color-ink: var(--gr-brand-ink); --color-ink-2: var(--gr-brand-ink-2); --color-ink-3: var(--gr-brand-ink-3);
+  --color-line: color-mix(in srgb, var(--gr-brand-ink) 28%, transparent); --color-line-strong: color-mix(in srgb, var(--gr-brand-ink) 55%, transparent);
+  --color-accent: var(--gr-brand-ink); --color-accent-hover: var(--gr-ink); --color-on-accent: var(--gr-brand);
+  background: var(--gr-brand); border-color: var(--gr-brand-ink-3); box-shadow: 0 40px 70px -30px color-mix(in srgb, var(--gr-brand) 80%, transparent); color: var(--color-ink);
+}
+.main > [data-ch=c] .pricing__vat { color: var(--gr-ink-2); }
+@media (forced-colors: active) { .main > [data-ch=c] .pack--featured { border: 2px solid Highlight; } }

@@ -2,6 +2,8 @@
 // (30 terms; a primary source is linked in the body where one exists). This file holds the
 // page frame: hero, key facts, one explanatory answer block and the glossary block.
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'glosario',
   image: 'villa_maqueta_iso_opaco',
@@ -41,6 +43,7 @@ export default {
         service: 'maqueta',
       },
       { type: 'glossary' },
+      plate('es', 'villa_interior_terraza'),
     ],
     related: ['servicio-ar', 'servicio-tour', 'caso-villa', 'guia-ar', 'faq'],
     cta: {
@@ -83,6 +86,7 @@ export default {
         service: 'maqueta',
       },
       { type: 'glossary' },
+      plate('en', 'villa_interior_terraza'),
     ],
     related: ['servicio-ar', 'servicio-tour', 'caso-villa', 'guia-ar', 'faq'],
     cta: {

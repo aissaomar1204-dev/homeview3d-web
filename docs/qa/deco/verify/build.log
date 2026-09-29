@@ -1,0 +1,22 @@
+
+> estudio-3d-web@0.1.0 build
+> node build/build.mjs
+
+Building Home View 3D → dist  (content: build/content)
+  content: 35 file(s), 0 warning(s) (VERBOSE=1 to list)
+  hero: 48 frames, desktop 2160.7 KB · mobile 859.5 KB
+  assets: 422 public file(s), css 35.2 KB + modules herotext 0.6 KB, herohs 3.1 KB, herolive 1.6 KB, tables 0.8 KB, data 1.8 KB, cta 1.4 KB, compare 2.5 KB, process 3.3 KB, bento 2.9 KB, pricing 2.7 KB, calc 2.3 KB, form 4.5 KB, plates 1.0 KB, glossary 1.4 KB, article 2.8 KB, viewer 5.5 KB, ar 4.5 KB, embed 1.3 KB, viewerlive 2.2 KB, answers 1.4 KB, cards 3.7 KB, inner 5.9 KB, pages 0.3 KB, js hero 7.1 KB, main 12.5 KB, viewer-dims 6.1 KB, viewer 15.0 KB
+    machine outputs: 79 files · 62 indexable pages · 62 index.md · IndexNow 62 pending (all URLs (live manifest unavailable: Unexpected token '<', "<!DOCTYPE "... is not valid JSON)) · CSP 4 inline hash(es)
+
+── Report ─────────────────────────────────────────
+  pages: es 38 · en 30 (+ 2 × 404)
+  home: HTML 78.5 KB (16.7 KB br) · CSS 65.7 KB (shared 35.2 KB) · initial JS 28.4 KB · fonts 60.3 KB · LCP image 50.0 KB (avif 1200w)
+  css bundles: 30 module set(s) · ≤ 2 render-blocking stylesheets per page
+  heaviest page CSS: 65.7 KB (/)
+  ⚠  PRICING NOT CONFIRMED: build/data/pricing.mjs is a proposal (confirmed: false).
+  0 warning(s) · 3.2 s
+
+
+real	0m4.041s
+user	0m0.120s
+sys	0m0.076s

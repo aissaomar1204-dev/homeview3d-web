@@ -63,6 +63,7 @@ auto id (slug of the text) usable as `@page#slug`. Phrase H2s as questions where
 | `checklist` | `h2`, `intro?`, `items: [string]` | Check list |
 | `figure` | `image`, `alt`, `caption`, `layout?: 'wide'\|'inline'` | Responsive `<picture>` with caption (always say it is a render) |
 | `gallery` | `h2?`, `intro?`, `items: [{ image, alt, caption }]` | Captioned plates |
+| `plate` | `images: [{ image, alt, caption }]` (1 or 2 items) | Full-bleed render plate between chapters: one image edge to edge, or a diptych (7/5) of two. The caption sits on a graphite strip **below** the image, numbered «Vista 01» by CSS, and **must say it is a render** («Render 3D de la villa anonimizada.» / "3D render of the anonymised villa."); alt describes the room and says it is a render. Used on the home and on every long inner page (zones, faq, glossary, guides hub in the content; services, audiences, about, pricing, process and guides get one automatically when the content has none). Content files build it with `plate(lang, key…)` from `build/data/plates.mjs` (honest alt and caption per render, both languages). In a guide the plate leaves the reading column and renders full bleed **after** the article, before the related list; the build validator and `design-lint` enforce image key, alt and caption |
 | `compare` | `h2?`, `intro?` | Registered slider: 2D line plan vs colour top-down render (fixed images) |
 | `viewer` | `h2?`, `intro?` | 3D viewer band (poster, loads on click, room list in HTML) |
 | `ar` | `h2?`, `intro?` | AR handoff: iPhone/iPad and Android buttons, QR on desktop |
@@ -85,7 +86,7 @@ auto id (slug of the text) usable as `@page#slug`. Phrase H2s as questions where
 | `faq` | (none) | Where `faq` is rendered. If absent, FAQ goes before the closing CTA |
 | `faqGroups` | `groups: [{ title, items: [{q,a}] }]` | FAQ hub page only |
 | `glossary` | (none) | Glossary page only (terms from build/data/glossary.mjs) |
-| `contactForm` | `h2?`, `intro?` | The quote form (contact page, home end) |
+| `contactForm` | `h2?`, `intro?`, `image?`, `imageAlt?`, `imageCaption?` | The quote form (contact page, home end). `image` (an eye-level interior key) shows a render beside the form on the dark home chapter, with the honesty caption in `imageCaption` |
 | `cta` | `h2`, `body`, `service?` | Mid-page CTA band (the closing one is automatic) |
 | `video` | `h2?`, `intro?`, `video` (key in build/generated/videos.json, e.g. `villa-turntable`), `caption` | Click-to-play muted video with poster, pause control and a caption stating it is a 3D render |
 
@@ -203,3 +204,15 @@ export default {
   en: { /* … British English … */ },
 };
 ```
+
+## 9. Chapters (pages drawn as a drawing set)
+
+A page opts in from its template (`ctx.chapters = {}`): since the inner-page rollout (2026-09-29) **every template does**, the home, service, audience, zone, case, process, pricing, guide, hub, glossary, faq, about, contact, thanks, legal (quiet: `{ quiet: true }`), 404 and the AR landing (only `embed` stays minimal). Each block section then becomes a *chapter* with a tone, number and label, and the page gets the tone rhythm of the drawing set (white and grey sheets, graphite chapters, a cinematic pricing chapter, render plates, a cinematic closing call to action). Content writers do not choose tones: the block **order** is the rhythm, and `CHAPTERS` in `build/lib/chapters.mjs` maps each block type to its tone (labels in `build/data/ui.mjs`, `chapter.*`). Rules for content on such a page:
+
+- Do not write an eyebrow: the chapter index row («03 PROCESO ··· HOJA A-03») does that job (drawn by CSS, not in the text).
+- Put a `plate` block between two text chapters that would otherwise share a tone, or where the page needs air; never two plates in a row.
+- The home order is: hero, key facts, `compare`, `plate` (living room), `deliverables`, `process` (despiece), `viewer`, `plate` (bedroom and bathroom diptych), `audiences`, `pricing`, `calculator`, `faq`, `contactForm` (with `image`).
+- Inner pages need no chapter markup either: the hero is the first sheet (a legend with north arrow, scale bar and the sheet id of the page's series: A home, S service, C audience, Z zone, V case, P process, T pricing, G guide, H hub, L glossary, Q faq, N about, K contact and thanks, J legal, X 404), the key facts become the graphite strip, every block is a chapter, the closing `cta` (and any mid-page `cta` block) is a cinema chapter over a render, and the date line continues the last chapter. A page with a lot of text should carry one `plate` (see the table row above); pages without their own get one automatically (`plateBand`, opaque landscape renders, never one that the page already shows).
+- Guides are the exception to "every block is a chapter": the article is ONE white sheet with a 66ch reading column and a sticky table of contents drawn as a sheet, so its blocks stay plain sections (decorated by `49-article.css`: numbered heads that match the table of contents, framed tables with a graphite header row, hatch-edged callouts, a graphite figure plate). `plate` blocks come out of the column and render full bleed after it.
+- Block-specific looks (no content change needed): `stat` is a giant number on graphite, `table` a framed plate with a graphite header row, `needs` numbered plates, `steps` and `process` outlined numerals beside a line drawing that stays put while they scroll, `callout` a note with a section-cut hatch edge, `services`, `pages` (when every page has a render in `CARD_IMAGES`, `blocks.mjs`) and `audiences` image cards, the `glossary` numbered term plates.
+- Deliverable cards show a title-block row from `build/data/deliverables.mjs` (`sheet: { es: [name, detail], en: [...] }`, tokens allowed). Only real facts: «Esc. 1:20» is the AR tabletop scale, «{{villa:rooms}} estancias» the room list.

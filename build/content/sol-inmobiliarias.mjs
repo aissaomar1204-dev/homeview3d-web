@@ -73,6 +73,8 @@ const faqEn = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'sol-inmobiliarias',
   image: 'villa_salon_dormitorio_opaco',
@@ -177,6 +179,7 @@ export default {
         answer: 'Depende de tus honorarios medios y de cuántas viviendas captes. Ejemplo con supuestos: en una vivienda de 400.000 € con honorarios del 3 %, la agencia factura 12.000 € + IVA, y la maqueta 3D completa cuesta {{price:maqueta}} + IVA. Si el modelo te ayuda a firmar una sola exclusiva más al año, cubre el coste de muchas maquetas.',
         body: 'La cuenta que importa es sencilla: divide lo que te costarían las maquetas del año entre tus honorarios medios por operación. Si el resultado es menor que una operación, el riesgo es bajo. Pon tus propias cifras en la tabla.',
       },
+      plate('es', 'villa_interior_salon'),
       {
         type: 'table',
         caption: 'Ejemplo ilustrativo de rentabilidad para una agencia (supuestos, no resultados)',
@@ -301,6 +304,7 @@ export default {
         answer: 'It depends on your average fee and how many homes you list. A worked example with assumptions: on a €400,000 sale at a 3% fee, the agency earns €12,000 + VAT, and the complete 3D model costs {{price:maqueta}} + VAT. If the model helps you win just one extra instruction a year, it pays for many models.',
         body: 'The sum that matters is simple: divide what a year of 3D models would cost by your average fee per sale. If the answer is less than one sale, the risk is small. Try it with your own figures below.',
       },
+      plate('en', 'villa_interior_salon'),
       {
         type: 'table',
         caption: 'Illustrative return for an agency (assumptions, not results)',

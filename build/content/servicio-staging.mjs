@@ -4,6 +4,8 @@
 
 const INE = 'https://www.ine.es/dyngs/Prensa/ETDP0726.htm';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'servicio-staging',
   image: 'villa_interior_dormitorio',
@@ -48,6 +50,7 @@ export default {
         answer: 'La maqueta 3D completa ya se entrega amueblada, con un estilo que proponemos a partir del plano. El home staging virtual es para cuando quieres decidir tú: otro estilo, piezas concretas, acabados distintos o varias versiones de la misma estancia para compradores diferentes. Se cobra por estancia redecorada, a {{extra:staging}} + IVA.',
         body: 'Los cambios puntuales, como otro sofá o un suelo más claro, entran en las {{revisions:maqueta}} incluidas en la maqueta. El staging es la redecoración completa de una estancia, con sus renders recalculados.',
       },
+      plate('es', 'villa_dormitorios_opaco'),
       {
         type: 'answer',
         h2: '¿En qué se diferencia del home staging virtual con IA?',
@@ -222,6 +225,7 @@ export default {
         answer: 'The complete 3D model already arrives furnished, in a style we propose from the plan. Virtual staging is for when you want to decide: a different style, specific pieces, other finishes, or several versions of a room for different buyers. It is charged per restyled room, at {{extra:staging}} + VAT.',
         body: 'Small tweaks, such as another sofa or a lighter floor, fall within the {{revisions:maqueta}} included with the model. Staging is a full restyle of a room, with its renders recalculated.',
       },
+      plate('en', 'villa_dormitorios_opaco'),
       {
         type: 'answer',
         h2: 'How is 3D virtual staging different from AI staging on photos?',

@@ -1,28 +1,56 @@
 /* @module article article
    ==========================================================================
-   49-article · guide layout: 66ch body, sticky table of contents. Owner: ENGINE.
+   49-article · guide layout: the article is ONE white sheet (dotted paper) holding a 66ch reading column and a sticky table of
+   contents drawn as a sheet of its own. Decoration (rulebook Overrides O3): numbered section heads, tables with graphite header
+   rows and callouts with a hatch edge (57-inner, 35-data), outlined step numerals, a graphite figure plate. Owner: ENGINE.
    ========================================================================== */
-.article__head { padding-block: var(--space-7) var(--space-5); }
-.article__head .wrap > * { max-width: 72ch; }
-.article__head .wrap > * + * { margin-top: var(--space-4); }
+.article[data-ch] { padding-block: var(--space-7); }
 .byline__by { color: var(--color-ink-2); }
-.article__hero { margin-block: var(--space-5); }
-.article__hero .figure { max-width: 56rem; }
-/* Portrait heroes (the top-down plan) are height-capped and drawn inside the full-width stage (no load-time shift). */
-.article__hero .pic img { max-height: min(78svh, 40rem); object-fit: contain; }
-.article__layout { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
+.article__layout { display: grid; gap: var(--space-6); }
 .article__body { min-width: 0; max-width: 50rem; }
 .article__body .wrap { padding: 0; max-width: none; }
 .article__body .block { margin-block: var(--space-7); }
 .article__body > :first-child { margin-top: 0; }
-.toc { padding-top: var(--space-4); border-top: 1px solid var(--color-line-strong); }
-.toc__list { margin-top: var(--space-3); counter-reset: t; }
+.article__body > :last-child { margin-bottom: 0; }
+
+/* Table of contents: a sheet with two corner marks and a dimension line under its title. */
+.toc { position: relative; padding: var(--space-5) var(--space-4) var(--space-4); background: var(--color-surface); border: 1px solid var(--color-line-strong); }
+.toc::before, .toc::after { content: ""; position: absolute; width: 14px; height: 14px; border: solid var(--color-ink); pointer-events: none; }
+.toc::before { top: -5px; left: -5px; border-width: 2px 0 0 2px; }
+.toc::after { right: -5px; bottom: -5px; border-width: 0 2px 2px 0; }
+.toc__title { padding-bottom: var(--space-3); border-bottom: 1px solid var(--color-ink); color: var(--color-ink); }
+.toc__list { margin-top: var(--space-2); counter-reset: t; }
 .toc__list li { border-bottom: 1px solid var(--color-line); }
+.toc__list li:last-child { border-bottom: 0; }
 .toc__list a { display: grid; grid-template-columns: 2ch minmax(0, 1fr); gap: var(--space-3); align-items: center; min-height: var(--tap-min); padding-block: var(--space-2); font-size: var(--fs-sm); color: var(--color-ink-2); text-decoration: none; }
-.toc__list a::before { counter-increment: t; content: counter(t); color: var(--color-ink-3); }
+.toc__list a::before { counter-increment: t; content: counter(t, decimal-leading-zero); content: counter(t, decimal-leading-zero) / ""; color: var(--color-ink-3); }
+
+/* The reading column: numbered section heads (the same numbers as the table of contents), steps with outlined numerals. */
+.article__body { counter-reset: sec; }
+.article[data-ch] .article__body .block__head { position: relative; padding-top: var(--space-5); border-top: 1px solid var(--color-ink); }
+.article[data-ch] .article__body .block__head > h2 { max-width: 26ch; font-size: clamp(1.75rem, 1.2rem + 1.5vw, 2.5rem); line-height: 1.08; letter-spacing: -.02em; font-stretch: 112%; }
+.article[data-ch] .article__body .block__head::before {
+  counter-increment: sec; content: counter(sec, decimal-leading-zero); content: counter(sec, decimal-leading-zero) / "";
+  display: block; margin-bottom: var(--space-2); font: var(--wght-mono) var(--fs-meta) / 1 var(--font-mono); letter-spacing: .09em; color: var(--color-accent);
+}
+.article[data-ch] .article__body .block__head::after { content: ""; position: absolute; top: -1px; right: 0; width: 42px; height: 7px; background: repeating-linear-gradient(135deg, var(--color-ink) 0 1px, transparent 1px 5px); }
+.article__body .steps { counter-reset: s; }
+.article__body .step { position: relative; counter-increment: s; }
+.article__body .step::before {
+  content: counter(s, decimal-leading-zero); content: counter(s, decimal-leading-zero) / "";
+  position: absolute; right: 0; top: var(--space-3); font: 650 2.5rem / 1 var(--font-display); font-stretch: 125%; color: transparent; -webkit-text-stroke: 1px var(--color-line-strong);
+}
+.article__body .step__title { max-width: 80%; }
+
+@media (min-width: 768px) {
+  /* A sheet: the column sits on white paper with a keyline, so the dotted grid of the chapter stays around it. */
+  .article__body { padding: var(--space-6) var(--space-7) var(--space-7); background: var(--sheet-white); border: 1px solid var(--color-line-strong); }
+  .article__body .block { margin-block: var(--space-8); }
+}
 @media (min-width: 1024px) {
-  .article__head { padding-top: var(--space-9); }
+  .article[data-ch] { padding-block: var(--space-9); }
   .article__layout { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); column-gap: var(--space-8); }
   .article__layout--solo { grid-template-columns: minmax(0, 1fr); }
   .article__aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); align-self: start; }
 }
+@media (forced-colors: active) { .article__body .step::before, .article[data-ch] .article__body .block__head::after { display: none; } }

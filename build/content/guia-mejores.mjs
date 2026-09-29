@@ -42,6 +42,8 @@ const SRC = {
   vista: 'https://vistastudiodesign.com/',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-mejores',
   image: 'villa_maqueta_iso_opaco',
@@ -171,6 +173,7 @@ export default {
         title: 'Cómo mantenemos esta lista',
         body: 'Revisamos la lista cada tres meses; la próxima revisión será en diciembre de 2026. Añadimos o quitamos opciones solo con datos de su propia web y cambiamos la fecha de actualización cuando cambia algo. Si tienes un estudio o una herramienta que encaja con estos criterios, o ves un dato que ha cambiado, escríbenos a {{email}}.',
       },
+      plate('es', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',
@@ -355,6 +358,7 @@ export default {
         title: 'How we keep this list up to date',
         body: 'We review the list every three months; the next review is due in December 2026. We only add or remove options based on facts from their own websites, and we change the “Updated” date whenever something changes. If you run a studio or tool that meets these criteria, or you spot a fact that has changed, email us at {{email}}.',
       },
+      plate('en', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',

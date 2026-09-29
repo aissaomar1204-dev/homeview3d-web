@@ -1,0 +1,66 @@
+/* @module cards index__item--media
+   ==========================================================================
+   56-cards · audience image cards (C): one large card with an eye-level interior render, three smaller with aerial
+   views, dark scrims under white type, an arrow. The picture is decorative (alt ""), the whole card is the link.
+   Owner: ENGINE. Only linked on pages that render .index__item--media.
+   ========================================================================== */
+.index--cards { display: grid; gap: var(--space-3); border: 0; counter-reset: none; }
+.index__item--media {
+  --color-bg: var(--gr-bg); --color-surface: var(--gr-surface); --color-ink: var(--gr-ink); --color-ink-2: var(--gr-ink-2); --color-ink-3: var(--gr-ink-3);
+  --color-line: var(--gr-line); --color-line-strong: var(--gr-line-strong); --color-accent: var(--gr-accent);
+  isolation: isolate; overflow: hidden; min-height: 240px; align-content: end; padding: clamp(20px, 2.4vw, 36px); border: 0; color: var(--gr-ink); background: var(--gr-bg);
+}
+.index--grid .index__item--media { padding: clamp(20px, 2.4vw, 36px); border: 0; }
+.index--grid .index__item--media::before { display: none; }
+/* grid-area: auto so the absolute box is sized by the card, not by the first grid column. */
+.index__item--media > .index__media { grid-area: auto; position: absolute; inset: 0; z-index: -1; }
+.index__media .pic, .index__media img { width: 100%; height: 100%; }
+.index__media img { object-fit: cover; transition: transform 1.1s var(--ease-out); }
+/* Scrim: the card is darkest where the type sits (bottom), so white text keeps its 4.5:1 on any render. */
+.index__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(0deg, color-mix(in srgb, var(--gr-bg) 96%, transparent) 0, color-mix(in srgb, var(--gr-bg) 88%, transparent) 55%, color-mix(in srgb, var(--gr-bg) 44%, transparent));
+}
+.index__item--media .index__title { font-size: var(--fs-h3); }
+.index__item--media:first-child .index__title { font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.75rem); font-stretch: 112%; }
+.index__item--media .index__title a, .index__item--media .index__arrow { color: var(--gr-ink); }
+.index__item--media .index__summary { color: var(--gr-ink-2); }
+.index__item--media:has(a:focus-visible) { outline-color: var(--ch-ring); }
+@media (hover: hover) and (pointer: fine) {
+  .index__item--media:hover .index__media img { transform: scale(1.05); }
+  .index__item--media:hover :is(.index__title a, .index__arrow) { color: var(--gr-accent); }
+}
+/* Layouts by count (index--nN, set by indexList): 2 = a large card and one (the English audiences), 3 = a large card and two, 4 = a large card and three (audiences), 5 = two on top and
+   three below (services). Tablet: the large card on top, the rest in a row or two. */
+@media (min-width: 768px) {
+  .index--cards { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: var(--space-3); }
+  .index--n2, .index--n3, .index--n5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .index--n2 .index__item--media:first-child { grid-column: auto; min-height: 380px; }
+  .index--n2 .index__item--media:nth-child(n + 2) { min-height: 380px; }
+  .index__item--media:first-child { grid-column: 1 / -1; min-height: 340px; }
+  .index__item--media:nth-child(n + 2) { min-height: 300px; }
+}
+@media (min-width: 1024px) {
+  .index--cards { grid-template-columns: repeat(12, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(210px, 1fr)); }
+  .index__item--media:first-child { grid-column: 1 / 8; grid-row: 1 / 4; }
+  /* The large card is tall, so its type sits far from the top of the render: a lighter scrim above it keeps the interior visible. */
+  .index__item--media:first-child .index__media::after { background: linear-gradient(0deg, color-mix(in srgb, var(--gr-bg) 95%, transparent) 0, color-mix(in srgb, var(--gr-bg) 62%, transparent) 46%, color-mix(in srgb, var(--gr-bg) 18%, transparent)); }
+  .index__item--media:nth-child(n + 2) { grid-column: 8 / 13; }
+  .index--n2 { grid-template-rows: minmax(420px, 1fr); }
+  .index--n2 .index__item--media:first-child { grid-column: 1 / 8; grid-row: 1; }
+  .index--n2 .index__item--media:nth-child(2) { grid-column: 8 / 13; grid-row: 1; min-height: 420px; }
+  .index--n2 .index__item--media:first-child .index__media::after { background: linear-gradient(0deg, color-mix(in srgb, var(--gr-bg) 96%, transparent) 0, color-mix(in srgb, var(--gr-bg) 88%, transparent) 55%, color-mix(in srgb, var(--gr-bg) 44%, transparent)); }
+  .index--n3 { grid-template-rows: repeat(2, minmax(250px, 1fr)); }
+  .index--n3 .index__item--media:first-child { grid-row: 1 / 3; }
+  .index--n5 { grid-template-rows: repeat(2, minmax(290px, 1fr)); }
+  .index--n5 .index__item--media:first-child { grid-column: 1 / 8; grid-row: 1; }
+  .index--n5 .index__item--media:nth-child(2) { grid-column: 8 / 13; grid-row: 1; }
+  .index--n5 .index__item--media:nth-child(n + 3) { grid-row: 2; min-height: 290px; }
+  .index--n5 .index__item--media:nth-child(3) { grid-column: 1 / 5; }
+  .index--n5 .index__item--media:nth-child(4) { grid-column: 5 / 9; }
+  .index--n5 .index__item--media:nth-child(5) { grid-column: 9 / 13; }
+  .index--n5 .index__item--media:first-child .index__media::after { background: linear-gradient(0deg, color-mix(in srgb, var(--gr-bg) 96%, transparent) 0, color-mix(in srgb, var(--gr-bg) 88%, transparent) 55%, color-mix(in srgb, var(--gr-bg) 44%, transparent)); }
+}
+@media (prefers-reduced-motion: reduce) { .index__media img { transition: none; } }
+/* Forced colours paint the type in system colours: a render under it would make it unreadable, so the decorative picture goes and the card keeps its text and its border. */
+@media (forced-colors: active) { .index__media { display: none; } .index__item--media { border: 1px solid CanvasText; } }

@@ -12,6 +12,10 @@
    - LCP weight is measured on the AVIF candidate closest to 1200w when the LCP <img> sits in a <picture>
      with an AVIF source (what a phone downloads); the <img src> is only the fallback for browsers without AVIF.
    - Copy findings (dashes, "...", banned words) quote ~70 characters around the match.
+   - Drawing-set rules (rulebook Overrides O3, 2026-09-29): the decoration the client asked for (chapter tones, crop marks,
+     grids, outlined numerals, plates, láminas, dark chapters) is allowed but disciplined: known tones, no two neighbouring
+     chapters alike, decoration hidden from assistive tech, decorative pictures with alt="", plate captions that say render,
+     and generated text in CSS always with an empty-alt fallback.
    - Page weight budgets (BUILD-SPEC §11) come from BUDGETS in build/lib/machine.mjs (same numbers as
      build/check.mjs): HTML raw AND brotli per page, shared stylesheet, total CSS per page and the number of
      render-blocking stylesheet requests. The local fallback below is used only if that module cannot load. */
@@ -24,7 +28,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.resolve(process.argv[2] || path.join(HERE, '..', process.env.OUT_DIR || 'dist'));
 const SRC_CSS = path.join(HERE, '..', 'src', 'css');
 const TOKENS_CSS = /(^|[-.])tokens\.css$/; // the ONLY source css file allowed to contain raw hex colours (00-tokens.css)
-let SHARED = { htmlRawKB: 72, htmlBrotliKB: 16, brotliQuality: 11, cssSharedKB: 25, cssPageKB: 45, cssBlockingMax: 2, initialJsKB: 30, lcpImageTargetKB: 120 };
+let SHARED = { htmlRawKB: 90, htmlBrotliKB: 19, brotliQuality: 11, cssSharedKB: 42, cssPageKB: 72, cssBlockingMax: 2, initialJsKB: 30, lcpImageTargetKB: 120 };
 try { SHARED = { ...SHARED, ...(await import('../build/lib/machine.mjs')).BUDGETS }; } catch { /* standalone copy: local fallback */ }
 const BUDGET = {
   htmlKB: SHARED.htmlRawKB, htmlBrotliKB: SHARED.htmlBrotliKB, brotliQuality: SHARED.brotliQuality,
@@ -145,6 +149,39 @@ for (const f of files.filter((x) => x.endsWith('.html'))) {
   const eyebrows = (html.match(/class="[^"]*\beyebrow\b/gi) || []).length;
   if (sections && eyebrows > Math.ceil(sections / 3)) err(f, `${eyebrows} eyebrows for ${sections} sections (max ${Math.ceil(sections / 3)})`);
 
+  // Drawing-set chapters (O3): known tones, neighbours differ, decoration is aria-hidden, decorative pictures have alt="".
+  const TONES = new Set(['h', 'w', 'p', 'g', 'k', 'c', 'plate']);
+  const tones = [...html.matchAll(/<(?:section|article)\b[^>]*\sdata-ch="(\w+)"/gi)].map((m) => m[1]);
+  for (const t of tones) if (!TONES.has(t)) err(f, `unknown chapter tone data-ch="${t}" (allowed: ${[...TONES].join(' ')})`);
+  tones.forEach((t, i) => { if (i && t === tones[i - 1] && t !== 'plate') err(f, `two neighbouring chapters share the tone "${t}" (no rhythm)`); });
+  for (const c of ['ch-ax', 'hv-leg', 'bento__tb', 'ch-bg', 'index__media', 'site-footer__cut', 'process__side']) {
+    for (const m of html.matchAll(new RegExp(`<(?:div|p)\\b[^>]*class="[^"]*\\b${c}\\b[^"]*"[^>]*>`, 'g'))) if (!/aria-hidden="true"/.test(m[0])) err(f, `decoration .${c} must be aria-hidden="true"`);
+  }
+  // On a page with chapters every top-level block section IS a chapter (a block type missing from CHAPTERS would be a plain strip
+  // between two tones). Sections inside an <article> (the guide's reading column) are content, not chapters.
+  if (tones.length) {
+    const mainHtml = (html.match(/<main\b[^>]*>([\s\S]*)<\/main>/) || [, ''])[1];
+    const VOID = new Set(['img', 'br', 'hr', 'input', 'meta', 'link', 'source', 'path', 'use', 'circle', 'rect', 'line', 'polyline', 'polygon']);
+    const stack = [];
+    for (const m of mainHtml.matchAll(/<(\/?)([a-z][a-z0-9-]*)\b([^>]*)>/gi)) {
+      const [, close, name, rest] = m; const tag = name.toLowerCase();
+      if (VOID.has(tag) || /\/\s*$/.test(rest)) continue;
+      if (close) { const i = stack.lastIndexOf(tag); if (i >= 0) stack.length = i; continue; }
+      if (tag === 'section' && stack.length === 0 && !/\sdata-ch=/.test(rest)) {
+        const cls = (rest.match(/class="([^"]*)"/) || [, ''])[1];
+        err(f, `top-level <section${cls ? ` class="${cls}"` : ''}> is not a chapter (add its block type to CHAPTERS, build/lib/chapters.mjs)`);
+      }
+      stack.push(tag);
+    }
+  }
+  for (const m of html.matchAll(/<div class="(?:ch-bg|index__media)"[^>]*>([\s\S]*?)<\/div>/g)) for (const im of m[1].matchAll(/<img\b[^>]*>/g)) if (attr(im[0], 'alt') !== '') err(f, 'decorative chapter picture must have alt=""');
+  for (const m of html.matchAll(/<section\b[^>]*block--vista[\s\S]*?<\/section>/g)) {
+    const figs = (m[0].match(/<figure\b/g) || []).length;
+    const caps = [...m[0].matchAll(/<figcaption\b[^>]*>([\s\S]*?)<\/figcaption>/g)].map((x) => x[1].replace(/<[^>]+>/g, ''));
+    if (caps.length !== figs) err(f, 'render plate without a caption');
+    for (const c of caps) if (!/render/i.test(c)) err(f, `plate caption must say it is a render (IMG-03): «${c.slice(0, 50)}»`);
+  }
+
   // Images
   const imgs = [...html.matchAll(/<img\b[^>]*>/gi)].map((m) => m[0]);
   imgs.forEach((tag, i) => {
@@ -222,6 +259,21 @@ if (fs.existsSync(SRC_CSS)) {
   for (const f of fs.readdirSync(SRC_CSS).filter((x) => x.endsWith('.css')).map((x) => path.join(SRC_CSS, x))) {
     const css = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
     if (!TOKENS_CSS.test(path.basename(f)) && /#[0-9a-f]{3,8}\b/i.test(css)) err(f, 'raw hex colour outside tokens.css (use var(--color-*))');
+  }
+}
+
+// Generated text in the drawing-set stylesheets (numerals, index rows, sheet ids, plate numbers) must never reach a screen reader:
+// every content: attr()/counter() has a sibling content: … / "" (the alt form), unless the element itself is aria-hidden (.bento__tb).
+if (fs.existsSync(SRC_CSS)) {
+  for (const name of ['24-chapters.css', '42-process.css', '43-bento.css', '56-cards.css', '57-inner.css', '49-article.css', '48-glossary.css']) {
+    const p = path.join(SRC_CSS, name);
+    if (!fs.existsSync(p)) continue;
+    const src = fs.readFileSync(p, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    for (const m of src.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+      const decls = [...m[2].matchAll(/(?:^|;)\s*content\s*:\s*([^;]+)/g)].map((x) => x[1]);
+      const text = decls.filter((d) => /attr\(|counter\(/.test(d));
+      if (text.length && !decls.some((d) => /\/\s*""\s*$/.test(d)) && !/bento__tb/.test(m[1])) err(p, `generated text without an empty-alt fallback in «${m[1].trim().slice(0, 60)}» (add content: … / "")`);
+    }
   }
 }
 

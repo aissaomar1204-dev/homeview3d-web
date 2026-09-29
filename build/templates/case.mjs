@@ -1,7 +1,8 @@
 /* Case study (caso-villa, rulebook C5): the hero IS the viewer facade (D-07). H1 + lead + CTA in cols 1-5, the viewer
    app (#visor, poster eager = LCP) in cols 6-12; on phones: H1, lead, then the stage. → cajetín → blocks → FAQ →
    related → CTA. */
-import { h1, hasImage, heroActions } from '../lib/components.mjs';
+import { h1, hasImage, heroActions, heroAttrs } from '../lib/components.mjs';
+import { heroLegend } from '../lib/hero.mjs';
 import { standardPage, viewerModule } from '../lib/blocks.mjs';
 
 function viewerFallback(ctx) {
@@ -13,6 +14,7 @@ function viewerFallback(ctx) {
 }
 
 export default function render(ctx) {
+  ctx.chapters = {}; // a drawing set (build/lib/chapters.mjs)
   const p = ctx.page;
   let app;
   if (viewerModule && typeof viewerModule.renderViewerApp === 'function') {
@@ -22,8 +24,8 @@ export default function render(ctx) {
   } else {
     app = viewerFallback(ctx);
   }
-  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.heroLead || p.lead)}</p>${heroActions(ctx, { service: 'maqueta', secondary: null })}</div>`;
-  const hero = `<section class="hero hero--text hero--case" id="visor" aria-labelledby="titulo"><div class="wrap hero__grid">${text}<div class="hero__app">${app}</div></div></section>`;
+  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.heroLead || p.lead)}</p>${heroActions(ctx, { service: 'maqueta', secondary: null })}${heroLegend(ctx)}</div>`;
+  const hero = `<section class="hero hero--text hero--case" id="visor"${heroAttrs(ctx)} aria-labelledby="titulo"><div class="wrap hero__grid">${text}<div class="hero__app">${app}</div></div></section>`;
   const { html } = standardPage(ctx, {
     hero,
     cta: { h2: ctx.t('cta_band.caseH2'), body: ctx.t('cta_band.caseBody'), service: 'maqueta' },

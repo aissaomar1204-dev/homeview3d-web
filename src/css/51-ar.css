@@ -94,6 +94,7 @@
 
 /* ---------- /ar/villa/ landing ---------- */
 .vw-arpage .wrap { display: grid; gap: var(--space-7); }
+.vw-arpage[data-ch=h] { padding-block: var(--space-8) var(--space-9); }
 .vw-arpage__head > * + * { margin-top: var(--space-3); }
 .vw-arpage__how h2 { margin-bottom: var(--space-4); }
 .vw-steps { display: grid; gap: var(--space-3); max-width: var(--measure); margin: 0; padding-left: var(--space-5); }

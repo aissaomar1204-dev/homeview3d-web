@@ -1,0 +1,1 @@
+() => [...document.querySelectorAll('.main > [data-ch], .site-footer')].map(el => { const r = el.getBoundingClientRect(); return { cls: (el.className || '').toString().split(' ').filter(Boolean).slice(0, 3).join('.'), ch: el.dataset.ch || '', n: el.dataset.n || '', top: Math.round(r.top + scrollY), h: Math.round(r.height) }; })

@@ -5,24 +5,25 @@
    animation unless reduced motion, Save-Data or a slow connection say otherwise. */
 import { h1, btnPrimary, linkArrow, contactHref, cajetin, faqSection, contactForm } from '../lib/components.mjs';
 import { renderBlocks } from '../lib/blocks.mjs';
-import { heroStage, heroBoot } from '../lib/hero.mjs';
+import { heroStage, heroBoot, heroLegend } from '../lib/hero.mjs';
 
 export default function render(ctx) {
+  // The home is a drawing set: every block is a chapter with a tone (build/lib/chapters.mjs).
+  ctx.chapters = {};
   const p = ctx.page;
   const blocks = p.blocks || [];
   const hasDemo = blocks.some((b) => b.type === 'viewer');
   const villaHref = hasDemo ? '#demo' : (ctx.has('caso-villa') ? ctx.href('caso-villa', 'visor') : null);
   const secondary = villaHref ? linkArrow(ctx, villaHref, ctx.t('cta.villa'), { icon: hasDemo ? 'arrowDown' : 'arrow' }) : '';
-  const hero = `<section class="hero hero--seq" aria-labelledby="titulo"><div class="hs-grid">`
-    + `<div class="hero__text hs-text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p><p class="actions" data-hero-actions>${btnPrimary(ctx, contactHref(ctx, 'maqueta'), ctx.t('cta.demo'))}${secondary}</p></div>`
+  const hero = `<section class="hero hero--seq" data-ch="h" aria-labelledby="titulo"><div class="hs-grid">`
+    + `<div class="hero__text hs-text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p><p class="actions" data-hero-actions>${btnPrimary(ctx, contactHref(ctx, 'maqueta'), ctx.t('cta.demo'))}${secondary}</p>${heroLegend(ctx)}</div>`
     + `${heroStage(ctx)}${heroBoot()}`
     + `</div></section>`;
   const state = {};
   const body = renderBlocks(ctx, blocks, {
-    state, service: 'maqueta',
-    eyebrows: { compare: ctx.t('eyebrow.compare'), viewer: ctx.t('eyebrow.viewer'), faq: ctx.t('eyebrow.faq') },
+    state, service: 'maqueta', // no eyebrows: the chapter index rows do their job
   });
-  const faq = !state.faqPlaced && p.faq && p.faq.length ? faqSection(ctx, p.faq, { eyebrow: ctx.t('eyebrow.faq'), openCount: 1 }) : '';
+  const faq = !state.faqPlaced && p.faq && p.faq.length ? faqSection(ctx, p.faq, { openCount: 1 }) : '';
   const form = state.formPlaced ? '' : contactForm(ctx, { service: 'maqueta' });
   return { main: hero + cajetin(ctx, p.facts) + body + faq + form, bodyClass: 'page-home' };
 }

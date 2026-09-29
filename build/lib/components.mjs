@@ -4,6 +4,8 @@
    values here: every visual decision lives in src/css via tokens.
    ═══════════════════════════════════════════════════════════════ */
 import { esc } from './md.mjs';
+import { chapter, noteTone } from './chapters.mjs';
+import { heroLegend } from './hero.mjs';
 
 /* ─── Primitives ──────────────────────────────────────────────── */
 
@@ -20,11 +22,23 @@ export function head(ctx, { h2, intro, eyebrow, level = 2, className = '' } = {}
   return { html, id };
 }
 
-/** <section> wrapper with an inner container. */
-export function section(ctx, { type, id, labelledby, band, className = '', inner, wrap = true, attrs = '' }) {
+/**
+ * <section> wrapper with an inner container. On pages with chapters (ctx.chapters, build/lib/chapters.mjs) the section
+ * also carries its tone / number / label and drops the band classes: the chapter CSS paints the background.
+ * `ch` = a chapter the block resolved earlier (it needed the tone before building its inner HTML; null = none),
+ * `pre` = HTML placed before the wrapper (a chapter background image).
+ */
+export function section(ctx, { type, id, labelledby, band, className = '', inner, wrap = true, attrs = '', ch, pre = '' }) {
+  if (ch === undefined) ch = chapter(ctx, type, { head: !!labelledby });
   const idAttr = id ? ` id="${id}"` : '';
   const lab = labelledby ? ` aria-labelledby="${labelledby}"` : '';
-  return `<section class="${cls('block', type && `block--${type}`, band && 'band', band && typeof band === 'string' && `band--${band}`, className)}"${idAttr}${lab}${attrs ? ` ${attrs}` : ''}>${wrap ? `<div class="wrap">${inner}</div>` : inner}</section>`;
+  const b = band && !ch;
+  return `<section class="${cls('block', type && `block--${type}`, b && 'band', b && typeof band === 'string' && `band--${band}`, className)}"${idAttr}${lab}${ch ? ch.attrs : ''}${attrs ? ` ${attrs}` : ''}>${ch && ch.axes ? ch.axes : ''}${pre}${wrap ? `<div class="wrap"${ch ? ch.wrapAttr : ''}>${inner}</div>` : inner}</section>`;
+}
+
+/** Chapter background: a render behind a graphite chapter (decorative, lazy, scrim and grain come from the CSS). */
+export function chapterBg(ctx, name, { widths = [800, 1200, 1600, 2400], max = 2400 } = {}) {
+  return hasImage(ctx, name) ? `<div class="ch-bg" aria-hidden="true">${ctx.img(name, { alt: '', sizes: '100vw', widths, max })}</div>` : '';
 }
 
 export function btnPrimary(ctx, href, label) {
@@ -92,13 +106,27 @@ export function heroActions(ctx, { service, secondary = 'villa' } = {}) {
   return `<p class="actions" data-hero-actions>${primary}${sec}</p>`;
 }
 
+/** Line drawing behind the hero copy, per template (CSS mask on the hero sheet, 24-chapters.css: data-d). Varies from page to page. */
+const HERO_DRAWING = {
+  service: 'iso', audience: 'plan', zone: 'sec', hub: 'iso', process: 'axo', pricing: 'sec', guide: 'axo', about: 'plan',
+  faq: 'sec', glossary: 'plan', contact: 'iso', thanks: 'sec', legal: 'sec', case: 'plan', notfound: 'plan',
+};
+/** Attributes of a hero that is the first chapter (a drafting sheet), or '' on a page without chapters. */
+export function heroAttrs(ctx) {
+  if (!ctx.chapters) return '';
+  noteTone(ctx, 'h');
+  return ` data-ch="h" data-d="${HERO_DRAWING[ctx.route.template] || 'plan'}"`;
+}
+
 /** Left-aligned text hero with an optional side figure (page.hero). */
 export function textHero(ctx, { actions = false, service, meta = '', figureSide = true, className = '' } = {}) {
   const p = ctx.page;
   const hero = figureSide && p.hero && p.hero.image ? p.hero : null;
-  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p>${meta}${actions ? heroActions(ctx, { service }) : ''}</div>`;
+  // Legend (north arrow, scale bar, sheet id) under the copy on pages with chapters (not the quiet legal pages).
+  const leg = ctx.chapters && !ctx.chapters.quiet ? heroLegend(ctx) : '';
+  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p>${meta}${actions ? heroActions(ctx, { service }) : ''}${leg}</div>`;
   const fig = hero ? `<figure class="hero__figure${isAlpha(ctx, hero.image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(hero.image, { alt: hero.alt ?? defaultAlt(ctx, hero.image), sizes: '(min-width: 1320px) 500px, (min-width: 1024px) 38vw, 100vw', eager: true, max: 1200 })}</div>${hero.caption ? `<figcaption>${ctx.mdInline(hero.caption)}</figcaption>` : ''}</figure>` : '';
-  return `<section class="${cls('hero hero--text', hero && 'hero--figure', className)}" aria-labelledby="titulo"><div class="wrap hero__grid">${text}${fig}</div></section>`;
+  return `<section class="${cls('hero hero--text', hero && 'hero--figure', className)}"${heroAttrs(ctx)} aria-labelledby="titulo"><div class="wrap hero__grid">${text}${fig}</div></section>`;
 }
 
 /* ─── Cajetín (title block of key facts, COMP-13) ─────────────── */
@@ -113,9 +141,10 @@ export function cajetin(ctx, facts, { date } = {}) {
     return m ? `${ctx.mdInline(m[1])}<span class="sr-only">${m[2]} </span><span class="cajetin__detail">${ctx.mdInline(m[3])}</span>` : ctx.mdInline(v);
   };
   const cells = facts.map(([k, v]) => `<div class="cajetin__cell"><dt>${ctx.mdInline(k)}</dt><dd>${value(v)}</dd></div>`).join('');
+  if (ctx.chapters) noteTone(ctx, 'k');
   const d = date || ctx.doc?.dateModified;
   const rev = d ? `<span class="cajetin__rev">${esc(ctx.t('date.revised'))} <time datetime="${esc(d)}">${esc(ctx.fmtDate(d))}</time></span>` : '';
-  return `<section class="cajetin-band" aria-label="${esc(ctx.t('cajetin.label'))}"><div class="wrap"><div class="cajetin cajetin--n${n}" data-reveal="line"><p class="cajetin__head"><span>${esc(ctx.t('cajetin.head'))}</span>${rev}</p><dl class="cajetin__grid">${cells}</dl></div></div></section>`;
+  return `<section class="cajetin-band"${ctx.chapters ? ' data-ch="k"' : ''} aria-label="${esc(ctx.t('cajetin.label'))}"><div class="wrap"><div class="cajetin cajetin--n${n}" data-reveal="line"><p class="cajetin__head"><span>${esc(ctx.t('cajetin.head'))}</span>${rev}</p><dl class="cajetin__grid">${cells}</dl></div></div></section>`;
 }
 
 /* ─── Tables (GEO-03) ─────────────────────────────────────────── */
@@ -181,14 +210,21 @@ export function faqSection(ctx, items, { eyebrow, h2, openCount } = {}) {
 
 /* ─── Index lists (related, pages, audiences, services) ───────── */
 
-export function indexList(ctx, ids, { className = '', meta } = {}) {
-  const items = ids.filter((id) => ctx.has(id)).map((id) => {
+export function indexList(ctx, ids, { className = '', meta, images } = {}) {
+  let cards = 0;
+  const items = ids.filter((id) => ctx.has(id)).map((id, i) => {
     const c = ctx.card(id);
     const m = meta ? meta(id) : '';
-    return `<li class="index__item"><h3 class="index__title"><a href="${esc(c.href)}">${esc(c.title)}</a></h3>${c.summary ? `<p class="index__summary">${c.summary}</p>` : ''}${m ? `<p class="index__meta">${m}</p>` : ''}${ctx.icon('arrow', 'index__arrow')}</li>`;
+    // images = { pageId: imageKey }: the row becomes an image card (audiences); the picture is decorative, the link is the card.
+    const im = images && images[id] && hasImage(ctx, images[id]) ? images[id] : null;
+    if (im) cards++;
+    const media = im ? `<div class="index__media" aria-hidden="true">${ctx.img(im, { alt: '', sizes: i === 0 ? '(min-width: 1024px) 58vw, 100vw' : '(min-width: 1024px) 40vw, 100vw', widths: [480, 800, 1200], max: 1200 })}</div>` : '';
+    return `<li class="${im ? 'index__item index__item--media' : 'index__item'}">${media}<h3 class="index__title"><a href="${esc(c.href)}">${esc(c.title)}</a></h3>${c.summary ? `<p class="index__summary">${c.summary}</p>` : ''}${m ? `<p class="index__meta">${m}</p>` : ''}${ctx.icon('arrow', 'index__arrow')}</li>`;
   });
   if (!items.length) return '';
-  return `<ul class="${cls('index', className)}" role="list">${items.join('')}</ul>`;
+  // Image cards: one grid whatever the list was (rows of services, a grid of audiences); index--nN picks the layout (56-cards.css).
+  const cardList = cards === items.length;
+  return `<ul class="${cardList ? cls('index', 'index--grid', 'index--cards', `index--n${items.length}`) : cls('index', className)}" role="list">${items.join('')}</ul>`;
 }
 
 export function related(ctx, ids) {
@@ -219,10 +255,28 @@ function ctaImage(ctx) {
   return CTA_IMAGES.find((n) => hasImage(ctx, n) && !used.has(n)) || null; // all shown (case page): text-only band
 }
 
+/** Renders for the cinema call to action: opaque, landscape, eye-level first (the type never sits on them: a scrim covers the text side). */
+const CINEMA_IMAGES = ['villa_interior_salon', 'villa_interior_dormitorio', 'villa_terraza_opaco', 'villa_interior_bano', 'villa_muros_completos_opaco', 'villa_dormitorios_opaco', 'villa_interior_terraza'];
+function cinemaImage(ctx) {
+  const used = new Set(ctx.collect.images.map((i) => String(i.name).replace(/_(opaco|mobile)$/, '')));
+  const free = CINEMA_IMAGES.filter((n) => hasImage(ctx, n));
+  return free.find((n) => !used.has(n.replace(/_opaco$/, ''))) || free[0] || null;
+}
+
 export function ctaBand(ctx, { h2, body, service, image, className = '' } = {}) {
-  if (image === undefined) image = ctaImage(ctx);
+  // On pages with chapters every call to action (closing or mid-page) is a cinema chapter: white type on graphite over a darkened render (decorative, alt="").
+  const cine = !!ctx.chapters;
+  if (image === undefined) image = cine ? null : ctaImage(ctx);
   const hd = head(ctx, { h2: h2 || ctx.t('cta_band.h2') });
   const text = ctx.md(body || ctx.t('cta_band.body'));
+  if (cine) {
+    const bg = cinemaImage(ctx);
+    const ch = chapter(ctx, 'cta', { tone: bg ? 'c' : 'k' });
+    const inner = `<div class="cta-band__grid cta-band__grid--solo"><div class="cta-band__text">${hd.html}<div class="cta-band__body">${text}</div><p class="actions">${btnPrimary(ctx, contactHref(ctx, service), ctx.t('cta.demo'))}${ctx.directContact ? whatsappLink(ctx) : ''}</p></div></div>`;
+    // Straight after a cinema chapter (pricing) the engine turns a dark tone into grey: then the band is a plain one, without the render.
+    const dark = ch.tone === 'c';
+    return section(ctx, { type: 'cta', className: cls('cta-band', dark && 'cta-band--cine'), labelledby: hd.id, inner, ch, pre: bg && dark ? chapterBg(ctx, bg, { widths: [800, 1200, 1600, 2400] }) : '' });
+  }
   const fig = image && hasImage(ctx, image)
     ? `<figure class="cta-band__figure${isAlpha(ctx, image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(image, { alt: ctx.t('cta_band.alt'), sizes: '(min-width: 1320px) 520px, (min-width: 1024px) 40vw, 100vw', max: 1200 })}</div></figure>`
     : '';
@@ -293,6 +347,17 @@ export function compare(ctx, block = {}, { eyebrow } = {}) {
   return section(ctx, { type: 'compare', band: 'stage', labelledby: hd.id, inner });
 }
 
+/**
+ * Line drawing that stays beside a list of steps (a CSS mask, aria-hidden, sticky on desktop): the exploded axonometric for the
+ * process, then the plan and the isometric for the other step lists of a page. `fixed` picks one without advancing the cycle.
+ */
+const SIDE_DRAWINGS = ['plan', 'iso', 'axo'];
+export function sideDrawing(ctx, fixed) {
+  const st = ctx.chapters;
+  const d = fixed || SIDE_DRAWINGS[((st.side = (st.side || 0) + 1) - 1) % SIDE_DRAWINGS.length];
+  return `<div class="process__side" data-d="${d}" aria-hidden="true"></div>`;
+}
+
 /* ─── Process (list and despiece variants, COMP-15) ───────────── */
 
 export function processSteps(ctx, { headingLevel = 3 } = {}) {
@@ -313,6 +378,8 @@ export function processBlock(ctx, block = {}) {
   const hd = head(ctx, { h2: block.h2 || ctx.t('h2.process'), intro: block.intro });
   const steps = processSteps(ctx);
   if (block.variant !== 'despiece') {
+    // Chapters: the steps beside the exploded axonometric, which stays put while they scroll (fills the right half).
+    if (ctx.chapters) return section(ctx, { type: 'process', labelledby: hd.id, inner: `${hd.html}<div class="process process--side"><div class="process__steps">${steps}${totalCota(ctx)}</div>${sideDrawing(ctx, 'axo')}</div>` });
     return section(ctx, { type: 'process', labelledby: hd.id, inner: `${hd.html}${steps}${totalCota(ctx)}` });
   }
   ctx.needs.add('despiece');
@@ -339,7 +406,10 @@ export function deliverablesBlock(ctx, block = {}) {
     const title = ctx.has(d.page) ? `<a href="${esc(ctx.href(d.page))}">${esc(L.title)}</a>` : esc(L.title);
     const formats = String(L.formats || '').split(/\s*·\s*/).filter(Boolean).map((f) => `<li>${esc(f)}</li>`).join('');
     const img = ctx.img(d.image, { alt: defaultAlt(ctx, d.image), sizes: i === 0 ? '(min-width: 1320px) 700px, (min-width: 1024px) 55vw, 100vw' : '(min-width: 1320px) 400px, (min-width: 1024px) 32vw, (min-width: 768px) 60vw, 100vw', max: i === 0 ? 1600 : 1200 });
-    return `<li class="bento__cell bento__cell--${i + 1}" data-reveal><div class="bento__media${isAlpha(ctx, d.image) || !hasImage(ctx, d.image) ? ' figure--stage' : ''}">${img}</div><div class="bento__text"><h3 class="bento__title">${title}</h3><p>${ctx.mdInline(L.body)}</p>${formats ? `<ul class="bento__formats" role="list" aria-label="${esc(ctx.t('deliverables.formats'))}">${formats}</ul>` : ''}</div></li>`;
+    // Title block of the sheet (B "láminas"): "Lám. 01/05 · Modelo 3D · Esc. 1:20", drawn by CSS from data attributes.
+    const sh = d.sheet && d.sheet[ctx.lang];
+    const tb = sh ? `<p class="bento__tb" aria-hidden="true" data-a="${esc(ctx.t('deliverables.sheet'))} ${String(i + 1).padStart(2, '0')}/${String(items.length).padStart(2, '0')}" data-c="${esc(ctx.tok(sh[1]))}">${esc(ctx.tok(sh[0]))}</p>` : '';
+    return `<li class="bento__cell bento__cell--${i + 1}" data-reveal><div class="bento__media${isAlpha(ctx, d.image) || !hasImage(ctx, d.image) ? ' figure--stage' : ''}">${img}</div><div class="bento__text"><h3 class="bento__title">${title}</h3><p>${ctx.mdInline(L.body)}</p>${formats ? `<ul class="bento__formats" role="list" aria-label="${esc(ctx.t('deliverables.formats'))}">${formats}</ul>` : ''}</div>${tb}</li>`;
   }).join('');
   const soon = ctx.data.comingSoon || [];
   // One sentence (V-12): titles after the first go in sentence case («… con IA y tours de realidad virtual 360°»),
@@ -376,6 +446,7 @@ export function guaranteesList(ctx) {
 }
 
 export function pricingBlock(ctx, block = {}) {
+  const ch = chapter(ctx, 'pricing');
   const { pricing } = ctx.data;
   const onPricing = ctx.route.id === 'precios';
   const hd = head(ctx, { h2: block.h2 || ctx.t('h2.pricing'), intro: block.intro });
@@ -404,7 +475,8 @@ export function pricingBlock(ctx, block = {}) {
     if (!onPricing && ctx.has('precios')) links.push(linkArrow(ctx, ctx.href('precios'), ctx.t('pricing.allPrices')));
     more = links.length ? `<p class="actions actions--quiet">${links.join('')}</p>` : '';
   }
-  return section(ctx, { type: 'pricing', labelledby: hd.id, inner: `${hd.html}${tiles}${vat}${more}` });
+  // Cinema tone: the packs sit over the dusk terrace render (CHAPTERS in chapters.mjs).
+  return section(ctx, { type: 'pricing', labelledby: hd.id, inner: `${hd.html}${tiles}${vat}${more}`, ch, pre: ch && ch.tone === 'c' ? chapterBg(ctx, 'villa_interior_terraza') : '' });
 }
 
 export function guaranteesBlock(ctx, block = {}) {
@@ -498,12 +570,16 @@ export function contactForm(ctx, block = {}, { alternatives = true } = {}) {
     + `</fieldset></form>`;
 
   const hd = head(ctx, { h2: block.h2 || ctx.t('h2.contactForm'), intro: block.intro });
-  const alt = alternatives ? contactAlternatives(ctx) : '';
+  // block.image: an interior render beside the form (dark chapter), with the honesty caption from the content.
+  const fig = block.image && hasImage(ctx, block.image)
+    ? `<figure class="contact__fig"><div class="figure__media">${ctx.img(block.image, { alt: ctx.tok(block.imageAlt || defaultAlt(ctx, block.image)), sizes: '(min-width: 1024px) 420px, 100vw', widths: [480, 800, 1200], max: 1200 })}</div>${block.imageCaption ? `<figcaption>${ctx.mdInline(block.imageCaption)}</figcaption>` : ''}</figure>`
+    : '';
+  const alt = alternatives ? contactAlternatives(ctx, fig) : '';
   const inner = `<div class="contact">${`<div class="contact__main">${hd.html}${form}</div>`}${alt}</div>`;
   return section(ctx, { type: 'form', id: formAnchor(ctx), className: 'form-section', labelledby: hd.id, inner });
 }
 
-export function contactAlternatives(ctx) {
+export function contactAlternatives(ctx, fig = '') {
   const c = ctx.site.contact;
   // WhatsApp and phone only with real contact data (V-02); email always.
   const items = [
@@ -513,5 +589,5 @@ export function contactAlternatives(ctx) {
   ].filter(Boolean);
   if (c.booking) items.push(`<li><span class="alt__k">${esc(ctx.t('form.altBooking'))}</span><a href="${esc(c.booking)}" rel="noopener">${esc(ctx.t('form.altBooking'))}</a></li>`);
   const altId = ctx.uid('alt');
-  return `<aside class="contact__alt" aria-labelledby="${altId}"><h3 id="${altId}" class="alt__title">${esc(ctx.t('form.altTitle'))}</h3><ul class="alt" role="list">${items.join('')}</ul><p class="alt__note">${esc(ctx.t('form.altReply'))}</p></aside>`;
+  return `<aside class="contact__alt" aria-labelledby="${altId}">${fig}<h3 id="${altId}" class="alt__title">${esc(ctx.t('form.altTitle'))}</h3><ul class="alt" role="list">${items.join('')}</ul><p class="alt__note">${esc(ctx.t('form.altReply'))}</p></aside>`;
 }

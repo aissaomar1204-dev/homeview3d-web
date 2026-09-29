@@ -17,6 +17,8 @@ const SCENE = 'https://developers.google.com/ar/develop/scene-viewer';
 const DEVICES = 'https://developers.google.com/ar/devices';
 const WEBKIT = 'https://webkit.org/blog/8421/viewing-augmented-reality-assets-in-safari-for-ios/';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'guia-ar',
   image: 'villa_maqueta_iso_opaco',
@@ -150,6 +152,7 @@ export default {
         title: 'Lo que la realidad aumentada no sustituye',
         body: '- La visita: la realidad aumentada enseña distribución y escala, no el estado real de una vivienda construida.\n- Las medidas oficiales: si el plano no trae cotas, las medidas son aproximadas (≈).\n- El ordenador: en escritorio solo verás el código QR o el visor 3D.\n- Los móviles Android no compatibles con ARCore: verán la vivienda en 3D, sin cámara.',
       },
+      plate('es', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',
@@ -329,6 +332,7 @@ export default {
         title: 'What augmented reality doesn’t replace',
         body: '- A viewing: AR shows layout and scale, not the real condition of a finished home.\n- Official measurements: if the plan has no dimensions, measurements are approximate (≈).\n- A computer: on desktop you only get the QR code or the 3D viewer.\n- Android phones without ARCore support: they show the home in 3D, without the camera.',
       },
+      plate('en', 'villa_interior_salon'),
       { type: 'faq' },
       {
         type: 'sources',

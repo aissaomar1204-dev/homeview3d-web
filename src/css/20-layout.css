@@ -30,6 +30,8 @@
 .brand { height: 28px; flex: none; }
 .hv-logo { display: block; height: 100%; width: auto; fill: var(--color-ink); }
 .hv-a { fill: var(--color-accent); }
+/* Forced colours (Windows high contrast): custom-property fills are not recoloured, so the wordmark would stay ink on a black Canvas. */
+@media (forced-colors: active) { .hv-logo { fill: CanvasText; } .hv-a { fill: Highlight; } }
 /* Theme toggle (auto / light / dark): a 44px icon button next to the language link; the icon shows the current state. */
 .theme-btn { padding: 0; background: none; border: 0; }
 .theme-btn g { display: none; }

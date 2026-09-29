@@ -8,10 +8,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc } from './md.mjs';
 import { optionalImport } from './context.mjs';
+import { chapter } from './chapters.mjs';
 import {
   cls, head, section, figure, table, faqSection, faqList, indexList, routePrice, ctaBand, compare, cajetin, related,
   processBlock, deliverablesBlock, pricingBlock, guaranteesBlock, calculator, contactForm, hasImage, linkArrow, tableHtml,
-  btnPrimary, contactHref, defaultAlt, renderCaption,
+  btnPrimary, contactHref, defaultAlt, renderCaption, sideDrawing,
 } from './components.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -22,6 +23,22 @@ export const viewerStatus = viewerImport.mod ? 'loaded' : viewerImport.missing ?
 
 const SERVICE_IDS = ['servicio-plano', 'servicio-renders', 'servicio-tour', 'servicio-ar', 'servicio-staging'];
 const AUDIENCE_IDS = ['sol-inmobiliarias', 'sol-promotoras', 'sol-arquitectos', 'sol-vacacional'];
+/**
+ * Image cards (C "image cards") for an index of pages, by page id. Audiences: the first is the large card with an eye-level
+ * interior, the rest use the opaque aerial views. Services and zones get their own renders. A list becomes cards only when
+ * every one of its pages has an image here (a mixed list stays a plain index).
+ */
+const CARD_IMAGES = {
+  'sol-inmobiliarias': 'villa_interior_salon', 'sol-promotoras': 'villa_maqueta_iso_opaco',
+  'sol-arquitectos': 'villa_muros_completos_opaco', 'sol-vacacional': 'villa_terraza_opaco',
+  'servicio-plano': 'villa_salon_dormitorio_opaco', 'servicio-renders': 'villa_interior_bano', 'servicio-tour': 'villa_dormitorios_opaco',
+  'servicio-ar': 'villa_bano_suite_opaco', 'servicio-staging': 'villa_interior_dormitorio',
+  'zona-marbella': 'villa_interior_terraza', 'zona-malaga': 'villa_salon_dormitorio_opaco', 'zona-costa-del-sol': 'villa_terraza_opaco',
+};
+const cardImages = (ctx, ids) => {
+  const live = ids.filter((id) => ctx.has(id));
+  return ctx.chapters && live.length > 1 && live.every((id) => CARD_IMAGES[id]) ? CARD_IMAGES : undefined;
+};
 
 function callViewer(fn, ctx, block, fallback) {
   const f = viewerModule && viewerModule[fn];
@@ -63,19 +80,25 @@ function simpleFallback(ctx, block, key) {
 function indexBlock(ctx, b, type, ids, opts) {
   if (!ids.some((id) => ctx.has(id))) return '';
   const hd = head(ctx, { h2: b.h2 || ctx.t(`h2.${type}`), intro: b.intro });
-  return section(ctx, { type, labelledby: hd.id, inner: `${hd.html}${indexList(ctx, ids, opts)}` });
+  const images = opts.images === undefined ? cardImages(ctx, ids) : opts.images;
+  return section(ctx, { type, labelledby: hd.id, inner: `${hd.html}${indexList(ctx, ids, { ...opts, images })}` });
 }
 
 /* ─── Answers on inner pages (D-09): answer + aside, alternating sides, one stage band ─── */
 
 /** Templates whose answers get the two-column layout (guides keep their reading column). */
 const SPLIT = new Set(['service', 'audience', 'zone', 'pricing', 'process', 'about']);
-/** Renders offered to asides and the stage band: eye-level interiors interleaved with the aerial cut-away views.
+/** Renders offered to asides: eye-level interiors interleaved with the aerial cut-away views.
  *  villa_interior_bano stays out: its tight 1.6 m room crops the basin, fine in galleries but not as a full-bleed band. */
 const ASIDE_IMAGES = [
   'villa_interior_salon', 'villa_salon_dormitorio', 'villa_interior_terraza', 'villa_terraza', 'villa_interior_dormitorio',
   'villa_bano_suite', 'villa_dormitorios', 'villa_muros_completos', 'villa_planta_cenital', 'villa_maqueta_iso',
 ];
+/** Renders for the automatic full-bleed plate of a page that has none of its own: opaque and landscape (they are cropped to fill). */
+const PLATE_IMAGES = [
+  'villa_interior_salon', 'villa_interior_dormitorio', 'villa_terraza_opaco', 'villa_muros_completos_opaco',
+  'villa_salon_dormitorio_opaco', 'villa_dormitorios_opaco', 'villa_maqueta_iso_opaco', 'villa_interior_bano',
+]; // villa_interior_terraza is the pricing chapter's backdrop
 
 const baseName = (n) => String(n).replace(/_opaco$/, '');
 
@@ -87,16 +110,17 @@ function pageImages(ctx) {
   for (const b of p.blocks || []) {
     if (b.type === 'figure' && b.image) out.add(baseName(b.image));
     if (b.type === 'gallery') for (const it of b.items || []) out.add(baseName(it.image));
+    if (b.type === 'plate') for (const it of b.images || []) out.add(baseName(it.image));
   }
   return out;
 }
 
-function nextImage(ctx) {
+function nextImage(ctx, list = ASIDE_IMAGES) {
   const used = new Set([...ctx.collect.images.map((i) => baseName(i.name)), ...pageImages(ctx)]);
   // Each page starts the rotation at a different render, so neighbouring pages do not open on the same image.
-  const start = [...ctx.route.id].reduce((t, ch) => t + ch.charCodeAt(0), 0) % ASIDE_IMAGES.length;
-  const order = ASIDE_IMAGES.slice(start).concat(ASIDE_IMAGES.slice(0, start));
-  return order.find((n) => hasImage(ctx, n) && !used.has(n)) || null;
+  const start = [...ctx.route.id].reduce((t, ch) => t + ch.charCodeAt(0), 0) % list.length;
+  const order = list.slice(start).concat(list.slice(0, start));
+  return order.find((n) => hasImage(ctx, n) && !used.has(baseName(n))) || null;
 }
 
 function asideFigure(ctx, name, sizes) {
@@ -144,11 +168,28 @@ function answerAside(ctx, n, o, b) {
   return `<p class="answer-fact"><span class="mono">${ctx.mdInline(k)}</span><strong>${ctx.mdInline(v)}</strong></p>`;
 }
 
-/** Full-bleed stage band with one render, after the second answer: breaks the run of text blocks. */
-function plateBand(ctx) {
-  const img = nextImage(ctx);
+/**
+ * Full-bleed render plate after the second answer of a page that has no `plate` block of its own: breaks the run of text.
+ * Caption and alt are the render's own (villa.renders) plus the honesty label, so it never claims more than it is.
+ */
+export function plateBand(ctx) {
+  if ((ctx.page.blocks || []).some((b) => b.type === 'plate')) return '';
+  const img = nextImage(ctx, PLATE_IMAGES);
   if (!img) return '';
-  return section(ctx, { type: 'plate', band: 'stage', inner: asideFigure(ctx, img, '(min-width: 1320px) 1224px, 100vw') });
+  const cap = renderCaption(ctx, img);
+  return plateSection(ctx, [{ image: img, alt: defaultAlt(ctx, img), caption: `${cap ? `${cap}. ` : ''}${ctx.t('img.renderLabel')}.` }]);
+}
+
+/** One or two figures edge to edge (diptych 7/5), captions on a graphite strip below with «Vista NN» drawn by CSS. */
+function plateSection(ctx, items) {
+  const two = items.length > 1;
+  const figs = items.map((it, i) => {
+    const n = String((ctx.plateCount = (ctx.plateCount || 0) + 1)).padStart(2, '0');
+    const sizes = two ? (i === 0 ? '(min-width: 768px) 58vw, 100vw' : '(min-width: 768px) 42vw, 100vw') : '100vw';
+    const cap = it.caption ? `<figcaption data-n="${n}" data-p="${esc(ctx.t('plate.view'))}">${ctx.mdInline(it.caption)}</figcaption>` : '';
+    return `<figure>${ctx.img(it.image, { alt: ctx.tok(it.alt), sizes, widths: [480, 800, 1200, 1600, 2400], max: 2400 })}${cap}</figure>`;
+  }).join('');
+  return section(ctx, { type: 'vista', className: two ? 'block--vista2' : '', wrap: false, inner: figs, ch: chapter(ctx, 'plate') });
 }
 
 const R = {
@@ -176,6 +217,8 @@ const R = {
   steps(ctx, b) {
     const hd = head(ctx, { h2: b.h2, intro: b.intro });
     const items = (b.items || []).map((it) => `<li class="step" data-reveal>${it.time ? `<p class="step__time">${ctx.mdInline(it.time)}</p>` : ''}<h3 class="step__title">${ctx.mdInline(it.title)}</h3><div class="step__body">${ctx.md(it.body)}</div></li>`).join('');
+    // Chapters: outlined numerals and a line drawing that stays beside the steps (fills the empty half), a different one each time.
+    if (ctx.chapters) return section(ctx, { type: 'steps', labelledby: hd.id, inner: `${hd.html}<div class="process process--side"><div class="process__steps"><ol class="steps steps--process" role="list">${items}</ol></div>${sideDrawing(ctx)}</div>` });
     return section(ctx, { type: 'steps', labelledby: hd.id, inner: `${hd.html}<ol class="steps" role="list">${items}</ol>` });
   },
 
@@ -200,6 +243,15 @@ const R = {
       return `<li class="plate plate--${span}" data-reveal>${figure(ctx, { image: it.image, alt: ctx.tok(it.alt), caption: it.caption, sizes })}</li>`;
     }).join('');
     return section(ctx, { type: 'gallery', labelledby: hd.id, inner: `${hd.html}<ul class="plates" role="list">${items}</ul>` });
+  },
+
+  /**
+   * Render plates between chapters: one full-bleed image, or a diptych (7/5) of two. The caption sits on a graphite
+   * strip below the image (IMG-08) and always says it is a render; the plate number is drawn by CSS (data-n, data-p).
+   */
+  plate(ctx, b) {
+    const items = b.images || [];
+    return items.length ? plateSection(ctx, items) : '';
   },
 
   compare(ctx, b, o) { return compare(ctx, b, { eyebrow: o.eyebrows?.compare }); },
@@ -241,7 +293,7 @@ const R = {
   comingSoon(ctx, b) {
     const hd = head(ctx, { h2: b.h2 || ctx.t('h2.comingSoon'), intro: b.intro });
     const items = (ctx.data.comingSoon || []).map((s) => `<li class="soon__item"><h3>${esc(s[ctx.lang].title)}</h3><p>${ctx.mdInline(s[ctx.lang].body)}</p></li>`).join('');
-    return section(ctx, { type: 'soon', labelledby: hd.id, inner: `${hd.html}<ul class="soon" role="list">${items}</ul>` });
+    return section(ctx, { type: 'soon', labelledby: hd.id, ch: chapter(ctx, 'comingSoon', { head: !!hd.id }), inner: `${hd.html}<ul class="soon" role="list">${items}</ul>` });
   },
 
   process(ctx, b) { return processBlock(ctx, b); },
@@ -249,11 +301,11 @@ const R = {
   needs(ctx, b) {
     const hd = head(ctx, { h2: b.h2 || ctx.t('h2.needs'), intro: b.intro });
     const items = (ctx.data.process.needs[ctx.lang] || []).map((x) => `<li>${ctx.mdInline(x)}</li>`).join('');
-    return section(ctx, { type: 'needs', labelledby: hd.id, inner: `${hd.html}<ul class="checks checks--grid" role="list">${items}</ul>` });
+    return section(ctx, { type: 'needs', labelledby: hd.id, inner: `${hd.html}<ul class="checks checks--grid${ctx.chapters ? ' checks--plates' : ''}" role="list">${items}</ul>` });
   },
 
   services(ctx, b) { return indexBlock(ctx, b, 'services', SERVICE_IDS, { className: 'index--services', meta: (id) => routePrice(ctx, id) }); },
-  audiences(ctx, b) { return indexBlock(ctx, b, 'audiences', AUDIENCE_IDS, { className: 'index--grid' }); },
+  audiences(ctx, b) { return indexBlock(ctx, b, 'audiences', AUDIENCE_IDS, { className: 'index--grid', images: CARD_IMAGES }); },
   pages(ctx, b) { return indexBlock(ctx, b, 'pages', b.ids || [], { className: (b.ids || []).length > 3 ? 'index--grid' : '' }); },
 
   pricing(ctx, b) { return pricingBlock(ctx, b); },
@@ -325,7 +377,7 @@ function glossaryBlock(ctx) {
     const rel = t.related && ctx.has(t.related) ? `<p class="term__related">${esc(ctx.t('glossary.related'))}: <a href="${esc(ctx.href(t.related))}">${esc(ctx.label(t.related))}</a></p>` : '';
     return `<section class="term" id="${esc(t.id)}" aria-labelledby="${esc(t.id)}-t"><h2 class="term__name" id="${esc(t.id)}-t"><dfn>${esc(L.term)}</dfn></h2><p class="term__def">${ctx.mdInline(L.definition)}</p>${L.body ? `<div class="term__body prose">${ctx.md(L.body)}</div>` : ''}${rel}</section>`;
   }).join('');
-  return `<div class="block block--glossary"><div class="wrap glossary">${index}<div class="glossary__terms">${items}</div></div></div>`;
+  return section(ctx, { type: 'glossary', inner: `<div class="glossary">${index}<div class="glossary__terms">${items}</div></div>` });
 }
 
 /* ─── Public API ──────────────────────────────────────────────── */
@@ -365,9 +417,11 @@ export function standardPage(ctx, opts = {}) {
   const p = ctx.page;
   const service = serviceFor(ctx);
   const state = {};
+  // The key-facts strip is drawn before the blocks (chapter tones and numbers follow the page order), placed right after the hero.
+  const facts = opts.facts !== false ? cajetin(ctx, p.facts) : '';
   const blocks = renderBlocks(ctx, p.blocks || [], { state, service, eyebrows: opts.eyebrows });
   const parts = [opts.hero || ''];
-  if (opts.facts !== false) parts.push(cajetin(ctx, p.facts));
+  if (opts.facts !== false) parts.push(facts);
   if (opts.beforeBlocks) parts.push(opts.beforeBlocks);
   parts.push(blocks);
   if (opts.afterBlocks) parts.push(opts.afterBlocks);

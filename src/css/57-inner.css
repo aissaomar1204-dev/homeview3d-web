@@ -1,0 +1,118 @@
+/* @module inner page-service page-audience page-zone page-hub page-process page-pricing page-guide page-glossary page-faq page-about page-contact page-thanks page-legal page-404 page-case
+   ==========================================================================
+   57-inner · the drawing set on every inner page (client-requested decoration, 2026-09-29; rulebook Overrides O3). Owner: ENGINE.
+   The chapter engine (24-chapters.css, build/lib/chapters.mjs) draws tones, marks, numerals and index rows on all templates; this
+   module holds what only inner pages need: the hero sheet variants (line drawing per page, figure frame), framed tables with a
+   graphite header row, numbered "needs" plates, the sticky side drawing beside step lists, the paper plates of the index lists,
+   and the quiet legal pages. Component decoration that has its own module (stat, callout, cta, answers, cards, article, glossary)
+   lives there. Linked only on pages whose <body> carries one of the classes above.
+   ========================================================================== */
+body { --chapter-y: clamp(64px, 5.5vw + 24px, 112px); }
+
+/* ---------- Hero sheet: a line drawing behind the copy, a frame around the figure ---------- */
+.hero--text[data-ch=h] { padding-block: var(--space-7) var(--space-6); }
+.hero--text[data-ch=h] .hv-leg { margin-top: var(--space-7); }
+.hero--text[data-ch=h] .hero__figure .figure__media { border: 1px solid var(--color-line-strong); }
+.hero--text[data-ch=h] .hero__figure .pic img { max-height: min(68svh, 34rem); object-fit: contain; }
+.hero--404[data-ch=h] .hero__text { max-width: 44rem; }
+@media (min-width: 1024px) {
+  .hero--text[data-ch=h] { padding-block: var(--space-9) var(--space-8); }
+  /* Which drawing, where: heroes with a figure keep it low behind the copy; heroes without one show it large at the right. */
+  .main > [data-ch=h]:is([data-d=iso], [data-d=axo], [data-d=sec])::after { transform: none; left: auto; }
+  .main > [data-ch=h][data-d=iso]::after { right: -4%; bottom: -30%; width: min(52vw, 780px); aspect-ratio: 1729 / 1564; -webkit-mask-image: url(/assets/deco/villa-iso-lines.svg); mask-image: url(/assets/deco/villa-iso-lines.svg); }
+  .main > [data-ch=h][data-d=axo]::after { right: 1%; top: -14%; bottom: auto; width: min(32vw, 480px); aspect-ratio: 1473 / 2114; -webkit-mask-image: url(/assets/deco/villa-axo-exploded.svg); mask-image: url(/assets/deco/villa-axo-exploded.svg); }
+  .main > [data-ch=h][data-d=sec]::after { right: -3%; bottom: -3%; width: min(74vw, 1060px); aspect-ratio: 1402 / 508; -webkit-mask-image: url(/assets/deco/villa-section.svg); mask-image: url(/assets/deco/villa-section.svg); }
+  .hero--text:not(.hero--figure, .hero--case)[data-ch=h]::after { opacity: .085; }
+  .main > .hero--text:not(.hero--figure, .hero--case)[data-d=plan]::after { left: auto; right: -12%; }
+  .main > .hero--figure[data-d=iso]::after { right: auto; left: -12%; }
+  .main > .hero--figure[data-d=axo]::after { right: auto; left: -4%; top: auto; bottom: -30%; }
+}
+
+/* ---------- Tables: a framed plate, a caption strip, a graphite header row, quiet zebra ---------- */
+.main > [data-ch] .table { border: 1px solid var(--color-line-strong); background: var(--color-surface); }
+.main > [data-ch] .table :is(caption, .table__caption) { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-line); background: var(--color-bg); color: var(--color-ink-2); }
+.main > [data-ch] .table th, .main > [data-ch] .table td { padding-left: var(--space-4); }
+.main > [data-ch] .table :is(th, td):last-child { padding-right: var(--space-4); }
+@media (min-width: 1024px) {
+  .main > [data-ch] .table th, .main > [data-ch] .table td { padding-left: var(--space-5); }
+  .main > [data-ch] .table :is(th, td):last-child { padding-right: var(--space-5); }
+}
+.main > [data-ch] .table thead th { padding-block: var(--space-4); border-bottom: 0; background: var(--gr-bg); color: var(--gr-ink); }
+.main > [data-ch] .table tbody tr:nth-child(even) { background: color-mix(in srgb, var(--color-ink) 4%, transparent); }
+.main > [data-ch] .table :is(.table__note, .table__sources) { margin: 0; padding: var(--space-3) var(--space-4); border-top: 1px solid var(--color-line); }
+.main > :is([data-ch=k], [data-ch=c]) .table thead th { background: var(--gr-stage); }
+.main > [data-ch] .table--calc { border: 0; }
+@media (max-width: 639px) {
+  .main > [data-ch] .table--stack tr { padding-inline: var(--space-4); }
+  .main > [data-ch] .table--stack tbody tr:nth-child(even) { background: none; }
+  .main > [data-ch] .table th, .main > [data-ch] .table td { padding-left: 0; }
+  .main > [data-ch] .table :is(th, td):last-child { padding-right: 0; }
+}
+
+/* ---------- Needs and checklists: numbered plates ---------- */
+.checks--plates { counter-reset: need; gap: var(--space-4); }
+.checks--plates li { counter-increment: need; position: relative; display: block; min-height: 8.5rem; padding: var(--space-5) var(--space-5) var(--space-5) var(--space-5); background: var(--color-surface); border: 1px solid var(--color-line-strong); overflow-wrap: anywhere; }
+.checks--plates li::before {
+  content: counter(need, decimal-leading-zero); content: counter(need, decimal-leading-zero) / "";
+  position: absolute; top: var(--space-3); right: var(--space-4); width: auto; height: auto; margin: 0; border: 0; transform: none;
+  font: 650 3.25rem / 1 var(--font-display); font-stretch: 125%; color: transparent; -webkit-text-stroke: 1px var(--color-line-strong);
+}
+.checks--plates li > * { position: relative; }
+.checks--plates li { padding-right: 5.5rem; }
+@media (max-width: 639px) {
+  .checks--plates li { min-height: 0; padding-right: 4.25rem; }
+  .checks--plates li::before { font-size: 2.25rem; top: var(--space-2); right: var(--space-3); }
+}
+@media (forced-colors: active) { .checks--plates li::before { display: none; } }
+
+/* ---------- Steps and process: the drawing that stays beside them ---------- */
+.process__side { display: none; }
+@media (min-width: 1024px) {
+  .process--side .process__steps { grid-column: 1 / 8; }
+  .process__side {
+    display: block; grid-column: 9 / 13; grid-row: 1; position: sticky; top: calc(var(--header-h) + var(--space-6)); height: min(76svh, 44rem);
+    background: var(--color-ink); opacity: .34; pointer-events: none;
+    -webkit-mask: var(--side) 50% 0 / contain no-repeat; mask: var(--side) 50% 0 / contain no-repeat;
+  }
+  .process__side[data-d=axo] { --side: url(/assets/deco/villa-axo-exploded.svg); }
+  .process__side[data-d=plan] { --side: url(/assets/deco/villa-plan-lines.svg); }
+  .process__side[data-d=iso] { --side: url(/assets/deco/villa-iso-lines.svg); }
+  .main > [data-ch=k] .process__side { opacity: .82; }
+}
+
+/* ---------- Index lists (related, sections, services without images): a numeral per row ---------- */
+.main > [data-ch] .index:not(.index--cards) { counter-reset: ix; }
+.main > [data-ch] .index:not(.index--cards) .index__item { counter-increment: ix; padding-left: 4.75rem; }
+.main > [data-ch] .index:not(.index--cards) .index__item::before {
+  content: counter(ix, decimal-leading-zero); content: counter(ix, decimal-leading-zero) / "";
+  position: absolute; left: 0; top: var(--space-4); font: 650 2.25rem / 1 var(--font-display); font-stretch: 125%;
+  color: transparent; -webkit-text-stroke: 1px var(--color-line-strong);
+}
+.main > [data-ch] .index:not(.index--cards) .index__item:hover::before { -webkit-text-stroke-color: var(--color-accent); }
+@media (max-width: 639px) {
+  .main > [data-ch] .index:not(.index--cards) .index__item { padding-left: 3.5rem; }
+  .main > [data-ch] .index:not(.index--cards) .index__item::before { font-size: 1.75rem; }
+}
+@media (forced-colors: active) { .main > [data-ch] .index__item::before { display: none; } }
+
+/* ---------- Other blocks on chapters ---------- */
+.main > [data-ch] .soon__item, .main > [data-ch] .guarantees li { background: color-mix(in srgb, var(--color-surface) 100%, transparent); }
+.main > [data-ch] .specs { border-top-color: var(--color-line-strong); }
+.main > [data-ch] .sources { max-width: none; }
+
+/* ---------- Case: the viewer app sits on the hero sheet ---------- */
+.hero--case[data-ch=h] .hero__app { z-index: 1; }
+
+/* ---------- Legal pages: quiet. White and paper sheets, no outlined numerals, tighter air ---------- */
+.page-legal .main > [data-n]::before { display: none; }
+.page-legal .main > [data-ch]:not([data-ch=h]) { --chapter-y: var(--space-7); }
+.page-legal .main > [data-n] > .wrap { padding-top: calc(var(--space-6) + var(--space-5)); }
+.page-legal .hero--text[data-ch=h]::after { display: none; }
+.page-legal .block__head { margin-bottom: var(--space-4); }
+.page-legal h2 { font: var(--wght-heading) var(--fs-h3) var(--font-sans); font-stretch: 100%; letter-spacing: var(--tracking-h3); max-width: 32ch; }
+.page-legal .main > [data-ch] :is(.block__head > h2) { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--tracking-h3); font-stretch: 100%; }
+
+/* ---------- Contact and thanks ---------- */
+.page-contact .form-section { margin-top: 0; }
+.page-thanks .main > [data-ch] .steps--compact .step { background: var(--color-surface); padding-inline: var(--space-4); border: 1px solid var(--color-line-strong); margin-bottom: var(--space-2); }
+.page-thanks .main > [data-ch] .steps--compact .step:last-child { border-bottom-width: 1px; }

@@ -1,0 +1,141 @@
+== svc-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/svc-1440-light 1440x16539
+9 slices
+== precios-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/precios-1440-light 1440x17186
+10 slices
+== contacto-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/contacto-1440-light 1440x7981
+5 slices
+== faq-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/faq-1440-light 1440x11063
+6 slices
+== guia-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/guia-1440-light 1440x15012
+8 slices
+== caso-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/caso-1440-light 1440x18077
+10 slices
+== audiencia-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/audiencia-1440-light 1440x15056
+8 slices
+== zona-1440-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/zona-1440-light 1440x11703
+7 slices
+== home-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/home-390-light 390x22600
+9 slices
+== svc-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/svc-390-light 390x21309
+9 slices
+== precios-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/precios-390-light 390x25415
+10 slices
+== contacto-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/contacto-390-light 390x10359
+4 slices
+== faq-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/faq-390-light 390x16715
+7 slices
+== guia-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/guia-390-light 390x22376
+9 slices
+== caso-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/caso-390-light 390x21550
+9 slices
+== audiencia-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/audiencia-390-light 390x19245
+8 slices
+== zona-390-light
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/zona-390-light 390x15818
+7 slices
+== home-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/home-1440-dark 1440x17052
+9 slices
+== svc-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/svc-1440-dark 1440x16539
+9 slices
+== precios-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/precios-1440-dark 1440x17186
+10 slices
+== contacto-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/contacto-1440-dark 1440x7981
+5 slices
+== faq-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/faq-1440-dark 1440x11063
+6 slices
+== guia-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/guia-1440-dark 1440x15012
+8 slices
+== caso-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/caso-1440-dark 1440x18077
+10 slices
+== audiencia-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/audiencia-1440-dark 1440x15056
+8 slices
+== zona-1440-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/zona-1440-dark 1440x11703
+7 slices
+== home-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/home-390-dark 390x22600
+9 slices
+== svc-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/svc-390-dark 390x21309
+9 slices
+== precios-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/precios-390-dark 390x25415
+10 slices
+== contacto-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/contacto-390-dark 390x10359
+4 slices
+== faq-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/faq-390-dark 390x16715
+7 slices
+== guia-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/guia-390-dark 390x22376
+9 slices
+== caso-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/caso-390-dark 390x21550
+9 slices
+== audiencia-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/audiencia-390-dark 390x19245
+8 slices
+== zona-390-dark
+    await Promise.all([...document.images].map(i => i.complete ? 1 : new Promise(r => { i.onload = i.onerror = r; setTimeout(r, 6000); })));
+shots/zona-390-dark 390x15818
+7 slices
+BATCH_DONE

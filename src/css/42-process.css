@@ -17,7 +17,7 @@
 /* The legend reads like drawing notes: one row per layer, a short leader, the layer name. */
 .despiece__legend { display: grid; gap: var(--space-1); margin-top: var(--space-3); counter-reset: l; }
 .despiece__legend li { display: grid; grid-template-columns: 2ch var(--space-5) minmax(0, 1fr); align-items: center; gap: var(--space-2); }
-.despiece__legend li::before { counter-increment: l; content: counter(l); color: var(--color-ink); }
+.despiece__legend li::before { counter-increment: l; content: counter(l); content: counter(l) / ""; color: var(--color-ink); }
 .despiece__legend li::after { content: ""; grid-area: 1 / 2; height: 1px; background: var(--color-line-strong); }
 .despiece__legend li > * { grid-column: 3; }
 @media (min-width: 1024px) {
@@ -48,3 +48,29 @@
     .reveal-ready .despiece:not(.is-in) .despiece__layer--3 { transform: translateY(var(--d3)); }
   }
 }
+
+/* Drawing-set process: step numerals in outline (CSS counter), an isometric grid under the despiece, and the exploded
+   axonometric line drawing (villa-axo-exploded.svg) as a faint mask behind the steps on the graphite chapter. */
+.despiece__stage {
+  background: radial-gradient(ellipse 70% 62% at 50% 55%, transparent 30%, var(--color-stage) 100%), repeating-linear-gradient(30deg, var(--color-line) 0 1px, transparent 1px 30px),
+    repeating-linear-gradient(150deg, var(--color-line) 0 1px, transparent 1px 30px), var(--color-stage);
+  border: 1px solid var(--color-line);
+}
+.steps--process { counter-reset: s; }
+.steps--process .step { position: relative; counter-increment: s; padding-block: var(--space-5) var(--space-6); border-color: var(--color-line-strong); }
+.steps--process .step::before {
+  content: counter(s, decimal-leading-zero); content: counter(s, decimal-leading-zero) / "";
+  position: absolute; right: 0; top: var(--space-4); font: 650 clamp(2.5rem, 4vw, 3.75rem) / 1 var(--font-display); font-stretch: 125%;
+  color: transparent; -webkit-text-stroke: 1px var(--color-line-strong);
+}
+.steps--process .step__time { color: var(--color-accent); }
+.steps--process .step__title { max-width: 80%; }
+.main > .block--process[data-ch]:has(.process__drawing) > .wrap::after {
+  content: ""; position: absolute; z-index: -1; right: -6%; top: 12%; width: min(54vw, 760px); aspect-ratio: 1473 / 2114; pointer-events: none;
+  background: var(--color-ink); opacity: .15; -webkit-mask: url(/assets/deco/villa-axo-exploded.svg) center / contain no-repeat; mask: url(/assets/deco/villa-axo-exploded.svg) center / contain no-repeat;
+}
+@media (max-width: 767px) {
+  .steps--process .step::before { font-size: 2.25rem; }
+  .main > .block--process[data-ch]:has(.process__drawing) > .wrap::after { right: -30%; top: 30%; width: 90vw; opacity: .07; }
+}
+@media (forced-colors: active) { .steps--process .step::before { display: none; } }

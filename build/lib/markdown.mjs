@@ -434,6 +434,11 @@ function blockMd(b, h, ctxInfo) {
       out.push(L.rendersNote);
       break;
     }
+    case 'plate': {
+      out.push((b.images || []).map((it) => { const u = h.imageUrl(it.image); return u ? `- [${h.plain(it.caption || it.alt)}](${u}): ${h.plain(it.alt)}` : `- ${h.plain(it.caption || it.alt)}: ${h.plain(it.alt)}`; }).join('\n'));
+      out.push(L.rendersNote);
+      break;
+    }
     case 'video': {
       // Click-to-play render video (build/generated/videos.json): poster image + direct MP4 link + caption.
       const v = videoManifest()[b.video];

@@ -15,6 +15,8 @@ const SRC = {
   r2u: 'https://r2u.io/en/blog/ar-staging-cost-real-estate-2026/',
 };
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'precios',
   image: 'villa_bano_suite_opaco',
@@ -95,6 +97,7 @@ export default {
         h2: '¿Hay precio especial para agencias con varias viviendas?',
         answer: 'Sí. El pack cartera incluye 5 maquetas 3D completas por {{volume}} + IVA, {{volumeUnit}} por vivienda, para usar en 6 meses en viviendas de hasta 150 m². Si encargas más a la vez, la calculadora aplica el precio por tramos a todas las viviendas del encargo, no solo a partir de la quinta: de 5 a 9, {{volumeUnit}} + IVA cada una, y desde 10, menos todavía. La calculadora te da el total.',
       },
+      plate('es', 'villa_interior_salon'),
       {
         type: 'calculator',
         h2: '¿Cuánto costarían tus viviendas?',
@@ -260,6 +263,7 @@ export default {
         h2: 'Do you offer volume pricing for agencies?',
         answer: 'Yes. The portfolio pack covers 5 complete 3D models for {{volume}} + VAT, {{volumeUnit}} per home, to be used within 6 months on homes up to 150 m². Order more at once and the calculator applies tiered pricing to every home in the order, not just from the fifth: from 5 to 9 homes each costs {{volumeUnit}} + VAT, and from 10 it drops again. The calculator below works out the total.',
       },
+      plate('en', 'villa_interior_salon'),
       {
         type: 'calculator',
         h2: 'What would your properties cost?',

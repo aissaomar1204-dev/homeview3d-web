@@ -34,6 +34,8 @@ const faq = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'sol-arquitectos',
   image: 'villa_muros_completos_opaco',
@@ -115,6 +117,7 @@ export default {
         answer: 'Compara el precio con tus horas. Ejemplo con supuestos: si preparar tú el modelo, los materiales y los renders te lleva 20 horas y tu hora de estudio vale 50 €, son 1.000 € de tiempo que no dedicas a proyectar. La maqueta 3D completa cuesta {{price:maqueta}} + IVA e incluye además visor web y realidad aumentada.',
         body: 'Si tus horas multiplicadas por tu tarifa superan el precio del encargo, externalizar compensa. Y si no, quizá te interese solo la parte que no haces: el visor y la realidad aumentada para presentar al cliente. Consulta todas las tarifas en [precios](@precios).',
       },
+      plate('es', 'villa_dormitorios_opaco'),
       {
         type: 'table',
         caption: 'Ejemplo ilustrativo: horas propias frente a encargo (supuestos, no resultados)',

@@ -45,3 +45,11 @@
   .calc { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: var(--space-8); align-items: start; }
   .calc__widget { position: sticky; top: calc(var(--header-h) + var(--space-6)); margin-top: var(--space-9); }
 }
+
+/* Drawing-set calculator: the widget is a plate on the mat, framed by a keyline; a bigger total. */
+.calc__widget { border-color: var(--color-line-strong); box-shadow: 0 0 0 6px var(--ch-bg, var(--color-bg)), 0 0 0 7px var(--color-line-strong), 0 40px 60px -34px color-mix(in srgb, var(--color-ink) 45%, transparent); }
+.calc__total strong { font-size: clamp(2.5rem, 2rem + 2vw, 3.75rem); }
+/* The plate starts below the outlined numeral (0.8 of its size, the box of the 0.8 line height), so the keyline never cuts the digits. */
+@media (min-width: 1024px) {
+  .main > [data-n] .calc__widget { margin-top: max(var(--space-9), calc(var(--chapter-num) * .8 - var(--space-3))); }
+}

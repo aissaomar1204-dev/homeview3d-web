@@ -3,6 +3,7 @@ import { textHero } from '../lib/components.mjs';
 import { standardPage } from '../lib/blocks.mjs';
 
 export default function render(ctx) {
+  ctx.chapters = {}; // a drawing set: every block is a chapter (build/lib/chapters.mjs)
   const p = ctx.page;
   const hasBlock = (p.blocks || []).some((b) => b.type === 'glossary');
   const saved = ctx.page;

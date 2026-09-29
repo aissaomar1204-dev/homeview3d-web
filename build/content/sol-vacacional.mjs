@@ -34,6 +34,8 @@ const faq = [
   },
 ];
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'sol-vacacional',
   image: 'villa_terraza_opaco',
@@ -125,6 +127,7 @@ export default {
         answer: 'Divide el coste entre tu tarifa por noche. Ejemplo con supuestos: con un apartamento a 150 € la noche, el plano 3D ({{price:plano3d}} + IVA por planta) se cubre con muy pocas noches reservadas. Y si el modelo te permite abrir el calendario antes de amueblar, cada semana adelantada cuenta.',
         body: 'Es un ejemplo con cifras supuestas, no un resultado medido. Haz la cuenta con tu tarifa media y tu ocupación real.',
       },
+      plate('es', 'villa_interior_dormitorio'),
       { type: 'faq' },
     ],
     faq,

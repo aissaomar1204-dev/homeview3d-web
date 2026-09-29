@@ -8,6 +8,8 @@ const APPLE = 'https://developer.apple.com/augmented-reality/quick-look/';
 const SCENE = 'https://developers.google.com/ar/develop/scene-viewer';
 const DEVICES = 'https://developers.google.com/ar/devices';
 
+import { plate } from '../data/plates.mjs';
+
 export default {
   id: 'servicio-ar',
   image: 'villa_terraza_opaco',
@@ -57,6 +59,7 @@ export default {
         answer: 'No. Usamos los visores que ya traen los teléfonos: [AR Quick Look](@glosario#ar-quick-look) en iPhone y iPad, que abre archivos [USDZ](@glosario#usdz) desde Safari, y [Scene Viewer](@glosario#scene-viewer) en Android, que abre archivos [GLB](@glosario#glb) en móviles compatibles con ARCore. El comprador toca un botón y la vivienda aparece, sin instalar nada ni registrarse.',
         body: 'Lo documentan Apple en su página de [AR Quick Look](' + APPLE + ') y Google en la de [Scene Viewer](' + SCENE + '). En Apple hace falta iOS o iPadOS 12 o posterior; en Android, la versión 7.0 o posterior y los servicios de Google Play para realidad aumentada.',
       },
+      plate('es', 'villa_interior_dormitorio'),
       {
         type: 'formats',
         h2: '¿Funciona en iPhone y en Android?',
@@ -191,6 +194,7 @@ export default {
         answer: 'No. We use the viewers already built into phones: [AR Quick Look](@glosario#ar-quick-look) on iPhone and iPad, which opens [USDZ](@glosario#usdz) files from Safari, and [Scene Viewer](@glosario#scene-viewer) on Android, which opens [GLB](@glosario#glb) files on ARCore-compatible phones. Buyers tap a button and the home appears, with nothing to install and no sign-up.',
         body: 'Apple documents it on its [AR Quick Look](' + APPLE + ') page and Google on its [Scene Viewer](' + SCENE + ') page. Apple devices need iOS or iPadOS 12 or later; Android phones need version 7.0 or later with Google Play Services for AR.',
       },
+      plate('en', 'villa_interior_dormitorio'),
       {
         type: 'formats',
         h2: 'Does it work on iPhone and Android?',
