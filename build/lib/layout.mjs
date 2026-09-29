@@ -20,14 +20,14 @@ export const meshoptScript = (url) => `self.ModelViewerElement = { meshoptDecode
 
 /**
  * Theme, part 1: the inline head script, before the CSS, so the stored choice is on <html> before the first paint
- * (no flash). 'hv-theme' holds 'light' or 'dark'; no key = automatic (the system preference decides, see
- * 00-tokens.css). Storage is a per-visitor convenience: the access is inside try/catch and the page works without it.
+ * (no flash). Light is the default: <html> ships with data-theme="light". 'hv-theme' holds 'dark' or 'auto'
+ * ('auto' removes data-theme so the system preference decides, see 00-tokens.css); no key or 'light' = light. Storage is a per-visitor convenience: the access is inside try/catch and the page works without it.
  */
-export const THEME_HEAD_SCRIPT = "try{var t=localStorage.getItem('hv-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}";
+export const THEME_HEAD_SCRIPT = "try{var t=localStorage.getItem('hv-theme'),r=document.documentElement;if(t==='dark')r.dataset.theme='dark';else if(t==='auto')delete r.dataset.theme}catch(e){}";
 
 /**
  * Theme, part 2: the toggle (deferred file, cached like every hashed asset, so the HTML carries only the tag).
- * Cycles automatic → light → dark, persists (automatic removes the key), keeps <meta name="theme-color"> and
+ * Cycles light → dark → automatic, persists ('auto' is stored explicitly; no key means light), keeps <meta name="theme-color"> and
  * <meta name="color-scheme"> in step, updates the button's aria-label and tooltip (three strings joined with "|" in
  * data-l, from ui.mjs) and announces the new state in a polite live region it creates next to the button. Other tabs
  * follow through "storage".
@@ -55,10 +55,10 @@ export function themeToggleJs({ light = '#F4F5F6', dark = '#0F1215' } = {}) {
   put(ok(r.dataset.theme));
   b.addEventListener('click', function () {
     var n = S[(S.indexOf(ok(r.dataset.theme)) + 1) % 3];
-    try { if (n) localStorage.setItem(K, n); else localStorage.removeItem(K); } catch (e) {}
+    try { localStorage.setItem(K, n || 'auto'); } catch (e) {}
     put(n, 1);
   });
-  addEventListener('storage', function (e) { if (e.key === K) put(ok(e.newValue)); });
+  addEventListener('storage', function (e) { if (e.key === K) put(e.newValue === 'auto' ? '' : e.newValue === 'dark' ? 'dark' : 'light'); });
 })();`;
   return minifyJs(src).split('\n').join('');
 }
@@ -95,7 +95,7 @@ const THEME_ICON = '<svg class="icon" viewBox="0 0 256 256" aria-hidden="true" f
 /** The toggle button (visible only with JS, see html:not(.js) in 20-layout.css). Its polite live region is added by theme.js. */
 function themeButton(ctx) {
   const labels = ['auto', 'light', 'dark'].map((k) => ctx.t(`theme.${k}`));
-  return `<button type="button" class="theme-btn" data-theme-toggle aria-label="${esc(labels[0])}" data-l="${esc(labels.join('|'))}">${THEME_ICON}</button>`;
+  return `<button type="button" class="theme-btn" data-theme-toggle aria-label="${esc(labels[1])}" data-l="${esc(labels.join('|'))}">${THEME_ICON}</button>`;
 }
 
 const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
@@ -317,8 +317,8 @@ export function renderDocument(ctx, o) {
     // X/Twitter reads og:title, og:description and og:image when its own tags are absent: only the card type is needed.
     + `<meta name="twitter:card" content="summary_large_image">`
     + `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${o.themeColors.light}">`
-    + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.dark}">`
-    + `<meta name="color-scheme" content="light dark">`
+    + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.light}">`
+    + `<meta name="color-scheme" content="light">`
     + `<script>${THEME_HEAD_SCRIPT}</script>`
     + `<meta name="format-detection" content="telephone=no">`
     + (A.font ? `<link rel="preload" href="${esc(A.font)}" as="font" type="font/woff2" crossorigin>` : '')
@@ -347,5 +347,5 @@ export function renderDocument(ctx, o) {
       + (utility ? '' : bottomBar(ctx));
   }
   body = sprite(body) + body;
-  return `<!doctype html><html lang="${L}" dir="ltr"><head>${headHtml}</head><body class="${esc(bodyClass)}">${body}</body></html>\n`;
+  return `<!doctype html><html lang="${L}" dir="ltr" data-theme="light"><head>${headHtml}</head><body class="${esc(bodyClass)}">${body}</body></html>\n`;
 }

@@ -1261,7 +1261,9 @@ if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'NIF y datos reg
     else if (firstCss >= 0 && head.indexOf(inline) > firstCss) err('structure', p.where, 'the theme script must come before the stylesheet (no flash)', B);
     const tc = p.metas.filter((m) => m.a.name === 'theme-color');
     if (tc.length !== 2 || tc.some((m) => !/^#[0-9a-f]{6}$/i.test(m.a.content || '') || !/prefers-color-scheme/.test(m.a.media || ''))) err('structure', p.where, 'needs two <meta name="theme-color"> (light and dark) with media and a hex colour', B);
-    if (!p.metas.some((m) => m.a.name === 'color-scheme' && /light dark/.test(m.a.content || ''))) err('structure', p.where, 'missing <meta name="color-scheme" content="light dark">', B);
+    // Light is the default theme: <html data-theme="light"> + <meta name="color-scheme" content="light"> (theme.js switches it).
+    if (!p.metas.some((m) => m.a.name === 'color-scheme' && /\blight\b/.test(m.a.content || ''))) err('structure', p.where, 'missing <meta name="color-scheme" content="light">', B);
+    if (!/<html[^>]*\sdata-theme="light"/.test(p.html || '')) err('structure', p.where, '<html> must default to data-theme="light"', B);
     if (!/<header\b[^>]*\bsite-header\b/.test(p.html)) continue; // bare pages (embed): no header, footer or toggle
     const brand = p.html.match(/<a class="brand"[^>]*aria-label="([^"]+)"[^>]*>([\s\S]*?)<\/a>/);
     if (!brand) err('structure', p.where, 'header logo link missing (a.brand with aria-label)', B);
