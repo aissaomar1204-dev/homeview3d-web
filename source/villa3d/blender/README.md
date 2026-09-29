@@ -12,6 +12,7 @@ como alternativa) y denoiser OpenImageDenoise en GPU.
 | `villa_render.py` | Escena completa y render de las 9 tomas: cámaras, sol, cielo, sombra y modos maqueta/muros/plano. |
 | `export_usdz_mesa.py` | Maqueta de sobremesa 1:20 para AR Quick Look (`../ar/villa_maqueta_mesa.usdz`). |
 | `villa_renders.blend` | Escena guardada, con rutas de textura relativas. Tiene todas las cámaras `CAM_*` y las colecciones `Maqueta` / `Alto (sobre 1,15 m)` / `Corte seccion`. |
+| `villa_interiores.py` | 4 vistas a la altura de los ojos (`villa_interior_salon`, `_dormitorio`, `_bano`, `_terraza`, 2400×1600 opacas): muros completos, techo a 2,60 m, sol de media tarde, focos empotrados y lámparas encendidas. Ver más abajo. |
 | `villa_despiece.py` | Despiece del home/proceso: 3 capas RGBA registradas al píxel con la cámara y la luz del hero (`villa_despiece_1..3.png`, 1600×1030). |
 | `villa_turntable.py` + `encode_turntable.mjs` | Vuelta de 8 s de la maqueta (Cycles, 240 fotogramas) y su codificación a MP4/WebM + póster (`public/assets/video/`). |
 | `capture/` | `capture-server.mjs` + `poster.html`: fotogramas de `<model-viewer>` con los valores del sitio (`villa_viewer_poster.png` 16:11 y `villa_viewer_poster_mobile.png` 4:5). |
@@ -57,6 +58,16 @@ playwright-cli eval "async () => JSON.stringify(await window.__result)"
 node source/villa3d/blender/capture/finish-poster.mjs _poster_mobile_2x.png villa_viewer_poster_mobile.png 1200x1500
 cd E:\ProyectosRealStateBlender; npm run images
 
+# 5b) encuadre del visor (V-01): márgenes del modelo + sombra en 16:9, 16:11 y 4:5 sin guardar nada
+#     (mode=probe devuelve la caja del canal alfa; orbit/target sustituyen a los de villa.mjs solo para probar)
+playwright-cli goto "http://127.0.0.1:8802/source/villa3d/blender/capture/poster.html?mode=probe&w=1200&h=1500&orbit=-32deg%2050deg%2096%25"
+playwright-cli eval "async () => JSON.stringify((await window.__result).margins)"
+
+# 5c) interiores a la altura de los ojos (unos 20 min los 4 en la RTX 4060; previsualización: --scale 25 --samples 64)
+& $B -b --factory-startup -P villa_interiores.py
+& $B -b --factory-startup -P villa_interiores.py -- --only villa_interior_bano --scale 50 --samples 256 --outdir $env:TEMP\int_prev
+cd E:\ProyectosRealStateBlender; npm run images
+
 # 6) USDZ para AR Quick Look (usd-core en un venv; texturas con sharp)
 .venv-usd\Scripts\python source\villa3d\blender\usdz_web.py all      # real + maqueta -> public/models/
 
@@ -64,6 +75,27 @@ cd E:\ProyectosRealStateBlender; npm run images
 & $B -b --factory-startup -P source\villa3d\blender\villa_turntable.py -- --outdir $env:TEMP\villa_turntable
 node source/villa3d/blender/encode_turntable.mjs $env:TEMP\villa_turntable
 ```
+
+### Interiores (`villa_interiores.py`)
+
+Abre `villa_renders.blend` y convierte la maqueta en una planta terminada vista por una persona de pie:
+
+- **Arquitectura**: colección `Alto` visible (muros a 2,60 m), sin tapas de corte, y un forjado de 30 cm
+  (techo a 2,60 m) sobre el interior; las dos terrazas quedan abiertas. Los derrames de huecos (`Pared_Corte`)
+  pasan a yeso, los espejos se sombrean planos (el suavizado los curvaba como un espejo convexo).
+- **Vidrio arquitectónico**: mezcla Fresnel de reflejo nítido sobre un *Transparent BSDF* teñido, para que el sol
+  entre por las correderas sin cáusticas (el vidrio con transmisión de las aéreas bloquea la luz directa). Las caras
+  traseras usan 1/1,52 de IOR: si no, la reflexión total interna pinta una banda curva oscura en los paños oblicuos.
+- **Entorno**: cielo físico (`MULTIPLE_SCATTERING`, sin disco) y un plano de mar 60 m por debajo, con oleaje por
+  *bump*. Es un fondo ilustrativo, no el entorno real de la villa.
+- **Luz**: sol cálido de media tarde (287° / 17° en los interiores; 255° / 33° en la terraza, para que el peto oeste
+  no deje todo el suelo en sombra), *portals* en cada hueco, 19 focos empotrados de 2.700 K (9 W; 14 W en el baño
+  negro) y bombillas en la lámpara de pie y las mesillas, con pantallas translúcidas.
+- **Cámaras**: a 1,60 m, niveladas (sin cabeceo: las verticales quedan verticales) y encuadradas con *shift*, 24-26 mm.
+  En el baño la mampara fija es invisible solo para la cámara (se dispara desde la ducha) y la hoja de la puerta
+  abierta se retira.
+- `--variants '{"prueba": {"base": "villa_interior_bano", "cam": [7.7, 1.15, 1.6], "az": 258}}'` renderiza encuadres
+  de prueba (con `--outdir` fuera de `../renders`).
 
 ### Despiece (`villa_despiece.py`)
 
@@ -164,3 +196,13 @@ interior está en 0 y la base de la maqueta va de -0,60 a -0,02.
 | og_image | 1200×630 | 512 | 10 s |
 | villa_muros_completos | 2800×1800 | 512 | 73 s |
 | **Total** (con carga y guardado) | | | **unos 7 min** |
+
+Interiores (`villa_interiores.py`, 29-09-2026, OIDN, muestreo adaptativo 0,008):
+
+| Toma | Resolución | Muestras | Tiempo |
+|---|---|---|---|
+| villa_interior_salon | 2400×1600 | 1024 | 261 s |
+| villa_interior_dormitorio | 2400×1600 | 1024 | 322 s |
+| villa_interior_bano | 2400×1600 | 1024 | 193 s |
+| villa_interior_terraza | 2400×1600 | 768 | 85 s |
+| **Total** | | | **unos 14,5 min** |

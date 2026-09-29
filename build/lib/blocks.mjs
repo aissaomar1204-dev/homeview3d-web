@@ -70,11 +70,29 @@ function indexBlock(ctx, b, type, ids, opts) {
 
 /** Templates whose answers get the two-column layout (guides keep their reading column). */
 const SPLIT = new Set(['service', 'audience', 'zone', 'pricing', 'process', 'about']);
-/** Renders offered to asides and the stage band, in order of preference (interiors first). */
-const ASIDE_IMAGES = ['villa_salon_dormitorio', 'villa_terraza', 'villa_bano_suite', 'villa_dormitorios', 'villa_muros_completos', 'villa_planta_cenital', 'villa_maqueta_iso'];
+/** Renders offered to asides and the stage band: eye-level interiors interleaved with the aerial cut-away views.
+ *  villa_interior_bano stays out: its tight 1.6 m room crops the basin, fine in galleries but not as a full-bleed band. */
+const ASIDE_IMAGES = [
+  'villa_interior_salon', 'villa_salon_dormitorio', 'villa_interior_terraza', 'villa_terraza', 'villa_interior_dormitorio',
+  'villa_bano_suite', 'villa_dormitorios', 'villa_muros_completos', 'villa_planta_cenital', 'villa_maqueta_iso',
+];
+
+const baseName = (n) => String(n).replace(/_opaco$/, '');
+
+/** Images the page places itself (hero, figures, galleries), so an aside never repeats one that comes later. */
+function pageImages(ctx) {
+  const p = ctx.page || {};
+  const out = new Set();
+  if (p.hero && p.hero.image) out.add(baseName(p.hero.image));
+  for (const b of p.blocks || []) {
+    if (b.type === 'figure' && b.image) out.add(baseName(b.image));
+    if (b.type === 'gallery') for (const it of b.items || []) out.add(baseName(it.image));
+  }
+  return out;
+}
 
 function nextImage(ctx) {
-  const used = new Set(ctx.collect.images.map((i) => String(i.name).replace(/_opaco$/, '')));
+  const used = new Set([...ctx.collect.images.map((i) => baseName(i.name)), ...pageImages(ctx)]);
   // Each page starts the rotation at a different render, so neighbouring pages do not open on the same image.
   const start = [...ctx.route.id].reduce((t, ch) => t + ch.charCodeAt(0), 0) % ASIDE_IMAGES.length;
   const order = ASIDE_IMAGES.slice(start).concat(ASIDE_IMAGES.slice(0, start));
@@ -86,25 +104,44 @@ function asideFigure(ctx, name, sizes) {
   return `<figure class="figure figure--stage"><div class="figure__media">${ctx.img(name, { alt: defaultAlt(ctx, name), sizes, widths: [480, 800, 1200] })}</div>${cap ? `<figcaption>${esc(cap)}. ${esc(ctx.t('img.renderLabel'))}.</figcaption>` : ''}</figure>`;
 }
 
-function priceCard(ctx, o) {
+/**
+ * Price card beside an answer. The pack is the route's own pack, else the first {{price:x}} / {{delivery:x}} token of
+ * that answer (V-14). Without either (e.g. a pricing answer about the portfolio pack), there is no card: the aside
+ * falls back to a fact or a render, so a card never shows a price the answer is not about.
+ */
+function priceCard(ctx, o, b = {}) {
   const r = ctx.route;
   const packs = ctx.data.pricing.packs;
-  const packId = r.pack && packs.some((p) => p.id === r.pack) ? r.pack : null;
-  const price = routePrice(ctx, r.id) || esc(ctx.t('services.from', { price: ctx.price('plano3d') }));
+  let packId = r.pack && packs.some((p) => p.id === r.pack) ? r.pack : null;
+  const extra = !packId && r.pack && ctx.data.pricing.extras.some((e) => e.id === r.pack);
+  let service = o.service;
+  if (!packId && !extra) {
+    const tok = String(b.answer || '').match(/\{\{(?:price|delivery):(\w+)/);
+    packId = tok && packs.some((p) => p.id === tok[1]) ? tok[1] : null;
+    if (packId) service = packId;
+    // The pricing page is all prices: a card there must match its answer, or not be shown. Elsewhere the entry pack.
+    else if (r.template === 'pricing') return '';
+    else packId = 'plano3d';
+  }
+  const price = packId ? esc(ctx.t('services.from', { price: ctx.price(packId) })) : routePrice(ctx, r.id);
   const days = ctx.delivery(packId || 'plano3d');
   return `<div class="answer-card"><p class="mono">${esc(ctx.t('answers.price'))}</p><p class="answer-card__price">${price}</p>`
-    + `<p>${esc(ctx.t('answers.delivery', { days }))}</p><p class="actions">${btnPrimary(ctx, contactHref(ctx, o.service), ctx.t('cta.demo'))}</p></div>`;
+    + `<p>${esc(ctx.t('answers.delivery', { days }))}</p><p class="actions">${btnPrimary(ctx, contactHref(ctx, service), ctx.t('cta.demo'))}</p></div>`;
 }
 
-function answerAside(ctx, n, o) {
+function answerAside(ctx, n, o, b) {
   const facts = ctx.page.facts || [];
-  if (n % 4 === 2) return priceCard(ctx, o);
+  if (n % 4 === 2) { const card = priceCard(ctx, o, b); if (card) return card; }
   if (n % 4 === 0 && facts.length) {
     const [k, v] = facts[(n / 4) % facts.length];
     return `<p class="answer-fact"><span class="mono">${ctx.mdInline(k)}</span><strong>${ctx.mdInline(v)}</strong></p>`;
   }
   const img = nextImage(ctx);
-  return img ? asideFigure(ctx, img, '(min-width: 1320px) 390px, (min-width: 1024px) 30vw, 100vw') : priceCard(ctx, o);
+  if (img) return asideFigure(ctx, img, '(min-width: 1320px) 390px, (min-width: 1024px) 30vw, 100vw');
+  const card = priceCard(ctx, o, b);
+  if (card || !facts.length) return card;
+  const [k, v] = facts[n % facts.length];
+  return `<p class="answer-fact"><span class="mono">${ctx.mdInline(k)}</span><strong>${ctx.mdInline(v)}</strong></p>`;
 }
 
 /** Full-bleed stage band with one render, after the second answer: breaks the run of text blocks. */
@@ -126,7 +163,7 @@ const R = {
     const main = `${hd.html}<div class="answer" data-answer>${ctx.md(b.answer)}</div>${body}`;
     if (!SPLIT.has(ctx.route.template)) return section(ctx, { type: 'answer', labelledby: hd.id, inner: main });
     const n = (o.state.answers = (o.state.answers || 0) + 1);
-    const aside = answerAside(ctx, n, o);
+    const aside = answerAside(ctx, n, o, b);
     const inner = `<div class="answer-split${n % 2 === 0 ? ' answer-split--flip' : ''}"><div class="answer-split__main">${main}</div><aside class="answer-split__aside">${aside}</aside></div>`;
     return section(ctx, { type: 'answer', labelledby: hd.id, inner }) + (n === 2 ? plateBand(ctx) : '');
   },

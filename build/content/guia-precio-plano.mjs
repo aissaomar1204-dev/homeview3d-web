@@ -1,5 +1,6 @@
-// Guide: market prices of a 3D floor plan in Spain (ES only; routes.mjs has no EN path).
-// Every market figure below was re-verified with WebFetch on 2026-09-28 against the page linked in its row.
+// Guide: market prices of a 3D floor plan in Spain (ES + EN; the EN twin answers seo-geo-audit O-04).
+// ES market figures were verified with WebFetch on 2026-09-28 and all of them re-checked on 2026-09-29 for the EN
+// version (CubiCasa's Spanish price list only renders in a browser: PLUS 3D 65 €, 48 h, «applies in Spain»).
 // Our own prices come ONLY from tokens (build/data/pricing.mjs).
 
 const SRC = {
@@ -13,13 +14,14 @@ const SRC = {
   pedra: 'https://pedra.ai/es/pricing',
   fp: 'https://floorplanner.com/pricing',
   sh3d: 'https://www.sweethome3d.com/',
+  cubi: 'https://www.cubi.casa/pricing/',
 };
 
 export default {
   id: 'guia-precio-plano',
   image: 'villa_planta_cenital',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: '¿Cuánto cuesta un plano 3D? Precios en España 2026',
@@ -74,6 +76,12 @@ export default {
           ['Plano 3D de {{brand}}', '{{price:plano3d}} + IVA hasta 150 m² y {{price:plano3d:1}} + IVA hasta 300 m²', '[Nuestros precios](@precios)'],
         ],
         note: 'BoxBrownie y Pedra son plataformas en línea; el resto son estudios y fotógrafos que trabajan en España. Solo tucasaapunto.com y {{brand}} dicen de forma expresa que el precio es sin IVA; en las demás fuentes, confírmalo. renders.es indica que sus precios son estimados.',
+      },
+      {
+        type: 'cta',
+        h2: '¿Cuánto costaría el tuyo?',
+        body: 'Estas tarifas son de otras empresas. El nuestro cuesta {{price:plano3d}} + IVA por planta de hasta 150 m², en {{delivery:plano3d}} y sin visita. Envíanos el plano y te confirmamos el precio cerrado en 24 h laborables.',
+        service: 'plano3d',
       },
       {
         type: 'table',
@@ -216,6 +224,216 @@ export default {
     cta: {
       h2: 'Pide precio para tu plano 3D',
       body: 'Envíanos el plano en PDF o JPG y te decimos precio y plazo. Sin visita y sin fotos.',
+      service: 'plano3d',
+    },
+  },
+  // ─────────────────────────────────────────────────────────────── EN
+  // Angle: international agents and developers selling Spanish property to buyers abroad (seo-geo-audit O-04, C-02).
+  // Every third-party figure was re-checked with WebFetch (CubiCasa in a browser from Spain) on 2026-09-29.
+  en: {
+    title: 'How much does a 3D floor plan cost in Spain? (2026)',
+    description: 'A 3D floor plan in Spain costs €40 per floor online and €100 to €800 or more from a studio in 2026. Sourced price table, cost factors and worked examples.',
+    h1: 'How much does a 3D floor plan cost in Spain? 2026 prices',
+    lead: 'In Spain, a 3D floor plan costs €40 per floor on online platforms and €100 to €800 or more from studios, based on rates published in 2026: €100 to €250 for a basic plan, €250 to €400 furnished and €400 to €800 or more photorealistic. At {{brand}}, {{price:plano3d}} + VAT per floor, in {{delivery:plano3d}}.',
+    breadcrumb: '3D floor plan cost',
+    card: {
+      title: 'How much does a 3D floor plan cost in Spain?',
+      summary: 'Euro prices per floor for 2026, from online platforms to photorealistic studio plans, with sources, cost factors and three worked examples.',
+    },
+    facts: [
+      ['Online platform', '€40 per floor'],
+      ['Basic 3D floor plan', '€100 to €250'],
+      ['Furnished, standard level', '€250 to €400'],
+      ['Photorealistic', '€400 to €800 or more'],
+      ['AI tool on subscription', 'Under €1 per image'],
+      ['3D floor plan at {{brand}}', '{{price:plano3d}} + VAT per floor'],
+      ['Turnaround at {{brand}}', '{{delivery:plano3d}}'],
+      ['Data checked', 'September 2026'],
+    ],
+    hero: {
+      image: 'villa_planta_cenital',
+      alt: 'Colour top-down plan of the anonymised Costa del Sol villa, a 3D render produced from its 2D floor plan',
+      caption: 'Top-down plan rendered from the 3D model. A {{brand}} demonstration case.',
+    },
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'How much does it cost to have a 3D floor plan made?',
+        answer: 'Having a 3D floor plan made in Spain costs €100 to €800 per plan from a studio, depending on realism, furniture and floor area, and €40 per floor on an online platform. A furnished plan at standard level costs €250 to €400; photorealistic plans with materials, light and shadows start at around €400.',
+        body: 'Two different products often share the same name. A **3D floor plan** is an image: the layout seen from above or at an angle, with floors, cut-away walls and furniture. A **3D model** is the geometry of the whole home, and the floor plan, the renders, a [viewer your buyer can spin](@servicio-tour) and [augmented reality](@servicio-ar) all come out of it.\n\nThis guide is about the first. Buyers who cannot fly out for a viewing read the layout from the plan, so it is worth knowing what a fair price looks like before you order one per listing. Prices for interior and exterior images are in our guide to [3D rendering costs in Spain](@guia-precio-render); our own rates are on the [pricing page](@precios).',
+      },
+      {
+        type: 'table',
+        h2: 'What do providers in Spain charge in 2026?',
+        intro: 'Published rates from platforms, photographers and studios that work in Spain, all checked on 29 September 2026. They are other companies’ prices, not ours, except for the last row. Most of the source pages are in Spanish.',
+        caption: '3D floor plan prices in Spain (September 2026)',
+        head: ['Type of 3D floor plan', 'Published price', 'Source'],
+        rows: [
+          ['Colour plan, online platform', '€40 per floor, in 48 hours', `[boxbrownie.com](${SRC.box})`],
+          ['Tailored plan, online platform', 'From €200', `[boxbrownie.com](${SRC.box})`],
+          ['Furnished 3D plan from a phone scan, app', '€65, in 48 hours (price shown for Spain)', `[cubi.casa](${SRC.cubi})`],
+          ['Colour and furnished, floor of about 60 m²', '€119.95 per floor', `[homestagerdesign.com](${SRC.hsd})`],
+          ['Basic, no detailed furniture', '€100 to €250', `[inmofotomadrid.es](${SRC.imf}), 12 Feb 2026`],
+          ['Standard, basic furniture and colours', '€250 to €400', `[inmofotomadrid.es](${SRC.imf}), 12 Feb 2026`],
+          ['Premium, photorealistic', '€400 to €800 or more', `[inmofotomadrid.es](${SRC.imf}), 12 Feb 2026`],
+          ['Top-down plan with dimensions and materials', '€300 to €800', `[estudio3dbs.com](${SRC.bs}), 2026`],
+          ['Real estate 3D floor plan', 'From €165 + VAT', `[tucasaapunto.com](${SRC.tcp})`],
+          ['“Humanised” 3D floor plan', 'From €250 per room', `[studiomkdesign.es](${SRC.mk})`],
+          ['Budget floor plan render', '€50 to €100 (estimate)', `[renders.es](${SRC.rend})`],
+          ['AI plan-to-render tool, on subscription', 'About €0.58 per image (2 credits from a €29 a month plan with 100)', `[pedra.ai](${SRC.pedra})`],
+          ['{{brand}} 3D floor plan', '{{price:plano3d}} + VAT up to 150 m² and {{price:plano3d:1}} + VAT up to 300 m²', '[Our pricing](@precios)'],
+        ],
+        note: 'BoxBrownie, CubiCasa and Pedra are online platforms or apps; the rest are studios and photographers working in Spain. Only tucasaapunto.com and {{brand}} state outright that the price excludes VAT; with the others, ask, as Spanish VAT is 21%. renders.es describes its prices as estimates, and inmofotomadrid.es adds that each quote depends on the project. CubiCasa draws the plan from a scan you make on site with its app, so someone has to visit the property.',
+      },
+      {
+        type: 'cta',
+        h2: 'What would yours cost?',
+        body: 'Those are other companies’ rates. Ours costs {{price:plano3d}} + VAT per floor up to 150 m², delivered in {{delivery:plano3d}}, with no site visit. Send us the plan and we confirm a fixed price within one working day.',
+        service: 'plano3d',
+      },
+      {
+        type: 'table',
+        h2: 'What do you get at each price level?',
+        intro: '“3D floor plan” covers very different products. This table sums up what each price band usually includes, based on the sources’ own descriptions.',
+        caption: 'What a 3D floor plan includes at each price level',
+        head: ['Level', 'What you get', 'What it is for'],
+        rows: [
+          ['Online platform, about €40', 'One colour top-down image, in 48 hours', 'Resale listings that need volume and speed'],
+          ['Basic, €100 to €250', 'Floors and walls in 3D, without detailed furniture', 'First presentations and simple catalogues'],
+          ['Standard, €250 to €400', 'Basic furniture, colours and labelled rooms', 'Listing pages and property portals'],
+          ['Premium, €400 to €800 or more', 'Photorealistic materials, light and shadows', 'Sales brochures and development launches'],
+          ['Complete 3D model', 'Scaled geometry that gives you the plan, renders, a viewer and AR', 'Off-plan and empty homes that buyers abroad have to understand remotely'],
+        ],
+      },
+      {
+        type: 'table',
+        h2: 'What makes a 3D floor plan cost more or less?',
+        intro: 'Nine factors explain almost every difference between quotes. The third column says how to handle each one when you ask for prices.',
+        caption: 'What drives the price of a 3D floor plan',
+        head: ['Factor', 'Why it matters', 'What to do'],
+        rows: [
+          ['Floor area', 'More square metres means more rooms to draw and furnish', 'Ask for the area limit of the rate: some prices cover 60 m² per floor, others 150 m²'],
+          ['Number of floors', 'Almost every provider charges per floor', 'A two-storey townhouse is two plans: count them when you compare'],
+          ['Furniture', 'Furnishing each room takes modelling time', 'An empty home reads better furnished, because the buyer sees the scale'],
+          ['Realism', 'Materials, light and computed shadows', 'Moving from standard to premium can double the price'],
+          ['Views', 'Top-down, isometric or both', 'Check how many images the price includes'],
+          ['Dimensions and labels', 'Measurements and room names on the image', 'Ask whether they are included or charged separately'],
+          ['Starting plan', 'A clean PDF with dimensions is read faster than a photo of a brochure', 'Send the best version you have and at least one real measurement'],
+          ['Turnaround', 'A rush job reorders the queue', 'At {{brand}}, 48-hour delivery adds {{extra:urgente}} to the total'],
+          ['Revisions', 'Each round of changes is extra work', 'Ask how many are included: our 3D floor plan comes with {{revisions:plano3d}}'],
+        ],
+      },
+      {
+        type: 'table',
+        h2: 'What would three real homes cost?',
+        intro: 'Three examples worked out with the published rates in this guide. They help you set a budget; the final price comes from each provider.',
+        caption: 'Three 3D floor plan price examples (September 2026)',
+        head: ['Home', 'Online platform', 'Studio, standard level', 'With {{brand}}'],
+        rows: [
+          ['Flat of 90 m² on one floor', '€40', '€250 to €400', '{{price:plano3d}} + VAT'],
+          ['Two-storey townhouse, 80 m² per floor', '€80 (2 × €40)', '€500 to €800 (2 × €250 to €400)', '{{price:plano3d}} + VAT per floor'],
+          ['Single-storey villa of 280 m²', '€40, if the rate covers that floor area', '€250 to €400 or more', '{{price:plano3d:1}} + VAT'],
+        ],
+        note: 'If you also want renders, a viewer and augmented reality, the maths changes: the [complete 3D model](@servicio-plano) costs from {{price:maqueta}} + VAT and includes the colour top-down plan and the redrawn 2D plan.',
+      },
+      {
+        type: 'answer',
+        h2: 'Can you get a 3D floor plan for free?',
+        answer: 'Yes, if you draw it yourself. Sweet Home 3D is free and open source, and Floorplanner’s free plan lets you draw a layout and see it in 3D. The cost is your time and the result: on its free plan, Floorplanner exports images at 960 × 540 pixels with a watermark.',
+        body: 'For your own use, such as trying out a layout or a renovation, that is a sensible choice. For a listing, image quality and the learning curve usually tip the balance towards a provider. If you are tempted by an AI tool instead, read [what AI can and cannot do with a floor plan](@guia-ia-vs-3d) first.',
+      },
+      {
+        type: 'answer',
+        h2: 'Where does our 3D floor plan fit?',
+        answer: '{{brand}} charges {{price:plano3d}} + VAT per floor up to 150 m² and {{price:plano3d:1}} + VAT up to 300 m². That includes a colour top-down view and a furnished isometric view in 4K, the 2D plan redrawn cleanly and {{revisions:plano3d}}, delivered in {{delivery:plano3d}}. It sits at the basic end of the market, but it comes from a real 3D model.',
+        body: 'Coming from a model has two practical consequences. The top-down and isometric views match each other because they are two cameras on the same geometry, not two drawings. And if you later want renders, a viewer or augmented reality of that home, for an [off-plan development](@sol-promotoras) for instance, the model already exists.\n\nThere are also cases where we are not the best choice. If all you need is a quick top-down image of a resale flat to complete a listing, a €40 online platform may well be enough.',
+      },
+      {
+        type: 'figure',
+        image: 'villa_maqueta_iso',
+        alt: 'Cut-away 3D model of the anonymised Costa del Sol villa, three-quarter aerial view, a render produced from the 2D floor plan',
+        caption: 'Furnished isometric view, a render of the 3D model from our demonstration case. The top-down plan above comes from the same geometry.',
+        layout: 'wide',
+      },
+      {
+        type: 'checklist',
+        h2: 'How do you get comparable 3D floor plan quotes?',
+        intro: 'Ask every provider the same questions and compare the answers, not just the figures.',
+        items: [
+          'Price per floor and the floor area limit of that rate.',
+          'Views included: top-down, isometric or both.',
+          'Whether it is furnished, and in how much detail.',
+          'Output resolution and file format.',
+          'Whether dimensions, floor areas and room names are included.',
+          'Rounds of changes included.',
+          'Turnaround in working days and the price of a rush job.',
+          'Whether the price includes Spanish VAT.',
+          'Whether someone has to visit the property, or the plan is drawn from existing drawings.',
+          'Whether it comes from a 3D model you can reuse for renders, a viewer or augmented reality.',
+        ],
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'A 3D floor plan is a marketing image, not a survey',
+        body: 'If the original plan has no dimensions, measurements are estimated from its scale (≈), and the listing should say so. A 3D floor plan does not replace the property’s technical documentation, and the official floor area is the one to quote in a listing. Every area in our [demonstration case](@caso-villa) is an estimate, and we say so on the page.',
+      },
+      { type: 'faq' },
+      {
+        type: 'sources',
+        items: [
+          { label: 'boxbrownie.com: 2D and 3D floor plans', url: SRC.box, note: 'Checked 29 Sep 2026.' },
+          { label: 'cubi.casa: pricing', url: SRC.cubi, note: 'Prices shown for Spain in a browser. Checked 29 Sep 2026.' },
+          { label: 'homestagerdesign.com: 3D floor plans', url: SRC.hsd, note: 'In Spanish. Price per plan of 60 m² and floor. Checked 29 Sep 2026.' },
+          { label: 'inmofotomadrid.es: ¿Cuánto cuesta un plano en 3D? (12 Feb 2026)', url: SRC.imf, note: 'In Spanish, indicative prices. Checked 29 Sep 2026.' },
+          { label: 'estudio3dbs.com: professional 3D render prices in Spain (2026)', url: SRC.bs, note: 'In Spanish; includes the 3D plan with dimensions and materials. Checked 29 Sep 2026.' },
+          { label: 'tucasaapunto.com: 3D floor plan', url: SRC.tcp, note: 'In Spanish. Checked 29 Sep 2026.' },
+          { label: 'studiomkdesign.es: prices', url: SRC.mk, note: 'In Spanish. Checked 29 Sep 2026.' },
+          { label: 'renders.es: prices', url: SRC.rend, note: 'In Spanish; the page describes its prices as estimates. Checked 29 Sep 2026.' },
+          { label: 'pedra.ai: plans and pricing', url: SRC.pedra, note: 'Plan to 3D: 2 credits per render. Checked 29 Sep 2026.' },
+          { label: 'floorplanner.com: plans and pricing', url: SRC.fp, note: 'Free plan exports at 960 × 540 px with a watermark. Checked 29 Sep 2026.' },
+          { label: 'sweethome3d.com', url: SRC.sh3d, note: 'Free software under the GNU GPL. Checked 29 Sep 2026.' },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How much does a 3D floor plan cost per square metre?',
+        a: 'Almost nobody prices a 3D floor plan per square metre: it is priced per floor, with floor area bands. homestagerdesign.com sets its price for floors of about 60 m², and {{brand}} has two bands: {{price:plano3d}} + VAT up to 150 m² and {{price:plano3d:1}} + VAT up to 300 m². If your home is larger than a provider’s band, get the price in writing before you order.',
+      },
+      {
+        q: 'What is the difference between a 3D floor plan and a 3D model?',
+        a: 'A 3D floor plan is an image of the layout, seen from above or at an angle. A 3D model is the complete geometry of the home, and the plan, the renders, a web viewer and augmented reality all come from it. At {{brand}}, a 3D floor plan costs {{price:plano3d}} + VAT per floor and the complete 3D model, with all of the above, starts at {{price:maqueta}} + VAT.',
+      },
+      {
+        q: 'How long does a 3D floor plan take?',
+        a: 'From 48 hours to a few working days. BoxBrownie and CubiCasa each deliver a 3D plan in 48 hours, and homestagerdesign.com from 72 hours. {{brand}} delivers a 3D floor plan in {{delivery:plano3d}} and the complete 3D model in {{delivery:maqueta}}, with a 48-hour rush option for a {{extra:urgente}} surcharge on the total.',
+      },
+      {
+        q: 'What do I need to send to order a 3D floor plan?',
+        a: 'The floor plan as a PDF, JPG or PNG, or a DWG if you have one, plus the approximate floor area or one reference measurement to fix the scale. A furniture style is optional: if you do not give one, the studio proposes it. {{brand}} works from that material alone and delivers the 3D floor plan in {{delivery:plano3d}}, without visiting the property.',
+      },
+      {
+        q: 'Can a 3D floor plan be made from a plan without dimensions?',
+        a: 'Yes. Without dimensions, measurements are estimated from the plan’s scale and any known size, such as the width of a door, so the resulting floor areas are approximate (≈). {{brand}} built its demonstration case that way, a Costa del Sol villa of about {{villa:interiorM2}} m² indoors, and says so on the page. With a dimensioned plan from the client, precision is higher.',
+      },
+      {
+        q: 'Can I use a 3D floor plan on Spanish property portals?',
+        a: 'Yes, as an image: a 3D floor plan is a JPG or PNG file you can add to a listing on idealista or Fotocasa, to your website or to a brochure, just like a photo. What portals restrict is embedded 3D tours: idealista only accepts approved multimedia providers. If you want buyers to spin the home, {{brand}} gives you a viewer on your own link for your website and messages.',
+      },
+      {
+        q: 'Are there AI tools that make 3D floor plans?',
+        a: 'Yes. Some platforms turn the image of a plan into a 3D render for under €1 per image: at pedra.ai it costs 2 credits from a €29 a month plan with 100 credits. It is fast, but the result is a picture, not a measurable model, so check the walls and openings. {{brand}} explains the difference in [Can AI turn a floor plan into 3D?](@guia-ia-vs-3d).',
+      },
+      {
+        q: 'How much does a complete 3D model with renders and a viewer cost?',
+        a: 'At {{brand}}, a complete 3D model of the home, with renders, a web viewer and augmented reality, costs from {{price:maqueta}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m², delivered in {{delivery:maqueta}}. It includes 6 renders in 4K, the colour top-down plan and {{revisions:maqueta}}. Market ranges for renders are in our [3D rendering cost guide for Spain](@guia-precio-render).',
+      },
+    ],
+    related: ['guia-precio-render', 'servicio-plano', 'guia-ia-vs-3d', 'precios', 'caso-villa'],
+    cta: {
+      h2: 'Get a price for your 3D floor plan',
+      body: 'Send us the plan as a PDF or JPG and we reply with a price and turnaround. No site visit and no photos needed.',
       service: 'plano3d',
     },
   },

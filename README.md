@@ -8,8 +8,30 @@ Sitio estático generado con Node (sin frameworks) y publicado en Netlify. Convi
 Especificación: `docs/build/BUILD-SPEC.md` · contrato de contenidos: `docs/build/CONTENT-SCHEMA.md` ·
 diseño: `docs/design/DESIGN-RULEBOOK.md` · estrategia GEO: `docs/research/04-geo-2026.md`.
 
-**Orden del lanzamiento:** §1 datos → §2 comprobación local → §3 Netlify → §4 formularios → §5 a §7
-indexación → §8 y §9 presencia fuera de la web → §10 medición mensual.
+**Orden del lanzamiento:** §0 qué falta → §1 datos → §2 comprobación local → §3 Netlify → §4 formularios →
+§5 a §7 indexación → §8 y §9 presencia fuera de la web → §10 medición mensual.
+
+---
+
+## 0. Qué falta para lanzar
+
+La web está construida; lo que falta para publicarla son sobre todo **decisiones y datos del cliente**. La
+lista completa, para marcar punto por punto, está en
+[`docs/qa/content/CLIENT-CONFIRMATIONS.md`](docs/qa/content/CLIENT-CONFIRMATIONS.md).
+
+1. **Bloquean el lanzamiento:** nombre y logotipo, dominio, email, teléfono y WhatsApp, razón social, NIF,
+   domicilio y datos registrales (CLIENT-CONFIRMATIONS §1). Van a `build/data/site.mjs` (§1.1) y, al terminar,
+   todos los `placeholder` a `false`. Mientras tanto la web sale en `noindex`, sin enlaces de llamada ni de
+   WhatsApp, y el deploy de producción falla a propósito.
+2. **Precios y condiciones:** precios, qué incluye cada pack, plazos y rondas, pago, demo gratis, alojamiento del
+   visor, derechos de uso, atención, cobertura y uso de IA (CLIENT-CONFIRMATIONS §2 a §12). Se aplican en
+   `build/data/pricing.mjs` (y las páginas que indica el documento); después, `confirmed: true` (§1.2).
+3. **Fundador** en `site.founder` (autoría real de guías y caso, §1.1) y los perfiles que ya existan en `sameAs`.
+4. **Antes de publicar:** revisión legal y fechas de los datos de terceros (CLIENT-CONFIRMATIONS §13).
+5. **Día del lanzamiento:** `CONTEXT=production npm run check` con 0 errores (§2), Netlify con dominio y sin
+   `ALLOW_PLACEHOLDERS` (§3), `node scripts/geo-harness.mjs --live <url>` con 0 fallos, formulario probado de
+   punta a punta (§4), realidad aumentada probada en un iPhone y un Android reales, y alta en Search Console,
+   Bing, IndexNow y Brave (§5 a §7).
 
 ---
 
@@ -36,7 +58,7 @@ Mientras quede un dato provisional (`placeholder: true` en `site.mjs`):
 | `legal.razonSocial`, `legal.nif`, `legal.domicilio`, `legal.registro`, `legal.email` | Datos LSSI-CE (aviso legal, privacidad). Si queda un `[NIF]` o similar, el QA de producción falla. | `legal.placeholder: false` |
 | `entity.es`, `entity.en` | La **frase canónica**: idéntica en la web, `llms.txt`, LinkedIn, YouTube, Google Business Profile y directorios. Revísala cuando haya nombre. | — |
 | `sameAs` | URL de cada perfil a medida que exista (LinkedIn, YouTube, Instagram, GBP, Clutch, Sortlist, Houzz, Behance, Sketchfab, GitHub…). Van a `Organization.sameAs`. | Rebuild |
-| `founder` | La persona real detrás del estudio (E-E-A-T, `04-geo-2026.md` §9): `{ name, jobTitle: { es, en }, image: '/assets/img/founder.jpg', sameAs: ['https://www.linkedin.com/in/…'] }`. Con él, el schema publica un `Person` (`/sobre-nosotros/#founder`) como fundador de la organización y autor de las guías y del caso, y los `index.md` lo citan como autor. `null` = «Equipo de …». Falta que la plantilla muestre «Revisado por …» en las guías y una sección en «Sobre nosotros» con foto. | Rebuild |
+| `founder` | La persona real detrás del estudio (E-E-A-T, `04-geo-2026.md` §9): `{ name, jobTitle: { es, en }, image: '/assets/img/founder.jpg', sameAs: ['https://www.linkedin.com/in/…'] }`. Con él, el schema publica un `Person` (`/sobre-nosotros/#founder`) como fundador de la organización y autor de las guías y del caso, y los `index.md` lo citan como autor. `null` = «Equipo de …». Las guías y el caso muestran entonces «Revisado por {nombre}», enlazado a «Sobre nosotros». Falta una sección con foto en «Sobre nosotros» (la plantilla aún no la pinta). | Rebuild |
 | `indexNowKey` | Puede quedarse. Para una nueva: `node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"`. Se publica sola como `/<clave>.txt`. | — |
 | `analytics` | `null` (sin analítica, sin banner) o `{ provider: 'plausible', domain: 'tudominio.com' }` (sin cookies; la CSP se amplía sola). | — |
 | `facts` | Año de fundación, idiomas y herramientas: comprueba que siguen siendo ciertos. | — |
@@ -68,11 +90,14 @@ Requisitos: Node 24 (vale ≥ 20) y `npm install` una vez.
 | Comando | Qué hace |
 |---|---|
 | `npm run build` | Genera `dist/`: páginas, 404 por idioma, `robots.txt`, sitemaps, `llms.txt`, `llms-full.txt` (ES) y `en/llms-full.txt` (EN), un `index.md` por página indexable, feeds RSS, IndexNow, `_headers`, `_redirects`, `site.webmanifest`. |
+| `OUT_DIR=dist-x npm run build` · `OUT_DIR=dist-x npm run check` | Lo mismo en otra carpeta (varias personas o agentes a la vez sin pisarse `dist/`). Las carpetas `dist-*/` no se suben a Git. En PowerShell: `$env:OUT_DIR='dist-x'; npm run build; npm run check; Remove-Item Env:OUT_DIR`. |
+| `SKIP_INVALID=1 npm run build` | Solo mientras se redacta: omite las páginas con errores de contenido en lugar de parar el build (el QA avisa de las rutas sin construir). |
 | `npm run check` | QA sobre `dist/` (ver abajo). Código de salida 1 si hay algún error. |
 | `npm run qa` | `build` + `check`: exactamente lo que ejecuta Netlify. |
 | `npm run preview` | Build y servidor local de `dist/` (barras finales, 404 real, MIME de GLB/USDZ/Markdown). |
+| `node build/serve.mjs <puerto> <carpeta>` | Sirve una carpeta ya construida (por ejemplo `node build/serve.mjs 8831 dist-x`) con `_headers`, `_redirects` y brotli, como Netlify. |
 | `npm run validate` | Valida los ficheros de contenido (`build/content/*.mjs`). |
-| `npm run lint:design` | Solo el *design lint* (`scripts/design-lint.mjs dist`). |
+| `npm run lint:design` | Solo el *design lint* (`scripts/design-lint.mjs dist`; otra carpeta: `node scripts/design-lint.mjs dist-x`). |
 | `npm run indexnow` | Lista las URL pendientes de IndexNow (ver §6). |
 | `npm run images` | Regenera AVIF/WebP/OG desde los renders. |
 | `node scripts/geo-harness.mjs` | Prueba aislada de los módulos GEO (schema, Markdown, ficheros para máquinas) con datos falsos. |
@@ -83,16 +108,35 @@ canonical autorreferente; hreflang recíproco con `x-default`; títulos y descri
 longitud correcta; JSON-LD (se parsea, campos obligatorios por tipo, `@id` resueltos, FAQ del schema =
 FAQ visible, precios del schema visibles en la página, el precio «desde» de la descripción es una `Offer` del
 `Service`, `wordCount` > 0, `speakable` solo con selectores que existen, licencia de imágenes y vídeo que
-resuelven); `.lead` y datos clave; imágenes con `alt`,
+resuelven, `ItemList` coherentes con la página); `.lead` y datos clave; imágenes con `alt`,
 `width`/`height` y una sola `fetchpriority="high"`; páginas huérfanas; sitemaps, `robots.txt`, `llms*.txt`,
 espejos `index.md`, feeds e IndexNow; `_headers` (CSP con los *hash* de los scripts en línea, embed
 enmarcable, MIME y CORS de los modelos); `_redirects` (sin bucles, 404 por idioma); formulario de Netlify;
 modelos 3D (cabeceras GLB, USDZ sin compresión y alineado a 64 bytes, texturas, tamaños); datos
-provisionales; presupuestos de peso (HTML ≤ 60 KB, CSS ≤ 40 KB, JS inicial ≤ 30 KB, fuentes ≤ 110 KB,
-imagen LCP ≤ 120 KB) y el *design lint*.
+provisionales; presupuestos de peso en **cada página** y el *design lint*.
+
+**Presupuestos de peso** (`docs/build/BUILD-SPEC.md` §11; los números están en un solo sitio, `BUDGETS` en
+`build/lib/machine.mjs`, y los usan el QA y el *design lint*):
+
+| Qué | Límite |
+|---|---|
+| HTML de cada página | ≤ 72 KB sin comprimir **y** ≤ 16 KB en brotli |
+| Hoja CSS común (`site.<hash>.css`) | ≤ 25 KB |
+| CSS total de una página | ≤ 45 KB |
+| Hojas CSS que bloquean el primer pintado | ≤ 2 por página (la común + un paquete) |
+| JS inicial · fuentes · imagen LCP · JSON-LD | ≤ 30 KB · ≤ 110 KB · ≤ 150 KB (objetivo 120) · ≤ 8 KB sin las preguntas FAQ (aviso) |
+
+*Por qué 72 KB y 16 KB brotli (antes 60 KB):* con las páginas ya hechas, las más pesadas medían 66-68 KB sin
+comprimir pero solo 14-15 KB en brotli, y Lighthouse móvil daba 98-99. Esos bytes son contenido que buscadores y
+asistentes tienen que leer en el HTML (respuestas completas de la FAQ, estancias del visor, formulario, JSON-LD):
+recortarlo no acelera nada que se note. Lo que descarga el móvil es la página comprimida, así que el límite en
+brotli es el que protege de verdad; el de 72 KB vigila que el HTML no crezca sin control. En CSS pesa más el
+número de hojas que bloquean el render que su tamaño total: por eso cada página enlaza la hoja común y un solo
+paquete.
 
 El informe se agrupa **por responsable** (ENGINE, VIEWER, CONTENT, ASSETS, GEO, LAUNCH), indica el fichero
-de contenido afectado y, en las páginas que superan 60 KB, qué partes pesan más.
+de contenido afectado y, en las páginas que superan el presupuesto de HTML, qué partes pesan más. Al final
+muestra la tabla de presupuestos con la página más pesada de cada uno.
 Opciones: `--verbose` (todo), `--production` (simula producción), `--placeholders-ok`, `--no-lint`,
 `--json informe.json`.
 
@@ -294,7 +338,7 @@ del panel. Con esos datos: una guía o un caso nuevo al mes y revisión trimestr
 |---|---|
 | `/robots.txt` | Todo abierto a buscadores y asistentes de IA con una sola lista de reglas (grupo `*` y grupo explícito idénticos, con el registro `Content-Signal: search=yes, ai-input=yes, ai-train=yes`); cerrado `/models/`; `/embed/` abierto para que Google pinte el visor dentro de las webs que lo incrustan; `Bytespider` bloqueado; `Sitemap:`. |
 | `/sitemap.xml` → `/sitemap-pages.xml`, `/sitemap-images.xml` (+ `/sitemap-video.xml`) | Páginas indexables con `hreflang` y `lastmod` = fecha real del contenido; renders; el vídeo del caso cuando una página tiene un bloque `video`. |
-| `/llms.txt`, `/en/llms.txt` | Índice para agentes por idioma (< 10 KB cada uno): frase canónica (ES y EN en el raíz), datos clave con precios y plazos, **respuestas rápidas** con forma de pregunta, cada página con su nota (en las guías, la respuesta y la cifra con que abre). El raíz enlaza el índice inglés. |
+| `/llms.txt`, `/en/llms.txt` | Índice para agentes por idioma (< 10 KB cada uno): frase canónica (ES y EN en el raíz), datos clave con precios y plazos, **respuestas rápidas** con forma de pregunta (la guía comparativa responde con su propia entradilla), cada página con su nota (en las guías, la respuesta y la cifra con que abre; si ya tiene respuesta rápida, solo el título). Las guías nuevas entran solas por su plantilla. El raíz enlaza el índice inglés. Teléfono y WhatsApp solo cuando `site.contact` tenga datos reales. |
 | `/llms-full.txt`, `/en/llms-full.txt` | Todo el contenido en Markdown, **un fichero por idioma** (≤ 400 KB cada uno, unas 100 000 *tokens*: cabe en una sola lectura de un asistente). Sin índices ni legales (siguen en `llms.txt`); el contenido compartido se cita una vez. |
 | `/<ruta>/index.md` | Versión Markdown de cada página indexable; también se sirve en la URL de la página con `Accept: text/markdown`. |
 | `/feed.xml`, `/en/feed.xml` | RSS de guías y del caso. |

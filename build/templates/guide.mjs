@@ -1,11 +1,12 @@
 /* Guide: article layout (66ch), author line + "Actualizado el", auto table of contents (≥ 4 h2), blocks, FAQ, sources, related, CTA. */
-import { h1, cajetin, faqSection, related, ctaBand, figure, defaultAlt } from '../lib/components.mjs';
+import { h1, cajetin, faqSection, related, ctaBand, figure, defaultAlt, reviewedBy } from '../lib/components.mjs';
 import { renderBlocks, serviceFor } from '../lib/blocks.mjs';
 
 export default function render(ctx) {
   const p = ctx.page;
   const d = ctx.doc.dateModified;
-  const meta = `<p class="byline"><span class="byline__by">${ctx.esc(ctx.t('guide.byline'))}</span><span>${ctx.esc(ctx.t('date.updated'))} <time datetime="${ctx.esc(d)}">${ctx.esc(ctx.fmtDate(d))}</time></span></p>`;
+  // "Revisado por {name}" joins the byline once site.founder is set (reviewedBy is empty until then).
+  const meta = `<p class="byline"><span class="byline__by">${ctx.esc(ctx.t('guide.byline'))}</span>${reviewedBy(ctx).replace('dateline__by', 'byline__by')}<span>${ctx.esc(ctx.t('date.updated'))} <time datetime="${ctx.esc(d)}">${ctx.esc(ctx.fmtDate(d))}</time></span></p>`;
   const heroFig = p.hero && p.hero.image
     ? figure(ctx, { image: p.hero.image, alt: p.hero.alt ? ctx.tok(p.hero.alt) : defaultAlt(ctx, p.hero.image), caption: p.hero.caption, eager: true, sizes: '(min-width: 1024px) 880px, 100vw', className: 'article__figure' })
     : '';

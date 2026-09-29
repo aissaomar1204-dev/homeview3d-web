@@ -28,6 +28,7 @@ const IMAGES = new Set([
   'villa_bano_suite', 'villa_bano_suite_opaco', 'villa_terraza', 'villa_terraza_opaco',
   'villa_muros_completos', 'villa_muros_completos_opaco', 'og_image',
   'villa_despiece_1', 'villa_despiece_2', 'villa_despiece_3', 'villa_viewer_poster',
+  'villa_interior_salon', 'villa_interior_dormitorio', 'villa_interior_bano', 'villa_interior_terraza',
 ]);
 
 const BLOCKS = {

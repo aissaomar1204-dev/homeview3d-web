@@ -63,13 +63,22 @@ const OVERRIDES = [
   // q70/effort 6 (no visible difference on 3× crops, shadow alpha unbanded) and brings 1200w 114 → 100 KB,
   // 1600w 169 → 148 KB (2026-09-28).
   [/^villa_planta_cenital(_opaco)?$/, { avif: { quality: 66, effort: 9, chromaSubsampling: '4:4:4' } }],
+  // Eye-level interiors: long, soft gradients on plaster, ceiling and sky. q68 flattens the plaster grain and
+  // leaves faint blotches in the wall falloff on 2× crops; q76 keeps them for ~45 KB at 1200w (budget 120 KB).
+  [/^villa_interior_/, { avif: { quality: 76 }, webp: { quality: 84 } }],
 ];
 const overridesFor = (name) => OVERRIDES.find(([re]) => re.test(name))?.[1];
 // Byte budgets per variant (BUILD-SPEC §10/§11, rulebook IMG-05/PERF-04).
 const POSTER_BUDGET = { 'avif-1200': 120 * 1024, 'avif-800': 80 * 1024 };
 // LCP plates: the lint measures the AVIF closest to 1200w (phones); 1600w is what DPR-2 desktops pick.
 const PLAN_BUDGET = { 'avif-1200': 110 * 1024, 'avif-1600': 150 * 1024 };
+// Eye-level interiors (villa_interiores.py): full-bleed stage bands and gallery openers, 1200w AVIF ≤ 120 KB.
+const INTERIOR_BUDGET = { 'avif-1200': 120 * 1024 };
 const BUDGETS = {
+  villa_interior_salon: INTERIOR_BUDGET,
+  villa_interior_dormitorio: INTERIOR_BUDGET,
+  villa_interior_bano: INTERIOR_BUDGET,
+  villa_interior_terraza: INTERIOR_BUDGET,
   villa_maqueta_iso: POSTER_BUDGET,
   villa_viewer_poster: POSTER_BUDGET,
   villa_viewer_poster_mobile: POSTER_BUDGET,

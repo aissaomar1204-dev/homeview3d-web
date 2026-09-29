@@ -27,7 +27,7 @@ import { site, hasPlaceholders } from '../data/site.mjs';
 import { routes, routeById, redirects } from '../data/routes.mjs';
 import { pricing, packById } from '../data/pricing.mjs';
 import { villa } from '../data/villa.mjs';
-import { blocksToMarkdown, setRegistry, helpers, markdownPath, fmtMB, fmtNumber, ROOT, LOCALE, videoManifest } from './markdown.mjs';
+import { blocksToMarkdown, setRegistry, helpers, markdownPath, fmtMB, fmtNumber, ROOT, LOCALE, videoManifest, directContact } from './markdown.mjs';
 
 /* ── Shared definitions (also used by build/check.mjs) ────────── */
 const UTILITY_TEMPLATES = new Set(['thanks', 'ar', 'embed', 'notfound']);
@@ -98,6 +98,30 @@ export const LLMS_FULL = {
 export const LLMS_INDEX = {
   targetBytes: 10 * 1024,
   path: (lang) => (lang === site.defaultLang ? '/llms.txt' : `/${lang}/llms.txt`),
+};
+
+/**
+ * Performance budgets (BUILD-SPEC §11): the ONE place the numbers live. build/check.mjs and
+ * scripts/design-lint.mjs read them (the engine's build report can import them too).
+ * Re-baselined on 2026-09-29 after measuring the built pages: 66-68 KB raw but 14-15 KB brotli, Lighthouse
+ * mobile 98-99. What reaches the phone is the compressed HTML, so a page must fit BOTH the raw and the brotli
+ * limit (brotli at quality 11, what a static host serves; a CDN compressing on the fly at a lower quality adds
+ * about 10 %). CSS: the shared sheet stays small because every page downloads it before first paint, a page's
+ * total CSS has a ceiling, and at most 2 render-blocking stylesheet requests per page (shared + one bundle).
+ */
+export const BUDGETS = {
+  htmlRawKB: 72,          // per HTML page, uncompressed
+  htmlBrotliKB: 16,       // per HTML page, brotli quality 11
+  brotliQuality: 11,
+  cssSharedKB: 25,        // the stylesheet every page links (site.<hash>.css)
+  cssPageKB: 45,          // all the stylesheets one page links
+  cssBlockingMax: 2,      // render-blocking stylesheet requests per page (<link rel=stylesheet> without a non-matching media, + @import)
+  initialJsKB: 30,        // scripts referenced by the initial HTML
+  fontsKB: 110,           // all woff2 files
+  lcpImageKB: 150,        // LCP image, AVIF candidate closest to 1200 w (error)
+  lcpImageTargetKB: 120,  // LCP image target (warning in check.mjs, error in the design lint)
+  jsonLdKB: 8,            // JSON-LD per page without the FAQ Questions (they mirror visible text)
+  jsonLdGlossaryKB: 24,   // the glossary IS its DefinedTermSet
 };
 
 /* ── Small utilities ──────────────────────────────────────────── */
@@ -270,6 +294,8 @@ function keyFacts(lang, h, fullLangs = site.langs, only = null) {
   const sp = villa.specs;
   const tiers = (id) => (pk(id).tiers?.[0]?.maxM2 ? (lang === 'es' ? ` (hasta ${pk(id).tiers[0].maxM2} m²)` : ` (up to ${pk(id).tiers[0].maxM2} m²)`) : '');
   const contact = h.absHref('contacto');
+  // Phone and WhatsApp only with real contact data (V-02), like the pages.
+  const phoneBits = directContact() ? [site.contact.phoneDisplay, site.contact.whatsapp ? `WhatsApp https://wa.me/${site.contact.whatsapp}` : null] : [];
   const es = lang === 'es';
   const facts = es ? [
     ['input', `- Entrada mínima: un plano 2D (PDF, JPG o PNG). Las fotos y las cotas son opcionales: las medidas se estiman con la escala del plano (≈).`],
@@ -281,7 +307,7 @@ function keyFacts(lang, h, fullLangs = site.langs, only = null) {
     ['demo', `- Caso demostrativo: villa anonimizada en la Costa del Sol (${villa.scope.es}), ≈ ${fmtNumber(sp.interiorM2, 'es')} m² interiores y ≈ ${fmtNumber(sp.terracesM2, 'es')} m² de terrazas, ${sp.rooms} estancias, ${sp.textures} texturas procedurales, modelo web GLB de ${fmtMB(villa.files.glb.bytes, 'es')}. Partió de ${sp.input.es}.`],
     ['soon', `- Próximamente: vídeos cinematográficos con IA a partir de los renders y tours de realidad virtual 360°.`],
     ['area', `- Zona: ${site.areaServed.es.slice(0, -1).join(', ')} y el resto de España en remoto. Idiomas: español e inglés.`],
-    ['contact', `- Contacto: ${site.contact.email} · ${site.contact.phoneDisplay} · WhatsApp https://wa.me/${site.contact.whatsapp}${contact ? ` · ${contact}` : ''}`],
+    ['contact', `- Contacto: ${[site.contact.email, ...phoneBits, contact].filter(Boolean).join(' · ')}`],
     ['files', fullLine('es', fullLangs)],
   ] : [
     ['input', `- Minimum input: a 2D floor plan (PDF, JPG or PNG). Photos and dimensions are optional: measurements are estimated from the plan's scale (≈).`],
@@ -293,7 +319,7 @@ function keyFacts(lang, h, fullLangs = site.langs, only = null) {
     ['demo', `- Demo case: anonymised Costa del Sol villa (${villa.scope.en}), ≈ ${fmtNumber(sp.interiorM2, 'en')} m² indoors and ≈ ${fmtNumber(sp.terracesM2, 'en')} m² of terraces, ${sp.rooms} rooms, ${sp.textures} procedural textures, ${fmtMB(villa.files.glb.bytes, 'en')} GLB web model. Built from ${sp.input.en}.`],
     ['soon', `- Coming soon: AI cinematic videos generated from the renders and 360° virtual reality tours.`],
     ['area', `- Area: ${site.areaServed.en.slice(0, -1).join(', ')} and the rest of Spain remotely. Languages: Spanish and English.`],
-    ['contact', `- Contact: ${site.contact.email} · ${site.contact.phoneDisplay} · WhatsApp https://wa.me/${site.contact.whatsapp}${contact ? ` · ${contact}` : ''}`],
+    ['contact', `- Contact: ${[site.contact.email, ...phoneBits, contact].filter(Boolean).join(' · ')}`],
     ['files', fullLine('en', fullLangs)],
   ];
   return facts.filter(([k, line]) => line && (!only || only.includes(k))).map(([, line]) => line);
@@ -303,8 +329,11 @@ function keyFacts(lang, h, fullLangs = site.langs, only = null) {
  * «Respuestas rápidas» / "Quick answers" (G-08): the prospect prompts of README §10 as `- [question](page): answer`
  * lines, each linking the page that should be cited. Prices, turnarounds and case figures come from the
  * data (tokens), so they never drift from the pages. Market figures live in the guides' notes instead.
+ * An answer of `null` is the page's own answer (the opening of its lead, answerNote): used for comparison
+ * guides, whose answer is editorial; such a line is only written when the page exists.
+ * @param {(id: string) => object|undefined} get indexable entry of this language by page id
  */
-function quickAnswers(lang, h, urlOf) {
+function quickAnswers(lang, h, get) {
   const base = site.base.locality;
   const zone = { Marbella: 'zona-marbella', 'Málaga': 'zona-malaga' }[base] || 'zona-costa-del-sol';
   const sp = villa.specs;
@@ -318,6 +347,7 @@ function quickAnswers(lang, h, urlOf) {
     ['servicio-tour', '¿Se puede poner el modelo 3D en mi web o en el anuncio del portal?', 'En tu web, con un iframe; en los portales, como enlace en el campo de tour virtual cuando el portal lo admite.'],
     ['servicio-staging', '¿Cuánto cuesta el home staging virtual?', '{{extra:staging}} + IVA por estancia, sobre el modelo 3D: el mismo estilo en renders, visor y realidad aumentada. En el anuncio se indica que es una recreación virtual.'],
     ['caso-villa', '¿Hay un ejemplo real?', `Una villa anonimizada de la Costa del Sol (${villa.scope.es}, ≈ ${n(sp.interiorM2)} m², ${sp.rooms} estancias) modelada desde un único plano, sin fotos, con visor 3D y realidad aumentada en vivo.`],
+    ['guia-mejores', '¿Cuáles son los mejores estudios de visualización 3D inmobiliaria en España?', null],
   ] : [
     [zone, `Which studio turns floor plans into 3D for estate agents in ${base}?`, `{{brand}}, a 3D visualisation studio based in ${base} (Costa del Sol): 3D models, renders, a web viewer and app-free AR from the floor plan, from {{price:plano3d}} + VAT, in English and Spanish, remotely across Spain.`],
     ['precios', 'How much does it cost to turn a floor plan into 3D?', '3D floor plan, {{price:plano3d}} per floor in {{delivery:plano3d}}; complete 3D model with 6 renders, viewer and AR, {{price:maqueta}} per home in {{delivery:maqueta}}. Excluding VAT.'],
@@ -327,12 +357,15 @@ function quickAnswers(lang, h, urlOf) {
     ['servicio-tour', 'Can I put the 3D model on my website or property listing?', 'On your website, with an iframe; on portals, as a link in the virtual tour field where the portal accepts one.'],
     ['servicio-staging', 'How much does virtual staging cost?', '{{extra:staging}} + VAT per room, on the 3D model: the same style in every render, the viewer and AR. Listings must state it is a virtual recreation.'],
     ['caso-villa', 'Is there a real example?', `An anonymised Costa del Sol villa (${villa.scope.en}, ≈ ${n(sp.interiorM2)} m², ${sp.rooms} rooms) modelled from a single floor plan with no photos, with a live 3D viewer and AR.`],
+    ['guia-mejores', 'Which are the best real estate 3D visualisation studios in Spain?', null],
   ];
   return QA.map(([id, q, a]) => {
-    const u = urlOf(id);
+    const e = get(id);
+    if (a === null) { const note = e ? answerNote(e, h) : ''; return note ? `- [${q}](${e.url}): ${note}` : null; }
+    const u = e?.url;
     const ans = h.tokens(a).replace(/[  ]/g, ' ');
     return u ? `- [${q}](${u}): ${ans}` : `- ${q} ${ans}`;
-  });
+  }).filter(Boolean);
 }
 
 /**
@@ -363,12 +396,16 @@ export function llmsTxt(indexable, placeholders, fullLangs = site.langs, lang = 
   lines.push(`> ${summary(lang)}`);
   if (root) for (const l of site.langs.filter((x) => x !== lang && indexable.some((e) => e.lang === x))) lines.push(`> ${l.toUpperCase()}: ${summary(l)}`);
   lines.push('', es ? 'Datos clave:' : 'Key facts:', ...keyFacts(lang, h, fullLangs, INDEX_FACTS), '');
-  lines.push(`## ${es ? 'Respuestas rápidas' : 'Quick answers'}`, ...quickAnswers(lang, h, (id) => get(id)?.url), '');
+  const answers = quickAnswers(lang, h, (id) => get(id));
+  lines.push(`## ${es ? 'Respuestas rápidas' : 'Quick answers'}`, ...answers, '');
 
   // Every page with its note (card summary; guides: the answer and figure their lead opens with). The
   // glossary and the FAQ hub are listed by title only; hubs (lists of the pages below) are left out.
+  // A page that a quick answer already links and answers is listed by title only (its answer is right
+  // above): each index stays under LLMS_INDEX.targetBytes as guides are added.
+  const answered = new Set(answers.map((l) => (l.match(/^- \[[^\]]*\]\(([^)\s]+)\)/) || [])[1]).filter(Boolean));
   const section = (title, items) => {
-    const ls = items.filter(Boolean).map((e) => linkLine(e, h, !['hub', 'glossary', 'faq', 'contact'].includes(e.template)));
+    const ls = items.filter(Boolean).map((e) => linkLine(e, h, !['hub', 'glossary', 'faq', 'contact'].includes(e.template) && !answered.has(e.url)));
     if (ls.length) lines.push(`## ${title}`, ...ls, '');
   };
   const byTemplate = (t) => routes.filter((r) => r.template === t).map((r) => get(r.id));

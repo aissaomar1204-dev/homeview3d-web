@@ -12,8 +12,9 @@
    - On load: cut at 1.15 m (materials ending in _Alto → alpha MASK,
      base colour alpha 0), hotspots, controls. Fallback GLB on loadfailure.
    - Reduced motion: camera jumps, tour steps every 6 s, nothing autoplays.
-   - "Medidas" (S3): real dimension lines on the model (footprint, wall or
-     cut height), hotspots + one SVG updated on camera-change.
+   - "Medidas" (S3, V-03): real dimension lines on the model (footprint, wall
+     or cut height) in src/js/viewer-dims.js, imported on the first press
+     (data-dims-js), so the initial JS stays within budget.
    ═══════════════════════════════════════════════════════════════ */
 const doc = document;
 const motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -53,9 +54,10 @@ function arChoices(url) {
         const page = new DOMParser().parseFromString(html, 'text/html');
         const el = page.querySelector('[data-vw-arblock]');
         if (!el) throw new Error('no AR block');
-        // The choices are styled by the AR module stylesheet of that page (51-ar.css): add it once, wait for it.
-        const css = [...page.querySelectorAll('link[rel="stylesheet"]')].map((l) => l.getAttribute('href')).find((h) => /\/ar\.[\w]+\.css$/.test(h));
-        if (!css || doc.querySelector(`link[href="${css}"]`)) return el;
+        // The choices are styled by the AR module stylesheet (51-ar.css, data-css on the block): add it once, wait for it.
+        // Pages whose CSS bundle already holds it (a .vw-ar on the page) skip the request.
+        const css = el.dataset.css;
+        if (!css || doc.querySelector(`link[href="${css}"]`) || doc.querySelector('.vw-ar, .vw-embedcode, .vw-arpage')) return el;
         const link = Object.assign(doc.createElement('link'), { rel: 'stylesheet', href: css });
         return new Promise((ok) => { link.onload = link.onerror = () => ok(el); doc.head.append(link); });
       })
@@ -128,6 +130,7 @@ function initViewer(root) {
   let hotspots = false;
   let tourTimer = 0;
   let tourIdx = 0;
+  let homeR = 0;
 
   const setState = (s) => { state = s; root.dataset.state = s; };
   const say = (msg) => { if (live) live.textContent = msg || ''; };
@@ -182,7 +185,7 @@ function initViewer(root) {
     mv.addEventListener('load', onLoad);
     mv.addEventListener('error', onError);
     mv.addEventListener('camera-change', (e) => {
-      if (e.detail && e.detail.source === 'user-interaction') { pauseTour(); pressView(null); }
+      if (e.detail && e.detail.source === 'user-interaction') { pauseTour(); pressView(null); if (dims) dims.moved(); }
     });
     mv.addEventListener('pointerdown', pauseTour, { passive: true });
     mv.addEventListener('wheel', pauseTour, { passive: true });
@@ -198,6 +201,7 @@ function initViewer(root) {
     }]));
     setCut(cutOn); // same state as the poster, applied before the first visible frame
     addHotspots();
+    homeR = mv.getCameraOrbit().radius; // the overview's % radius in metres (Medidas framing)
     const refocus = doc.activeElement === startBtn;
     setState('ready');
     startBtn.removeAttribute('aria-busy');
@@ -257,56 +261,19 @@ function initViewer(root) {
     }
     for (const b of qa('[data-vw-cut]')) b.setAttribute('aria-pressed', String((b.dataset.vwCut === '1') === on));
     if (hotspots) for (const b of rooms) mv.updateHotspot({ name: `hotspot-${b.dataset.room}`, position: labelPos(b) });
-    if (dimsOn) placeDims();
+    if (dims) dims.cut();
   }
 
-  /* ── Medidas: footprint and height as measured lines (data, not decoration) ── */
-  const [dw, dd, wallH, cutH, lw, ld, lWall, lCut] = JSON.parse(ds.dims || '[9.1,14.1,2.6,1.15,"","","",""]');
-  const NS = 'http://www.w3.org/2000/svg';
-  let dimsOn = false;
-  let svg = null;
-  const dimH = () => (cutOn ? cutH : wallH);
-  // [name, position] (glTF: x east, y up, z = -north): cotas on the ground 0.8 m outside the base, like a drawing,
-  // the height beside the south-east corner, and a label at each midpoint.
-  const G = -0.6; const O = 0.8;
-  const dimSpots = () => [['w1', `0m ${G}m ${O}m`], ['w2', `${dw}m ${G}m ${O}m`], ['d1', `${-O}m ${G}m 0m`], ['d2', `${-O}m ${G}m ${-dd}m`],
-    ['h1', `${dw + O / 2}m 0m 0m`], ['h2', `${dw + O / 2}m ${dimH()}m 0m`],
-    ['lw', `${dw / 2}m ${G}m ${O}m`], ['ld', `${-O}m ${G}m ${-dd / 2}m`], ['lh', `${dw + O / 2}m ${dimH() / 2}m 0m`]];
-  function placeDims() {
-    for (const [n, pos] of dimSpots()) mv.updateHotspot({ name: `hotspot-dim-${n}`, position: pos });
-    const lh = mv.querySelector('[slot="hotspot-dim-lh"]');
-    if (lh) lh.textContent = cutOn ? lCut : lWall;
-    drawDims();
-  }
-  function drawDims() {
-    if (!svg) return;
-    const pt = (n) => { const h = mv.queryHotspot(`hotspot-dim-${n}`); return h ? h.canvasPosition : { x: 0, y: 0 }; };
-    [['w1', 'w2'], ['d1', 'd2'], ['h1', 'h2']].forEach(([f, t], i) => {
-      const l = svg.children[i]; const p = pt(f); const q = pt(t);
-      l.setAttribute('x1', p.x); l.setAttribute('y1', p.y); l.setAttribute('x2', q.x); l.setAttribute('y2', q.y);
+  /* ── Medidas (S3, V-03): dimension lines on the live model, in src/js/viewer-dims.js (imported on first use) ── */
+  let dims = null;
+  let dimsLoading = null;
+  function toggleDims() {
+    if (dims) { dims.toggle(); return; }
+    if (!ds.dimsJs) return;
+    dimsLoading ||= import(ds.dimsJs).then((m) => {
+      dims = m.createDims({ mv, root, stage, ds, buttons: qa('[data-vw-dims]'), jump, cutOn: () => cutOn, homeR: () => homeR });
     });
-  }
-  function setDims(on) {
-    dimsOn = on;
-    root.toggleAttribute('data-dims-on', on);
-    for (const b of qa('[data-vw-dims]')) b.setAttribute('aria-pressed', String(on));
-    if (on && !svg) {
-      svg = doc.createElementNS(NS, 'svg');
-      svg.setAttribute('class', 'vw-dims');
-      svg.setAttribute('aria-hidden', 'true');
-      for (let i = 0; i < 3; i++) svg.append(doc.createElementNS(NS, 'line'));
-      stage.append(svg);
-      for (const [n, pos] of dimSpots()) {
-        const h = doc.createElement('span');
-        h.slot = `hotspot-dim-${n}`;
-        h.className = n[0] === 'l' ? 'vw-dim' : 'vw-dim-pt';
-        h.dataset.position = pos;
-        h.textContent = { lw, ld, lh: cutOn ? lCut : lWall }[n] || '';
-        mv.append(h);
-      }
-      mv.addEventListener('camera-change', () => { if (dimsOn) drawDims(); });
-    }
-    if (on) requestAnimationFrame(placeDims);
+    dimsLoading.then(() => dims.toggle(), () => { dimsLoading = null; });
   }
 
   /* ── Hotspots: created only after load (labels are data, not decoration) ── */
@@ -359,13 +326,18 @@ function initViewer(root) {
 
   function view(v) {
     clearRoom();
-    mv.cameraTarget = v === 'top' ? ds.topTarget : ds.target;
-    mv.cameraOrbit = v === 'top' ? topOrbit() : ds.orbit;
+    const target = v === 'top' ? ds.topTarget : ds.target;
+    const orbit = v === 'top' ? topOrbit() : ds.orbit;
+    // With Medidas on, the view is framed for the drawing; turning it off returns to the plain view.
+    mv.cameraTarget = target;
+    mv.cameraOrbit = dims ? dims.viewOrbit(orbit, target) : orbit;
     jump();
     pressView(v);
   }
 
   function focusRoom(b) {
+    // A room close-up cannot hold the whole footprint drawing: Medidas turns off (and keeps the new camera).
+    if (dims) dims.off(false);
     const [x, y, span, text] = rd(b);
     mv.cameraTarget = `${x}m 0.4m ${-y}m`;
     mv.cameraOrbit = `-28deg 46deg ${Math.max(4.5, span * 1.35 + 3)}m`;
@@ -430,7 +402,7 @@ function initViewer(root) {
   for (const b of qa('[data-vw-cut]')) b.addEventListener('click', () => { pauseTour(); setCut(b.dataset.vwCut === '1'); });
   for (const b of qa('[data-vw-zoom]')) b.addEventListener('click', () => { pauseTour(); zoom(Number(b.dataset.vwZoom)); });
   if (tourBtn) tourBtn.addEventListener('click', playTour);
-  for (const b of qa('[data-vw-dims]')) b.addEventListener('click', () => { pauseTour(); run(() => setDims(!dimsOn)); });
+  for (const b of qa('[data-vw-dims]')) b.addEventListener('click', () => { pauseTour(); run(toggleDims); });
   const retryBtn = q('[data-vw-retry]');
   if (retryBtn) retryBtn.addEventListener('click', retry);
   if (light) {

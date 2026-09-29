@@ -22,8 +22,8 @@ export const villa = {
     textures: 39,                     // procedural PBR textures created for this model
     triangles: 178704,
     materials: 82,                    // unique material names in the web model
-    renders: 9,                       // Cycles stills produced for the site
-    renderMinutes: 7,                 // total Cycles time for the 9 stills on an RTX 4060
+    renders: 13,                      // Cycles stills for the site: 6 aerial views, 4 eye-level, 2 plans, og_image
+    renderMinutes: 21,                // total Cycles time for the 13 stills on an RTX 4060 (6.9 + 14.4 min, _timings.json)
     workSessions: 1,                  // modelled, textured and exported in a single work session
     input: { es: 'un único plano 2D, sin fotos del interior ni cotas', en: 'a single 2D floor plan, with no interior photos and no dimensions' },
     cutHeight: 1.15,                  // metres, "maqueta" cut
@@ -41,8 +41,13 @@ export const villa = {
 
   // <model-viewer> defaults (tuned in the original viewer).
   viewer: {
-    cameraOrbit: '-32deg 50deg 108%',
-    cameraTarget: '4.55m 0.3m -7.02m',     // footprint centre (x = w/2, z = -d/2): the villa sits centred, shadow included (V-01)
+    // V-01: model + contact shadow centred on every stage, measured on model-viewer frames (alpha bbox):
+    // margins ≥ 13 % top/bottom at 16:9 and 16:11, ≥ 21 % left/right at 16:11, 8 % left/right at 4:5 (the tightest).
+    // The target sits 0.4 m east, 0.9 m south and 0.66 m below the footprint centre (4.55m 0.3m -7.02m), because the
+    // near (south-west) corner projects larger; the % radius is relative to model-viewer's ideal distance for this
+    // target (96 % = 33.7 m). Posters (villa_viewer_poster*, source/villa3d/blender/capture/) are taken at exactly this camera.
+    cameraOrbit: '-32deg 50deg 96%',
+    cameraTarget: '4.99m -0.36m -6.09m',
     topOrbit: '0deg 0deg 26m',
     topTarget: '4.55m 0m -7.02m',
     minCameraOrbit: 'auto 0deg 2m',
@@ -99,6 +104,12 @@ export const villa = {
 
   // Rendered stills (keys = image manifest names, see build/generated/images.json).
   renders: [
+    // Eye-level stills (source/villa3d/blender/villa_interiores.py): camera at 1.60 m, level, full-height walls
+    // and a ceiling at 2.60 m. The sky and sea seen through the openings are an illustrative backdrop.
+    { image: 'villa_interior_salon',      es: 'Salón de la villa anonimizada hacia la terraza, a la altura de los ojos', en: 'Living room of the anonymised villa towards the terrace, at eye level' },
+    { image: 'villa_interior_dormitorio', es: 'Dormitorio principal de la villa anonimizada con luz de media tarde, a la altura de los ojos', en: 'Main bedroom of the anonymised villa in late-afternoon light, at eye level' },
+    { image: 'villa_interior_bano',       es: 'Baño en suite de la villa anonimizada con bañera exenta, a la altura de los ojos', en: 'En-suite bathroom of the anonymised villa with a freestanding tub, at eye level' },
+    { image: 'villa_interior_terraza',    es: 'Terraza principal de la villa anonimizada con sofá exterior y olivo, a la altura de los ojos', en: 'Main terrace of the anonymised villa with an outdoor sofa and an olive tree, at eye level' },
     { image: 'villa_maqueta_iso',       es: 'Maqueta seccionada a 1,15 m, vista aérea en tres cuartos', en: 'Cut-away model at 1.15 m, three-quarter aerial view' },
     { image: 'villa_planta_cenital',    es: 'Planta cenital a color, cámara ortográfica', en: 'Colour top-down plan, orthographic camera' },
     { image: 'villa_plano_lineas',      es: 'Planta 2D redibujada desde el modelo 3D', en: '2D plan redrawn from the 3D model' },

@@ -38,7 +38,7 @@ export default {
   id: 'sol-arquitectos',
   image: 'villa_muros_completos_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: 'Visualización 3D para arquitectos e interioristas',
@@ -88,9 +88,9 @@ export default {
       },
       {
         type: 'figure',
-        image: 'villa_muros_completos',
-        alt: 'Planta alta de una villa en la Costa del Sol con todos los muros a altura completa, dormitorios, baños y terrazas amueblados. Render 3D generado a partir del plano 2D.',
-        caption: 'Muros completos a {{villa:wallHeight}} m, la misma geometría que en el modo maqueta. Render generado a partir del plano 2D.',
+        image: 'villa_interior_dormitorio',
+        alt: 'Dormitorio principal a la altura de los ojos, con cabecero de obra rematado en madera, ropa de cama en lino, lámparas de mesilla encendidas y puerta corredera a la terraza. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+        caption: 'Madera, textiles y luz de media tarde sobre el mismo modelo, a la altura de los ojos. Render 3D de la villa anonimizada.',
         layout: 'wide',
       },
       {

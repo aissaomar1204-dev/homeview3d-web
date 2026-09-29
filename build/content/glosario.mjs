@@ -6,7 +6,7 @@ export default {
   id: 'glosario',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
@@ -33,6 +33,12 @@ export default {
         h2: '¿Por qué una vivienda en 3D necesita varios formatos?',
         answer: 'Porque cada dispositivo abre un formato distinto. El visor web y los móviles Android leen [GLB](@glosario#glb), la versión compacta de [glTF](@glosario#gltf); el iPhone y el iPad necesitan [USDZ](@glosario#usdz) para abrir la realidad aumentada con [AR Quick Look](@glosario#ar-quick-look). Los [renders](@glosario#render) son imágenes en 4K. Todo sale del mismo modelo 3D.',
         body: 'Por eso {{brand}} entrega un solo modelo con varias salidas. En nuestra [villa de demostración](@caso-villa), el modelo web pesa {{file:glb}}, la maqueta 1:20 para iPhone {{file:usdzMesa}} y la de Android {{file:glbArMesa}}. Quien abre el enlace no tiene que saber nada de esto: el botón «Ver en tu salón» abre el archivo que corresponde a su móvil, y en un ordenador aparece un código QR.',
+      },
+      {
+        type: 'cta',
+        h2: '¿Quieres tu precio cerrado?',
+        body: 'Envíanos el plano de la vivienda y te decimos precio y plazo de su maqueta 3D: modelo, 6 renders, visor web y realidad aumentada, desde {{price:maqueta}} + IVA.',
+        service: 'maqueta',
       },
       { type: 'glossary' },
     ],
@@ -69,6 +75,12 @@ export default {
         h2: 'Why does one 3D home need several file formats?',
         answer: 'Because each device opens a different format. The web viewer and Android phones read [GLB](@glosario#glb), the compact form of [glTF](@glosario#gltf); iPhones and iPads need [USDZ](@glosario#usdz) to open augmented reality in [AR Quick Look](@glosario#ar-quick-look). [Renders](@glosario#render) are 4K images. All of them come from the same 3D model.',
         body: 'That is why {{brand}} delivers one model with several outputs. For our [demo villa](@caso-villa), the web model weighs {{file:glb}}, the 1:20 tabletop model for iPhone {{file:usdzMesa}} and the Android one {{file:glbArMesa}}. Buyers opening the link never need to know any of this: the “View in your room” button opens the right file for their phone, and a computer shows a QR code instead.\n\nIf you work with Spanish developers, you will also meet local terms such as *venta sobre plano* (off-plan sale), *infografía 3D* (CGI) and *cota* (a dimension on a plan). They are listed here under their English names, with the Spanish in brackets.',
+      },
+      {
+        type: 'cta',
+        h2: 'Want a fixed price for your property?',
+        body: 'Send us the floor plan and we reply with the price and turnaround of its complete 3D model: the model, 6 renders, a web viewer and augmented reality, from {{price:maqueta}} + VAT.',
+        service: 'maqueta',
       },
       { type: 'glossary' },
     ],

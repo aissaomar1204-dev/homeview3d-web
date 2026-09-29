@@ -45,9 +45,9 @@ const faq = [
 
 export default {
   id: 'zona-malaga',
-  image: 'villa_planta_cenital_opaco',
+  image: 'villa_interior_terraza',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: 'Render 3D e infografías 3D en Málaga',
@@ -60,9 +60,9 @@ export default {
       summary: 'Pisos, obra nueva y reformas en Málaga capital: infografías y modelos 3D desde el plano, con realidad aumentada.',
     },
     hero: {
-      image: 'villa_planta_cenital',
-      alt: 'Planta cenital a color de la planta alta de una villa en la Costa del Sol, con salón, dormitorios, baños y terrazas amueblados. Render 3D generado a partir del plano 2D de un caso anonimizado.',
-      caption: 'Planta cenital a color del caso demostrativo. Render generado a partir del plano 2D.',
+      image: 'villa_interior_terraza',
+      alt: 'Terraza de la villa del caso demostrativo a la altura de los ojos, con suelo de barro cocido, sofá exterior, mesa baja y un olivo en maceta. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+      caption: 'Terraza del caso demostrativo, a la altura de los ojos. Render 3D de la villa anonimizada; el mar del fondo es ilustrativo.',
     },
     facts: [
       ['Zona', 'Málaga capital y área metropolitana'],

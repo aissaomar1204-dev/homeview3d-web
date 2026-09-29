@@ -29,7 +29,7 @@ import { villa } from '../data/villa.mjs';
 import { process as proc } from '../data/process.mjs';
 import { deliverables } from '../data/deliverables.mjs';
 import { slugify } from './md.mjs';
-import { helpers, LOCALE, fmtMB, glossaryTerms, imageManifest, videoManifest, blocksToMarkdown, stripMd, countWords } from './markdown.mjs';
+import { helpers, LOCALE, fmtMB, glossaryTerms, imageManifest, videoManifest, blocksToMarkdown, stripMd, countWords, directContact } from './markdown.mjs';
 
 const WD = (q) => `https://www.wikidata.org/wiki/${q}`;
 export const ORG_ID = `${site.domain}/#organization`;
@@ -141,8 +141,8 @@ function offerFor(id, lang, h, { atId, tiers = false } = {}) {
     if (tiers && pack.tiers?.length > 1) {
       pack.tiers.slice(1).forEach((t, i) => {
         const prev = pack.tiers[i].maxM2;
-        // "over 150 and up to 300 m²": a 150 m² home belongs to the first band only (content audit F-38).
-        specs.push(unitSpec(t.price, `${pack.unit[lang]}, ${lang === 'es' ? `más de ${prev} y hasta ${t.maxM2} m²` : `over ${prev} and up to ${t.maxM2} m²`}`));
+        // «de 151 a 300 m²» / "151 to 300 m²": a 150 m² home belongs to the first band only (content audit F-33/F-38).
+        specs.push(unitSpec(t.price, `${pack.unit[lang]}, ${lang === 'es' ? `de ${prev + 1} a ${t.maxM2} m²` : `${prev + 1} to ${t.maxM2} m²`}`));
       });
     }
     return { ...common, name: pack.name[lang], description: pack.summary[lang], price: pack.price, priceSpecification: specs.length === 1 ? specs[0] : specs };
@@ -210,7 +210,7 @@ function orgNode(entry, lang, h, full) {
     // One fixed image for the global entity on every page (the logo once it exists, the OG render until then).
     image: logo || entityImage(h),
     email: site.contact.email,
-    telephone: site.contact.phoneE164,
+    telephone: directContact() ? site.contact.phoneE164 : undefined, // no placeholder number (V-02)
     address: { '@type': 'PostalAddress', addressLocality: site.base.locality, addressRegion: site.base.region, addressCountry: site.base.country },
     areaServed: (site.areaServed[lang] || site.areaServed.es).map(place),
     knowsAbout: KNOWS_ABOUT.map((k) => ({ '@type': 'Thing', name: k[lang], sameAs: WD(k.q) })),
@@ -219,7 +219,7 @@ function orgNode(entry, lang, h, full) {
       '@type': 'ContactPoint',
       contactType: 'sales', // schema.org examples and Google use English values in every language
       email: site.contact.email,
-      telephone: site.contact.phoneE164,
+      telephone: directContact() ? site.contact.phoneE164 : undefined,
       availableLanguage: site.langs.map((l) => LOCALE[l]),
       areaServed: 'ES',
       url: h.absHref('contacto'),
@@ -229,15 +229,11 @@ function orgNode(entry, lang, h, full) {
     priceRange: '€€',
   };
 }
-function websiteNode(lang, h, entry) {
-  return {
-    '@type': 'WebSite',
-    '@id': WEBSITE_ID,
-    url: `${site.domain}/`,
-    name: site.brand.name,
-    inLanguage: site.langs.map((l) => LOCALE[l]),
-    publisher: ref(ORG_ID),
-  };
+/** Full WebSite where the full Organization is (home, about, contact); elsewhere a stub that pages reference. */
+function websiteNode(lang, h, full) {
+  const stub = { '@type': 'WebSite', '@id': WEBSITE_ID, url: `${site.domain}/`, name: site.brand.name };
+  if (!full) return stub;
+  return { ...stub, inLanguage: site.langs.map((l) => LOCALE[l]), publisher: ref(ORG_ID) };
 }
 /** Absolute URL of the site-wide OG render (build/generated/images.json og_image.og), or undefined. */
 function entityImage(h) {
@@ -283,6 +279,11 @@ function imageRights(lang, h) {
 }
 
 /* ── Video (build/generated/videos.json, `video` block) ───────── */
+/**
+ * Lean VideoObject (8 KB JSON-LD budget): name (the block heading), description (the caption, or the intro
+ * when there is no caption), thumbnailUrl, contentUrl (MP4), uploadDate, duration. The video sitemap
+ * (machine.mjs pageVideos) carries the longer description.
+ */
 function videoNodes(page, lang, h, url, datePublished) {
   const blocks = (page.blocks || []).filter((b) => b.type === 'video' && b.video);
   const man = videoManifest();
@@ -294,7 +295,7 @@ function videoNodes(page, lang, h, url, datePublished) {
     return {
       '@type': 'VideoObject', '@id': `${url}#video${i ? `-${i + 1}` : ''}`,
       name: h.plain(b.h2 || '') || caption,
-      description: [caption, h.plain(b.intro || '')].filter(Boolean).join(' ') || undefined,
+      description: caption || h.plain(b.intro || '') || undefined,
       thumbnailUrl: h.assetUrl(v.posterJpg || v.poster),
       contentUrl: mp4 ? h.assetUrl(mp4.src) : undefined,
       uploadDate: datePublished,
@@ -354,7 +355,7 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
   const nodes = [];
   const fullOrg = FULL_ORG.has(template);
   nodes.push(orgNode(entry, lang, h, fullOrg));
-  nodes.push(websiteNode(lang, h, entry));
+  nodes.push(websiteNode(lang, h, fullOrg));
 
   // Primary image
   const primaryId = entry.image?.url ? `${url}#primaryimage` : undefined;
@@ -443,10 +444,11 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       break;
     }
     case 'hub': {
-      const kids = routes.filter((r) => r.parent === entry.id && r[lang] && r.index !== false);
+      // Child pages actually built in this language (a route whose content is still missing is left out).
+      const kids = routes.filter((r) => r.parent === entry.id && r[lang] && r.index !== false).map((r) => h.absHref(r.id)).filter(Boolean);
       if (kids.length) {
         const listId = `${url}#list`;
-        nodes.push({ '@type': 'ItemList', '@id': listId, itemListElement: kids.map((r, i) => ({ '@type': 'ListItem', position: i + 1, url: h.abs(r[lang]) })) });
+        nodes.push({ '@type': 'ItemList', '@id': listId, itemListElement: kids.map((u, i) => ({ '@type': 'ListItem', position: i + 1, url: u })) });
         webpage.mainEntity = ref(listId);
       }
       break;
@@ -478,15 +480,12 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
     case 'case': {
       const articleId = `${url}#article`;
       const modelId = `${url}#model`;
-      // Gallery renders: URL + caption + licence (creator/copyright and acquireLicensePage are stated once on
-      // #primaryimage and by the Article's author/publisher; `license` alone makes an image eligible for the
-      // Licensable badge). The image sitemap lists every render as well. Keeps the graph small.
-      // One entry per render: art-directed crops of the same image (e.g. villa_viewer_poster_mobile) are skipped.
-      const seenImg = new Set([entry.image?.url]);
-      const names = new Set((entry.images || []).map((im) => im?.name).filter(Boolean));
-      const crop = (im) => /_mobile$/.test(im.name || '') && names.has(im.name.replace(/_mobile$/, ''));
-      const renders = (entry.images || []).filter((im) => im?.url && !crop(im) && !seenImg.has(im.url) && seenImg.add(im.url)).slice(0, 10)
-        .map((im) => ({ '@type': 'ImageObject', contentUrl: im.url, caption: im.caption || im.alt, license: rights.license }));
+      // Renders (8 KB budget without the FAQ, BUILD-SPEC §11): #primaryimage by @id (it carries creator,
+      // credit, copyright and acquireLicensePage once) + up to CASE_RENDERS other renders in page order, each
+      // with URL, caption and `license` (enough for the Licensable badge). One entry per render: variants of
+      // the same image (villa_maqueta_iso = the primary's villa_maqueta_iso_opaco, *_mobile crops) are skipped.
+      // The image sitemap still lists every image of the page.
+      const renders = caseRenders(entry).map((im) => ({ '@type': 'ImageObject', contentUrl: im.url, caption: im.caption || im.alt, license: rights.license }));
       const article = {
         '@type': 'Article', '@id': articleId, headline: h1, // description: on the WebPage (mainEntity → this Article)
         image: [ref(primaryId), ...renders],
@@ -512,8 +511,7 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
         image: ref(primaryId),
         copyrightHolder: ref(ORG_ID), // creator: the Article author/publisher
         dateCreated: datePublished,
-        contentLocation: place('Costa del Sol'),
-        isPartOf: ref(articleId),
+        contentLocation: place('Costa del Sol'), // the Article links here with `about` (no isPartOf back: same edge)
       });
       webpage.mainEntity = ref(articleId);
       break;
@@ -538,7 +536,8 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
           '@type': 'ItemList', '@id': id, name: h.plain(b.caption || b.h2 || ''), numberOfItems: b.rows.length,
           itemListElement: b.rows.map((row, i) => {
             const cell = String(row[0] ?? '');
-            const link = (cell.match(/\]\((https:\/\/[^)\s]+)\)/) || [])[1];
+            // First link of the first cell: external https, or an internal [text](@id) resolved to its absolute URL.
+            const link = (h.inline(cell).match(/\]\((https:\/\/[^)\s]+)\)/) || [])[1];
             return { '@type': 'ListItem', position: i + 1, name: h.plain(cell), url: link };
           }),
         });
@@ -622,6 +621,28 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
     videoOwner.video = videoRefs.length === 1 ? videoRefs[0] : videoRefs;
   }
   return finalize(nodes);
+}
+
+/** Renders listed by the case Article besides #primaryimage (see the `case` branch). */
+export const CASE_RENDERS = 6;
+const imageBase = (name) => String(name || '').replace(/_(opaco|mobile)$/, '');
+export function caseRenders(entry) {
+  const seenUrl = new Set([entry.image?.url].filter(Boolean));
+  const seenBase = new Set([imageBase(entry.image?.name)].filter(Boolean));
+  // An art-directed crop (…_mobile) gives way to its full image when the page has both, whatever the order.
+  const names = new Set((entry.images || []).map((im) => im?.name).filter(Boolean));
+  const isCrop = (im) => /_mobile$/.test(im.name || '') && names.has(im.name.replace(/_mobile$/, ''));
+  const out = [];
+  for (const im of entry.images || []) {
+    if (!im?.url || seenUrl.has(im.url) || isCrop(im)) continue;
+    const base = im.name ? imageBase(im.name) : null;
+    if (base && seenBase.has(base)) continue;
+    seenUrl.add(im.url);
+    if (base) seenBase.add(base);
+    out.push(im);
+    if (out.length === CASE_RENDERS) break;
+  }
+  return out;
 }
 
 function finalize(nodes) {

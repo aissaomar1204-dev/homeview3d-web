@@ -6,7 +6,7 @@
    stage (takes whatever height is left) · one row of room chips · one toolbar row. The embed is a
    stacked app (.vw--stack), so the 1280px rail column of 50-viewer.css never applies here.
    ========================================================================== */
-.vw-embed { display: grid; grid-template-rows: auto minmax(0, 1fr); height: 100vh; height: 100dvh; background: var(--color-stage); }
+.vw-embed { display: grid; grid-template-rows: auto minmax(0, 1fr); height: 100dvh; background: var(--color-stage); }
 .vw-embed__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 var(--space-4); }
 .vw-embed .vw-embed__title { font-size: var(--fs-base); font-stretch: 100%; line-height: var(--lh-h3); letter-spacing: 0; }
 .vw-embed__by { display: inline-flex; align-items: center; min-height: var(--tap-min); font-size: var(--fs-meta); color: var(--color-ink-2); }

@@ -17,6 +17,8 @@
      ctx.slug(text)         heading slug (same function as auto h2 ids)
      ctx.fill(str, vars)    replaces {name} placeholders
      ctx.whatsappUrl(text?) wa.me link with a prefilled message
+     ctx.directContact      false while site.contact is a placeholder: no WhatsApp actions (V-02)
+     ctx.phoneLink          false while site.contact is a placeholder: no tel: links (V-02)
      ctx.revisions(packId), ctx.volume(), ctx.volumeUnit()
      ctx.collect            { images: [], faq: [], headings: [], videos: [] } filled while rendering
      ctx.emitAsset(p, text) writes a generated file as a hashed asset, returns its URL
@@ -268,6 +270,12 @@ export function createContext(o) {
   ctx.twinPath = route && otherLang && route[otherLang] && rendered.has(`${route.id}:${otherLang}`) ? route[otherLang] : null;
 
   ctx.whatsappUrl = (text) => `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(text || ui.cta.whatsappText)}`;
+  /**
+   * Direct channels (WhatsApp actions, tel: links) render only once site.contact holds real data (V-02): a placeholder
+   * number must never be dialled. They come back on their own when site.contact.placeholder is false.
+   */
+  ctx.directContact = site.contact.placeholder !== true && !!site.contact.whatsapp;
+  ctx.phoneLink = site.contact.placeholder !== true && !!site.contact.phoneE164;
 
   return ctx;
 }

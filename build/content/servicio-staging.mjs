@@ -6,9 +6,9 @@ const INE = 'https://www.ine.es/dyngs/Prensa/ETDP0726.htm';
 
 export default {
   id: 'servicio-staging',
-  image: 'villa_dormitorios_opaco',
+  image: 'villa_interior_dormitorio',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: 'Home staging virtual sobre un modelo 3D real',
@@ -21,9 +21,9 @@ export default {
       summary: 'Estilo, muebles y materiales sobre el modelo 3D, coherentes en cada render, en el visor y en la realidad aumentada.',
     },
     hero: {
-      image: 'villa_dormitorios',
-      alt: 'Ala de dormitorios de la villa amueblada, con cama doble, dos camas individuales, vestidor y baño completo, vista desde arriba con los muros cortados. Render 3D generado a partir del plano 2D.',
-      caption: 'Dormitorios amueblados sobre el modelo. Render generado a partir del plano 2D.',
+      image: 'villa_interior_dormitorio',
+      alt: 'Dormitorio principal amueblado sobre el modelo, a la altura de los ojos: cama de 180 con cabecero de obra, lámparas de mesilla encendidas, butaca y puerta corredera a la terraza. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+      caption: 'Dormitorio principal amueblado sobre el modelo. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
     },
     facts: [
       ['Precio', '{{extra:staging}} + IVA por estancia'],
@@ -72,17 +72,27 @@ export default {
       {
         type: 'gallery',
         h2: 'El mobiliario de la villa, sobre el modelo',
-        intro: 'La villa de demostración está amueblada en un único estilo, de aire mediterráneo. Cada mueble ocupa su sitio en todas las vistas y en el visor, porque es un solo modelo y no imágenes decoradas por separado.',
+        intro: 'La villa de demostración, anonimizada, está amueblada en un único estilo, de aire mediterráneo. Cada mueble ocupa su sitio en todas las vistas y en el visor, porque es un solo modelo y no imágenes decoradas por separado: aquí ves el mismo salón y la misma terraza a la altura de los ojos y desde arriba.',
         items: [
           {
+            image: 'villa_interior_salon',
+            alt: 'Salón a la altura de los ojos, con sofá, lámpara de pie encendida, plantas y tres hojas correderas abiertas a la terraza con tumbonas. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'El salón amueblado, a la altura de los ojos. Render 3D de la villa anonimizada.',
+          },
+          {
             image: 'villa_salon_dormitorio',
-            alt: 'Salón con sofá rinconera, alfombra y mesa de mármol, junto al dormitorio principal con cama de 180 y butaca, vistos desde arriba. Render 3D generado a partir del plano 2D.',
-            caption: 'Salón y dormitorio principal amueblados. Render 3D.',
+            alt: 'El mismo salón con sofá rinconera, alfombra y mesa de mármol, junto al dormitorio principal con cama de 180 y butaca, vistos desde arriba con los muros cortados. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'El mismo salón y el dormitorio principal, desde arriba. Render 3D de la villa anonimizada.',
           },
           {
             image: 'villa_terraza',
-            alt: 'Terraza principal con dos tumbonas, sofá exterior, suelo de barro cocido y un olivo en maceta. Render 3D generado a partir del plano 2D.',
-            caption: 'Mobiliario exterior en la terraza principal. Render 3D.',
+            alt: 'Terraza principal vista desde arriba, con dos tumbonas, sofá exterior, suelo de barro cocido y un olivo en maceta. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'Mobiliario exterior de la terraza principal, desde arriba. Render 3D de la villa anonimizada.',
+          },
+          {
+            image: 'villa_interior_terraza',
+            alt: 'La misma terraza a la altura de los ojos, con sofá exterior, mesa baja y un olivo en maceta de barro. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'La misma terraza, a la altura de los ojos. Render 3D de la villa anonimizada.',
           },
         ],
       },
@@ -185,9 +195,9 @@ export default {
       summary: 'Style, furniture and finishes applied to the 3D model, consistent across every render, the viewer and AR.',
     },
     hero: {
-      image: 'villa_dormitorios',
-      alt: 'Furnished bedroom wing of the villa with a double bed, twin beds, a walk-in wardrobe and the family bathroom, seen from above with the walls cut away. 3D render generated from the 2D floor plan.',
-      caption: 'Bedrooms furnished on the model. 3D render from the 2D floor plan.',
+      image: 'villa_interior_dormitorio',
+      alt: 'Main bedroom furnished on the model, at eye level: 180 cm bed with a built-in headboard, lit bedside lamps, an armchair and a sliding door to the terrace. 3D render of the anonymised villa, generated from the 2D floor plan.',
+      caption: 'Main bedroom furnished on the model. 3D render of the anonymised villa, from the 2D floor plan.',
     },
     facts: [
       ['Price', '{{extra:staging}} + VAT per room'],
@@ -236,17 +246,27 @@ export default {
       {
         type: 'gallery',
         h2: 'The villa’s furniture, on the model',
-        intro: 'The demo villa is furnished in a single, Mediterranean-leaning style. Each piece stays in place across every view and in the viewer, because it is one model, not images staged one by one.',
+        intro: 'The anonymised demo villa is furnished in a single, Mediterranean-leaning style. Each piece stays in place across every view and in the viewer, because it is one model, not images staged one by one: here you see the same living room and the same terrace at eye level and from above.',
         items: [
           {
+            image: 'villa_interior_salon',
+            alt: 'Living room at eye level, with a sofa, a lit floor lamp, plants and three sliding panels open onto the terrace and its sun loungers. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'The furnished living room, at eye level. 3D render of the anonymised villa.',
+          },
+          {
             image: 'villa_salon_dormitorio',
-            alt: 'Living room with a corner sofa, rug and marble coffee table, next to the main bedroom with a 180 cm bed and an armchair, seen from above. 3D render generated from the 2D floor plan.',
-            caption: 'Furnished living room and main bedroom. 3D render.',
+            alt: 'The same living room with a corner sofa, rug and marble coffee table, next to the main bedroom with a 180 cm bed and an armchair, seen from above with the walls cut away. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'The same living room and the main bedroom, from above. 3D render of the anonymised villa.',
           },
           {
             image: 'villa_terraza',
-            alt: 'Main terrace with two sun loungers, an outdoor sofa, a terracotta floor and a potted olive tree. 3D render generated from the 2D floor plan.',
-            caption: 'Outdoor furniture on the main terrace. 3D render.',
+            alt: 'Main terrace seen from above, with two sun loungers, an outdoor sofa, a terracotta floor and a potted olive tree. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'Outdoor furniture on the main terrace, from above. 3D render of the anonymised villa.',
+          },
+          {
+            image: 'villa_interior_terraza',
+            alt: 'The same terrace at eye level, with an outdoor sofa, a low table and an olive tree in a terracotta pot. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'The same terrace, at eye level. 3D render of the anonymised villa.',
           },
         ],
       },

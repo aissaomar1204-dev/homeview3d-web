@@ -11,16 +11,26 @@
    - Straight quotes inside <pre>/<code> (the iframe embed snippet) are code, not prose.
    - LCP weight is measured on the AVIF candidate closest to 1200w when the LCP <img> sits in a <picture>
      with an AVIF source (what a phone downloads); the <img src> is only the fallback for browsers without AVIF.
-   - Copy findings (dashes, "...", banned words) quote ~70 characters around the match. */
+   - Copy findings (dashes, "...", banned words) quote ~70 characters around the match.
+   - Page weight budgets (BUILD-SPEC §11) come from BUDGETS in build/lib/machine.mjs (same numbers as
+     build/check.mjs): HTML raw AND brotli per page, shared stylesheet, total CSS per page and the number of
+     render-blocking stylesheet requests. The local fallback below is used only if that module cannot load. */
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.resolve(process.argv[2] || path.join(HERE, '..', process.env.OUT_DIR || 'dist'));
 const SRC_CSS = path.join(HERE, '..', 'src', 'css');
 const TOKENS_CSS = /(^|[-.])tokens\.css$/; // the ONLY source css file allowed to contain raw hex colours (00-tokens.css)
-const BUDGET = { htmlKB: 60, initialJsKB: 30, fontFiles: 3, fontKB: 60, lcpImageKB: 120, backdropFilters: 1 };
+let SHARED = { htmlRawKB: 72, htmlBrotliKB: 16, brotliQuality: 11, cssSharedKB: 25, cssPageKB: 45, cssBlockingMax: 2, initialJsKB: 30, lcpImageTargetKB: 120 };
+try { SHARED = { ...SHARED, ...(await import('../build/lib/machine.mjs')).BUDGETS }; } catch { /* standalone copy: local fallback */ }
+const BUDGET = {
+  htmlKB: SHARED.htmlRawKB, htmlBrotliKB: SHARED.htmlBrotliKB, brotliQuality: SHARED.brotliQuality,
+  cssSharedKB: SHARED.cssSharedKB, cssPageKB: SHARED.cssPageKB, cssBlockingMax: SHARED.cssBlockingMax,
+  initialJsKB: SHARED.initialJsKB, fontFiles: 3, fontKB: 60, lcpImageKB: SHARED.lcpImageTargetKB, backdropFilters: 1,
+};
 const CTA = {
   es: ['Pide tu demo', 'Ver la villa en 3D', 'Ver en tu salón', 'Calcular precio', 'Enviar solicitud', 'Escribir por WhatsApp'],
   en: ['Get your demo', 'View the villa in 3D', 'View in your room', 'Estimate price', 'Send request', 'Message on WhatsApp'],
@@ -49,6 +59,34 @@ let warnings = 0;
 const err = (f, m) => { errors++; console.log(`  x ${path.relative(DIST, f)}: ${m}`); };
 const warn = (f, m) => { warnings++; console.log(`  ! ${path.relative(DIST, f)}: ${m}`); };
 const kb = (bytes) => Math.round(bytes / 1024);
+const kb1 = (bytes) => (bytes / 1024).toFixed(1);
+const brotli = (buf) => zlib.brotliCompressSync(buf, { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: BUDGET.brotliQuality } }).length;
+const fileSize = (p) => { try { return fs.statSync(p).size; } catch { return 0; } };
+/** Stylesheets linked by a page (+ their @imports), with render-blocking status (media "print"/"not all" do not block). */
+const cssImportsOf = (file) => {
+  let css = '';
+  try { css = fs.readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, ''); } catch { return []; }
+  return [...css.matchAll(/@import\s+(?:url\(\s*)?["']?(\/[^"')\s;]+)["']?\s*\)?([^;]*);/g)].map((m) => ({ file: path.join(DIST, m[1].split(/[?#]/)[0]), media: m[2].trim() }));
+};
+function pageStylesheets(html) {
+  const out = [];
+  const seen = new Set();
+  const add = (file, media) => {
+    if (seen.has(file) || !fs.existsSync(file)) return;
+    seen.add(file);
+    out.push({ file, bytes: fileSize(file), blocking: !/^\s*(print|not\s+all)\s*$/i.test(media || '') });
+    for (const im of cssImportsOf(file)) add(im.file, im.media || media);
+  };
+  for (const m of html.matchAll(/<link\b[^>]*>/gi)) {
+    const tag = m[0];
+    if (!/\brel="[^"]*\bstylesheet\b[^"]*"/i.test(tag) || /\sdisabled\b/i.test(tag)) continue;
+    const href = attr(tag, 'href');
+    if (href && href.startsWith('/') && !href.startsWith('//')) add(path.join(DIST, href.split(/[?#]/)[0]), attr(tag, 'media'));
+  }
+  return out;
+}
+const cssUse = new Map(); // stylesheet → number of pages linking it (shared sheet detection)
+let pagesWithCss = 0;
 
 // Text extraction. keepLd=true keeps JSON-LD strings (public content for search/LLMs) for dash and wording checks.
 const extractText = (html, keepLd) => html
@@ -77,7 +115,18 @@ for (const f of files.filter((x) => x.endsWith('.html'))) {
   const visible = extractText(html, false);
   const lang = (html.match(/<html[^>]*\blang="([a-z]{2})/i) || [])[1] || 'es';
 
-  if (fs.statSync(f).size > BUDGET.htmlKB * 1024) err(f, `HTML ${kb(fs.statSync(f).size)} KB > ${BUDGET.htmlKB} KB`);
+  // Page weight (BUILD-SPEC §11): raw AND brotli.
+  const raw = fs.readFileSync(f);
+  if (raw.length > BUDGET.htmlKB * 1024) err(f, `HTML ${kb1(raw.length)} KB > ${BUDGET.htmlKB} KB`);
+  const br = brotli(raw);
+  if (br > BUDGET.htmlBrotliKB * 1024) err(f, `HTML ${kb1(br)} KB brotli > ${BUDGET.htmlBrotliKB} KB`);
+  const sheets = pageStylesheets(html);
+  if (sheets.length) pagesWithCss++;
+  for (const s of sheets) cssUse.set(s.file, (cssUse.get(s.file) || 0) + 1);
+  const cssTotal = sheets.reduce((n, s) => n + s.bytes, 0);
+  const blocking = sheets.filter((s) => s.blocking);
+  if (cssTotal > BUDGET.cssPageKB * 1024) err(f, `CSS ${kb1(cssTotal)} KB on this page > ${BUDGET.cssPageKB} KB (${sheets.length} stylesheets)`);
+  if (blocking.length > BUDGET.cssBlockingMax) err(f, `${blocking.length} render-blocking stylesheet requests (max ${BUDGET.cssBlockingMax}): ${blocking.map((s) => path.basename(s.file)).join(', ')}`);
   if (DASHES.test(text)) err(f, `em/en dash in content (use a period, comma, colon or hyphen) near «${around(text, DASHES)}»`);
   if (/\.\.\./.test(text)) err(f, `"..." found, use the ellipsis character, near «${around(text, /\.\.\./)}»`);
   const prose = extractText(html.replace(/<(pre|code)\b[\s\S]*?<\/\1>/gi, ' '), false);
@@ -158,6 +207,12 @@ for (const f of files.filter((x) => x.endsWith('.html'))) {
     const p = path.join(DIST, lcpFile.split(/[?#]/)[0]);
     if (fs.existsSync(p) && fs.statSync(p).size > BUDGET.lcpImageKB * 1024) err(f, `LCP image ${kb(fs.statSync(p).size)} KB > ${BUDGET.lcpImageKB} KB (${lcpFile})`);
   }
+}
+
+// Shared stylesheet: linked by (nearly) every page with CSS, or named site.<hash>.css by the engine.
+for (const [file, n] of cssUse) {
+  const shared = /(^|[\\/])site\.[0-9a-f]{6,}\.css$/.test(file) || (pagesWithCss > 2 && n >= pagesWithCss * 0.9);
+  if (shared && fileSize(file) > BUDGET.cssSharedKB * 1024) err(file, `shared stylesheet ${kb1(fileSize(file))} KB > ${BUDGET.cssSharedKB} KB (linked by ${n} of ${pagesWithCss} pages)`);
 }
 
 // Hex colours: only inside custom-property declarations (the concatenated tokens) in dist CSS.

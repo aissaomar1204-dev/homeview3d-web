@@ -17,9 +17,9 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { site } from '../build/data/site.mjs';
 import { routes, routeById } from '../build/data/routes.mjs';
-import { schemaGraph, schemaScript } from '../build/lib/schema.mjs';
+import { schemaGraph, schemaScript, CASE_RENDERS } from '../build/lib/schema.mjs';
 import { blocksToMarkdown, resolveTokensFallback, stripMd, imageManifest, fmtMB, fmtNumber } from '../build/lib/markdown.mjs';
-import { writeMachineOutputs, robotsTxt, buildCsp } from '../build/lib/machine.mjs';
+import { writeMachineOutputs, robotsTxt, buildCsp, BUDGETS } from '../build/lib/machine.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -123,7 +123,11 @@ function pageLang(id, lang) {
     case 'pricing': B.push({ type: 'pricing', variant: 'full' }, { type: 'calculator' }, { type: 'guarantees' }); break;
     case 'case': B.push({ type: 'specs', items: [[L(lang, 'Estancias', 'Rooms'), '{{villa:rooms}}'], ['m²', '{{villa:interiorM2}}']] }, { type: 'gallery', items: [{ image: 'villa_terraza', alt: 'Render', caption: 'Terraza' }] }, { type: 'callout', title: 'Aviso', body: 'Caso anonimizado.', tone: 'honesty' }, { type: 'embedCode' }, { type: 'ar' }); break;
     case 'process': B.push({ type: 'process', variant: 'despiece' }, { type: 'needs' }); break;
-    case 'guide': B.push({ type: 'prose', h2: 'Contexto', body: 'Texto con [fuente](https://www.registradores.org/) y lista:\n\n- uno\n- dos' }, { type: 'stat', value: '57 %', label: 'valora los planos', source: { label: 'NAR 2025', url: 'https://www.nar.realtor/' }, year: 2025 }, { type: 'sources', items: [{ label: 'INE', url: 'https://www.ine.es/' }] }); break;
+    case 'guide':
+      B.push({ type: 'prose', h2: 'Contexto', body: 'Texto con [fuente](https://www.registradores.org/) y lista:\n\n- uno\n- dos' }, { type: 'stat', value: '57 %', label: 'valora los planos', source: { label: 'NAR 2025', url: 'https://www.nar.realtor/' }, year: 2025 }, { type: 'sources', items: [{ label: 'INE', url: 'https://www.ine.es/' }] });
+      // Comparison guide: a ranked table rendered as an ItemList (external link, internal @link, no link).
+      if (id === 'guia-mejores') B.push({ type: 'table', itemList: true, h2: L(lang, 'Estudios comparados', 'Studios compared'), caption: L(lang, 'Estudios comparados', 'Studios compared'), head: ['Estudio', 'Precio'], rows: [['[Ararenders](https://ararenders.com/)', '250 €'], ['[{{brand}}](@home)', '{{price:plano3d}}'], [L(lang, 'Estudio sin web', 'Studio without a website'), '-']] });
+      break;
     case 'glossary': B.push({ type: 'glossary' }); delete base.faq; break;
     case 'faq': B.push({ type: 'faqGroups', groups: [{ title: L(lang, 'Precios', 'Pricing'), items: faq6(lang, 'grupo') }] }); delete base.faq; break;
     case 'contact': B.push({ type: 'contactForm' }); break;
@@ -246,6 +250,31 @@ const byType = (graph, t) => graph.filter((n) => [].concat(n['@type']).includes(
   assert(vo && vo.duration === 'PT8S' && vo.uploadDate === vc.datePublished && /\.mp4$/.test(vo.contentUrl) && /poster/.test(vo.thumbnailUrl) && byType(vg, 'Article')[0].video?.['@id'] === vo['@id'], 'video: VideoObject (PT8S, uploadDate = datePublished, mp4, poster) linked from the Article');
   const vmd = blocksToMarkdown(withVideo, vc.ctx, { entries });
   assert(vmd.includes('## ¿Cómo se ve la maqueta en movimiento?') && /\[Ver el vídeo \(MP4, 8 s, [^\]]+\]\([^)]+\.mp4\)/.test(vmd) && vmd.includes('*Una vuelta de cámara'), 'video: Markdown mirror links the MP4 and keeps the caption');
+  // Case graph within the JSON-LD budget (BUILD-SPEC §11): lean VideoObject, renders capped, 3DModel encodings kept.
+  const caseImgs = ['villa_viewer_poster_mobile', 'villa_viewer_poster', 'villa_maqueta_iso', 'villa_salon_dormitorio', 'villa_dormitorios', 'villa_bano_suite', 'villa_terraza', 'villa_muros_completos', 'villa_plano_lineas', 'villa_planta_cenital']
+    .map((name) => ({ name, url: `${site.domain}/assets/img/${name}-2400.0123abcd.webp`, caption: `Render ${name}`, alt: `Render 3D ${name}` }));
+  const fullCase = { ...withVideo, image: { ...vc.image, name: 'villa_maqueta_iso_opaco' }, images: caseImgs };
+  const cg = schemaGraph(fullCase, vc.ctx);
+  const cImgs = byType(cg, 'Article')[0].image.map((i) => i.contentUrl || i['@id']);
+  assert(cImgs.length === 1 + CASE_RENDERS && cImgs[0].endsWith('#primaryimage') && !cImgs.some((u) => /_mobile-|villa_maqueta_iso-/.test(u)) && cImgs.some((u) => /villa_viewer_poster-/.test(u)), `case: Article images = #primaryimage + ${CASE_RENDERS} renders, no crop or variant of the primary (${cImgs.length})`);
+  assert(byType(cg, '3DModel')[0].encoding.length === 5, 'case: 3DModel keeps its 5 encodings (GLB, 2 USDZ, 2 AR GLB)');
+  const vKeys = Object.keys(byType(cg, 'VideoObject')[0]).sort().join(',');
+  assert(vKeys === '@id,@type,contentUrl,description,duration,name,thumbnailUrl,uploadDate', `case: lean VideoObject (${vKeys})`);
+  const ctag = schemaScript(fullCase, vc.ctx);
+  let faqB = 0;
+  for (const n of cg) if (n['@type'] === 'FAQPage') for (const q of n.mainEntity) faqB += Buffer.byteLength(JSON.stringify(q));
+  const ldB = Buffer.byteLength(ctag.slice(ctag.indexOf('>') + 1, ctag.lastIndexOf('</'))) - faqB;
+  assert(ldB <= BUDGETS.jsonLdKB * 1024, `case: JSON-LD ${(ldB / 1024).toFixed(1)} KB without the FAQ (max ${BUDGETS.jsonLdKB} KB)`);
+  assert(Object.keys(byType(cg, 'WebSite')[0]).length === 4 && byType(g('home'), 'WebSite')[0].publisher, 'WebSite: full on the home, stub (@id, url, name) elsewhere');
+  // Tier bands: «de 151 a 300 m²» / "151 to 300 m²" (content audit F-33), in the Offers
+  const tierUnits = JSON.stringify(byType(g('precios'), 'OfferCatalog')[0]) + JSON.stringify(byType(g('precios', 'en'), 'OfferCatalog')[0]);
+  assert(tierUnits.includes('de 151 a 300 m²') && tierUnits.includes('151 to 300 m²') && !/más de 150|over 150/.test(tierUnits), 'pricing: tier unitText «de 151 a 300 m²» / "151 to 300 m²"');
+  // Comparison guide → ItemList (only when the route exists)
+  if (routeById['guia-mejores']) {
+    const il = byType(g('guia-mejores'), 'ItemList')[0];
+    const els = il?.itemListElement || [];
+    assert(il && il.numberOfItems === 3 && els[0]?.url === 'https://ararenders.com/' && els[1]?.url === `${site.domain}/` && !els[2]?.url && byType(g('guia-mejores'), 'Article')[0].hasPart?.[0]?.['@id'] === il['@id'], 'guide: `table` with itemList: true → ItemList (external + internal @link resolved), Article hasPart');
+  }
   // Founder (Person) only once site.founder is filled in
   site.founder = { name: 'Nombre Apellido', jobTitle: { es: 'Fundador', en: 'Founder' }, sameAs: ['https://www.linkedin.com/in/ejemplo'] };
   const person = byType(g('sobre-nosotros'), 'Person')[0];
@@ -268,6 +297,9 @@ console.log('\n[blocksToMarkdown]');
   assert(md.includes('## Preguntas frecuentes') && md.includes('## Sigue leyendo') && md.includes('## Contacto'), 'FAQ, related and contact sections');
   const pmd = blocksToMarkdown(get('precios', 'en'), get('precios', 'en').ctx, { entries });
   assert(pmd.includes('€1,490') && pmd.includes('€2,090') && pmd.includes('+30%'), 'pricing full (EN): packs, volume, rush extra');
+  const pmdEs = blocksToMarkdown(get('precios'), get('precios').ctx, { entries });
+  assert(pmdEs.includes('| de 151 a 300 m² |') && pmd.includes('| 151 to 300 m² |'), 'pricing tiers table: «de 151 a 300 m²» / "151 to 300 m²"');
+  assert(site.contact.placeholder !== true || !/\+34 600 000 000|wa\.me\//.test(md + pmd), 'contact block: no placeholder phone / WhatsApp while site.contact is a placeholder (V-02)');
   const home = blocksToMarkdown(get('home'), get('home').ctx, { entries });
   assert(home.includes('Salón') && home.includes('```') === false && home.includes('Del plano 2D al modelo 3D'), 'home: viewer room list + compare');
   const cmd = blocksToMarkdown(get('caso-villa'), get('caso-villa').ctx, { entries });
@@ -340,6 +372,10 @@ const hdr = fs.readFileSync(path.join(OUT, '_headers'), 'utf8');
 assert(hdr.includes('/embed/*') && hdr.includes('frame-ancestors *') && !/^\s+X-Frame-Options:/mi.test(hdr), '_headers: embed rule, no X-Frame-Options');
 assert(/\/embed\/\*\n[^\n]*\n\s+X-Robots-Tag: noindex, indexifembedded/.test(hdr), '_headers: embed X-Robots-Tag noindex, indexifembedded');
 const llmsEn = fs.readFileSync(path.join(OUT, 'en', 'llms.txt'), 'utf8');
+if (routeById['guia-mejores']) {
+  const u = (l) => `${site.domain}${routeById['guia-mejores'][l]}`;
+  assert(llms.includes(`](${u('es')}): `) && (!routeById['guia-mejores'].en || llmsEn.includes(`](${u('en')}): `)), 'llms: the comparison guide answers a quick question (its own lead) and is listed');
+}
 assert(llms.includes('## Respuestas rápidas') && llmsEn.includes('## Quick answers') && llms.includes(`${site.domain}/en/llms.txt`) && Buffer.byteLength(llmsEn) < 10240 && hdr.includes('/en/llms.txt'), `llms: ES + EN indexes with quick answers (${Buffer.byteLength(llmsEn)} bytes EN)`);
 const fullEs = fs.readFileSync(path.join(OUT, 'llms-full.txt'), 'utf8');
 const fullEn = fs.readFileSync(path.join(OUT, 'en', 'llms-full.txt'), 'utf8');

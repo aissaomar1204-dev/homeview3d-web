@@ -19,7 +19,7 @@ export default {
   id: 'guia-precio-render',
   image: 'villa_salon_dormitorio',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
@@ -76,6 +76,12 @@ export default {
           ['Renders con IA desde fotos, hasta 6 estancias', '129 € sin IVA por inmueble', `[vistastudiodesign.com](${SRC.vista})`],
         ],
         note: 'Salvo que la fuente diga «+ IVA» o «sin IVA», la página no aclara si el precio incluye el IVA del 21 %: pregúntalo antes de comparar. renders.es advierte de que sus precios son estimados. Los renders con IA parten de fotos de una vivienda que ya existe y no construyen un modelo 3D.',
+      },
+      {
+        type: 'cta',
+        h2: '¿Cuánto costaría tu vivienda?',
+        body: 'Estas tarifas son de terceros. Envíanos el plano y te respondemos con nuestro precio cerrado y el plazo para tu vivienda. Si quieres verlo antes de decidir, modelamos gratis una estancia y te la mandamos en realidad aumentada.',
+        service: 'renders',
       },
       {
         type: 'table',
@@ -164,19 +170,13 @@ export default {
         type: 'answer',
         h2: '¿Dónde encaja nuestro precio?',
         answer: '{{brand}} no vende renders sueltos: vende el modelo 3D de la vivienda, del que salen los renders. La maqueta 3D completa cuesta desde {{price:maqueta}} + IVA e incluye 6 renders en 4K, el visor web y la realidad aumentada, en {{delivery:maqueta}}. Cada render adicional del mismo modelo cuesta {{extra:render}} + IVA.',
-        body: 'Si comparas solo las imágenes, el precio por render queda en la parte baja de la tabla, y además te llevas el modelo, el visor y la AR. La razón no es recortar calidad: levantamos muros y huecos con scripts de Python en [Blender](' + SRC.blender + ') y creamos materiales [PBR](@glosario#pbr) procedurales, así que rehacer una vista o mover un tabique cuesta minutos, no horas.\n\nLa prueba está en nuestro [caso demostrativo](@caso-villa): una villa en la Costa del Sol modelada desde un único plano, con {{villa:rooms}} estancias; sus {{villa:renders}} imágenes (6 vistas, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Si necesitas solo la planta, el [plano 3D](@servicio-plano) cuesta {{price:plano3d}} + IVA por planta.',
+        body: 'Si comparas solo las imágenes, el precio por render queda en la parte baja de la tabla, y además te llevas el modelo, el visor y la AR. La razón no es recortar calidad: levantamos muros y huecos con scripts de Python en [Blender](' + SRC.blender + ') y creamos materiales [PBR](@glosario#pbr) procedurales, así que rehacer una vista o mover un tabique cuesta minutos, no horas.\n\nLa prueba está en nuestro [caso demostrativo](@caso-villa): una villa en la Costa del Sol modelada desde un único plano, con {{villa:rooms}} estancias; sus {{villa:renders}} imágenes (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Si necesitas solo la planta, el [plano 3D](@servicio-plano) cuesta {{price:plano3d}} + IVA por planta.',
       },
       {
         type: 'callout',
         tone: 'honesty',
         title: 'Somos parte interesada',
-        body: 'Vendemos visualización 3D, así que esta guía no es neutral. Para compensarlo, cada cifra de mercado enlaza a la página que la publica, indicamos la fecha de consulta y marcamos qué rangos son estimados. No citamos precios que solo aparecen en resúmenes de buscadores o de IA.',
-      },
-      {
-        type: 'cta',
-        h2: '¿Cuánto costaría tu vivienda?',
-        body: 'Envíanos el plano y te respondemos con precio cerrado y plazo. Si quieres verlo antes de decidir, modelamos gratis una estancia y te la mandamos con realidad aumentada.',
-        service: 'renders',
+        body: 'Vendemos visualización 3D, así que esta guía no es neutral. Para compensarlo, cada cifra de mercado enlaza a la página que la publica, indicamos la fecha de consulta y marcamos qué rangos son estimados. No citamos precios que solo aparecen en resúmenes de buscadores o de IA. Si lo que comparas son proveedores, y no solo precios, tienes una [lista de estudios y herramientas de visualización 3D en España](@guia-mejores) con los criterios a la vista.',
       },
       { type: 'faq' },
       {
@@ -288,6 +288,12 @@ export default {
         note: 'Unless the source says “+ VAT” or “ex VAT”, the page does not state whether Spanish VAT (21%) is included, so ask before comparing. renders.es describes its own prices as estimates. AI renders start from photos of a home that already exists and do not build a 3D model.',
       },
       {
+        type: 'cta',
+        h2: 'What would your property cost?',
+        body: 'These are other studios’ rates. Send us the floor plan and we reply with our fixed price and turnaround for your property. If you would like to see our work first, we model one room free of charge and send it to you in augmented reality.',
+        service: 'renders',
+      },
+      {
         type: 'table',
         h2: 'How much does a whole home or a development cost?',
         intro: 'For several views, most studios quote a package. These are the published ranges for whole homes, developments, tours and animations, with our own rates alongside for context.',
@@ -338,7 +344,7 @@ export default {
         type: 'answer',
         h2: 'Is 3D rendering priced per square metre?',
         answer: 'Rarely. Studios in Spain price renders per image or per package, not per square metre. Floor area matters indirectly, because a bigger home has more rooms to model and furnish. Area bands do appear in 3D floor plans and in complete 3D models of a home, where the whole property is built.',
-        body: 'At {{brand}}, for example, the complete 3D model costs {{price:maqueta:0}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m², with 6 renders included. If you are pricing a whole-home 3D model for a listing, our page on [how we build a model from the plan](@como-funciona) explains what goes into it.',
+        body: 'At {{brand}}, for example, the complete 3D model costs {{price:maqueta:0}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m², with 6 renders included. If what you need is the layout in 3D, the market ranges are in [what a 3D floor plan costs in Spain](@guia-precio-plano); for a whole-home model, our page on [how we build a model from the plan](@como-funciona) explains what goes into it.',
       },
       {
         type: 'table',
@@ -380,19 +386,13 @@ export default {
         type: 'answer',
         h2: 'Where does our price fit?',
         answer: '{{brand}} does not sell one-off renders: we build the 3D model of the home and the renders come from it. The complete 3D model costs from {{price:maqueta}} + VAT and includes 6 renders in 4K, the web viewer and augmented reality, in {{delivery:maqueta}}. Each extra render from the same model costs {{extra:render}} + VAT.',
-        body: 'Counting images alone, the price per render lands at the lower end of the tables, and the model, viewer and AR come with it. That is not about cutting corners: walls and openings are built with Python scripts in [Blender](' + SRC.blender + ') and materials are procedural [PBR](@glosario#pbr), so re-rendering a view or moving a partition takes minutes, not hours.\n\nSee it in our [demonstration case](@caso-villa): a Costa del Sol villa modelled from a single plan, with {{villa:rooms}} rooms; its {{villa:renders}} images (6 views, both plans and the social media image) were computed in about {{villa:renderMinutes}} minutes in total. If you only need the layout, a [3D floor plan](@servicio-plano) costs {{price:plano3d}} + VAT per floor.',
+        body: 'Counting images alone, the price per render lands at the lower end of the tables, and the model, viewer and AR come with it. That is not about cutting corners: walls and openings are built with Python scripts in [Blender](' + SRC.blender + ') and materials are procedural [PBR](@glosario#pbr), so re-rendering a view or moving a partition takes minutes, not hours.\n\nSee it in our [demonstration case](@caso-villa): a Costa del Sol villa modelled from a single plan, with {{villa:rooms}} rooms; its {{villa:renders}} images (6 aerial views, 4 eye-level views, both plans and the social media image) were computed in about {{villa:renderMinutes}} minutes in total. If you only need the layout, a [3D floor plan](@servicio-plano) costs {{price:plano3d}} + VAT per floor.',
       },
       {
         type: 'callout',
         tone: 'honesty',
         title: 'We have a stake in this',
-        body: 'We sell 3D visualisation, so this guide is not neutral. To offset that, every market figure links to the page that publishes it, we state when we checked it and we flag ranges that are estimates. We do not quote prices that only appear in search engine or AI summaries.',
-      },
-      {
-        type: 'cta',
-        h2: 'What would your property cost?',
-        body: 'Send us the floor plan and we reply with a fixed price and turnaround. If you would like to see our work first, we model one room free of charge and send it to you in augmented reality.',
-        service: 'renders',
+        body: 'We sell 3D visualisation, so this guide is not neutral. To offset that, every market figure links to the page that publishes it, we state when we checked it and we flag ranges that are estimates. We do not quote prices that only appear in search engine or AI summaries. If you are comparing providers rather than prices, see our [list of 3D visualisation studios and tools in Spain](@guia-mejores), with the criteria in plain view.',
       },
       { type: 'faq' },
       {

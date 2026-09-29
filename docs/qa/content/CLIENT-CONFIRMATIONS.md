@@ -1,6 +1,6 @@
 # Confirmaciones del cliente antes del lanzamiento
 
-Fecha: 28 de septiembre de 2026 · Para: el propietario de Estudio 3D (nombre provisional).
+Fecha: 28 de septiembre de 2026 (actualizado el 29 de septiembre de 2026: §5, §13 y nuevo §14) · Para: el propietario de Estudio 3D (nombre provisional).
 
 La web publica precios, plazos y compromisos concretos, y los asistentes de IA y los buscadores los van a citar tal cual. Hoy todos son una **propuesta** (`build/data/pricing.mjs` tiene `confirmed: false`). Revisa cada punto y marca una opción:
 
@@ -76,7 +76,8 @@ Cuando todo esté marcado, el equipo aplica los cambios en un solo sitio (`build
   - Texto del staging: → ✏️ propuesta «Recreación virtual. Mobiliario no incluido.»
   - Obra nueva: → ✏️ propuesta añadir «no contractual».
   - ¿Va **impreso en la imagen** (marca de agua) o como **pie de foto / nombre de archivo** que la agencia pone en el anuncio? La web usa ya los tres textos propuestos y dice que se entregan «como texto para el pie de foto». → ✅ pie de foto / ✏️ marca de agua
-- [ ] **Datos de la villa de demostración:** la web dice ahora «9 imágenes (6 vistas, la planta cenital, la planta de líneas y la imagen para redes) en unos 7 minutos», baños «2: el de la suite, con bañera y ducha de lluvia, y el completo» (antes «2 + ducha»; falta corregir `villa.specs.bathrooms` en `build/data/villa.mjs`, que hoy no usa ninguna página) y «una sola sesión de trabajo». La frase «rehacer la exportación tarda unos 26 segundos» se ha quitado hasta que se vuelva a medir. ¿Todo correcto? → ✅ / ✏️
+- [ ] **Datos de la villa de demostración:** la web dice ahora «13 imágenes (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) en unos 21 minutos» (6,9 min las 9 primeras + 14,4 min los 4 interiores nuevos, según `source/villa3d/renders/_timings.json`), baños «2 (suite con bañera y ducha)» / «2 (en-suite with tub and shower)», que ahora sale de `villa.specs.bathrooms` y aparece en la ficha técnica del caso (la ficha se ha recortado a los datos técnicos que no están en el cajetín: huella, baños, texturas, materiales, triángulos, alturas de muro y de corte, compresión y pesos de los archivos de realidad aumentada) y «una sola sesión de trabajo». La frase «rehacer la exportación tarda unos 26 segundos» se ha quitado hasta que se vuelva a medir. ¿Todo correcto? → ✅ / ✏️
+- [ ] **Interiores a la altura de los ojos (nuevos):** 4 renders (salón, dormitorio principal, baño en suite y terraza) con techo, lámparas encendidas y cámara a 1,60 m. Se usan en la galería del caso, en las páginas de renders y de home staging (portada y galería), en la celda «Renders fotorrealistas» de la portada, en la página de Málaga y como imagen lateral en varias páginas. **El cielo y el mar que se ven por las ventanas son un fondo ilustrativo, no el entorno real de la villa**, y la web lo dice en la galería del caso y en la de renders. ¿Te parece bien mostrar mar de fondo en un caso anonimizado, o prefieres un cielo sin mar? → ✅ / ✏️
 
 ## 6. Pago y facturación
 
@@ -140,8 +141,19 @@ Cuando todo esté marcado, el equipo aplica los cambios en un solo sitio (`build
 Todos se han verificado el 28 de septiembre de 2026 (ver `CONTENT-AUDIT.md` §3). Si la web se publica más tarde:
 
 - [ ] **Actualizar la fecha «consultado el 28 de septiembre de 2026»** y revisar las tarifas de la competencia: BoxBrownie, homestagerdesign, inmofotomadrid, ararenders, estudio3dbs, proyecto3dvalencia, studiomkdesign, renders.es, maverickframe, vistastudiodesign, cronoshare, tucasaapunto, pedra.ai, floorplanner, r2u, RealSpace 3D, Matterport y el proveedor Matterport de Málaga.
+- [ ] **Datos consultados el 29 de septiembre de 2026** (revisar con la misma regla): la versión en inglés de la guía de precios del plano 3D (todas sus fuentes, más CubiCasa: plano 3D amueblado a 65 € en 48 h, precio que su web muestra para España) y la nueva comparativa de estudios (§14): Viseni, Improntia, Persuadis e Inmoshowroom, Floorfy, Matterport, andreasgrunau.com, CubiCasa, BoxBrownie, Home Stager Design y Vista Studio.
 - [ ] **Estadísticas oficiales:** la Estadística Registral Inmobiliaria del 3.er trimestre de 2026 saldrá en diciembre; el INE publica cada mes. Decide si se actualizan o se mantiene «2.º trimestre de 2026».
 - [ ] **Revisión legal** de la guía «Cómo vender viviendas sobre plano», el aviso sobre el Reglamento europeo de IA (fecha del 2 de agosto de 2026) y las menciones al RD 515/1989, por tu asesor jurídico. La web ya dice «no es asesoramiento jurídico».
+
+## 14. Comparativa «Mejores estudios de visualización 3D en España» (nueva)
+
+Página nueva en `/guias/mejores-estudios-visualizacion-3d-espana/` y `/en/guides/best-3d-visualisation-studios-spain/` (`build/content/guia-mejores.mjs`). Lista 10 opciones reales (Viseni, Improntia, Persuadis, Floorfy, Matterport, CubiCasa, BoxBrownie, Home Stager Design, Vista Studio y Estudio 3D), agrupadas por tipo de servicio y no ordenadas por calidad, con un aviso destacado de parte interesada. Cada dato de un tercero sale de su propia web, consultada el 29 de septiembre de 2026, y solo se da precio si la empresa lo publica. Compromisos nuevos que la web hace en tu nombre:
+
+- [ ] **Publicar una comparativa que nombra a competidores.** Es publicidad comparativa: que la revise tu asesor legal antes de publicar (art. 10 de la Ley 3/1991 de Competencia Desleal; datos objetivos, verificables y sin denigrar). → ✅ revisado / ✏️ cambios: ______ / ❌ no publicar
+- [ ] **Revisión trimestral de la lista**; la página anuncia la próxima para **diciembre de 2026** y promete cambiar la fecha de actualización cuando cambie un dato. ¿Quién la hace? → ✅ / ✏️ ______
+- [ ] **«Ninguna empresa ha pagado por aparecer» y «no cobramos por aparecer ni por el orden».** → ✅ / ✏️
+- [ ] **Inclusión a petición:** un estudio que encaje con los criterios y publique lo que ofrece entra en la siguiente revisión trimestral; las correcciones de datos se piden por email. → ✅ / ✏️ / ❌ quitar
+- [ ] **Qué no hacemos**, dicho en público: fotografía, vídeo con dron y escaneos; la fachada completa con entorno se presupuesta aparte. → ✅ / ✏️
 
 ---
 

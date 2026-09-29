@@ -6,9 +6,9 @@ const INE = 'https://www.ine.es/dyngs/Prensa/ETDP0726.htm';
 
 export default {
   id: 'servicio-renders',
-  image: 'villa_salon_dormitorio_opaco',
+  image: 'villa_interior_salon',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: 'Renders inmobiliarios fotorrealistas desde el plano',
@@ -21,9 +21,9 @@ export default {
       summary: 'Renders fotorrealistas en 4K desde el plano, coherentes entre sí, con el visor y con la realidad aumentada.',
     },
     hero: {
-      image: 'villa_salon_dormitorio',
-      alt: 'Salón y dormitorio principal de la villa amueblados, vistos desde arriba con los muros cortados. Render 3D generado a partir del plano 2D.',
-      caption: 'Salón y dormitorio principal. Render generado a partir del plano 2D.',
+      image: 'villa_interior_salon',
+      alt: 'Salón de la villa a la altura de los ojos, con sofá, lámpara de pie encendida y tres hojas correderas abiertas a la terraza con tumbonas. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+      caption: 'Salón a la altura de los ojos. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
     },
     facts: [
       ['Entrada', 'Plano 2D, sin fotos de la vivienda'],
@@ -45,27 +45,37 @@ export default {
       {
         type: 'gallery',
         h2: 'Renders de la villa de demostración',
-        intro: 'Todas las imágenes son renders generados a partir del plano 2D de una villa en la Costa del Sol, sin fotos. Las {{villa:renders}} imágenes del caso (6 vistas, la planta cenital, la planta de líneas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total con una sola tarjeta gráfica.',
+        intro: 'Todas las imágenes son renders 3D de la villa anonimizada de nuestro caso, en la Costa del Sol, generados a partir de su plano 2D y sin fotos: primero a la altura de los ojos, con techo y lámparas encendidas, y después desde arriba con los muros cortados. Las {{villa:renders}} imágenes del caso (6 vistas aéreas, 4 a la altura de los ojos, la planta cenital, la planta de líneas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total con una sola tarjeta gráfica. El cielo y el mar que se ven por las ventanas son un fondo ilustrativo.',
         items: [
           {
+            image: 'villa_interior_dormitorio',
+            alt: 'Dormitorio principal a la altura de los ojos, con cama de 180, cabecero de obra, lámparas de mesilla encendidas y puerta corredera a la terraza. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'Dormitorio principal con luz de media tarde. Render 3D de la villa anonimizada.',
+          },
+          {
+            image: 'villa_interior_bano',
+            alt: 'Baño en suite a la altura de los ojos, con bañera exenta redonda, porcelánico negro, espejo redondo y pared de terrazo. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'Baño en suite con bañera exenta. Render 3D de la villa anonimizada.',
+          },
+          {
             image: 'villa_terraza',
-            alt: 'Terraza principal de la villa con suelo de barro cocido, dos tumbonas, sofá exterior y un olivo en maceta. Render 3D generado a partir del plano 2D.',
-            caption: 'Terraza principal con tumbonas y olivo. Render 3D.',
+            alt: 'Terraza principal de la villa vista desde arriba, con suelo de barro cocido, dos tumbonas, sofá exterior y un olivo en maceta. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'La terraza principal desde arriba. Render 3D de la villa anonimizada.',
           },
           {
-            image: 'villa_bano_suite',
-            alt: 'Baño en suite con bañera exenta redonda, porcelánico negro, pared de terrazo y lavabo sobre encimera. Render 3D generado a partir del plano 2D.',
-            caption: 'Baño en suite con bañera exenta. Render 3D.',
+            image: 'villa_interior_terraza',
+            alt: 'La misma terraza a la altura de los ojos, con sofá exterior, mesa baja, olivo en maceta y el peto blanco. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'La misma terraza, a la altura de los ojos. Render 3D de la villa anonimizada.',
           },
           {
-            image: 'villa_dormitorios',
-            alt: 'Ala de dormitorios de la villa, con cama doble, dormitorio de dos camas y baño completo, vista desde arriba con los muros cortados. Render 3D generado a partir del plano 2D.',
-            caption: 'Ala de dormitorios y baño completo. Render 3D.',
+            image: 'villa_salon_dormitorio',
+            alt: 'Salón y dormitorio principal de la villa amueblados, vistos desde arriba con los muros cortados. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'Salón y dormitorio principal con los muros cortados. Render 3D de la villa anonimizada.',
           },
           {
             image: 'villa_muros_completos',
-            alt: 'Vista aérea exterior de la planta alta de la villa con los muros a altura completa y las dos terrazas. Render 3D generado a partir del plano 2D.',
-            caption: 'Muros completos a 2,60 m. Render 3D.',
+            alt: 'Vista aérea exterior de la planta alta de la villa con los muros a altura completa y las dos terrazas. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
+            caption: 'Muros completos a 2,60 m. Render 3D de la villa anonimizada.',
           },
         ],
       },
@@ -182,9 +192,9 @@ export default {
       summary: 'Photorealistic 4K renders from the floor plan, consistent with each other, with the web viewer and with AR.',
     },
     hero: {
-      image: 'villa_salon_dormitorio',
-      alt: 'Furnished living room and main bedroom of the villa, seen from above with the walls cut away. 3D render generated from the 2D floor plan.',
-      caption: 'Living room and main bedroom. 3D render from the 2D floor plan.',
+      image: 'villa_interior_salon',
+      alt: 'The villa’s living room at eye level, with a sofa, a lit floor lamp and three sliding panels open onto the terrace and its sun loungers. 3D render of the anonymised villa, generated from the 2D floor plan.',
+      caption: 'Living room at eye level. 3D render of the anonymised villa, from the 2D floor plan.',
     },
     facts: [
       ['Input', '2D floor plan, no photos of the home'],
@@ -206,27 +216,37 @@ export default {
       {
         type: 'gallery',
         h2: 'Renders from the demo villa',
-        intro: 'Every image below is a 3D render generated from the 2D floor plan of a villa on the Costa del Sol, with no photos. The case’s {{villa:renders}} images (6 views, the top-down plan, the line plan and the social media image) took about {{villa:renderMinutes}} minutes to render in total on a single graphics card.',
+        intro: 'Every image below is a 3D render of the anonymised villa from our case study on the Costa del Sol, generated from its 2D floor plan with no photos: first at eye level, with ceilings and the lamps switched on, then from above with the walls cut away. The case’s {{villa:renders}} images (6 aerial views, 4 eye-level views, the top-down plan, the line plan and the social media image) took about {{villa:renderMinutes}} minutes to render in total on a single graphics card. The sky and sea seen through the windows are an illustrative backdrop.',
         items: [
           {
+            image: 'villa_interior_dormitorio',
+            alt: 'Main bedroom at eye level, with a 180 cm bed, a built-in headboard, lit bedside lamps and a sliding door to the terrace. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'Main bedroom in late-afternoon light. 3D render of the anonymised villa.',
+          },
+          {
+            image: 'villa_interior_bano',
+            alt: 'En-suite bathroom at eye level, with a round freestanding tub, black porcelain tiles, a round mirror and a terrazzo wall. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'En-suite bathroom with a freestanding tub. 3D render of the anonymised villa.',
+          },
+          {
             image: 'villa_terraza',
-            alt: 'Main terrace of the villa with a terracotta floor, two sun loungers, an outdoor sofa and a potted olive tree. 3D render generated from the 2D floor plan.',
-            caption: 'Main terrace with sun loungers and olive tree. 3D render.',
+            alt: 'The villa’s main terrace seen from above, with a terracotta floor, two sun loungers, an outdoor sofa and a potted olive tree. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'The main terrace from above. 3D render of the anonymised villa.',
           },
           {
-            image: 'villa_bano_suite',
-            alt: 'En-suite bathroom with a round freestanding tub, black porcelain tiles, a terrazzo wall and a countertop basin. 3D render generated from the 2D floor plan.',
-            caption: 'En-suite bathroom with freestanding tub. 3D render.',
+            image: 'villa_interior_terraza',
+            alt: 'The same terrace at eye level, with an outdoor sofa, a low table, a potted olive tree and the white parapet. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'The same terrace, at eye level. 3D render of the anonymised villa.',
           },
           {
-            image: 'villa_dormitorios',
-            alt: 'Bedroom wing of the villa with a double bedroom, a twin bedroom and the family bathroom, seen from above with the walls cut away. 3D render generated from the 2D floor plan.',
-            caption: 'Bedroom wing and family bathroom. 3D render.',
+            image: 'villa_salon_dormitorio',
+            alt: 'Furnished living room and main bedroom of the villa, seen from above with the walls cut away. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'Living room and main bedroom with the walls cut away. 3D render of the anonymised villa.',
           },
           {
             image: 'villa_muros_completos',
-            alt: 'Aerial exterior view of the villa’s upper floor with full-height walls and both terraces. 3D render generated from the 2D floor plan.',
-            caption: 'Full-height walls at 2.60 m. 3D render.',
+            alt: 'Aerial exterior view of the villa’s upper floor with full-height walls and both terraces. 3D render of the anonymised villa, generated from the 2D floor plan.',
+            caption: 'Full-height walls at 2.60 m. 3D render of the anonymised villa.',
           },
         ],
       },

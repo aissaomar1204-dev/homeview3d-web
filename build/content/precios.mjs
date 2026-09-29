@@ -19,7 +19,7 @@ export default {
   id: 'precios',
   image: 'villa_bano_suite_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
@@ -65,7 +65,7 @@ export default {
           ['Rondas de cambios', '{{revisions:plano3d}}', '{{revisions:maqueta}}'],
           ['Plazo', '{{delivery:plano3d}}', '{{delivery:maqueta}}'],
           ['Hasta 150 m²', '{{price:plano3d}} + IVA por planta', '{{price:maqueta}} + IVA por vivienda'],
-          ['Hasta 300 m²', '{{price:plano3d:1}} + IVA por planta', '{{price:maqueta:1}} + IVA por vivienda'],
+          ['De 151 a 300 m²', '{{price:plano3d:1}} + IVA por planta', '{{price:maqueta:1}} + IVA por vivienda'],
         ],
         note: 'Si solo necesitas enseñar la distribución en un portal, el [plano 3D](@servicio-plano) basta. Si el comprador tiene que recorrer la vivienda, porque está en otro país, es obra nueva o el piso está vacío, compensa la maqueta completa, con su [visor 3D](@servicio-tour) y su [realidad aumentada](@servicio-ar).',
       },
@@ -134,7 +134,7 @@ export default {
         type: 'answer',
         h2: '¿Dónde encaja nuestro precio?',
         answer: 'En la franja intermedia, con más entregables. Un plano 3D en línea cuesta de 40 a 120 € y es una imagen; un render de estudio, de 200 a 450 € por imagen; una plataforma 3D interactiva, desde unos 2.700 US$. Por {{price:maqueta}} + IVA, {{brand}} entrega el modelo 3D con 6 renders, visor web y realidad aumentada, en {{delivery:maqueta}}.',
-        body: 'No lo conseguimos recortando calidad, sino automatizando: los muros, huecos y muebles se colocan con scripts de Python en Blender y los materiales son procedurales, así que un cambio cuesta minutos y no una tarde. La prueba está en nuestro [caso demostrativo](@caso-villa): {{villa:rooms}} estancias, {{villa:textures}} texturas creadas para ese modelo y {{villa:renders}} imágenes (6 vistas, las dos plantas y la imagen para redes) calculadas en unos {{villa:renderMinutes}} minutos. El proceso completo, en [nuestro proceso, paso a paso](@como-funciona).',
+        body: 'No lo conseguimos recortando calidad, sino automatizando: los muros, huecos y muebles se colocan con scripts de Python en Blender y los materiales son procedurales, así que un cambio cuesta minutos y no una tarde. La prueba está en nuestro [caso demostrativo](@caso-villa): {{villa:rooms}} estancias, {{villa:textures}} texturas creadas para ese modelo y {{villa:renders}} imágenes (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) calculadas en unos {{villa:renderMinutes}} minutos. El proceso completo, en [nuestro proceso, paso a paso](@como-funciona).',
       },
       {
         type: 'callout',
@@ -230,7 +230,7 @@ export default {
           ['Rounds of changes', '{{revisions:plano3d}}', '{{revisions:maqueta}}'],
           ['Turnaround', '{{delivery:plano3d}}', '{{delivery:maqueta}}'],
           ['Up to 150 m²', '{{price:plano3d}} + VAT per floor', '{{price:maqueta}} + VAT per home'],
-          ['Up to 300 m²', '{{price:plano3d:1}} + VAT per floor', '{{price:maqueta:1}} + VAT per home'],
+          ['151 to 300 m²', '{{price:plano3d:1}} + VAT per floor', '{{price:maqueta:1}} + VAT per home'],
         ],
         note: 'If you only need to show the layout on a portal, the [3D floor plan](@servicio-plano) is enough. If the buyer needs to walk through the home, because they live abroad, the property is off-plan or it is empty, the complete model pays off, with its [interactive 3D viewer](@servicio-tour) and [app-free AR](@servicio-ar).',
       },
@@ -293,13 +293,13 @@ export default {
           ['Interactive 3D sales platform', 'From about US$2,700 per project', 'Browser-based platform for developments, in 3 to 10 weeks', `[r2u.io](${SRC.r2u}), 2026`],
           ['{{brand}} complete 3D model', '{{price:maqueta}} + VAT up to 150 m²', '3D model from the plan, 6 renders, web viewer and augmented reality, in {{delivery:maqueta}}', 'This page'],
         ],
-        note: 'Where a source does not say “+ VAT” or “ex VAT”, it does not state whether the price includes it, so ask before comparing. For more sources and the factors behind render prices, see our guide to [3D rendering costs in Spain](@guia-precio-render).',
+        note: 'Where a source does not say “+ VAT” or “ex VAT”, it does not state whether the price includes it, so ask before comparing. For more sources and the factors behind the prices, see our guides to [3D rendering costs in Spain](@guia-precio-render) and to [3D floor plan prices](@guia-precio-plano).',
       },
       {
         type: 'answer',
         h2: 'Where does our price sit?',
         answer: 'In the middle band, with more deliverables. An online 3D floor plan costs €40 to €120 and is one image; a studio render, €200 to €450 per image; an interactive 3D platform, from about US$2,700. For {{price:maqueta}} + VAT, {{brand}} delivers the 3D model with 6 renders, a web viewer and augmented reality, in {{delivery:maqueta}}.',
-        body: 'We get there by automating, not by cutting corners: walls, openings and furniture are placed by Python scripts in Blender and the materials are procedural, so a change takes minutes rather than an afternoon. The proof is our [case study](@caso-villa): {{villa:rooms}} rooms, {{villa:textures}} textures made for that model and {{villa:renders}} images (6 views, both plans and the social media image) computed in about {{villa:renderMinutes}} minutes. The full process is in [our step-by-step process](@como-funciona).',
+        body: 'We get there by automating, not by cutting corners: walls, openings and furniture are placed by Python scripts in Blender and the materials are procedural, so a change takes minutes rather than an afternoon. The proof is our [case study](@caso-villa): {{villa:rooms}} rooms, {{villa:textures}} textures made for that model and {{villa:renders}} images (6 aerial views, 4 eye-level views, both plans and the social media image) computed in about {{villa:renderMinutes}} minutes. The full process is in [our step-by-step process](@como-funciona).',
       },
       {
         type: 'callout',
@@ -343,7 +343,7 @@ export default {
         a: 'No. {{brand}} models one room of your plan in 3D and sends it to you in augmented reality to open on your phone. We ask for no card and no signature. If you like it, we send the fixed price for the whole home, which is the one on this page; if not, that is the end of it.',
       },
     ],
-    related: ['guia-precio-render', 'caso-villa', 'servicio-plano', 'sol-inmobiliarias', 'como-funciona'],
+    related: ['guia-precio-render', 'guia-precio-plano', 'caso-villa', 'servicio-plano', 'sol-inmobiliarias'],
     cta: {
       h2: 'Get the exact price for your floor plan',
       body: 'Send us the plan and we reply with a fixed price and turnaround. If you would like to see how we work first, we model one room free of charge and send it to you in augmented reality. A real person replies.',

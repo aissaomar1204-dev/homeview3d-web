@@ -154,5 +154,57 @@
   "mean": 0.5931825257709704,
   "clip": 0.0,
   "black": 0.005819500095401641
+ },
+ "villa_interior_salon": {
+  "seconds": 261.3,
+  "scale": 100,
+  "samples": 1024,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 1.0,
+  "mean": 0.4665726018869714,
+  "clip": 0.0007661458333333333,
+  "black": 0.01431484375
+ },
+ "villa_interior_dormitorio": {
+  "seconds": 322.2,
+  "scale": 100,
+  "samples": 1024,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 1.0,
+  "mean": 0.5347363894158075,
+  "clip": 0.00778671875,
+  "black": 0.0148109375
+ },
+ "villa_interior_bano": {
+  "seconds": 193.4,
+  "scale": 100,
+  "samples": 1024,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 1.0,
+  "mean": 0.2731264200367796,
+  "clip": 0.0005875,
+  "black": 0.03939817708333333
+ },
+ "villa_interior_terraza": {
+  "seconds": 84.8,
+  "scale": 100,
+  "samples": 768,
+  "size": [
+   2400,
+   1600
+  ],
+  "alpha_cover": 1.0,
+  "mean": 0.6527158159265352,
+  "clip": 0.0,
+  "black": 0.0017096354166666666
  }
 }

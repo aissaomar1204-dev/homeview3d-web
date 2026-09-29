@@ -233,7 +233,9 @@ export function renderArChoices(ctx, o = {}) {
     + (o.desktopNote ? `<p class="vw-ar__how">${esc(s.arDesktopNote)}</p>` : '')
     + '</div>';
 
-  return `<div class="vw-ar${o.big ? ' vw-ar--big' : ''}" data-vw-arblock data-contact="${esc(links.contact)}" data-origin="${esc(ctx.site.domain)}">`
+  // data-css: the AR module stylesheet on its own (pages link it inside their CSS bundle); the viewer dialog adds it on first open.
+  const css = ctx.asset ? ctx.asset('/assets/css/ar.css') : '';
+  return `<div class="vw-ar${o.big ? ' vw-ar--big' : ''}" data-vw-arblock data-contact="${esc(links.contact)}" data-origin="${esc(ctx.site.domain)}"${css ? ` data-css="${esc(css)}"` : ''}>`
     + `<p class="vw-ar__notice" data-vw-noar hidden>${esc(s.noAr)} <a href="${esc(ctx.href('caso-villa', 'visor'))}">${esc(s.start)}</a></p>`
     + ios + android + desktop
     + `<p class="vw-ar__notice" data-vw-inapp hidden>${esc(s.inApp)}</p>`
@@ -302,7 +304,7 @@ function viewerCore(ctx, o) {
   const iconBtn = (attrs, label, name, glyph) => `<button type="button" class="btn btn--neutral vw-tool vw-icon" ${attrs} aria-label="${esc(label)}">${icon(ctx, name) || glyph}</button>`;
 
   return `<div class="vw${o.embed ? ' vw--embed' : ''}${o.stack ? ' vw--stack' : ''}" id="${id}-app" data-vw data-state="poster"`
-    + ` data-mv="${esc(ctx.asset(v.modelViewer))}" data-meshopt="${esc(ctx.asset(v.meshoptDecoder))}" data-live="${esc(ctx.asset('/assets/css/viewerlive.css'))}"`
+    + ` data-mv="${esc(ctx.asset(v.modelViewer))}" data-meshopt="${esc(ctx.asset(v.meshoptDecoder))}" data-live="${esc(ctx.asset('/assets/css/viewerlive.css'))}" data-dims-js="${esc(ctx.asset('/assets/js/viewer-dims.js'))}"`
     + ` data-fallback="${esc(villa.files.glbAr.url)}" data-preload="${o.preload || 'visible'}"`
     + ` data-orbit="${v.cameraOrbit}" data-target="${v.cameraTarget}" data-top-orbit="${v.topOrbit}" data-top-target="${v.topTarget}"`
     + ` data-cut-suffix="${v.cutMaterialSuffix}" data-label-y="${v.labelHeight.cut} ${v.labelHeight.full}" data-exposure="${v.exposure}"`

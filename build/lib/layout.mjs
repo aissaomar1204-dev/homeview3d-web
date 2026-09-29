@@ -123,8 +123,9 @@ export function footer(ctx) {
     + `<p class="site-footer__base">${esc(ctx.t('footer.base'))}</p>`
     + `<dl class="site-footer__contact">`
     + `<div><dt>${esc(ctx.t('footer.email'))}</dt><dd><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></dd></div>`
-    + `<div><dt>${esc(ctx.t('footer.phone'))}</dt><dd><a href="tel:${esc(c.phoneE164)}">${esc(c.phoneDisplay)}</a></dd></div>`
-    + `<div><dt>${esc(ctx.t('footer.whatsapp'))}</dt><dd><a href="${esc(wa)}" rel="noopener">${esc(ctx.tok('{{whatsapp}}'))}</a></dd></div>`
+    // Phone and WhatsApp only with real contact data (V-02): no tel:/wa.me link to a placeholder number.
+    + (ctx.phoneLink ? `<div><dt>${esc(ctx.t('footer.phone'))}</dt><dd><a href="tel:${esc(c.phoneE164)}">${esc(c.phoneDisplay)}</a></dd></div>` : '')
+    + (ctx.directContact ? `<div><dt>${esc(ctx.t('footer.whatsapp'))}</dt><dd><a href="${esc(wa)}" rel="noopener">${esc(ctx.tok('{{whatsapp}}'))}</a></dd></div>` : '')
     + `</dl></div>`
     + `<div class="site-footer__cols">${cols}</div>`
     + `</div>`
@@ -140,7 +141,11 @@ export function bottomBar(ctx) {
   const onContact = ctx.route && ctx.route.id === 'contacto';
   const demoHref = onContact ? `#${formAnchor(ctx)}` : contactHref(ctx);
   // One line at every width: the visible label is "WhatsApp", the accessible name is the full COMP-03 label (it contains it).
-  return `<div class="bottom-bar" data-bottom-bar role="region" aria-label="${esc(ctx.t('cta.barLabel'))}"><a class="btn btn--primary" href="${esc(demoHref)}">${esc(ctx.t('cta.demo'))}</a><a class="btn btn--neutral" href="${esc(ctx.whatsappUrl())}" rel="noopener" aria-label="${esc(ctx.t('cta.whatsapp'))}">${ctx.icon('chat')}<span>${esc(ctx.t('cta.whatsappShort'))}</span></a></div>`;
+  // While the contact data are placeholders there is no WhatsApp action: the demo button takes the full width (V-02).
+  const wa = ctx.directContact
+    ? `<a class="btn btn--neutral" href="${esc(ctx.whatsappUrl())}" rel="noopener" aria-label="${esc(ctx.t('cta.whatsapp'))}">${ctx.icon('chat')}<span>${esc(ctx.t('cta.whatsappShort'))}</span></a>`
+    : '';
+  return `<div class="bottom-bar${wa ? '' : ' bottom-bar--solo'}" data-bottom-bar role="region" aria-label="${esc(ctx.t('cta.barLabel'))}"><a class="btn btn--primary" href="${esc(demoHref)}">${esc(ctx.t('cta.demo'))}</a>${wa}</div>`;
 }
 
 /* ─── Document ────────────────────────────────────────────────── */
@@ -167,8 +172,11 @@ export function renderDocument(ctx, o) {
   const feed = A.markdown && o.layout !== 'bare'
     ? `<link rel="alternate" type="application/rss+xml" title="${esc(ctx.t('meta.feed'))}" href="${L === ctx.site.defaultLang ? '/feed.xml' : `/${L}/feed.xml`}">`
     : '';
-  // Shared stylesheet + the feature modules this page uses (build/lib/assets.mjs buildCss).
-  const styles = [A.css, ...modulesFor(o.main, A.cssModules).map((m) => m.url)].map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join('');
+  // Shared stylesheet + ONE bundle of the feature modules this page uses (build/lib/assets.mjs buildCss / cssBundle):
+  // never more than two render-blocking CSS requests (V-21).
+  const mods = modulesFor(o.main, A.cssModules);
+  const bundle = mods.length ? (A.cssBundle ? A.cssBundle(mods) : null) : null;
+  const styles = [A.css, ...(bundle ? [bundle.url] : mods.map((m) => m.url))].map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join('');
   const locales = ctx.site.locale;
   const ogAlt = Object.keys(alt).filter((k) => k !== L && k !== 'x-default' && locales[k]).map((k) => `<meta property="og:locale:alternate" content="${locales[k]}">`).join('');
   const ld = o.graph && o.graph.length

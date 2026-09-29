@@ -112,6 +112,10 @@
 @media (max-width: 767px) and (orientation: portrait) {
   .vw-stage { aspect-ratio: 4 / 5; max-height: none; }
 }
+/* Landscape phones (V-10): the stage is capped by the short viewport, so it is narrower than the column; centre it. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .vw-stage { width: min(100%, 85svh * 16 / 11); max-height: none; margin-inline: auto; }
+}
 /* Desktop band: 16:9 keeps the facade button above the fold. */
 @media (min-width: 1024px) { .vw:not(.vw--stack) .vw-stage { aspect-ratio: 16 / 9; } }
 .vw[data-state="poster"] .vw-stage { cursor: pointer; }

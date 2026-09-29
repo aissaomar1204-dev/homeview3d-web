@@ -8,6 +8,8 @@
 .byline__by { color: var(--color-ink-2); }
 .article__hero { margin-block: var(--space-5); }
 .article__hero .figure { max-width: 56rem; }
+/* Portrait heroes (the top-down plan) are height-capped and drawn inside the full-width stage (no load-time shift). */
+.article__hero .pic img { max-height: min(78svh, 40rem); object-fit: contain; }
 .article__layout { display: grid; gap: var(--space-6); margin-top: var(--space-6); }
 .article__body { min-width: 0; max-width: 50rem; }
 .article__body .wrap { padding: 0; max-width: none; }

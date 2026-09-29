@@ -22,7 +22,7 @@ export default function render(ctx) {
   const main = '<div class="vw-embed">'
     + '<header class="wrap vw-embed__head">'
     + `<h1 class="vw-embed__title">${esc(h1)}</h1>`
-    + `<a class="vw-embed__by" href="${esc(ctx.abs(ctx.href('home')))}" target="_blank" rel="noopener">${esc(by)}</a>`
+    + `<a class="vw-embed__by" href="${esc(ctx.abs(ctx.href('home')))}" target="_blank" rel="noopener nofollow">${esc(by)}</a>`
     + '</header>'
     + renderViewerApp(ctx, { embed: true, eager: true, railLevel: 2 })
     + '</div>';

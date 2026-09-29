@@ -92,8 +92,10 @@ figcaption { margin-top: var(--space-3); max-width: var(--measure); }
   .cajetin__cell { gap: var(--space-2); padding: var(--space-5); }
   .cajetin__cell:last-child:nth-child(odd) { grid-column: auto; }
   .cajetin--n5 .cajetin__cell:last-child, .cajetin--n7 .cajetin__cell:last-child { grid-column: span 2; }
-  .cajetin dd { font-size: var(--fs-h3); font-weight: var(--wght-heading); line-height: var(--lh-h3); letter-spacing: var(--tracking-h3); }
+  /* Values at lead size (V-11): a fact reads in one or two lines; the detail after ";" or ":" drops to a mono line. */
+  .cajetin dd { font-size: var(--fs-lead); }
 }
+.cajetin__detail { display: block; margin-top: var(--space-1); font: var(--wght-mono) var(--fs-meta)/var(--lh-meta) var(--font-mono); color: var(--color-ink-2); }
 
 /* ---------- Cota: a dimension line carrying a real value ---------- */
 .cota { position: relative; display: grid; place-items: center; min-height: var(--space-6); margin-top: var(--space-5); color: var(--color-ink-2); }
@@ -135,8 +137,7 @@ figcaption { margin-top: var(--space-3); max-width: var(--measure); }
 }
 
 /* ---------- FAQ (COMP-17): native details, 2 columns on desktop ---------- */
-.faq { display: grid; gap: 0 var(--space-7); }
-.faq__col { border-bottom: 1px solid var(--color-line); }
+.faq { border-bottom: 1px solid var(--color-line); }
 .faq__item { border-top: 1px solid var(--color-line); }
 .faq__item summary {
   display: flex;
@@ -162,7 +163,9 @@ figcaption { margin-top: var(--space-3); max-width: var(--measure); }
   .faq__item summary:hover { color: var(--color-accent); }
 }
 @media (min-width: 1024px) {
-  .faq--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  /* Balanced columns (V-08): items flow down the first column, then the second; each item closes with its own rule. */
+  .faq--2 { columns: 2; column-gap: var(--space-8); border-bottom: 0; }
+  .faq--2 .faq__item { break-inside: avoid; margin-bottom: -1px; border-bottom: 1px solid var(--color-line); }
 }
 
 /* ---------- Index lists (related, services, audiences, pages) ---------- */

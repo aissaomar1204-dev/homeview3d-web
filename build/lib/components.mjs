@@ -106,7 +106,13 @@ export function textHero(ctx, { actions = false, service, meta = '', figureSide 
 export function cajetin(ctx, facts, { date } = {}) {
   if (!facts || !facts.length) return '';
   const n = facts.length;
-  const cells = facts.map(([k, v]) => `<div class="cajetin__cell"><dt>${ctx.mdInline(k)}</dt><dd>${ctx.mdInline(v)}</dd></div>`).join('');
+  // V-11: the headline part of a value stays at lead size; what follows the first "; " or ": " is a mono detail line
+  // (the separator stays for screen readers).
+  const value = (v) => {
+    const m = String(v).match(/^(.+?)([;:]) (.+)$/s);
+    return m ? `${ctx.mdInline(m[1])}<span class="sr-only">${m[2]} </span><span class="cajetin__detail">${ctx.mdInline(m[3])}</span>` : ctx.mdInline(v);
+  };
+  const cells = facts.map(([k, v]) => `<div class="cajetin__cell"><dt>${ctx.mdInline(k)}</dt><dd>${value(v)}</dd></div>`).join('');
   const d = date || ctx.doc?.dateModified;
   const rev = d ? `<span class="cajetin__rev">${esc(ctx.t('date.revised'))} <time datetime="${esc(d)}">${esc(ctx.fmtDate(d))}</time></span>` : '';
   return `<section class="cajetin-band" aria-label="${esc(ctx.t('cajetin.label'))}"><div class="wrap"><div class="cajetin cajetin--n${n}" data-reveal="line"><p class="cajetin__head"><span>${esc(ctx.t('cajetin.head'))}</span>${rev}</p><dl class="cajetin__grid">${cells}</dl></div></div></section>`;
@@ -163,9 +169,8 @@ export function faqList(ctx, items, { openCount = 3 } = {}) {
     ctx.collect.faq.push({ q: ctx.tok(f.q), a: ctx.tok(f.a) });
     return `<details class="faq__item"${i < openCount ? ' open' : ''}><summary><span class="faq__q">${ctx.mdInline(f.q)}</span><span class="faq__icon" aria-hidden="true"></span></summary><div class="faq__a">${ctx.md(f.a)}</div></details>`;
   });
-  const half = Math.ceil(rendered.length / 2);
-  const cols = rendered.length > 3 ? [rendered.slice(0, half), rendered.slice(half)] : [rendered];
-  return `<div class="faq${cols.length > 1 ? ' faq--2' : ''}">${cols.map((c) => `<div class="faq__col">${c.join('')}</div>`).join('')}</div>`;
+  // One list; from 1024px CSS columns balance it by height (V-08), so the open items never leave a hole beside them.
+  return `<div class="faq${rendered.length > 3 ? ' faq--2' : ''}">${rendered.join('')}</div>`;
 }
 
 export function faqSection(ctx, items, { eyebrow, h2, openCount } = {}) {
@@ -206,23 +211,50 @@ export function routePrice(ctx, id) {
 
 /* ─── CTA band (closing + mid-page) ───────────────────────────── */
 
-export function ctaBand(ctx, { h2, body, service, image = 'villa_terraza', className = '' } = {}) {
+const CTA_IMAGES = ['villa_terraza', 'villa_interior_terraza', 'villa_muros_completos', 'villa_interior_salon', 'villa_bano_suite', 'villa_dormitorios'];
+
+/** First CTA render not already on the page (hero, blocks and asides come before the closing band). */
+function ctaImage(ctx) {
+  const used = new Set(ctx.collect.images.map((i) => String(i.name).replace(/_(opaco|mobile)$/, '')));
+  return CTA_IMAGES.find((n) => hasImage(ctx, n) && !used.has(n)) || null; // all shown (case page): text-only band
+}
+
+export function ctaBand(ctx, { h2, body, service, image, className = '' } = {}) {
+  if (image === undefined) image = ctaImage(ctx);
   const hd = head(ctx, { h2: h2 || ctx.t('cta_band.h2') });
   const text = ctx.md(body || ctx.t('cta_band.body'));
   const fig = image && hasImage(ctx, image)
     ? `<figure class="cta-band__figure${isAlpha(ctx, image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(image, { alt: ctx.t('cta_band.alt'), sizes: '(min-width: 1320px) 520px, (min-width: 1024px) 40vw, 100vw', max: 1200 })}</div></figure>`
     : '';
-  const inner = `<div class="cta-band__grid${fig ? '' : ' cta-band__grid--solo'}"><div class="cta-band__text">${hd.html}<div class="cta-band__body">${text}</div><p class="actions">${btnPrimary(ctx, contactHref(ctx, service), ctx.t('cta.demo'))}${whatsappLink(ctx)}</p></div>${fig}</div>`;
+  const inner = `<div class="cta-band__grid${fig ? '' : ' cta-band__grid--solo'}"><div class="cta-band__text">${hd.html}<div class="cta-band__body">${text}</div><p class="actions">${btnPrimary(ctx, contactHref(ctx, service), ctx.t('cta.demo'))}${ctx.directContact ? whatsappLink(ctx) : ''}</p></div>${fig}</div>`;
   return section(ctx, { type: 'cta', className: cls('cta-band', className), labelledby: hd.id, inner });
 }
 
 /* ─── Date line ───────────────────────────────────────────────── */
 
+/** The founder once site.founder is filled in (same rule as schema.mjs), else null. */
+export const founderOf = (ctx) => {
+  const f = ctx.site.founder;
+  return f && f.name && !f.placeholder ? f : null;
+};
+
+/**
+ * "Revisado por {name}" on guides and the case once site.founder is set (E-E-A-T; schema.mjs names the same Person as
+ * author). The name links to the about page. Empty while there is no founder.
+ */
+export function reviewedBy(ctx) {
+  const f = founderOf(ctx);
+  if (!f || !ctx.route || !['guide', 'case'].includes(ctx.route.template)) return '';
+  const name = ctx.has('sobre-nosotros') ? `<a href="${esc(ctx.href('sobre-nosotros'))}">${esc(f.name)}</a>` : esc(f.name);
+  const [a, b = ''] = ctx.t('date.reviewedBy').split('{name}');
+  return `<span class="dateline__by">${esc(a)}${name}${esc(b)}</span>`;
+}
+
 export function dateLine(ctx, { author = false } = {}) {
   const d = ctx.doc?.dateModified;
   if (!d) return '';
   const by = author ? `<span class="dateline__by">${esc(ctx.t('guide.byline'))}</span>` : '';
-  return `<p class="dateline">${by}<span>${esc(ctx.t('date.updated'))} <time datetime="${esc(d)}">${esc(ctx.fmtDate(d))}</time></span></p>`;
+  return `<p class="dateline">${by}${reviewedBy(ctx)}<span>${esc(ctx.t('date.updated'))} <time datetime="${esc(d)}">${esc(ctx.fmtDate(d))}</time></span></p>`;
 }
 
 /* ─── Compare slider (COMP-12, S2 "Calco") ─────────────────────── */
@@ -310,7 +342,11 @@ export function deliverablesBlock(ctx, block = {}) {
     return `<li class="bento__cell bento__cell--${i + 1}" data-reveal><div class="bento__media${isAlpha(ctx, d.image) || !hasImage(ctx, d.image) ? ' figure--stage' : ''}">${img}</div><div class="bento__text"><h3 class="bento__title">${title}</h3><p>${ctx.mdInline(L.body)}</p>${formats ? `<ul class="bento__formats" role="list" aria-label="${esc(ctx.t('deliverables.formats'))}">${formats}</ul>` : ''}</div></li>`;
   }).join('');
   const soon = ctx.data.comingSoon || [];
-  const soonLine = soon.length ? `<p class="bento__soon"><span>${esc(ctx.t('deliverables.soon'))}:</span> ${soon.map((s) => esc(s[ctx.lang].title)).join(ctx.lang === 'es' ? ' y ' : ' and ')}.</p>` : '';
+  // One sentence (V-12): titles after the first go in sentence case («… con IA y tours de realidad virtual 360°»),
+  // unless the item gives its own `inline` wording (proper nouns).
+  const inlineTitle = (s, i) => s[ctx.lang].inline || (i === 0 ? s[ctx.lang].title : s[ctx.lang].title.replace(/^\p{Lu}(?=\p{Ll})/u, (c) => c.toLocaleLowerCase(ctx.lang)));
+  const joined = soon.map((s, i) => esc(inlineTitle(s, i)));
+  const soonLine = soon.length ? `<p class="bento__soon"><span>${esc(ctx.t('deliverables.soon'))}:</span> ${joined.length > 1 ? `${joined.slice(0, -1).join(', ')}${ctx.lang === 'es' ? ' y ' : ' and '}${joined[joined.length - 1]}` : joined[0]}.</p>` : '';
   return section(ctx, { type: 'deliverables', labelledby: hd.id, inner: `${hd.html}<ul class="bento bento--${items.length}" role="list">${cells}</ul>${soonLine}` });
 }
 
@@ -348,7 +384,7 @@ export function pricingBlock(ctx, block = {}) {
   let more = '';
   if (block.variant === 'full') {
     const maxTiers = Math.max(...pricing.packs.map((p) => (p.tiers ? p.tiers.length : 0)));
-    const tierCols = pricing.packs.find((p) => p.tiers && p.tiers.length === maxTiers).tiers.map((t) => esc(ctx.t('pricing.upTo', { m2: t.maxM2 })));
+    const tierCols = pricing.packs.find((p) => p.tiers && p.tiers.length === maxTiers).tiers.map((t, i, all) => esc(i ? ctx.t('pricing.range', { from: all[i - 1].maxM2 + 1, m2: t.maxM2 }) : ctx.t('pricing.upTo', { m2: t.maxM2 })));
     const cols = [esc(ctx.t('pricing.tierHead')), ...tierCols, esc(ctx.t('pricing.delivery'))];
     const rows = pricing.packs.map((p) => {
       const cells = p.tiers
@@ -438,7 +474,7 @@ export function contactForm(ctx, block = {}, { alternatives = true } = {}) {
   const enlace = text('enlace', { type: 'url', autocomplete: 'url', inputmode: 'url', spell: false, msg: 'url' });
   const mensaje = `<div class="field"><label class="field__label" for="${ids.mensaje}">${f('mensaje')} ${opt}</label><textarea id="${ids.mensaje}" name="mensaje" class="input" rows="4" autocomplete="off" placeholder="${f('mensajePh')}"></textarea></div>`;
   const origen = `<div class="field"><label class="field__label" for="${ids.origen}">${f('origen')} ${opt}</label><select id="${ids.origen}" name="origen" class="input"><option value="">${f('origenPh')}</option>${Object.entries(ctx.t('form.origenes')).map(([v, l]) => `<option value="${v}">${esc(l)}</option>`).join('')}</select></div>`;
-  const rgpd = `<div class="field field--check"><label class="check" for="${ids.rgpd}"><input id="${ids.rgpd}" name="rgpd" type="checkbox" value="si" required data-m="rgpd" toolparamdescription="${f('rgpdParam')}"><span>${ctx.tHtml('form.rgpd')}</span></label></div>`;
+  const rgpd = `<div class="field field--check"><label class="check" for="${ids.rgpd}"><input id="${ids.rgpd}" name="rgpd" type="checkbox" value="si" required data-m="rgpd" toolparamtitle="${f('rgpdTitle')}" toolparamdescription="${f('rgpdParam')}"><span>${ctx.tHtml('form.rgpd')}</span></label></div>`;
   const hp = `<p class="hp" aria-hidden="true"><label for="${ids.hp}">${f('honeypot')}</label><input id="${ids.hp}" name="bot-field" type="text" tabindex="-1" autocomplete="off"></p>`;
   const hidden = ['utm_source', 'utm_medium', 'utm_campaign', 'referrer', 'landing'].map((n) => `<input type="hidden" name="${n}" value="">`).join('')
     + `<input type="hidden" name="form-name" value="presupuesto"><input type="hidden" name="idioma" value="${ctx.lang}">`;
@@ -469,11 +505,12 @@ export function contactForm(ctx, block = {}, { alternatives = true } = {}) {
 
 export function contactAlternatives(ctx) {
   const c = ctx.site.contact;
+  // WhatsApp and phone only with real contact data (V-02); email always.
   const items = [
-    `<li><span class="alt__k">${esc(ctx.t('form.altWhatsapp'))}</span>${whatsappLink(ctx, { className: 'btn btn--neutral' })}</li>`,
+    ctx.directContact ? `<li><span class="alt__k">${esc(ctx.t('form.altWhatsapp'))}</span>${whatsappLink(ctx, { className: 'btn btn--neutral' })}</li>` : '',
     `<li><span class="alt__k">${esc(ctx.t('form.altEmail'))}</span><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></li>`,
-    `<li><span class="alt__k">${esc(ctx.t('form.altPhone'))}</span><a href="tel:${esc(c.phoneE164)}">${esc(c.phoneDisplay)}</a></li>`,
-  ];
+    ctx.phoneLink ? `<li><span class="alt__k">${esc(ctx.t('form.altPhone'))}</span><a href="tel:${esc(c.phoneE164)}">${esc(c.phoneDisplay)}</a></li>` : '',
+  ].filter(Boolean);
   if (c.booking) items.push(`<li><span class="alt__k">${esc(ctx.t('form.altBooking'))}</span><a href="${esc(c.booking)}" rel="noopener">${esc(ctx.t('form.altBooking'))}</a></li>`);
   const altId = ctx.uid('alt');
   return `<aside class="contact__alt" aria-labelledby="${altId}"><h3 id="${altId}" class="alt__title">${esc(ctx.t('form.altTitle'))}</h3><ul class="alt" role="list">${items.join('')}</ul><p class="alt__note">${esc(ctx.t('form.altReply'))}</p></aside>`;

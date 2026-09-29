@@ -14,6 +14,7 @@
    ═══════════════════════════════════════════════════════════════ */
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { site, hasPlaceholders } from './data/site.mjs';
@@ -147,6 +148,7 @@ const exists = (p) => fs.existsSync(path.join(ROOT, 'public', p));
 const pageAssets = {
   css: css.url,
   cssModules: css.modules,
+  cssBundle: (mods) => assets.cssBundle(mods),
   js: { main: js.main && js.main.url, viewer: js.viewer && js.viewer.url },
   font: assets.assetMap.has(fontPath) ? assets.asset(fontPath) : null,
   meshopt: assets.asset(villa.viewer.meshoptDecoder),
@@ -347,11 +349,27 @@ function report() {
     const lcpName = (home.images[0] || {}).name;
     const m = lcpName && assets.images && assets.images[lcpName];
     const lcpB = m && m.bytes ? (m.bytes['avif-1200'] || m.bytes['webp-1200'] || 0) : 0;
-    console.log(`  home: HTML ${kb(htmlB)} · CSS ${kb(cssB)} (shared ${kb(css.bytes)}) · initial JS ${kb(jsB)} · fonts ${kb(fontB)} · LCP image ${lcp ? (lcpB ? `${kb(lcpB)} (avif 1200w)` : 'n/a (no manifest bytes)') : 'none'}`);
-    if (htmlB > 60 * 1024) warn(`! home HTML ${kb(htmlB)} > 60 KB budget`);
-    if (cssB > 40 * 1024) warn(`! home CSS ${kb(cssB)} > 40 KB budget`);
+    const B = (machineMod && machineMod.BUDGETS) || { htmlRawKB: 72, htmlBrotliKB: 16, brotliQuality: 11, cssSharedKB: 25, cssPageKB: 45, cssBlockingMax: 2 };
+    const brB = zlib.brotliCompressSync(Buffer.from(home.html), { params: { [zlib.constants.BROTLI_PARAM_QUALITY]: B.brotliQuality } }).length;
+    console.log(`  home: HTML ${kb(htmlB)} (${kb(brB)} br) · CSS ${kb(cssB)} (shared ${kb(css.bytes)}) · initial JS ${kb(jsB)} · fonts ${kb(fontB)} · LCP image ${lcp ? (lcpB ? `${kb(lcpB)} (avif 1200w)` : 'n/a (no manifest bytes)') : 'none'}`);
+    console.log(`  css bundles: ${assets.bundles.size} module set(s) · ≤ ${B.cssBlockingMax} render-blocking stylesheets per page`);
+    // Budgets (BUILD-SPEC §11): the BUDGETS export of build/lib/machine.mjs, shared with check.mjs and the design lint.
+    if (htmlB > B.htmlRawKB * 1024) warn(`! home HTML ${kb(htmlB)} > ${B.htmlRawKB} KB budget`);
+    if (brB > B.htmlBrotliKB * 1024) warn(`! home HTML ${kb(brB)} brotli > ${B.htmlBrotliKB} KB budget`);
+    if (css.bytes > B.cssSharedKB * 1024) warn(`! shared CSS ${kb(css.bytes)} > ${B.cssSharedKB} KB budget`);
+    if (cssB > B.cssPageKB * 1024) warn(`! home CSS ${kb(cssB)} > ${B.cssPageKB} KB budget`);
     if (js.main && js.main.bytes > 15 * 1024) warn(`! main.js ${kb(js.main.bytes)} > 15 KB budget`);
   }
+  let worst = null;
+  const PB = (machineMod && machineMod.BUDGETS) || { cssPageKB: 45, cssBlockingMax: 2 };
+  for (const e of [...entries, ...notFound]) {
+    const links = [...e.html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map((m) => m[1]);
+    const bytes = links.reduce((s, u) => s + size(u), 0);
+    if (links.length > PB.cssBlockingMax) warn(`! ${e.path}: ${links.length} render-blocking stylesheets (max ${PB.cssBlockingMax})`);
+    if (bytes > PB.cssPageKB * 1024) warn(`! ${e.path}: CSS ${kb(bytes)} > ${PB.cssPageKB} KB budget`);
+    if (!worst || bytes > worst.bytes) worst = { path: e.path, bytes };
+  }
+  if (worst) console.log(`  heaviest page CSS: ${kb(worst.bytes)} (${worst.path})`);
   if (placeholders) console.warn('\n  ⚠  PLACEHOLDERS: brand/domain/contact/legal data in build/data/site.mjs are placeholders.\n     Every page is rendered "noindex, follow". Production deploys fail unless ALLOW_PLACEHOLDERS=1.');
   if (!pricing.confirmed) console.warn('  ⚠  PRICING NOT CONFIRMED: build/data/pricing.mjs is a proposal (confirmed: false).');
   if (assets.missing.size) console.warn(`  ⚠  ${assets.missing.size} asset(s) referenced but missing in public/`);
@@ -372,6 +390,7 @@ function validateContent(allDocs) {
     'villa_bano_suite', 'villa_bano_suite_opaco', 'villa_terraza', 'villa_terraza_opaco',
     'villa_muros_completos', 'villa_muros_completos_opaco', 'og_image',
     'villa_despiece_1', 'villa_despiece_2', 'villa_despiece_3', 'villa_viewer_poster',
+    'villa_interior_salon', 'villa_interior_dormitorio', 'villa_interior_bano', 'villa_interior_terraza',
   ]);
   const BLOCKS = {
     prose: ['body'], answer: ['h2', 'answer'], table: ['caption', 'head', 'rows'], steps: ['h2', 'items'], checklist: ['h2', 'items'],

@@ -42,12 +42,13 @@ export const routes = [
   // ── Guides ────────────────────────────────────────────────────
   { id: 'guias',             template: 'hub',      parent: 'home',       es: '/guias/',                             en: '/en/guides/',                            priority: 0.7 },
   { id: 'guia-precio-render', template: 'guide',   parent: 'guias',      es: '/guias/cuanto-cuesta-un-render-3d/',  en: '/en/guides/3d-rendering-cost-spain/',    priority: 0.8 },
-  { id: 'guia-precio-plano', template: 'guide',    parent: 'guias',      es: '/guias/cuanto-cuesta-un-plano-3d/',   en: null,                                     priority: 0.7 },
+  { id: 'guia-precio-plano', template: 'guide',    parent: 'guias',      es: '/guias/cuanto-cuesta-un-plano-3d/',   en: '/en/guides/3d-floor-plan-cost-spain/',   priority: 0.7 },
   { id: 'guia-plano-2d-3d',  template: 'guide',    parent: 'guias',      es: '/guias/como-convertir-un-plano-2d-en-3d/', en: null,                                priority: 0.7 },
   { id: 'guia-ia-vs-3d',     template: 'guide',    parent: 'guias',      es: '/guias/ia-o-modelo-3d-real/',         en: '/en/guides/ai-floor-plan-to-3d/',        priority: 0.7 },
   { id: 'guia-sobre-plano',  template: 'guide',    parent: 'guias',      es: '/guias/como-vender-viviendas-sobre-plano/', en: null,                               priority: 0.7 },
   { id: 'guia-matterport',   template: 'guide',    parent: 'guias',      es: '/guias/modelo-3d-vs-matterport/',     en: '/en/guides/3d-model-vs-matterport/',     priority: 0.7 },
   { id: 'guia-ar',           template: 'guide',    parent: 'guias',      es: '/guias/ver-una-vivienda-en-realidad-aumentada/', en: '/en/guides/view-property-in-ar/', priority: 0.7 },
+  { id: 'guia-mejores',      template: 'guide',    parent: 'guias',      es: '/guias/mejores-estudios-visualizacion-3d-espana/', en: '/en/guides/best-3d-visualisation-studios-spain/', priority: 0.7 },
 
   // ── Reference ─────────────────────────────────────────────────
   { id: 'glosario',          template: 'glossary', parent: 'home',       es: '/glosario/',                          en: '/en/glossary/',                          priority: 0.6 },

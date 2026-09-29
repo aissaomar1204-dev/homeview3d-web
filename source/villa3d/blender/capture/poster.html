@@ -9,6 +9,9 @@
     ?w=1600&h=1100&scale=2                     poster → source/villa3d/renders/villa_viewer_poster.png
     ?w=1200&h=1500&scale=2&name=_poster_mobile_2x.png   4:5 poster for the portrait (mobile) stage
     ?mode=turntable&w=1280&h=800&frames=240    frames → CAPTURE_TMP/turntable/f_0001.png …
+    ?mode=probe&w=1600&h=900                   no file: returns the alpha bounding box of the frame and its margins
+                                               (fractions of w/h, alpha ≥ 4/255, shadow included) to tune the framing
+    &orbit=…&target=…                          override villa.viewer.cameraOrbit / cameraTarget (tuning only)
   `scale` renders at N× (fake devicePixelRatio) for supersampling; the PNG is saved at w×h·scale and
   downscaled by the caller (sharp), which gives cleaner edges than the WebGL MSAA alone.
 -->
@@ -26,7 +29,9 @@
   const NAME = q.get('name') || 'villa_viewer_poster.png';
   Object.defineProperty(window, 'devicePixelRatio', { get: () => SCALE });
   const { villa } = await import('/build/data/villa.mjs');
-  const v = villa.viewer;
+  const v = { ...villa.viewer };
+  if (q.get('orbit')) v.cameraOrbit = q.get('orbit');
+  if (q.get('target')) v.cameraTarget = q.get('target');
   self.ModelViewerElement = Object.assign(self.ModelViewerElement || {}, {
     meshoptDecoderLocation: '/public/lib/model-viewer/meshopt_decoder.js',
     minimumRenderScale: 1,
@@ -70,7 +75,21 @@
       mv.jumpCameraToGoal();
       await settle(20);
       const info = { cut: cut.length, orbit: mv.getCameraOrbit().toString(), fov: mv.getFieldOfView(), canvas: null, saved: [] };
-      if (MODE === 'poster') {
+      if (MODE === 'probe') {
+        const blob = await mv.toBlob({ mimeType: 'image/png', idealAspect: false });
+        const bmp = await createImageBitmap(blob);
+        const c = new OffscreenCanvas(bmp.width, bmp.height);
+        const g = c.getContext('2d');
+        g.drawImage(bmp, 0, 0);
+        const { data, width, height } = g.getImageData(0, 0, bmp.width, bmp.height);
+        let x0 = width, y0 = height, x1 = -1, y1 = -1;
+        for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+          if (data[(y * width + x) * 4 + 3] >= 4) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        }
+        info.canvas = [width, height];
+        info.bbox = [x0, y0, x1, y1];
+        info.margins = { left: x0 / width, right: (width - 1 - x1) / width, top: y0 / height, bottom: (height - 1 - y1) / height };
+      } else if (MODE === 'poster') {
         const blob = await mv.toBlob({ mimeType: 'image/png', idealAspect: false });
         const bmp = await createImageBitmap(blob);
         info.canvas = [bmp.width, bmp.height];

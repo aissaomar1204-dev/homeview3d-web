@@ -10,7 +10,7 @@ export default {
   id: 'servicio-plano',
   image: 'villa_planta_cenital_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: 'Plano 2D a 3D para inmobiliarias, sin fotos',
@@ -245,7 +245,7 @@ export default {
         type: 'pricing',
         variant: 'excerpt',
         h2: 'How much does a 3D floor plan cost?',
-        intro: 'Public prices, excluding VAT. A 3D floor plan costs {{price:plano3d}} per floor up to 150 m² and {{price:plano3d:1}} up to 300 m². Market rates for 3D floor plans in Spain are compared on our [pricing page](@precios).',
+        intro: 'Public prices, excluding VAT. A 3D floor plan costs {{price:plano3d}} per floor up to 150 m² and {{price:plano3d:1}} up to 300 m². Market rates for 3D floor plans in Spain, with sources, are in our [3D floor plan cost guide](@guia-precio-plano); all our rates are on the [pricing page](@precios).',
       },
       {
         type: 'callout',
@@ -258,7 +258,7 @@ export default {
     faq: [
       {
         q: 'How much does a 3D floor plan cost?',
-        a: 'In Spain, a 3D floor plan costs about €40 per floor on online platforms and €100 to €800 or more from studios, according to rates published in 2026. At {{brand}} it costs {{price:plano3d}} + VAT per floor up to 150 m², or {{price:plano3d:1}} up to 300 m², and the complete 3D model starts at {{price:maqueta}} + VAT. The sourced comparison is on our [pricing page](@precios).',
+        a: 'In Spain, a 3D floor plan costs about €40 per floor on online platforms and €100 to €800 or more from studios, according to rates published in 2026. At {{brand}} it costs {{price:plano3d}} + VAT per floor up to 150 m², or {{price:plano3d:1}} up to 300 m², and the complete 3D model starts at {{price:maqueta}} + VAT. The sourced comparison is in [how much a 3D floor plan costs in Spain](@guia-precio-plano).',
       },
       {
         q: 'How long does it take to turn a floor plan into a 3D model?',

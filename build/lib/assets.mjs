@@ -2,8 +2,10 @@
    Assets (docs/build/BUILD-SPEC.md §0 Hashing, §2 step 2). Owner: ENGINE.
    - public/** → dist/**; files under public/assets/** and public/lib/**
      are renamed <name>.<hash8>.<ext> and recorded in assetMap.
-   - src/css/*.css → one minified dist/assets/css/site.<hash8>.css with
-     url(/assets/…) rewritten to hashed names.
+   - src/css/*.css → one minified dist/assets/css/site.<hash8>.css (shared) with
+     url(/assets/…) rewritten to hashed names; files marked `@module` become
+     <name>.<hash8>.css, and each page links site.css + one bundle of the
+     modules it uses (p.<hash8>.css, cssBundle): ≤ 2 render-blocking sheets.
    - src/js/*.js → dist/assets/js/<name>.<hash8>.js (lightly minified,
      verified with `node --check`, raw copy as fallback).
    - picture(name, opts, ctx): <picture> from build/generated/images.json.
@@ -112,11 +114,36 @@ export function createAssets({ root, dist, warn = console.warn }) {
       m.css += p.css;
       byName.set(p.module, m);
     }
+    // Each module is also written on its own: viewer.js adds viewerlive.css and ar.css at runtime (on intent / in the AR dialog).
     const modules = [...byName.values()].map((m) => {
       const css = finish(m.css);
-      return { name: m.name, classes: [...new Set(m.classes)], url: register(`/assets/css/${m.name}.css`, Buffer.from(css)), bytes: Buffer.byteLength(css) };
+      return { name: m.name, classes: [...new Set(m.classes)], url: register(`/assets/css/${m.name}.css`, Buffer.from(css)), bytes: Buffer.byteLength(css), css };
     });
     return { url, bytes: Buffer.byteLength(core), files, modules };
+  }
+
+  /**
+   * One stylesheet per set of modules (V-21): a page links the shared sheet plus at most one bundle, so it never has
+   * more than two render-blocking CSS requests. Modules keep their source order inside the bundle. Same set → same file.
+   * Returns { url, bytes, names } or null for an empty set.
+   */
+  const bundles = new Map();
+  function cssBundle(mods = []) {
+    if (!mods.length) return null;
+    // A single module is its own bundle (same bytes, and the file viewer.js may already have in cache).
+    if (mods.length === 1) return { url: mods[0].url, bytes: mods[0].bytes, names: [mods[0].name] };
+    const key = mods.map((m) => m.name).join('+');
+    if (!bundles.has(key)) {
+      const css = mods.map((m) => m.css).join('');
+      const buf = Buffer.from(css);
+      const out = `/assets/css/p.${hash8(buf)}.css`;
+      const dst = path.join(dist, out);
+      fs.mkdirSync(path.dirname(dst), { recursive: true });
+      fs.writeFileSync(dst, buf);
+      sizes.set(out, buf.length);
+      bundles.set(key, { url: out, bytes: buf.length, names: mods.map((m) => m.name) });
+    }
+    return bundles.get(key);
   }
 
   /** src/js/*.js → /assets/js/<name>.<hash>.js. Returns { name: url }. */
@@ -220,7 +247,7 @@ export function createAssets({ root, dist, warn = console.warn }) {
   }
 
   return {
-    assetMap, sizes, copyPublic, asset, register, buildCss, buildJs, loadImages, picture, largest, og,
+    assetMap, sizes, copyPublic, asset, register, buildCss, cssBundle, bundles, buildJs, loadImages, picture, largest, og,
     get images() { return images; },
     missing,
   };

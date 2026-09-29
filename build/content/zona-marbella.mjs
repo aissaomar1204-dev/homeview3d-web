@@ -24,7 +24,7 @@ const faqEs = [
   },
   {
     q: '¿Cuánto cuesta un render 3D en Marbella?',
-    a: 'Con {{brand}}, un render adicional en 4K sobre el modelo cuesta {{extra:render}} + IVA, y la maqueta 3D completa con renders, visor y realidad aumentada parte de {{price:maqueta}} + IVA. Muchos estudios de la zona presupuestan por proyecto; en nuestra [guía de precios de renders](@guia-precio-render) comparamos los rangos publicados en España, con fuente y fecha.',
+    a: 'Con {{brand}}, un render adicional en 4K sobre el modelo cuesta {{extra:render}} + IVA, y la maqueta 3D completa con renders, visor y realidad aumentada parte de {{price:maqueta}} + IVA. Muchos estudios de la zona presupuestan por proyecto, como verás en nuestra [comparativa de estudios de infografía 3D](@guia-mejores); los rangos publicados en España, con fuente y fecha, están en la [guía de precios de renders](@guia-precio-render).',
   },
   {
     q: '¿Podéis modelar una villa grande o de varias plantas?',
@@ -55,7 +55,7 @@ const faqEn = [
   },
   {
     q: 'How much does 3D rendering cost in Marbella?',
-    a: 'With {{brand}}, an extra 4K render on an existing model costs {{extra:render}} + VAT, and the complete 3D model with renders, viewer and augmented reality starts at {{price:maqueta}} + VAT. Many local studios quote per project; our [3D rendering cost guide](@guia-precio-render) compares the price ranges published in Spain, with sources and dates.',
+    a: 'With {{brand}}, an extra 4K render on an existing model costs {{extra:render}} + VAT, and the complete 3D model with renders, viewer and augmented reality starts at {{price:maqueta}} + VAT. Many local studios quote per project, as our [round-up of 3D studios in Spain](@guia-mejores) shows; our [3D rendering cost guide](@guia-precio-render) compares the price ranges published in Spain, with sources and dates.',
   },
   {
     q: 'Can you model a large villa over several floors?',
@@ -83,7 +83,7 @@ export default {
   id: 'zona-marbella',
   image: 'villa_terraza_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   es: {
     title: 'Render 3D y maqueta virtual en Marbella',
@@ -157,7 +157,7 @@ export default {
         head: ['Vivienda', 'Qué te recomendamos', 'Precio'],
         rows: [
           ['Apartamento o ático de hasta 150 m²', 'Maqueta 3D completa: modelo, renders, visor y realidad aumentada', '{{price:maqueta}}'],
-          ['Villa de 150 a 300 m² en total', 'Maqueta 3D completa, con todas sus plantas', '{{price:maqueta:1}}'],
+          ['Villa de más de 150 y hasta 300 m² en total', 'Maqueta 3D completa, con todas sus plantas', '{{price:maqueta:1}}'],
           ['Vivienda con decoración antigua o por reformar', 'Maqueta más home staging virtual en las estancias clave', '{{extra:staging}} por estancia'],
           ['Piso de reventa con buenas fotos', '[Plano 3D](@servicio-plano) para explicar la distribución', '{{price:plano3d}} por planta'],
           ['Varias captaciones en la zona', 'Pack cartera de 5 maquetas 3D completas', '{{volume}}'],
@@ -280,7 +280,7 @@ export default {
         head: ['Property', 'What we recommend', 'Price'],
         rows: [
           ['Apartment or penthouse up to 150 m²', 'Complete 3D model: model, renders, viewer and augmented reality', '{{price:maqueta}}'],
-          ['Villa of 150 to 300 m² in total', 'Complete 3D model, all floors included', '{{price:maqueta:1}}'],
+          ['Villa of over 150 and up to 300 m² in total', 'Complete 3D model, all floors included', '{{price:maqueta:1}}'],
           ['Dated home or renovation project', 'Model plus virtual staging in the key rooms', '{{extra:staging}} per room'],
           ['Resale flat with good photos', '[3D floor plan](@servicio-plano) to explain the layout', '{{price:plano3d}} per floor'],
           ['Several instructions in the area', 'Portfolio pack of 5 complete 3D models', '{{volume}}'],

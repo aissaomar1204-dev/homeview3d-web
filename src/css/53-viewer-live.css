@@ -56,10 +56,17 @@
 }
 
 /* Medidas (S3): measured lines drawn on the live model; labels are hotspots (data on the stage, IMG-08). */
-.vw-dims { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; stroke: var(--color-ink); stroke-width: 1.5; }
+/* Lines break around their value and end in 45° ticks (drawn by viewer.js, V-03); the camera keeps them on stage. */
+.vw-dims { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; fill: none; stroke: var(--color-ink); stroke-width: 1.5; stroke-linecap: square; }
 .vw:not([data-dims-on]) :is(.vw-dims, .vw-dim) { display: none; }
 .vw-dim-pt { width: 1px; height: 1px; pointer-events: none; }
-.vw-dim { padding: 0 var(--space-2); font: var(--wght-mono) var(--fs-meta)/1.6 var(--font-mono); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); pointer-events: none; white-space: nowrap; }
+.vw-dim { display: inline-block; padding: 0 var(--space-2); font: var(--wght-mono) var(--fs-meta)/1.6 var(--font-mono); color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line-strong); border-radius: var(--radius-1); pointer-events: none; white-space: nowrap; }
+/* The height value sits beside its line, never on it. */
+.vw-dim--h { translate: calc(50% + 10px) 0; }
+.vw-dim--h.vw-dim--hl { translate: calc(-50% - 10px) 0; }
+.vw-dim.is-off { visibility: hidden; }
+/* While Medidas is on, the drawing is the only annotation: room numbers step back (the room list still works). */
+.vw[data-dims-on] .vw-hs { visibility: hidden; }
 
 .vw-group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
 .vw-seg { flex-wrap: nowrap; gap: 0; }

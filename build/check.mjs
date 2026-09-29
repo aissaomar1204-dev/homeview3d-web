@@ -22,6 +22,7 @@
    ═══════════════════════════════════════════════════════════════ */
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { site, hasPlaceholders } from './data/site.mjs';
@@ -29,7 +30,7 @@ import { routes, routeById, redirects as routeRedirects } from './data/routes.mj
 import { pricing, formatPrice } from './data/pricing.mjs';
 import { villa } from './data/villa.mjs';
 import {
-  routeIndexable, embedPrefixes, ALLOWED_AGENTS, BLOCKED_AGENTS, CRITICAL_AGENTS, inlineScriptHashes, LLMS_FULL, LLMS_INDEX, EMBED_ROBOTS, CONTENT_SIGNAL,
+  routeIndexable, embedPrefixes, ALLOWED_AGENTS, BLOCKED_AGENTS, CRITICAL_AGENTS, inlineScriptHashes, LLMS_FULL, LLMS_INDEX, EMBED_ROBOTS, CONTENT_SIGNAL, BUDGETS,
 } from './lib/machine.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -85,6 +86,11 @@ const norm = (s) => decode(String(s ?? '')).toLowerCase().normalize('NFC').repla
 const words = (s) => String(s ?? '').split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w)).length;
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 const size = (p) => { try { return fs.statSync(p).size; } catch { return 0; } };
+const KB = 1024;
+/** Brotli size at the budget's quality (BUILD-SPEC §11: what a static host serves). */
+const brotliBytes = (s) => zlib.brotliCompressSync(Buffer.isBuffer(s) ? s : Buffer.from(String(s)), {
+  params: { [zlib.constants.BROTLI_PARAM_QUALITY]: BUDGETS.brotliQuality },
+}).length;
 
 /** Resolve a URL path inside dist: page dir (index.html), file, or null. */
 function distFile(urlPath) {
@@ -354,13 +360,13 @@ for (const p of pages.values()) {
     if (/<\/?[a-z]/i.test(raw.replace(/\\u003c/gi, ''))) warn('schema', p.where, 'unescaped "<" in JSON-LD');
     let json;
     try { json = JSON.parse(raw); } catch (e) { err('schema', p.where, `JSON-LD does not parse: ${e.message}`); continue; }
-    // Budget 8 KB (05 §5.3 #8) for the structured-data overhead. The FAQ Questions are excluded: they must
+    // Budget 8 KB (05 §5.3 #8, BUDGETS.jsonLdKB) for the structured-data overhead. The FAQ Questions are excluded: they must
     // mirror the visible FAQ word for word (6 to 10 answers of 40 to 80 words ≈ 4 KB), so their size is
     // content, not markup. The glossary IS its DefinedTermSet (every visible definition), so it gets 24 KB.
     let faqBytes = 0;
     walkJson(json, (v) => { if (v && typeof v === 'object' && !Array.isArray(v) && v['@type'] === 'Question') faqBytes += Buffer.byteLength(JSON.stringify(v)); });
     const ldBytes = Buffer.byteLength(raw) - faqBytes;
-    const ldMax = p.template === 'glossary' ? 24 * 1024 : 8 * 1024;
+    const ldMax = (p.template === 'glossary' ? BUDGETS.jsonLdGlossaryKB : BUDGETS.jsonLdKB) * KB;
     if (ldBytes > ldMax) warn('budgets', p.where, `JSON-LD ${kb(ldBytes)} without the FAQ questions (> ${kb(ldMax)})`);
     if (json['@context'] !== 'https://schema.org') err('schema', p.where, '@context must be "https://schema.org"');
     const graph = Array.isArray(json['@graph']) ? json['@graph'] : [json];
@@ -480,6 +486,19 @@ for (const p of pages.values()) {
       }
     }
     if (t.includes('HowTo')) { need(p, n, ['name']); if (!(n.step || []).length) err('schema', p.where, 'HowTo without steps'); }
+    // ItemList: hubs (#list), the home's services, ranked/comparison tables of guides (`table` with itemList: true).
+    if (t.includes('ItemList') && !t.includes('BreadcrumbList') && !t.includes('OfferCatalog') && n['@id']) {
+      const items = [].concat(n.itemListElement || []);
+      if (!items.length) err('schema', p.where, `ItemList ${n['@id']} without itemListElement`);
+      if (n.numberOfItems != null && n.numberOfItems !== items.length) err('schema', p.where, `ItemList ${n['@id']} numberOfItems ${n.numberOfItems} ≠ ${items.length} items`);
+      items.forEach((it, i) => {
+        if (it.position !== i + 1) err('schema', p.where, `ItemList ${n['@id']} position ${it.position} at index ${i}`);
+        const u = it.url || (typeof it.item === 'string' ? it.item : it.item?.['@id'] || it.item?.url);
+        if (!it.name && !u) err('schema', p.where, `ItemList ${n['@id']} item ${i + 1} needs a name or a url`);
+        if (u && !urlExists(u)) err('schema', p.where, `ItemList ${n['@id']} item ${i + 1} → missing page ${u}`);
+        if (it.name && !p.textNorm.includes(norm(it.name))) err('schema', p.where, `ItemList ${n['@id']} item «${String(it.name).slice(0, 60)}» is not visible on the page`);
+      });
+    }
     if (t.includes('DefinedTermSet') && !(n.hasDefinedTerm || []).length) err('schema', p.where, 'DefinedTermSet without terms');
     if (t.includes('DefinedTerm')) {
       need(p, n, ['name', 'description']);
@@ -560,10 +579,67 @@ for (const p of pages.values()) {
   }
 }
 
-/* ═══ 7. Budgets (§11) + heavy 3D never in initial HTML ═══════ */
+/* ═══ 7. Budgets (§11, BUDGETS in build/lib/machine.mjs) + heavy 3D never in initial HTML ═══ */
+/**
+ * Stylesheets a page requests from its HTML: every <link rel="stylesheet"> (head or body) plus the @imports
+ * inside them. Render-blocking = not `disabled` and no media query that is false on a screen
+ * ("print", "not all"): a stylesheet with a matching or width-based media still blocks first paint.
+ */
+const cssImports = new Map();
+const importsOf = (file) => {
+  if (!cssImports.has(file)) {
+    let css = '';
+    try { css = fs.readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, ''); } catch { /* missing: reported as a broken link */ }
+    const out = [];
+    for (const m of css.matchAll(/@import\s+(?:url\(\s*)?["']?([^"')\s;]+)["']?\s*\)?([^;]*);/g)) {
+      const abs = m[1].startsWith('/') ? m[1] : new URL(m[1], `https://${HOST}/${rel(file)}`).pathname;
+      const f = distFile(abs);
+      if (f) out.push({ file: f, media: m[2].trim() });
+    }
+    cssImports.set(file, out);
+  }
+  return cssImports.get(file);
+};
+const nonBlockingMedia = (media) => /^\s*(print|not\s+all)\s*$/i.test(media || '');
+function stylesheetsOf(p) {
+  const out = [];
+  const seen = new Set();
+  const add = (file, media, via) => {
+    if (!file || seen.has(file)) return;
+    seen.add(file);
+    out.push({ file, bytes: size(file), blocking: !nonBlockingMedia(media), via });
+    for (const im of importsOf(file)) add(im.file, im.media || media, `@import in ${path.basename(file)}`);
+  };
+  for (const l of p.links) {
+    if (!(l.a.rel || '').toLowerCase().split(/\s+/).includes('stylesheet') || 'disabled' in l.a) continue;
+    const c = classify(l.a.href || '', p.urlPath);
+    if (c.kind === 'internal') add(distFile(c.path), l.a.media, 'link');
+  }
+  return out;
+}
+const pageCss = new Map([...pages.values()].map((p) => [p, stylesheetsOf(p)]));
+// The shared sheet: linked by (nearly) every page that has CSS, or named site.<hash>.css by the engine.
+const cssUse = new Map();
+for (const sheets of pageCss.values()) for (const s of sheets) cssUse.set(s.file, (cssUse.get(s.file) || 0) + 1);
+const pagesWithCss = [...pageCss.values()].filter((x) => x.length).length;
+const sharedSheets = [...cssUse].filter(([f, n]) => /(^|[\\/])site\.[0-9a-f]{6,}\.css$/.test(f) || (pagesWithCss > 2 && n >= pagesWithCss * 0.9)).map(([f]) => f);
+for (const f of sharedSheets) if (size(f) > BUDGETS.cssSharedKB * KB) err('budgets', rel(f), `shared stylesheet ${kb(size(f))} > ${BUDGETS.cssSharedKB} KB (linked by ${cssUse.get(f)} of ${pagesWithCss} pages)`);
+const worst = { raw: null, br: null, css: null, blocking: null };
+const bump = (k, p, v) => { if (!worst[k] || v > worst[k].v) worst[k] = { p, v }; };
 for (const p of pages.values()) {
   const bytes = Buffer.byteLength(p.html);
-  if (bytes > 60 * 1024) err('budgets', p.where, `HTML ${kb(bytes)} > 60 KB`);
+  const br = brotliBytes(p.html);
+  p.bytes = { raw: bytes, br };
+  bump('raw', p, bytes); bump('br', p, br);
+  if (bytes > BUDGETS.htmlRawKB * KB) err('budgets', p.where, `HTML ${kb(bytes)} > ${BUDGETS.htmlRawKB} KB (brotli ${kb(br)})`);
+  if (br > BUDGETS.htmlBrotliKB * KB) err('budgets', p.where, `HTML ${kb(br)} brotli > ${BUDGETS.htmlBrotliKB} KB (raw ${kb(bytes)})`);
+  const sheets = pageCss.get(p);
+  const cssBytes = sheets.reduce((s, x) => s + x.bytes, 0);
+  const blocking = sheets.filter((x) => x.blocking);
+  bump('css', p, cssBytes); bump('blocking', p, blocking.length);
+  const list = (xs) => xs.map((x) => `${path.basename(x.file)} ${kb(x.bytes)}${x.via !== 'link' ? ` (${x.via})` : ''}`).join(' + ');
+  if (cssBytes > BUDGETS.cssPageKB * KB) err('budgets', p.where, `CSS ${kb(cssBytes)} on this page > ${BUDGETS.cssPageKB} KB: ${list(sheets)}`);
+  if (blocking.length > BUDGETS.cssBlockingMax) err('budgets', p.where, `${blocking.length} render-blocking stylesheet requests (max ${BUDGETS.cssBlockingMax}: shared sheet + one bundle): ${list(blocking)}`);
   if (/<script\b[^>]*\bsrc=["'][^"']*model-viewer/i.test(p.html)) err('budgets', p.where, 'model-viewer <script src> in the initial HTML (must be a dynamic import on intent)');
   for (const l of p.links) {
     const relv = (l.a.rel || '').toLowerCase();
@@ -586,20 +662,20 @@ for (const p of pages.values()) {
 }
 const fontFiles = allFiles.filter((f) => f.endsWith('.woff2'));
 const fontBytes = fontFiles.reduce((s, f) => s + size(f), 0);
+/** Budget table rows: [label, value, max, unit ('bytes' | 'count'), page]. HTML/CSS rows show the heaviest page. */
 const budgetRows = [];
-if (fontBytes > 110 * 1024) err('budgets', 'fonts', `${kb(fontBytes)} of woff2 > 110 KB`);
-budgetRows.push(['Fonts (all woff2)', fontBytes, 110 * 1024]);
+if (worst.raw) budgetRows.push(['HTML raw (largest page)', worst.raw.v, BUDGETS.htmlRawKB * KB, 'bytes', worst.raw.p.urlPath]);
+if (worst.br) budgetRows.push([`HTML brotli q${BUDGETS.brotliQuality} (largest page)`, worst.br.v, BUDGETS.htmlBrotliKB * KB, 'bytes', worst.br.p.urlPath]);
+for (const f of sharedSheets) budgetRows.push(['CSS shared sheet', size(f), BUDGETS.cssSharedKB * KB, 'bytes', path.basename(f)]);
+if (worst.css?.v) budgetRows.push(['CSS per page (largest)', worst.css.v, BUDGETS.cssPageKB * KB, 'bytes', worst.css.p.urlPath]);
+if (worst.blocking?.v) budgetRows.push(['Render-blocking CSS requests (max)', worst.blocking.v, BUDGETS.cssBlockingMax, 'count', worst.blocking.p.urlPath]);
+if (fontBytes > BUDGETS.fontsKB * KB) err('budgets', 'fonts', `${kb(fontBytes)} of woff2 > ${BUDGETS.fontsKB} KB`);
+budgetRows.push(['Fonts (all woff2)', fontBytes, BUDGETS.fontsKB * KB]);
 if (home) {
-  const hb = Buffer.byteLength(home.html);
-  budgetRows.push(['Home HTML', hb, 60 * 1024]);
-  const css = home.links.filter((l) => (l.a.rel || '').includes('stylesheet')).map((l) => distFile(classify(l.a.href, '/').path || '')).filter(Boolean);
-  const cssBytes = css.reduce((s, f) => s + size(f), 0);
-  budgetRows.push(['Home CSS', cssBytes, 40 * 1024]);
-  if (cssBytes > 40 * 1024) err('budgets', home.where, `CSS ${kb(cssBytes)} > 40 KB`);
   const js = tagsOf(home.html, 'script').filter((s) => s.a.src).map((s) => distFile(classify(s.a.src, '/').path || '')).filter(Boolean);
   const jsBytes = js.reduce((s, f) => s + size(f), 0);
-  budgetRows.push(['Home initial JS', jsBytes, 30 * 1024]);
-  if (jsBytes > 30 * 1024) err('budgets', home.where, `initial JS ${kb(jsBytes)} > 30 KB`);
+  budgetRows.push(['Home initial JS', jsBytes, BUDGETS.initialJsKB * KB]);
+  if (jsBytes > BUDGETS.initialJsKB * KB) err('budgets', home.where, `initial JS ${kb(jsBytes)} > ${BUDGETS.initialJsKB} KB`);
   const preFonts = home.links.filter((l) => (l.a.rel || '').includes('preload') && l.a.as === 'font');
   if (preFonts.length > 1) err('budgets', home.where, `${preFonts.length} preloaded fonts (1 max)`);
   for (const f of preFonts) if (!('crossorigin' in f.a)) err('budgets', home.where, `font preload without crossorigin: ${f.a.href}`);
@@ -617,9 +693,9 @@ if (home) {
     const pick = pool.sort((a, b) => Math.abs(a.w - 1200) - Math.abs(b.w - 1200))[0];
     const file = distFile(classify(pick ? pick.u : lcpTag.a.src, '/').path || '');
     const b = file ? size(file) : 0;
-    budgetRows.push([`Home LCP image (${pick ? `${pick.w || '?'}w ${pick.avif ? 'AVIF' : ''}` : 'src'})`, b, 150 * 1024]);
-    if (b > 150 * 1024) err('budgets', home.where, `LCP image ${kb(b)} > 150 KB`);
-    else if (b > 120 * 1024) warn('budgets', home.where, `LCP image ${kb(b)} > 120 KB target`);
+    budgetRows.push([`Home LCP image (${pick ? `${pick.w || '?'}w ${pick.avif ? 'AVIF' : ''}` : 'src'})`, b, BUDGETS.lcpImageKB * KB]);
+    if (b > BUDGETS.lcpImageKB * KB) err('budgets', home.where, `LCP image ${kb(b)} > ${BUDGETS.lcpImageKB} KB`);
+    else if (b > BUDGETS.lcpImageTargetKB * KB) warn('budgets', home.where, `LCP image ${kb(b)} > ${BUDGETS.lcpImageTargetKB} KB target`);
   }
 }
 
@@ -1104,11 +1180,16 @@ if (!flag('--no-lint')) {
     const r = spawnSync(process.execPath, [lintScript, DIST], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     // Lint lines are "  x <file>: <message>" / "  ! <file>: <message>" (file relative to dist, or an absolute source path).
     const parse = (s) => { const i = s.indexOf(': '); return i > 0 ? [s.slice(0, i), s.slice(i + 2)] : ['design-lint', s]; };
+    // The lint applies the same §11 budgets (BUDGETS): a finding already reported under "budgets" (with a
+    // breakdown) for the same file is not repeated.
+    const budgetKind = (msg) => (/^HTML [\d.]+ KB brotli/.test(msg) ? 'html-br' : /^HTML [\d.]+ KB/.test(msg) ? 'html'
+      : /render-blocking stylesheet/.test(msg) ? 'css-blocking' : /^shared stylesheet/.test(msg) ? 'css-shared' : /^CSS [\d.]+ KB/.test(msg) ? 'css-page'
+        : /^initial JS [\d.]+ KB/.test(msg) ? 'js' : null);
     for (const line of (r.stdout || '').split(/\r?\n/)) {
       if (/^\s+x /.test(line)) {
         const [where, msg] = parse(line.replace(/^\s+x /, ''));
-        // Same rule as budgets "HTML > 60 KB" (already reported there, with a breakdown): not repeated.
-        if (/^HTML \d+ KB > 60 KB$/.test(msg) && report.budgets.errors.some((x) => x.where === where.replace(/\\/g, '/') && /^HTML /.test(x.msg))) continue;
+        const kind = budgetKind(msg);
+        if (kind && report.budgets.errors.some((x) => x.where === where.replace(/\\/g, '/') && budgetKind(x.msg) === kind)) continue;
         err('design-lint', where, msg);
       }
       else if (/^\s+! /.test(line)) warn('design-lint', ...parse(line.replace(/^\s+! /, '')));
@@ -1147,7 +1228,7 @@ const OWNER_RULES = [
   ['links', /→ \/(assets\/img|models)\//, 'assets'], ['links', /anchor #/, 'content'], ['links', /insecure http:|target=_blank/, 'content'], ['links', null, 'engine'],
   ['content', /\.lead has|words in <main>|generic link text|unresolved \{\{token\}\}|undefined \/ NaN|cajetin|target=_blank/, 'content'], ['content', null, 'engine'],
   ['meta', /^title \d+ chars|^description \d+ chars|^duplicate (title|description)|unresolved token in title/, 'content'], ['meta', null, 'engine'],
-  ['design-lint', /^HTML \d+ KB|initial JS|primary CTA|eyebrows|button|form control|heading|<h1>|dead link|viewport|transition|outline|100vh|hex|backdrop|cursor|img /, 'engine'],
+  ['design-lint', /^HTML [\d.]+ KB|^CSS [\d.]+ KB|render-blocking|shared stylesheet|initial JS|primary CTA|eyebrows|button|form control|heading|<h1>|dead link|viewport|transition|outline|100vh|hex|backdrop|cursor|img /, 'engine'],
   ['design-lint', /LCP image|font/i, 'assets'],
   ['design-lint', /dash|"\.\.\."|banned copy|straight double quote|leftover/, 'content'],
   ['structure', null, 'engine'], ['images', null, 'engine'],
@@ -1180,10 +1261,11 @@ function htmlBreakdown(html) {
   return parts.sort((a, b) => b[1] - a[1]).slice(0, 7).map(([k, n]) => `${k} ${kb(n)}`).join(' · ');
 }
 for (const f of report.budgets.errors) {
-  const pg = /^HTML [\d.]+ KB > 60 KB/.test(f.msg) ? pageOf(f.where) : null;
-  if (pg) f.detail = `largest parts: ${htmlBreakdown(pg.html)}`;
+  const pg = /^HTML [\d.]+ KB (brotli )?> /.test(f.msg) ? pageOf(f.where) : null;
+  if (pg) f.detail = `largest parts (raw): ${htmlBreakdown(pg.html)}`;
 }
-for (const f of report.budgets.errors.filter((x) => /^CSS /.test(x.msg))) {
+// Per-page CSS findings already list their stylesheets; the shared sheet gets the source breakdown.
+for (const f of report.budgets.errors.filter((x) => /^shared stylesheet /.test(x.msg))) {
   const src = path.join(ROOT, 'src', 'css');
   try {
     const files = fs.readdirSync(src).filter((x) => x.endsWith('.css'))
@@ -1222,7 +1304,8 @@ const catLine = CATS.map((c) => [c, report[c].errors.length, report[c].warnings.
 if (catLine) console.log(`By category (errors/warnings): ${catLine}`);
 if (budgetRows.length) {
   console.log('\nBudgets (§11):');
-  for (const [k, v, max] of budgetRows) console.log(`  ${v > max ? '✗' : '✓'} ${k.padEnd(34)} ${kb(v).padStart(10)}  / ${kb(max)}`);
+  const fmt = (v, unit) => (unit === 'count' ? String(v) : kb(v));
+  for (const [k, v, max, unit, page] of budgetRows) console.log(`  ${v > max ? '✗' : '✓'} ${k.padEnd(36)} ${fmt(v, unit).padStart(10)}  / ${fmt(max, unit).padEnd(9)}${page ? `  ${page}` : ''}`);
 }
 for (const i of info) console.log(`  · ${i}`);
 console.log(`  · design lint: ${lintSummary}`);

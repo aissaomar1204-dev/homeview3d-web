@@ -7,7 +7,7 @@ export const deliverables = [
     en: { title: '3D model from the floor plan', body: 'A furnished, to-scale 3D model built from a 2D plan, even with no photos. Ideal for new builds and empty homes.', formats: 'GLB · USDZ · BLEND' },
   },
   {
-    id: 'renders', page: 'servicio-renders', image: 'villa_salon_dormitorio',
+    id: 'renders', page: 'servicio-renders', image: 'villa_interior_salon',
     es: { title: 'Renders fotorrealistas', body: 'Imágenes 4K con luz natural calculada para anuncios, portales y dosieres de venta.', formats: 'PNG · JPG · 4K' },
     en: { title: 'Photorealistic renders', body: '4K stills with physically based daylight for listings, portals and sales brochures.', formats: 'PNG · JPG · 4K' },
   },

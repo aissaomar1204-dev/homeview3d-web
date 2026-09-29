@@ -126,7 +126,7 @@ const en = {
   alt: 'Explorable 3D model of the upper floor of a Costa del Sol villa: {rooms} rooms, including {bedrooms} bedrooms and {terraces} terraces, with the walls cut at {cut}',
   posterAlt: '3D render of the villa’s upper floor with the walls cut at {cut}, generated from the 2D floor plan',
   start: 'View the villa in 3D',
-  startNote: 'Interactive 3D model, {size}. Downloads when you tap.',
+  startNote: 'Interactive 3D model, {size}. Downloads only when you open it.',
   preparing: 'Preparing the viewer…',
   loading: 'Loading 3D model…',
   pct: '{n}%',

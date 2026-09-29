@@ -263,15 +263,19 @@
   /* State change: slides away while the hero CTA, the form or the footer is in view. */
   transition: transform var(--dur-state) var(--ease-out), visibility 0s var(--dur-state);
 }
+/* Only "Pide tu demo" while the contact data are placeholders (V-02): one full-width button. */
+.bottom-bar--solo { grid-template-columns: minmax(0, 1fr); }
 .bottom-bar .btn { height: var(--tap-min); padding-inline: var(--space-3); }
 /* With JS the bar waits for the first observer answer, so it never flashes over the hero CTA. */
 .bottom-bar.is-hidden, .js .bottom-bar:not(.is-ready) { transform: translateY(110%); visibility: hidden; }
 .bottom-bar:not(.is-hidden) { transition-delay: 0s; }
-@media (max-width: 767px) {
-  body:has(> .bottom-bar) { padding-bottom: var(--bar-h); }
+/* The space the bar may cover is reserved inside the footer (same surface), not on <body> (V-09): no strip of body
+   colour under the footer while the bar is hidden over it. Landscape phones (≤ 500px tall) get no bar at all (V-10). */
+@media (max-width: 767px) and (min-height: 501px) {
+  body:has(> .bottom-bar) > .site-footer { padding-bottom: calc(var(--space-6) + var(--bar-h)); }
   html { scroll-padding-bottom: calc(var(--bar-h) + var(--space-2)); }
 }
-@media (min-width: 768px) {
+@media (min-width: 768px), (max-height: 500px) {
   .bottom-bar { display: none; }
 }
 

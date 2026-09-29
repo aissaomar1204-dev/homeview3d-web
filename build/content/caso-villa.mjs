@@ -1,7 +1,8 @@
 // Case study (template `case`): the anonymised Costa del Sol villa, our central proof page.
 // Only REAL facts: build/data/villa.mjs (tokens), docs/research/06-3d-ar-pipeline.md (validator 0 errors,
-// web GLB under a third of the Blender export) and 07-renders.md (9 Cycles images in ≈ 7 min on an RTX 4060:
-// 6 views + top-down plan + line plan + og_image; plan/render overlay within ±3 px, < 0.002 % clipped pixels,
+// web GLB under a third of the Blender export) and 07-renders.md (13 Cycles images in ≈ 21 min on an RTX 4060:
+// 6 aerial views + 4 eye-level (villa_interiores.py) + top-down plan + line plan + og_image; plan/render overlay
+// within ±3 px, < 0.002 % clipped pixels,
 // known model limits). The "≈ 26 s rebuild" claim was removed until it is re-measured (content audit F-34).
 // No hours per phase: they were not timed separately. The honesty notice is villa.notice (single source).
 
@@ -11,7 +12,7 @@ export default {
   id: 'caso-villa',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-09-29',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
@@ -30,7 +31,7 @@ export default {
     facts: [
       ['Entrada', 'Un plano 2D publicado, sin fotos ni cotas'],
       ['Alcance', 'Planta alta de una villa, con dos terrazas'],
-      ['Superficie', '≈ {{villa:interiorM2}} m² interiores y ≈ {{villa:terracesM2}} m² de terrazas'],
+      ['Superficie', '≈\u00a0{{villa:interiorM2}}\u00a0m² interiores y ≈\u00a0{{villa:terracesM2}}\u00a0m² de terrazas'],
       ['Estancias', '{{villa:rooms}}, con {{villa:bedrooms}} dormitorios'],
       ['Imágenes', '{{villa:renders}} en unos {{villa:renderMinutes}} minutos de cálculo en total'],
       ['Modelo web', '{{file:glb}}, con recorrido y modo maqueta'],
@@ -53,36 +54,33 @@ export default {
         type: 'specs',
         h2: 'La villa en números',
         items: [
-          ['Punto de partida', 'Un único plano 2D publicado por terceros, sin fotos del interior ni cotas'],
-          ['Alcance', 'Planta alta completa, con dos terrazas'],
           ['Huella del modelo', '{{villa:footprint}}'],
-          ['Superficie interior', '≈ {{villa:interiorM2}} m², estimada a escala'],
-          ['Terrazas', '≈ {{villa:terracesM2}} m², en dos terrazas'],
-          ['Estancias', '{{villa:rooms}}, terrazas, escalera y lavadero incluidos'],
-          ['Dormitorios', '{{villa:bedrooms}}'],
-          ['Baños', '2: el de la suite, con bañera y ducha de lluvia, y el completo'],
+          ['Baños', '{{villa:bathrooms}}'],
           ['Texturas PBR procedurales', '{{villa:textures}}, creadas para este modelo'],
           ['Materiales', '{{villa:materials}}'],
           ['Triángulos', '{{villa:triangles}}'],
-          ['Altura de muros', '{{villa:wallHeight}} m; corte de maqueta a {{villa:cutHeight}} m'],
-          ['Imágenes', '{{villa:renders}}: 6 vistas, planta cenital, planta de líneas e imagen para redes; unos {{villa:renderMinutes}} minutos de Cycles en total'],
-          ['Modelo web', '{{file:glb}}, GLB con compresión Meshopt y texturas WebP'],
-          ['Realidad aumentada en iPhone', '{{file:usdzMesa}} la maqueta 1:20 y {{file:usdzReal}} el tamaño real (USDZ)'],
-          ['Realidad aumentada en Android', '{{file:glbArMesa}} la maqueta 1:20 y {{file:glbAr}} el tamaño real (GLB)'],
-          ['Tiempo de trabajo', 'Una sola sesión: modelado, texturas y exportación'],
+          ['Altura de muros', '{{villa:wallHeight}} m'],
+          ['Corte de maqueta', '{{villa:cutHeight}} m'],
+          ['Compresión del modelo web', 'GLB con Meshopt y texturas WebP'],
+          ['Realidad aumentada en iPhone (USDZ)', '{{file:usdzMesa}} la maqueta 1:20 y {{file:usdzReal}} el tamaño real'],
+          ['Realidad aumentada en Android (GLB)', '{{file:glbArMesa}} la maqueta 1:20 y {{file:glbAr}} el tamaño real'],
         ],
       },
       {
         type: 'gallery',
         h2: 'Los renders de la villa',
-        intro: 'Las {{villa:renders}} imágenes del caso (6 vistas, la planta cenital, la planta de líneas y la imagen para redes) se calcularon con Cycles en unos {{villa:renderMinutes}} minutos en total, con la misma luz de media tarde mediterránea. Ninguna es una foto ni una imagen generada con IA. Aquí van las 6 vistas; las dos plantas están en el comparador de más abajo. Así trabajamos los [renders inmobiliarios](@servicio-renders).',
+        intro: 'Las {{villa:renders}} imágenes del caso (6 vistas aéreas, 4 a la altura de los ojos, la planta cenital, la planta de líneas y la imagen para redes) se calcularon con Cycles en unos {{villa:renderMinutes}} minutos en total, con luz de media tarde mediterránea. Ninguna es una foto ni una imagen generada con IA. Aquí van primero las 4 vistas a la altura de los ojos, con techo y lámparas encendidas, y después las 6 aéreas; las dos plantas están en el comparador de más abajo. El cielo y el mar que se ven por las ventanas son un fondo ilustrativo, no el entorno real de la villa. Así trabajamos los [renders inmobiliarios](@servicio-renders).',
         items: [
-          { image: 'villa_maqueta_iso', alt: 'Maqueta 3D de la planta alta de la villa seccionada a {{villa:cutHeight}} m, vista aérea en tres cuartos con las estancias amuebladas. Render 3D de la villa anonimizada de la Costa del Sol.', caption: 'Maqueta seccionada a {{villa:cutHeight}} m, vista aérea en tres cuartos. Render 3D.' },
-          { image: 'villa_salon_dormitorio', alt: 'Render 3D del salón con sofá rinconera y del dormitorio principal de la villa anonimizada, con luz de media tarde.', caption: 'Salón y dormitorio principal. Render 3D.' },
-          { image: 'villa_dormitorios', alt: 'Render 3D del ala de dormitorios y del baño completo de la villa anonimizada, con la terraza de césped y la escalera de caracol.', caption: 'Ala de dormitorios y baño completo. Render 3D.' },
-          { image: 'villa_bano_suite', alt: 'Render 3D del baño en suite de la villa anonimizada, con bañera exenta redonda, porcelánico negro y pared de terrazo.', caption: 'Baño en suite con bañera exenta. Render 3D.' },
-          { image: 'villa_terraza', alt: 'Render 3D de la terraza principal de la villa anonimizada, con suelo de barro cocido, dos tumbonas, sofá exterior y un olivo en maceta.', caption: 'Terraza principal con tumbonas y olivo. Render 3D.' },
-          { image: 'villa_muros_completos', alt: 'Render 3D de la villa anonimizada con los muros a su altura completa de {{villa:wallHeight}} m, vista aérea exterior en tres cuartos.', caption: 'Muros completos a {{villa:wallHeight}} m. Render 3D.' },
+          { image: 'villa_interior_salon', alt: 'Render 3D a la altura de los ojos del salón de la villa anonimizada: sofá, lámpara de pie encendida y tres hojas correderas abiertas a la terraza con tumbonas.', caption: 'Salón hacia la terraza, a la altura de los ojos. Render 3D de la villa anonimizada.' },
+          { image: 'villa_interior_dormitorio', alt: 'Render 3D a la altura de los ojos del dormitorio principal de la villa anonimizada: cama de 180 con cabecero de obra, lámparas de mesilla encendidas y puerta corredera a la terraza.', caption: 'Dormitorio principal con luz de media tarde. Render 3D de la villa anonimizada.' },
+          { image: 'villa_interior_bano', alt: 'Render 3D a la altura de los ojos del baño en suite de la villa anonimizada: bañera exenta redonda, porcelánico negro, espejo redondo y pared de terrazo.', caption: 'Baño en suite con bañera exenta. Render 3D de la villa anonimizada.' },
+          { image: 'villa_interior_terraza', alt: 'Render 3D a la altura de los ojos de la terraza principal de la villa anonimizada: suelo de barro cocido, sofá exterior, mesa baja y un olivo en maceta.', caption: 'Terraza principal con sofá exterior y olivo. Render 3D de la villa anonimizada.' },
+          { image: 'villa_maqueta_iso', alt: 'Maqueta 3D de la planta alta de la villa seccionada a {{villa:cutHeight}} m, vista aérea en tres cuartos con las estancias amuebladas. Render 3D de la villa anonimizada de la Costa del Sol.', caption: 'Maqueta seccionada a {{villa:cutHeight}} m, vista aérea en tres cuartos. Render 3D de la villa anonimizada.' },
+          { image: 'villa_salon_dormitorio', alt: 'Render 3D del salón con sofá rinconera y del dormitorio principal de la villa anonimizada, con luz de media tarde.', caption: 'Salón y dormitorio principal, desde arriba. Render 3D de la villa anonimizada.' },
+          { image: 'villa_dormitorios', alt: 'Render 3D del ala de dormitorios y del baño completo de la villa anonimizada, con la terraza de césped y la escalera de caracol.', caption: 'Ala de dormitorios y baño completo. Render 3D de la villa anonimizada.' },
+          { image: 'villa_bano_suite', alt: 'Render 3D del baño en suite de la villa anonimizada, con bañera exenta redonda, porcelánico negro y pared de terrazo.', caption: 'Baño en suite desde arriba, con los muros cortados. Render 3D de la villa anonimizada.' },
+          { image: 'villa_terraza', alt: 'Render 3D de la terraza principal de la villa anonimizada, con suelo de barro cocido, dos tumbonas, sofá exterior y un olivo en maceta.', caption: 'Terraza principal con tumbonas y olivo, desde arriba. Render 3D de la villa anonimizada.' },
+          { image: 'villa_muros_completos', alt: 'Render 3D de la villa anonimizada con los muros a su altura completa de {{villa:wallHeight}} m, vista aérea exterior en tres cuartos.', caption: 'Muros completos a {{villa:wallHeight}} m. Render 3D de la villa anonimizada.' },
         ],
       },
       {
@@ -116,7 +114,7 @@ export default {
           {
             title: 'Luz y renders',
             time: '≈ {{villa:renderMinutes}} min',
-            body: 'Luz de media tarde mediterránea: sol cálido y bajo, y cielo físico. [Cycles](@glosario#cycles) calculó las {{villa:renders}} imágenes (6 vistas, las dos plantas y la imagen para redes) en unos {{villa:renderMinutes}} minutos en total en una tarjeta gráfica RTX 4060, con control automático de píxeles quemados y de texturas que no cargan.',
+            body: 'Luz de media tarde mediterránea: sol cálido y bajo, y cielo físico. [Cycles](@glosario#cycles) calculó las {{villa:renders}} imágenes (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) en unos {{villa:renderMinutes}} minutos en total en una tarjeta gráfica RTX 4060, con control automático de píxeles quemados y de texturas que no cargan.',
           },
           {
             title: 'Exportación a web y realidad aumentada',
@@ -163,7 +161,7 @@ export default {
       },
       {
         q: '¿Cuánto se tardó en hacer?',
-        a: 'El modelado, las texturas y la exportación se hicieron en una sola sesión de trabajo, y las {{villa:renders}} imágenes del caso (6 vistas, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Un encargo real de {{brand}} lleva {{delivery:maqueta}} porque incluye tu revisión: te enviamos el visor en un enlace privado y aplicamos {{revisions:maqueta}} antes de la entrega.',
+        a: 'El modelado, las texturas y la exportación se hicieron en una sola sesión de trabajo, y las {{villa:renders}} imágenes del caso (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Un encargo real de {{brand}} lleva {{delivery:maqueta}} porque incluye tu revisión: te enviamos el visor en un enlace privado y aplicamos {{revisions:maqueta}} antes de la entrega.',
       },
       {
         q: '¿Son exactas las superficies que aparecen en el visor?',
@@ -209,7 +207,7 @@ export default {
     facts: [
       ['Input', 'One published 2D plan, no photos or dimensions'],
       ['Scope', 'Upper floor of a villa, with two terraces'],
-      ['Floor area', '≈ {{villa:interiorM2}} m² indoors and ≈ {{villa:terracesM2}} m² of terraces'],
+      ['Floor area', '≈\u00a0{{villa:interiorM2}}\u00a0m² indoors and ≈\u00a0{{villa:terracesM2}}\u00a0m² of terraces'],
       ['Rooms', '{{villa:rooms}}, including {{villa:bedrooms}} bedrooms'],
       ['Images', '{{villa:renders}} in about {{villa:renderMinutes}} minutes of compute in total'],
       ['Web model', '{{file:glb}}, with guided tour and cut-away mode'],
@@ -232,36 +230,33 @@ export default {
         type: 'specs',
         h2: 'The villa in numbers',
         items: [
-          ['Starting point', 'One 2D floor plan published by a third party, with no interior photos or dimensions'],
-          ['Scope', 'The full upper floor, with two terraces'],
           ['Model footprint', '{{villa:footprint}}'],
-          ['Interior floor area', '≈ {{villa:interiorM2}} m², estimated from the plan’s scale'],
-          ['Terraces', '≈ {{villa:terracesM2}} m², across two terraces'],
-          ['Rooms', '{{villa:rooms}}, counting terraces, stairs and laundry'],
-          ['Bedrooms', '{{villa:bedrooms}}'],
-          ['Bathrooms', '2: the en-suite, with a tub and rain shower, and a family bathroom'],
+          ['Bathrooms', '{{villa:bathrooms}}'],
           ['Procedural PBR textures', '{{villa:textures}}, created for this model'],
           ['Materials', '{{villa:materials}}'],
           ['Triangles', '{{villa:triangles}}'],
-          ['Wall height', '{{villa:wallHeight}} m; cut-away at {{villa:cutHeight}} m'],
-          ['Images', '{{villa:renders}}: 6 views, top-down plan, line plan and social image; about {{villa:renderMinutes}} minutes of Cycles in total'],
-          ['Web model', '{{file:glb}}, GLB with Meshopt compression and WebP textures'],
-          ['AR on iPhone', '{{file:usdzMesa}} for the 1:20 tabletop model and {{file:usdzReal}} at real size (USDZ)'],
-          ['AR on Android', '{{file:glbArMesa}} for the 1:20 tabletop model and {{file:glbAr}} at real size (GLB)'],
-          ['Working time', 'A single session: modelling, texturing and export'],
+          ['Wall height', '{{villa:wallHeight}} m'],
+          ['Cut-away height', '{{villa:cutHeight}} m'],
+          ['Web model compression', 'GLB with Meshopt and WebP textures'],
+          ['AR on iPhone (USDZ)', '{{file:usdzMesa}} for the 1:20 tabletop model and {{file:usdzReal}} at real size'],
+          ['AR on Android (GLB)', '{{file:glbArMesa}} for the 1:20 tabletop model and {{file:glbAr}} at real size'],
         ],
       },
       {
         type: 'gallery',
         h2: 'The villa’s renders',
-        intro: 'The case’s {{villa:renders}} images (6 views, the top-down plan, the line plan and the social media image) were computed in Cycles in about {{villa:renderMinutes}} minutes in total, under the same Mediterranean late-afternoon light. None is a photo or an AI-generated picture. The 6 views are shown here; both plans are in the comparison slider below. This is how we approach [real estate 3D rendering](@servicio-renders).',
+        intro: 'The case’s {{villa:renders}} images (6 aerial views, 4 eye-level views, the top-down plan, the line plan and the social media image) were computed in Cycles in about {{villa:renderMinutes}} minutes in total, under Mediterranean late-afternoon light. None is a photo or an AI-generated picture. The 4 eye-level views come first, with ceilings and the lamps switched on, followed by the 6 aerial views; both plans are in the comparison slider below. The sky and sea seen through the windows are an illustrative backdrop, not the villa’s real surroundings. This is how we approach [real estate 3D rendering](@servicio-renders).',
         items: [
-          { image: 'villa_maqueta_iso', alt: 'Cut-away 3D model of the villa’s upper floor at {{villa:cutHeight}} m, three-quarter aerial view with furnished rooms. 3D render of the anonymised Costa del Sol villa.', caption: 'Cut-away model at {{villa:cutHeight}} m, three-quarter aerial view. 3D render.' },
-          { image: 'villa_salon_dormitorio', alt: '3D render of the living room with a corner sofa and the main bedroom of the anonymised villa, in late-afternoon light.', caption: 'Living room and main bedroom. 3D render.' },
-          { image: 'villa_dormitorios', alt: '3D render of the bedroom wing and family bathroom of the anonymised villa, with the lawn terrace and spiral staircase.', caption: 'Bedroom wing and family bathroom. 3D render.' },
-          { image: 'villa_bano_suite', alt: '3D render of the anonymised villa’s en-suite bathroom, with a round freestanding tub, black porcelain tiles and a terrazzo wall.', caption: 'En-suite bathroom with freestanding tub. 3D render.' },
-          { image: 'villa_terraza', alt: '3D render of the anonymised villa’s main terrace, with a terracotta floor, two sun loungers, an outdoor sofa and a potted olive tree.', caption: 'Main terrace with sun loungers and an olive tree. 3D render.' },
-          { image: 'villa_muros_completos', alt: '3D render of the anonymised villa with walls at their full {{villa:wallHeight}} m height, three-quarter exterior aerial view.', caption: 'Full-height walls at {{villa:wallHeight}} m. 3D render.' },
+          { image: 'villa_interior_salon', alt: 'Eye-level 3D render of the anonymised villa’s living room: sofa, a lit floor lamp and three sliding panels open onto the terrace with its sun loungers.', caption: 'Living room towards the terrace, at eye level. 3D render of the anonymised villa.' },
+          { image: 'villa_interior_dormitorio', alt: 'Eye-level 3D render of the anonymised villa’s main bedroom: 180 cm bed with a built-in headboard, lit bedside lamps and a sliding door to the terrace.', caption: 'Main bedroom in late-afternoon light. 3D render of the anonymised villa.' },
+          { image: 'villa_interior_bano', alt: 'Eye-level 3D render of the anonymised villa’s en-suite bathroom: round freestanding tub, black porcelain tiles, a round mirror and a terrazzo wall.', caption: 'En-suite bathroom with a freestanding tub. 3D render of the anonymised villa.' },
+          { image: 'villa_interior_terraza', alt: 'Eye-level 3D render of the anonymised villa’s main terrace: terracotta floor, outdoor sofa, low table and a potted olive tree.', caption: 'Main terrace with an outdoor sofa and olive tree. 3D render of the anonymised villa.' },
+          { image: 'villa_maqueta_iso', alt: 'Cut-away 3D model of the villa’s upper floor at {{villa:cutHeight}} m, three-quarter aerial view with furnished rooms. 3D render of the anonymised Costa del Sol villa.', caption: 'Cut-away model at {{villa:cutHeight}} m, three-quarter aerial view. 3D render of the anonymised villa.' },
+          { image: 'villa_salon_dormitorio', alt: '3D render of the living room with a corner sofa and the main bedroom of the anonymised villa, in late-afternoon light.', caption: 'Living room and main bedroom, from above. 3D render of the anonymised villa.' },
+          { image: 'villa_dormitorios', alt: '3D render of the bedroom wing and family bathroom of the anonymised villa, with the lawn terrace and spiral staircase.', caption: 'Bedroom wing and family bathroom. 3D render of the anonymised villa.' },
+          { image: 'villa_bano_suite', alt: '3D render of the anonymised villa’s en-suite bathroom, with a round freestanding tub, black porcelain tiles and a terrazzo wall.', caption: 'En-suite bathroom from above, with the walls cut away. 3D render of the anonymised villa.' },
+          { image: 'villa_terraza', alt: '3D render of the anonymised villa’s main terrace, with a terracotta floor, two sun loungers, an outdoor sofa and a potted olive tree.', caption: 'Main terrace with sun loungers and an olive tree, from above. 3D render of the anonymised villa.' },
+          { image: 'villa_muros_completos', alt: '3D render of the anonymised villa with walls at their full {{villa:wallHeight}} m height, three-quarter exterior aerial view.', caption: 'Full-height walls at {{villa:wallHeight}} m. 3D render of the anonymised villa.' },
         ],
       },
       {
@@ -295,7 +290,7 @@ export default {
           {
             title: 'Lighting and renders',
             time: '≈ {{villa:renderMinutes}} min',
-            body: 'Mediterranean late-afternoon light: a warm, low sun and a physical sky. [Cycles](@glosario#cycles) computed the {{villa:renders}} images (6 views, both plans and the social media image) in about {{villa:renderMinutes}} minutes in total on an RTX 4060 graphics card, with automatic checks for blown-out pixels and textures that fail to load.',
+            body: 'Mediterranean late-afternoon light: a warm, low sun and a physical sky. [Cycles](@glosario#cycles) computed the {{villa:renders}} images (6 aerial views, 4 eye-level views, both plans and the social media image) in about {{villa:renderMinutes}} minutes in total on an RTX 4060 graphics card, with automatic checks for blown-out pixels and textures that fail to load.',
           },
           {
             title: 'Export for web and augmented reality',
@@ -342,7 +337,7 @@ export default {
       },
       {
         q: 'How long did it take?',
-        a: 'Modelling, texturing and export were done in a single work session, and the case’s {{villa:renders}} images (6 views, both plans and the social media image) took about {{villa:renderMinutes}} minutes to compute in total. A real {{brand}} project takes {{delivery:maqueta}} because it includes your review: we send you the viewer on a private link and apply {{revisions:maqueta}} before delivery.',
+        a: 'Modelling, texturing and export were done in a single work session, and the case’s {{villa:renders}} images (6 aerial views, 4 eye-level views, both plans and the social media image) took about {{villa:renderMinutes}} minutes to compute in total. A real {{brand}} project takes {{delivery:maqueta}} because it includes your review: we send you the viewer on a private link and apply {{revisions:maqueta}} before delivery.',
       },
       {
         q: 'Are the floor areas in the viewer exact?',

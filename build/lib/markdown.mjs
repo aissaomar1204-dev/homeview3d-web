@@ -44,6 +44,8 @@ export function videoManifest() {
   catch { VIDEOS = {}; }
   return VIDEOS;
 }
+/** Phone / WhatsApp are published only once site.contact holds real data (same rule as the engine's ctx.phoneLink, V-02). */
+export const directContact = () => site.contact.placeholder !== true && !!site.contact.phoneE164;
 /** The founder (site.founder) once filled in, else null (same rule as schema.mjs). */
 const founderOf = () => (site.founder && site.founder.name && !site.founder.placeholder ? site.founder : null);
 
@@ -175,7 +177,7 @@ const LABELS = {
     compare: 'Del plano 2D al modelo 3D', gallery: 'Galería de renders', glossary: 'Glosario',
     device: 'Dispositivo', opens: 'Cómo se abre', format: 'Formato', size: 'Tamaño',
     pack: 'Pack', priceNoVat: 'Precio sin IVA', delivery: 'Plazo', includes: 'Incluye', unit: 'Unidad', area: 'Superficie',
-    extra: 'Extra', units: 'Viviendas', perUnit: 'Precio por vivienda', from: 'desde', upTo: (n) => `hasta ${n} m²`, range: (a, b) => `más de ${a} y hasta ${b} m²`,
+    extra: 'Extra', units: 'Viviendas', perUnit: 'Precio por vivienda', from: 'desde', upTo: (n) => `hasta ${n} m²`, range: (a, b) => `de ${a + 1} a ${b} m²`,
     videoStill: 'Fotograma del vídeo', videoLink: (s, mb) => `Ver el vídeo (MP4, ${s} s, ${mb})`,
     vatNote: (r) => `Todos los precios son sin IVA (IVA aplicable: ${r} %).`, source: 'Fuente', related2: 'Relacionado', render: 'Render',
     comingSoonTag: 'próximamente', total: (d) => `Plazo total: ${d}.`, rendersNote: 'Imágenes generadas a partir del modelo 3D (renders), no fotografías.',
@@ -197,7 +199,7 @@ const LABELS = {
     compare: 'From 2D floor plan to 3D model', gallery: 'Render gallery', glossary: 'Glossary',
     device: 'Device', opens: 'How it opens', format: 'Format', size: 'Size',
     pack: 'Package', priceNoVat: 'Price excl. VAT', delivery: 'Turnaround', includes: 'Includes', unit: 'Unit', area: 'Floor area',
-    extra: 'Extra', units: 'Homes', perUnit: 'Price per home', from: 'from', upTo: (n) => `up to ${n} m²`, range: (a, b) => `over ${a} and up to ${b} m²`,
+    extra: 'Extra', units: 'Homes', perUnit: 'Price per home', from: 'from', upTo: (n) => `up to ${n} m²`, range: (a, b) => `${a + 1} to ${b} m²`,
     videoStill: 'Video still', videoLink: (s, mb) => `Watch the video (MP4, ${s} s, ${mb})`,
     vatNote: (r) => `All prices exclude VAT (Spanish VAT: ${r}%).`, source: 'Source', related2: 'Related', render: 'Render',
     comingSoonTag: 'coming soon', total: (d) => `Total turnaround: ${d}.`, rendersNote: 'Images generated from the 3D model (renders), not photographs.',
@@ -394,8 +396,11 @@ function contactLines(h, service) {
   const lines = [];
   if (contactUrl) lines.push(`- ${L.demo}: ${contactUrl}${service ? `?servicio=${encodeURIComponent(service)}` : ''}`);
   lines.push(`- ${L.email}: ${site.contact.email}`);
-  lines.push(`- ${L.phone}: ${site.contact.phoneDisplay}`);
-  lines.push(`- ${L.whatsapp}: https://wa.me/${site.contact.whatsapp}`);
+  // Phone and WhatsApp only with real contact data, like the pages (V-02): never a placeholder number to dial.
+  if (directContact()) {
+    lines.push(`- ${L.phone}: ${site.contact.phoneDisplay}`);
+    if (site.contact.whatsapp) lines.push(`- ${L.whatsapp}: https://wa.me/${site.contact.whatsapp}`);
+  }
   return lines.join('\n');
 }
 
