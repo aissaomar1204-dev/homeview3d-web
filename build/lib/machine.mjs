@@ -121,7 +121,7 @@ export const BUDGETS = {
   cssSharedKB: 42,        // the stylesheet every page links (site.<hash>.css)
   cssPageKB: 72,          // all the stylesheets one page links
   cssBlockingMax: 2,      // render-blocking stylesheet requests per page (<link rel=stylesheet> without a non-matching media, + @import)
-  initialJsKB: 30,        // scripts referenced by the initial HTML
+  initialJsKB: 32,        // scripts referenced by the initial HTML (32: eased anchor scrolling, 2026-09-30)
   fontsKB: 110,           // all woff2 files
   lcpImageKB: 150,        // LCP image, AVIF candidate closest to 1200 w (error)
   lcpImageTargetKB: 120,  // LCP image target (warning in check.mjs, error in the design lint)

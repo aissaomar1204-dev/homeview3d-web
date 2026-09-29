@@ -362,3 +362,48 @@
     targets.forEach(function (t) { o.observe(t); });
   }
 })();
+
+/* Smooth, subtle in-page scrolling: every same-page anchor link (and the logo on its own page) glides with an
+   ease-in-out curve whose duration grows with the distance (0.45 to 1.1 s). A wheel or touch cancels it; reduced
+   motion keeps the native instant jump. The target gets focus afterwards and the URL hash is updated. */
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function glide(y, done) {
+    var from = scrollY, d = y - from, dur = Math.min(1100, Math.max(450, Math.abs(d) * 0.35)), t0 = 0, stop = false;
+    if (Math.abs(d) < 2) { done(); return; }
+    function cancel() { stop = true; }
+    addEventListener('wheel', cancel, { passive: true, once: true });
+    addEventListener('touchstart', cancel, { passive: true, once: true });
+    requestAnimationFrame(function step(t) {
+      if (stop) return;
+      if (!t0) t0 = t;
+      var p = Math.min(1, (t - t0) / dur);
+      scrollTo({ top: from + d * ease(p), behavior: 'instant' });
+      if (p < 1) { requestAnimationFrame(step); return; }
+      removeEventListener('wheel', cancel);
+      removeEventListener('touchstart', cancel);
+      done();
+    });
+  }
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || reduce.matches) return;
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target || a.hasAttribute('download')) return;
+    var u = new URL(a.href, location.href);
+    if (u.origin !== location.origin || u.pathname !== location.pathname || u.search !== location.search) return;
+    var id = decodeURIComponent(u.hash.slice(1)), el = id ? document.getElementById(id) : null;
+    if (id && !el) return;
+    e.preventDefault();
+    var pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0,
+      y = el ? el.getBoundingClientRect().top + scrollY - pad : 0,
+      max = document.documentElement.scrollHeight - innerHeight;
+    glide(Math.max(0, Math.min(y, max)), function () {
+      if (el) {
+        if (!el.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT|SELECT|TEXTAREA|SUMMARY)$/.test(el.tagName)) el.setAttribute('tabindex', '-1');
+        el.focus({ preventScroll: true });
+      }
+      if (location.hash !== u.hash) history.pushState(null, '', u.hash || u.pathname);
+    });
+  });
+})();

@@ -28,7 +28,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const DIST = path.resolve(process.argv[2] || path.join(HERE, '..', process.env.OUT_DIR || 'dist'));
 const SRC_CSS = path.join(HERE, '..', 'src', 'css');
 const TOKENS_CSS = /(^|[-.])tokens\.css$/; // the ONLY source css file allowed to contain raw hex colours (00-tokens.css)
-let SHARED = { htmlRawKB: 90, htmlBrotliKB: 19, brotliQuality: 11, cssSharedKB: 42, cssPageKB: 72, cssBlockingMax: 2, initialJsKB: 30, lcpImageTargetKB: 120 };
+let SHARED = { htmlRawKB: 90, htmlBrotliKB: 19, brotliQuality: 11, cssSharedKB: 42, cssPageKB: 72, cssBlockingMax: 2, initialJsKB: 32, lcpImageTargetKB: 120 };
 try { SHARED = { ...SHARED, ...(await import('../build/lib/machine.mjs')).BUDGETS }; } catch { /* standalone copy: local fallback */ }
 const BUDGET = {
   htmlKB: SHARED.htmlRawKB, htmlBrotliKB: SHARED.htmlBrotliKB, brotliQuality: SHARED.brotliQuality,
