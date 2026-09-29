@@ -1,0 +1,8 @@
+/* @module ar vw-ar vw-embedcode vw-arpage
+   ==========================================================================
+   59-theme-ar · theme bridge for the AR QR code. Owner: BRAND.
+   51-ar.css swaps the QR colours inside its own dark media query, which knows nothing about the theme toggle
+   (light forced on a dark system would print light modules on a dark plate). The QR is dark on light in every
+   theme, from tokens that do not change (the dark media rule of 51-ar.css is gone, this is the only rule).
+   ========================================================================== */
+.vw-qr { color: var(--color-qr-ink); background: var(--color-qr-paper); }

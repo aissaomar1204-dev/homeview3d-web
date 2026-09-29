@@ -4,6 +4,16 @@
    This is the ONLY stylesheet allowed to contain raw colour values
    (enforced by docs/design/design-lint.js). Every other file uses var(--*).
    Contrast ratios in comments were measured (WCAG 2.x formula) on 2026-09-28.
+
+   Theme (light / dark / automatic). The header toggle sets data-theme="light|dark" on <html>
+   (inline head script, localStorage "hv-theme"); no attribute = follow the system.
+     light palette  = :root (default)
+     dark palette   = :root[data-theme="dark"], or the system asks for dark AND light is not forced
+   The dark values appear twice on purpose (CSS cannot share one declaration between a media query
+   and an attribute selector). Edit both blocks together. Other stylesheets never test the theme:
+   they read tokens. If a rule must differ per theme, add a token here (see --plan-invert).
+   Brand: scripts/brand.mjs and build.mjs read --color-bg / --color-ink / --color-accent from this file,
+   light first and dark from the media block, so keep that order.
    ========================================================================== */
 
 /* ---------- Fonts: self-hosted, instanced + subset (rulebook A3) ---------- */
@@ -73,6 +83,9 @@
   --color-success: #1F7245;      /* 5.8:1 on surface */
   --color-scrim: rgb(20 23 27 / 0.56);
   --shadow-pop: 0 1px 2px rgb(20 23 27 / 0.06), 0 12px 32px -12px rgb(20 23 27 / 0.22);
+  --plan-invert: 0;              /* filter: invert() for line art drawn dark on light (0 light, .91 dark) */
+  --color-qr-ink: #14171B;       /* QR modules and quiet zone: dark on light in every theme (scanners) */
+  --color-qr-paper: #FCFCFD;
 
   /* ---------- Type ---------- */
   --font-sans: "Archivo", "Archivo Text Fallback", system-ui, sans-serif;
@@ -163,9 +176,12 @@
   }
 }
 
-/* ---------- Colour: dark (system preference) ---------- */
+/* ---------- Colour: light forced (toggle "Claro"): the default palette, native controls follow ---------- */
+:root[data-theme="light"] { color-scheme: light; }
+
+/* ---------- Colour: dark, system preference unless light is forced ---------- */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --color-bg: #0F1215;           /* ink 15.7:1 */
     --color-surface: #161A1E;
     --color-stage: #1B2025;
@@ -182,7 +198,30 @@
     --color-success: #7FCB9E;      /* 9.1:1 on surface */
     --color-scrim: rgb(5 7 9 / 0.64);
     --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
+    --plan-invert: 0.91;
   }
+}
+
+/* ---------- Colour: dark forced (toggle "Oscuro"): same values as the block above ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0F1215;           /* ink 15.7:1 */
+  --color-surface: #161A1E;
+  --color-stage: #1B2025;
+  --color-ink: #E8EBEE;
+  --color-ink-2: #AEB5BD;        /* 9.1:1 on bg */
+  --color-ink-3: #8A929B;        /* 6.0:1 on bg, 5.2:1 on stage */
+  --color-line: #283038;
+  --color-line-strong: #66707B;  /* 3.7 bg / 3.5 surface / 3.3 stage */
+  --color-accent: #A2B3EA;       /* 8.5:1 on surface */
+  --color-accent-hover: #B8C5F2;
+  --color-on-accent: #0F1215;    /* 9.1:1 on accent */
+  --color-accent-soft: #1C2640;  /* ink 12.5:1, accent 7.3:1 */
+  --color-danger: #F2877E;       /* 7.1:1 on surface */
+  --color-success: #7FCB9E;      /* 9.1:1 on surface */
+  --color-scrim: rgb(5 7 9 / 0.64);
+  --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
+  --plan-invert: 0.91;
 }
 
 /* ---------- Reduced motion: every duration collapses ---------- */

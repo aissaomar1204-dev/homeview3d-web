@@ -1,15 +1,102 @@
 /* ═══════════════════════════════════════════════════════════════
    Layout (docs/build/BUILD-SPEC.md §4): <head>, header, breadcrumbs,
-   footer and the mobile bottom bar. Owner: ENGINE.
+   footer and the mobile bottom bar. Owner: ENGINE; brand and theme parts
+   (inline logo, favicons, branded OG, theme scripts and toggle): BRAND
+   (scripts/brand.mjs writes the assets this file reads).
    ═══════════════════════════════════════════════════════════════ */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { esc } from './md.mjs';
 import { sprite } from './context.mjs';
 import { contactHref, formAnchor } from './components.mjs';
-import { modulesFor } from './assets.mjs';
+import { modulesFor, minifyJs } from './assets.mjs';
 
-/** Inline scripts emitted by the layout (their sha256 goes into the CSP, see build.mjs). */
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
+
+/** Inline scripts emitted by the layout (machine.mjs hashes every inline script of the built HTML into the CSP). */
 export const JS_FLAG_SCRIPT = "document.documentElement.classList.add('js')";
 export const meshoptScript = (url) => `self.ModelViewerElement = { meshoptDecoderLocation: '${url}' }`;
+
+/**
+ * Theme, part 1: the inline head script, before the CSS, so the stored choice is on <html> before the first paint
+ * (no flash). 'hv-theme' holds 'light' or 'dark'; no key = automatic (the system preference decides, see
+ * 00-tokens.css). Storage is a per-visitor convenience: the access is inside try/catch and the page works without it.
+ */
+export const THEME_HEAD_SCRIPT = "try{var t=localStorage.getItem('hv-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}";
+
+/**
+ * Theme, part 2: the toggle (deferred file, cached like every hashed asset, so the HTML carries only the tag).
+ * Cycles automatic → light → dark, persists (automatic removes the key), keeps <meta name="theme-color"> and
+ * <meta name="color-scheme"> in step, updates the button's aria-label and tooltip (three strings joined with "|" in
+ * data-l, from ui.mjs) and announces the new state in a polite live region it creates next to the button. Other tabs
+ * follow through "storage".
+ */
+export function themeToggleJs({ light = '#F4F5F6', dark = '#0F1215' } = {}) {
+  const src = `
+(function () {
+  var d = document, r = d.documentElement, K = 'hv-theme', C = { light: '${light}', dark: '${dark}' }, S = ['', 'light', 'dark'],
+    b = d.querySelector('[data-theme-toggle]'), o;
+  if (!b) return;
+  o = d.createElement('span');
+  o.className = 'sr-only';
+  o.setAttribute('role', 'status');
+  b.after(o);
+  function ok(v) { return S.indexOf(v) > 0 ? v : ''; }
+  function put(t, say) {
+    var m = d.querySelectorAll('meta[name=theme-color]'), c = d.querySelector('meta[name=color-scheme]'), l = b.dataset.l.split('|')[S.indexOf(t)], i;
+    if (t) r.dataset.theme = t; else delete r.dataset.theme;
+    for (i = 0; i < m.length; i++) m[i].content = C[t || (/dark/.test(m[i].getAttribute('media')) ? 'dark' : 'light')];
+    if (c) c.content = t || 'light dark';
+    b.setAttribute('aria-label', l);
+    b.title = l;
+    if (say) o.textContent = l;
+  }
+  put(ok(r.dataset.theme));
+  b.addEventListener('click', function () {
+    var n = S[(S.indexOf(ok(r.dataset.theme)) + 1) % 3];
+    try { if (n) localStorage.setItem(K, n); else localStorage.removeItem(K); } catch (e) {}
+    put(n, 1);
+  });
+  addEventListener('storage', function (e) { if (e.key === K) put(ok(e.newValue)); });
+})();`;
+  return minifyJs(src).split('\n').join('');
+}
+
+/** Emits /assets/js/theme.<hash>.js once per build (same bytes, same URL) and returns its URL. */
+const themeJsUrl = new Map();
+function themeAsset(ctx, colors) {
+  const code = themeToggleJs(colors);
+  if (!themeJsUrl.has(code)) themeJsUrl.set(code, ctx.emitAsset('/assets/js/theme.js', code));
+  return themeJsUrl.get(code);
+}
+
+/* ─── Brand: the inline lockup (build/generated/brand.json, written by scripts/brand.mjs) ─── */
+
+let LOCKUP = null;
+try { LOCKUP = JSON.parse(fs.readFileSync(path.join(ROOT, 'build', 'generated', 'brand.json'), 'utf8')).horizontal; } catch { /* partial checkout: text wordmark */ }
+
+/**
+ * Header logo: the outlined lockup as inline SVG so it follows the theme (ink and accent come from the tokens, see
+ * .hv-logo in 20-layout.css). The group has an id so the footer can <use> it: the paths ship once per page.
+ */
+function logoSvg() {
+  return `<svg class="hv-logo" viewBox="${LOCKUP.viewBox}" aria-hidden="true" focusable="false"><g id="hv-logo"><path d="${LOCKUP.ink}"/><path class="hv-a" d="${LOCKUP.accent}"/></g></svg>`;
+}
+const footerLogo = () => `<svg class="hv-logo site-footer__logo" viewBox="${LOCKUP.viewBox}" aria-hidden="true" focusable="false"><use href="#hv-logo"/></svg>`;
+
+/* Theme toggle icons (256 grid, stroke style of the site's icon set): half disc = auto, sun = light, moon = dark. Only the
+   group of the current state is shown (CSS on html[data-theme], 20-layout.css). */
+const THEME_ICON = '<svg class="icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false">'
+  + '<g class="ic-a"><circle cx="128" cy="128" r="92"/><path d="M128 36a92 92 0 0 1 0 184z" fill="currentColor"/></g>'
+  + '<g class="ic-l"><circle cx="128" cy="128" r="44"/><path d="M128 52V28M128 204v24M52 128H28M204 128h24M74 74L57 57M182 74l17-17M74 182l-17 17M182 182l17 17"/></g>'
+  + '<g class="ic-d"><path d="M224 136A96 96 0 1 1 120 32a75 75 0 0 0 104 104z"/></g></svg>';
+
+/** The toggle button (visible only with JS, see html:not(.js) in 20-layout.css). Its polite live region is added by theme.js. */
+function themeButton(ctx) {
+  const labels = ['auto', 'light', 'dark'].map((k) => ctx.t(`theme.${k}`));
+  return `<button type="button" class="theme-btn" data-theme-toggle aria-label="${esc(labels[0])}" data-l="${esc(labels.join('|'))}">${THEME_ICON}</button>`;
+}
 
 const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const ROBOTS_NOINDEX = 'noindex, follow';
@@ -56,15 +143,13 @@ export function header(ctx) {
   }).join('');
   const home = ctx.href('home');
   const brand = ctx.site.brand;
-  const logo = brand.logo
-    ? `<img src="${esc(ctx.asset(brand.logo))}" alt="${esc(brand.name)}" width="180" height="32">`
-    : `<span class="brand__word">${esc(brand.name)}</span>`;
+  const logo = LOCKUP ? logoSvg() : `<span class="brand__word">${esc(brand.name)}</span>`;
   const cta = `<a class="btn btn--primary btn--header" href="${esc(contactHref(ctx))}">${esc(ctx.t('cta.demo'))}</a>`;
   return `<header class="site-header" data-header><div class="wrap site-header__bar">`
     + `<a class="brand" href="${esc(home)}" aria-label="${esc(ctx.t('meta.homeLabel'))}">${logo}</a>`
     + `<nav class="site-nav" id="site-nav" aria-label="${esc(ctx.t('nav.label'))}" data-nav><ul class="site-nav__list" role="list">${items}</ul>`
     + `<p class="site-nav__extra">${langLink(ctx, { className: 'lang-link lang-link--sheet', long: true })}<a class="btn btn--primary" href="${esc(contactHref(ctx))}">${esc(ctx.t('cta.demo'))}</a></p></nav>`
-    + `<div class="site-header__actions">${langLink(ctx)}${cta}`
+    + `<div class="site-header__actions">${langLink(ctx)}${themeButton(ctx)}${cta}`
     + `<button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" data-menu data-label-open="${esc(ctx.t('nav.menu'))}" data-label-close="${esc(ctx.t('nav.close'))}">${ctx.icon('menu', 'menu-btn__open')}${ctx.icon('close', 'menu-btn__close')}<span data-menu-label>${esc(ctx.t('nav.menu'))}</span></button>`
     + `</div></div></header>`;
 }
@@ -118,7 +203,7 @@ export function footer(ctx) {
   const year = new Date().getFullYear();
   return `<footer class="site-footer" data-footer><div class="wrap">`
     + `<div class="site-footer__top">`
-    + `<div class="site-footer__about"><p class="brand__word brand__word--footer">${esc(ctx.site.brand.name)}</p>`
+    + `<div class="site-footer__about">${LOCKUP ? footerLogo() : `<p class="brand__word brand__word--footer">${esc(ctx.site.brand.name)}</p>`}`
     + `<p class="site-footer__entity">${esc(ctx.tok(ctx.site.entity[L]))}</p>`
     + `<p class="site-footer__base">${esc(ctx.t('footer.base'))}</p>`
     + `<dl class="site-footer__contact">`
@@ -151,6 +236,20 @@ export function bottomBar(ctx) {
 /* ─── Document ────────────────────────────────────────────────── */
 
 /**
+ * The OG image of a page with the brand lockup on a paper plate (scripts/brand.mjs writes
+ * public/assets/img/og-brand/<image>.jpg from the originals in public/assets/img/og/). Falls back to the plain crop
+ * while the branded copy does not exist (partial checkout), so the meta never points to a missing file.
+ */
+const brandedExists = new Map();
+function brandedOg(ctx, og) {
+  if (!og || !og.url) return null;
+  if (!og.name) return og.url;
+  const p = `/assets/img/og-brand/${og.name}.jpg`;
+  if (!brandedExists.has(p)) brandedExists.set(p, fs.existsSync(path.join(ROOT, 'public', p)));
+  return brandedExists.get(p) ? ctx.abs(ctx.asset(p)) : og.url;
+}
+
+/**
  * @param ctx
  * @param o { main, layout: 'default'|'bare', bodyClass, entry, graph, assets: { css, js: { main, viewer }, font, meshopt,
  *            favicons: { ico, svg, apple }, manifest: bool, markdown: bool }, themeColors: { light, dark }, placeholders, dateline }
@@ -164,6 +263,7 @@ export function renderDocument(ctx, o) {
     ? Object.entries(alt).map(([hl, p]) => `<link rel="alternate" hreflang="${hl}" href="${esc(ctx.abs(p))}">`).join('')
     : '';
   const og = entry.image;
+  const ogUrl = brandedOg(ctx, og);
   const ogType = ['guide', 'case'].includes(entry.template) ? 'article' : 'website';
   const articleMeta = ogType === 'article'
     ? (entry.datePublished ? `<meta property="article:published_time" content="${esc(entry.datePublished)}">` : '')
@@ -187,7 +287,7 @@ export function renderDocument(ctx, o) {
     ? `<script>${meshoptScript(A.meshopt)}</script><script type="module" src="${esc(A.js.viewer)}"></script>`
     : '';
   const icons = [
-    A.favicons.ico ? '<link rel="icon" href="/favicon.ico" sizes="32x32">' : '',
+    A.favicons.ico ? '<link rel="icon" href="/favicon.ico" sizes="32x32">' : '', // 16/32/48 inside; 32x32 keeps Chrome on the SVG below
     A.favicons.svg ? '<link rel="icon" href="/favicon.svg" type="image/svg+xml">' : '',
     A.favicons.apple ? '<link rel="apple-touch-icon" href="/apple-touch-icon.png">' : '',
     A.manifest ? '<link rel="manifest" href="/site.webmanifest">' : '',
@@ -213,18 +313,20 @@ export function renderDocument(ctx, o) {
     + `<meta property="og:title" content="${esc(entry.title)}">`
     + `<meta property="og:description" content="${esc(entry.description)}">`
     + articleMeta
-    + (og && og.url ? `<meta property="og:image" content="${esc(og.url)}"><meta property="og:image:width" content="${og.width}"><meta property="og:image:height" content="${og.height}"><meta property="og:image:alt" content="${esc(og.alt)}">` : '')
+    + (og && ogUrl ? `<meta property="og:image" content="${esc(ogUrl)}"><meta property="og:image:width" content="${og.width}"><meta property="og:image:height" content="${og.height}"><meta property="og:image:alt" content="${esc(og.alt)}">` : '')
     // X/Twitter reads og:title, og:description and og:image when its own tags are absent: only the card type is needed.
     + `<meta name="twitter:card" content="summary_large_image">`
     + `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${o.themeColors.light}">`
     + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.dark}">`
     + `<meta name="color-scheme" content="light dark">`
+    + `<script>${THEME_HEAD_SCRIPT}</script>`
     + `<meta name="format-detection" content="telephone=no">`
     + (A.font ? `<link rel="preload" href="${esc(A.font)}" as="font" type="font/woff2" crossorigin>` : '')
     + styles
     + icons + mdAlt + feed
     + `<script>${JS_FLAG_SCRIPT}</script>`
     + ld
+    + (o.layout !== 'bare' ? `<script src="${esc(themeAsset(ctx, o.themeColors))}" defer></script>` : '')
     + (A.js.main ? `<script src="${esc(A.js.main)}" defer></script>` : '')
     + viewerScripts
     + analytics;

@@ -41,8 +41,8 @@ strong { font-weight: var(--wght-heading); }
 a { color: inherit; text-decoration-thickness: 1px; text-decoration-color: var(--color-line-strong); text-underline-offset: 0.22em; }
 /* Feedback: link hover shifts to the accent (COLOR-02). */
 @media (hover: hover) and (pointer: fine) {
-  a { transition: color var(--dur-hover) var(--ease-out); }
-  a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
+  a, .theme-btn { transition: color var(--dur-hover) var(--ease-out); }
+  a:hover, .theme-btn:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 }
 
 /* Focus (A11Y-03): outline, never box-shadow, so it survives forced colors. */
@@ -68,7 +68,7 @@ h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--t
 .eyebrow, .mono, .cajetin__head, .cajetin dt, .cota, .table caption, .step__time, .compare__hint, .compare__labels,
 .despiece__legend, .bento__formats, .bento__soon span, .pack__flag, .pack__meta dt, .calc__total-label, .form__progress,
 .alt__k, .specs dt, .toc__title, .az__title, .az__letters, .byline, .dateline, .footer-col__title, .site-footer__contact dt,
-.lang-link, .notfound__code, .toc__list a::before, .lamina-label dt, .lamina__lbl {
+.lang-link, .notfound__code, .toc__list a::before {
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   font-weight: var(--wght-mono);
@@ -78,10 +78,10 @@ h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--t
 }
 .eyebrow, .cajetin__head, .cajetin dt, .table caption, .step__time, .compare__hint, .despiece__legend, .bento__formats,
 .bento__soon span, .pack__meta dt, .calc__total-label, .form__progress, .alt__k, .specs dt, .toc__title, .az__title,
-.byline, .dateline, .footer-col__title, .site-footer__contact dt, .notfound__code, figcaption, .field__hint, .lamina-label dt,
-.hero__caption, .index__arrow, .form__privacy, .calc__note, .pricing__vat, .table__note, .sources__note, .table__caption { color: var(--color-ink-3); }
+.byline, .dateline, .footer-col__title, .site-footer__contact dt, .notfound__code, figcaption, .field__hint,
+.index__arrow, .form__privacy, .calc__note, .pricing__vat, .table__note, .sources__note, .table__caption { color: var(--color-ink-3); }
 .eyebrow { margin-bottom: var(--space-3); }
-figcaption, .field__hint, .hero__caption, .form__privacy, .calc__note, .pricing__vat, .table__note { font-size: var(--fs-sm); line-height: var(--lh-meta); }
+figcaption, .field__hint, .form__privacy, .calc__note, .pricing__vat, .table__note { font-size: var(--fs-sm); line-height: var(--lh-meta); }
 
 /* Body copy may hyphenate on very narrow screens only (TYPE-11). */
 @media (max-width: 479px) {
@@ -118,8 +118,9 @@ figcaption, .field__hint, .hero__caption, .form__privacy, .calc__note, .pricing_
 .skip:focus { transform: none; }
 
 /* ---------- Preferences (A11Y-12) ---------- */
+/* :root:root ties the dark palette blocks in 00-tokens.css (0,2,0) and wins on source order. */
 @media (prefers-contrast: more) {
-  :root { --color-line: var(--color-line-strong); --color-ink-3: var(--color-ink-2); }
+  :root:root { --color-line: var(--color-line-strong); --color-ink-3: var(--color-ink-2); }
 }
 @media (forced-colors: active) {
   .btn, .input, .choice, .stepper, .pack { border: 1px solid CanvasText; }

@@ -96,9 +96,9 @@ export function createAssets({ root, dist, warn = console.warn }) {
     const parts = files.map((f) => {
       let css = fs.readFileSync(path.join(dir, f), 'utf8');
       const mod = css.match(/@module\s+([\w-]+)((?:[ \t]+[\w-]+)*)/);
-      // tokens.css is the only file with colour literals (COLOR-01). The bundle ships them as rgb()
-      // so the bundled stylesheets stay free of hex literals for the design lint.
-      if (/tokens/.test(f)) css = css.replace(/#([0-9a-fA-F]{6})\b/g, (m, h) => `rgb(${parseInt(h.slice(0, 2), 16)} ${parseInt(h.slice(2, 4), 16)} ${parseInt(h.slice(4, 6), 16)})`);
+      // tokens.css is the only file with colour literals (COLOR-01), all of them inside custom-property declarations,
+      // which is where the design lint allows hex in dist. They ship as they are: 7 bytes per colour instead of the
+      // 16 of rgb(r g b), about 0.4 KB on every page (the CSS budgets have little room left).
       return { f, module: mod ? mod[1] : null, classes: mod ? mod[2].trim().split(/\s+/).filter(Boolean) : [], css: minifyCss(css) };
     });
     if (process.env.NO_SHORTEN !== '1') inlineStaticTokens(parts, keepNames(root));

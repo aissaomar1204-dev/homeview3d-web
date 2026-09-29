@@ -1,0 +1,94 @@
+/* @module herohs hs
+   ==========================================================================
+   22-hero-seq · home hero "El plano se vuelve 3D", CRITICAL part: layout of the sheet (stage, art, plan drawing, canvas,
+   final still), phase rail, title block and the animated-mode layer switching. Owner: HERO. Only used by the home hero.
+   The markup is the FINAL state (still). Animated mode needs html.js and no reduced motion;
+   hero.js then adds .is-live (overlay + strip appear), .is-f (frames), .is-pre (still preloads), .is-end (still shown),
+   .is-done (replay offered). Cotas, rulers, chips and the replay button are built by JS and styled by
+   23-hero-live.css, which hero.js loads (it is not linked in the HTML). Mono text uses the shared .mono class.
+   The dark re-drawing of the plan (inverted line art) reads --plan-invert (00-tokens.css), so it follows
+   prefers-color-scheme and :root[data-theme] alike.
+   ========================================================================== */
+
+/* ---------- Layout: text first, the sheet full-bleed under it (mobile); text left, sheet bleeding right (desktop) ---------- */
+.hs-grid { display: grid; gap: var(--space-6); }
+.hero--seq { padding-block: var(--space-5) var(--space-7); }
+.hs-text { padding-inline: var(--gutter); }
+.hs-text h1 { font-size: clamp(2rem, 8.6vw, 3.5rem); line-height: 1.03; }
+/* Phones: the headline keeps two lines at 360px and the sheet starts above the fold's middle, so the animation is seen. */
+@media (max-width: 767px) {
+  .hs-grid { gap: var(--space-4); }
+  .hero--seq { padding-top: var(--space-4); }
+  .hs-text .actions { margin-top: var(--space-5); }
+}
+
+.hs { --strip: 88px; position: relative; container: hs / inline-size; border-block: 1px solid var(--color-line-strong); }
+.hs__stage { position: relative; aspect-ratio: 5 / 4; overflow: hidden; container-type: size; background: var(--color-stage); }
+/* The art box is the 14:9 frame of the renders, always as tall as the stage; a narrower stage crops its sides. */
+.hs__art { position: absolute; inset: 0 auto 0 50%; width: calc(100cqh * 14 / 9); transform: translateX(-50%); container-type: size; }
+.hs__still, .hs__plan, .hs__cv { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hs__still img { width: 100%; height: 100%; }
+.hs__plan, .hs__cv { display: none; }
+/* Dark: the line drawing is re-drawn light on dark (invert, exactly registered with the frames), not just dimmed. */
+.hs__plan { filter: invert(var(--plan-invert)); }
+
+/* ---------- Strip: phase rail + title block ---------- */
+.hs__strip { display: grid; border-top: 1px solid var(--color-line-strong); background: var(--color-bg); }
+.hs__rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.hs__rail li { position: relative; min-width: 0; }
+.hs__rail li + li { border-left: 1px solid var(--color-line); }
+/* Progress: the bottom hairline fills with the current frame (state, synced by hero.js through --p). */
+.hs__rail li::after { content: ""; position: absolute; inset: auto 0 0; height: 2px; background: var(--color-accent); transform: scaleX(var(--p, 1)); transform-origin: 0 50%; }
+.hs__b { display: grid; gap: var(--space-2); width: 100%; margin: 0; padding: var(--space-3) var(--space-3) var(--space-4); border: 0; background: none; color: inherit; font: inherit; text-align: left; }
+.hs__b i, .hs__title dt { color: var(--color-ink-3); font-style: normal; }
+.hs__b b { font-size: var(--fs-sm); font-weight: var(--wght-ui); line-height: 1.2; }
+.is-on b { color: var(--color-accent); }
+.hs__title div { display: grid; grid-template-columns: 4.25rem minmax(0, 1fr); gap: var(--space-3); padding: 6px var(--space-3); border-top: 1px solid var(--color-line); }
+.hs__title dd { font-size: var(--fs-meta); line-height: 1.25; color: var(--color-ink-2); }
+
+/* ---------- Animated mode (hero.js): line plan first, then the frames on the canvas, then the crisp still ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js .hs .hs__still { display: none; opacity: 0; transition: opacity var(--dur-state) var(--ease-in-out); }
+  .js .hs.is-pre .hs__still { display: block; }
+  .js .hs.is-end .hs__still { opacity: 1; }
+  /* Storytelling: the drawing (LCP, static) gives way to the render of the same plan (opacity only). */
+  .js .hs :is(.hs__plan, .hs__cv) { display: block; transition: opacity var(--dur-reveal) var(--ease-in-out); }
+  .js .hs .hs__cv { opacity: 0; }
+  .js .hs.is-f .hs__cv { opacity: 1; }
+  .js .hs:is(.is-f, .is-end) .hs__plan { opacity: 0; }
+  /* Landing: the last frame and the still are the same image, and both carry a soft alpha shadow, so a dissolve would
+     double it for a moment and then snap it lighter. The still SWAPS in (decoded first); .is-done only offers the replay.
+     hero.js drops .is-f when the sequence did not land, so a failed run still dissolves. */
+  .js .hs.is-f.is-end .hs__still { opacity: 1; transition: none; }
+  .js .hs.is-f.is-end .hs__cv { display: none; }
+  /* Cut: hero.js adds .is-cut for one style flush while it changes layers (replay, rail click), so nothing ghosts. */
+  .js .hs.is-cut :is(.hs__still, .hs__plan, .hs__cv) { transition: none; }
+  /* Until hero.js runs, the strip stays hidden (it would show the final state next to the line plan). */
+  .js .hs:not(.is-live) .hs__strip { opacity: 0; }
+}
+
+/* ---------- Tablet: one column, the sheet is wide again ---------- */
+@media (min-width: 768px) { .hs__stage { aspect-ratio: 14 / 9; } }
+
+/* ---------- Desktop: text left, the sheet bleeds to the right edge and fills the first screen ---------- */
+@media (min-width: 1024px) {
+  .hero--seq { display: grid; align-items: center; min-height: calc(100svh - var(--header-h)); padding-block: var(--space-6); }
+  .hs-grid {
+    --c: calc(min(100%, var(--container)) - 2 * var(--gutter));
+    grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, calc(var(--c) * 5 / 12)) var(--space-7) minmax(0, calc(var(--c) * 7 / 12 - var(--space-7))) minmax(var(--gutter), 1fr);
+    align-items: center;
+    gap: 0;
+  }
+  .hs-text { grid-area: 1 / 2; container-type: inline-size; padding: 0; }
+  /* Display scale, sized by the column so the headline keeps its line breaks at every desktop width. */
+  .hs-text h1 { font-size: min(var(--fs-display), 13.2cqi); line-height: 1.02; letter-spacing: -0.026em; }
+  .hs { grid-area: 1 / 4 / 2 / 6; border-left: 1px solid var(--color-line-strong); }
+  .hs__stage { aspect-ratio: auto; height: min(46vw, max(360px, calc(100svh - var(--header-h) - var(--space-9) - var(--strip)))); }
+}
+/* Wide sheet: the title block sits beside the rail (a narrow one stacks them, and the stage leaves room for the taller strip). */
+@container (min-width: 40rem) {
+  .hs__strip { grid-template-columns: minmax(0, 1fr) 18.5rem; }
+  .hs__title { border-left: 1px solid var(--color-line); align-content: end; }
+  .hs__title div:first-child { border-top: 0; }
+}
+@container (max-width: 39.99rem) { .hs__stage { --strip: 156px; } }

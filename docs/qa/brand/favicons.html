@@ -1,0 +1,40 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Favicon rendering test</title>
+<!-- QA page for the brand icons. Serve the built site (node build/serve.mjs 8881 dist-brand), copy this file to the
+     root of that folder and open /favicons.html. The favicons are shown at their real pixel sizes (16, 32, 48) as a
+     browser tab, a shortcut and a pinned tile would draw them; scripts/brand.mjs writes the files. -->
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; padding: 24px; font: 13px/1.4 ui-monospace, Consolas, monospace; background: #F4F5F6; color: #14171B; }
+  @media (prefers-color-scheme: dark) { body { background: #0F1215; color: #E8EBEE; } }
+  h2 { margin: 24px 0 8px; font-size: 13px; font-weight: 500; }
+  .row { display: flex; gap: 24px; align-items: end; }
+  figure { margin: 0; display: grid; gap: 6px; justify-items: center; }
+  .tab { display: flex; align-items: center; gap: 8px; padding: 8px 12px; width: 240px; background: #fff; color: #14171B; border-radius: 8px 8px 0 0; }
+  @media (prefers-color-scheme: dark) { .tab { background: #2b2f34; color: #E8EBEE; } }
+  .tab img { width: 16px; height: 16px; }
+  .strip { background: #DEE1E6; padding: 8px 8px 0; }
+  @media (prefers-color-scheme: dark) { .strip { background: #0b0d10; } }
+</style>
+<h2>favicon.svg at 16, 32, 48 (adapts to the colour scheme inside the file)</h2>
+<div class="row">
+  <figure><img src="/favicon.svg" width="16" height="16" alt=""><figcaption>16</figcaption></figure>
+  <figure><img src="/favicon.svg" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+  <figure><img src="/favicon.svg" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+</div>
+<h2>favicon.ico (16, 32, 48 entries: añil tile, light mark)</h2>
+<div class="row">
+  <figure><img src="/favicon.ico" width="16" height="16" alt=""><figcaption>16</figcaption></figure>
+  <figure><img src="/favicon.ico" width="32" height="32" alt=""><figcaption>32</figcaption></figure>
+  <figure><img src="/favicon.ico" width="48" height="48" alt=""><figcaption>48</figcaption></figure>
+</div>
+<h2>Touch and manifest icons</h2>
+<div class="row">
+  <figure><img src="/apple-touch-icon.png" width="90" height="90" alt=""><figcaption>apple-touch 180 @0.5</figcaption></figure>
+  <figure><img src="/icon-192.png" width="96" height="96" alt=""><figcaption>icon-192 @0.5</figcaption></figure>
+  <figure><img src="/icon-192.png" width="96" height="96" alt="" style="border-radius:50%"><figcaption>maskable circle</figcaption></figure>
+  <figure><img src="/icon-192.png" width="96" height="96" alt="" style="border-radius:22%"><figcaption>maskable squircle</figcaption></figure>
+</div>
+<h2>In a browser tab</h2>
+<div class="strip"><div class="tab"><img src="/favicon.svg" alt=""><span>Home View 3D | Modelos 3D desde planos</span></div></div>

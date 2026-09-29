@@ -11,7 +11,7 @@ export const site = {
     name: 'Home View 3D',
     legalName: 'AS TRINITY, S.L.',
     placeholder: false,
-    logo: null,                  // set by the logo system (public/assets/brand/*); null = text wordmark
+    logo: '/assets/brand/logo-512.png', // schema.org logo (512 x 512, from scripts/brand.mjs); the header uses the inline SVG lockup
   },
 
   // Canonical origin, no trailing slash (apex; www redirects here on Netlify).

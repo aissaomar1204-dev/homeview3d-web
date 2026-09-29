@@ -1,0 +1,8 @@
+/* @module compare compare
+   ==========================================================================
+   59-theme-compare · theme bridge for the plan/render slider. Owner: BRAND.
+   41-compare.css inverts the line plan inside its own dark media query, which knows nothing about the theme
+   toggle: a visitor on a dark system who picks "Claro" would get white lines on the light sheet. This rule
+   reads the theme token instead (the dark media block of 41-compare.css is gone, this is the only rule).
+   ========================================================================== */
+.compare__layer--under .compare__img { filter: invert(var(--plan-invert)); }

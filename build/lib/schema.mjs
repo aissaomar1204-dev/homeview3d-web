@@ -198,6 +198,7 @@ function orgNode(entry, lang, h, full) {
   if (!full) return stub;
   const catalog = h.absHref('precios');
   const legalOk = !site.legal.placeholder && site.brand.legalName && !/^\[/.test(site.brand.legalName);
+  // Logo: public/assets/brand/logo-512.png (scripts/brand.mjs): the symbol on the paper colour, 512 x 512, crawlable.
   const logo = site.brand.logo ? h.assetUrl(site.brand.logo) : undefined;
   const f = founder();
   return {
@@ -206,7 +207,7 @@ function orgNode(entry, lang, h, full) {
     description: h.plain(site.entity[lang]),
     foundingDate: site.facts?.founded ? String(site.facts.founded) : undefined,
     founder: f ? ref(FOUNDER_ID) : undefined,
-    logo: logo ? { '@type': 'ImageObject', url: logo } : undefined,
+    logo: logo ? { '@type': 'ImageObject', '@id': `${site.domain}/#logo`, url: logo, contentUrl: logo, width: 512, height: 512, caption: site.brand.name } : undefined,
     // One fixed image for the global entity on every page (the logo once it exists, the OG render until then).
     image: logo || entityImage(h),
     email: site.contact.email,

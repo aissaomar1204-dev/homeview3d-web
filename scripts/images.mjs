@@ -315,7 +315,8 @@ async function main() {
   fs.mkdirSync(path.dirname(MANIFEST), { recursive: true });
   fs.mkdirSync(path.dirname(CACHE), { recursive: true });
   const stage = stageColour();
-  if (!CHECK_ONLY) await favicons();
+  // Favicons and app icons are generated from the logo by scripts/brand.mjs (npm run brand).
+  // Do not regenerate them here: the old flat-square favicons() would overwrite the brand icons.
   const cache = FORCE ? {} : readJson(CACHE, {});
   const previous = readJson(MANIFEST, {});
 

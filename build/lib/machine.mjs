@@ -586,7 +586,9 @@ function headersFile(dist, htmlFiles, extraHtml, mdPaths, keyFile, llmsPaths = [
       'X-Content-Type-Options: nosniff',
       'Referrer-Policy: strict-origin-when-cross-origin',
       'Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=(), xr-spatial-tracking=(self)',
-      'Cross-Origin-Opener-Policy: same-origin',
+      // No Cross-Origin-Opener-Policy on purpose: the site needs no cross-origin isolation (no SharedArrayBuffer), and with
+      // `same-origin` (also with `same-origin-allow-popups`) Lighthouse CLI on headless Chrome fails with NO_NAVSTART on most
+      // runs, which makes PageSpeed Insights and CI audits flaky. check.mjs errors if `same-origin` comes back.
     ]),
     '# HTML pages: CSP + revalidate',
     ...pagePaths.map((p) => block(p, [`Content-Security-Policy: ${cspPage}`, 'Cache-Control: public, max-age=0, must-revalidate'])),
@@ -642,15 +644,15 @@ function tokenColour(name, fallback) {
   return fallback;
 }
 function webmanifest(dist, h) {
-  // PNG icons only (public/icon-192.png, icon-512.png from the assets pipeline): flat añil square with the
-  // mark inside the maskable safe zone, so one file serves both purposes.
+  // PNG icons only (public/icon-192.png, icon-512.png from scripts/brand.mjs): añil tile with the light symbol
+  // inside the 80 % maskable safe zone, so one file serves both purposes.
   const icons = [['/icon-192.png', '192x192'], ['/icon-512.png', '512x512']]
     .filter(([p]) => fs.existsSync(path.join(dist, p)))
     .map(([src, sizes]) => ({ src, sizes, type: 'image/png', purpose: 'any maskable' }));
   const m = {
     id: '/',
     name: site.brand.name,
-    short_name: site.brand.name,
+    short_name: site.brand.name.replace(/\s+/g, ''), // "Home View 3D" → "HomeView3D": one word for a home-screen label
     description: h.plain(site.entity[site.defaultLang]),
     lang: site.defaultLang,
     dir: 'ltr',

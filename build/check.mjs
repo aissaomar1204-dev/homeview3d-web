@@ -25,7 +25,7 @@ import path from 'node:path';
 import zlib from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { site, hasPlaceholders } from './data/site.mjs';
+import { site, hasPlaceholders, legalPending } from './data/site.mjs';
 import { routes, routeById, redirects as routeRedirects } from './data/routes.mjs';
 import { pricing, formatPrice } from './data/pricing.mjs';
 import { villa } from './data/villa.mjs';
@@ -92,6 +92,14 @@ const brotliBytes = (s) => zlib.brotliCompressSync(Buffer.isBuffer(s) ? s : Buff
   params: { [zlib.constants.BROTLI_PARAM_QUALITY]: BUDGETS.brotliQuality },
 }).length;
 
+/** Public path (/assets/x/name.ext) to its content-hashed URL in dist (/assets/x/name.<hash8>.ext), or null. */
+function distHashed(publicPath) {
+  const dir = path.posix.dirname(publicPath), ext = path.posix.extname(publicPath), base = path.posix.basename(publicPath, ext);
+  const abs = path.join(DIST, dir);
+  if (!fs.existsSync(abs)) return null;
+  const hit = fs.readdirSync(abs).find((n) => n.startsWith(`${base}.`) && n.endsWith(ext) && /^[0-9a-f]{8}$/.test(n.slice(base.length + 1, -ext.length)));
+  return hit ? `${dir}/${hit}` : null;
+}
 /** Resolve a URL path inside dist: page dir (index.html), file, or null. */
 function distFile(urlPath) {
   let p;
@@ -937,7 +945,7 @@ if (hRules.length) {
     if (!has('x-content-type-options', /nosniff/)) err('headers', '_headers', '/* missing X-Content-Type-Options: nosniff');
     if (!has('referrer-policy')) err('headers', '_headers', '/* missing Referrer-Policy');
     if (!has('permissions-policy', /xr-spatial-tracking=\(self\)/)) err('headers', '_headers', '/* Permissions-Policy must allow xr-spatial-tracking=(self)');
-    if (!has('cross-origin-opener-policy')) err('headers', '_headers', '/* missing Cross-Origin-Opener-Policy');
+    if (has('cross-origin-opener-policy', /^same-origin$/i)) err('headers', '_headers', '/* sends Cross-Origin-Opener-Policy: same-origin: Lighthouse CLI then fails with NO_NAVSTART on most runs (flaky PageSpeed/CI audits) and nothing here needs cross-origin isolation');
   }
   if (hRules.some((r) => r.headers.some(([n]) => n === 'x-frame-options'))) err('headers', '_headers', 'X-Frame-Options found: it would block the embeddable viewer (use CSP frame-ancestors)');
   const embeds = embedPrefixes();
@@ -1171,6 +1179,112 @@ for (const f of allFiles.filter((x) => /\.(html|md|txt|xml|json|webmanifest)$/.t
 }
 for (const [label, h] of phHits) phFail('placeholders', 'dist', `${label}: ${h.n}× in ${h.files} file(s) (e.g. ${h.first})`);
 
+/* ═══ 14b. Brand and theme (owner: BRAND) ═════════════════════ */
+// LAUNCH warning: the company (AS TRINITY, S.L.) is in formation, so the legal notice says «en trámite».
+if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'NIF y datos registrales en trámite (legal.pending): cuando la sociedad esté inscrita, rellena legal.nif y legal.registro y pon legal.pending en false');
+{
+  const B = 'brand';
+  const tokensFile = path.join(ROOT, 'src', 'css', '00-tokens.css');
+  const tokensSrc = fs.readFileSync(tokensFile, 'utf8');
+  const strip = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '');
+  const docsTokens = (() => { try { return fs.readFileSync(path.join(ROOT, 'docs', 'design', 'tokens.css'), 'utf8'); } catch { return null; } })();
+  if (docsTokens !== tokensSrc) err('structure', 'docs/design/tokens.css', 'differs from src/css/00-tokens.css (they must stay identical)', B);
+  // Theme: the dark palette exists twice (system preference unless light is forced, and data-theme="dark"): same tokens, same values.
+  const css = strip(tokensSrc);
+  const decls = (body) => [...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => `${k}: ${v.trim()}`).sort();
+  const viaMedia = css.match(/@media \(prefers-color-scheme: dark\)\s*\{\s*:root:not\(\[data-theme="light"\]\)\s*\{([^}]*)\}/);
+  const viaAttr = css.match(/:root\[data-theme="dark"\]\s*\{([^}]*)\}/);
+  if (!viaMedia || !viaAttr) err('structure', 'src/css/00-tokens.css', 'dark palette must exist as @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { … } } and as :root[data-theme="dark"] { … }', B);
+  else {
+    const a = decls(viaMedia[1]), b = decls(viaAttr[1]);
+    const diff = [...a.filter((x) => !b.includes(x)), ...b.filter((x) => !a.includes(x))];
+    if (diff.length) err('structure', 'src/css/00-tokens.css', `the two dark palette blocks differ: ${diff.slice(0, 4).join(' | ')}`, B);
+    const light = decls((css.match(/:root\s*\{([^}]*)\}/) || [, ''])[1]).map((x) => x.split(':')[0]);
+    const missing = a.map((x) => x.split(':')[0]).filter((k) => !light.includes(k));
+    if (missing.length) err('structure', 'src/css/00-tokens.css', `dark tokens without a light value: ${missing.join(', ')}`, B);
+  }
+  // Other stylesheets read tokens; a media query of their own must not fire when the visitor forced light.
+  for (const f of fs.readdirSync(path.join(ROOT, 'src', 'css')).filter((x) => x.endsWith('.css') && !/tokens/.test(x))) {
+    const s = strip(fs.readFileSync(path.join(ROOT, 'src', 'css', f), 'utf8'));
+    for (const m of s.matchAll(/@media\s*\(prefers-color-scheme:\s*dark\)\s*\{/g)) {
+      let depth = 1, i = m.index + m[0].length;
+      while (i < s.length && depth) { if (s[i] === '{') depth++; else if (s[i] === '}') depth--; i++; }
+      if (!/data-theme/.test(s.slice(m.index, i))) warn('structure', `src/css/${f}`, 'own prefers-color-scheme rule: it ignores the theme toggle (read a token, or scope it with :root:not([data-theme="light"]) and :root[data-theme="dark"]; see 00-tokens.css --plan-invert)', B);
+    }
+  }
+  // Brand files.
+  const brandFile = (p) => { const f = distFile(p); return f ? fs.readFileSync(f) : null; };
+  const wantPng = (p, w, h) => { const b = brandFile(p); const d = b && imageSize(b); if (!b) err('discovery', p, 'missing in dist (run node scripts/brand.mjs)', B); else if (!d || d.w !== w || d.h !== h) err('discovery', p, `is ${d ? `${d.w}x${d.h}` : 'not a PNG'}, expected ${w}x${h}`, B); };
+  wantPng('/apple-touch-icon.png', 180, 180);
+  const ico = brandFile('/favicon.ico');
+  if (!ico) err('discovery', '/favicon.ico', 'missing in dist', B);
+  else {
+    const n = ico.readUInt16LE(4);
+    const sizes = Array.from({ length: n }, (_, i) => ico[6 + 16 * i] || 256).sort((x, y) => x - y).join(',');
+    if (sizes !== '16,32,48') err('discovery', '/favicon.ico', `has sizes ${sizes}, expected 16,32,48`, B);
+  }
+  const fsvg = brandFile('/favicon.svg');
+  if (!fsvg) err('discovery', '/favicon.svg', 'missing in dist', B);
+  else if (!/prefers-color-scheme:\s*dark/.test(fsvg.toString('utf8'))) err('discovery', '/favicon.svg', 'must adapt with prefers-color-scheme inside the file', B);
+  const logoPath = site.brand.logo && distHashed(site.brand.logo);
+  if (!site.brand.logo) err('schema', 'build/data/site.mjs', 'site.brand.logo is empty (expected /assets/brand/logo-512.png)', B);
+  else if (!logoPath) err('schema', 'build/data/site.mjs', `site.brand.logo ${site.brand.logo} is not in dist`, B);
+  else { const d = imageSize(fs.readFileSync(distFile(logoPath))); if (!d || d.w !== 512 || d.h !== 512) err('schema', logoPath, 'logo must be a 512x512 PNG', B); }
+  if (home) {
+    const org = home.graph.find((n) => n['@id'] === `${DOMAIN}/#organization`);
+    const lg = org && org.logo;
+    if (!lg || lg['@type'] !== 'ImageObject' || !lg.url) err('schema', home.where, 'Organization.logo must be an ImageObject with url', B);
+    else {
+      const f = distFile(new URL(lg.url).pathname);
+      const d = f && imageSize(fs.readFileSync(f));
+      if (!f) err('schema', home.where, `Organization.logo ${lg.url} does not resolve in dist`, B);
+      else if (!d || d.w !== lg.width || d.h !== lg.height || d.w !== 512) err('schema', home.where, `Organization.logo declares ${lg.width}x${lg.height} but the file is ${d ? `${d.w}x${d.h}` : 'not a PNG'} (expected 512x512)`, B);
+    }
+  }
+  // Web manifest: name, short name, theme colours from the tokens.
+  try {
+    const wm = JSON.parse(readDist('site.webmanifest') || 'null');
+    const bg = (css.match(/--color-bg:\s*(#[0-9a-fA-F]{6})/) || [])[1];
+    if (wm) {
+      if (wm.name !== site.brand.name) err('discovery', 'site.webmanifest', `name is "${wm.name}", expected "${site.brand.name}"`, B);
+      const short = site.brand.name.replace(/\s+/g, '');
+      if (wm.short_name !== short) err('discovery', 'site.webmanifest', `short_name is "${wm.short_name}", expected "${short}"`, B);
+      for (const k of ['theme_color', 'background_color']) if (!bg || String(wm[k]).toLowerCase() !== bg.toLowerCase()) err('discovery', 'site.webmanifest', `${k} is ${wm[k]}, expected ${bg} (--color-bg)`, B);
+    }
+  } catch { /* reported by the manifest check */ }
+  // Every page: theme script before the CSS, theme-color per scheme, header logo, toggle, footer logo, branded OG.
+  for (const p of pages.values()) {
+    const head = p.html.slice(0, p.html.indexOf('</head>'));
+    const inline = [...head.matchAll(/<script>([^<]*)<\/script>/g)].map((m) => m[1]).find((s) => /hv-theme/.test(s));
+    const firstCss = head.search(/<link\b[^>]*\brel="stylesheet"/);
+    if (!inline) err('structure', p.where, 'no inline theme script in <head> (the stored theme would flash)', B);
+    else if (firstCss >= 0 && head.indexOf(inline) > firstCss) err('structure', p.where, 'the theme script must come before the stylesheet (no flash)', B);
+    const tc = p.metas.filter((m) => m.a.name === 'theme-color');
+    if (tc.length !== 2 || tc.some((m) => !/^#[0-9a-f]{6}$/i.test(m.a.content || '') || !/prefers-color-scheme/.test(m.a.media || ''))) err('structure', p.where, 'needs two <meta name="theme-color"> (light and dark) with media and a hex colour', B);
+    if (!p.metas.some((m) => m.a.name === 'color-scheme' && /light dark/.test(m.a.content || ''))) err('structure', p.where, 'missing <meta name="color-scheme" content="light dark">', B);
+    if (!/<header\b[^>]*\bsite-header\b/.test(p.html)) continue; // bare pages (embed): no header, footer or toggle
+    const brand = p.html.match(/<a class="brand"[^>]*aria-label="([^"]+)"[^>]*>([\s\S]*?)<\/a>/);
+    if (!brand) err('structure', p.where, 'header logo link missing (a.brand with aria-label)', B);
+    else {
+      if (!brand[1].startsWith(site.brand.name)) err('structure', p.where, `logo link name "${brand[1]}" must start with the brand name`, B);
+      if (!/<svg class="hv-logo"[^>]*aria-hidden="true"[\s\S]*<g id="hv-logo">/.test(brand[2])) err('structure', p.where, 'header logo must be the inline SVG lockup (svg.hv-logo with g#hv-logo)', B);
+    }
+    if (!/<svg class="hv-logo site-footer__logo"[^>]*><use href="#hv-logo"\/><\/svg>/.test(p.html)) err('structure', p.where, 'footer logo (svg.site-footer__logo using #hv-logo) missing', B);
+    const btn = p.html.match(/<button\b[^>]*\bdata-theme-toggle\b[^>]*>/);
+    if (!btn) err('structure', p.where, 'theme toggle button missing', B);
+    else {
+      const a = parseAttrs(btn[0].slice(7, -1));
+      if (a.type !== 'button' || !a['aria-label']) err('structure', p.where, 'theme toggle needs type="button" and an aria-label', B);
+      if (String(a['data-l'] || '').split('|').length !== 3) err('structure', p.where, 'theme toggle data-l needs 3 labels joined with "|" (auto, light, dark)', B);
+    }
+    if (!/<script\b[^>]*\bsrc="\/assets\/js\/theme\.[0-9a-f]{8}\.js"[^>]*\bdefer\b/.test(p.html)) err('structure', p.where, 'deferred theme.js missing', B);
+    if (p.indexable) {
+      if (!p.ogImage || !/\/assets\/img\/og-brand\//.test(p.ogImage)) err('meta', p.where, `og:image is not the branded copy (${p.ogImage || 'none'}): run node scripts/brand.mjs`, B);
+      for (const [sel, re] of [['icon .ico', /<link rel="icon" href="\/favicon\.ico"/], ['icon .svg', /<link rel="icon" href="\/favicon\.svg" type="image\/svg\+xml"/], ['apple-touch-icon', /<link rel="apple-touch-icon" href="\/apple-touch-icon\.png"/], ['manifest', /<link rel="manifest" href="\/site\.webmanifest"/]]) if (!re.test(p.html)) err('structure', p.where, `<link> for ${sel} missing`, B);
+    }
+  }
+}
+
 /* ═══ 15. Design lint (merged) ════════════════════════════════ */
 let lintSummary = 'skipped';
 if (!flag('--no-lint')) {
@@ -1207,6 +1321,7 @@ const OWNERS = {
   content: 'build/content/<id>.mjs, build/data/glossary.mjs',
   assets: 'scripts/images.mjs, build/generated/images.json, public/assets/*, public/models/*, build/data/villa.mjs (bytes)',
   geo: 'build/lib/{schema,markdown,machine}.mjs, build/check.mjs, scripts/design-lint.mjs, netlify.toml, netlify/*',
+  brand: 'scripts/brand.mjs, public/assets/brand/*, favicons, public/assets/img/og-brand/*, build/lib/layout.mjs (head, header, footer, theme toggle), src/css/00-tokens.css, 10-base.css, 20-layout.css, 59-theme-*.css',
   launch: 'humans before launch: build/data/site.mjs, build/data/pricing.mjs (README.md, section 1)',
 };
 const pageByWhere = new Map([...pages.values()].map((p) => [p.where, p]));

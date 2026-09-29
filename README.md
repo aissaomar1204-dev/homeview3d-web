@@ -19,10 +19,13 @@ La web está construida; lo que falta para publicarla son sobre todo **decisione
 lista completa, para marcar punto por punto, está en
 [`docs/qa/content/CLIENT-CONFIRMATIONS.md`](docs/qa/content/CLIENT-CONFIRMATIONS.md).
 
-1. **Bloquean el lanzamiento:** nombre y logotipo, dominio, email, teléfono y WhatsApp, razón social, NIF,
-   domicilio y datos registrales (CLIENT-CONFIRMATIONS §1). Van a `build/data/site.mjs` (§1.1) y, al terminar,
-   todos los `placeholder` a `false`. Mientras tanto la web sale en `noindex`, sin enlaces de llamada ni de
-   WhatsApp, y el deploy de producción falla a propósito.
+1. **Datos de la empresa:** el nombre (Home View 3D), el logotipo, el dominio (homeview3d.com), el contacto y la
+   sede (Mijas) ya están en `build/data/site.mjs` y sus `placeholder` están en `false`. **Queda un dato
+   provisional: el NIF y los datos registrales de AS TRINITY, S.L., sociedad en constitución** (`legal.pending:
+   true`, §1.1). No bloquea el build ni el deploy, pero `npm run check` lo repite en la sección **LAUNCH**
+   («NIF y datos registrales en trámite») y el aviso legal y la política de privacidad dicen «en trámite» hasta que
+   se sustituya: en cuanto la sociedad esté inscrita, rellena `legal.nif` y `legal.registro`, pon
+   `legal.pending: false` y repasa el aviso legal.
 2. **Precios y condiciones:** precios, qué incluye cada pack, plazos y rondas, pago, demo gratis, alojamiento del
    visor, derechos de uso, atención, cobertura y uso de IA (CLIENT-CONFIRMATIONS §2 a §12). Se aplican en
    `build/data/pricing.mjs` (y las páginas que indica el documento); después, `confirmed: true` (§1.2).
@@ -50,12 +53,12 @@ Mientras quede un dato provisional (`placeholder: true` en `site.mjs`):
 |---|---|---|
 | `brand.name` | Nombre definitivo. Único y sin colisiones: compruébalo en Google, Bing, Wikidata, LinkedIn, Instagram, YouTube y OEPM/EUIPO (`04-geo-2026.md` §7.1). Nada genérico tipo «3D Studio». | — |
 | `brand.legalName` | Razón social | — |
-| `brand.logo` | Ruta del logo en `public/` (SVG, o PNG cuadrado de 112 px o más) o `null` para el logotipo de texto | — |
+| `brand.logo` | Logo para schema.org (`Organization.logo`): PNG cuadrado, hoy `/assets/brand/logo-512.png` (512 × 512, lo genera `scripts/brand.mjs`, §2.1). La cabecera y el pie usan el SVG en línea, no este campo. | — |
 | `brand.placeholder` | | `false` |
 | `domain` | `https://www.tudominio.com`, sin barra final. Es la base de **todas** las URL canónicas, hreflang, sitemaps, schema, `llms.txt` e IndexNow. Decide ahora con o sin `www` y no lo cambies. | `domainPlaceholder: false` |
 | `contact.email`, `contact.phoneE164` (`+34…`), `contact.phoneDisplay`, `contact.whatsapp` (sin `+`), `contact.booking` (enlace de Cal.com o `null`) | Datos reales: salen en texto en cada página, en el schema y en `llms.txt` | `contact.placeholder: false` |
 | `base.locality`, `base.region` | Localidad y provincia de la sede. Es un negocio de área de servicio: no se publica calle. | `placeholderAddress: false` |
-| `legal.razonSocial`, `legal.nif`, `legal.domicilio`, `legal.registro`, `legal.email` | Datos LSSI-CE (aviso legal, privacidad). Si queda un `[NIF]` o similar, el QA de producción falla. | `legal.placeholder: false` |
+| `legal.razonSocial`, `legal.nif`, `legal.domicilio`, `legal.registro`, `legal.email` | Datos LSSI-CE (aviso legal, privacidad). Si queda un `[NIF]` o similar, el QA de producción falla. Mientras la sociedad esté en constitución, `nif` y `registro` dicen «en trámite» y `legal.pending` es `true`: solo avisa (LAUNCH en `npm run check`). | `legal.placeholder: false`; al inscribirse la sociedad, `legal.pending: false` |
 | `entity.es`, `entity.en` | La **frase canónica**: idéntica en la web, `llms.txt`, LinkedIn, YouTube, Google Business Profile y directorios. Revísala cuando haya nombre. | — |
 | `sameAs` | URL de cada perfil a medida que exista (LinkedIn, YouTube, Instagram, GBP, Clutch, Sortlist, Houzz, Behance, Sketchfab, GitHub…). Van a `Organization.sameAs`. | Rebuild |
 | `founder` | La persona real detrás del estudio (E-E-A-T, `04-geo-2026.md` §9): `{ name, jobTitle: { es, en }, image: '/assets/img/founder.jpg', sameAs: ['https://www.linkedin.com/in/…'] }`. Con él, el schema publica un `Person` (`/sobre-nosotros/#founder`) como fundador de la organización y autor de las guías y del caso, y los `index.md` lo citan como autor. `null` = «Equipo de …». Las guías y el caso muestran entonces «Revisado por {nombre}», enlazado a «Sobre nosotros». Falta una sección con foto en «Sobre nosotros» (la plantilla aún no la pinta). | Rebuild |
@@ -151,6 +154,33 @@ CONTEXT=production npm run check            # simula producción: los datos prov
 Fuera del build (05 §5.3, n.º 24 y 25), antes del lanzamiento y tras cambios grandes: Lighthouse móvil
 (≥ 95 en rendimiento, 100 en SEO y accesibilidad) y axe/pa11y en una página de cada plantilla (home, un
 servicio, el caso, precios, una guía y contacto).
+
+### 2.1 Logotipo, iconos y tema claro / oscuro
+
+**Logotipo.** Concepto A «Habitación» (`docs/brand/concepts/A/`, trazados vectoriales, sin depender de la
+fuente). `node scripts/brand.mjs` genera todo lo derivado y es reproducible (`--verify` compara el SVG optimizado
+con el original; `--only=svg,icons,og` limita el trabajo):
+
+| Salida | Uso |
+|---|---|
+| `public/assets/brand/symbol.svg`, `lockup-horizontal.svg`, `lockup-stacked.svg` | Símbolo y lockups a dos colores, con variante oscura dentro del fichero (para `<img>`, firmas de correo, prensa). |
+| `public/assets/brand/logo-512.png` | `Organization.logo` (schema.org): símbolo sobre el color papel, 512 × 512. |
+| `build/generated/brand.json` | Lockup horizontal en línea para la cabecera (y el pie, con `<use>`): sigue el tema porque usa los tokens. 32 px de alto desde 1024 px, 28 px por debajo (24 px por debajo de 350 px). |
+| `public/favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png` | Iconos: el SVG se adapta al modo claro/oscuro del navegador; los PNG llevan el símbolo claro sobre azul añil (los de 192 y 512 son *maskable*, símbolo dentro del 80 % central). |
+| `public/assets/img/og-brand/<imagen>.jpg` | Cada imagen OG (1200 × 630) con el lockup sobre una placa de color papel abajo a la izquierda. Las originales de `public/assets/img/og/` no se tocan; la cabecera apunta a las de `og-brand/`. |
+
+Los colores salen de `src/css/00-tokens.css`: cambiar el acento es un solo cambio ahí y volver a ejecutar el script.
+**Tras `npm run images`, vuelve a ejecutar `node scripts/brand.mjs`**: `scripts/images.mjs` todavía reescribe los
+iconos de `public/` con un cuadrado liso (mientras no se quite su función `favicons()`).
+
+**Tema.** Un botón en la cabecera (junto al idioma, también en móvil) recorre Automático → Claro → Oscuro; la
+elección se guarda en `localStorage['hv-theme']` (Automático borra la clave). Un script mínimo en `<head>`, antes
+del CSS, pone `data-theme` en `<html>` antes del primer pintado (sin parpadeo); `theme.js` (con `defer`) mueve el
+botón, su etiqueta y los `theme-color`. Los tokens aplican la paleta oscura con `:root[data-theme="dark"]` o con
+sistema oscuro y sin `data-theme="light"`. Las hojas de estilo solo leen tokens: **una regla propia con
+`@media (prefers-color-scheme)` no obedece al botón** (`npm run check` lo avisa; si hace falta una diferencia por
+tema, se añade un token, como `--plan-invert`). La paleta oscura aparece dos veces en `00-tokens.css` (el QA exige
+que coincidan) y `docs/design/tokens.css` es una copia idéntica.
 
 ---
 
@@ -345,13 +375,14 @@ del panel. Con esos datos: una guía o un caso nuevo al mes y revisión trimestr
 | `/<clave>.txt`, `/indexnow-manifest.json`, `/indexnow-pending.json` | IndexNow (§6). |
 | `/_headers` | Seguridad (HSTS, CSP por página con los *hash* de los scripts en línea, sin `X-Frame-Options`), `/embed/*` enmarcable (`frame-ancestors *`) con `X-Robots-Tag: noindex, indexifembedded` (no sale sola en Google, pero cuenta dentro de la página que la incrusta), MIME y CORS de los modelos 3D, caché inmutable de `/assets/` y `/lib/`, `noindex` en los ficheros para máquinas. |
 | `/_redirects` | 301 de `routes.mjs` y 404 por idioma (`/en/*` → `/en/404.html`, `/*` → `/404.html`, con estado 404). Sin reglas comodín con estado 200. |
-| `/site.webmanifest` | Nombre, colores e iconos PNG 192 y 512 (`any maskable`). |
+| `/site.webmanifest` | Nombre («Home View 3D»), nombre corto («HomeView3D»), colores de los tokens e iconos PNG 192 y 512 (`any maskable`). |
 
 ## 12. Mantenimiento
 
 - Cada trimestre: precios (`pricing.mjs`), guías y comparativas; `dateModified` solo de lo que cambie.
 - Cada mes: panel de *prompts* (§10), informes de IA de Search Console y Bing, formularios.
 - Cada 6 meses: lista de *user agents* de IA en `build/lib/machine.mjs` (`ALLOWED_AGENTS`).
+- Tras cambiar el acento o el logotipo (`src/css/00-tokens.css`, `docs/brand/concepts/A/`): `node scripts/brand.mjs` y después `npm run build`.
 - Si se añade un script en línea a una plantilla, el build recalcula la CSP. Si Netlify inyecta scripts
   (analítica de Netlify, *snippet injection*), la CSP los bloqueará: no los actives.
 - USDZ: el QA avisa por encima de 10 MB porque AR Quick Look descarga el fichero entero antes de mostrar

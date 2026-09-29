@@ -19,22 +19,22 @@
   transition: opacity var(--dur-state) var(--ease-out);
 }
 .site-header.is-scrolled::after, .site-header.is-open::after { opacity: 1; }
-.site-header__bar, .site-header__actions { display: flex; align-items: center; gap: var(--space-4); }
-.site-header__bar { height: var(--header-h); gap: var(--space-5); }
+/* Phones: logo, EN, theme toggle and Menú must fit 360px, so the gaps start tight (the 44px targets carry their own air). */
+.site-header__bar, .site-header__actions { display: flex; align-items: center; }
+.site-header__bar { height: var(--header-h); gap: var(--space-1); }
 .site-header__actions { margin-left: auto; }
 
-/* Logo slot (BRAND-02/03): fixed box, the future SVG logo drops in with zero CLS. */
-.brand { display: flex; align-items: center; height: 28px; max-width: 180px; flex-shrink: 0; color: var(--color-ink); text-decoration: none; }
-.brand img { height: 100%; width: auto; }
-.brand__word {
-  font-family: var(--font-display);
-  font-weight: var(--wght-heading);
-  font-stretch: var(--stretch-wordmark);
-  font-size: var(--fs-h4);
-  line-height: 1;
-  letter-spacing: var(--tracking-h3);
-  white-space: nowrap;
-}
+/* Logo slot (BRAND-03): fixed box, inline SVG lockup (build/lib/layout.mjs). Ink and accent come from the theme tokens;
+   the fill is not currentColor, so the link hover colour never reaches the logo. .hv-a is a single class on purpose:
+   the footer draws the logo with <use>, and a descendant selector would not reach into that shadow tree. */
+.brand { height: 28px; flex: none; }
+.hv-logo { display: block; height: 100%; width: auto; fill: var(--color-ink); }
+.hv-a { fill: var(--color-accent); }
+/* Theme toggle (auto / light / dark): a 44px icon button next to the language link; the icon shows the current state. */
+.theme-btn { padding: 0; background: none; border: 0; }
+.theme-btn g { display: none; }
+html:not([data-theme]) .ic-a, [data-theme=light] .ic-l, [data-theme=dark] .ic-d { display: inline; }
+html:not(.js) .theme-btn { display: none; }
 
 .site-nav__list { display: flex; gap: var(--space-6); }
 .site-nav__list a {
@@ -57,7 +57,7 @@
   background: var(--color-accent);
 }
 .site-nav__extra, .site-header .btn--header { display: none; }
-.lang-link { display: inline-grid; place-items: center; min-width: var(--tap-min); min-height: var(--tap-min); color: var(--color-ink-2); text-decoration: none; }
+.lang-link, .theme-btn { display: inline-grid; place-items: center; min-width: var(--tap-min); min-height: var(--tap-min); color: var(--color-ink-2); text-decoration: none; }
 .lang-link--sheet, .lang-link--footer { font: inherit; display: inline-flex; min-width: 0; text-decoration: underline; text-decoration-color: var(--color-line-strong); }
 .menu-btn {
   display: inline-flex;
@@ -76,6 +76,13 @@
 
 @media (min-width: 768px) {
   .site-header .btn--header { display: inline-flex; }
+  .site-header__bar { gap: var(--space-5); }
+  .site-header__actions { gap: var(--space-4); }
+}
+/* 320px: the logo drops to its 24px minimum and Menú keeps only its icon (the text stays in the accessible name). */
+@media (max-width: 349px) {
+  .brand { height: 24px; }
+  [data-menu-label] { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
 }
 /* Below 1024px the nav becomes a full-screen sheet with a solid surface (LAYOUT-05). */
 @media (max-width: 1023px) {
@@ -112,8 +119,14 @@
   .brand { height: 32px; }
   .site-header__bar { gap: var(--space-7); }
   .site-nav { margin-left: auto; }
+  .site-nav__list a { white-space: nowrap; }
   .site-header__actions { margin-left: 0; }
   .menu-btn { display: none; }
+}
+/* Small laptops and landscape tablets: the lockup and the 44px theme button leave the five links no room at the wide
+   gaps, and two of them wrapped onto two lines. Tighter gaps keep every label on one line (checked ES + EN, 1024-1179). */
+@media (min-width: 1024px) and (max-width: 1179px) {
+  .site-header__bar, .site-nav__list { gap: var(--space-5); }
 }
 
 /* ---------- Breadcrumbs (GEO-06) ---------- */
@@ -152,58 +165,7 @@
   .hero .actions .btn--primary { flex: 1 1 100%; }
 }
 
-/* Home hero (C5): asymmetric 5/7 split, the stage bleeds to the right edge. */
-.hero--home { padding-top: var(--space-6); }
-.hero--home .hero__grid { display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr) var(--gutter); row-gap: var(--space-7); }
-.hero--home .hero__text { grid-column: 2; }
-.hero--home .hero__visual { grid-column: 1 / -1; }
-.hero__stage { display: grid; place-items: center; padding: var(--space-4); background: var(--color-stage); }
-/* Lámina (S1): the render cropped to the maqueta by build-time geometry (home.mjs), with static cotas.
-   --m* = mobile crop (model + shadow), --d* = desktop crop (model + dimension lines). The edge fade
-   keeps the shadow catcher's faint alpha from drawing a rectangle on the stage. */
-.lamina {
-  --fade: linear-gradient(90deg, transparent, var(--color-ink) 3% 97%, transparent), linear-gradient(transparent, var(--color-ink) 3% 97%, transparent);
-  position: relative;
-  width: 100%;
-  aspect-ratio: var(--mr);
-  overflow: hidden;
-  -webkit-mask: var(--fade);
-  -webkit-mask-composite: source-in;
-  mask: var(--fade);
-  mask-composite: intersect;
-}
-.lamina__frame { position: absolute; left: var(--ml); top: var(--mt); width: var(--mw); }
-.lamina__cotas, .lamina__lbl { display: none; }
-.lamina__cotas { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: var(--color-line-strong); }
-.lamina__cotas path { vector-effect: non-scaling-stroke; }
-.lamina__lbl { position: absolute; padding: 0 var(--space-2); background: var(--color-stage); color: var(--color-ink-2); white-space: nowrap; transform: translate(-50%, -50%); }
-.lamina-label { display: grid; border-top: 1px solid var(--color-line-strong); }
-.lamina-label div { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr); gap: var(--space-3); padding-block: var(--space-2); border-bottom: 1px solid var(--color-line); }
-.lamina-label dd { color: var(--color-ink-2); }
-.hero__caption { margin-top: var(--space-3); padding-inline: var(--gutter); max-width: none; }
-@media (min-width: 768px) {
-  .hero__stage { aspect-ratio: 16 / 10; padding: var(--space-6); container-type: size; }
-  .lamina { aspect-ratio: var(--dr); width: min(100cqw, 100cqh * var(--dr)); }
-  .lamina__frame { left: var(--dl); top: var(--dt); width: var(--dw); }
-  .lamina__cotas, .lamina__lbl { display: block; }
-  .lamina-label { grid-template-columns: repeat(3, auto); justify-content: start; border-bottom: 1px solid var(--color-line); }
-  .lamina-label div { display: block; padding: var(--space-2) var(--space-5) var(--space-2) var(--space-4); border: 0; border-left: 1px solid var(--color-line); }
-  .lamina-label div:first-child { padding-left: 0; border: 0; }
-}
-@media (min-width: 1024px) {
-  .hero--home { padding-top: var(--space-7); }
-  .hero--home .hero__grid {
-    --c: calc(min(100%, var(--container)) - 2 * var(--gutter));
-    grid-template-columns: minmax(var(--gutter), 1fr) minmax(0, calc(var(--c) * 6 / 12 - var(--space-5))) var(--space-7) minmax(0, calc(var(--c) * 6 / 12 - var(--space-7) + var(--space-5))) minmax(var(--gutter), 1fr);
-    align-items: center;
-  }
-  .hero--home .hero__text { grid-area: 1 / 2; container-type: inline-size; }
-  .hero--home .hero__visual { grid-area: 1 / 4 / 2 / 6; }
-  /* The home H1 is sized by its column so it keeps two lines at every desktop width (TYPE-05). */
-  .hero--home h1 { font-size: min(var(--fs-h1), 9cqi); }
-  .hero__stage { aspect-ratio: auto; height: min(72dvh, 44vw); padding: var(--space-5); }
-  .hero__caption { padding: 0; }
-}
+/* Home hero: see 22-hero-seq.css (module herohs). */
 
 /* ---------- Byline / date line ---------- */
 .byline, .dateline { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-5); }
@@ -213,7 +175,7 @@
 .site-footer { padding-block: var(--space-8) var(--space-6); background: var(--color-surface); border-top: 1px solid var(--color-line); font-size: var(--fs-sm); }
 .site-footer__top { display: grid; gap: var(--space-8); }
 .site-footer__about > * + * { margin-top: var(--space-4); }
-.brand__word--footer { font-size: var(--fs-h3); }
+.site-footer__logo { height: 32px; }
 .site-footer__entity { font-size: var(--fs-base); max-width: 52ch; }
 .site-footer__base { color: var(--color-ink-2); }
 .site-footer__contact { max-width: 30rem; border-top: 1px solid var(--color-line); }

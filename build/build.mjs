@@ -29,6 +29,7 @@ import { createAssets } from './lib/assets.mjs';
 import { renderDocument, crumbTrail, robotsFor } from './lib/layout.mjs';
 import { dateLine, renderCaption, defaultAlt } from './lib/components.mjs';
 import { viewerStatus } from './lib/blocks.mjs';
+import { loadHero } from './lib/hero.mjs';
 import { stripTags, countWords } from './lib/md.mjs';
 
 const t0 = Date.now();
@@ -95,6 +96,12 @@ if (validation.errors.length) {
   }
 }
 console.log(`  content: ${docs.size} file(s), ${validation.warnings.length} warning(s)${VERBOSE ? '' : ' (VERBOSE=1 to list)'}`);
+
+// Home hero data (build/generated/hero.json vs public/assets/hero): a broken sequence fails here, not in the browser.
+try {
+  const { hero } = loadHero(ROOT);
+  console.log(`  hero: ${hero.frames} frames, desktop ${kb(hero.desktop.bytes)} · mobile ${kb(hero.mobile.bytes)}`);
+} catch (e) { fail(e.message); }
 
 // Utility pages may have no content file: synthesise them from ui.mjs (noindex anyway).
 const SYNTH = { thanks: 'thanks', ar: 'ar', embed: 'embed' };

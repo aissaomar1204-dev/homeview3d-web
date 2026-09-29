@@ -58,10 +58,7 @@
   .compare__stage.is-peek { animation: peek var(--dur-sequence) var(--ease-in-out); }
 }
 @keyframes peek { 45% { --pos: 38%; } }
-/* Dark theme: the line plan is drawn light on the dark sheet (a static filter, line art only). */
-@media (prefers-color-scheme: dark) {
-  .compare__layer--under .compare__img { filter: invert(0.91); }
-}
+/* Dark theme: the line plan is drawn light on the dark sheet, from the --plan-invert token (59-theme-compare.css). */
 @media (min-width: 1024px) {
   .compare { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-8); align-items: start; }
   .compare__text { position: sticky; top: calc(var(--header-h) + var(--space-7)); }

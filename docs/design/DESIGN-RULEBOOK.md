@@ -937,3 +937,30 @@ Arrows in the UI are Phosphor icons, not the → glyph, which is not in the Goog
 | Mesa | Stage | `--color-stage`, the backdrop for renders and the viewer |
 | Añil | Indigo / ultramarine | The single accent of B2 |
 | Calco | Tracing overlay | The B1 plan-over-render slider |
+
+---
+
+## Overrides 2026-09-29
+
+Two decisions taken after the first build review. Where this section and the rules above disagree, **this section wins**.
+
+### O1. Home hero "El plano se vuelve 3D" (owner HERO)
+
+The owner found the still-image hero weak next to the rest of the site. The hero is now a drawing sheet: a 2D line plan becomes the furnished 3D maqueta (48 pre-rendered RGBA frames, `build/generated/hero.json`), with dimension lines (*cotas*) and rulers that follow the model, a phase rail and a title block. Code: `build/lib/hero.mjs` (build), `src/js/hero.js` (run time), `src/css/22-hero-seq.css` (critical) and `23-hero-live.css` (lazy), strings in `build/data/ui-hero.mjs`.
+
+| Rule | Exception | Why it is acceptable |
+|---|---|---|
+| MOTION-05 (nothing above the fold animates in on load) | The sequence starts after `load` + idle. Until then the hero is painted in a final, static state: the text, the CTAs and the LCP element (the line-plan `<img>`, `fetchpriority="high"`, 34 KB on phones, 78 KB on desktop) never animate in. `hero.js` is not in the HTML: a 300-byte inline loader adds it after `load`, so it is not initial JS. | LCP is measured on a static image; the animation is an enhancement of an already complete picture. Lighthouse mobile after the change: Performance 99, LCP 2.0 s, CLS 0, TBT 30-60 ms. |
+| MOTION-02 (only `transform` and `opacity`) | Canvas draws (the frames) and SVG attribute updates: the cotas and rulers are re-projected for every frame, because they must follow the camera. The cota lines draw themselves once with `stroke-dashoffset`. Layer changes (plan, canvas, still) are opacity only. | The cotas are data (a homography of the footprint corners per frame), not a CSS effect. No layout property is animated: the canvas and the overlay are absolutely positioned inside a container-query box (`cqw`/`cqh` units), so per-frame updates cause paint only. Measured: no long task, CLS 0. |
+| MOTION-04 (durations from tokens) | CSS uses `--dur-reveal`, `--dur-state`, `--dur-hover`, `--ease-*`. The timeline constants live in `hero.js`: hold 700 ms, crossfade 480 ms (= `--dur-reveal`), play 2100 ms eased out (about 20 fps, 42 frames), still crossfade 260 ms (= `--dur-state`). | A frame sequence needs a JS clock; it uses the same values as the tokens where a token exists. |
+| MOTION-08 (autoplay over 5 s needs a pause control) | Total length is about 3.3 s (hold + crossfade + play), plays once, never loops. It also pauses when the stage leaves the viewport. The visible controls are "Ver de nuevo / Replay" and the four phase buttons (they jump to the start of a phase and play on). | Under the 5 s limit; the controls are there anyway. |
+| MOTION-09 (reduced motion = final state) | Kept as is: with `prefers-reduced-motion: reduce`, Save-Data, 2G/3G, no `createImageBitmap` or no JS, **no frame is downloaded**. The sheet shows the final still (AVIF, 2400 w on retina) and, with JS, the final cotas and rulers. If frames fail or the sequence has not started after 6 s, the still fades in over whatever is showing and the frame requests are aborted. | Same rule, more paths. |
+| SLOP-06 (numbered eyebrows, decorative rulers, overlaid tags) and LAYOUT-02 (at most 4 text elements) | The sheet carries a numbered phase rail (01 Plano … 04 Luz, real buttons), coordinate rulers in metres, cota labels and a title block. | All of them are data or controls, not decoration: the rulers measure the footprint's screen extent (metres across and along the view), the cotas are the real 14,10 × 9,10 m and the wall height (0,00 m growing to 1,15 m), the rail scrubs the timeline. The hero text stays H1 + lead + two CTAs. |
+| TYPE-05 (home H1 in 2 lines at 1440) | The H1 keeps its text but is set at display scale (Archivo at 118 % width, up to 84 px, `min(--fs-display, 13.2cqi)`): 3 lines on desktop, 2 on phones. | Owner request ("bigger, more confident"). It is still the LCP-safe text: it paints in its final state. |
+| Mobile stage 14:9 | The frames are 14:9, but the phone stage is 5:4 (tablet 14:9) and shows the middle of the frame (fit by height, cropped sides), so the model is 25 % larger. Nothing is lost: the model and its cotas fit in the middle 80 % of the frame. | Legibility of the cota labels at 390 px. |
+
+Budgets: the hero CSS is split in a critical part (`herohs`, 2.9 KB, in the home bundle) and a lazy part (`herolive`, 1.6 KB, added by `hero.js` and awaited before the overlay is built). The dead CSS of the previous home hero (`.hero--home`, `.lamina*`, `.hero__stage`, about 3.5 KB) was removed from `20-layout.css` and `10-base.css`, which also brings the shared sheet under 25 KB. `hero.js` (6.3 KB minified by the site's light minifier, 3.2 KB gzip) and `hero-geo.<hash>.json` (10 KB, 2.4 KB gzip) load after `load`. The frames are 2.2 MB (desktop) or 0.88 MB (phones), fetched four at a time in order, decoded a few frames ahead of the playhead (ImageBitmap, the rest closed), never before `load`.
+
+### O2. Theme toggle (light / dark / automatic, owner BRAND)
+
+The header has a three-state toggle (automatic, light, dark). It sets `data-theme="light|dark"` on `<html>` from an inline head script (`localStorage` key `hv-theme`, no key = follow the system). The dark tokens exist twice in `00-tokens.css` (the `prefers-color-scheme: dark` block, guarded with `:root:not([data-theme="light"])`, and `:root[data-theme="dark"]`); the rule for every other stylesheet is: **never test the theme, read a token**. The hero follows it through `--plan-invert` (0 in light, 0.91 in dark): the line plan has near-white floors, so in dark it is dimmed with `filter: brightness(calc(1 - var(--plan-invert) * .42))` (about 62 %) and the crossfade into the coloured frames does not flash. The frames are RGBA and sit on `--color-stage` in both themes.

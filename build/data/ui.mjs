@@ -31,6 +31,14 @@ const es = {
     close: 'Cerrar',
     sheetLabel: 'Menú del sitio',
   },
+  // Theme toggle (header button, cycles automático → claro → oscuro). One string per current state: it names the
+  // mode and the next action (aria-label and tooltip) and is also what the live region announces after a click.
+  // Joined with "|" in the button's data-l attribute, so no string may contain "|".
+  theme: {
+    auto: 'Tema: automático, según tu dispositivo. Cambiar a claro',
+    light: 'Tema: claro. Cambiar a oscuro',
+    dark: 'Tema: oscuro. Cambiar a automático',
+  },
   cta: {
     demo: 'Pide tu demo',
     villa: 'Ver la villa en 3D',
@@ -276,7 +284,7 @@ const es = {
     email: 'Email',
     phone: 'Teléfono',
     whatsapp: 'WhatsApp',
-    base: 'Con base en Marbella (Málaga). Trabajamos en toda España y con agencias internacionales.',
+    base: 'Con base en Mijas (Málaga). Trabajamos en toda España y con agencias internacionales.',
     rights: '© {year} {{brand}}. Todos los derechos reservados.',
     languageLabel: 'Idioma',
     faqLabel: 'Preguntas frecuentes',
@@ -348,6 +356,11 @@ const en = {
     menu: 'Menu',
     close: 'Close',
     sheetLabel: 'Site menu',
+  },
+  theme: {
+    auto: 'Theme: auto, follows your device. Switch to light',
+    light: 'Theme: light. Switch to dark',
+    dark: 'Theme: dark. Switch to auto',
   },
   cta: {
     demo: 'Get your demo',
@@ -594,7 +607,7 @@ const en = {
     email: 'Email',
     phone: 'Phone',
     whatsapp: 'WhatsApp',
-    base: 'Based in Marbella (Málaga). We work across Spain and with international agencies.',
+    base: 'Based in Mijas (Málaga). We work across Spain and with international agencies.',
     rights: '© {year} {{brand}}. All rights reserved.',
     languageLabel: 'Language',
     faqLabel: 'FAQ',

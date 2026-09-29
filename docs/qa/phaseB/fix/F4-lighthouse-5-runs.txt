@@ -1,0 +1,18 @@
+F4 · Lighthouse CLI 13.5.0, Chrome headless=new, Windows, mobile emulation, performance only, localhost via build/serve.mjs (applies dist/_headers)
+
+AFTER (no Cross-Origin-Opener-Policy header): 5 of 5 valid runs
+  run 1: runtimeError=none  perf=0.99  LCP=2.1 s  TBT=0 ms  CLS=0
+  run 2: runtimeError=none  perf=0.99  LCP=2.1 s  TBT=0 ms  CLS=0
+  run 3: runtimeError=none  perf=0.99  LCP=2.1 s  TBT=0 ms  CLS=0
+  run 4: runtimeError=none  perf=0.96  LCP=2.1 s  TBT=190 ms  CLS=0
+  run 5: runtimeError=none  perf=0.99  LCP=2.1 s  TBT=0 ms  CLS=0
+
+CONTROL (previous build, Cross-Origin-Opener-Policy: same-origin): 5 of 5 valid on this machine, so NO_NAVSTART did not reproduce here
+  run 1: runtimeError=none  perf=0.95  LCP=2.2 s  TBT=210 ms  CLS=0
+  run 2: runtimeError=none  perf=0.99  LCP=2.1 s  TBT=20 ms  CLS=0
+  run 3: runtimeError=none  perf=0.99  LCP=2.2 s  TBT=20 ms  CLS=0
+  run 4: runtimeError=none  perf=0.99  LCP=2.1 s  TBT=30 ms  CLS=0
+  run 5: runtimeError=none  perf=0.98  LCP=2.2 s  TBT=60 ms  CLS=0
+
+Note: lighthouse exits 1 on Windows with EPERM when it deletes its temporary Chrome profile after writing the report; the JSON is complete (no runtimeError).
+Production (homeview3d.com) answers from a Hostinger CDN placeholder (Server: hcdn, no Netlify headers), so it is not serving this build yet; rerun there after the first deploy.

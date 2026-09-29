@@ -22,7 +22,8 @@
     "serve": "node scripts/serve.mjs",
     "model:poster": "node scripts/3d/poster.mjs",
     "model:usdz": "node scripts/3d/run-usdz.mjs",
-    "hero:frames": "node scripts/hero-frames.mjs --rung 5"
+    "hero:frames": "node scripts/hero-frames.mjs --rung 5",
+    "brand": "node scripts/brand.mjs"
   },
   "engines": {
     "node": ">=20"
