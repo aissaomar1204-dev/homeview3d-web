@@ -21,7 +21,8 @@
     "vendor:viewer": "node scripts/3d/vendor-model-viewer.mjs",
     "serve": "node scripts/serve.mjs",
     "model:poster": "node scripts/3d/poster.mjs",
-    "model:usdz": "node scripts/3d/run-usdz.mjs"
+    "model:usdz": "node scripts/3d/run-usdz.mjs",
+    "hero:frames": "node scripts/hero-frames.mjs --rung 5"
   },
   "engines": {
     "node": ">=20"

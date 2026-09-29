@@ -17,3 +17,5 @@ docs/research/img/*.png
 source/villa3d/harness/
 scripts/fonts/src/
 dist-*/
+source/villa3d/renders/hero/
+docs/brand/concepts/_fonts/
