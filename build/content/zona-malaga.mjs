@@ -53,7 +53,7 @@ export default {
     title: 'Render 3D e infografías 3D en Málaga',
     description: 'Infografías y modelos 3D desde el plano para promotoras, agencias y reformas en Málaga capital, con visor y realidad aumentada. Desde {{price:plano3d}} + IVA.',
     h1: 'Render 3D e infografías desde plano en Málaga',
-    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, convierte planos de pisos, obra nueva y viviendas a reformar de Málaga en modelos 3D amueblados, con renders, visor y realidad aumentada sin app. Plano 3D desde {{price:plano3d}} + IVA; maqueta 3D completa desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Mijas, en la Costa del Sol, convierte planos de pisos, obra nueva y viviendas a reformar de Málaga en modelos 3D amueblados, con renders, visor y realidad aumentada sin app. Plano 3D desde {{price:plano3d}} + IVA; maqueta 3D completa desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
     breadcrumb: 'Málaga',
     card: {
       title: 'Málaga',

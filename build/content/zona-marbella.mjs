@@ -89,7 +89,7 @@ export default {
     title: 'Render 3D y maqueta virtual en Marbella',
     description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano para agencias y promotoras de Marbella, sin visitas y en días. Desde {{price:maqueta}} + IVA.',
     h1: 'Render 3D y modelos 3D desde plano en Marbella',
-    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, convierte el plano de villas, áticos y viviendas de reventa u obra nueva en un modelo 3D amueblado con renders, visor para el anuncio y realidad aumentada sin app, para compradores que a menudo deciden desde otro país. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, convierte el plano de villas, áticos y viviendas de reventa u obra nueva en un modelo 3D amueblado con renders, visor para el anuncio y realidad aumentada sin app, para compradores que a menudo deciden desde otro país. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
     breadcrumb: 'Marbella',
     card: {
       title: 'Marbella',
@@ -185,7 +185,7 @@ export default {
     title: '3D rendering in Marbella and on the Costa del Sol',
     description: '3D models, CGI, a listing viewer and app-free AR from the floor plan for agents and developers in Marbella and the Costa del Sol, from {{price:maqueta}} + VAT.',
     h1: '3D rendering, 3D models and AR in Marbella',
-    lead: '{{brand}}, a 3D visualisation studio based in Marbella, turns floor plans of villas, penthouses and resale or off-plan homes along the Costa del Sol into furnished 3D models with renders, a listing viewer and app-free AR, for buyers who often decide from abroad. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, turns floor plans of villas, penthouses and resale or off-plan homes along the Costa del Sol into furnished 3D models with renders, a listing viewer and app-free AR, for buyers who often decide from abroad. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
     breadcrumb: 'Marbella',
     card: {
       title: 'Marbella and the Costa del Sol',

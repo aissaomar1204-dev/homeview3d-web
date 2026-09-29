@@ -83,7 +83,7 @@ export default {
     title: 'Modelo 3D y AR: capta exclusivas y vende a distancia',
     description: 'Maqueta 3D, renders, visor para tu anuncio y AR sin app desde el plano, para captar exclusivas y vender a distancia. Desde {{price:maqueta}} + IVA.',
     h1: 'Maqueta 3D, renders y realidad aumentada para inmobiliarias',
-    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, convierte el plano de cada vivienda que captas en un modelo 3D amueblado con renders, visor para tu anuncio y realidad aumentada sin app, para que el comprador entienda la casa antes de visitarla. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, convierte el plano de cada vivienda que captas en un modelo 3D amueblado con renders, visor para tu anuncio y realidad aumentada sin app, para que el comprador entienda la casa antes de visitarla. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
     breadcrumb: 'Inmobiliarias',
     card: {
       title: 'Para inmobiliarias',
@@ -206,7 +206,7 @@ export default {
     title: '3D floor plans and AR for estate agents in Spain',
     description: 'A 3D floor plan from {{price:plano3d}} + VAT, or a complete 3D model with renders, a listing viewer and app-free AR, to win instructions and sell abroad.',
     h1: '3D floor plans, renders and AR for estate agents',
-    lead: '{{brand}}, a 3D visualisation studio based in Marbella, turns the floor plan of every home you list into a 3D floor plan from {{price:plano3d}} + VAT per floor in {{delivery:plano3d}}, or a complete 3D model with renders, a listing viewer and app-free AR from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, turns the floor plan of every home you list into a 3D floor plan from {{price:plano3d}} + VAT per floor in {{delivery:plano3d}}, or a complete 3D model with renders, a listing viewer and app-free AR from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
     breadcrumb: 'Estate agents',
     card: {
       title: 'For estate agents',

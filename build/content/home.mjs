@@ -15,7 +15,7 @@ export default {
     description: '{{brand}} convierte el plano 2D de una vivienda en modelo 3D amueblado, renders, visor web y AR sin app. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
     h1: 'Del plano 2D al modelo 3D, sin fotos',
     // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
-    lead: '{{brand}}, estudio de visualización 3D en Marbella: modelo 3D fotorrealista, visor web y realidad aumentada a partir del plano de la vivienda. En días.',
+    lead: '{{brand}}, estudio de visualización 3D en la Costa del Sol: modelo 3D fotorrealista, visor web y realidad aumentada a partir del plano de la vivienda. En días.',
     breadcrumb: 'Inicio',
     facts: [
       ['Entrada', 'Un plano 2D, sin fotos ni visita'],
@@ -113,7 +113,7 @@ export default {
     description: '{{brand}} turns a home’s 2D floor plan into a furnished 3D model, renders, web viewer and app-free AR. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
     h1: 'From 2D floor plan to 3D, no photos',
     // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
-    lead: '{{brand}}, a 3D visualisation studio based in Marbella: photoreal 3D model, web viewer and augmented reality from the property’s floor plan. In days.',
+    lead: '{{brand}}, a 3D visualisation studio based in Mijas, on the Costa del Sol: photoreal 3D model, web viewer and augmented reality from the property’s floor plan. In days.',
     breadcrumb: 'Home',
     facts: [
       ['Input', 'One 2D floor plan, no photos or visit'],
@@ -149,7 +149,7 @@ export default {
       {
         type: 'audiences',
         h2: 'Who is it for?',
-        intro: 'Estate agents with homes that do not sell on photos alone, and developers selling off-plan to buyers who are still in London, Amsterdam or Stockholm. Your buyer opens the same model on their phone, wherever they are. [See all our services](@servicios).\n\nWhere we work: we are based in Marbella ([3D rendering in Marbella](@zona-marbella)) and work remotely, with no site visit, across the Costa del Sol, the rest of Spain and abroad, at the same price and turnaround.',
+        intro: 'Estate agents with homes that do not sell on photos alone, and developers selling off-plan to buyers who are still in London, Amsterdam or Stockholm. Your buyer opens the same model on their phone, wherever they are. [See all our services](@servicios).\n\nWhere we work: we are based in Mijas, on the Costa del Sol ([3D rendering in Marbella](@zona-marbella)) and work remotely, with no site visit, across the Costa del Sol, the rest of Spain and abroad, at the same price and turnaround.',
       },
       {
         type: 'pricing',

@@ -1,40 +1,40 @@
 /* ═══════════════════════════════════════════════════════════════
    Site configuration: the ONLY place for brand, domain and contact.
-   Everything marked `placeholder: true` must be replaced before launch.
-   While any placeholder remains, every page is rendered `noindex`
-   and the build prints a warning (see build/check.mjs).
+   Anything marked `placeholder: true` blocks indexing (every page `noindex`).
+   `legal.pending: true` only warns: the company (AS TRINITY, S.L.) is being
+   constituted, so NIF and registry data are shown as «en trámite».
    ═══════════════════════════════════════════════════════════════ */
 
 export const site = {
-  // Brand (no name or logo yet). Content files use the {{brand}} token, never a literal name.
+  // Brand. Content files use the {{brand}} token, never a literal name.
   brand: {
-    name: 'Estudio 3D',          // placeholder wordmark shown in the header and titles
-    legalName: '[RAZÓN SOCIAL]',
-    placeholder: true,
-    logo: null,                  // path to an SVG/PNG in public/ once it exists; null = text wordmark
+    name: 'Home View 3D',
+    legalName: 'AS TRINITY, S.L.',
+    placeholder: false,
+    logo: null,                  // set by the logo system (public/assets/brand/*); null = text wordmark
   },
 
-  // Canonical origin, no trailing slash. `.example` is reserved: safe placeholder.
-  domain: 'https://www.estudio3d.example',
-  domainPlaceholder: true,
+  // Canonical origin, no trailing slash (apex; www redirects here on Netlify).
+  domain: 'https://homeview3d.com',
+  domainPlaceholder: false,
 
   langs: ['es', 'en'],
   defaultLang: 'es',             // Spanish at the root, English under /en/
   xDefault: 'en',                // hreflang x-default points to the English twin when it exists
   locale: { es: 'es_ES', en: 'en_GB' },
 
-  // Contact (placeholders). WhatsApp in international format without "+".
+  // Contact. WhatsApp in international format without "+".
   contact: {
-    email: 'hola@estudio3d.example',
-    phoneE164: '+34600000000',
-    phoneDisplay: '+34 600 000 000',
-    whatsapp: '34600000000',
+    email: 'homeview3d@gmail.com',
+    phoneE164: '+34685494982',
+    phoneDisplay: '+34 685 49 49 82',
+    whatsapp: '34685494982',
     booking: null,               // e.g. a Cal.com 15-min link; null hides the option
-    placeholder: true,
+    placeholder: false,
   },
 
   // Where the studio is based / serves (service-area business, no public address yet).
-  base: { locality: 'Marbella', region: 'Málaga', country: 'ES', placeholderAddress: true },
+  base: { locality: 'Mijas', region: 'Málaga', country: 'ES', postalCode: '29651', placeholderAddress: false },
   areaServed: {
     es: ['Marbella', 'Málaga', 'Costa del Sol', 'España'],
     en: ['Marbella', 'Málaga', 'Costa del Sol', 'Spain'],
@@ -46,14 +46,16 @@ export const site = {
     en: '{{brand}} is a 3D visualisation studio on the Costa del Sol that turns a home\'s 2D floor plan into a photorealistic, furnished 3D model, with renders, an interactive web viewer and app-free augmented reality, for estate agents, developers and architects across Spain.',
   },
 
-  // Legal data for aviso legal / privacidad (LSSI-CE art. 10). Placeholders block launch.
+  // Legal data for aviso legal / privacidad (LSSI-CE art. 10).
+  // pending: true while the SL is being constituted (NIF and registry data not issued yet).
   legal: {
-    razonSocial: '[RAZÓN SOCIAL]',
-    nif: '[NIF]',
-    domicilio: '[DOMICILIO]',
-    registro: '[DATOS REGISTRALES, si aplica]',
-    email: 'hola@estudio3d.example',
-    placeholder: true,
+    razonSocial: 'AS TRINITY, S.L.',
+    nif: 'en trámite (sociedad en constitución)',
+    domicilio: 'Calle San Daniel 12, 29651 Mijas Costa (Málaga), España',
+    registro: 'Inscripción en el Registro Mercantil de Málaga en trámite',
+    email: 'homeview3d@gmail.com',
+    placeholder: false,
+    pending: true,
   },
 
   // Off-site profiles for Organization.sameAs (fill as they are created).
@@ -80,6 +82,9 @@ export const site = {
   },
 };
 
-/** True while any launch-blocking placeholder remains. */
+/** True while any launch-blocking placeholder remains (drives noindex). */
 export const hasPlaceholders = () =>
   site.brand.placeholder || site.domainPlaceholder || site.contact.placeholder || site.legal.placeholder;
+
+/** True while legal data is issued but not final (NIF/registry pending): warning only. */
+export const legalPending = () => Boolean(site.legal.pending);

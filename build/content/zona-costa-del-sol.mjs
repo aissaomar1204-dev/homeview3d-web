@@ -55,7 +55,7 @@ export default {
     title: 'Renders e infografías 3D en la Costa del Sol',
     description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano en Estepona, Benahavís, Mijas, Fuengirola, Nerja o Sotogrande. Desde {{price:maqueta}} + IVA.',
     h1: 'Renders y modelos 3D en la Costa del Sol',
-    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, hace renders, modelos 3D con visor web y realidad aumentada sin app a partir del plano de viviendas de toda la Costa del Sol, de Sotogrande a Nerja, para agencias y promotoras. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Mijas, en la Costa del Sol, hace renders, modelos 3D con visor web y realidad aumentada sin app a partir del plano de viviendas de toda la Costa del Sol, de Sotogrande a Nerja, para agencias y promotoras. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
     breadcrumb: 'Costa del Sol',
     card: {
       title: 'Costa del Sol',

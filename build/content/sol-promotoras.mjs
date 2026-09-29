@@ -89,7 +89,7 @@ export default {
     title: 'Renders e infografías 3D para promotoras de obra nueva',
     description: 'Cada tipología de tu promoción en 3D: renders, maqueta virtual interactiva y realidad aumentada para vender sobre plano. Desde {{price:promocion}} + IVA.',
     h1: 'Renders y maqueta virtual para promotoras de obra nueva',
-    lead: '{{brand}}, estudio de visualización 3D con base en Marbella, modela cada tipología de tu promoción desde los planos del proyecto: renders 4K, una maqueta virtual interactiva con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Desde {{price:promocion}} + IVA hasta 3 tipologías, en {{delivery:promocion}}.',
+    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, modela cada tipología de tu promoción desde los planos del proyecto: renders 4K, una maqueta virtual interactiva con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Desde {{price:promocion}} + IVA hasta 3 tipologías, en {{delivery:promocion}}.',
     breadcrumb: 'Promotoras',
     card: {
       title: 'Para promotoras de obra nueva',
@@ -208,7 +208,7 @@ export default {
     title: 'Off-plan 3D visualisation for developers in Spain',
     description: 'Every unit type as a 3D model with 4K CGI, an interactive viewer and app-free AR for your sales suite and fairs. From {{price:promocion}} + VAT.',
     h1: 'Off-plan 3D visualisation for property developers',
-    lead: '{{brand}}, a 3D visualisation studio based in Marbella, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and property fairs. From {{price:promocion}} + VAT for up to 3 unit types, in {{delivery:promocion}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and property fairs. From {{price:promocion}} + VAT for up to 3 unit types, in {{delivery:promocion}}.',
     breadcrumb: 'Developers',
     card: {
       title: 'For developers selling off-plan',
