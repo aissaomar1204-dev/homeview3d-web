@@ -23,6 +23,8 @@
 }
 
 .hs { --strip: 88px; position: relative; container: hs / inline-size; border-block: 1px solid var(--color-line-strong); }
+/* The large phase line is for phones only (95-mobile.css shows it). */
+.hs__say { display: none; }
 .hs__stage { position: relative; aspect-ratio: 5 / 4; overflow: hidden; container-type: size; background: var(--color-stage); }
 /* The art box is the 14:9 frame of the renders, always as tall as the stage; a narrower stage crops its sides. */
 .hs__art { position: absolute; inset: 0 auto 0 50%; width: calc(100cqh * 14 / 9); transform: translateX(-50%); container-type: size; }

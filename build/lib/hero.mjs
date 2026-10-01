@@ -210,9 +210,10 @@ export function heroStage(ctx) {
     + `<dl class="hs__title">${tr('project', ui.title.projectValue)}${tr('floor', floor)}${tr('source', ui.title.sourceValue)}</dl></div>`;
 
   // data-t: cota labels (long side | short side); data-u: length unit; data-r: label of the replay button (built by hero.js);
-  // data-x: phone scroll intro strings (one line per phase | hint | skip).
-  const attrs = `data-hero data-g="${esc(geoUrl)}" data-j="${esc(jsUrl)}" data-c="${esc(ctx.asset('/assets/css/herolive.css'))}" data-t="${fmt(villa.footprint.d)}|${fmt(villa.footprint.w)}" data-u="${esc(ui.unit)}" data-r="${esc(ui.replay)}" data-x="${esc([...ui.scrub, ui.hint, ui.skip].join('|'))}"`;
-  return `<figure class="hs" ${attrs}><div class="hs__stage">${art}</div>${strip}</figure>`;
+  const attrs = `data-hero data-g="${esc(geoUrl)}" data-j="${esc(jsUrl)}" data-c="${esc(ctx.asset('/assets/css/herolive.css'))}" data-t="${fmt(villa.footprint.d)}|${fmt(villa.footprint.w)}" data-u="${esc(ui.unit)}" data-r="${esc(ui.replay)}"`;
+  // Phones only (hidden from 768px): a large line per phase above the model, final state in the markup like the rail.
+  const say = `<p class="hs__say" aria-hidden="true">${ui.lines.map((s, i) => `<span${i === last ? ' class="is-on"' : ''}>${esc(s)}</span>`).join('')}</p>`;
+  return `<figure class="hs" ${attrs}>${say}<div class="hs__stage">${art}</div>${strip}</figure>`;
 }
 
 /** North arrow, scale bar and sheet id under the hero copy (decoration: aria-hidden, drawn by 24-chapters.css). */

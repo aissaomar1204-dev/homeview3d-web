@@ -15,7 +15,7 @@
   }
 
   /* ---------- Chapters: plain sheets, one small index label, no drawing furniture ---------- */
-  html .main > :is([data-ch=w], [data-ch=p], [data-ch=g]) { background: var(--ch-bg); }
+  html .main > :is([data-ch=w], [data-ch=p], [data-ch=g], [data-ch=h]) { background: var(--ch-bg); }
   html .main > [data-n]::before, html .ch-ax, html .main > [data-n] > .wrap::before { display: none; }
   html .main > [data-n]::after { border-bottom: 0; background: none; padding-bottom: 0; letter-spacing: .08em; color: var(--color-ink-3); }
   html .main > [data-n] > .wrap { padding-top: var(--space-6); }
@@ -70,43 +70,42 @@
   }
   html :is(.step__body, .pack__includes, .bento__text, .faq__a, .vw-note) { font-size: var(--fs-sm); line-height: 1.5; }
 
-  /* ---------- Hero, phone scroll intro (hero.js adds .is-scrub; modelled on the Carvajal demo intro). One panel pins
-     under the header for the height of a runway: a large line per phase, the model full width on a faint drawing grid,
-     the phase rail as four progress bars, a hint and «Saltar». Nothing in the panel changes size while it scrolls
-     (the lines are stacked in one cell), so the page never re-anchors under the finger. ---------- */
-  html .hs.is-scrub { border: 0; }
-  html .hs.is-scrub .hs__pin {
-    position: sticky; top: var(--header-h); z-index: 1; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto;
-    height: calc(100svh - var(--header-h) - var(--bar-h)); overflow: hidden; background: var(--color-bg);
-  }
-  html .hs.is-scrub .hs__run { height: 170svh; }
-  html .hs.is-scrub .hs__say {
-    display: grid; align-items: end; min-height: 2.1em; margin: 0; padding: var(--space-5) var(--gutter) 0;
+  /* ---------- Hero on the phone (modelled on the Carvajal demo intro, but NOT tied to the scroll: the block stays put and
+     hero.js plays it once half of it is on screen). A large line per phase, the model full width on a faint drawing grid,
+     the rail as four progress bars. No cotas. Every rule here applies from the first paint (the line is in the HTML), so
+     nothing moves when hero.js starts. ---------- */
+  html .hs { border: 0; }
+  html .hs__say {
+    display: grid; align-items: end; min-height: 2.1em; margin: 0; padding: var(--space-2) var(--gutter) 0;
     font: var(--wght-display) clamp(2.25rem, 10.5vw, 2.75rem) / 1.02 var(--font-display); font-stretch: var(--stretch-h2); letter-spacing: -.026em; color: var(--color-ink);
   }
-  html .hs.is-scrub .hs__say span { grid-area: 1 / 1; opacity: 0; transform: translateY(.35em); transition: opacity .3s var(--ease-out), transform .45s var(--ease-out); }
-  html .hs.is-scrub .hs__say .is-on { opacity: 1; transform: none; }
-  html .hs.is-scrub .hs__stage {
-    aspect-ratio: auto; min-height: 0; border: 0;
+  /* The outgoing line leaves fast, the next one arrives just after: the two never sit on top of each other. */
+  html .hs__say span { grid-area: 1 / 1; opacity: 0; transform: translateY(-.15em); transition: opacity .14s var(--ease-out), transform .14s var(--ease-out); }
+  html .hs__say .is-on { opacity: 1; transform: none; transition: opacity .3s var(--ease-out) .12s, transform .45s var(--ease-out) .12s; }
+  html .hs__stage {
+    aspect-ratio: 1; max-height: 72svh; border: 0;
     background: radial-gradient(closest-side, transparent 40%, var(--color-bg)), linear-gradient(var(--color-line) 1px, transparent 1px) 50% 50% / 28px 28px,
       linear-gradient(90deg, var(--color-line) 1px, transparent 1px) 50% 50% / 28px 28px, var(--color-bg);
   }
-  html .hs.is-scrub .hs__art { inset: 50% auto auto 50%; width: min(100cqh * 14 / 9, 140cqw); height: auto; aspect-ratio: 14 / 9; transform: translate(calc(-50% - var(--hx, 0) * 5%), -50%); }
-  html .hs.is-scrub :is(.hs__svg, .hs__c, .hs__rp, .hs__b i) { display: none; }
-  html .hs.is-scrub .hs__strip { padding: 0 var(--gutter); border: 0; background: none; }
-  html .hs.is-scrub .hs__rail { gap: var(--space-2); }
-  html .hs.is-scrub .hs__rail li + li { border: 0; }
-  html .hs.is-scrub .hs__rail li::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: var(--color-line-strong); opacity: .5; }
-  html .hs.is-scrub .hs__rail li::after { inset: 0 0 auto; }
-  html .hs.is-scrub .hs__b { min-height: 44px; padding: var(--space-3) 0 var(--space-1); }
-  html .hs.is-scrub .hs__b b { color: var(--color-ink-3); }
-  html .hs.is-scrub .is-on .hs__b b { color: var(--color-accent); }
-  html .hs.is-scrub .hs__foot { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--gutter) var(--space-2); }
-  html .hs__hint { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--fs-sm); font-weight: var(--wght-ui); transition: opacity var(--dur-state) var(--ease-out); }
-  html .hs__hint .icon { width: 18px; height: 18px; color: var(--color-accent); animation: hs-nudge 1.6s var(--ease-in-out) infinite; }
-  html .hs__hint.is-off { opacity: 0; }
-  html .hs__skip { min-height: 44px; padding: 0; border: 0; background: none; font-size: var(--fs-sm); font-weight: var(--wght-ui); color: var(--color-ink-2); text-decoration: underline; text-underline-offset: 3px; }
-  html .hs:not(.is-scrub) :is(.hs__say, .hs__foot) { display: none; }
+  html .hs__art { inset: 50% auto auto 50%; width: min(100cqh * 14 / 9, 130cqw); height: auto; aspect-ratio: 14 / 9; transform: translate(calc(-50% - var(--hx, 1) * 5%), -50%); }
+  html .hs :is(.hs__svg, .hs__c, .hs__b i) { display: none; }
+  html .hs__strip { grid-template-columns: minmax(0, 1fr); padding: 0 var(--gutter); border: 0; background: none; }
+  html .hs__rail { gap: var(--space-2); }
+  html .hs__rail li + li { border: 0; }
+  html .hs__rail li::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: var(--color-line-strong); opacity: .5; }
+  html .hs__rail li::after { inset: 0 0 auto; }
+  html .hs__b { min-height: 44px; padding: var(--space-3) 0 var(--space-1); }
+  html .hs__b b { color: var(--color-ink-3); }
+  html .hs .is-on .hs__b b { color: var(--color-accent); }
+  html .hs__rp { bottom: 0; right: 0; }
+  /* Paths without the sequence (Save-Data, slow network, failure): the art glides to the final offset as the still dissolves in. */
+  html .hs.is-end .hs__art { transition: transform var(--dur-reveal) var(--ease-in-out); }
+  /* Until hero.js runs, the line matches the line plan on screen (the markup holds the final state for no-JS). */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .hs:not(.is-f):not(.is-end) { --hx: 0; }
+    html.js .hs:not(.is-live) .hs__say span { opacity: 0; }
+    html.js .hs:not(.is-live) .hs__say span:first-child { opacity: 1; transform: none; }
+  }
 
   /* ---------- Despiece: on the phone the steps stack under the drawing, so a timeline on the whole section ended
      half-way while the drawing was already off screen. Here the drawing drives its own timeline and finishes when it
@@ -118,4 +117,3 @@
     }
   }
 }
-@keyframes hs-nudge { 50% { transform: translateY(3px); } }

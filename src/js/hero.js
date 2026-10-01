@@ -14,6 +14,7 @@
   const blobs = [], bmp = {};
   let ready = 0, pool = 0, next = 0, t1 = 0, nx = 0, kk = 0, began = 0, CM = [14, 36];
   const ac = new AbortController(), EASE = 1.35;
+  let DUR = 2100; // ms from walls to light; phones get longer, so each large phase line can be read
 
   // Final still, shown once it is decoded (rp: the sequence landed on the last frame, so the still SWAPS in with no
   // dissolve, see 22-hero-seq.css, and a replay is offered). Any other case dissolves over the plan or the last frame.
@@ -22,8 +23,7 @@
     const f = () => { rp || C.remove('is-f'); C.add('is-end'); setTimeout(() => rp && C.add('is-done'), 300); };
     im.decode ? im.decode().then(f, () => (im.complete && im.naturalWidth ? f() : rp && C.add('is-done'))) : f();
   };
-  let pin, run; // phone scroll mode (scrub)
-  const fail = () => { if (dead) return; dead = 1; st = 9; ac.abort(); if (run) { run.remove(); C.remove('is-scrub'); } C.add('is-live'); if (G) { setF(LAST); rail(LAST); } still(); };
+  const fail = () => { if (dead) return; dead = 1; st = 9; ac.abort(); C.add('is-live'); if (G) { setF(LAST); rail(LAST); if (!began) R.style.removeProperty('--hx'); } still(); };
 
   /* ─── Overlay: cotas, rulers, chips (built here: they are data, and it keeps them out of the HTML) ─── */
   const build = () => {
@@ -58,7 +58,9 @@
     lb.forEach(e => { const n = +e.dataset.m; e.style.setProperty('--y', f4((g[38] + n * g[40]) / 900)); e.hidden = n > g[42]; });
     hb.textContent = g[36].toFixed(2).replace('.', es ? ',' : '.');
   };
-  // Phase rail: p = fractional frame; each cell fills between its start and the next one's.
+  // Phase rail: p = fractional frame; each cell fills between its start and the next one's. Phones also switch the large
+  // phase line and slide the art left during the camera move (--hx), so the wide final view stays centred.
+  let say, lc = -1, lx = '';
   const rail = p => {
     const on = PH.filter(a => p >= a).length - 1;
     phs.forEach((li, i) => {
@@ -67,6 +69,10 @@
       li.classList.toggle('is-on', i === on);
       i === on ? e.setAttribute('aria-current', 'step') : e.removeAttribute('aria-current');
     });
+    if (!say) return;
+    if (on !== lc) { [...say.children].forEach((e, i) => e.classList.toggle('is-on', i === on)); lc = on; }
+    const x = f4(M.max(0, M.min(1, (p - CM[0]) / (CM[1] - CM[0]))));
+    if (x !== lx) { R.style.setProperty('--hx', x); lx = x; }
   };
 
   /* ─── Canvas: backing store = min(frame width, css width × DPR), redrawn on resize ─── */
@@ -143,7 +149,7 @@
     } else if (st === 1) {
       if (el >= 480) { st = 2; el = 0; }
     } else {
-      const D = 2100 * (LAST - from) / (LAST - PH[1]), x = M.min(el / D, 1), p = from + (LAST - from) * (1 - M.pow(1 - x, EASE)), f = M.floor(p), b = bm(f);
+      const D = DUR * (LAST - from) / (LAST - PH[1]), x = M.min(el / D, 1), p = from + (LAST - from) * (1 - M.pow(1 - x, EASE)), f = M.floor(p), b = bm(f);
       win(f);
       if (!b) { el -= dt; sa = sa || now; if (now - sa > 4000) return fail(); }
       else {
@@ -176,89 +182,35 @@
     // Animated mode, in a second task (no long task): plan drawing + cotas at frame 0, frames download in the background.
     setTimeout(() => animate(j));
   }).catch(fail);
-  /* ─── Phones: scroll-driven intro. A panel (phase line, model, phase rail, hint) pins under the header for the height of
-     a runway. The playhead eases towards the scroll position, so a jerky finger never makes the model jump; neighbour
-     frames dissolve into each other (inside the camera move only around the middle of each step, a blend of two frames
-     10 px apart would ghost at rest). The cotas stay off here: only the model moves. ─── */
-  let span = 1, stick = 0;
-  const pos = () => M.max(0, M.min(1, (stick - R.getBoundingClientRect().top) / span));
-  const seek = i => scrollTo({ top: scrollY + R.getBoundingClientRect().top - stick + (i ? (PH[i] + 0.5) / LAST : 0) * span, behavior: 'smooth' });
-  const scrub = x => {
-    C.add('is-scrub');
-    const stg = q('.hs__stage'), say = d.createElement('p'), foot = d.createElement('div');
-    pin = d.createElement('div'); pin.className = 'hs__pin';
-    say.className = 'hs__say'; say.setAttribute('aria-hidden', 'true');
-    say.innerHTML = x.slice(0, 4).map(s => `<span>${s}</span>`).join('');
-    foot.className = 'hs__foot';
-    foot.innerHTML = `<span class="hs__hint" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256"><path d="M128 40v176M64 152l64 64 64-64"/></svg>${x[4]}</span><button type="button" class="hs__skip">${x[5]}</button>`;
-    R.insertBefore(pin, stg); pin.append(say, stg, q('.hs__strip'), foot);
-    run = d.createElement('div'); run.className = 'hs__run'; run.setAttribute('aria-hidden', 'true'); R.append(run);
-    const ln = [...say.children], hint = foot.firstChild;
-    foot.lastChild.onclick = () => { scrollTo({ top: scrollY + R.getBoundingClientRect().bottom - stick, behavior: 'instant' }); };
-    let tk = 0, lt = 0, sp = -1, la = -1, lk = -1, lc = -1, lx = '';
-    const near = f => {
-      for (let i = M.max(0, f - 4); i <= M.min(LAST, f + 6); i++) bm(i);
-      for (const k in bmp) if (+k < f - 8 || +k > f + 10) { bmp[k] && bmp[k].close(); delete bmp[k]; }
-    };
-    const paint = p => {
-      const fp = p * LAST, ph = PH.filter(a => fp >= a).length - 1;
-      rail(fp);
-      if (ph !== lc) { ln.forEach((e, i) => e.classList.toggle('is-on', i === ph)); lc = ph; }
-      hint.classList.toggle('is-off', p > 0.03);
-      // The camera move drifts the model right: the art follows it (--hx 0 → 1), so the wide final view stays centred.
-      const hx = f4(M.max(0, M.min(1, (fp - CM[0]) / (CM[1] - CM[0])))); if (hx !== lx) { R.style.setProperty('--hx', hx); lx = hx; }
-      // Frames 0 to PH[1] are the same flat view: the line plan holds for the first half of the phase, then dissolves.
-      if (fp < PH[1] / 2) { if (C.contains('is-f')) { C.remove('is-f'); la = -1; } return 1; }
-      const i = M.min(LAST, M.floor(fp)), r = fp - i, cam = i >= CM[0] && i < CM[1];
-      const k = M.round(24 * (cam ? M.max(0, M.min(1, (r - 0.3) / 0.4)) : r)) / 24, A = bm(i), B = k && i < LAST ? bm(i + 1) : 0;
-      near(i);
-      if (!A || (k && !B)) return 0; // still downloading or decoding
-      if (i !== la || k !== lk) { cur = A; nx = B; kk = k; draw(); la = i; lk = k; C.add('is-f'); }
-      return 1;
-    };
-    const upd = now => {
-      tk = 0;
-      if (dead) return;
-      const p = pos(), dt = lt ? M.min(now - lt, 64) : 16;
-      sp = sp < 0 ? p : sp + (p - sp) * (1 - M.pow(0.8, dt / 16.7));
-      if (M.abs(p - sp) < 0.0005) sp = p;
-      lt = now;
-      const ok = paint(sp);
-      if (sp !== p || !ok) on(); else lt = 0;
-    };
-    const on = () => { if (!tk) tk = requestAnimationFrame(upd); };
-    let vw = 0;
-    const measure = () => { if (innerWidth === vw) return; vw = innerWidth; span = run.offsetHeight || 1; stick = parseFloat(getComputedStyle(pin).top) || 0; on(); };
-    addEventListener('scroll', on, { passive: true });
-    addEventListener('resize', measure, { passive: true });
-    measure();
-    // Frames keep arriving in the background: redraw the current position until all of them are in.
-    const iv = setInterval(() => { on(); if (ready >= N || dead) clearInterval(iv); }, 300);
-  };
-
   const animate = j => {
     cx = cv.getContext('2d'); fr = 0;
     // Small frames (700 px) below 768 px, and on 1x screens where the sheet is narrow anyway.
     const m = mq('(max-width: 767px)').matches || (devicePixelRatio <= 1 && innerWidth < 1060);
     base = m ? j.bm : j.bd; hs = m ? j.hm : j.hd;
-    // Phones: the visitor's scroll drives the sequence (scrub) instead of the clock.
-    const sc = mq('(max-width: 767px)').matches && at('data-x');
+    // Phones: the block stays put in the page and plays on its own once it is in view (no scroll-linked motion).
+    const sm = mq('(max-width: 767px)');
+    say = q('.hs__say'); // hidden from 768px, so harmless there; kept wired in case the window narrows later
+    if (sm.matches) DUR = 3600;
     phs.forEach((li, i) => {
       const s = li.firstChild, b = d.createElement('button');
       b.type = 'button'; b.className = s.className; b.innerHTML = s.innerHTML;
       li.replaceChild(b, s);
-      b.onclick = () => { if (sc) seek(i); else if (st) restart(i); else { want = i; hold = i ? 0 : 700; } };
+      b.onclick = () => { if (st) restart(i); else { want = i; hold = i ? 0 : 700; } };
     });
-    if (!sc) {
-      q('.hs__stage').insertAdjacentHTML('beforeend', `<button type="button" class="mono hs__rp"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M216 128a88 88 0 1 1-25.8-62.2L216 88M216 40v48h-48"/></svg>${at('data-r')}</button>`);
-      q('.hs__rp').onclick = () => restart(0);
-    }
+    q('.hs__stage').insertAdjacentHTML('beforeend', `<button type="button" class="mono hs__rp"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M216 128a88 88 0 1 1-25.8-62.2L216 88M216 40v48h-48"/></svg>${at('data-r')}</button>`);
+    q('.hs__rp').onclick = () => restart(0);
     fit(); rail(0);
     C.add('is-live');
     load();
-    if (sc) return scrub(sc.split('|'));
-    new IntersectionObserver(e => { vis = e[0].isIntersecting; if (vis) { t = 0; go(); } }, { threshold: 0.25 }).observe(q('.hs__stage'));
+    // Phones wait until about half of the model is on screen (or most of a short landscape screen), so the sequence is
+    // seen from the plan. The newest entry wins. The 6 s fallback (never started: the final still; a replay resets st,
+    // not this) counts from the first time the stage is seen, so a late visitor is not cut off.
+    let ft = 0;
+    new IntersectionObserver(e => {
+      const x = e[e.length - 1], rh = x.rootBounds ? x.rootBounds.height : innerHeight;
+      vis = sm.matches ? x.intersectionRect.height >= M.min(0.45 * x.boundingClientRect.height, 0.8 * rh) : x.isIntersecting;
+      if (vis) { t = 0; go(); ft = ft || setTimeout(() => { if (!began && vis) fail(); }, 6000); }
+    }, { threshold: sm.matches ? [0, 0.25, 0.5] : 0.25 }).observe(q('.hs__stage'));
     go();
-    setTimeout(() => { if (!began && vis) fail(); }, 6000); // never started after 6 s: the final still (a replay resets st, not this)
   };
 })();
