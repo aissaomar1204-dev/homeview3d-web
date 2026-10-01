@@ -60,4 +60,13 @@
 
   /* ---------- Footer: no long section drawing, no masthead ---------- */
   html .site-footer__cut, html .site-footer__top::before { display: none; }
+
+  /* ---------- Less text on the phone: clamped intros with «Leer más», closed FAQ answers (main.js), no keyboard hints ---------- */
+  html :is(.compare__hint, .vw-hint) { display: none; }
+  html .block__intro.is-clamped { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; }
+  html .more-btn {
+    display: inline-flex; align-items: center; min-height: 40px; margin-top: var(--space-1); padding: 0; border: 0; background: none;
+    font: 560 var(--fs-sm) / 1 var(--font-sans); color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
+  }
+  html :is(.step__body, .pack__includes, .bento__text, .faq__a, .vw-note) { font-size: var(--fs-sm); line-height: 1.5; }
 }

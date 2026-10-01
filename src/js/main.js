@@ -407,3 +407,24 @@
     });
   });
 })();
+
+/* Phone only (< 768 px): calmer reading. Long section intros show 3 lines with a «Leer más» toggle, and FAQ answers start
+   closed (only the questions show). The full text stays in the HTML for search engines and assistants. */
+(function () {
+  if (!matchMedia('(max-width: 767px)').matches) return;
+  var es = (document.documentElement.lang || 'es').slice(0, 2) === 'es', more = es ? 'Leer más' : 'Read more', less = es ? 'Leer menos' : 'Read less';
+  document.querySelectorAll('.faq__item[open]').forEach(function (d) { d.open = false; });
+  document.querySelectorAll('.block__intro').forEach(function (p, i) {
+    p.classList.add('is-clamped');
+    if (p.scrollHeight <= p.clientHeight + 2) { p.classList.remove('is-clamped'); return; }
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'more-btn'; b.textContent = more;
+    if (!p.id) p.id = 'intro-' + i;
+    b.setAttribute('aria-controls', p.id); b.setAttribute('aria-expanded', 'false');
+    b.addEventListener('click', function () {
+      var open = p.classList.toggle('is-clamped') === false;
+      b.textContent = open ? less : more; b.setAttribute('aria-expanded', String(open));
+    });
+    p.after(b);
+  });
+})();
