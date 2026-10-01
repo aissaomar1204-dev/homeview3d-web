@@ -70,12 +70,43 @@
   }
   html :is(.step__body, .pack__includes, .bento__text, .faq__a, .vw-note) { font-size: var(--fs-sm); line-height: 1.5; }
 
-  /* ---------- Hero, phone scroll mode (hero.js adds .is-scrub): the stage and the phase rail stay pinned under the
-     header while the runway scrolls by; the scroll picks the frame. A large caption names the phase. ---------- */
-  html .hs.is-scrub .hs__pin { position: sticky; top: calc(var(--header-h) + var(--space-2)); z-index: 1; background: var(--color-bg); }
-  html .hs.is-scrub .hs__run { height: 150svh; }
-  html .hs__cap { margin: 0; padding: var(--space-3) var(--gutter) var(--space-3); font: 600 1.5rem / 1.1 var(--font-display); font-stretch: 112%; letter-spacing: -.012em; color: var(--color-ink); }
-  html .hs.is-scrub .hs__rp { display: none; }
+  /* ---------- Hero, phone scroll intro (hero.js adds .is-scrub; modelled on the Carvajal demo intro). One panel pins
+     under the header for the height of a runway: a large line per phase, the model full width on a faint drawing grid,
+     the phase rail as four progress bars, a hint and «Saltar». Nothing in the panel changes size while it scrolls
+     (the lines are stacked in one cell), so the page never re-anchors under the finger. ---------- */
+  html .hs.is-scrub { border: 0; }
+  html .hs.is-scrub .hs__pin {
+    position: sticky; top: var(--header-h); z-index: 1; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto;
+    height: calc(100svh - var(--header-h) - var(--bar-h)); overflow: hidden; background: var(--color-bg);
+  }
+  html .hs.is-scrub .hs__run { height: 170svh; }
+  html .hs.is-scrub .hs__say {
+    display: grid; align-items: end; min-height: 2.1em; margin: 0; padding: var(--space-5) var(--gutter) 0;
+    font: var(--wght-display) clamp(2.25rem, 10.5vw, 2.75rem) / 1.02 var(--font-display); font-stretch: var(--stretch-h2); letter-spacing: -.026em; color: var(--color-ink);
+  }
+  html .hs.is-scrub .hs__say span { grid-area: 1 / 1; opacity: 0; transform: translateY(.35em); transition: opacity .3s var(--ease-out), transform .45s var(--ease-out); }
+  html .hs.is-scrub .hs__say .is-on { opacity: 1; transform: none; }
+  html .hs.is-scrub .hs__stage {
+    aspect-ratio: auto; min-height: 0; border: 0;
+    background: radial-gradient(closest-side, transparent 40%, var(--color-bg)), linear-gradient(var(--color-line) 1px, transparent 1px) 50% 50% / 28px 28px,
+      linear-gradient(90deg, var(--color-line) 1px, transparent 1px) 50% 50% / 28px 28px, var(--color-bg);
+  }
+  html .hs.is-scrub .hs__art { inset: 50% auto auto 50%; width: min(100cqh * 14 / 9, 140cqw); height: auto; aspect-ratio: 14 / 9; transform: translate(calc(-50% - var(--hx, 0) * 5%), -50%); }
+  html .hs.is-scrub :is(.hs__svg, .hs__c, .hs__rp, .hs__b i) { display: none; }
+  html .hs.is-scrub .hs__strip { padding: 0 var(--gutter); border: 0; background: none; }
+  html .hs.is-scrub .hs__rail { gap: var(--space-2); }
+  html .hs.is-scrub .hs__rail li + li { border: 0; }
+  html .hs.is-scrub .hs__rail li::before { content: ""; position: absolute; inset: 0 0 auto; height: 2px; background: var(--color-line-strong); opacity: .5; }
+  html .hs.is-scrub .hs__rail li::after { inset: 0 0 auto; }
+  html .hs.is-scrub .hs__b { min-height: 44px; padding: var(--space-3) 0 var(--space-1); }
+  html .hs.is-scrub .hs__b b { color: var(--color-ink-3); }
+  html .hs.is-scrub .is-on .hs__b b { color: var(--color-accent); }
+  html .hs.is-scrub .hs__foot { display: flex; align-items: center; justify-content: space-between; padding: 0 var(--gutter) var(--space-2); }
+  html .hs__hint { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--fs-sm); font-weight: var(--wght-ui); transition: opacity var(--dur-state) var(--ease-out); }
+  html .hs__hint .icon { width: 18px; height: 18px; color: var(--color-accent); animation: hs-nudge 1.6s var(--ease-in-out) infinite; }
+  html .hs__hint.is-off { opacity: 0; }
+  html .hs__skip { min-height: 44px; padding: 0; border: 0; background: none; font-size: var(--fs-sm); font-weight: var(--wght-ui); color: var(--color-ink-2); text-decoration: underline; text-underline-offset: 3px; }
+  html .hs:not(.is-scrub) :is(.hs__say, .hs__foot) { display: none; }
 
   /* ---------- Despiece: on the phone the steps stack under the drawing, so a timeline on the whole section ended
      half-way while the drawing was already off screen. Here the drawing drives its own timeline and finishes when it
@@ -87,3 +118,4 @@
     }
   }
 }
+@keyframes hs-nudge { 50% { transform: translateY(3px); } }

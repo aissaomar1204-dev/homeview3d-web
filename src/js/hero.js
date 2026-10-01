@@ -12,7 +12,7 @@
   let G, N, LAST, PH, base, hs, cx, dims, chips, hb, rt, rl, tb, lb, cur;
   let U = 1.4, aw = 0, st = 0, el = 0, t = 0, raf = 0, vis = 1, want = 0, from = 5, hold = 700, df = -1, fr = 0, sa = 0, dead = 0;
   const blobs = [], bmp = {};
-  let ready = 0, pool = 0, next = 0, t1 = 0, nx = 0, kk = 0, began = 0;
+  let ready = 0, pool = 0, next = 0, t1 = 0, nx = 0, kk = 0, began = 0, CM = [14, 36];
   const ac = new AbortController(), EASE = 1.35;
 
   // Final still, shown once it is decoded (rp: the sequence landed on the last frame, so the still SWAPS in with no
@@ -166,7 +166,7 @@
   css.rel = 'stylesheet'; css.href = at('data-c');
   d.head.append(css);
   Promise.all([fetch(at('data-g')).then(r => r.json()), new Promise((ok, no) => { css.onload = ok; css.onerror = no; })]).then(([j]) => {
-    N = j.n; LAST = N - 1; PH = j.ph;
+    N = j.n; LAST = N - 1; PH = j.ph; CM = j.cm || CM;
     build();
     G = j.g; fr = LAST;
     new ResizeObserver(fit).observe(A);
@@ -176,37 +176,59 @@
     // Animated mode, in a second task (no long task): plan drawing + cotas at frame 0, frames download in the background.
     setTimeout(() => animate(j));
   }).catch(fail);
-  /* ─── Phones: scroll-driven sequence. The stage + rail pin under the header while a runway scrolls by; the scroll
-     position picks the frame (plan → walls → furniture → light) and a large caption names the phase. ─── */
+  /* ─── Phones: scroll-driven intro. A panel (phase line, model, phase rail, hint) pins under the header for the height of
+     a runway. The playhead eases towards the scroll position, so a jerky finger never makes the model jump; neighbour
+     frames dissolve into each other (inside the camera move only around the middle of each step, a blend of two frames
+     10 px apart would ghost at rest). The cotas stay off here: only the model moves. ─── */
   let span = 1, stick = 0;
-  const pos = () => { const r = R.getBoundingClientRect(); return M.max(0, M.min(1, (stick - r.top) / span)); };
-  const seek = i => { const r = R.getBoundingClientRect(); scrollTo({ top: scrollY + r.top - stick + (PH[i] + 0.5) / LAST * span, behavior: 'smooth' }); };
-  const scrub = labels => {
+  const pos = () => M.max(0, M.min(1, (stick - R.getBoundingClientRect().top) / span));
+  const seek = i => scrollTo({ top: scrollY + R.getBoundingClientRect().top - stick + (i ? (PH[i] + 0.5) / LAST : 0) * span, behavior: 'smooth' });
+  const scrub = x => {
     C.add('is-scrub');
-    const stg = q('.hs__stage'), cap = d.createElement('p');
+    const stg = q('.hs__stage'), say = d.createElement('p'), foot = d.createElement('div');
     pin = d.createElement('div'); pin.className = 'hs__pin';
-    cap.className = 'hs__cap'; cap.setAttribute('aria-hidden', 'true');
-    R.insertBefore(pin, stg); pin.append(cap, stg, q('.hs__strip'));
+    say.className = 'hs__say'; say.setAttribute('aria-hidden', 'true');
+    say.innerHTML = x.slice(0, 4).map(s => `<span>${s}</span>`).join('');
+    foot.className = 'hs__foot';
+    foot.innerHTML = `<span class="hs__hint" aria-hidden="true"><svg class="icon" viewBox="0 0 256 256"><path d="M128 40v176M64 152l64 64 64-64"/></svg>${x[4]}</span><button type="button" class="hs__skip">${x[5]}</button>`;
+    R.insertBefore(pin, stg); pin.append(say, stg, q('.hs__strip'), foot);
     run = d.createElement('div'); run.className = 'hs__run'; run.setAttribute('aria-hidden', 'true'); R.append(run);
-    let tk = 0, lf = -1, lc = -1;
+    const ln = [...say.children], hint = foot.firstChild;
+    foot.lastChild.onclick = () => { scrollTo({ top: scrollY + R.getBoundingClientRect().bottom - stick, behavior: 'instant' }); };
+    let tk = 0, lt = 0, sp = -1, la = -1, lk = -1, lc = -1, lx = '';
     const near = f => {
-      for (let i = M.max(0, f - 5); i <= M.min(LAST, f + 5); i++) bm(i);
-      for (const k in bmp) if (M.abs(+k - f) > 9) { bmp[k] && bmp[k].close(); delete bmp[k]; }
+      for (let i = M.max(0, f - 4); i <= M.min(LAST, f + 6); i++) bm(i);
+      for (const k in bmp) if (+k < f - 8 || +k > f + 10) { bmp[k] && bmp[k].close(); delete bmp[k]; }
     };
-    const upd = () => {
+    const paint = p => {
+      const fp = p * LAST, ph = PH.filter(a => fp >= a).length - 1;
+      rail(fp);
+      if (ph !== lc) { ln.forEach((e, i) => e.classList.toggle('is-on', i === ph)); lc = ph; }
+      hint.classList.toggle('is-off', p > 0.03);
+      // The camera move drifts the model right: the art follows it (--hx 0 → 1), so the wide final view stays centred.
+      const hx = f4(M.max(0, M.min(1, (fp - CM[0]) / (CM[1] - CM[0])))); if (hx !== lx) { R.style.setProperty('--hx', hx); lx = hx; }
+      // Frames 0 to PH[1] are the same flat view: the line plan holds for the first half of the phase, then dissolves.
+      if (fp < PH[1] / 2) { if (C.contains('is-f')) { C.remove('is-f'); la = -1; } return 1; }
+      const i = M.min(LAST, M.floor(fp)), r = fp - i, cam = i >= CM[0] && i < CM[1];
+      const k = M.round(24 * (cam ? M.max(0, M.min(1, (r - 0.3) / 0.4)) : r)) / 24, A = bm(i), B = k && i < LAST ? bm(i + 1) : 0;
+      near(i);
+      if (!A || (k && !B)) return 0; // still downloading or decoding
+      if (i !== la || k !== lk) { cur = A; nx = B; kk = k; draw(); la = i; lk = k; C.add('is-f'); }
+      return 1;
+    };
+    const upd = now => {
       tk = 0;
       if (dead) return;
-      const p = pos(), fp = p * LAST, ph = PH.filter(a => fp >= a).length - 1;
-      rail(fp);
-      if (ph !== lc) { cap.textContent = labels[ph]; lc = ph; }
-      if (p < 0.02) { if (C.contains('is-f')) { C.remove('is-f'); setF(0); lf = -1; } return; }
-      const f = M.min(LAST, M.round(fp)), b = bm(f);
-      near(f);
-      if (!b) { setTimeout(on, 60); return; } // still downloading or decoding: try again shortly
-      if (f !== lf) { cur = b; nx = 0; kk = 0; draw(); setF(f); lf = f; C.add('is-f'); }
+      const p = pos(), dt = lt ? M.min(now - lt, 64) : 16;
+      sp = sp < 0 ? p : sp + (p - sp) * (1 - M.pow(0.8, dt / 16.7));
+      if (M.abs(p - sp) < 0.0005) sp = p;
+      lt = now;
+      const ok = paint(sp);
+      if (sp !== p || !ok) on(); else lt = 0;
     };
     const on = () => { if (!tk) tk = requestAnimationFrame(upd); };
-    const measure = () => { span = run.offsetHeight || 1; stick = parseFloat(getComputedStyle(pin).top) || 0; on(); };
+    let vw = 0;
+    const measure = () => { if (innerWidth === vw) return; vw = innerWidth; span = run.offsetHeight || 1; stick = parseFloat(getComputedStyle(pin).top) || 0; on(); };
     addEventListener('scroll', on, { passive: true });
     addEventListener('resize', measure, { passive: true });
     measure();
@@ -220,7 +242,7 @@
     const m = mq('(max-width: 767px)').matches || (devicePixelRatio <= 1 && innerWidth < 1060);
     base = m ? j.bm : j.bd; hs = m ? j.hm : j.hd;
     // Phones: the visitor's scroll drives the sequence (scrub) instead of the clock.
-    const sc = mq('(max-width: 767px)').matches, labels = phs.map(li => li.querySelector('i').textContent + ' · ' + li.querySelector('b').textContent);
+    const sc = mq('(max-width: 767px)').matches && at('data-x');
     phs.forEach((li, i) => {
       const s = li.firstChild, b = d.createElement('button');
       b.type = 'button'; b.className = s.className; b.innerHTML = s.innerHTML;
@@ -234,7 +256,7 @@
     fit(); rail(0);
     C.add('is-live');
     load();
-    if (sc) return scrub(labels);
+    if (sc) return scrub(sc.split('|'));
     new IntersectionObserver(e => { vis = e[0].isIntersecting; if (vis) { t = 0; go(); } }, { threshold: 0.25 }).observe(q('.hs__stage'));
     go();
     setTimeout(() => { if (!began && vis) fail(); }, 6000); // never started after 6 s: the final still (a replay resets st, not this)

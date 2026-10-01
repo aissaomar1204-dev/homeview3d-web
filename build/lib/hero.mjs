@@ -190,7 +190,7 @@ export function heroStage(ctx) {
   // Geometry + frame lists: one hashed JSON asset, fetched by hero.js.
   const d = frameSet(ctx, hero.desktop, hero);
   const m = frameSet(ctx, hero.mobile, hero);
-  const geoUrl = ctx.emitAsset('/assets/hero/hero-geo.json', JSON.stringify({ n: hero.frames, ph: hero.phases.map((p) => p.from), bd: d.base, hd: d.hashes, bm: m.base, hm: m.hashes, g: geo }));
+  const geoUrl = ctx.emitAsset('/assets/hero/hero-geo.json', JSON.stringify({ n: hero.frames, ph: hero.phases.map((p) => p.from), cm: hero.timeline.camera, bd: d.base, hd: d.hashes, bm: m.base, hm: m.hashes, g: geo }));
   const jsUrl = ctx.asset('/assets/js/hero.js');
 
   // Plan drawing: the LCP candidate (small line art, registered with frame 0). The only fetchpriority=high image.
@@ -209,8 +209,9 @@ export function heroStage(ctx) {
   const strip = `<div class="hs__strip"><ol class="hs__rail" role="list" aria-label="${esc(ui.railLabel)}">${phases}</ol>`
     + `<dl class="hs__title">${tr('project', ui.title.projectValue)}${tr('floor', floor)}${tr('source', ui.title.sourceValue)}</dl></div>`;
 
-  // data-t: cota labels (long side | short side); data-u: length unit; data-r: label of the replay button (built by hero.js).
-  const attrs = `data-hero data-g="${esc(geoUrl)}" data-j="${esc(jsUrl)}" data-c="${esc(ctx.asset('/assets/css/herolive.css'))}" data-t="${fmt(villa.footprint.d)}|${fmt(villa.footprint.w)}" data-u="${esc(ui.unit)}" data-r="${esc(ui.replay)}"`;
+  // data-t: cota labels (long side | short side); data-u: length unit; data-r: label of the replay button (built by hero.js);
+  // data-x: phone scroll intro strings (one line per phase | hint | skip).
+  const attrs = `data-hero data-g="${esc(geoUrl)}" data-j="${esc(jsUrl)}" data-c="${esc(ctx.asset('/assets/css/herolive.css'))}" data-t="${fmt(villa.footprint.d)}|${fmt(villa.footprint.w)}" data-u="${esc(ui.unit)}" data-r="${esc(ui.replay)}" data-x="${esc([...ui.scrub, ui.hint, ui.skip].join('|'))}"`;
   return `<figure class="hs" ${attrs}><div class="hs__stage">${art}</div>${strip}</figure>`;
 }
 

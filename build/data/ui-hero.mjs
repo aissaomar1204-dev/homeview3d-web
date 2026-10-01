@@ -19,6 +19,10 @@ export const uiHero = {
       sourceValue: 'Render 3D desde el plano 2D',
     },
     unit: 'm',
+    // Phone scroll intro (hero.js): one large line per phase, the scroll hint and the skip link.
+    scrub: ['Tu plano.', 'Muros a escala.', 'Amueblado.', 'Listo para vender.'],
+    hint: 'Desliza',
+    skip: 'Saltar',
   },
   en: {
     railLabel: 'Model stages',
@@ -32,5 +36,8 @@ export const uiHero = {
       sourceValue: '3D render from the 2D plan',
     },
     unit: 'm',
+    scrub: ['Your plan.', 'Walls, to scale.', 'Furnished.', 'Ready to sell.'],
+    hint: 'Scroll',
+    skip: 'Skip',
   },
 };

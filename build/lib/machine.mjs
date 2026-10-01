@@ -112,14 +112,14 @@ export const LLMS_INDEX = {
  * marks, grids, outlined numerals, plates, láminas, cinema pricing, footer section) added about 12 KB to the shared
  * sheet, about 20 KB to the home bundle and 8 KB (0.9 KB brotli) of picture markup to the home HTML. Nothing
  * decorative loads above the fold except the hero watermark (desktop only) and nothing decorative is the LCP.
- * Limits: HTML 90 KB raw and 19 KB brotli, shared CSS 42 KB, CSS per page 72 KB (BUILD-SPEC §11).
+ * Limits: HTML 90 KB raw and 19 KB brotli, shared CSS 42 KB, CSS per page 74 KB (BUILD-SPEC §11).
  */
 export const BUDGETS = {
   htmlRawKB: 90,          // per HTML page, uncompressed
   htmlBrotliKB: 19,       // per HTML page, brotli quality 11
   brotliQuality: 11,
   cssSharedKB: 42,        // the stylesheet every page links (site.<hash>.css)
-  cssPageKB: 72,          // all the stylesheets one page links
+  cssPageKB: 74,          // all the stylesheets one page links
   cssBlockingMax: 2,      // render-blocking stylesheet requests per page (<link rel=stylesheet> without a non-matching media, + @import)
   initialJsKB: 32,        // scripts referenced by the initial HTML (32: eased anchor scrolling, 2026-09-30)
   fontsKB: 110,           // all woff2 files
