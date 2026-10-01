@@ -22,7 +22,8 @@
     const f = () => { rp || C.remove('is-f'); C.add('is-end'); setTimeout(() => rp && C.add('is-done'), 300); };
     im.decode ? im.decode().then(f, () => (im.complete && im.naturalWidth ? f() : rp && C.add('is-done'))) : f();
   };
-  const fail = () => { if (dead) return; dead = 1; st = 9; ac.abort(); C.add('is-live'); if (G) { setF(LAST); rail(LAST); } still(); };
+  let pin, run; // phone scroll mode (scrub)
+  const fail = () => { if (dead) return; dead = 1; st = 9; ac.abort(); if (run) { run.remove(); C.remove('is-scrub'); } C.add('is-live'); if (G) { setF(LAST); rail(LAST); } still(); };
 
   /* ─── Overlay: cotas, rulers, chips (built here: they are data, and it keeps them out of the HTML) ─── */
   const build = () => {
@@ -175,22 +176,65 @@
     // Animated mode, in a second task (no long task): plan drawing + cotas at frame 0, frames download in the background.
     setTimeout(() => animate(j));
   }).catch(fail);
+  /* ─── Phones: scroll-driven sequence. The stage + rail pin under the header while a runway scrolls by; the scroll
+     position picks the frame (plan → walls → furniture → light) and a large caption names the phase. ─── */
+  let span = 1, stick = 0;
+  const pos = () => { const r = R.getBoundingClientRect(); return M.max(0, M.min(1, (stick - r.top) / span)); };
+  const seek = i => { const r = R.getBoundingClientRect(); scrollTo({ top: scrollY + r.top - stick + (PH[i] + 0.5) / LAST * span, behavior: 'smooth' }); };
+  const scrub = labels => {
+    C.add('is-scrub');
+    const stg = q('.hs__stage'), cap = d.createElement('p');
+    pin = d.createElement('div'); pin.className = 'hs__pin';
+    cap.className = 'hs__cap'; cap.setAttribute('aria-hidden', 'true');
+    R.insertBefore(pin, stg); pin.append(cap, stg, q('.hs__strip'));
+    run = d.createElement('div'); run.className = 'hs__run'; run.setAttribute('aria-hidden', 'true'); R.append(run);
+    let tk = 0, lf = -1, lc = -1;
+    const near = f => {
+      for (let i = M.max(0, f - 5); i <= M.min(LAST, f + 5); i++) bm(i);
+      for (const k in bmp) if (M.abs(+k - f) > 9) { bmp[k] && bmp[k].close(); delete bmp[k]; }
+    };
+    const upd = () => {
+      tk = 0;
+      if (dead) return;
+      const p = pos(), fp = p * LAST, ph = PH.filter(a => fp >= a).length - 1;
+      rail(fp);
+      if (ph !== lc) { cap.textContent = labels[ph]; lc = ph; }
+      if (p < 0.02) { if (C.contains('is-f')) { C.remove('is-f'); setF(0); lf = -1; } return; }
+      const f = M.min(LAST, M.round(fp)), b = bm(f);
+      near(f);
+      if (!b) { setTimeout(on, 60); return; } // still downloading or decoding: try again shortly
+      if (f !== lf) { cur = b; nx = 0; kk = 0; draw(); setF(f); lf = f; C.add('is-f'); }
+    };
+    const on = () => { if (!tk) tk = requestAnimationFrame(upd); };
+    const measure = () => { span = run.offsetHeight || 1; stick = parseFloat(getComputedStyle(pin).top) || 0; on(); };
+    addEventListener('scroll', on, { passive: true });
+    addEventListener('resize', measure, { passive: true });
+    measure();
+    // Frames keep arriving in the background: redraw the current position until all of them are in.
+    const iv = setInterval(() => { on(); if (ready >= N || dead) clearInterval(iv); }, 300);
+  };
+
   const animate = j => {
     cx = cv.getContext('2d'); fr = 0;
     // Small frames (700 px) below 768 px, and on 1x screens where the sheet is narrow anyway.
     const m = mq('(max-width: 767px)').matches || (devicePixelRatio <= 1 && innerWidth < 1060);
     base = m ? j.bm : j.bd; hs = m ? j.hm : j.hd;
+    // Phones: the visitor's scroll drives the sequence (scrub) instead of the clock.
+    const sc = mq('(max-width: 767px)').matches, labels = phs.map(li => li.querySelector('i').textContent + ' · ' + li.querySelector('b').textContent);
     phs.forEach((li, i) => {
       const s = li.firstChild, b = d.createElement('button');
       b.type = 'button'; b.className = s.className; b.innerHTML = s.innerHTML;
       li.replaceChild(b, s);
-      b.onclick = () => { if (st) restart(i); else { want = i; hold = i ? 0 : 700; } };
+      b.onclick = () => { if (sc) seek(i); else if (st) restart(i); else { want = i; hold = i ? 0 : 700; } };
     });
-    q('.hs__stage').insertAdjacentHTML('beforeend', `<button type="button" class="mono hs__rp"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M216 128a88 88 0 1 1-25.8-62.2L216 88M216 40v48h-48"/></svg>${at('data-r')}</button>`);
-    q('.hs__rp').onclick = () => restart(0);
+    if (!sc) {
+      q('.hs__stage').insertAdjacentHTML('beforeend', `<button type="button" class="mono hs__rp"><svg class="icon" viewBox="0 0 256 256" aria-hidden="true"><path d="M216 128a88 88 0 1 1-25.8-62.2L216 88M216 40v48h-48"/></svg>${at('data-r')}</button>`);
+      q('.hs__rp').onclick = () => restart(0);
+    }
     fit(); rail(0);
     C.add('is-live');
     load();
+    if (sc) return scrub(labels);
     new IntersectionObserver(e => { vis = e[0].isIntersecting; if (vis) { t = 0; go(); } }, { threshold: 0.25 }).observe(q('.hs__stage'));
     go();
     setTimeout(() => { if (!began && vis) fail(); }, 6000); // never started after 6 s: the final still (a replay resets st, not this)

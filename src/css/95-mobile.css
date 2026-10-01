@@ -69,4 +69,21 @@
     font: 560 var(--fs-sm) / 1 var(--font-sans); color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; cursor: pointer;
   }
   html :is(.step__body, .pack__includes, .bento__text, .faq__a, .vw-note) { font-size: var(--fs-sm); line-height: 1.5; }
+
+  /* ---------- Hero, phone scroll mode (hero.js adds .is-scrub): the stage and the phase rail stay pinned under the
+     header while the runway scrolls by; the scroll picks the frame. A large caption names the phase. ---------- */
+  html .hs.is-scrub .hs__pin { position: sticky; top: calc(var(--header-h) + var(--space-2)); z-index: 1; background: var(--color-bg); }
+  html .hs.is-scrub .hs__run { height: 150svh; }
+  html .hs__cap { margin: 0; padding: var(--space-3) var(--gutter) var(--space-3); font: 600 1.5rem / 1.1 var(--font-display); font-stretch: 112%; letter-spacing: -.012em; color: var(--color-ink); }
+  html .hs.is-scrub .hs__rp { display: none; }
+
+  /* ---------- Despiece: on the phone the steps stack under the drawing, so a timeline on the whole section ended
+     half-way while the drawing was already off screen. Here the drawing drives its own timeline and finishes when it
+     reaches the middle of the screen. ---------- */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      html .despiece__stage { view-timeline-name: --dspm; }
+      html .despiece__layer--2, html .despiece__layer--3 { animation-timeline: --dspm; animation-range: entry 5% cover 50%; }
+    }
+  }
 }
