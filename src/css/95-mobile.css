@@ -1,0 +1,63 @@
+/* ==========================================================================
+   95-mobile · phone layout (< 768 px), modelled on the Carvajal demo: calmer, shorter, easier to follow.
+   Desktop and tablet are untouched. Shared sheet (no @module): `html` prefixes win over the module bundles
+   that load after it. Owner: ENGINE.
+   ========================================================================== */
+@media (max-width: 767px) {
+  :root {
+    --header-h: 52px;
+    --chapter-y: 48px;
+    --fs-base: 1rem;
+    --fs-lead: 1.0625rem;
+    --fs-h1: clamp(2.125rem, 8.9vw, 2.25rem);
+    --fs-h2: clamp(1.625rem, 7vw, 1.75rem);
+    --fs-h3: 1.25rem;
+  }
+
+  /* ---------- Chapters: plain sheets, one small index label, no drawing furniture ---------- */
+  html .main > :is([data-ch=w], [data-ch=p], [data-ch=g]) { background: var(--ch-bg); }
+  html .main > [data-n]::before, html .ch-ax, html .main > [data-n] > .wrap::before { display: none; }
+  html .main > [data-n]::after { border-bottom: 0; background: none; padding-bottom: 0; letter-spacing: .08em; color: var(--color-ink-3); }
+  html .main > [data-n] > .wrap { padding-top: var(--space-6); }
+  html .main > [data-ch] :is(.block__head > h2, .cta-band__text h2) { font-size: var(--fs-h2); font-stretch: 106%; line-height: 1.12; letter-spacing: -.015em; max-width: none; }
+  html .main > [data-ch] .block__intro { font-size: var(--fs-base); }
+
+  /* Graphite chapters become light sheets on the phone (one long dark block after another felt heavy). The colour
+     tokens fall back to the page theme; the pricing "cinema" chapter and the footer keep their dark moment. */
+  html body .main > [data-ch=k][data-ch] {   /* beats the graphite :is() rule (0,3,0) */
+    --ch-bg: var(--sheet-mat);
+    --color-bg: inherit; --color-surface: inherit; --color-stage: inherit;
+    --color-ink: inherit; --color-ink-2: inherit; --color-ink-3: inherit;
+    --color-line: inherit; --color-line-strong: inherit;
+    --color-accent: inherit; --color-accent-hover: inherit; --color-on-accent: inherit; --color-accent-soft: inherit;
+    --color-danger: inherit; --color-success: inherit; --plan-invert: inherit; --cota-bg: inherit; --ch-ring: inherit;
+    color-scheme: inherit;
+    background: var(--ch-bg);
+  }
+
+  /* ---------- Hero: the model and the phase rail, without rulers, legend or title block ---------- */
+  html :is(.hs__rv, .hs__rt, .hs__rl, .hs__tb, .hs__lb, .hs__title, .hv-leg) { display: none; }
+
+  /* ---------- Plan ↔ 3D: the slider is enough; the room list lives in the viewer ---------- */
+  html .legend { display: none; }
+
+  /* ---------- Swipe rows instead of long stacks: deliverables and price packs ---------- */
+  html .bento, html .packs {
+    display: flex; gap: var(--space-3); overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter);
+    margin-inline: calc(-1 * var(--gutter)); padding: 0 var(--gutter) var(--space-3);
+    scrollbar-width: none;
+  }
+  html :is(.bento, .packs)::-webkit-scrollbar { display: none; }
+  html .bento > *, html .packs > * { flex: 0 0 84%; min-width: 0; scroll-snap-align: start; grid-column: auto; }
+  html .packs__item--featured { order: -1; }
+  html .bento__tb { display: none; }
+
+  /* ---------- Process: steps without the outlined numerals ---------- */
+  html .steps--process .step::before { display: none; }
+  html body .main > .block--process[data-ch]:has(.process__drawing) > .wrap::after { display: none; }
+  html .steps--process .step__title { max-width: none; }
+
+  /* ---------- Footer: no long section drawing, no masthead ---------- */
+  html .site-footer__cut, html .site-footer__top::before { display: none; }
+}
