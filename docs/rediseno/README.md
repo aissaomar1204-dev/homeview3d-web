@@ -4,7 +4,9 @@
 > Tablero de ideas compartido (claude.ai, hay que tener acceso): https://claude.ai/artifact/UDyxESa4QnbJ1wyHFFyJRD
 
 ## Por qué
-El propio reglamento (`docs/design/DESIGN-RULEBOOK.md`, O3) recoge la crítica: «demasiado simple» y «no concuerda con una web de miles de euros». La base técnica es muy buena y se mantiene; lo que falla es la emoción, la variedad y que no se ve lo nuevo.
+La crítica del cliente a la primera versión fue «demasiado simple» y «no concuerda con una web de miles de euros». La base técnica es muy buena y se mantiene; lo que falla es la emoción, la variedad y que no se ve lo nuevo.
+
+**9 oct 2026:** se elimina el reglamento de diseño (`docs/design/DESIGN-RULEBOOK.md`). Se mantiene el sistema visual que ya existe (tokens, tipografías, motor de capítulos) y las comprobaciones automáticas; las referencias a reglas que queden en el código son históricas. Consecuencia directa: la web puede usar imágenes retocadas con IA (Nano Banana), siempre con un pie que lo diga.
 
 ## Diagnóstico de la portada (medido el 9 oct 2026 a 1440×900)
 | Dato | Valor |
@@ -56,11 +58,10 @@ Mantener el plano como seña de identidad (precisión) y que cada lámina técni
 | Descartada | Showreel de 30 segundos | Movimiento |
 | Descartada | Testimonio de Jurgita | Confianza |
 
-## Decisiones pendientes (chocan con el reglamento)
-- ¿Titulares con más emoción en las bandas oscuras? Hoy solo Archivo; casi todas las serifas prohibidas (TYPE-02); B1 admite Newsreader.
-- ¿Texto sobre renders? Prohibido (IMG-08) salvo velo oscuro con contraste medido.
+## Decisiones pendientes
+- ¿Titulares con más emoción en las bandas oscuras? Hoy solo Archivo; se podría probar una serif de titular.
+- ¿Texto sobre los renders (hero, tarjetas)? Si se hace, con velo oscuro y contraste suficiente.
 - ¿Precio en la portada? Mantener «desde» o separar agencias (precio cerrado) y promotoras (a medida).
 - ¿Showrooms de promociones dentro de la web o en su propia dirección (por ejemplo benahavis.homeview3d.com)?
 - ¿Más idiomas (alemán, neerlandés, sueco)?
 
-Toda excepción que se acepte se apunta en el reglamento como «O4. Rediseño de la portada (octubre 2026)».
