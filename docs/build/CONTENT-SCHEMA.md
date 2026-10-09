@@ -116,7 +116,7 @@ Unknown tokens fail the build.
 
 ## 5. Writing rules (both languages)
 
-Read `docs/design/DESIGN-RULEBOOK.md` §A1 (anti-slop) and §A11 (copy mechanics) and `docs/research/04-geo-2026.md` §8 before writing.
+Read `docs/research/04-geo-2026.md` §8 before writing. (The design rulebook was removed on 9 Oct 2026; see `docs/rediseno/`.)
 
 1. **Answer first.** The lead answers what / for whom / price / time in ≤ 60 words. Every `answer` block answers in its first sentence.
 2. **Numbers, not adjectives.** m², rooms, days, €, MB. Banned: "innovador", "revolucionario", "de última generación", "solución integral", "cutting-edge", "seamless", "unlock", "elevate", "game-changer", "in today's fast-paced".

@@ -1,9 +1,12 @@
 # Build spec · website of the 3D studio (no name yet)
 
-Owner of decisions: this document. Inputs it resolves: `docs/research/01..07`, `docs/design/DESIGN-RULEBOOK.md`
-(+ `tokens.css`, `design-lint.mjs`), `docs/build/CONTENT-SCHEMA.md`. When a research doc and this spec disagree,
-**this spec wins**. When the rulebook and this spec disagree on visual matters, **the rulebook wins** (except
-where this spec explicitly overrides it).
+> **9 oct 2026:** the design rulebook (`docs/design/DESIGN-RULEBOOK.md`) has been removed. References to its rules
+> that remain here and in code comments (IMG-01, C5, O3…) are historical and no longer binding. `scripts/design-lint.mjs`
+> still runs: if it blocks something the team has decided, change that check and say so in the PR. Redesign: `docs/rediseno/`.
+
+Owner of decisions: this document. Inputs it resolves: `docs/research/01..07` (+ `docs/design/tokens.css`,
+`docs/design/design-lint.mjs`), `docs/build/CONTENT-SCHEMA.md`. When a research doc and this spec disagree,
+**this spec wins**.
 
 ## 0. Decisions (final)
 

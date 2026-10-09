@@ -6,7 +6,7 @@ Sitio estático generado con Node (sin frameworks) y publicado en Netlify. Convi
 (`robots.txt`, sitemaps, `llms.txt`, espejos Markdown, IndexNow, JSON-LD).
 
 Especificación: `docs/build/BUILD-SPEC.md` · contrato de contenidos: `docs/build/CONTENT-SCHEMA.md` ·
-diseño: `docs/design/DESIGN-RULEBOOK.md` · estrategia GEO: `docs/research/04-geo-2026.md`.
+estrategia GEO: `docs/research/04-geo-2026.md`.
 
 **Orden del lanzamiento:** §0 qué falta → §1 datos → §2 comprobación local → §3 Netlify → §4 formularios →
 §5 a §7 indexación → §8 y §9 presencia fuera de la web → §10 medición mensual.
