@@ -26,13 +26,10 @@ El antiguo reglamento de diseño (`docs/design/DESIGN-RULEBOOK.md`) se ha elimin
 ## 3. Tareas de la fase 1 (en este orden, un commit por tarea)
 
 ### T1. Imágenes de Benahavís
-- Origen: repositorio `2002salvarito-wq/realstate`, rama `comunidad-benahavis`.
-  - **Para la web, las retocadas con IA (Nano Banana)**, que lucen más: `ComunidadBenahavis/imagenes/renders_ia_modelo3d/` (JPG): `10_aerea`, `01_jardin_piscina`, `00_fachada_calle`, `03_salon_cocina`, `02_azotea`.
-  - **Para el interruptor día/noche (fase 2), las de Blender**, porque son la misma cámara y coinciden al píxel: `ComunidadBenahavis/modelo3d/renders/01_jardin_piscina.png` y `11_jardin_noche.png`.
-- Antes de usar cada imagen de IA, compárala con su render de Blender (`modelo3d/renders/`, mismo nombre). La IA a veces inventa detalles: en `01_jardin_piscina` añadió muros de piedra en la planta baja que no están en el proyecto. Si una imagen enseña algo que el proyecto no tiene, usa la de Blender.
-- `scripts/images.mjs` solo lee PNG de `source/villa3d/renders/`: convierte los JPG a PNG y guárdalos con el prefijo `benahavis_` (por ejemplo `benahavis_10_aerea.png`). Copia también las dos de Blender como `benahavis_01_jardin_piscina_blender.png` y `benahavis_11_jardin_noche_blender.png`.
-- `npm run images` (genera AVIF/WebP y `build/generated/images.json`).
-- Añade las claves nuevas a la lista `IMAGES` en `build/validate-content.mjs` **y** en `build/build.mjs` (deben coincidir) y documéntalas en `docs/build/CONTENT-SCHEMA.md` §6.
+- **Ya están preparadas** (PR `alvaro/imagenes-benahavis`, 10 oct 2026): 22 imágenes con el prefijo `benahavis_`, elegidas, con el color igualado y ya generadas en AVIF/WebP con su entrada en `build/generated/images.json`. No conviertas nada. Lee `docs/rediseno/IMAGENES.md`: qué es cada clave, para qué sección se pensó y los pies.
+- Criterio de Álvaro: Benahavís es un proyecto de demostración y en la web manda la mejor calidad visual; los detalles que añade la IA y se ven bien se quedan.
+- Antes de volver a ejecutar `npm run images`, lee el apartado «Cuidado» de `IMAGENES.md`: el script borra las imágenes cuyas PNG originales no tengas en local.
+- Añade las claves que uses a la lista `IMAGES` en `build/validate-content.mjs` **y** en `build/build.mjs` (deben coincidir) y documéntalas en `docs/build/CONTENT-SCHEMA.md` §6.
 - Alt y pie en `build/data/plates.mjs`. El comprobador exige que el pie contenga la palabra «render».
   - IA, ES: «Imagen retocada con IA a partir del render 3D del proyecto de demostración Residencial Benahavís.»
   - IA, EN: "AI-enhanced image from the 3D render of the Residencial Benahavís demo project."
@@ -40,6 +37,7 @@ El antiguo reglamento de diseño (`docs/design/DESIGN-RULEBOOK.md`) se ha elimin
   - Blender, EN: "3D render of the Residencial Benahavís demo project."
 
 ### T2. Portada con nuestra propia casa
+- **Fotos listas para la portada:** `benahavis_portada` (escritorio, hora dorada) y `benahavis_portada_movil` (vertical para móvil). Álvaro las eligió para la portada; tú decides si sustituyen a la animación del plano o la acompañan (por ejemplo, la foto arriba y la animación en «cómo trabajamos»). Si las usas como portada, el resto de esta tarea (los 48 fotogramas en el PC de Aissa) deja de ser necesario.
 - La villa del hero no es nuestra. Se sustituye por la **casa tipo B de Benahavís** (casa 4, la que no está en simetría), en **planta baja**: salón, comedor y cocina de 72,4 m², garaje de 17,6 m², aseo y núcleo de escalera y ascensor.
 - Mismo contrato que hoy (lee el README del hero): 48 fotogramas RGBA 14:9 de 1400×900, `hero_plan_lines.png` registrado al píxel con el fotograma 0, `hero_points.json` con la línea de tiempo y los puntos proyectados, mismas cuatro fases (Plano, Muros, Mobiliario, Luz). El último fotograma tiene que ser idéntico al still final para que no haya salto.
 - Escena: adapta `source/villa3d/blender/hero/hero_frames.py` al modelo de Benahavís (`ComunidadBenahavis/generador/m3d_build.py` genera `modelo3d/comunidad_benahavis.blend`). Deja solo la casa 4 y su parcela: suelos (`*_Suelo_*`), muros (`Muros_fachada`, `Tabiques`, `Medianeras` y carpintería) y mobiliario (`Mob_*` y los muebles IA instanciados). Si ya tienes el modelo hecho, encájalo en este contrato.
@@ -51,7 +49,7 @@ El antiguo reglamento de diseño (`docs/design/DESIGN-RULEBOOK.md`) se ha elimin
 ### T3. Sección «Proyectos» (bloque nuevo `projects`)
 - Datos en `build/data/projects.mjs` (ES y EN) con dos proyectos:
   1. **Villa Costa del Sol**, «Caso real (anonimizado)». Imagen `villa_interior_salon`, cifras de `build/data/villa.mjs` (tokens, nunca a mano), enlace a la página del caso (`@caso-villa`).
-  2. **Residencial Benahavís**, «Proyecto de demostración». Imagen `benahavis_10_aerea`. Datos: 11 viviendas adosadas, 4 plantas, 358,9 m² construidos por vivienda, 2,39 ha. Sin enlace por ahora: deja un campo `demoUrl: null` y, si es `null`, no pintes botón.
+  2. **Residencial Benahavís**, «Proyecto de demostración». Imagen `benahavis_aerea`. Datos: 11 viviendas adosadas, 4 plantas, 358,9 m² construidos por vivienda, 2,39 ha. Sin enlace por ahora: deja un campo `demoUrl: null` y, si es `null`, no pintes botón.
 - Diseño: dos tiras verticales en reparto 7/5, imagen recortada en vertical en escritorio y 16:9 en móvil, pie debajo de la imagen y un mini cajetín (`<dl>`) con 3 o 4 datos debajo del pie.
 - Regístralo como hacen los demás bloques: renderizado en `build/lib/blocks.mjs`, tono en `CHAPTERS` de `build/lib/chapters.mjs` (banda oscura `k`; que no repita tono con sus vecinos o falla la comprobación), validación en `build/validate-content.mjs`, fila en CONTENT-SCHEMA §3 y CSS en un módulo nuevo siguiendo el patrón de `56-cards.css`.
 - Va en la portada justo después del cajetín.
@@ -96,7 +94,7 @@ El antiguo reglamento de diseño (`docs/design/DESIGN-RULEBOOK.md`) se ha elimin
 - Explorador de entregables (showroom web, visita 360°, recorrido 3D, AR, Google Earth y renders) con la demo real al lado, en lugar del bento actual.
 - «Ver en 3D» fijo en la cabecera (la cabecera tiene sitio para 5 enlaces: habría que pasar «Cómo funciona» al pie).
 - Enlace a la demo de Benahavís en Netlify (pide la dirección a Aissa: es interna y no debe aparecer en este repositorio público) cuando Álvaro y Aissa la aprueben para clientes.
-- Interruptor día/noche con `benahavis_01_jardin_piscina_blender` y `benahavis_11_jardin_noche_blender` (misma cámara), con fundido en `--dur-reveal`.
+- Interruptor día/noche con `benahavis_jardin_piscina_blender` y `benahavis_jardin_noche_blender` (misma cámara), con fundido en `--dur-reveal`.
 - Cifras propias (solo datos verificables de `build/data`).
 - Formulario «Sube tu plano» (comprobar que el formulario de Netlify acepta el archivo).
 - Más bandas oscuras a sangre, con los tonos `k` y `c` del motor de capítulos.
