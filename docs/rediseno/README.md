@@ -2,6 +2,7 @@
 
 > Estado: 9 oct 2026. **Salva construye, Álvaro reúne ideas.** Para empezar: [`FASE-1-PROMPT.md`](FASE-1-PROMPT.md) (instrucciones de la fase 1, listas para pegar en Claude Code).
 > Tablero de ideas compartido (claude.ai, hay que tener acceso): https://claude.ai/artifact/UDyxESa4QnbJ1wyHFFyJRD
+> Imágenes de Benahavís listas para usar (10 oct 2026): [`IMAGENES.md`](IMAGENES.md).
 
 ## Por qué
 La crítica del cliente a la primera versión fue «demasiado simple» y «no concuerda con una web de miles de euros». La base técnica es muy buena y se mantiene; lo que falla es la emoción, la variedad y que no se ve lo nuevo.

@@ -1,4 +1,712 @@
 {
+  "benahavis_aerea": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_aerea-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_aerea-1200.webp",
+    "og": "/assets/img/og/benahavis_aerea.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAwBACdASoYAA0APt1ep00opSOiMAgBEBuJZgCdMoADTmHqxLBdC9++kUAA3lGyx7ai//YYZwLU7OCq3BgrCF8Nigr894c7VsAkWnjXgEtoMHlDsJcQlHkZcgJvT05cnMi3DwAA",
+    "bytes": {
+      "avif-480": 30707,
+      "webp-480": 33674,
+      "avif-800": 75704,
+      "webp-800": 82260,
+      "avif-1200": 161225,
+      "webp-1200": 164610,
+      "avif-1600": 282186,
+      "webp-1600": 283150,
+      "avif-2400": 599890,
+      "webp-2400": 612074,
+      "og": 144828
+    }
+  },
+  "benahavis_aerea_noche": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_aerea_noche-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_aerea_noche-1200.webp",
+    "og": "/assets/img/og/benahavis_aerea_noche.jpg",
+    "placeholder": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQBACdASoYAA0APt1kqU2opaQiMAgBEBuJQBOkCYhgaXWI8F4gXXBpcAD+6Rp3iFvSgU7ANvLDU9tqOP2DBRYBFyJtiQYtpS+qeCCu4II95CP4YaDaOuCsjeAAAA==",
+    "bytes": {
+      "avif-480": 17256,
+      "webp-480": 15704,
+      "avif-800": 39503,
+      "webp-800": 35172,
+      "avif-1200": 78646,
+      "webp-1200": 67146,
+      "avif-1600": 132321,
+      "webp-1600": 108788,
+      "avif-2400": 285311,
+      "webp-2400": 217120,
+      "og": 88480
+    }
+  },
+  "benahavis_aerea_oeste": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_aerea_oeste-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_aerea_oeste-1200.webp",
+    "og": "/assets/img/og/benahavis_aerea_oeste.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYAA0APt1cp0yopSOiMAgBEBuJQBOmUABpoCy0ocbmRn6EGQAA/I/Nx8mTC/8tpDsBUEUydIkDxSkmsg9beiSDGLcxGvJ+n/6J1seti33c/0/4ubXqdc20bWJ7H5KfQgu0PoZEg2cgAA==",
+    "bytes": {
+      "avif-480": 36060,
+      "webp-480": 41296,
+      "avif-800": 88773,
+      "webp-800": 101466,
+      "avif-1200": 183691,
+      "webp-1200": 202688,
+      "avif-1600": 313251,
+      "webp-1600": 331648,
+      "avif-2400": 654850,
+      "webp-2400": 682142,
+      "og": 152392
+    }
+  },
+  "benahavis_axonometria": {
+    "width": 2304,
+    "height": 1856,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_axonometria-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_axonometria-1200.webp",
+    "og": "/assets/img/og/benahavis_axonometria.jpg",
+    "placeholder": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAADQBACdASoYABMAPt1kp0+opaMiKAqpEBuJQBdgAiXsW0dZiQvglynJhhEnFINLIAD9/T2rW1iHPWsIDXuomvtYVO5jOGjPmfNcLD526hc0irHR8Rm7ev147hc+cYy4YjaKlq1yfygtXN5PsOZ9JXMq9Ls6Auos7Zp2R7L2uMzb80UicLtWfW54mdwT/9n3dp+eOkdvSrMAEAAA",
+    "bytes": {
+      "avif-480": 34864,
+      "webp-480": 37770,
+      "avif-800": 85835,
+      "webp-800": 92262,
+      "avif-1200": 187922,
+      "webp-1200": 200380,
+      "avif-1600": 333190,
+      "webp-1600": 350940,
+      "og": 79502
+    }
+  },
+  "benahavis_azotea": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_azotea-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_azotea-1200.webp",
+    "og": "/assets/img/og/benahavis_azotea.jpg",
+    "placeholder": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAACwAwCdASoYAA0APt1cp00opSOiMAgBEBuJQBfnBDjkwp1ezjvUwAD32ntGMR2wByFMMLOIeCuUjbUlRVvc0dM49mCRbR6UwLCTQTlM3DnLJUN7RDXevvUH2Gx2R8pbLgwb08rPoJULE8YaiV2cVVjTugAAAA==",
+    "bytes": {
+      "avif-480": 14506,
+      "webp-480": 15746,
+      "avif-800": 31634,
+      "webp-800": 35324,
+      "avif-1200": 59862,
+      "webp-1200": 65806,
+      "avif-1600": 95018,
+      "webp-1600": 101256,
+      "avif-2400": 186049,
+      "webp-2400": 188114,
+      "og": 85074
+    }
+  },
+  "benahavis_azotea_atardecer": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_azotea_atardecer-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_azotea_atardecer-1200.webp",
+    "og": "/assets/img/og/benahavis_azotea_atardecer.jpg",
+    "placeholder": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwAwCdASoYAA0APt1cpkyopSOiMAgBEBuJZACdACHG3vDSHhZ3azugAMsLjMON7LeS8f/INaVkr3T0osS62ELSo+j54ZPYWcWCMHkBdlAawW726U7P0BcXTo2itMaTPTj8os41T2wubgvUwX2HIBDvhdVGpeAA",
+    "bytes": {
+      "avif-480": 14547,
+      "webp-480": 15944,
+      "avif-800": 31870,
+      "webp-800": 35674,
+      "avif-1200": 59347,
+      "webp-1200": 65212,
+      "avif-1600": 91249,
+      "webp-1600": 100044,
+      "avif-2400": 167885,
+      "webp-2400": 177666,
+      "og": 84740
+    }
+  },
+  "benahavis_cocina_detalle": {
+    "width": 1600,
+    "height": 1986,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_cocina_detalle-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_cocina_detalle-1200.webp",
+    "og": "/assets/img/og/benahavis_cocina_detalle.jpg",
+    "placeholder": "data:image/webp;base64,UklGRsoAAABXRUJQVlA4IL4AAABwBQCdASoYAB4APt1ep0yopSOiMBgMARAbiUAVhA4AJUI2RFm0RQby/ors6tbXuVh9w3jcAP1G8rwpQkjeClYS9rjVnOHzsOQhKuFb6j+YXlkMYjDR9GUQ1KlGi210Wkccr6zei/JcKDy4YV6Ipg4dyi5K9jcEDUgDjGGeW34nZLF5x8DXXPrGHSzv5ihX3knW18xRzOnDARUUMgk31kUl9A303v1lkaVnKjsOWuPNOHCoj/niC4T7YTaFiAAA",
+    "bytes": {
+      "avif-480": 17803,
+      "webp-480": 18368,
+      "avif-800": 35725,
+      "webp-800": 36420,
+      "avif-1200": 61515,
+      "webp-1200": 62562,
+      "avif-1600": 89932,
+      "webp-1600": 90296,
+      "og": 30068
+    }
+  },
+  "benahavis_dormitorio": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_dormitorio-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_dormitorio-1200.webp",
+    "og": "/assets/img/og/benahavis_dormitorio.jpg",
+    "placeholder": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABQBACdASoYAA0APt1ep00opSOiMAgBEBuJZQCw7CFpzlKRbkj/94Cwa/AAAP5gqbfBhF3sD3P9VpROOjOo0dg7KyqK1guoaZdwhGFttwei6KYd22VM38Bd0COwZaPTXgA=",
+    "bytes": {
+      "avif-480": 10687,
+      "webp-480": 11132,
+      "avif-800": 22057,
+      "webp-800": 22140,
+      "avif-1200": 41514,
+      "webp-1200": 39486,
+      "avif-1600": 65441,
+      "webp-1600": 61532,
+      "avif-2400": 125840,
+      "webp-2400": 112616,
+      "og": 61712
+    }
+  },
+  "benahavis_jardin_hora_dorada": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_jardin_hora_dorada-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_jardin_hora_dorada-1200.webp",
+    "og": "/assets/img/og/benahavis_jardin_hora_dorada.jpg",
+    "placeholder": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAABwBACdASoYAA0APt1cqE0opSQiMAgBEBuJQBOmUGVsiSVTsWtFxnu0omm8QAD+4NopRiNDUtPkk4YCIdTVquzZmEPJIR1cnm06wZKo7998zkPPoSvoRf5pCFvgHp0nTTudzAxMbNy6VgrXTajxB+gz8QXyqZE0O+4AAA==",
+    "bytes": {
+      "avif-480": 26299,
+      "webp-480": 30188,
+      "avif-800": 64379,
+      "webp-800": 71996,
+      "avif-1200": 130693,
+      "webp-1200": 142848,
+      "avif-1600": 211750,
+      "webp-1600": 226796,
+      "avif-2400": 409301,
+      "webp-2400": 434358,
+      "og": 148574
+    }
+  },
+  "benahavis_jardin_noche": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_jardin_noche-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_jardin_noche-1200.webp",
+    "og": "/assets/img/og/benahavis_jardin_noche.jpg",
+    "placeholder": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQAwCdASoYAA0APt1cpkyopSOiMAgBEBuJQBOgBDv4fqgTkjbAueAA/syYXxXh9EA1FNFFbWFx/ghdUiiyEkql5CuXlvfL73ZOQtLFNSlfSeJvGXMZc9QoqiRA5XGzjHAH5JYlaOngODuoRFiK3ALKDw1QcAAA",
+    "bytes": {
+      "avif-480": 16132,
+      "webp-480": 17336,
+      "avif-800": 34770,
+      "webp-800": 35884,
+      "avif-1200": 64851,
+      "webp-1200": 63984,
+      "avif-1600": 104399,
+      "webp-1600": 96102,
+      "avif-2400": 210595,
+      "webp-2400": 182266,
+      "og": 91761
+    }
+  },
+  "benahavis_jardin_noche_blender": {
+    "width": 1920,
+    "height": 1080,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_jardin_noche_blender-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_jardin_noche_blender-1200.webp",
+    "og": "/assets/img/og/benahavis_jardin_noche_blender.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYAA4APt1cpkyopSOiMAgBEBuJQBOkEBBgWn3FWqi4Q+VykAAA/syUjRREN0Sd+8dIhWywu+fDDdaq9SerFEmbC1jO7ZZDsJHeDu6+1tjmA3MEmwjirrpOZdYGOslVoJKCC4KlsJMAAA==",
+    "bytes": {
+      "avif-480": 12587,
+      "webp-480": 13598,
+      "avif-800": 27529,
+      "webp-800": 29070,
+      "avif-1200": 51149,
+      "webp-1200": 51124,
+      "avif-1600": 80379,
+      "webp-1600": 78302,
+      "og": 77737
+    }
+  },
+  "benahavis_jardin_piscina": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_jardin_piscina-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_jardin_piscina-1200.webp",
+    "og": "/assets/img/og/benahavis_jardin_piscina.jpg",
+    "placeholder": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAADQAwCdASoYAA0APt1gp00opaOiMAgBEBuJQBhQBDqXug3DAuvCzAAA/uevl8dFlAjyM7IrQRIOsMEBQhQInMVonV7j0YpSnaR1r3dF+qJeDQHNZwQQfWNAeSrxlfVTnE/OEv2IhBftW0TIPavFmIPAAAA=",
+    "bytes": {
+      "avif-480": 24557,
+      "webp-480": 28270,
+      "avif-800": 61000,
+      "webp-800": 65872,
+      "avif-1200": 126304,
+      "webp-1200": 132568,
+      "avif-1600": 213050,
+      "webp-1600": 218606,
+      "avif-2400": 443928,
+      "webp-2400": 446286,
+      "og": 139380
+    }
+  },
+  "benahavis_jardin_piscina_blender": {
+    "width": 1920,
+    "height": 1080,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_jardin_piscina_blender-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_jardin_piscina_blender-1200.webp",
+    "og": "/assets/img/og/benahavis_jardin_piscina_blender.jpg",
+    "placeholder": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAQBACdASoYAA4APt1cpkyopSOiMAgBEBuJQBadBDh18rhvuId/+gdzAAD+4as7hxhOkezQf381HKhrN5V8+Mro9uzFCz+Eo3vwzHft2+T3EsLT9JsqH/qJ2nBteT6h4tVsjWLe4DOxUB3fioFa+zS43BKrlO7Ij6ILgAAA",
+    "bytes": {
+      "avif-480": 19937,
+      "webp-480": 21414,
+      "avif-800": 50262,
+      "webp-800": 52890,
+      "avif-1200": 101615,
+      "webp-1200": 104906,
+      "avif-1600": 163490,
+      "webp-1600": 168334,
+      "og": 117431
+    }
+  },
+  "benahavis_parque": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_parque-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_parque-1200.webp",
+    "og": "/assets/img/og/benahavis_parque.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoYAA0APt1cpkyopSOiMAgBEBuJZAC2yCB96Nm7rGASwAD+4KtrhSc+Hst6EoZofzt0KdyQ1cXnrMVB0lnjhmBhsGYszQIDlEVlY9hM8OZd9J/16gUda0F2msXao38AAAA=",
+    "bytes": {
+      "avif-480": 20113,
+      "webp-480": 21594,
+      "avif-800": 51276,
+      "webp-800": 55772,
+      "avif-1200": 111768,
+      "webp-1200": 122406,
+      "avif-1600": 194756,
+      "webp-1600": 213910,
+      "avif-2400": 416016,
+      "webp-2400": 458296,
+      "og": 120387
+    }
+  },
+  "benahavis_planta_azotea": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_planta_azotea-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_planta_azotea-1200.webp",
+    "og": "/assets/img/og/benahavis_planta_azotea.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADQAwCdASoYAA0APt1apkyopSOiMAgBEBuJYgDE2Bi/yBF6HT0QYAAA/smeRi1DZapRLCuwXdNmVoY1WIdpA/5OX4l2wxmXPldETthGCLYf9MkHY/fqW9/BAnS925Z/y27n+eCePAA=",
+    "bytes": {
+      "avif-480": 21414,
+      "webp-480": 22054,
+      "avif-800": 53910,
+      "webp-800": 53878,
+      "avif-1200": 127068,
+      "webp-1200": 122520,
+      "avif-1600": 232268,
+      "webp-1600": 222560,
+      "avif-2400": 510063,
+      "webp-2400": 500776,
+      "og": 136241
+    }
+  },
+  "benahavis_planta_baja": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_planta_baja-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_planta_baja-1200.webp",
+    "og": "/assets/img/og/benahavis_planta_baja.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAwCdASoYAA0APt1apkyopSOiMAgBEBuJaAC7ABiFqIJczhdCFAAA/texHsSxcnrQ/BYuMsOS1fpUb5N98zSBPcmDb+6fppszEzK6hq2d10ROW7a3S+ZlrYQ9xiAJ7dSwwAAA",
+    "bytes": {
+      "avif-480": 21352,
+      "webp-480": 20744,
+      "avif-800": 57194,
+      "webp-800": 54926,
+      "avif-1200": 130095,
+      "webp-1200": 121756,
+      "avif-1600": 231443,
+      "webp-1600": 217246,
+      "avif-2400": 483903,
+      "webp-2400": 461584,
+      "og": 133570
+    }
+  },
+  "benahavis_planta_primera": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_planta_primera-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_planta_primera-1200.webp",
+    "og": "/assets/img/og/benahavis_planta_primera.jpg",
+    "placeholder": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoYAA0APt1iqUyopiQiMAgBEBuJZgCxGwABUxBcYb0HMAD+yZ4hMmAP0HyUD8g54RYDYUF2HaTH0659NK4E2AH/Nge9j84XI1V0m9Zlj2S6BCJBTR9c04qCbtAAAA==",
+    "bytes": {
+      "avif-480": 21597,
+      "webp-480": 20610,
+      "avif-800": 58663,
+      "webp-800": 55646,
+      "avif-1200": 134452,
+      "webp-1200": 126102,
+      "avif-1600": 243148,
+      "webp-1600": 228522,
+      "avif-2400": 522241,
+      "webp-2400": 506348,
+      "og": 136628
+    }
+  },
+  "benahavis_planta_sotano": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_planta_sotano-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_planta_sotano-1200.webp",
+    "og": "/assets/img/og/benahavis_planta_sotano.jpg",
+    "placeholder": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAADwAwCdASoYAA0APt1apkyopSOiMAgBEBuJZAC06BkjfKJNc20vJlRAAP7ITtp/QRjEot6y3/fQ8453V3bSl4rvggX0mp3QJoYieaNqC9uDkZWJMwhdXLcSALCxsCKS8ZR54hPVpQu+llDEI4Yy7NotQAA=",
+    "bytes": {
+      "avif-480": 22420,
+      "webp-480": 23020,
+      "avif-800": 59077,
+      "webp-800": 58222,
+      "avif-1200": 138732,
+      "webp-1200": 130438,
+      "avif-1600": 253789,
+      "webp-1600": 238424,
+      "avif-2400": 560829,
+      "webp-2400": 545700,
+      "og": 139333
+    }
+  },
+  "benahavis_portada": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_portada-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_portada-1200.webp",
+    "og": "/assets/img/og/benahavis_portada.jpg",
+    "placeholder": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBACdASoYAA0APt1cpkyopSOiMAgBEBuJQBOmUABqCtQ85CVwDRFAAAD+6ABDjoJJ9+jzh5ddET4CT3i1yvsr5r38ZSqAZ030rJQ7qTMBG6ylCDCQdyMjIwksw5i+SEkBXdnjADEBRBC5e34nP7w4qZo+cAAA",
+    "bytes": {
+      "avif-480": 26174,
+      "webp-480": 30422,
+      "avif-800": 64461,
+      "webp-800": 72158,
+      "avif-1200": 130717,
+      "webp-1200": 141948,
+      "avif-1600": 211460,
+      "webp-1600": 227286,
+      "avif-2400": 408179,
+      "webp-2400": 433764,
+      "og": 148053
+    }
+  },
+  "benahavis_portada_movil": {
+    "width": 1350,
+    "height": 2419,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_portada_movil-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_portada_movil-1200.webp",
+    "og": "/assets/img/og/benahavis_portada_movil.jpg",
+    "placeholder": "data:image/webp;base64,UklGRuwAAABXRUJQVlA4IOAAAAAQBwCdASoYACsAPt1gqU4opaOiKrgMARAbiWQAqSfCwq3/4NIsORijFV+LBcLruxbrd5WH+G9A6xx0PuqNfo4EAAD+37g4+rNIj7kf425kqCPfhw1DEpiDmos9Cad9KflLtQOcNJO9xoDuVq46UFOVFoIyIdljPfBF1twkN++vrTgBxYTZ9WFLtMI6aUwKPD15ixB+ozcZKZzOLIcy5YVYJ10r3HVilBAE1Ash+D4AgBBv/o6k64pNGGtX06zWwwD8Y617uqP+nqiDFezku0LSEadlW0eSljaA+3By5yAAAA==",
+    "bytes": {
+      "avif-480": 42620,
+      "webp-480": 43534,
+      "avif-800": 98990,
+      "webp-800": 98602,
+      "avif-1200": 186680,
+      "webp-1200": 181322,
+      "og": 30800
+    }
+  },
+  "benahavis_salon_atardecer": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_salon_atardecer-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_salon_atardecer-1200.webp",
+    "og": "/assets/img/og/benahavis_salon_atardecer.jpg",
+    "placeholder": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAwCdASoYAA0APt1apkyopSOiMAgBEBuJQBOmUABV9lzB98Uz50PAAPtQ4iHF9KPk3ibjHcxOcgYLguzXQ5yOFpsS4vA5mK2LxeXTBpe1NtggpQobjaGPqb7qfcjARDnTD5We1QEk/BGATjo7gAAA",
+    "bytes": {
+      "avif-480": 10722,
+      "webp-480": 11696,
+      "avif-800": 21161,
+      "webp-800": 22464,
+      "avif-1200": 37386,
+      "webp-1200": 39200,
+      "avif-1600": 55669,
+      "webp-1600": 57122,
+      "avif-2400": 98878,
+      "webp-2400": 95684,
+      "og": 62497
+    }
+  },
+  "benahavis_salon_cocina": {
+    "width": 2400,
+    "height": 1340,
+    "alpha": false,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "path": "/assets/img/benahavis_salon_cocina-{w}.{ext}",
+    "fallback": "/assets/img/benahavis_salon_cocina-1200.webp",
+    "og": "/assets/img/og/benahavis_salon_cocina.jpg",
+    "placeholder": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoYAA0APt1ep00opSOiMAgBEBuJQBOgBDp4UW9seKQWIjQAAPiNV8nPYoMK9c9uVckd7LAF2XrTGKkXZ/4+aZnAWMmx8K4OGxiB5NjKjf6IGZgRDx5eRQeXYAA=",
+    "bytes": {
+      "avif-480": 9873,
+      "webp-480": 10256,
+      "avif-800": 18899,
+      "webp-800": 19446,
+      "avif-1200": 33952,
+      "webp-1200": 33418,
+      "avif-1600": 51238,
+      "webp-1600": 49754,
+      "avif-2400": 96092,
+      "webp-2400": 88308,
+      "og": 56553
+    }
+  },
   "og_image": {
     "width": 1200,
     "height": 630,
