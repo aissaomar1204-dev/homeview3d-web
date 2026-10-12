@@ -10,13 +10,13 @@ export default {
   id: 'servicio-tour',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Tour virtual 3D inmobiliario desde el plano',
-    description: 'Visor 3D para tu anuncio creado desde el plano: estancias con m², recorrido guiado y modo maqueta. Incluido en la maqueta 3D desde {{price:maqueta}} + IVA.',
+    description: 'Visor 3D para tu anuncio creado desde el plano: estancias con m², recorrido guiado y modo maqueta. Incluido en la maqueta 3D completa.',
     h1: 'Tour virtual 3D inmobiliario, sin visita ni cámara',
-    lead: 'Creamos un tour virtual 3D a partir del plano, sin visita ni cámara: un visor web que recorre las estancias y corta los muros para ver la distribución. Se comparte con un enlace o se incrusta en tu web. Incluido en la maqueta 3D completa, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
+    lead: 'Creamos un tour virtual 3D a partir del plano, sin visita ni cámara: un visor web que recorre las estancias y corta los muros para ver la distribución. Se comparte con un enlace o se incrusta en tu web. Incluido en la maqueta 3D completa, con entrega en {{delivery:maqueta}}.',
     breadcrumb: 'Tour virtual 3D',
     card: {
       title: 'Tour virtual 3D',
@@ -32,9 +32,9 @@ export default {
       ['Funciones', 'Estancias con m², recorrido guiado, modo maqueta y luz'],
       ['Publicación', 'Enlace, iframe en tu web y código QR'],
       ['Peso del modelo', '{{file:glb}}, solo si el visitante pulsa el botón del visor'],
-      ['Alojamiento', '12 meses incluidos; después, {{extra:hosting}} + IVA al año'],
+      ['Alojamiento', '12 meses incluidos; después, renovación anual'],
       ['Realidad aumentada', 'Incluida en iPhone, iPad y Android, sin app'],
-      ['Precio desde', '{{price:maqueta}} + IVA, en la maqueta completa'],
+      ['Precio', 'Incluido en la maqueta completa, con presupuesto cerrado'],
       ['Plazo', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -107,18 +107,12 @@ export default {
         h2: '¿Cómo se crea el tour virtual a partir del plano?',
         intro: 'El visor es el último paso: primero modelamos, amueblamos y revisamos contigo la vivienda en un enlace privado.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: '¿Cuánto cuesta un tour virtual inmobiliario?',
-        intro: 'El visor va incluido en la maqueta 3D completa, con 12 meses de alojamiento. Después, mantenerlo en línea cuesta {{extra:hosting}} por vivienda y año. Todos los precios, sin IVA.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: '¿Cómo puedo generar un recorrido virtual?',
-        a: 'Hay dos caminos. Si la vivienda existe, una cámara 360 o un escáner capturan su estado real durante una visita. Si no existe o no puedes entrar, {{brand}} genera el recorrido virtual a partir del plano 2D: modelamos la vivienda en 3D, la amueblamos y te entregamos el visor en {{delivery:maqueta}}, desde {{price:maqueta}} + IVA.',
+        a: 'Hay dos caminos. Si la vivienda existe, una cámara 360 o un escáner capturan su estado real durante una visita. Si no existe o no puedes entrar, {{brand}} genera el recorrido virtual a partir del plano 2D: modelamos la vivienda en 3D, la amueblamos y te entregamos el visor en {{delivery:maqueta}}, con presupuesto cerrado.',
       },
       {
         q: '¿Cuál es el mejor programa para crear recorridos virtuales?',
@@ -130,7 +124,7 @@ export default {
       },
       {
         q: '¿Cuánto tiempo está publicado el visor?',
-        a: 'La maqueta 3D completa de {{brand}} incluye 12 meses de alojamiento del visor, con su enlace y su código para incrustar. Si la vivienda sigue a la venta, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año. Con la maqueta recibes también el modelo en GLB, USDZ y BLEND.',
+        a: 'La maqueta 3D completa de {{brand}} incluye 12 meses de alojamiento del visor, con su enlace y su código para incrustar. Si la vivienda sigue a la venta, te pasamos el precio de la renovación antes de que venza. Con la maqueta recibes también el modelo en GLB, USDZ y BLEND.',
       },
       {
         q: '¿El tour virtual funciona en el móvil?',
@@ -142,11 +136,11 @@ export default {
       },
       {
         q: '¿Se puede ver la vivienda con otros muebles?',
-        a: 'Sí. Como el tour sale de un modelo 3D, {{brand}} cambia mobiliario y materiales sobre ese mismo modelo y el cambio aparece a la vez en el visor, en los renders y en la realidad aumentada. Es nuestro [home staging virtual sobre el modelo 3D](@servicio-staging), a {{extra:staging}} + IVA por estancia.',
+        a: 'Sí. Como el tour sale de un modelo 3D, {{brand}} cambia mobiliario y materiales sobre ese mismo modelo y el cambio aparece a la vez en el visor, en los renders y en la realidad aumentada. Es nuestro [home staging virtual sobre el modelo 3D](@servicio-staging), que se presupuesta por estancia.',
       },
       {
         q: '¿Cuánto cuesta un tour virtual inmobiliario?',
-        a: 'En {{brand}}, el tour virtual 3D va incluido en la maqueta 3D completa desde {{price:maqueta}} + IVA por vivienda de hasta 150 m², junto con 6 renders y la realidad aumentada. Incluye 12 meses de alojamiento; después, {{extra:hosting}} + IVA al año. Para carteras de agencia hay un pack de 5 viviendas por {{volume}} + IVA.',
+        a: 'En {{brand}}, el tour virtual 3D va incluido en la maqueta 3D completa, junto con 6 renders y la realidad aumentada, e incluye 12 meses de alojamiento. El precio depende de la superficie y de lo que incluya, y te lo mandamos cerrado al ver el plano. Para carteras de agencia preparamos un presupuesto por volumen.',
       },
     ],
     related: ['servicio-ar', 'servicio-plano', 'caso-villa', 'precios', 'guia-matterport'],
@@ -158,9 +152,9 @@ export default {
 
   en: {
     title: 'Interactive 3D floor plans to embed in your listings',
-    description: 'An interactive 3D floor plan built from the 2D plan, with a room list, guided tour, cut-away mode and embed code. From {{price:maqueta}} + VAT.',
+    description: 'An interactive 3D floor plan built from the 2D plan, with a room list, guided tour, cut-away mode and embed code. Included in the complete 3D model.',
     h1: 'Interactive 3D floor plans for property listings',
-    lead: 'We build an interactive 3D floor plan from the home’s 2D plan, with no visit and no camera: a web viewer buyers tour room by room, with the walls cut away. Share it as a link or embed it on your site. Included in the complete 3D model, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    lead: 'We build an interactive 3D floor plan from the home’s 2D plan, with no visit and no camera: a web viewer buyers tour room by room, with the walls cut away. Share it as a link or embed it on your site. Included in the complete 3D model, delivered in {{delivery:maqueta}}.',
     breadcrumb: 'Interactive 3D floor plans',
     card: {
       title: 'Interactive 3D floor plans',
@@ -176,9 +170,9 @@ export default {
       ['Features', 'Rooms with m², guided tour, cut-away mode and lighting'],
       ['Publishing', 'Link, iframe embed and QR code'],
       ['Model size', '{{file:glb}}, loaded only when the visitor taps the viewer button'],
-      ['Hosting', '12 months included; then {{extra:hosting}} + VAT a year'],
+      ['Hosting', '12 months included; then yearly renewal'],
       ['Augmented reality', 'Included on iPhone, iPad and Android, no app'],
-      ['Price from', '{{price:maqueta}} + VAT, with the complete model'],
+      ['Price', 'Included in the complete model, with a fixed quote'],
       ['Turnaround', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -251,18 +245,12 @@ export default {
         h2: 'How is a 3D walkthrough made from a floor plan?',
         intro: 'The viewer is the last step: first we model and furnish the home, then you review it with us on a private link.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'How much does an interactive 3D floor plan cost?',
-        intro: 'The viewer comes with the complete 3D model, including 12 months of hosting. After that, keeping it online costs {{extra:hosting}} per home per year. All prices exclude VAT.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: 'What can I use instead of Matterport?',
-        a: 'When the home cannot be scanned, because it is off-plan, tenanted, abroad or unfinished, a 3D model built from the floor plan does the same job. {{brand}} delivers it with a guided tour, cut-away mode and app-free AR, from {{price:maqueta}} + VAT in {{delivery:maqueta}}. If the home exists and looks good, a scan remains a fair choice.',
+        a: 'When the home cannot be scanned, because it is off-plan, tenanted, abroad or unfinished, a 3D model built from the floor plan does the same job. {{brand}} delivers it with a guided tour, cut-away mode and app-free AR in {{delivery:maqueta}}, with a fixed quote. If the home exists and looks good, a scan remains a fair choice.',
       },
       {
         q: 'Can I get a 3D virtual tour from a floor plan alone?',
@@ -274,7 +262,7 @@ export default {
       },
       {
         q: 'How long is the viewer hosted?',
-        a: 'The {{brand}} complete 3D model includes 12 months of viewer hosting, with its link and embed code. If the property is still on the market, renewal costs {{extra:hosting}} + VAT per home per year. The complete model comes with GLB, USDZ and BLEND files.',
+        a: 'The {{brand}} complete 3D model includes 12 months of viewer hosting, with its link and embed code. If the property is still on the market, we send you the renewal price before it expires. The complete model comes with GLB, USDZ and BLEND files.',
       },
       {
         q: 'Does the 3D viewer work on phones?',
@@ -286,11 +274,11 @@ export default {
       },
       {
         q: 'Can buyers see the home with different furniture?',
-        a: 'Yes. Because the tour comes from a 3D model, {{brand}} can swap furniture and finishes on that same model, and the change appears at once in the viewer, the renders and augmented reality. That is our [3D virtual staging](@servicio-staging), at {{extra:staging}} + VAT per room.',
+        a: 'Yes. Because the tour comes from a 3D model, {{brand}} can swap furniture and finishes on that same model, and the change appears at once in the viewer, the renders and augmented reality. That is our [3D virtual staging](@servicio-staging), quoted per room.',
       },
       {
         q: 'How much does a virtual tour from a floor plan cost?',
-        a: 'At {{brand}}, the interactive 3D floor plan comes with the complete 3D model, from {{price:maqueta}} + VAT per home up to 150 m², together with 6 renders and augmented reality. It includes 12 months of hosting, then {{extra:hosting}} + VAT a year. For agency portfolios there is a 5-home Portfolio pack at {{volume}} + VAT.',
+        a: 'At {{brand}}, the interactive 3D floor plan comes with the complete 3D model, together with 6 renders and augmented reality, and includes 12 months of hosting. The price depends on floor area and what is included, and we send it fixed once we see the plan. For agency portfolios we prepare a volume quote.',
       },
     ],
     related: ['servicio-ar', 'servicio-plano', 'caso-villa', 'precios', 'guia-matterport'],

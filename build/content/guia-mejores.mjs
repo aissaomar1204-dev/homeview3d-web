@@ -48,14 +48,14 @@ export default {
   id: 'guia-mejores',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-29',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Mejores estudios de visualización 3D en España (2026)',
     description: 'Comparativa 2026 de 10 estudios y herramientas de visualización 3D inmobiliaria en España: qué ofrece cada uno, para quién es y su precio si lo publica.',
     h1: 'Mejores estudios de infografía 3D inmobiliaria en España',
-    lead: 'Diez estudios y herramientas de visualización 3D inmobiliaria que trabajan en España en 2026, según lo que necesites: Viseni o Improntia en la Costa del Sol, Persuadis para promotoras, Floorfy o Matterport para tours, CubiCasa, BoxBrownie o Home Stager Design para planos, Vista Studio para IA sobre fotos y {{brand}}, desde {{price:plano3d}} + IVA.',
+    lead: 'Diez estudios y herramientas de visualización 3D inmobiliaria que trabajan en España en 2026, según lo que necesites: Viseni o Improntia en la Costa del Sol, Persuadis para promotoras, Floorfy o Matterport para tours, CubiCasa, BoxBrownie o Home Stager Design para planos, Vista Studio para IA sobre fotos y {{brand}}, con presupuesto cerrado.',
     breadcrumb: 'Mejores estudios 3D',
     card: {
       title: 'Mejores estudios de visualización 3D en España',
@@ -65,7 +65,7 @@ export default {
       ['Opciones comparadas', '10 estudios y herramientas, {{brand}} incluido'],
       ['Criterios', 'Entrada, entregables, precio público, plazo y zona'],
       ['En la Costa del Sol', 'Viseni (Marbella), Improntia (Benahavís) y {{brand}}'],
-      ['Con precio publicado', '7 de las 10 opciones'],
+      ['Con precio publicado', '6 de las 10 opciones'],
       ['Orden', 'Por tipo de servicio; no es un ranking'],
       ['Parte interesada', 'Sí: {{brand}} escribe esta guía y aparece en ella'],
       ['Datos revisados', '29 de septiembre de 2026'],
@@ -121,7 +121,7 @@ export default {
           [`[BoxBrownie](${SRC.box})`, 'Plataforma en línea de edición inmobiliaria: planos 2D y 3D dibujados a partir del plano que subes', 'Anuncios de segunda mano que necesitan una planta a color rápida', 'Plano 3D a color, 40 € por planta en 48 h; a medida, desde 200 €'],
           [`[Home Stager Design](${SRC.hsd})`, 'Tienda en línea de planos: 2D en blanco y negro, 2D a color y 3D a color amueblado a partir de una imagen del plano', 'Pisos pequeños que necesitan un plano 3D con precio cerrado', '119,95 € el plano 3D por planta de unos 60 m², desde 72 h y con 1 revisión'],
           [`[Vista Studio](${SRC.vista})`, 'Estudio de Barcelona de renders y vídeo tours generados con IA a partir de fotos hechas con el móvil', 'Redecorar o reformar virtualmente pisos que ya existen y tienen fotos', 'Renders de hasta 6 estancias, 129 €; vídeo tour, 290 €; sin IVA'],
-          ['[{{brand}}](@home)', 'Estudio con base en Mijas, en la Costa del Sol: modelo 3D amueblado desde el plano 2D, sin fotos ni visita, con renders, visor web y realidad aumentada sin app', 'Obra nueva, [venta sobre plano](@glosario#venta-sobre-plano) y viviendas vacías o lejanas que el comprador ve a distancia', 'Plano 3D desde {{price:plano3d}}; maqueta 3D completa desde {{price:maqueta}}; sin IVA'],
+          ['[{{brand}}](@home)', 'Estudio con base en Mijas, en la Costa del Sol: modelo 3D amueblado desde el plano 2D, sin fotos ni visita, con renders, visor web y realidad aumentada sin app', 'Obra nueva, [venta sobre plano](@glosario#venta-sobre-plano) y viviendas vacías o lejanas que el comprador ve a distancia', 'No publica tarifas: presupuesto cerrado al ver el plano'],
         ],
         note: 'Precios tal como los publica cada empresa. Vista Studio, el proveedor de Matterport en Málaga y {{brand}} dicen de forma expresa que sus precios son sin IVA; en el resto, confírmalo. Los precios de Matterport y CubiCasa son los que sus webs muestran para España.',
       },
@@ -164,7 +164,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Dónde encajamos nosotros?',
-        answer: '{{brand}} encaja cuando solo hay un plano: obra nueva, venta sobre plano o una vivienda vacía que el comprador verá desde otro país. Del plano sacamos el modelo 3D, 6 renders, un visor web y realidad aumentada sin app, desde {{price:maqueta}} + IVA y en {{delivery:maqueta}}, sin visitar la vivienda.',
+        answer: '{{brand}} encaja cuando solo hay un plano: obra nueva, venta sobre plano o una vivienda vacía que el comprador verá desde otro país. Del plano sacamos el modelo 3D, 6 renders, un visor web y realidad aumentada sin app, en {{delivery:maqueta}} y sin visitar la vivienda.',
         body: 'No somos la mejor opción para todo. No hacemos fotografía, vídeo con dron ni escaneos, y una fachada completa con su entorno la presupuestamos aparte. Somos un estudio nuevo: en lugar de testimonios, te enseñamos un [caso demostrativo](@caso-villa) que puedes abrir en el visor y en tu móvil, y publicamos todas nuestras [tarifas](@precios). Si vendes obra nueva, mira también cómo trabajamos para [promotoras](@sol-promotoras).',
       },
       {
@@ -195,15 +195,15 @@ export default {
     faq: [
       {
         q: '¿Cuál es el mejor estudio de renders 3D de la Costa del Sol?',
-        a: 'Depende del encargo. Para una preventa de villas de lujo con presupuesto a medida, Viseni, en Marbella desde 2008, hace renders, animación y realidad virtual. Para fotos, planos y tour de una vivienda terminada, Improntia, en Benahavís. Para modelar desde el plano con visor y realidad aumentada a precio publicado, {{brand}}, desde {{price:maqueta}} + IVA. Somos parte interesada: compruébalo en sus webs.',
+        a: 'Depende del encargo. Para una preventa de villas de lujo con presupuesto a medida, Viseni, en Marbella desde 2008, hace renders, animación y realidad virtual. Para fotos, planos y tour de una vivienda terminada, Improntia, en Benahavís. Para modelar desde el plano con visor y realidad aumentada, con presupuesto cerrado, {{brand}}. Somos parte interesada: compruébalo en sus webs.',
       },
       {
         q: '¿Qué estudios de visualización 3D publican sus precios?',
-        a: 'De las diez opciones de esta comparativa, siete publican precio: Floorfy (planes de 19 a 99 € al mes), Matterport (plan gratuito, y Starter a 13 € al mes u 11 € con pago anual), CubiCasa (plano 3D por 65 €), BoxBrownie (40 € por planta), Home Stager Design (119,95 €), Vista Studio (129 € sin IVA) y {{brand}} (plano 3D desde {{price:plano3d}} + IVA). Viseni, Improntia y Persuadis trabajan con presupuesto.',
+        a: 'De las diez opciones de esta comparativa, seis publican precio: Floorfy (planes de 19 a 99 € al mes), Matterport (plan gratuito, y Starter a 13 € al mes u 11 € con pago anual), CubiCasa (plano 3D por 65 €), BoxBrownie (40 € por planta), Home Stager Design (119,95 €) y Vista Studio (129 € sin IVA). {{brand}} no publica tarifas: da un presupuesto cerrado al ver el plano. Viseni, Improntia y Persuadis trabajan con presupuesto.',
       },
       {
         q: '¿Qué empresa convierte planos en modelos 3D para inmobiliarias?',
-        a: 'Varias, con resultados distintos. BoxBrownie y Home Stager Design convierten la imagen de un plano en un plano 3D, que es una imagen. Estudios de infografía como Viseni hacen renders de viviendas antes de construirlas, con presupuesto. {{brand}} construye desde el plano 2D un modelo 3D completo, con renders, visor web y realidad aumentada, desde {{price:maqueta}} + IVA y en {{delivery:maqueta}}.',
+        a: 'Varias, con resultados distintos. BoxBrownie y Home Stager Design convierten la imagen de un plano en un plano 3D, que es una imagen. Estudios de infografía como Viseni hacen renders de viviendas antes de construirlas, con presupuesto. {{brand}} construye desde el plano 2D un modelo 3D completo, con renders, visor web y realidad aumentada, en {{delivery:maqueta}}.',
       },
       {
         q: '¿Es mejor un estudio de infografía o una herramienta de IA?',
@@ -211,11 +211,11 @@ export default {
       },
       {
         q: '¿Matterport o un estudio de visualización 3D?',
-        a: 'Matterport escanea una vivienda que ya existe: sirve cuando está terminada y sus acabados la venden, con plan gratuito y Starter a 13 € al mes (11 € con pago anual), más el escaneo. Un estudio modela desde el plano, así que también sirve para obra nueva. En {{brand}}, el modelo 3D con visor y realidad aumentada cuesta desde {{price:maqueta}} + IVA. Lo comparamos en [modelo 3D o Matterport](@guia-matterport).',
+        a: 'Matterport escanea una vivienda que ya existe: sirve cuando está terminada y sus acabados la venden, con plan gratuito y Starter a 13 € al mes (11 € con pago anual), más el escaneo. Un estudio modela desde el plano, así que también sirve para obra nueva. En {{brand}}, el modelo 3D con visor y realidad aumentada va con presupuesto cerrado. Lo comparamos en [modelo 3D o Matterport](@guia-matterport).',
       },
       {
         q: '¿Por qué aparecéis en una lista que escribís vosotros?',
-        a: 'Porque somos una opción real para una parte de los casos, y ocultarlo sería peor. Para compensar el conflicto de interés, {{brand}} publica los criterios, enlaza la web de cada empresa, no ordena la lista por calidad y dice cuándo te conviene más otra opción. Nuestro precio también está a la vista: el plano 3D, desde {{price:plano3d}} + IVA, y la maqueta completa, desde {{price:maqueta}} + IVA.',
+        a: 'Porque somos una opción real para una parte de los casos, y ocultarlo sería peor. Para compensar el conflicto de interés, {{brand}} publica los criterios, enlaza la web de cada empresa, no ordena la lista por calidad y dice cuándo te conviene más otra opción. Y te decimos cómo presupuestamos: precio cerrado y por escrito antes de empezar.',
       },
       {
         q: '¿Cada cuánto se actualiza esta comparativa?',
@@ -240,7 +240,7 @@ export default {
     title: 'Best 3D visualisation studios in Spain (2026)',
     description: 'Ten 3D property visualisation studios and tools in Spain compared for 2026: what each offers, who it suits and its price where published. We are one of them.',
     h1: 'Best 3D visualisation studios for property in Spain',
-    lead: 'Ten 3D property visualisation studios and tools working in Spain in 2026, by what you need: Viseni or Improntia on the Costa del Sol, Persuadis for developers, Floorfy or Matterport for tours, CubiCasa, BoxBrownie or Home Stager Design for floor plans, Vista Studio for AI on photos and {{brand}}, from {{price:plano3d}} + VAT.',
+    lead: 'Ten 3D property visualisation studios and tools working in Spain in 2026, by what you need: Viseni or Improntia on the Costa del Sol, Persuadis for developers, Floorfy or Matterport for tours, CubiCasa, BoxBrownie or Home Stager Design for floor plans, Vista Studio for AI on photos and {{brand}}, at a fixed quote.',
     breadcrumb: 'Best 3D studios',
     card: {
       title: 'Best 3D visualisation studios in Spain',
@@ -250,7 +250,7 @@ export default {
       ['Options compared', '10 studios and tools, {{brand}} included'],
       ['Criteria', 'Input, deliverables, public price, turnaround and location'],
       ['On the Costa del Sol', 'Viseni (Marbella), Improntia (Benahavís) and {{brand}}'],
-      ['Published prices', '7 of the 10 options'],
+      ['Published prices', '6 of the 10 options'],
       ['Order', 'By type of service; not a ranking'],
       ['Interested party', 'Yes: {{brand}} writes this guide and appears in it'],
       ['Data checked', '29 September 2026'],
@@ -306,7 +306,7 @@ export default {
           [`[BoxBrownie](${SRC.box})`, 'Online property editing platform: 2D and 3D floor plans drawn from the plan you upload', 'Resale listings that need a quick colour layout', 'Colour 3D plan, €40 per floor in 48 hours; tailored plans from €200'],
           [`[Home Stager Design](${SRC.hsd})`, 'Online floor plan shop: black and white 2D, colour 2D and furnished colour 3D plans from an image of the plan', 'Small flats that need a 3D floor plan at a fixed price', '€119.95 for a 3D plan per floor of about 60 m², from 72 hours, 1 revision included'],
           [`[Vista Studio](${SRC.vista})`, 'Barcelona studio producing AI renders and AI video tours from phone photos', 'Virtually restyling or renovating flats that already exist and have photos', 'Renders for up to 6 rooms, €129; video tour, €290; ex VAT'],
-          ['[{{brand}}](@home)', 'Studio based in Mijas (Costa del Sol): a furnished 3D model built from the 2D floor plan, with no photos or site visit, plus renders, a web viewer and app-free augmented reality', '[Off-plan](@glosario#venta-sobre-plano), new-build and empty or distant homes that buyers view remotely', '3D floor plan from {{price:plano3d}}; complete 3D model from {{price:maqueta}}; ex VAT'],
+          ['[{{brand}}](@home)', 'Studio based in Mijas (Costa del Sol): a furnished 3D model built from the 2D floor plan, with no photos or site visit, plus renders, a web viewer and app-free augmented reality', '[Off-plan](@glosario#venta-sobre-plano), new-build and empty or distant homes that buyers view remotely', 'No published rates: a fixed quote once it sees the plan'],
         ],
         note: 'Prices as each company publishes them. Vista Studio, the Matterport provider in Málaga and {{brand}} state outright that their prices exclude VAT; with the others, ask, as Spanish VAT is 21%. Matterport and CubiCasa prices are the ones their websites show for Spain.',
       },
@@ -349,7 +349,7 @@ export default {
       {
         type: 'answer',
         h2: 'Where do we fit in?',
-        answer: '{{brand}} fits when all you have is a floor plan: an off-plan development, a new build or an empty home that buyers will view from another country. From the plan we produce the 3D model, 6 renders, a web viewer and app-free augmented reality, from {{price:maqueta}} + VAT in {{delivery:maqueta}}, with no site visit.',
+        answer: '{{brand}} fits when all you have is a floor plan: an off-plan development, a new build or an empty home that buyers will view from another country. From the plan we produce the 3D model, 6 renders, a web viewer and app-free augmented reality in {{delivery:maqueta}}, with no site visit.',
         body: 'We are not the right choice for everything. We do not do photography, drone video or scans, and a full façade with its surroundings is quoted separately. We are a new studio: instead of testimonials, we show you a [demonstration case](@caso-villa) you can open in the viewer and on your phone, and every one of our [rates is published](@precios). If you are marketing a scheme, see how we work on [off-plan 3D visualisation](@sol-promotoras).',
       },
       {
@@ -380,15 +380,15 @@ export default {
     faq: [
       {
         q: 'Which is the best 3D rendering studio on the Costa del Sol?',
-        a: 'It depends on the brief. For a luxury villa pre-sale with a bespoke budget, Viseni, based in Marbella since 2008, produces renders, animation and virtual reality. For photos, plans and a tour of a finished home, Improntia in Benahavís. To model from the floor plan with a viewer and augmented reality at a published price, {{brand}}, from {{price:maqueta}} + VAT. We are an interested party, so check their websites.',
+        a: 'It depends on the brief. For a luxury villa pre-sale with a bespoke budget, Viseni, based in Marbella since 2008, produces renders, animation and virtual reality. For photos, plans and a tour of a finished home, Improntia in Benahavís. To model from the floor plan with a viewer and augmented reality at a fixed quote, {{brand}}. We are an interested party, so check their websites.',
       },
       {
         q: 'Which 3D visualisation studios publish their prices?',
-        a: 'Seven of the ten options in this comparison publish prices: Floorfy (plans from €19 to €99 a month), Matterport (a free plan, and Starter at €13 a month or €11 billed annually), CubiCasa (a 3D floor plan for €65), BoxBrownie (€40 per floor), Home Stager Design (€119.95), Vista Studio (€129 ex VAT) and {{brand}} (3D floor plans from {{price:plano3d}} + VAT). Viseni, Improntia and Persuadis work on quotes.',
+        a: 'Six of the ten options in this comparison publish prices: Floorfy (plans from €19 to €99 a month), Matterport (a free plan, and Starter at €13 a month or €11 billed annually), CubiCasa (a 3D floor plan for €65), BoxBrownie (€40 per floor), Home Stager Design (€119.95) and Vista Studio (€129 ex VAT). {{brand}} does not publish rates: it gives a fixed quote once it sees the plan. Viseni, Improntia and Persuadis work on quotes.',
       },
       {
         q: 'Which company turns floor plans into 3D models for estate agents?',
-        a: 'Several, with different results. BoxBrownie and Home Stager Design turn the image of a plan into a 3D floor plan, which is a picture. Visualisation studios such as Viseni render homes before they are built, on a quote. {{brand}} builds a complete 3D model from the 2D plan, with renders, a web viewer and augmented reality, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+        a: 'Several, with different results. BoxBrownie and Home Stager Design turn the image of a plan into a 3D floor plan, which is a picture. Visualisation studios such as Viseni render homes before they are built, on a quote. {{brand}} builds a complete 3D model from the 2D plan, with renders, a web viewer and augmented reality, delivered in {{delivery:maqueta}}.',
       },
       {
         q: 'Should I use a visualisation studio or an AI tool?',
@@ -396,11 +396,11 @@ export default {
       },
       {
         q: 'Matterport or a 3D visualisation studio?',
-        a: 'Matterport scans a home that already exists, so it suits finished properties whose finishes sell them, with a free plan and Starter at €13 a month (€11 billed annually) plus the scan itself. A studio models from the floor plan, so it also works off-plan. At {{brand}}, the 3D model with a viewer and augmented reality starts at {{price:maqueta}} + VAT. We compare both in [3D model vs Matterport](@guia-matterport).',
+        a: 'Matterport scans a home that already exists, so it suits finished properties whose finishes sell them, with a free plan and Starter at €13 a month (€11 billed annually) plus the scan itself. A studio models from the floor plan, so it also works off-plan. At {{brand}}, the 3D model with a viewer and augmented reality comes with a fixed quote. We compare both in [3D model vs Matterport](@guia-matterport).',
       },
       {
         q: 'Why are you on a list you wrote yourselves?',
-        a: 'Because we are a genuine option for some of these cases, and hiding that would be worse. To offset the conflict of interest, {{brand}} publishes the criteria, links to every company’s website, does not rank the list by quality and says when another option suits you better. Our prices are public too: 3D floor plans from {{price:plano3d}} + VAT and the complete model from {{price:maqueta}} + VAT.',
+        a: 'Because we are a genuine option for some of these cases, and hiding that would be worse. To offset the conflict of interest, {{brand}} publishes the criteria, links to every company’s website, does not rank the list by quality and says when another option suits you better. And we tell you how we quote: a fixed written price before work starts.',
       },
       {
         q: 'How often is this comparison updated?',

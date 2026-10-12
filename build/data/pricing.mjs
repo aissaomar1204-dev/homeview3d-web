@@ -12,6 +12,9 @@
 
 export const pricing = {
   confirmed: false,
+  // public: false (since 2026-10-12) = no price is shown anywhere: pages, FAQs, schema Offers, llms.txt, calculator.
+  // Every quote is made to measure. A {{price}}, {{extra}} or {{volume}} token in a content file fails the build.
+  public: false,
   currency: 'EUR',
   vatRate: 0.21,
   vatIncluded: false,

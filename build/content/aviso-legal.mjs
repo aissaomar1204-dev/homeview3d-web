@@ -14,7 +14,7 @@ export default {
     title: 'Aviso legal y condiciones de uso de la web',
     description: 'Datos del titular de la web según la LSSI-CE, condiciones de uso, valor de precios y renders, propiedad intelectual, responsabilidad y ley aplicable.',
     h1: 'Aviso legal',
-    lead: 'Aquí tienes los datos del titular de esta web, como exige el artículo 10 de la Ley 34/2002 (LSSI-CE), y las condiciones para usarla: qué puedes hacer con sus contenidos, qué valor tienen los precios y los renders que publicamos y qué ley se aplica.',
+    lead: 'Aquí tienes los datos del titular de esta web, como exige el artículo 10 de la Ley 34/2002 (LSSI-CE), y las condiciones para usarla: qué puedes hacer con sus contenidos, qué valor tienen nuestros presupuestos y los renders que publicamos y qué ley se aplica.',
     breadcrumb: 'Aviso legal',
     blocks: [
       {
@@ -29,8 +29,8 @@ export default {
       },
       {
         type: 'prose',
-        h2: '¿Qué valor tienen los precios publicados?',
-        body: 'Los precios de la web son tarifas públicas en euros y **no incluyen el IVA**, que se añade en la factura cuando corresponde. Para cada encargo vale el precio del presupuesto que aceptas. Podemos actualizar las tarifas en cualquier momento; los cambios no afectan a los presupuestos ya aceptados.',
+        h2: '¿Qué valor tienen los presupuestos?',
+        body: 'No publicamos tarifas: cada encargo se presupuesta por escrito, en euros y **sin IVA**, que se añade en la factura cuando corresponde. Para cada encargo vale el precio del presupuesto que aceptas, y no cambia después salvo que cambie el encargo y aceptes un presupuesto nuevo.',
       },
       {
         type: 'prose',
@@ -74,7 +74,7 @@ export default {
     title: 'Legal notice and website terms of use',
     description: 'Who runs this website under Spain’s LSSI-CE, the terms for using it, what our prices and renders mean, intellectual property, liability and governing law.',
     h1: 'Legal notice',
-    lead: 'This page gives the details of the company behind this website, as required by article 10 of Spanish Law 34/2002 (LSSI-CE), and the terms for using the site: what you may do with its content, what our published prices and renders mean, and which law applies.',
+    lead: 'This page gives the details of the company behind this website, as required by article 10 of Spanish Law 34/2002 (LSSI-CE), and the terms for using the site: what you may do with its content, what our quotes and the renders we publish mean, and which law applies.',
     breadcrumb: 'Legal notice',
     blocks: [
       {
@@ -89,8 +89,8 @@ export default {
       },
       {
         type: 'prose',
-        h2: 'What our published prices mean',
-        body: 'Prices on this website are public rates in euros and **exclude VAT**, which is added to the invoice where it applies. For each project, the price that counts is the one in the quote you accept. We may update our rates at any time; changes never affect quotes that have already been accepted.',
+        h2: 'What our quotes mean',
+        body: 'We do not publish rates: every project is quoted in writing, in euros and **excluding VAT**, which is added to the invoice where it applies. For each project, the price that counts is the one in the quote you accept, and it does not change unless the project does and you accept a new quote.',
       },
       {
         type: 'prose',

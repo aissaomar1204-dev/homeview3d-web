@@ -16,13 +16,13 @@ export default {
   id: 'zonas',
   image: 'villa_terraza_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Visualización 3D en remoto: Costa del Sol y España',
-    description: 'Desde la Costa del Sol, en remoto para toda España y agencias extranjeras, solo con el plano y al mismo precio y plazo. Maqueta desde {{price:maqueta}} + IVA.',
+    description: 'Desde la Costa del Sol, en remoto para toda España y agencias extranjeras, solo con el plano y al mismo precio y plazo. Presupuesto cerrado antes de empezar.',
     h1: 'Dónde trabajamos: Costa del Sol y toda España',
-    lead: '{{brand}} tiene su base en la Costa del Sol y trabaja en remoto para inmobiliarias, promotoras y arquitectos de toda España, y para agencias extranjeras que venden aquí. Solo necesitamos el plano, así que la ubicación no cambia el precio ni el plazo: maqueta 3D completa desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    lead: '{{brand}} tiene su base en la Costa del Sol y trabaja en remoto para inmobiliarias, promotoras y arquitectos de toda España, y para agencias extranjeras que venden aquí. Solo necesitamos el plano, así que la ubicación no cambia el precio ni el plazo: maqueta 3D completa en {{delivery:maqueta}}, con presupuesto cerrado.',
     breadcrumb: 'Zonas',
     card: {
       title: 'Dónde trabajamos',
@@ -34,7 +34,7 @@ export default {
       ['Resto de España', 'En remoto, con el plano y sin visita'],
       ['Compras por extranjeros', '37,01 % en la provincia de Málaga (2.º trimestre de 2026)'],
       ['Precio y plazo', 'Iguales en cualquier zona'],
-      ['Maqueta 3D completa', 'Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}'],
+      ['Maqueta 3D completa', 'En {{delivery:maqueta}}, con presupuesto cerrado'],
       ['Idiomas', 'Español e inglés'],
     ],
     blocks: [
@@ -61,11 +61,11 @@ export default {
         type: 'table',
         h2: '¿Qué encaja en cada zona?',
         intro: 'Un resumen de las tres páginas locales. Las cifras de cada municipio, con su fuente, están en cada una.',
-        caption: 'Tipo de vivienda, comprador y entregable recomendado por zona (precios sin IVA)',
+        caption: 'Tipo de vivienda, comprador y entregable recomendado por zona',
         head: ['Zona', 'Qué se vende sobre todo', 'Comprador habitual', 'Qué suele encajar'],
         rows: [
-          ['[Marbella](@zona-marbella)', 'Villas, áticos y apartamentos de segunda mano, muchos con la decoración del anterior propietario', 'Internacional, que decide desde su país', 'Maqueta completa con realidad aumentada y [home staging virtual](@servicio-staging), desde {{price:maqueta}}'],
-          ['[Málaga capital](@zona-malaga)', 'Pisos, obra nueva y viviendas para reformar', 'Local de primera vivienda, inversor y extranjero', '[Plano 3D](@servicio-plano) para pisos, desde {{price:plano3d}}; tipologías en 3D para promociones'],
+          ['[Marbella](@zona-marbella)', 'Villas, áticos y apartamentos de segunda mano, muchos con la decoración del anterior propietario', 'Internacional, que decide desde su país', 'Maqueta completa con realidad aumentada y [home staging virtual](@servicio-staging)'],
+          ['[Málaga capital](@zona-malaga)', 'Pisos, obra nueva y viviendas para reformar', 'Local de primera vivienda, inversor y extranjero', '[Plano 3D](@servicio-plano) para pisos; tipologías en 3D para promociones'],
           ['[Resto de la Costa del Sol](@zona-costa-del-sol)', 'De Sotogrande a Nerja: obra nueva en Estepona, villas en Benahavís, apartamentos en Fuengirola, Benalmádena y Torremolinos', 'Local o internacional, según el municipio', 'Del plano 3D a la [maqueta 3D interactiva](@servicio-tour) o el [pack de promoción](@sol-promotoras)'],
         ],
       },

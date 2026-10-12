@@ -19,7 +19,7 @@ const faq = [
   },
   {
     q: '¿Trabajáis con promotoras de Málaga capital?',
-    a: 'Sí. La provincia de Málaga es la tercera de España en compraventas de vivienda nueva, y {{brand}} tiene un pack pensado para vender sobre plano: hasta 3 tipologías en 3D con renders, visor con selector de tipología y realidad aumentada para la sala de ventas, desde {{price:promocion}} + IVA y en {{delivery:promocion}}. Lo detallamos en la página para [promotoras de obra nueva](@sol-promotoras).',
+    a: 'Sí. La provincia de Málaga es la tercera de España en compraventas de vivienda nueva, y {{brand}} tiene un pack pensado para vender sobre plano: cada tipología en 3D con renders, visor con selector de tipología y realidad aumentada para la sala de ventas, con presupuesto cerrado y en {{delivery:promocion}}. Lo detallamos en la página para [promotoras de obra nueva](@sol-promotoras).',
   },
   {
     q: '¿Podéis modelar un piso antiguo del centro con un plano a mano?',
@@ -27,7 +27,7 @@ const faq = [
   },
   {
     q: '¿Cuánto cuesta una infografía 3D de un piso en Málaga?',
-    a: 'Con {{brand}}, el plano 3D de un piso, con planta cenital a color y vista isométrica amueblada, cuesta {{price:plano3d}} + IVA por planta en su tramo básico. La maqueta 3D completa, con renders de cada ambiente, visor web y realidad aumentada, parte de {{price:maqueta}} + IVA. Los precios son los mismos en Málaga que en el resto de España.',
+    a: 'Depende de la superficie y de lo que necesites: el plano 3D de un piso, con planta cenital a color y vista isométrica amueblada, o la maqueta 3D completa, con renders de cada ambiente, visor web y realidad aumentada. {{brand}} te manda un presupuesto cerrado al ver el plano, y el precio es el mismo en Málaga que en el resto de España.',
   },
   {
     q: '¿Trabajáis también en Torremolinos, Rincón de la Victoria o la Axarquía?',
@@ -49,13 +49,13 @@ export default {
   id: 'zona-malaga',
   image: 'villa_interior_terraza',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Render 3D e infografías 3D en Málaga',
-    description: 'Infografías y modelos 3D desde el plano para promotoras, agencias y reformas en Málaga capital, con visor y realidad aumentada. Desde {{price:plano3d}} + IVA.',
+    description: 'Infografías y modelos 3D desde el plano para promotoras, agencias y reformas en Málaga capital, con visor y realidad aumentada. Presupuesto cerrado.',
     h1: 'Render 3D e infografías desde plano en Málaga',
-    lead: '{{brand}}, estudio de visualización 3D con base en Mijas, en la Costa del Sol, convierte planos de pisos, obra nueva y viviendas a reformar de Málaga en modelos 3D amueblados, con renders, visor y realidad aumentada sin app. Plano 3D desde {{price:plano3d}} + IVA; maqueta 3D completa desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Mijas, en la Costa del Sol, convierte planos de pisos, obra nueva y viviendas a reformar de Málaga en modelos 3D amueblados, con renders, visor y realidad aumentada sin app. Plano 3D en {{delivery:plano3d}}, con presupuesto cerrado.',
     breadcrumb: 'Málaga',
     card: {
       title: 'Málaga',
@@ -72,7 +72,7 @@ export default {
       ['Precio medio en la capital', '3.401 €/m², un 14,7 % más en un año'],
       ['Obra nueva en la provincia', '11.727 compraventas en 12 meses, 3.ª de España'],
       ['Entrada', 'El plano del piso o del proyecto'],
-      ['Precio', 'Desde {{price:plano3d}} + IVA'],
+      ['Precio', 'Presupuesto cerrado antes de empezar'],
       ['Plazo de la maqueta completa', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -110,7 +110,7 @@ export default {
       {
         type: 'prose',
         h2: '¿Qué encargan en Málaga promotoras, agencias y reformistas?',
-        body: '- **Promotoras.** La provincia es la tercera de España en compraventas de vivienda nueva. Para vender sobre plano, cada tipología en 3D con visor y realidad aumentada para la sala de ventas y para el comprador que reserva a distancia. Lo explicamos en [soluciones para promotoras](@sol-promotoras) y en [cómo vender obra nueva sobre plano con 3D](@guia-sobre-plano).\n- **Agencias.** En un piso de dos o tres dormitorios, la planta explica más que diez fotos. Un [plano 3D](@servicio-plano) a color resuelve la distribución por {{price:plano3d}} + IVA por planta, y la maqueta completa añade renders, visor y realidad aumentada para las viviendas de más valor.\n- **Reformas.** Los pisos antiguos suelen tener una distribución muy compartimentada. Sobre el modelo enseñas el estado actual y la propuesta, con mobiliario y acabados nuevos, antes de pedir presupuestos de obra. Más en [arquitectos e interioristas](@sol-arquitectos).',
+        body: '- **Promotoras.** La provincia es la tercera de España en compraventas de vivienda nueva. Para vender sobre plano, cada tipología en 3D con visor y realidad aumentada para la sala de ventas y para el comprador que reserva a distancia. Lo explicamos en [soluciones para promotoras](@sol-promotoras) y en [cómo vender obra nueva sobre plano con 3D](@guia-sobre-plano).\n- **Agencias.** En un piso de dos o tres dormitorios, la planta explica más que diez fotos. Un [plano 3D](@servicio-plano) a color resuelve la distribución, y la maqueta completa añade renders, visor y realidad aumentada para las viviendas de más valor.\n- **Reformas.** Los pisos antiguos suelen tener una distribución muy compartimentada. Sobre el modelo enseñas el estado actual y la propuesta, con mobiliario y acabados nuevos, antes de pedir presupuestos de obra. Más en [arquitectos e interioristas](@sol-arquitectos).',
       },
       {
         type: 'prose',

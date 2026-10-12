@@ -1,6 +1,6 @@
 // Home (rulebook C5 blueprint, BUILD-SPEC §6). The hero, cajetín, eyebrows and form wrapper come from the
 // template; this file only feeds them. Block order is fixed by C5: compare → deliverables → process[despiece]
-// → viewer (#demo) → audiences → pricing[excerpt] → calculator → faq → contactForm.
+// → viewer (#demo) → audiences → faq → contactForm (no pricing or calculator while prices are not public).
 // Every price, delivery time and villa figure is a token (build/data). No market statistics on this page.
 
 export default {
@@ -78,7 +78,7 @@ export default {
   // ─────────────────────────────────────────────────────────────── EN
   en: {
     title: '3D visualisation studio for real estate in Spain | {{brand}}',
-    description: '{{brand}} turns a home’s 2D floor plan into a furnished 3D model, renders, web viewer and app-free AR. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
+    description: '{{brand}} turns a home’s 2D floor plan into a furnished 3D model, renders, web viewer and app-free AR. A fixed quote, delivered in {{delivery:maqueta}}.',
     h1: 'From 2D floor plan to 3D, no photos',
     // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
     lead: '{{brand}}, a 3D visualisation studio based in Mijas, on the Costa del Sol: photoreal 3D model, web viewer and augmented reality from the property’s floor plan. In days.',
@@ -87,7 +87,7 @@ export default {
       ['Input', 'One 2D floor plan, no photos or visit'],
       ['Deliverables', '3D model, 4K renders, web viewer and AR'],
       ['Turnaround', '{{delivery:maqueta}}'],
-      ['From', '{{price:plano3d}} + VAT; complete model {{price:maqueta}}'],
+      ['Price', 'A fixed written quote before work starts'],
       ['Augmented reality', 'iPhone, iPad and Android, no app'],
       ['Coverage', 'Costa del Sol, all of Spain and abroad'],
       ['Languages', 'English and Spanish'],
@@ -132,16 +132,6 @@ export default {
         h2: 'Who is it for?',
         intro: 'Estate agents with homes that do not sell on photos alone, and developers selling off-plan to buyers who are still in London, Amsterdam or Stockholm. Your buyer opens the same model on their phone, wherever they are. [See all our services](@servicios).\n\nWhere we work: we are based in Mijas, on the Costa del Sol ([3D rendering in Marbella](@zona-marbella)) and work remotely, with no site visit, across the Costa del Sol, the rest of Spain and abroad, at the same price and turnaround.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'How much is a 3D model of your property?',
-        intro: 'Public, fixed prices, excluding VAT. For a typical home there is no quote to wait for: pick a package and you know the cost before you send the plan. Extras, volume rates and a market comparison are on the [pricing page](@precios).',
-      },
-      {
-        type: 'calculator',
-        intro: 'Order 5 or more complete models for homes up to 150 m² and the unit price drops for every home in the order, not just from the fifth; from 10 it drops again. Change the number to see the total with and without VAT.',
-      },
       { type: 'faq' },
       {
         type: 'contactForm',
@@ -155,11 +145,11 @@ export default {
     faq: [
       {
         q: 'How much does it cost to turn a floor plan into a 3D model?',
-        a: 'At {{brand}}, a 3D floor plan costs {{price:plano3d}} + VAT per floor, and the complete 3D model, with renders, a web viewer and augmented reality, {{price:maqueta}} + VAT per home up to 150 m². New-build developments start at {{price:promocion}} + VAT. What each option includes is on [floor plan to 3D model](@servicio-plano); every rate and extra, on our [pricing page](@precios).',
+        a: 'It depends on floor area, the number of floors and what you need: a 3D floor plan, or the complete 3D model with renders, a web viewer and augmented reality. {{brand}} sends you a fixed written quote as soon as it sees the plan, with the turnaround. What each option includes is on [floor plan to 3D model](@servicio-plano); how we quote, on our [pricing page](@precios).',
       },
       {
         q: 'How quickly will I get the 3D model?',
-        a: '{{brand}} delivers the complete 3D model in {{delivery:maqueta}} and a 3D floor plan in {{delivery:plano3d}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery takes 48 hours, with a {{extra:urgente}} surcharge on the total.',
+        a: '{{brand}} delivers the complete 3D model in {{delivery:maqueta}} and a 3D floor plan in {{delivery:plano3d}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery in 48 hours is quoted separately, when the schedule allows.',
       },
       {
         q: 'What do you need from me: a plan, photos, measurements?',

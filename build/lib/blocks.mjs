@@ -134,6 +134,7 @@ function asideFigure(ctx, name, sizes) {
  * falls back to a fact or a render, so a card never shows a price the answer is not about.
  */
 function priceCard(ctx, o, b = {}) {
+  if (!ctx.data.pricing.public) return ''; // no public prices: the aside falls back to a fact or a render
   const r = ctx.route;
   const packs = ctx.data.pricing.packs;
   let packId = r.pack && packs.some((p) => p.id === r.pack) ? r.pack : null;
@@ -308,8 +309,8 @@ const R = {
   audiences(ctx, b) { return indexBlock(ctx, b, 'audiences', AUDIENCE_IDS, { className: 'index--grid', images: CARD_IMAGES }); },
   pages(ctx, b) { return indexBlock(ctx, b, 'pages', b.ids || [], { className: (b.ids || []).length > 3 ? 'index--grid' : '' }); },
 
-  pricing(ctx, b) { return pricingBlock(ctx, b); },
-  calculator(ctx, b) { return calculator(ctx, b); },
+  pricing(ctx, b) { return ctx.data.pricing.public ? pricingBlock(ctx, b) : ''; },
+  calculator(ctx, b) { return ctx.data.pricing.public ? calculator(ctx, b) : ''; },
   guarantees(ctx, b) { return guaranteesBlock(ctx, b); },
 
   stat(ctx, b) {

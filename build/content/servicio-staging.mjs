@@ -10,13 +10,13 @@ export default {
   id: 'servicio-staging',
   image: 'villa_interior_dormitorio',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Home staging virtual sobre un modelo 3D real',
-    description: 'Amueblamos la vivienda sobre su modelo 3D: el mismo estilo en cada render, en el visor y en la realidad aumentada. {{extra:staging}} + IVA por estancia.',
+    description: 'Amueblamos la vivienda sobre su modelo 3D: el mismo estilo en cada render, en el visor y en la realidad aumentada. Presupuesto cerrado por estancia.',
     h1: 'Home staging virtual sobre el modelo 3D de la vivienda',
-    lead: 'Para inmobiliarias y promotoras: hacemos home staging virtual sobre el modelo 3D de la vivienda, no sobre fotos sueltas. Eliges estilo, muebles y materiales, y el cambio aparece igual en cada render, en el visor web y en la realidad aumentada. Cuesta {{extra:staging}} + IVA por estancia, sobre la maqueta 3D completa desde {{price:maqueta}} + IVA.',
+    lead: 'Para inmobiliarias y promotoras: hacemos home staging virtual sobre el modelo 3D de la vivienda, no sobre fotos sueltas. Eliges estilo, muebles y materiales, y el cambio aparece igual en cada render, en el visor web y en la realidad aumentada. Se presupuesta por estancia y se suma a la maqueta 3D completa.',
     breadcrumb: 'Home staging virtual',
     card: {
       title: 'Home staging virtual',
@@ -28,8 +28,8 @@ export default {
       caption: 'Dormitorio principal amueblado sobre el modelo. Render 3D de la villa anonimizada, generado a partir del plano 2D.',
     },
     facts: [
-      ['Precio', '{{extra:staging}} + IVA por estancia'],
-      ['Se suma a', 'Maqueta 3D completa, desde {{price:maqueta}} + IVA'],
+      ['Precio', 'Presupuesto cerrado por estancia'],
+      ['Se suma a', 'Maqueta 3D completa'],
       ['Qué cambia', 'Mobiliario, textiles, suelos, paredes y materiales'],
       ['Dónde se ve', 'Renders, visor web y realidad aumentada'],
       ['Entrada', 'Plano 2D; fotos de acabados, opcionales'],
@@ -47,7 +47,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Qué diferencia hay con el mobiliario que ya incluye la maqueta?',
-        answer: 'La maqueta 3D completa ya se entrega amueblada, con un estilo que proponemos a partir del plano. El home staging virtual es para cuando quieres decidir tú: otro estilo, piezas concretas, acabados distintos o varias versiones de la misma estancia para compradores diferentes. Se cobra por estancia redecorada, a {{extra:staging}} + IVA.',
+        answer: 'La maqueta 3D completa ya se entrega amueblada, con un estilo que proponemos a partir del plano. El home staging virtual es para cuando quieres decidir tú: otro estilo, piezas concretas, acabados distintos o varias versiones de la misma estancia para compradores diferentes. Se presupuesta por estancia redecorada.',
         body: 'Los cambios puntuales, como otro sofá o un suelo más claro, entran en las {{revisions:maqueta}} incluidas en la maqueta. El staging es la redecoración completa de una estancia, con sus renders recalculados.',
       },
       plate('es', 'villa_dormitorios_opaco'),
@@ -117,7 +117,7 @@ export default {
         type: 'answer',
         h2: '¿Sirve para viviendas usadas o solo para obra nueva?',
         answer: 'Para las dos. En obra nueva, el staging sobre el modelo sustituye al piso piloto. En vivienda usada, que es la mayor parte del mercado, sirve para pisos vacíos, con muebles anticuados o con una reforma pendiente: enseñas su potencial sin mover un mueble. Como trabajamos desde el plano, ni siquiera hace falta fotografiarla.',
-        body: 'En Marbella y la Costa del Sol se venden muchas villas de reventa amuebladas al gusto del propietario. El [home staging virtual en Marbella](@zona-marbella) cuesta lo mismo que en cualquier otra zona, {{extra:staging}} + IVA por estancia, y se hace en remoto. También trabajamos en [Málaga](@zona-malaga) y en el resto de la [Costa del Sol](@zona-costa-del-sol).',
+        body: 'En Marbella y la Costa del Sol se venden muchas villas de reventa amuebladas al gusto del propietario. El [home staging virtual en Marbella](@zona-marbella) cuesta lo mismo que en cualquier otra zona y se hace en remoto. También trabajamos en [Málaga](@zona-malaga) y en el resto de la [Costa del Sol](@zona-costa-del-sol).',
       },
       {
         type: 'stat',
@@ -138,18 +138,12 @@ export default {
         h2: '¿Cómo se encarga el home staging virtual?',
         intro: 'El staging se suma al modelo: puedes pedirlo con la maqueta o añadirlo después, estancia a estancia. Los [renders inmobiliarios](@servicio-renders) y el [visor 3D interactivo](@servicio-tour) se actualizan con el nuevo estilo.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: '¿Cuánto cuesta el home staging virtual?',
-        intro: '{{extra:staging}} por estancia redecorada, que se suma a la maqueta 3D completa o al pack de promoción. Todos los precios, sin IVA.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: '¿Cuánto cuesta un home staging?',
-        a: 'Depende del tipo. Un home staging físico implica alquilar muebles, transportarlos y montarlos en la vivienda. El home staging virtual de {{brand}} cuesta {{extra:staging}} + IVA por estancia, sobre la maqueta 3D completa desde {{price:maqueta}} + IVA, que ya incluye 6 renders, visor web y realidad aumentada. No hay muebles que mover ni plazos de alquiler.',
+        a: 'Depende del tipo. Un home staging físico implica alquilar muebles, transportarlos y montarlos en la vivienda. El home staging virtual de {{brand}} se presupuesta por estancia, sobre la maqueta 3D completa, que ya incluye 6 renders, visor web y realidad aumentada. No hay muebles que mover ni plazos de alquiler.',
       },
       {
         q: '¿Hay home staging virtual gratuito?',
@@ -161,11 +155,11 @@ export default {
       },
       {
         q: '¿Se puede hacer home staging de una vivienda que aún no está construida?',
-        a: 'Sí, y es donde el staging sobre modelo 3D no tiene alternativa. {{brand}} modela la vivienda desde los planos del proyecto y la amuebla antes de que exista, sin piso piloto. En el pack de promoción, desde {{price:promocion}} + IVA, las tipologías ya llegan amuebladas; cada estilo alternativo cuesta {{extra:staging}} + IVA por estancia.',
+        a: 'Sí, y es donde el staging sobre modelo 3D no tiene alternativa. {{brand}} modela la vivienda desde los planos del proyecto y la amuebla antes de que exista, sin piso piloto. En el pack de promoción las tipologías ya llegan amuebladas; cada estilo alternativo se presupuesta por estancia.',
       },
       {
         q: '¿Puedo tener dos estilos de la misma vivienda?',
-        a: 'Sí. Sobre el mismo modelo, {{brand}} puede preparar, por ejemplo, una versión familiar y otra pensada para alquiler o inversión, y enseñar las dos en renders y en el visor. Cada estancia redecorada cuenta como una estancia de staging, a {{extra:staging}} + IVA. La distribución y las medidas son idénticas en ambas versiones.',
+        a: 'Sí. Sobre el mismo modelo, {{brand}} puede preparar, por ejemplo, una versión familiar y otra pensada para alquiler o inversión, y enseñar las dos en renders y en el visor. Cada estancia redecorada cuenta como una estancia de staging en el presupuesto. La distribución y las medidas son idénticas en ambas versiones.',
       },
       {
         q: '¿El home staging virtual cambia la distribución o tapa defectos?',
@@ -173,7 +167,7 @@ export default {
       },
       {
         q: '¿Cuánto tarda el home staging virtual?',
-        a: 'Si lo pides con la maqueta, {{brand}} lo entrega todo junto en {{delivery:maqueta}}. Si lo añades después sobre un modelo ya hecho, redecorar una estancia es rápido porque la vivienda ya existe en 3D; te confirmamos el plazo al encargarlo. Con entrega urgente en 48 horas, el recargo es del {{extra:urgente}} sobre el total.',
+        a: 'Si lo pides con la maqueta, {{brand}} lo entrega todo junto en {{delivery:maqueta}}. Si lo añades después sobre un modelo ya hecho, redecorar una estancia es rápido porque la vivienda ya existe en 3D; te confirmamos el plazo al encargarlo. La entrega urgente en 48 horas va con presupuesto aparte.',
       },
       {
         q: '¿Sirve para alquiler vacacional?',
@@ -189,9 +183,9 @@ export default {
 
   en: {
     title: '3D virtual staging on a real model, in Spain',
-    description: 'Virtual staging on the home’s 3D model: the same furniture in every render, the 3D viewer and AR. {{extra:staging}} + VAT per room.',
+    description: 'Virtual staging on the home’s 3D model: the same furniture in every render, the 3D viewer and AR. A fixed quote per room.',
     h1: '3D virtual staging on a real model of the home',
-    lead: 'For estate agents and developers: we stage homes on their 3D model, not on individual photos. You choose the style, furniture and finishes, and the change appears identically in every render, in the web viewer and in augmented reality. It costs {{extra:staging}} + VAT per room, on top of the complete 3D model from {{price:maqueta}} + VAT.',
+    lead: 'For estate agents and developers: we stage homes on their 3D model, not on individual photos. You choose the style, furniture and finishes, and the change appears identically in every render, in the web viewer and in augmented reality. It is quoted per room, on top of the complete 3D model.',
     breadcrumb: 'Virtual staging',
     card: {
       title: '3D virtual staging',
@@ -203,8 +197,8 @@ export default {
       caption: 'Main bedroom furnished on the model. 3D render of the anonymised villa, from the 2D floor plan.',
     },
     facts: [
-      ['Price', '{{extra:staging}} + VAT per room'],
-      ['Added to', 'Complete 3D model, from {{price:maqueta}} + VAT'],
+      ['Price', 'A fixed quote per room'],
+      ['Added to', 'Complete 3D model'],
       ['What changes', 'Furniture, soft furnishings, floors, walls and finishes'],
       ['Where it shows', 'Renders, web viewer and augmented reality'],
       ['Input', '2D floor plan; photos of finishes optional'],
@@ -222,7 +216,7 @@ export default {
       {
         type: 'answer',
         h2: 'How is it different from the furniture already in the 3D model?',
-        answer: 'The complete 3D model already arrives furnished, in a style we propose from the plan. Virtual staging is for when you want to decide: a different style, specific pieces, other finishes, or several versions of a room for different buyers. It is charged per restyled room, at {{extra:staging}} + VAT.',
+        answer: 'The complete 3D model already arrives furnished, in a style we propose from the plan. Virtual staging is for when you want to decide: a different style, specific pieces, other finishes, or several versions of a room for different buyers. It is quoted per restyled room.',
         body: 'Small tweaks, such as another sofa or a lighter floor, fall within the {{revisions:maqueta}} included with the model. Staging is a full restyle of a room, with its renders recalculated.',
       },
       plate('en', 'villa_dormitorios_opaco'),
@@ -292,7 +286,7 @@ export default {
         type: 'answer',
         h2: 'Does it work for resale homes or only new builds?',
         answer: 'Both. For off-plan units, staging on the model replaces the show home. For resale homes, which make up most of the market, it suits empty flats, dated interiors or homes awaiting refurbishment: you show their potential without moving a stick of furniture. Because we work from the plan, you do not even need photos.',
-        body: 'In Marbella and across the Costa del Sol, many resale villas are still dressed in the owner’s furniture. [Virtual staging in Marbella](@zona-marbella) costs the same as anywhere else, {{extra:staging}} + VAT per room, and is done remotely.',
+        body: 'In Marbella and across the Costa del Sol, many resale villas are still dressed in the owner’s furniture. [Virtual staging in Marbella](@zona-marbella) costs the same as anywhere else and is done remotely.',
       },
       {
         type: 'stat',
@@ -313,18 +307,12 @@ export default {
         h2: 'How do I order virtual staging?',
         intro: 'Staging is added to the model: order it with the complete model or add it later, room by room. Your [real estate 3D renders](@servicio-renders) and [interactive 3D floor plan](@servicio-tour) are updated with the new style.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'How much does virtual staging cost?',
-        intro: '{{extra:staging}} per restyled room, added to the complete 3D model or the development package shown here. All prices exclude VAT.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: 'How much does virtual staging cost?',
-        a: '{{brand}} charges {{extra:staging}} + VAT per restyled room, added to the complete 3D model from {{price:maqueta}} + VAT, which already includes 6 renders, a web viewer and augmented reality. Physical staging, by contrast, means hiring, transporting and installing furniture. With 3D staging there is nothing to move and no rental period to manage.',
+        a: '{{brand}} quotes it per restyled room, added to the complete 3D model, which already includes 6 renders, a web viewer and augmented reality. Physical staging, by contrast, means hiring, transporting and installing furniture. With 3D staging there is nothing to move and no rental period to manage.',
       },
       {
         q: 'How can I do virtual staging for free?',
@@ -340,11 +328,11 @@ export default {
       },
       {
         q: 'Can you stage a home that has not been built yet?',
-        a: 'Yes, and that is where staging on a 3D model has no real alternative. {{brand}} models the home from the architect’s plans and furnishes it before it exists, with no show home. In the development package, from {{price:promocion}} + VAT, unit types already arrive furnished; each alternative style costs {{extra:staging}} + VAT per room.',
+        a: 'Yes, and that is where staging on a 3D model has no real alternative. {{brand}} models the home from the architect’s plans and furnishes it before it exists, with no show home. In the development package, unit types already arrive furnished; each alternative style is quoted per room.',
       },
       {
         q: 'Can you show the same property in different furniture styles?',
-        a: 'Yes. On the same model, {{brand}} can prepare, for example, a family version and a version aimed at rental investors, and show both in renders and in the viewer. Each restyled room counts as one room of staging, at {{extra:staging}} + VAT. Layout and measurements are identical in both versions.',
+        a: 'Yes. On the same model, {{brand}} can prepare, for example, a family version and a version aimed at rental investors, and show both in renders and in the viewer. Each restyled room counts as one room of staging in the quote. Layout and measurements are identical in both versions.',
       },
       {
         q: 'Is virtual staging legitimate, or does it hide problems?',
@@ -352,7 +340,7 @@ export default {
       },
       {
         q: 'How long does virtual staging take?',
-        a: 'Ordered with the complete model, {{brand}} delivers everything together in {{delivery:maqueta}}. Added later on an existing model, restyling a room is quick because the home already exists in 3D; we confirm the timing when you order. Rush delivery in 48 hours carries a {{extra:urgente}} surcharge on the total.',
+        a: 'Ordered with the complete model, {{brand}} delivers everything together in {{delivery:maqueta}}. Added later on an existing model, restyling a room is quick because the home already exists in 3D; we confirm the timing when you order. Rush delivery in 48 hours is quoted separately.',
       },
     ],
     related: ['servicio-renders', 'servicio-tour', 'caso-villa', 'precios', 'sol-inmobiliarias'],

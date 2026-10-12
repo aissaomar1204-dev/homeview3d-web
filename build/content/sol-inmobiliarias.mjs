@@ -6,7 +6,7 @@
 const faqEs = [
   {
     q: '¿Qué gana una inmobiliaria con un modelo 3D de la vivienda?',
-    a: 'Con el modelo 3D de {{brand}}, la agencia llega a la captación con un argumento que otras no tienen y publica un anuncio que explica la vivienda mejor que las fotos: renders amueblados, visor 3D por estancias y realidad aumentada sin app. El comprador entiende la distribución antes de pedir visita. Cuesta desde {{price:maqueta}} + IVA por vivienda y se entrega en {{delivery:maqueta}}.',
+    a: 'Con el modelo 3D de {{brand}}, la agencia llega a la captación con un argumento que otras no tienen y publica un anuncio que explica la vivienda mejor que las fotos: renders amueblados, visor 3D por estancias y realidad aumentada sin app. El comprador entiende la distribución antes de pedir visita. Va con presupuesto cerrado y se entrega en {{delivery:maqueta}}.',
   },
   {
     q: '¿Puedo poner el visor 3D en idealista o en Fotocasa?',
@@ -14,11 +14,11 @@ const faqEs = [
   },
   {
     q: '¿Sirve para vender una vivienda vacía o sin reformar?',
-    a: 'Sí, es donde más se nota. {{brand}} amuebla el modelo 3D a partir del plano, así que no dependes de fotos de habitaciones vacías o de una decoración antigua. Con el home staging virtual ({{extra:staging}} + IVA por estancia) pruebas otro estilo sobre el mismo modelo. Esas imágenes se publican etiquetadas como recreación virtual, porque el mobiliario no se incluye en la venta.',
+    a: 'Sí, es donde más se nota. {{brand}} amuebla el modelo 3D a partir del plano, así que no dependes de fotos de habitaciones vacías o de una decoración antigua. Con el home staging virtual, presupuestado por estancia, pruebas otro estilo sobre el mismo modelo. Esas imágenes se publican etiquetadas como recreación virtual, porque el mobiliario no se incluye en la venta.',
   },
   {
     q: '¿Hacéis descuentos por volumen para agencias?',
-    a: 'Sí. {{brand}} ofrece el pack cartera: 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda de hasta 150 m². Con 10 o más, el precio vuelve a bajar y se aplica a todas las viviendas del encargo; la calculadora de esta página te da el total al momento. Cada maqueta incluye el modelo 3D amueblado, los renders, el visor web para tu anuncio y la realidad aumentada para iPhone y Android.',
+    a: 'Sí. Si nos encargas varias viviendas a la vez o a lo largo de unos meses, {{brand}} te prepara un presupuesto cerrado para tu cartera, con un precio por vivienda menor que el de un encargo suelto. Cada maqueta incluye el modelo 3D amueblado, los renders, el visor web para tu anuncio y la realidad aumentada para iPhone y Android.',
   },
   {
     q: '¿Tengo que ir a la vivienda a hacer fotos o a medir?',
@@ -30,18 +30,18 @@ const faqEs = [
   },
   {
     q: '¿Qué pasa con el visor cuando la vivienda se vende?',
-    a: 'La maqueta 3D completa de {{brand}} incluye el primer año de alojamiento del visor. Si la vivienda se vende antes, lo retiramos cuando nos lo pidas. Si quieres mantenerlo más tiempo, por ejemplo para enseñarlo en futuras captaciones como muestra de tu trabajo, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año.',
+    a: 'La maqueta 3D completa de {{brand}} incluye el primer año de alojamiento del visor. Si la vivienda se vende antes, lo retiramos cuando nos lo pidas. Si quieres mantenerlo más tiempo, por ejemplo para enseñarlo en futuras captaciones como muestra de tu trabajo, te pasamos el precio de la renovación antes de que venza.',
   },
   {
     q: '¿Qué diferencia hay entre el plano 3D y la maqueta 3D completa?',
-    a: 'El plano 3D de {{brand}} ({{price:plano3d}} + IVA por planta) son imágenes: la planta cenital a color y una vista isométrica amueblada. La maqueta 3D completa ({{price:maqueta}} + IVA) añade renders de cada ambiente, el visor web para tu anuncio y la realidad aumentada. Para un piso de reventa con buenas fotos suele bastar el plano 3D.',
+    a: 'El plano 3D de {{brand}} son imágenes: la planta cenital a color y una vista isométrica amueblada. La maqueta 3D completa añade renders de cada ambiente, el visor web para tu anuncio y la realidad aumentada. Para un piso de reventa con buenas fotos suele bastar el plano 3D.',
   },
 ];
 
 const faqEn = [
   {
     q: 'What does an estate agent gain from a 3D model of a property?',
-    a: 'With our 3D model, you walk into the valuation with something the other agents don’t offer, and you publish a listing that explains the home better than photos can: furnished renders, a room-by-room 3D viewer and app-free augmented reality. Buyers understand the layout before they ask to view. It costs from {{price:maqueta}} + VAT per home, delivered in {{delivery:maqueta}}.',
+    a: 'With our 3D model, you walk into the valuation with something the other agents don’t offer, and you publish a listing that explains the home better than photos can: furnished renders, a room-by-room 3D viewer and app-free augmented reality. Buyers understand the layout before they ask to view. It comes with a fixed quote and is delivered in {{delivery:maqueta}}.',
   },
   {
     q: 'Can I put the 3D viewer on idealista, Kyero or Rightmove?',
@@ -49,11 +49,11 @@ const faqEn = [
   },
   {
     q: 'Does it work for an empty or dated property?',
-    a: 'That is where it helps most. {{brand}} furnishes the 3D model from the floor plan, so you no longer depend on photos of bare rooms or tired décor. With virtual staging ({{extra:staging}} + VAT per room) you can show a different style on the same model. Those images should be labelled as a virtual recreation in the listing, because the furniture is not part of the sale.',
+    a: 'That is where it helps most. {{brand}} furnishes the 3D model from the floor plan, so you no longer depend on photos of bare rooms or tired décor. With virtual staging, quoted per room, you can show a different style on the same model. Those images should be labelled as a virtual recreation in the listing, because the furniture is not part of the sale.',
   },
   {
     q: 'Is there a discount if my agency orders several models?',
-    a: 'Yes. {{brand}} has a Portfolio pack: 5 complete 3D models for {{volume}} + VAT, which works out at {{volumeUnit}} per home up to 150 m². From 10 homes the unit price drops again and applies to every home in the order; the calculator on this page gives you the total straight away. Every model includes the furnished 3D model, the renders, the web viewer for your listing and augmented reality for iPhone and Android.',
+    a: 'Yes. If you order several homes at once or over a few months, {{brand}} prepares a fixed quote for your portfolio, with a lower price per home than a single order. Every model includes the furnished 3D model, the renders, the web viewer for your listing and augmented reality for iPhone and Android.',
   },
   {
     q: 'Do I have to go back to the property to measure or take photos?',
@@ -65,11 +65,11 @@ const faqEn = [
   },
   {
     q: 'What happens to the viewer once the property sells?',
-    a: 'Our complete 3D model includes the first year of viewer hosting. If the home sells sooner, we take the viewer down whenever you ask. If you want to keep it online for longer, for example to show vendors at future valuations what you do for your listings, renewal costs {{extra:hosting}} + VAT per home per year.',
+    a: 'Our complete 3D model includes the first year of viewer hosting. If the home sells sooner, we take the viewer down whenever you ask. If you want to keep it online for longer, for example to show vendors at future valuations what you do for your listings, we send you the renewal price before it expires.',
   },
   {
     q: 'What is the difference between a 3D floor plan and the complete 3D model?',
-    a: 'Our 3D floor plan ({{price:plano3d}} + VAT per floor) gives you images: a colour top-down plan and a furnished isometric view. The complete 3D model ({{price:maqueta}} + VAT) adds renders of each room, the web viewer for your listing and augmented reality. For a resale flat that already has good photos, the 3D floor plan is often enough.',
+    a: 'Our 3D floor plan gives you images: a colour top-down plan and a furnished isometric view. The complete 3D model adds renders of each room, the web viewer for your listing and augmented reality. For a resale flat that already has good photos, the 3D floor plan is often enough.',
   },
 ];
 
@@ -79,13 +79,13 @@ export default {
   id: 'sol-inmobiliarias',
   image: 'villa_salon_dormitorio_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Modelo 3D y AR: capta exclusivas y vende a distancia',
-    description: 'Maqueta 3D, renders, visor para tu anuncio y AR sin app desde el plano, para captar exclusivas y vender a distancia. Desde {{price:maqueta}} + IVA.',
+    description: 'Maqueta 3D, renders, visor para tu anuncio y AR sin app desde el plano, para captar exclusivas y vender a distancia, con presupuesto cerrado.',
     h1: 'Maqueta 3D, renders y realidad aumentada para inmobiliarias',
-    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, convierte el plano de cada vivienda que captas en un modelo 3D amueblado con renders, visor para tu anuncio y realidad aumentada sin app, para que el comprador entienda la casa antes de visitarla. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, convierte el plano de cada vivienda que captas en un modelo 3D amueblado con renders, visor para tu anuncio y realidad aumentada sin app, para que el comprador entienda la casa antes de visitarla. Presupuesto cerrado y entrega en {{delivery:maqueta}}.',
     breadcrumb: 'Inmobiliarias',
     card: {
       title: 'Para inmobiliarias',
@@ -100,10 +100,10 @@ export default {
       ['Para', 'Agencias inmobiliarias y asesores independientes'],
       ['Entrada', 'El plano de la vivienda, sin fotos'],
       ['Entregas', 'Modelo 3D, renders 4K, visor web y AR'],
-      ['Precio por vivienda', 'Desde {{price:maqueta}} + IVA'],
-      ['Pack cartera', '5 maquetas por {{volume}} + IVA'],
+      ['Precio por vivienda', 'Presupuesto cerrado antes de empezar'],
+      ['Varias viviendas', 'Presupuesto por volumen'],
       ['Plazo', '{{delivery:maqueta}}'],
-      ['Opción ligera', 'Plano 3D desde {{price:plano3d}} + IVA'],
+      ['Opción ligera', 'Plano 3D a color'],
       ['Idiomas', 'Español e inglés'],
     ],
     blocks: [
@@ -134,13 +134,13 @@ export default {
       {
         type: 'table',
         h2: '¿Qué pack encaja con cada vivienda de tu cartera?',
-        caption: 'Qué encargar según el tipo de captación (precios sin IVA)',
-        head: ['Tu captación', 'Qué te recomendamos', 'Precio', 'Plazo'],
+        caption: 'Qué encargar según el tipo de captación',
+        head: ['Tu captación', 'Qué te recomendamos', 'Plazo'],
         rows: [
-          ['Piso de reventa con buenas fotos', '[Plano 3D](@servicio-plano): planta cenital a color y vista isométrica amueblada', 'Desde {{price:plano3d}} por planta', '{{delivery:plano3d}}'],
-          ['Vivienda vacía, a reformar o exclusiva de valor', 'Maqueta 3D completa: modelo, renders, visor y realidad aumentada', 'Desde {{price:maqueta}}', '{{delivery:maqueta}}'],
-          ['Vivienda que necesita otro ambiente', 'Home staging virtual sobre la maqueta', '{{extra:staging}} por estancia', 'Con la maqueta'],
-          ['Varias captaciones en los próximos meses', 'Pack cartera: 5 maquetas 3D completas', '{{volume}} ({{volumeUnit}} por vivienda)', '{{delivery:maqueta}} cada una'],
+          ['Piso de reventa con buenas fotos', '[Plano 3D](@servicio-plano): planta cenital a color y vista isométrica amueblada', '{{delivery:plano3d}}'],
+          ['Vivienda vacía, a reformar o exclusiva de valor', 'Maqueta 3D completa: modelo, renders, visor y realidad aumentada', '{{delivery:maqueta}}'],
+          ['Vivienda que necesita otro ambiente', 'Home staging virtual sobre la maqueta', 'Con la maqueta'],
+          ['Varias captaciones en los próximos meses', 'Varias maquetas 3D completas, con presupuesto por volumen', '{{delivery:maqueta}} cada una'],
         ],
         note: 'Precios sin IVA. Los tramos por superficie y todos los extras están en la página de [precios](@precios).',
       },
@@ -176,8 +176,8 @@ export default {
       {
         type: 'answer',
         h2: '¿Compensa pagar un modelo 3D por cada captación?',
-        answer: 'Depende de tus honorarios medios y de cuántas viviendas captes. Ejemplo con supuestos: en una vivienda de 400.000 € con honorarios del 3 %, la agencia factura 12.000 € + IVA, y la maqueta 3D completa cuesta {{price:maqueta}} + IVA. Si el modelo te ayuda a firmar una sola exclusiva más al año, cubre el coste de muchas maquetas.',
-        body: 'La cuenta que importa es sencilla: divide lo que te costarían las maquetas del año entre tus honorarios medios por operación. Si el resultado es menor que una operación, el riesgo es bajo. Pon tus propias cifras en la tabla.',
+        answer: 'Depende de tus honorarios medios y de cuántas viviendas captes. Ejemplo con supuestos: en una vivienda de 400.000 € con honorarios del 3 %, la agencia factura 12.000 € + IVA. Compáralo con el presupuesto cerrado de la maqueta: si el modelo te ayuda a firmar una sola exclusiva más al año, cubre el coste de muchas maquetas.',
+        body: 'La cuenta que importa es sencilla: divide lo que te costarían las maquetas del año entre tus honorarios medios por operación. Si el resultado es menor que una operación, el riesgo es bajo. Pon tus propias cifras en la tabla y el presupuesto que te mandemos.',
       },
       plate('es', 'villa_interior_salon'),
       {
@@ -187,13 +187,11 @@ export default {
         rows: [
           ['Precio de la vivienda (supuesto)', '400.000 €'],
           ['Honorarios de la agencia (supuesto: 3 %)', '12.000 € + IVA'],
-          ['Maqueta 3D completa de esa vivienda', '{{price:maqueta}} + IVA'],
-          ['Coste por vivienda con el pack cartera', '{{volumeUnit}} + IVA'],
+          ['Maqueta 3D completa de esa vivienda', 'Según el presupuesto cerrado'],
           ['Punto de equilibrio', 'Una operación adicional cubre las maquetas de muchas viviendas'],
         ],
         note: 'Ejemplo con cifras supuestas para mostrar el cálculo. No es un resultado medido ni una promesa de ventas.',
       },
-      { type: 'calculator', h2: 'Calcula el coste para tu cartera', intro: 'Precio por vivienda de la maqueta 3D completa según cuántas encargues, con los descuentos por volumen aplicados.' },
       { type: 'faq' },
     ],
     faq: faqEs,
@@ -207,9 +205,9 @@ export default {
 
   en: {
     title: '3D floor plans and AR for estate agents in Spain',
-    description: 'A 3D floor plan from {{price:plano3d}} + VAT, or a complete 3D model with renders, a listing viewer and app-free AR, to win instructions and sell abroad.',
+    description: 'A 3D floor plan, or a complete 3D model with renders, a listing viewer and app-free AR, to win instructions and sell abroad.',
     h1: '3D floor plans, renders and AR for estate agents',
-    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, turns the floor plan of every home you list into a 3D floor plan from {{price:plano3d}} + VAT per floor in {{delivery:plano3d}}, or a complete 3D model with renders, a listing viewer and app-free AR from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, turns the floor plan of every home you list into a 3D floor plan in {{delivery:plano3d}}, or a complete 3D model with renders, a listing viewer and app-free AR in {{delivery:maqueta}}, always at a fixed quote.',
     breadcrumb: 'Estate agents',
     card: {
       title: 'For estate agents',
@@ -224,10 +222,10 @@ export default {
       ['For', 'Estate agencies and independent agents in Spain'],
       ['Input', 'The floor plan, no photos needed'],
       ['You get', '3D model, 4K renders, web viewer and AR'],
-      ['Price per home', 'From {{price:maqueta}} + VAT'],
-      ['Portfolio pack', '5 models for {{volume}} + VAT'],
+      ['Price per home', 'A fixed quote before work starts'],
+      ['Several homes', 'A volume quote'],
       ['Turnaround', '{{delivery:maqueta}}'],
-      ['Lighter option', '3D floor plan from {{price:plano3d}} + VAT'],
+      ['Lighter option', 'Colour 3D floor plan'],
       ['Languages', 'English and Spanish'],
     ],
     blocks: [
@@ -259,13 +257,13 @@ export default {
       {
         type: 'table',
         h2: 'Which package suits each listing?',
-        caption: 'What to order for each type of instruction (prices excluding VAT)',
-        head: ['Your listing', 'What we recommend', 'Price', 'Turnaround'],
+        caption: 'What to order for each type of instruction',
+        head: ['Your listing', 'What we recommend', 'Turnaround'],
         rows: [
-          ['Resale flat with good photos', '[3D floor plan](@servicio-plano): colour top-down plan and furnished isometric view', 'From {{price:plano3d}} per floor', '{{delivery:plano3d}}'],
-          ['Empty, dated or high-value home', 'Complete 3D model: model, renders, viewer and augmented reality', 'From {{price:maqueta}}', '{{delivery:maqueta}}'],
-          ['A home that needs a different feel', 'Virtual staging on the model', '{{extra:staging}} per room', 'With the model'],
-          ['Several instructions coming up', 'Portfolio pack: 5 complete 3D models', '{{volume}} ({{volumeUnit}} per home)', '{{delivery:maqueta}} each'],
+          ['Resale flat with good photos', '[3D floor plan](@servicio-plano): colour top-down plan and furnished isometric view', '{{delivery:plano3d}}'],
+          ['Empty, dated or high-value home', 'Complete 3D model: model, renders, viewer and augmented reality', '{{delivery:maqueta}}'],
+          ['A home that needs a different feel', 'Virtual staging on the model', 'With the model'],
+          ['Several instructions coming up', 'Several complete 3D models, with a volume quote', '{{delivery:maqueta}} each'],
         ],
         note: 'Prices exclude VAT. Size bands and every extra are listed on our [pricing page](@precios).',
       },
@@ -301,8 +299,8 @@ export default {
       {
         type: 'answer',
         h2: 'Is a 3D model worth it for every instruction?',
-        answer: 'It depends on your average fee and how many homes you list. A worked example with assumptions: on a €400,000 sale at a 3% fee, the agency earns €12,000 + VAT, and the complete 3D model costs {{price:maqueta}} + VAT. If the model helps you win just one extra instruction a year, it pays for many models.',
-        body: 'The sum that matters is simple: divide what a year of 3D models would cost by your average fee per sale. If the answer is less than one sale, the risk is small. Try it with your own figures below.',
+        answer: 'It depends on your average fee and how many homes you list. A worked example with assumptions: on a €400,000 sale at a 3% fee, the agency earns €12,000 + VAT. Compare that with the fixed quote for the model: if it helps you win just one extra instruction a year, it pays for many models.',
+        body: 'The sum that matters is simple: divide what a year of 3D models would cost by your average fee per sale. If the answer is less than one sale, the risk is small. Try it with your own figures below and the quote we send you.',
       },
       plate('en', 'villa_interior_salon'),
       {
@@ -312,13 +310,11 @@ export default {
         rows: [
           ['Sale price (assumption)', '€400,000'],
           ['Agency fee (assumption: 3%)', '€12,000 + VAT'],
-          ['Complete 3D model of that home', '{{price:maqueta}} + VAT'],
-          ['Cost per home with the portfolio pack', '{{volumeUnit}} + VAT'],
+          ['Complete 3D model of that home', 'As per the fixed quote'],
           ['Break-even', 'One extra sale covers the models for many homes'],
         ],
         note: 'Assumed figures to show the calculation. This is not a measured result or a sales forecast.',
       },
-      { type: 'calculator', h2: 'Estimate the cost for your portfolio', intro: 'Price per home for the complete 3D model depending on how many you order, with volume discounts applied.' },
       { type: 'faq' },
     ],
     faq: faqEn,

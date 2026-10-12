@@ -237,7 +237,7 @@ export function related(ctx, ids) {
 /** "Desde 490 € + IVA" for a route's pack (packs, or an extra such as staging). */
 export function routePrice(ctx, id) {
   const r = ctx.data.routeById[id];
-  if (!r || !r.pack) return '';
+  if (!r || !r.pack || !ctx.data.pricing.public) return '';
   const pack = ctx.data.pricing.packs.find((p) => p.id === r.pack);
   if (pack) return esc(ctx.t('services.from', { price: ctx.price(pack.id) }));
   const extra = ctx.data.pricing.extras.find((e) => e.id === r.pack);

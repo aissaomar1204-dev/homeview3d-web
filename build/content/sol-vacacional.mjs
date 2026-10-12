@@ -18,11 +18,11 @@ const faq = [
   },
   {
     q: '¿Cuánto cuesta un plano 3D para un apartamento turístico?',
-    a: 'El plano 3D de {{brand}} cuesta {{price:plano3d}} + IVA por planta en su tramo básico e incluye la planta cenital a color y una vista isométrica amueblada, en {{delivery:plano3d}}. Si quieres además renders de cada ambiente, visor web y realidad aumentada, la maqueta 3D completa parte de {{price:maqueta}} + IVA.',
+    a: 'Depende de la superficie y de lo que necesites. El plano 3D de {{brand}} incluye la planta cenital a color y una vista isométrica amueblada, en {{delivery:plano3d}}. Si quieres además renders de cada ambiente, visor web y realidad aumentada, la maqueta 3D completa. En los dos casos te mandamos un presupuesto cerrado al ver el plano.',
   },
   {
     q: '¿Y si gestiono varias viviendas turísticas?',
-    a: 'Para gestoras y propietarios con varias viviendas, {{brand}} ofrece el pack cartera: 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda. Si varias viviendas comparten distribución, como en un edificio de apartamentos, te lo decimos al presupuestar: repetir tipología cuesta menos trabajo que modelar una vivienda nueva.',
+    a: 'Para gestoras y propietarios con varias viviendas, {{brand}} prepara un presupuesto por volumen: cuantas más viviendas, menor el precio por unidad. Si varias viviendas comparten distribución, como en un edificio de apartamentos, te lo decimos al presupuestar: repetir tipología cuesta menos trabajo que modelar una vivienda nueva.',
   },
   {
     q: '¿Tenéis que venir al apartamento?',
@@ -40,13 +40,13 @@ export default {
   id: 'sol-vacacional',
   image: 'villa_terraza_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Plano 3D y visor 3D para alquiler vacacional',
-    description: 'Plano 3D a color, renders y visor para tu apartamento turístico o villa de alquiler, incluso antes de amueblarla. Plano 3D desde {{price:plano3d}} + IVA.',
+    description: 'Plano 3D a color, renders y visor para tu apartamento turístico o villa de alquiler, incluso antes de amueblarla, con presupuesto cerrado.',
     h1: 'Plano 3D, renders y visor para alquiler vacacional',
-    lead: 'Convertimos el plano de tu apartamento turístico o de tu villa de alquiler en un plano 3D a color y, si lo necesitas, en renders y un visor 3D para tu web de reservas, para anunciarla antes de amueblar. Plano 3D desde {{price:plano3d}} + IVA, en {{delivery:plano3d}}; con renders y visor, desde {{price:maqueta}} + IVA.',
+    lead: 'Convertimos el plano de tu apartamento turístico o de tu villa de alquiler en un plano 3D a color y, si lo necesitas, en renders y un visor 3D para tu web de reservas, para anunciarla antes de amueblar. Plano 3D en {{delivery:plano3d}}; con renders y visor, en {{delivery:maqueta}}.',
     breadcrumb: 'Alquiler vacacional',
     card: {
       title: 'Para alquiler vacacional',
@@ -60,11 +60,11 @@ export default {
     facts: [
       ['Para', 'Propietarios y gestoras de viviendas turísticas'],
       ['Entrada', 'El plano del apartamento o de la villa'],
-      ['Opción básica', 'Plano 3D desde {{price:plano3d}} + IVA'],
-      ['Opción completa', 'Maqueta 3D desde {{price:maqueta}} + IVA'],
-      ['Staging virtual', '{{extra:staging}} + IVA por estancia'],
+      ['Opción básica', 'Plano 3D a color'],
+      ['Opción completa', 'Maqueta 3D con renders, visor y realidad aumentada'],
+      ['Staging virtual', 'Por estancia, sobre el modelo'],
       ['Plazo del plano 3D', '{{delivery:plano3d}}'],
-      ['Varias viviendas', 'Pack de 5 por {{volume}} + IVA'],
+      ['Varias viviendas', 'Presupuesto por volumen'],
     ],
     blocks: [
       {
@@ -76,16 +76,16 @@ export default {
       {
         type: 'table',
         h2: '¿Qué encargar según tu situación?',
-        caption: 'Qué te recomendamos según el momento de tu vivienda turística (precios sin IVA)',
-        head: ['Tu situación', 'Qué te recomendamos', 'Desde'],
+        caption: 'Qué te recomendamos según el momento de tu vivienda turística',
+        head: ['Tu situación', 'Qué te recomendamos'],
         rows: [
-          ['Vivienda nueva o recién reformada, sin amueblar', 'Maqueta 3D completa, con renders para abrir reservas antes', '{{price:maqueta}}'],
-          ['Anuncio con fotos, pero con dudas sobre la distribución', '[Plano 3D](@servicio-plano): planta cenital a color y vista isométrica', '{{price:plano3d}} por planta'],
-          ['Vas a redecorar o a cambiar el mobiliario', '[Home staging virtual](@servicio-staging) sobre el modelo para comparar estilos', '{{extra:staging}} por estancia'],
-          ['Tienes web propia de reservas directas', '[Visor 3D](@servicio-tour) incrustado y realidad aumentada', 'Incluido en la maqueta'],
-          ['Gestionas varias viviendas', 'Pack cartera de 5 maquetas 3D completas', '{{volume}}'],
+          ['Vivienda nueva o recién reformada, sin amueblar', 'Maqueta 3D completa, con renders para abrir reservas antes'],
+          ['Anuncio con fotos, pero con dudas sobre la distribución', '[Plano 3D](@servicio-plano): planta cenital a color y vista isométrica'],
+          ['Vas a redecorar o a cambiar el mobiliario', '[Home staging virtual](@servicio-staging) sobre el modelo para comparar estilos'],
+          ['Tienes web propia de reservas directas', '[Visor 3D](@servicio-tour) incrustado y realidad aumentada, incluidos en la maqueta'],
+          ['Gestionas varias viviendas', 'Varias maquetas 3D completas, con presupuesto por volumen'],
         ],
-        note: 'Todas las tarifas, tramos por superficie y extras están en [precios](@precios).',
+        note: 'Cómo presupuestamos cada opción, en [precios](@precios).',
       },
       {
         type: 'prose',
@@ -124,7 +124,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Cuántas noches necesitas para cubrirlo?',
-        answer: 'Divide el coste entre tu tarifa por noche. Ejemplo con supuestos: con un apartamento a 150 € la noche, el plano 3D ({{price:plano3d}} + IVA por planta) se cubre con muy pocas noches reservadas. Y si el modelo te permite abrir el calendario antes de amueblar, cada semana adelantada cuenta.',
+        answer: 'Divide el coste entre tu tarifa por noche. Con el presupuesto cerrado delante, compara cuántas noches reservadas lo cubren: en un apartamento turístico suelen ser pocas. Y si el modelo te permite abrir el calendario antes de amueblar, cada semana adelantada cuenta.',
         body: 'Es un ejemplo con cifras supuestas, no un resultado medido. Haz la cuenta con tu tarifa media y tu ocupación real.',
       },
       plate('es', 'villa_interior_dormitorio'),

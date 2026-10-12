@@ -19,14 +19,14 @@ export default {
   id: 'sobre-nosotros',
   image: 'villa_dormitorios_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Quiénes somos: visualización 3D desde la Costa del Sol',
     description: 'Estudio de visualización 3D fundado en 2026 en la Costa del Sol: cómo trabajamos, qué hace la IA y qué no, y cómo protegemos los planos que nos envías.',
     h1: 'Quiénes somos y cómo trabajamos',
-    lead: 'Somos un estudio de visualización 3D nacido en 2026 en la Costa del Sol. Convertimos planos 2D en modelos 3D amueblados, con renders, visor web y realidad aumentada, para inmobiliarias, promotoras y arquitectos de toda España. Trabajamos con software abierto, precios públicos desde {{price:plano3d}} + IVA y un método que puedes comprobar en nuestra [villa de demostración](@caso-villa).',
+    lead: 'Somos un estudio de visualización 3D nacido en 2026 en la Costa del Sol. Convertimos planos 2D en modelos 3D amueblados, con renders, visor web y realidad aumentada, para inmobiliarias, promotoras y arquitectos de toda España. Trabajamos con software abierto, presupuestos cerrados y un método que puedes comprobar en nuestra [villa de demostración](@caso-villa).',
     breadcrumb: 'Sobre nosotros',
     card: {
       title: 'Sobre nosotros',
@@ -39,7 +39,7 @@ export default {
       ['Idiomas', 'Español e inglés'],
       ['Herramientas', 'Blender, Python, Cycles, glTF, USDZ y model-viewer'],
       ['Inteligencia artificial', 'Para escribir código, nunca para inventar geometría'],
-      ['Precios', 'Públicos y sin IVA, desde {{price:plano3d}}'],
+      ['Precios', 'Presupuesto cerrado y por escrito para cada encargo'],
     ],
     blocks: [
       {
@@ -82,9 +82,9 @@ export default {
       },
       {
         type: 'answer',
-        h2: '¿Por qué publicamos los precios?',
-        answer: 'Porque una agencia tiene que saber cuánto cuesta antes de pedir nada. El plano 3D cuesta {{price:plano3d}} + IVA por planta y la maqueta 3D completa, {{price:maqueta}} + IVA por vivienda, con plazos cerrados. Los buscadores y los asistentes de IA también leen esta web, y preferimos que den la cifra correcta.',
-        body: 'Todas las tarifas, extras y el pack para agencias están en [precios](@precios), junto a una comparativa con lo que publica el mercado.',
+        h2: '¿Por qué damos presupuesto cerrado?',
+        answer: 'Porque una agencia tiene que saber cuánto cuesta antes de encargar nada. Con el plano delante te mandamos un presupuesto cerrado y por escrito, con el plazo y las rondas de cambios, y ese precio no cambia después. Lo que se acuerda por escrito es lo que se paga.',
+        body: 'Cómo calculamos el precio y qué incluye cada opción, en [precios](@precios). Las tarifas que publica el mercado, con sus fuentes, están en nuestras guías de [renders](@guia-precio-render) y de [planos 3D](@guia-precio-plano).',
       },
       {
         type: 'checklist',
@@ -151,7 +151,7 @@ export default {
     title: 'About us: 3D visualisation studio, Costa del Sol',
     description: 'A 3D visualisation studio founded in 2026 on the Costa del Sol: how we work, what AI does and does not do, and how we protect the floor plans you send us.',
     h1: 'Who we are and how we work',
-    lead: 'We are a 3D visualisation studio founded in 2026 on the Costa del Sol. We turn 2D floor plans into furnished 3D models, with renders, a web viewer and augmented reality, for estate agents, developers and architects across Spain. We work with open software, public prices from {{price:plano3d}} + VAT and a method you can check on our [demo villa](@caso-villa).',
+    lead: 'We are a 3D visualisation studio founded in 2026 on the Costa del Sol. We turn 2D floor plans into furnished 3D models, with renders, a web viewer and augmented reality, for estate agents, developers and architects across Spain. We work with open software, fixed quotes and a method you can check on our [demo villa](@caso-villa).',
     breadcrumb: 'About us',
     card: {
       title: 'About us',
@@ -164,7 +164,7 @@ export default {
       ['Languages', 'English and Spanish'],
       ['Tools', 'Blender, Python, Cycles, glTF, USDZ and model-viewer'],
       ['Artificial intelligence', 'For writing code, never for inventing geometry'],
-      ['Prices', 'Public and ex VAT, from {{price:plano3d}}'],
+      ['Prices', 'A fixed written quote for every job'],
     ],
     blocks: [
       {
@@ -207,9 +207,9 @@ export default {
       },
       {
         type: 'answer',
-        h2: 'Why do we publish our prices?',
-        answer: 'Because an agent should know what something costs before asking for anything. A 3D floor plan costs {{price:plano3d}} + VAT per floor and the complete 3D model {{price:maqueta}} + VAT per home, with fixed turnarounds. Search engines and AI assistants read this site too, and we would rather they quote the right figure.',
-        body: 'Every rate, extra and the portfolio pack for agencies is on our [pricing page](@precios), next to a comparison with what the market publishes.',
+        h2: 'Why do we give fixed quotes?',
+        answer: 'Because an agent should know what something costs before ordering anything. With the plan in front of us we send a fixed written quote, with the turnaround and the rounds of changes, and that price does not change afterwards. What is agreed in writing is what you pay.',
+        body: 'How we work out the price and what each option includes are on our [pricing page](@precios). The rates the market publishes, with sources, are in our guides to [render costs](@guia-precio-render) and [3D floor plan costs](@guia-precio-plano).',
       },
       {
         type: 'checklist',

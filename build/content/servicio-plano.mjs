@@ -12,13 +12,13 @@ export default {
   id: 'servicio-plano',
   image: 'villa_planta_cenital_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Plano 2D a 3D para inmobiliarias, sin fotos',
-    description: 'Plano 3D amueblado o modelo 3D completo a partir del plano 2D de tu vivienda, sin fotos ni visita. Desde {{price:plano3d}} + IVA en {{delivery:plano3d}}.',
+    description: 'Plano 3D amueblado o modelo 3D completo a partir del plano 2D de tu vivienda, sin fotos ni visita. Presupuesto cerrado y entrega en {{delivery:plano3d}}.',
     h1: 'Plano 3D para inmobiliarias: del plano 2D al modelo 3D',
-    lead: 'Para inmobiliarias y promotoras: convertimos el plano 2D de una vivienda en un modelo 3D amueblado y a escala, sin fotos ni visita. El plano 3D cuesta desde {{price:plano3d}} + IVA por planta y llega en {{delivery:plano3d}}. La maqueta completa, con renders, visor web y realidad aumentada, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
+    lead: 'Para inmobiliarias y promotoras: convertimos el plano 2D de una vivienda en un modelo 3D amueblado y a escala, sin fotos ni visita. El plano 3D llega en {{delivery:plano3d}} y la maqueta completa, con renders, visor web y realidad aumentada, en {{delivery:maqueta}}, siempre con presupuesto cerrado.',
     breadcrumb: 'Plano 2D a 3D',
     card: {
       title: 'Plano 2D a 3D',
@@ -33,7 +33,7 @@ export default {
       ['Entrada', 'Un plano 2D (PDF, JPG, PNG o DWG), sin fotos ni visita'],
       ['Entregables', 'Planta cenital, vista isométrica y planta 2D; con la maqueta, modelo 3D'],
       ['Formatos', 'PNG en 4K; con la maqueta, GLB, USDZ y BLEND'],
-      ['Precio desde', '{{price:plano3d}} + IVA por planta; maqueta, {{price:maqueta}}'],
+      ['Precio', 'Presupuesto cerrado y por escrito, al ver el plano'],
       ['Plazo', '{{delivery:plano3d}}; maqueta, {{delivery:maqueta}}'],
       ['Revisiones', '{{revisions:plano3d}}; maqueta, {{revisions:maqueta}}'],
       ['Zona', 'Costa del Sol y toda España, en remoto'],
@@ -92,7 +92,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Sirve para vender obra nueva sobre plano?',
-        answer: 'Sí, y es donde más rinde. Una vivienda sin construir no tiene fotos, pero sí planos. Con ellos modelamos cada tipología amueblada y la enseñas en renders, en el visor y en realidad aumentada antes de empezar la obra. Para promociones de hasta 3 tipologías hay un pack desde {{price:promocion}} + IVA.',
+        answer: 'Sí, y es donde más rinde. Una vivienda sin construir no tiene fotos, pero sí planos. Con ellos modelamos cada tipología amueblada y la enseñas en renders, en el visor y en realidad aumentada antes de empezar la obra. Para promociones hay un pack por tipologías, con presupuesto cerrado.',
         body: 'Lo contamos con más detalle en la página para [promotoras de obra nueva](@sol-promotoras).\n\nTrabajamos en remoto desde Marbella para toda España, y sobre todo en la costa malagueña: [maquetas 3D en Marbella](@zona-marbella), [Málaga capital](@zona-malaga) y el resto de la [Costa del Sol](@zona-costa-del-sol).',
       },
       {
@@ -101,12 +101,6 @@ export default {
         label: 'compraventas de vivienda nueva inscritas en la provincia de Málaga en los 12 meses cerrados en el segundo trimestre de 2026: casi un tercio de las 35.839 del total',
         source: { label: 'Colegio de Registradores, Estadística Registral Inmobiliaria', url: ERI.url },
         year: '2.º trimestre de 2026',
-      },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: '¿Cuánto cuesta pasar un plano a 3D?',
-        intro: 'Precios públicos, sin IVA. El plano 3D cuesta {{price:plano3d}} por planta de hasta 150 m² y {{price:plano3d:1}} hasta 300 m². Para compararlo con otras tarifas publicadas, consulta la [guía de precios del plano 3D](@guia-precio-plano).',
       },
       {
         type: 'callout',
@@ -119,11 +113,11 @@ export default {
     faq: [
       {
         q: '¿Cuánto cuesta vuestro plano 3D?',
-        a: 'En {{brand}}, el plano 3D amueblado cuesta {{price:plano3d}} + IVA por planta de hasta 150 m² y {{price:plano3d:1}} hasta 300 m². La maqueta 3D completa, con renders, visor web y realidad aumentada, cuesta {{price:maqueta}} + IVA por vivienda de hasta 150 m² y {{price:maqueta:1}} hasta 300 m². Para comparar con otras tarifas del mercado, consulta la [guía de precios del plano 3D](@guia-precio-plano).',
+        a: 'Depende de la superficie, del número de plantas y de si necesitas solo el plano 3D amueblado o la maqueta 3D completa, con renders, visor web y realidad aumentada. {{brand}} te manda un presupuesto cerrado y por escrito al ver el plano. Para saber qué cobra el mercado, consulta la [guía de precios del plano 3D](@guia-precio-plano).',
       },
       {
         q: '¿Cuánto tardáis en convertir un plano 2D en 3D?',
-        a: '{{brand}} entrega el plano 3D en {{delivery:plano3d}} y la maqueta 3D completa en {{delivery:maqueta}}. Los días cuentan desde que tenemos el plano y una medida de referencia, e incluyen las rondas de cambios si nos las envías en 24 h. Si tienes prisa, hay entrega urgente en 48 horas con un recargo del {{extra:urgente}} sobre el total. Las promociones de obra nueva, de hasta 3 tipologías, tardan {{delivery:promocion}}.',
+        a: '{{brand}} entrega el plano 3D en {{delivery:plano3d}} y la maqueta 3D completa en {{delivery:maqueta}}. Los días cuentan desde que tenemos el plano y una medida de referencia, e incluyen las rondas de cambios si nos las envías en 24 h. Si tienes prisa, hay entrega urgente en 48 horas, con presupuesto aparte. Las promociones de obra nueva tardan {{delivery:promocion}}.',
       },
       {
         q: '¿Qué formatos de plano aceptáis?',
@@ -135,7 +129,7 @@ export default {
       },
       {
         q: '¿Qué entregáis exactamente en el plano 3D?',
-        a: 'El plano 3D de {{brand}} son imágenes PNG en 4K: la planta cenital a color, una vista isométrica amueblada y la planta 2D redibujada en limpio, con {{revisions:plano3d}}. El modelo 3D no se entrega en este pack: los archivos GLB, USDZ y BLEND, el visor y la realidad aumentada van con la [maqueta 3D completa](@precios), desde {{price:maqueta}} + IVA.',
+        a: 'El plano 3D de {{brand}} son imágenes PNG en 4K: la planta cenital a color, una vista isométrica amueblada y la planta 2D redibujada en limpio, con {{revisions:plano3d}}. El modelo 3D no se entrega en este pack: los archivos GLB, USDZ y BLEND, el visor y la realidad aumentada van con la [maqueta 3D completa](@precios).',
       },
       {
         q: '¿Vuestro plano 3D está hecho con IA?',
@@ -159,9 +153,9 @@ export default {
 
   en: {
     title: '2D floor plan to 3D model service in Spain',
-    description: 'A furnished 3D floor plan or a complete 3D model from your 2D plan, with no photos or site visit. From {{price:plano3d}} + VAT in {{delivery:plano3d}}.',
+    description: 'A furnished 3D floor plan or a complete 3D model from your 2D plan, with no photos or site visit. A fixed quote and delivery in {{delivery:plano3d}}.',
     h1: 'Floor plan to 3D model service, no photos needed',
-    lead: 'For estate agents and developers: we turn a home’s 2D floor plan into a furnished, to-scale 3D model, with no photos and no site visit. A 3D floor plan starts at {{price:plano3d}} + VAT per floor, delivered in {{delivery:plano3d}}. The complete model, with renders, web viewer and AR, starts at {{price:maqueta}} + VAT.',
+    lead: 'For estate agents and developers: we turn a home’s 2D floor plan into a furnished, to-scale 3D model, with no photos and no site visit. A 3D floor plan is delivered in {{delivery:plano3d}} and the complete model, with renders, web viewer and AR, in {{delivery:maqueta}}, always with a fixed quote.',
     breadcrumb: 'Floor plan to 3D',
     card: {
       title: 'Floor plan to 3D model',
@@ -176,7 +170,7 @@ export default {
       ['Input', 'One 2D plan (PDF, JPG, PNG or DWG), no photos'],
       ['Deliverables', 'Top-down plan, isometric view and 2D plan; 3D model with the complete package'],
       ['Formats', '4K PNG; with the complete model, GLB, USDZ and BLEND'],
-      ['Price from', '{{price:plano3d}} + VAT per floor; complete model {{price:maqueta}}'],
+      ['Price', 'A fixed written quote, once we see the plan'],
       ['Turnaround', '{{delivery:plano3d}}; complete model {{delivery:maqueta}}'],
       ['Revisions', '{{revisions:plano3d}}; complete model {{revisions:maqueta}}'],
       ['Coverage', 'Costa del Sol, all of Spain and remote clients abroad'],
@@ -235,7 +229,7 @@ export default {
       {
         type: 'answer',
         h2: 'Does it work for off-plan property in Spain?',
-        answer: 'Yes, and that is where it earns its keep. A home that has not been built has no photos, but it does have plans. We model every unit type fully furnished, so buyers abroad can see it in renders, in the viewer and in AR before ground is broken. Developments with up to 3 unit types start at {{price:promocion}} + VAT.',
+        answer: 'Yes, and that is where it earns its keep. A home that has not been built has no photos, but it does have plans. We model every unit type fully furnished, so buyers abroad can see it in renders, in the viewer and in AR before ground is broken. Developments are quoted by unit type, at a fixed price.',
         body: 'More on this on our page about [off-plan 3D visualisation](@sol-promotoras).\n\nWe work remotely from our base in Marbella for clients across Spain and abroad, with a focus on [3D rendering in Marbella and the Costa del Sol](@zona-marbella).',
       },
       {
@@ -244,12 +238,6 @@ export default {
         label: 'new-build home sales registered in Málaga province in the 12 months to Q2 2026: almost a third of the 35,839 total',
         source: { label: 'Colegio de Registradores (Spain’s association of land registrars), Estadística Registral Inmobiliaria', url: ERI.url },
         year: 'Q2 2026',
-      },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'How much does a 3D floor plan cost?',
-        intro: 'Public prices, excluding VAT. A 3D floor plan costs {{price:plano3d}} per floor up to 150 m² and {{price:plano3d:1}} up to 300 m². Market rates for 3D floor plans in Spain, with sources, are in our [3D floor plan cost guide](@guia-precio-plano); all our rates are on the [pricing page](@precios).',
       },
       {
         type: 'callout',
@@ -262,11 +250,11 @@ export default {
     faq: [
       {
         q: 'How much does a 3D floor plan cost?',
-        a: 'In Spain, a 3D floor plan costs about €40 per floor on online platforms and €100 to €800 or more from studios, according to rates published in 2026. At {{brand}} it costs {{price:plano3d}} + VAT per floor up to 150 m², or {{price:plano3d:1}} up to 300 m², and the complete 3D model starts at {{price:maqueta}} + VAT. The sourced comparison is in [how much a 3D floor plan costs in Spain](@guia-precio-plano).',
+        a: 'In Spain, a 3D floor plan costs about €40 per floor on online platforms and €100 to €800 or more from studios, according to rates published in 2026. {{brand}} does not publish rates: we send a fixed written quote for the 3D floor plan or the complete 3D model once we see your plan. The sourced comparison is in [how much a 3D floor plan costs in Spain](@guia-precio-plano).',
       },
       {
         q: 'How long does it take to turn a floor plan into a 3D model?',
-        a: '{{brand}} delivers a 3D floor plan in {{delivery:plano3d}} and the complete 3D model in {{delivery:maqueta}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery in 48 hours carries a {{extra:urgente}} surcharge on the total. Developments of up to 3 unit types take {{delivery:promocion}}.',
+        a: '{{brand}} delivers a 3D floor plan in {{delivery:plano3d}} and the complete 3D model in {{delivery:maqueta}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery in 48 hours is quoted separately. Developments take {{delivery:promocion}}.',
       },
       {
         q: 'Is your 3D floor plan made with AI?',

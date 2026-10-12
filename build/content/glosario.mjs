@@ -8,14 +8,14 @@ export default {
   id: 'glosario',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Glosario de visualización 3D inmobiliaria',
     description: 'Qué es un render, un USDZ, un GLB, AR Quick Look o el modo maqueta: 30 términos de 3D y realidad aumentada inmobiliaria, en menos de 40 palabras cada uno.',
     h1: 'Glosario de 3D y realidad aumentada inmobiliaria',
-    lead: 'Los 30 términos que aparecen al pasar el plano 2D de una vivienda a un modelo 3D y al enseñarla en un visor web o en realidad aumentada, definidos en pocas líneas para inmobiliarias, promotoras y arquitectos. La mayoría se aplican en la maqueta 3D completa, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
+    lead: 'Los 30 términos que aparecen al pasar el plano 2D de una vivienda a un modelo 3D y al enseñarla en un visor web o en realidad aumentada, definidos en pocas líneas para inmobiliarias, promotoras y arquitectos. La mayoría se aplican en la maqueta 3D completa, que entregamos en {{delivery:maqueta}}.',
     breadcrumb: 'Glosario',
     card: {
       title: 'Glosario de 3D inmobiliario',
@@ -39,7 +39,7 @@ export default {
       {
         type: 'cta',
         h2: '¿Quieres tu precio cerrado?',
-        body: 'Envíanos el plano de la vivienda y te decimos precio y plazo de su maqueta 3D: modelo, 6 renders, visor web y realidad aumentada, desde {{price:maqueta}} + IVA.',
+        body: 'Envíanos el plano de la vivienda y te decimos precio y plazo de su maqueta 3D: modelo, 6 renders, visor web y realidad aumentada.',
         service: 'maqueta',
       },
       { type: 'glossary' },
@@ -58,7 +58,7 @@ export default {
     title: 'Glossary of 3D visualisation and AR for property',
     description: 'What is a render, USDZ, GLB, AR Quick Look or cut-away mode? 30 terms in property 3D visualisation and augmented reality, each defined in under 40 words.',
     h1: 'Property 3D and augmented reality glossary',
-    lead: 'Plain-English definitions of the 30 terms you meet when a 2D floor plan becomes a 3D model shown in a web viewer or in augmented reality, written for estate agents, developers and architects. Spanish terms such as *infografía* and *cota* are covered too. The complete 3D model starts at {{price:maqueta}} + VAT, delivered in {{delivery:maqueta}}.',
+    lead: 'Plain-English definitions of the 30 terms you meet when a 2D floor plan becomes a 3D model shown in a web viewer or in augmented reality, written for estate agents, developers and architects. Spanish terms such as *infografía* and *cota* are covered too. The complete 3D model is delivered in {{delivery:maqueta}}.',
     breadcrumb: 'Glossary',
     card: {
       title: 'Property 3D glossary',
@@ -82,7 +82,7 @@ export default {
       {
         type: 'cta',
         h2: 'Want a fixed price for your property?',
-        body: 'Send us the floor plan and we reply with the price and turnaround of its complete 3D model: the model, 6 renders, a web viewer and augmented reality, from {{price:maqueta}} + VAT.',
+        body: 'Send us the floor plan and we reply with the price and turnaround of its complete 3D model: the model, 6 renders, a web viewer and augmented reality.',
         service: 'maqueta',
       },
       { type: 'glossary' },

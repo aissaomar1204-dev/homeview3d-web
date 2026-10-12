@@ -18,13 +18,13 @@ export default {
   id: 'guia-plano-2d-3d',
   image: 'villa_plano_lineas',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Cómo convertir un plano 2D en 3D: gratis, IA o estudio',
     description: 'Tres formas de pasar un plano 2D a 3D: con un programa gratuito, con IA o con un estudio. Qué obtienes, cuánto tardas y cuándo compensa cada una.',
     h1: 'Cómo convertir un plano 2D en 3D',
-    lead: 'Hay tres formas de convertir un plano 2D en 3D: dibujarlo tú con un programa gratuito como Sweet Home 3D, subirlo a una herramienta de IA que lo interpreta en minutos, o encargarlo a un estudio que lo modela a escala. Las dos primeras cuestan tu tiempo; en {{brand}}, desde {{price:plano3d}} + IVA en {{delivery:plano3d}}.',
+    lead: 'Hay tres formas de convertir un plano 2D en 3D: dibujarlo tú con un programa gratuito como Sweet Home 3D, subirlo a una herramienta de IA que lo interpreta en minutos, o encargarlo a un estudio que lo modela a escala. Las dos primeras cuestan tu tiempo; {{brand}} lo entrega en {{delivery:plano3d}}.',
     breadcrumb: 'Plano 2D a 3D',
     card: {
       title: 'Cómo convertir un plano 2D en 3D',
@@ -36,7 +36,7 @@ export default {
       ['IA generativa', 'Una imagen, no un modelo medible'],
       ['Estudio de visualización', 'Modelo a escala, renders, visor y AR'],
       ['Entrada mínima', 'Un plano en PDF, JPG o PNG'],
-      ['Plano 3D en {{brand}}', 'Desde {{price:plano3d}} + IVA, {{delivery:plano3d}}'],
+      ['Plano 3D en {{brand}}', 'Presupuesto cerrado, en {{delivery:plano3d}}'],
     ],
     hero: {
       image: 'villa_plano_lineas',
@@ -61,7 +61,7 @@ export default {
           ['Qué obtienes', 'Un modelo sencillo que dibujas tú', 'Un modelo o una imagen 3D generados desde tu plano', 'Una imagen con aspecto 3D', 'Modelo a escala amueblado, renders, visor y realidad aumentada'],
           ['Tiempo', 'Horas, según tu práctica', 'Minutos, más la revisión', 'Segundos por imagen', '{{delivery:plano3d}} el plano 3D, {{delivery:maqueta}} la maqueta completa'],
           ['Fidelidad al plano', 'La que tú dibujes', 'Depende de la calidad del plano que subas', 'No garantizada: puede mover huecos o cambiar proporciones', 'Revisada muro a muro contra el plano'],
-          ['Coste', 'Gratis, con límites en las versiones gratuitas', 'Prueba gratuita o suscripción', 'Gratis o suscripción', 'Desde {{price:plano3d}} + IVA'],
+          ['Coste', 'Gratis, con límites en las versiones gratuitas', 'Prueba gratuita o suscripción', 'Gratis o suscripción', 'Presupuesto cerrado'],
           ['Para vender una vivienda', 'Resultado básico, pensado para uso propio', 'Sirve para una imagen rápida si la revisas', 'Solo como imagen orientativa y etiquetada', 'Pensado para anuncios, dosieres y obra nueva'],
         ],
         note: 'Las condiciones de cada herramienta cambian: comprueba en su web qué incluye la versión gratuita y si permite uso comercial antes de publicar el resultado.',
@@ -94,7 +94,7 @@ export default {
         type: 'answer',
         h2: '¿Cuándo compensa encargarlo a un estudio?',
         answer: 'Cuando el 3D va a ayudarte a vender una vivienda. Si el resultado se publica en un anuncio, se enseña a un comprador que vive fuera o representa obra nueva que aún no existe, necesitas que todas las vistas coincidan con el plano, que el material aguante una revisión y que llegue en días sin que tú dediques horas.',
-        body: 'Estas son las situaciones en las que un estudio suele salir más a cuenta que hacerlo tú:\n\n- **Obra nueva o venta sobre plano:** no hay fotos que redecorar, solo el plano.\n- **Varias salidas del mismo modelo:** plano 3D, [renders](@servicio-renders), [visor 3D](@servicio-tour) y [realidad aumentada](@servicio-ar), coherentes entre sí.\n- **Volumen:** si publicas varias viviendas al mes, el pack cartera de 5 maquetas completas cuesta {{volume}} + IVA.\n- **Tiempo:** cada hora que pasas dibujando muros es una hora sin captar ni atender compradores.',
+        body: 'Estas son las situaciones en las que un estudio suele salir más a cuenta que hacerlo tú:\n\n- **Obra nueva o venta sobre plano:** no hay fotos que redecorar, solo el plano.\n- **Varias salidas del mismo modelo:** plano 3D, [renders](@servicio-renders), [visor 3D](@servicio-tour) y [realidad aumentada](@servicio-ar), coherentes entre sí.\n- **Volumen:** si publicas varias viviendas al mes, el presupuesto por volumen baja el precio por vivienda.\n- **Tiempo:** cada hora que pasas dibujando muros es una hora sin captar ni atender compradores.',
       },
       {
         type: 'table',
@@ -107,7 +107,7 @@ export default {
           ['Quiero redecorar las fotos de un piso que ya existe', 'Staging con IA sobre fotos, o [home staging virtual sobre el modelo](@servicio-staging)', 'Con buenas fotos, la IA es barata; si necesitas coherencia entre vistas, el modelo'],
           ['Vendo un piso vacío de segunda mano', '[Plano 3D amueblado](@servicio-plano)', 'El comprador entiende la distribución y la escala'],
           ['Vendo obra nueva sobre plano a compradores de fuera', 'Maqueta 3D completa', 'Renders, visor y realidad aumentada desde el plano, sin piso piloto'],
-          ['Publico 5 viviendas o más cada mes', 'Pack cartera', '{{volume}} + IVA por 5 maquetas completas'],
+          ['Publico 5 viviendas o más cada mes', 'Estudio, con presupuesto por volumen', 'El precio por vivienda baja y cada una sale igual'],
         ],
       },
       {
@@ -144,11 +144,11 @@ export default {
     faq: [
       {
         q: '¿Cómo puedo generar un plano en 3D?',
-        a: 'Puedes generar un plano en 3D de tres formas: dibujándolo en un programa gratuito como Sweet Home 3D sobre la imagen de tu plano, subiendo el plano a un conversor con IA que levanta un modelo en minutos, o encargándolo a un estudio. {{brand}} lo modela a escala desde un PDF o una imagen y entrega el plano 3D desde {{price:plano3d}} + IVA en {{delivery:plano3d}}.',
+        a: 'Puedes generar un plano en 3D de tres formas: dibujándolo en un programa gratuito como Sweet Home 3D sobre la imagen de tu plano, subiendo el plano a un conversor con IA que levanta un modelo en minutos, o encargándolo a un estudio. {{brand}} lo modela a escala desde un PDF o una imagen y entrega el plano 3D en {{delivery:plano3d}}, con presupuesto cerrado.',
       },
       {
         q: '¿Qué programa gratuito puedo usar para crear planos 3D?',
-        a: 'Sweet Home 3D es gratuito y de código abierto, y permite importar tu plano como fondo y verlo en 3D. Floorplanner tiene un plan gratuito de 5 proyectos con exportación en baja resolución, SketchUp Free funciona en el navegador y Blender es gratuito incluso para uso comercial, aunque más difícil. Si prefieres no dedicar horas, {{brand}} hace el plano 3D desde {{price:plano3d}} + IVA.',
+        a: 'Sweet Home 3D es gratuito y de código abierto, y permite importar tu plano como fondo y verlo en 3D. Floorplanner tiene un plan gratuito de 5 proyectos con exportación en baja resolución, SketchUp Free funciona en el navegador y Blender es gratuito incluso para uso comercial, aunque más difícil. Si prefieres no dedicar horas, {{brand}} hace el plano 3D por ti, con presupuesto cerrado.',
       },
       {
         q: '¿Puedo convertir un plano en PDF a 3D?',
@@ -156,11 +156,11 @@ export default {
       },
       {
         q: '¿Qué IA convierte dibujos en modelos 3D?',
-        a: 'Para planos de vivienda, los conversores con IA, como el reconocimiento de planos de Planner 5D, levantan un modelo a partir de la imagen del plano. Las IA generativas de chat devuelven imágenes, no modelos. En los dos casos conviene revisar muros y huecos contra el plano original. {{brand}} lo hace muro a muro y entrega el modelo con renders, visor y realidad aumentada desde {{price:maqueta}} + IVA.',
+        a: 'Para planos de vivienda, los conversores con IA, como el reconocimiento de planos de Planner 5D, levantan un modelo a partir de la imagen del plano. Las IA generativas de chat devuelven imágenes, no modelos. En los dos casos conviene revisar muros y huecos contra el plano original. {{brand}} lo hace muro a muro y entrega el modelo con renders, visor y realidad aumentada.',
       },
       {
         q: '¿Cómo puedo hacer un render desde un plano?',
-        a: 'Primero hay que convertir el plano en un modelo 3D; después se asignan materiales, se ilumina la escena, se coloca la cámara y se calcula la imagen con un motor de render, como Cycles en Blender. Con un programa gratuito puedes hacerlo tú. En {{brand}}, 6 renders en 4K van incluidos en la maqueta 3D completa, desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+        a: 'Primero hay que convertir el plano en un modelo 3D; después se asignan materiales, se ilumina la escena, se coloca la cámara y se calcula la imagen con un motor de render, como Cycles en Blender. Con un programa gratuito puedes hacerlo tú. En {{brand}}, 6 renders en 4K van incluidos en la maqueta 3D completa, que entregamos en {{delivery:maqueta}}.',
       },
       {
         q: '¿Se puede pasar a 3D un plano sin medidas?',
@@ -168,7 +168,7 @@ export default {
       },
       {
         q: '¿Cuánto cuesta que un estudio convierta mi plano a 3D?',
-        a: 'Un plano 3D cuesta en España entre 100 y 800 € por planta según el nivel de acabado, y hay plataformas en línea desde 40 €. En {{brand}}, el plano 3D cuesta {{price:plano3d}} + IVA por planta de hasta 150 m² y la maqueta completa con renders, visor y realidad aumentada, desde {{price:maqueta}} + IVA. Tienes todos los rangos en [cuánto cuesta un plano 3D](@guia-precio-plano).',
+        a: 'Un plano 3D cuesta en España entre 100 y 800 € por planta según el nivel de acabado, y hay plataformas en línea desde 40 €. En {{brand}} no publicamos tarifas: te mandamos un presupuesto cerrado del plano 3D o de la maqueta completa al ver tu plano. Tienes todos los rangos del mercado en [cuánto cuesta un plano 3D](@guia-precio-plano).',
       },
       {
         q: '¿Qué tengo que revisar en un plano 3D antes de publicarlo?',

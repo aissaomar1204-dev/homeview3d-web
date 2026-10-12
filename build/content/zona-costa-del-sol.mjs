@@ -17,7 +17,7 @@ const MIVAU = 'https://apps.fomento.gob.es/BoletinOnline2/?nivel=2&orden=3400000
 const faq = [
   {
     q: '¿Trabajáis en toda la Costa del Sol?',
-    a: 'Sí, de Sotogrande a Nerja y en el resto de España. {{brand}} construye el modelo 3D desde el plano, sin visitar la vivienda, así que el precio y el plazo son los mismos en Estepona, Mijas, Fuengirola o la Axarquía: la maqueta 3D completa cuesta desde {{price:maqueta}} + IVA y se entrega en {{delivery:maqueta}}.',
+    a: 'Sí, de Sotogrande a Nerja y en el resto de España. {{brand}} construye el modelo 3D desde el plano, sin visitar la vivienda, así que el precio y el plazo son los mismos en Estepona, Mijas, Fuengirola o la Axarquía: la maqueta 3D completa se entrega en {{delivery:maqueta}}, con presupuesto cerrado antes de empezar.',
   },
   {
     q: '¿Os desplazáis a Estepona, Benahavís o Sotogrande?',
@@ -25,11 +25,11 @@ const faq = [
   },
   {
     q: '¿Cuánto cuesta un render en la Costa del Sol?',
-    a: 'Con {{brand}}, un render adicional en 4K sobre un modelo ya construido cuesta {{extra:render}} + IVA, y la maqueta 3D completa, con varios renders, visor web y realidad aumentada, parte de {{price:maqueta}} + IVA por vivienda. Para una promoción, el pack parte de {{price:promocion}} + IVA. Los rangos de otros estudios de España están en nuestra [guía de precios de renders](@guia-precio-render).',
+    a: 'Depende de cuántas imágenes necesites y de si quieres solo renders o la maqueta 3D completa, con varios renders, visor web y realidad aumentada. {{brand}} te manda un presupuesto cerrado en cuanto ve el plano, y los renders adicionales se hacen sobre el mismo modelo. Los rangos de otros estudios de España están en nuestra [guía de precios de renders](@guia-precio-render).',
   },
   {
     q: '¿Podéis modelar todas las tipologías de una promoción en Estepona?',
-    a: 'Sí. El pack de promoción de {{brand}} incluye hasta 3 tipologías en un mismo visor, con selector para pasar de una a otra, renders 4K y realidad aumentada para la sala de ventas y las ferias. Cada tipología adicional cuesta {{extra:tipologia}} + IVA. Solo necesitamos las plantas del proyecto y, si existe, la memoria de calidades.',
+    a: 'Sí. El pack de promoción de {{brand}} incluye hasta 3 tipologías en un mismo visor, con selector para pasar de una a otra, renders 4K y realidad aumentada para la sala de ventas y las ferias. Si la promoción tiene más tipologías, se suman al mismo presupuesto. Solo necesitamos las plantas del proyecto y, si existe, la memoria de calidades.',
   },
   {
     q: '¿Sirve para villas con jardín y piscina?',
@@ -51,13 +51,13 @@ export default {
   id: 'zona-costa-del-sol',
   image: 'villa_dormitorios_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Renders e infografías 3D en la Costa del Sol',
-    description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano en Estepona, Benahavís, Mijas, Fuengirola, Nerja o Sotogrande. Desde {{price:maqueta}} + IVA.',
+    description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano en Estepona, Benahavís, Mijas, Fuengirola, Nerja o Sotogrande, con presupuesto cerrado.',
     h1: 'Renders y modelos 3D en la Costa del Sol',
-    lead: '{{brand}}, estudio de visualización 3D con base en Mijas, en la Costa del Sol, hace renders, modelos 3D con visor web y realidad aumentada sin app a partir del plano de viviendas de toda la Costa del Sol, de Sotogrande a Nerja, para agencias y promotoras. Desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D con base en Mijas, en la Costa del Sol, hace renders, modelos 3D con visor web y realidad aumentada sin app a partir del plano de viviendas de toda la Costa del Sol, de Sotogrande a Nerja, para agencias y promotoras. Presupuesto cerrado por vivienda y entrega en {{delivery:maqueta}}.',
     breadcrumb: 'Costa del Sol',
     card: {
       title: 'Costa del Sol',
@@ -74,7 +74,7 @@ export default {
       ['Compras por extranjeros', '37,01 % en la provincia (2.º trimestre de 2026)'],
       ['No residentes', '27,9 % de las compraventas de la provincia en 2025'],
       ['Entrada', 'El plano de la vivienda, sin visita'],
-      ['Precio', 'Desde {{price:maqueta}} + IVA'],
+      ['Precio', 'Presupuesto cerrado antes de empezar'],
       ['Plazo', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -122,7 +122,7 @@ export default {
       {
         type: 'prose',
         h2: 'Mijas y Fuengirola: del adosado al piso',
-        body: 'Mijas sumó 3.190 compraventas en 2025, en su mayoría de segunda mano: villas, adosados y apartamentos en las urbanizaciones de la costa. Aquí la maqueta completa ayuda a vender a quien compara varias viviendas parecidas en pocos días.\n\nFuengirola, más urbana y compacta, registró 2.169 compraventas, con un 28,6 % de obra nueva. Predominan los pisos, y para muchos anuncios basta un [plano 3D](@servicio-plano) a color que explique la distribución, desde {{price:plano3d}} + IVA por planta.',
+        body: 'Mijas sumó 3.190 compraventas en 2025, en su mayoría de segunda mano: villas, adosados y apartamentos en las urbanizaciones de la costa. Aquí la maqueta completa ayuda a vender a quien compara varias viviendas parecidas en pocos días.\n\nFuengirola, más urbana y compacta, registró 2.169 compraventas, con un 28,6 % de obra nueva. Predominan los pisos, y para muchos anuncios basta un [plano 3D](@servicio-plano) a color que explique la distribución.',
       },
       {
         type: 'prose',

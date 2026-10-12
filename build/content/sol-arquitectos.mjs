@@ -18,7 +18,7 @@ const faq = [
   },
   {
     q: '¿Me entregáis el modelo 3D para seguir trabajando con él?',
-    a: 'Sí. Además de los renders 4K y del visor web, {{brand}} entrega el modelo en GLB para web y Android, en USDZ para iPhone y en BLEND, el archivo editable de Blender. Así puedes reutilizar la geometría amueblada en las presentaciones de ese proyecto o pedirnos nuevas vistas más adelante, cada render adicional a {{extra:render}} + IVA.',
+    a: 'Sí. Además de los renders 4K y del visor web, {{brand}} entrega el modelo en GLB para web y Android, en USDZ para iPhone y en BLEND, el archivo editable de Blender. Así puedes reutilizar la geometría amueblada en las presentaciones de ese proyecto o pedirnos nuevas vistas más adelante, sobre el mismo modelo.',
   },
   {
     q: '¿Cuál es la mejor IA para renders arquitectónicos?',
@@ -26,11 +26,11 @@ const faq = [
   },
   {
     q: '¿Cuánto cuesta un render adicional sobre el modelo?',
-    a: 'Con el modelo ya construido, cada render adicional en 4K cuesta {{extra:render}} + IVA en {{brand}}. La maqueta 3D completa, con el modelo, varios renders, visor web y realidad aumentada, parte de {{price:maqueta}} + IVA por vivienda. Si quieres comparar con otras tarifas del mercado español, tienes los rangos publicados en nuestra [guía de precios de renders](@guia-precio-render).',
+    a: 'Con el modelo ya construido, cada render adicional en 4K se hace sobre la misma geometría, así que cuesta poco trabajo. La maqueta 3D completa de {{brand}}, con el modelo, varios renders, visor web y realidad aumentada, va con presupuesto cerrado al ver las plantas. Si quieres comparar con otras tarifas del mercado español, tienes los rangos publicados en nuestra [guía de precios de renders](@guia-precio-render).',
   },
   {
     q: '¿Trabajáis con interioristas y empresas de reformas?',
-    a: 'Sí. Para un interiorista, {{brand}} amuebla y materializa el modelo con tu propuesta y la cambia de estilo sin rehacerlo. Para una empresa de reformas, modelamos el estado actual y la propuesta sobre el mismo plano, de modo que el cliente compara antes y después en renders, en el visor y en realidad aumentada. El home staging virtual cuesta {{extra:staging}} + IVA por estancia.',
+    a: 'Sí. Para un interiorista, {{brand}} amuebla y materializa el modelo con tu propuesta y la cambia de estilo sin rehacerlo. Para una empresa de reformas, modelamos el estado actual y la propuesta sobre el mismo plano, de modo que el cliente compara antes y después en renders, en el visor y en realidad aumentada. El home staging virtual se presupuesta por estancia.',
   },
 ];
 
@@ -40,13 +40,13 @@ export default {
   id: 'sol-arquitectos',
   image: 'villa_muros_completos_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Visualización 3D para arquitectos e interioristas',
-    description: 'Del plano al modelo 3D con renders 4K, visor web y AR para presentar e iterar tu proyecto, con cambios en minutos. Desde {{price:maqueta}} + IVA.',
+    description: 'Del plano al modelo 3D con renders 4K, visor web y AR para presentar e iterar tu proyecto, con cambios en minutos y presupuesto cerrado.',
     h1: 'Renders y modelo 3D para arquitectos e interioristas',
-    lead: 'Convertimos tus plantas en un modelo 3D amueblado con renders 4K, visor web y realidad aumentada, para que tu cliente entienda el proyecto y lo apruebe antes. Como el modelo se construye por código, cada cambio se regenera en minutos. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    lead: 'Convertimos tus plantas en un modelo 3D amueblado con renders 4K, visor web y realidad aumentada, para que tu cliente entienda el proyecto y lo apruebe antes. Como el modelo se construye por código, cada cambio se regenera en minutos. Entrega en {{delivery:maqueta}}, con presupuesto cerrado.',
     breadcrumb: 'Arquitectos e interioristas',
     card: {
       title: 'Para arquitectos e interioristas',
@@ -63,8 +63,8 @@ export default {
       ['Entregas', 'Renders 4K, visor web, AR y archivos 3D'],
       ['Formatos 3D', 'GLB, USDZ y BLEND'],
       ['Cambios', '{{revisions:maqueta}}, regenerados en minutos'],
-      ['Precio', 'Desde {{price:maqueta}} + IVA'],
-      ['Render adicional', '{{extra:render}} + IVA'],
+      ['Precio', 'Presupuesto cerrado antes de empezar'],
+      ['Render adicional', 'Sobre el mismo modelo'],
       ['Plazo', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -114,8 +114,8 @@ export default {
       {
         type: 'answer',
         h2: '¿Compensa externalizar los renders?',
-        answer: 'Compara el precio con tus horas. Ejemplo con supuestos: si preparar tú el modelo, los materiales y los renders te lleva 20 horas y tu hora de estudio vale 50 €, son 1.000 € de tiempo que no dedicas a proyectar. La maqueta 3D completa cuesta {{price:maqueta}} + IVA e incluye además visor web y realidad aumentada.',
-        body: 'Si tus horas multiplicadas por tu tarifa superan el precio del encargo, externalizar compensa. Y si no, quizá te interese solo la parte que no haces: el visor y la realidad aumentada para presentar al cliente. Consulta todas las tarifas en [precios](@precios).',
+        answer: 'Compara el precio con tus horas. Ejemplo con supuestos: si preparar tú el modelo, los materiales y los renders te lleva 20 horas y tu hora de estudio vale 50 €, son 1.000 € de tiempo que no dedicas a proyectar. Compáralo con el presupuesto cerrado de la maqueta 3D completa, que incluye además visor web y realidad aumentada.',
+        body: 'Si tus horas multiplicadas por tu tarifa superan el precio del encargo, externalizar compensa. Y si no, quizá te interese solo la parte que no haces: el visor y la realidad aumentada para presentar al cliente. Cómo presupuestamos, en [precios](@precios).',
       },
       plate('es', 'villa_dormitorios_opaco'),
       {
@@ -126,8 +126,7 @@ export default {
           ['Horas de modelado, materiales y renders (supuesto)', '20 h'],
           ['Coste de tu hora de estudio (supuesto)', '50 €'],
           ['Coste interno estimado', '1.000 €'],
-          ['Maqueta 3D completa con visor y realidad aumentada', '{{price:maqueta}} + IVA'],
-          ['Regla práctica', 'Si horas × tarifa supera el precio, externalizar compensa'],
+          ['Regla práctica', 'Si horas × tarifa supera el presupuesto del encargo, externalizar compensa'],
         ],
         note: 'Cifras supuestas para mostrar el cálculo. Pon tus propias horas y tu tarifa.',
       },

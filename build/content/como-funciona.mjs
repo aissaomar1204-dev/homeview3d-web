@@ -15,14 +15,14 @@ export default {
   id: 'como-funciona',
   image: 'villa_muros_completos_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Cómo funciona: del plano 2D al modelo 3D en 5 pasos',
     description: 'Así convertimos tu plano en un modelo 3D con renders, visor y realidad aumentada: 5 pasos en {{delivery:maqueta}}, qué necesitamos y cómo revisamos la calidad.',
     h1: 'Cómo funciona: del plano 2D al modelo 3D en 5 pasos',
-    lead: 'Nos envías el plano, lo modelamos a escala con scripts de Python en Blender, lo vestimos con materiales propios, lo revisas en un enlace privado y te entregamos renders, visor web y realidad aumentada. La maqueta completa tarda {{delivery:maqueta}} y cuesta desde {{price:maqueta}} + IVA.',
+    lead: 'Nos envías el plano, lo modelamos a escala con scripts de Python en Blender, lo vestimos con materiales propios, lo revisas en un enlace privado y te entregamos renders, visor web y realidad aumentada. La maqueta completa tarda {{delivery:maqueta}}, con presupuesto cerrado antes de empezar.',
     breadcrumb: 'Cómo funciona',
     card: {
       title: 'Cómo funciona',
@@ -68,7 +68,7 @@ export default {
           ['Revisión', 'Día 4', 'Te enviamos el visor en un enlace privado y aplicamos tus cambios', 'Revisas y pides cambios: {{revisions:maqueta}}'],
           ['Entrega', 'Día 5', 'Renders en 4K, visor publicado, código iframe y archivos de realidad aumentada', 'Publicas en tu web, portales y redes'],
         ],
-        note: 'Con urgencia, las mismas fases se comprimen en 48 horas, con un recargo del {{extra:urgente}} sobre el total. Las promociones de hasta 3 tipologías tardan {{delivery:promocion}}.',
+        note: 'Con urgencia, las mismas fases se comprimen en 48 horas, con presupuesto aparte. Las promociones de hasta 3 tipologías tardan {{delivery:promocion}}.',
       },
       {
         type: 'table',
@@ -127,7 +127,7 @@ export default {
           ['Realidad aumentada', 'USDZ para iPhone y iPad; GLB para Android', 'Maqueta 1:20 sobre la mesa o vivienda a tamaño real'],
           ['Modelo 3D', 'GLB, USDZ y BLEND', 'Reutilizarlo con tu arquitecto o en otra herramienta'],
         ],
-        note: 'El visor queda alojado 12 meses; después, la renovación cuesta {{extra:hosting}} + IVA por vivienda y año. Los detalles de compatibilidad por dispositivo están en [realidad aumentada sin app](@servicio-ar).',
+        note: 'El visor queda alojado 12 meses; antes de que venza te pasamos el precio de la renovación. Los detalles de compatibilidad por dispositivo están en [realidad aumentada sin app](@servicio-ar).',
       },
       { type: 'faq' },
     ],
@@ -174,7 +174,7 @@ export default {
     title: 'How it works: from 2D floor plan to 3D in 5 steps',
     description: 'How we turn your floor plan into a 3D model with renders, a viewer and AR: 5 steps in {{delivery:maqueta}}, what we need from you and how we check quality.',
     h1: 'How it works: from 2D floor plan to 3D in 5 steps',
-    lead: 'You send us the floor plan, we model it to scale with Python scripts in Blender, finish it with our own materials, you review it on a private link, and we deliver renders, a web viewer and augmented reality. The complete model takes {{delivery:maqueta}} and starts at {{price:maqueta}} + VAT.',
+    lead: 'You send us the floor plan, we model it to scale with Python scripts in Blender, finish it with our own materials, you review it on a private link, and we deliver renders, a web viewer and augmented reality. The complete model takes {{delivery:maqueta}}, with a fixed quote before work starts.',
     breadcrumb: 'How it works',
     card: {
       title: 'How it works',
@@ -220,7 +220,7 @@ export default {
           ['Review', 'Day 4', 'We send the viewer on a private link and apply your changes', 'Review and request changes: {{revisions:maqueta}}'],
           ['Delivery', 'Day 5', '4K renders, live viewer, iframe code and augmented reality files', 'Publish on your site, portals and social media'],
         ],
-        note: 'On a rush job the same stages are compressed into 48 hours, with a {{extra:urgente}} surcharge on the total. Developments of up to 3 unit types take {{delivery:promocion}}.',
+        note: 'On a rush job the same stages are compressed into 48 hours, quoted separately. Developments of up to 3 unit types take {{delivery:promocion}}.',
       },
       {
         type: 'table',
@@ -279,7 +279,7 @@ export default {
           ['Augmented reality', 'USDZ for iPhone and iPad; GLB for Android', '1:20 tabletop model or the home at real size'],
           ['3D model', 'GLB, USDZ and BLEND', 'Reuse with your architect or in other software'],
         ],
-        note: 'The viewer is hosted for 12 months; after that, renewal costs {{extra:hosting}} + VAT per home per year. Device-by-device compatibility is covered on [AR property viewing](@servicio-ar).',
+        note: 'The viewer is hosted for 12 months; before it expires we send you the renewal price. Device-by-device compatibility is covered on [AR property viewing](@servicio-ar).',
       },
       { type: 'faq' },
     ],

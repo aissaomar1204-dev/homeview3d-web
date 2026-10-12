@@ -484,8 +484,8 @@ function blockMd(b, h, ctxInfo) {
       break;
     }
     case 'pages': head(); intro(); out.push(cardList(b.ids || [], h, ctxInfo.entries)); break;
-    case 'pricing': head(L.pricing); intro(); out.push(pricingTables(h, b.variant)); break;
-    case 'calculator': head(L.calculator); intro(); out.push(calculatorTable(h)); break;
+    case 'pricing': if (!pricing.public) break; head(L.pricing); intro(); out.push(pricingTables(h, b.variant)); break;
+    case 'calculator': if (!pricing.public) break; head(L.calculator); intro(); out.push(calculatorTable(h)); break;
     case 'guarantees': head(L.guarantees); out.push(pricing.guarantees[h.lang].map((g) => `- ${g}`).join('\n')); break;
     case 'stat': out.push(`> **${h.plain(b.value)}** ${h.inline(b.label)} (${L.source}: [${h.plain(b.source.label)}](${b.source.url}), ${b.year}).`); break;
     case 'callout': {

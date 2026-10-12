@@ -23,14 +23,14 @@ export default {
   id: 'guia-ar',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Ver una casa en realidad aumentada: iPhone y Android',
     description: 'Paso a paso para ver una vivienda en realidad aumentada en iPhone, iPad o Android sin instalar nada: requisitos, maqueta 1:20, tamaño real y soluciones.',
     h1: 'Cómo ver una vivienda en realidad aumentada, paso a paso',
-    lead: 'Para ver una vivienda en realidad aumentada basta un iPhone o iPad con iOS 12 o posterior, o un Android compatible con ARCore: tocas el botón, apuntas a la mesa o al suelo y aparece, sin instalar nada. Aquí tienes los pasos y qué hacer si falla. {{brand}} la incluye en cada maqueta 3D, desde {{price:maqueta}} + IVA.',
+    lead: 'Para ver una vivienda en realidad aumentada basta un iPhone o iPad con iOS 12 o posterior, o un Android compatible con ARCore: tocas el botón, apuntas a la mesa o al suelo y aparece, sin instalar nada. Aquí tienes los pasos y qué hacer si falla. {{brand}} la incluye en cada maqueta 3D.',
     breadcrumb: 'Ver en realidad aumentada',
     card: {
       title: 'Cómo ver una vivienda en realidad aumentada',
@@ -195,7 +195,7 @@ export default {
       },
       {
         q: '¿Cómo mando la realidad aumentada a un cliente?',
-        a: 'Con el enlace de la página de la vivienda, por WhatsApp o por email, y con un código QR en carteles y folletos. No envíes el archivo suelto: la página elige el formato correcto para iPhone o Android. {{brand}} incluye el enlace, el visor y la realidad aumentada en la maqueta 3D completa, desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+        a: 'Con el enlace de la página de la vivienda, por WhatsApp o por email, y con un código QR en carteles y folletos. No envíes el archivo suelto: la página elige el formato correcto para iPhone o Android. {{brand}} incluye el enlace, el visor y la realidad aumentada en la maqueta 3D completa, que entrega en {{delivery:maqueta}}.',
       },
     ],
     related: ['servicio-ar', 'caso-villa', 'servicio-tour', 'guia-matterport', 'sol-inmobiliarias'],
@@ -210,7 +210,7 @@ export default {
     title: 'How to view a property in AR on iPhone and Android',
     description: 'Step by step: view a home in augmented reality on iPhone, iPad or Android with nothing to install. Requirements, 1:20 tabletop or real size, and quick fixes.',
     h1: 'How to view a property in augmented reality, step by step',
-    lead: 'To view a home in augmented reality you need an iPhone or iPad on iOS 12 or later, or an ARCore-compatible Android phone: tap the button, point at a table or the floor and the property appears, with nothing to install. Here are the steps and the fixes. {{brand}} includes AR with every 3D model, from {{price:maqueta}} + VAT.',
+    lead: 'To view a home in augmented reality you need an iPhone or iPad on iOS 12 or later, or an ARCore-compatible Android phone: tap the button, point at a table or the floor and the property appears, with nothing to install. Here are the steps and the fixes. {{brand}} includes AR with every 3D model.',
     breadcrumb: 'View a property in AR',
     card: {
       title: 'How to view a property in augmented reality',
@@ -375,7 +375,7 @@ export default {
       },
       {
         q: 'How do I send the AR view to a buyer abroad?',
-        a: 'Send the link to the property page by WhatsApp or email, and put a QR code on boards and brochures. Don’t send the bare file: the page picks the right format for iPhone or Android. {{brand}} includes the link, the viewer and augmented reality with the complete 3D model, from {{price:maqueta}} + VAT, delivered in {{delivery:maqueta}}.',
+        a: 'Send the link to the property page by WhatsApp or email, and put a QR code on boards and brochures. Don’t send the bare file: the page picks the right format for iPhone or Android. {{brand}} includes the link, the viewer and augmented reality with the complete 3D model, delivered in {{delivery:maqueta}}.',
       },
     ],
     related: ['servicio-ar', 'caso-villa', 'servicio-tour', 'guia-matterport', 'sol-promotoras'],

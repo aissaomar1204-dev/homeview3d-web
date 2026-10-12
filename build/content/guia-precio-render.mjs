@@ -21,14 +21,14 @@ export default {
   id: 'guia-precio-render',
   image: 'villa_salon_dormitorio',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: '¿Cuánto cuesta un render 3D en España? Precios 2026',
     description: 'Un render 3D cuesta en España de 200 a 450 € por imagen interior y de 300 a 1.200 € por exterior. Tabla de precios 2026 con fuentes, factores y ejemplos.',
     h1: '¿Cuánto cuesta un render 3D en España en 2026?',
-    lead: 'Un render 3D profesional cuesta en España entre 200 y 450 € por imagen interior y entre 300 y 1.200 € por exterior de vivienda, según las tarifas publicadas en 2026. El low-cost baja a 50 a 150 €. En {{brand}}, la maqueta 3D desde {{price:maqueta}} + IVA incluye 6 renders, visor y realidad aumentada, en {{delivery:maqueta}}.',
+    lead: 'Un render 3D profesional cuesta en España entre 200 y 450 € por imagen interior y entre 300 y 1.200 € por exterior de vivienda, según las tarifas publicadas en 2026. El low-cost baja a 50 a 150 €. En {{brand}}, la maqueta 3D incluye 6 renders, visor y realidad aumentada, en {{delivery:maqueta}} y con presupuesto cerrado.',
     breadcrumb: 'Precio de un render',
     card: {
       title: '¿Cuánto cuesta un render 3D en España?',
@@ -41,7 +41,7 @@ export default {
       ['Promoción, 8 a 12 vistas', '1.500 a 6.000 €'],
       ['Low-cost', '50 a 150 € por imagen'],
       ['Recargo por urgencia', '20 a 40 %'],
-      ['Render adicional en {{brand}}', '{{extra:render}} + IVA'],
+      ['Render adicional en {{brand}}', 'Sobre el mismo modelo, con presupuesto cerrado'],
       ['Datos revisados', 'Septiembre de 2026'],
     ],
     hero: {
@@ -100,8 +100,6 @@ export default {
           ['Promoción, de 8 a 12 vistas', '1.500 a 4.000 € y 2.000 a 6.000 €', `[ararenders.com](${SRC.ara}) y [estudio3dbs.com](${SRC.bs})`],
           ['Tour virtual 360 generado por ordenador', '700 a 2.500 € y 800 a 2.500 €', `[estudio3dbs.com](${SRC.bs}) y [ararenders.com](${SRC.ara})`],
           ['Recorrido animado de 30 a 60 segundos', '1.500 a 5.000 €', `[estudio3dbs.com](${SRC.bs}) y [ararenders.com](${SRC.ara})`],
-          ['Maqueta 3D completa de {{brand}}: 6 renders, visor y AR', 'Desde {{price:maqueta}} + IVA', '[Nuestros precios](@precios)'],
-          ['Promoción de obra nueva de {{brand}}: 3 tipologías y 12 renders', 'Desde {{price:promocion}} + IVA', '[Nuestros precios](@precios)'],
         ],
         note: 'Donde dos estudios publican rangos distintos para el mismo encargo, mostramos los dos. Los packs de {{brand}} no son comparables uno a uno con un pack de imágenes: incluyen el modelo 3D, el [visor web](@servicio-tour) y la [realidad aumentada](@servicio-ar).',
       },
@@ -130,18 +128,18 @@ export default {
         type: 'answer',
         h2: '¿Cuánto cuesta el m² de render?',
         answer: 'Casi ningún estudio cobra los renders por metro cuadrado: se cobran por imagen o por pack. La superficie influye de forma indirecta, porque una vivienda grande tiene más estancias que modelar y amueblar. Donde sí hay tramos por superficie es en los planos 3D y en los modelos completos de la vivienda.',
-        body: 'En {{brand}}, por ejemplo, la maqueta 3D completa cuesta {{price:maqueta:0}} + IVA hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m², con 6 renders incluidos. Si lo que buscas es el precio de una planta en 3D, tienes los rangos del mercado en [cuánto cuesta un plano 3D](@guia-precio-plano).',
+        body: 'En {{brand}}, por ejemplo, la maqueta 3D completa se presupuesta según la superficie, con 6 renders incluidos. Si lo que buscas es el precio de una planta en 3D, tienes los rangos del mercado en [cuánto cuesta un plano 3D](@guia-precio-plano).',
       },
       {
         type: 'table',
         h2: '¿Cuánto costaría en tres encargos típicos?',
         intro: 'Tres cálculos hechos con las tarifas publicadas de las tablas anteriores. Sirven para ordenar el presupuesto, no sustituyen a una oferta cerrada.',
         caption: 'Tres ejemplos calculados con las tarifas publicadas (septiembre de 2026)',
-        head: ['Encargo', 'Tarifas de estudio', 'Tarifas low-cost', 'Con {{brand}}'],
+        head: ['Encargo', 'Tarifas de estudio', 'Tarifas low-cost'],
         rows: [
-          ['Piso vacío de 3 dormitorios, 6 interiores', '1.200 a 2.700 € (6 × 200 a 450 €)', '300 a 900 € (6 × 50 a 150 €)', '{{price:maqueta}} + IVA: 6 renders, visor y AR'],
-          ['Unifamiliar, 2 exteriores y 3 interiores', 'Unos 1.400 € + IVA', '290 a 850 € (2 × 70 a 200 € y 3 × 50 a 150 €)', 'Presupuesto a medida: la fachada necesita alzados'],
-          ['Promoción con 3 tipologías y 12 vistas', '1.500 a 6.000 €', '600 a 1.800 € (12 × 50 a 150 €)', '{{price:promocion}} + IVA: 12 renders, visor y AR'],
+          ['Piso vacío de 3 dormitorios, 6 interiores', '1.200 a 2.700 € (6 × 200 a 450 €)', '300 a 900 € (6 × 50 a 150 €)'],
+          ['Unifamiliar, 2 exteriores y 3 interiores', 'Unos 1.400 € + IVA', '290 a 850 € (2 × 70 a 200 € y 3 × 50 a 150 €)'],
+          ['Promoción con 3 tipologías y 12 vistas', '1.500 a 6.000 €', '600 a 1.800 € (12 × 50 a 150 €)'],
         ],
         note: 'Una maqueta de {{brand}} parte del plano de planta: renderiza interiores y terrazas. Una fachada completa con entorno necesita alzados y más modelado, así que la presupuestamos aparte. Si solo quieres una imagen de exterior con piscina para una valla, un estudio especializado en exteriores es una opción lógica.',
       },
@@ -171,8 +169,8 @@ export default {
       {
         type: 'answer',
         h2: '¿Dónde encaja nuestro precio?',
-        answer: '{{brand}} no vende renders sueltos: vende el modelo 3D de la vivienda, del que salen los renders. La maqueta 3D completa cuesta desde {{price:maqueta}} + IVA e incluye 6 renders en 4K, el visor web y la realidad aumentada, en {{delivery:maqueta}}. Cada render adicional del mismo modelo cuesta {{extra:render}} + IVA.',
-        body: 'Si comparas solo las imágenes, el precio por render queda en la parte baja de la tabla, y además te llevas el modelo, el visor y la AR. La razón no es recortar calidad: levantamos muros y huecos con scripts de Python en [Blender](' + SRC.blender + ') y creamos materiales [PBR](@glosario#pbr) procedurales, así que rehacer una vista o mover un tabique cuesta minutos, no horas.\n\nLa prueba está en nuestro [caso demostrativo](@caso-villa): una villa en la Costa del Sol modelada desde un único plano, con {{villa:rooms}} estancias; sus {{villa:renders}} imágenes (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Si necesitas solo la planta, el [plano 3D](@servicio-plano) cuesta {{price:plano3d}} + IVA por planta.',
+        answer: '{{brand}} no vende renders sueltos: vende el modelo 3D de la vivienda, del que salen los renders. La maqueta 3D completa incluye 6 renders en 4K, el visor web y la realidad aumentada, en {{delivery:maqueta}} y con presupuesto cerrado. Los renders adicionales salen del mismo modelo.',
+        body: 'Además de las imágenes te llevas el modelo, el visor y la AR. Y no es a costa de la calidad: levantamos muros y huecos con scripts de Python en [Blender](' + SRC.blender + ') y creamos materiales [PBR](@glosario#pbr) procedurales, así que rehacer una vista o mover un tabique cuesta minutos, no horas.\n\nLa prueba está en nuestro [caso demostrativo](@caso-villa): una villa en la Costa del Sol modelada desde un único plano, con {{villa:rooms}} estancias; sus {{villa:renders}} imágenes (6 vistas aéreas, 4 a la altura de los ojos, las dos plantas y la imagen para redes) se calcularon en unos {{villa:renderMinutes}} minutos en total. Si necesitas solo la planta, basta el [plano 3D](@servicio-plano).',
       },
       {
         type: 'callout',
@@ -199,15 +197,15 @@ export default {
     faq: [
       {
         q: '¿Cuánto vale hacer un render?',
-        a: 'Hacer un render 3D profesional vale en España entre 200 y 450 € por imagen interior y entre 300 y 1.200 € por exterior de vivienda, según las tarifas publicadas en 2026. Los servicios low-cost cobran de 50 a 150 € y los packs de promoción de 8 a 12 vistas, de 1.500 a 6.000 €. En {{brand}}, 6 renders van incluidos en la maqueta 3D desde {{price:maqueta}} + IVA.',
+        a: 'Hacer un render 3D profesional vale en España entre 200 y 450 € por imagen interior y entre 300 y 1.200 € por exterior de vivienda, según las tarifas publicadas en 2026. Los servicios low-cost cobran de 50 a 150 € y los packs de promoción de 8 a 12 vistas, de 1.500 a 6.000 €. En {{brand}}, 6 renders van incluidos en la maqueta 3D completa.',
       },
       {
         q: '¿Cuánto se cobra por un modelo 3D de una vivienda?',
-        a: 'Depende de si el modelo es un entregable o solo el paso previo a los renders. Como partida suelta, el low-cost publica modelado 3D de 60 a 250 € (renders.es, precio estimado). En {{brand}}, el modelo 3D amueblado es el entregable principal: con 6 renders, visor web y realidad aumentada cuesta desde {{price:maqueta}} + IVA por vivienda, en {{delivery:maqueta}}.',
+        a: 'Depende de si el modelo es un entregable o solo el paso previo a los renders. Como partida suelta, el low-cost publica modelado 3D de 60 a 250 € (renders.es, precio estimado). En {{brand}}, el modelo 3D amueblado es el entregable principal: con 6 renders, visor web y realidad aumentada, en {{delivery:maqueta}} y con presupuesto cerrado.',
       },
       {
         q: '¿El precio de un render incluye IVA?',
-        a: 'Depende del estudio: unos publican «+ IVA» y otros no lo aclaran, así que pregúntalo siempre antes de comparar. En España el IVA general es del 21 %, de modo que un render de 300 € sin IVA son 363 € con IVA. Todos los precios de {{brand}} se publican sin IVA: la maqueta 3D completa cuesta {{price:maqueta}} + IVA y cada render adicional, {{extra:render}} + IVA.',
+        a: 'Depende del estudio: unos publican «+ IVA» y otros no lo aclaran, así que pregúntalo siempre antes de comparar. En España el IVA general es del 21 %, de modo que un render de 300 € sin IVA son 363 € con IVA. Los presupuestos de {{brand}} se dan sin IVA, que se suma en la factura.',
       },
       {
         q: '¿Cuánto tarda un estudio en hacer un render?',
@@ -239,7 +237,7 @@ export default {
     title: 'How much does 3D rendering cost in Spain? 2026 prices',
     description: 'A 3D render in Spain costs €200 to €450 per interior image and €300 to €1,200 per exterior in 2026. Price tables with sources, cost factors and examples.',
     h1: 'How much does 3D rendering cost in Spain in 2026?',
-    lead: 'A professional 3D render in Spain costs €200 to €450 per interior image and €300 to €1,200 per house exterior, according to rates published in 2026. Budget services start at €50 to €150. At {{brand}}, the complete 3D model from {{price:maqueta}} + VAT includes 6 renders, a web viewer and AR, in {{delivery:maqueta}}.',
+    lead: 'A professional 3D render in Spain costs €200 to €450 per interior image and €300 to €1,200 per house exterior, according to rates published in 2026. Budget services start at €50 to €150. At {{brand}}, the complete 3D model includes 6 renders, a web viewer and AR, delivered in {{delivery:maqueta}} at a fixed quote.',
     breadcrumb: '3D rendering cost',
     card: {
       title: 'How much does 3D rendering cost in Spain?',
@@ -252,7 +250,7 @@ export default {
       ['Development, 8 to 12 views', '€1,500 to €6,000'],
       ['Budget services', '€50 to €150 per image'],
       ['Rush surcharge', '20% to 40%'],
-      ['Extra render at {{brand}}', '{{extra:render}} + VAT'],
+      ['Extra render at {{brand}}', 'From the same model, at a fixed quote'],
       ['Data checked', 'September 2026'],
     ],
     hero: {
@@ -311,8 +309,6 @@ export default {
           ['Development, 8 to 12 views', '€1,500 to €4,000 and €2,000 to €6,000', `[ararenders.com](${SRC.ara}) and [estudio3dbs.com](${SRC.bs})`],
           ['Computer-generated 360° tour', '€700 to €2,500 and €800 to €2,500', `[estudio3dbs.com](${SRC.bs}) and [ararenders.com](${SRC.ara})`],
           ['30 to 60 second animated walkthrough', '€1,500 to €5,000', `[estudio3dbs.com](${SRC.bs}) and [ararenders.com](${SRC.ara})`],
-          ['Our complete 3D model: 6 renders, viewer and AR', 'From {{price:maqueta}} + VAT', '[Our pricing](@precios)'],
-          ['Our new-build development package: 3 unit types, 12 renders', 'From {{price:promocion}} + VAT', '[Our pricing](@precios)'],
         ],
         note: 'Where two studios publish different ranges for the same job, we show both. Our packages are not a like-for-like match for an image package: they include the 3D model, the [web viewer](@servicio-tour) and [augmented reality](@servicio-ar).',
       },
@@ -347,18 +343,18 @@ export default {
         type: 'answer',
         h2: 'Is 3D rendering priced per square metre?',
         answer: 'Rarely. Studios in Spain price renders per image or per package, not per square metre. Floor area matters indirectly, because a bigger home has more rooms to model and furnish. Area bands do appear in 3D floor plans and in complete 3D models of a home, where the whole property is built.',
-        body: 'At {{brand}}, for example, the complete 3D model costs {{price:maqueta:0}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m², with 6 renders included. If what you need is the layout in 3D, the market ranges are in [what a 3D floor plan costs in Spain](@guia-precio-plano); for a whole-home model, our page on [how we build a model from the plan](@como-funciona) explains what goes into it.',
+        body: 'At {{brand}}, for example, the complete 3D model is quoted by floor area, with 6 renders included. If what you need is the layout in 3D, the market ranges are in [what a 3D floor plan costs in Spain](@guia-precio-plano); for a whole-home model, our page on [how we build a model from the plan](@como-funciona) explains what goes into it.',
       },
       {
         type: 'table',
         h2: 'What would three typical jobs cost?',
         intro: 'Three worked examples using the published rates above. They help you frame a budget; they are not a quote.',
         caption: 'Three examples priced with published rates (September 2026)',
-        head: ['Job', 'Studio rates', 'Budget rates', 'With {{brand}}'],
+        head: ['Job', 'Studio rates', 'Budget rates'],
         rows: [
-          ['Empty 3-bedroom flat, 6 interiors', '€1,200 to €2,700 (6 × €200 to €450)', '€300 to €900 (6 × €50 to €150)', '{{price:maqueta}} + VAT: 6 renders, viewer and AR'],
-          ['Detached house, 2 exteriors and 3 interiors', 'About €1,400 + VAT', '€290 to €850 (2 × €70 to €200 and 3 × €50 to €150)', 'Bespoke quote: the façade needs elevations'],
-          ['Development with 3 unit types and 12 views', '€1,500 to €6,000', '€600 to €1,800 (12 × €50 to €150)', '{{price:promocion}} + VAT: 12 renders, viewer and AR'],
+          ['Empty 3-bedroom flat, 6 interiors', '€1,200 to €2,700 (6 × €200 to €450)', '€300 to €900 (6 × €50 to €150)'],
+          ['Detached house, 2 exteriors and 3 interiors', 'About €1,400 + VAT', '€290 to €850 (2 × €70 to €200 and 3 × €50 to €150)'],
+          ['Development with 3 unit types and 12 views', '€1,500 to €6,000', '€600 to €1,800 (12 × €50 to €150)'],
         ],
         note: 'Our model starts from the floor plan, so it renders interiors and terraces. A full façade with its surroundings needs elevation drawings and more modelling, so we quote it separately. If all you need is one exterior with a pool for a billboard, an exterior specialist is a sensible choice.',
       },
@@ -388,8 +384,8 @@ export default {
       {
         type: 'answer',
         h2: 'Where does our price fit?',
-        answer: '{{brand}} does not sell one-off renders: we build the 3D model of the home and the renders come from it. The complete 3D model costs from {{price:maqueta}} + VAT and includes 6 renders in 4K, the web viewer and augmented reality, in {{delivery:maqueta}}. Each extra render from the same model costs {{extra:render}} + VAT.',
-        body: 'Counting images alone, the price per render lands at the lower end of the tables, and the model, viewer and AR come with it. That is not about cutting corners: walls and openings are built with Python scripts in [Blender](' + SRC.blender + ') and materials are procedural [PBR](@glosario#pbr), so re-rendering a view or moving a partition takes minutes, not hours.\n\nSee it in our [demonstration case](@caso-villa): a Costa del Sol villa modelled from a single plan, with {{villa:rooms}} rooms; its {{villa:renders}} images (6 aerial views, 4 eye-level views, both plans and the social media image) were computed in about {{villa:renderMinutes}} minutes in total. If you only need the layout, a [3D floor plan](@servicio-plano) costs {{price:plano3d}} + VAT per floor.',
+        answer: '{{brand}} does not sell one-off renders: we build the 3D model of the home and the renders come from it. The complete 3D model includes 6 renders in 4K, the web viewer and augmented reality, delivered in {{delivery:maqueta}} at a fixed quote. Extra renders come from the same model.',
+        body: 'On top of the images you get the model, the viewer and AR. And not by cutting corners: walls and openings are built with Python scripts in [Blender](' + SRC.blender + ') and materials are procedural [PBR](@glosario#pbr), so re-rendering a view or moving a partition takes minutes, not hours.\n\nSee it in our [demonstration case](@caso-villa): a Costa del Sol villa modelled from a single plan, with {{villa:rooms}} rooms; its {{villa:renders}} images (6 aerial views, 4 eye-level views, both plans and the social media image) were computed in about {{villa:renderMinutes}} minutes in total. If you only need the layout, a [3D floor plan](@servicio-plano) is enough.',
       },
       {
         type: 'callout',
@@ -417,15 +413,15 @@ export default {
     faq: [
       {
         q: 'How much should a 3D rendering cost?',
-        a: 'In Spain in 2026, a 3D rendering should cost €200 to €450 per interior image and €300 to €1,200 per house exterior at a professional studio, according to published rates. Budget services charge €50 to €150 and development packages of 8 to 12 views €1,500 to €6,000. At {{brand}}, 6 renders are included in the complete 3D model from {{price:maqueta}} + VAT.',
+        a: 'In Spain in 2026, a 3D rendering should cost €200 to €450 per interior image and €300 to €1,200 per house exterior at a professional studio, according to published rates. Budget services charge €50 to €150 and development packages of 8 to 12 views €1,500 to €6,000. At {{brand}}, 6 renders are included in the complete 3D model.',
       },
       {
         q: 'How much does a 3D model of a home cost?',
-        a: 'It depends on whether the model is a deliverable or just a step towards the renders. As a line item, budget providers publish 3D modelling at €60 to €250 (renders.es, estimated). At {{brand}}, the furnished 3D model is the main deliverable: with 6 renders, a web viewer and augmented reality it costs from {{price:maqueta}} + VAT per home, in {{delivery:maqueta}}.',
+        a: 'It depends on whether the model is a deliverable or just a step towards the renders. As a line item, budget providers publish 3D modelling at €60 to €250 (renders.es, estimated). At {{brand}}, the furnished 3D model is the main deliverable: with 6 renders, a web viewer and augmented reality, delivered in {{delivery:maqueta}} at a fixed quote.',
       },
       {
         q: 'Are 3D rendering prices in Spain quoted with VAT?',
-        a: 'Not always. Some studios state “+ VAT” and others do not say, so always ask before comparing. Standard VAT in Spain is 21%, so a €300 render ex VAT costs €363 with VAT. Every {{brand}} price is published ex VAT: the complete 3D model costs {{price:maqueta}} + VAT and each extra render {{extra:render}} + VAT. EU business clients should confirm how VAT applies to them.',
+        a: 'Not always. Some studios state “+ VAT” and others do not say, so always ask before comparing. Standard VAT in Spain is 21%, so a €300 render ex VAT costs €363 with VAT. {{brand}} quotes exclude VAT, which is added on the invoice. EU business clients should confirm how VAT applies to them.',
       },
       {
         q: 'How long does a 3D render take?',
@@ -441,7 +437,7 @@ export default {
       },
       {
         q: 'What does a professional 3D render include?',
-        a: 'A professional render includes preparing or modelling the home, materials, lighting, framing, computing the image and post-production, with one or two rounds of changes. Always check the resolution and the usage rights. At {{brand}}, every render is delivered in 4K and the complete 3D model includes {{revisions:maqueta}}, from {{price:maqueta}} + VAT.',
+        a: 'A professional render includes preparing or modelling the home, materials, lighting, framing, computing the image and post-production, with one or two rounds of changes. Always check the resolution and the usage rights. At {{brand}}, every render is delivered in 4K and the complete 3D model includes {{revisions:maqueta}}.',
       },
     ],
     related: ['precios', 'servicio-renders', 'guia-ia-vs-3d', 'guia-matterport', 'caso-villa'],

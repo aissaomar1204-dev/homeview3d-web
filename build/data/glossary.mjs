@@ -81,12 +81,12 @@ export const glossary = [
     es: {
       term: 'Realidad aumentada',
       definition: 'Tecnología que superpone objetos digitales a la imagen real de la cámara del móvil, anclados al suelo o a una mesa, de modo que parecen estar en la habitación. Se abrevia AR o RA.',
-      body: `En inmobiliaria permite ver una vivienda como maqueta sobre la mesa o a tamaño real en el salón, sin app: en iPhone y iPad la abre [AR Quick Look](@glosario#ar-quick-look) y en Android, [Scene Viewer](@glosario#scene-viewer). Un ordenador no puede mostrarla y enseña un código QR. {{brand}} la incluye en la maqueta 3D completa, desde {{price:maqueta}} + IVA.`,
+      body: `En inmobiliaria permite ver una vivienda como maqueta sobre la mesa o a tamaño real en el salón, sin app: en iPhone y iPad la abre [AR Quick Look](@glosario#ar-quick-look) y en Android, [Scene Viewer](@glosario#scene-viewer). Un ordenador no puede mostrarla y enseña un código QR. {{brand}} la incluye en la maqueta 3D completa.`,
     },
     en: {
       term: 'Augmented reality (AR)',
       definition: 'Technology that overlays digital objects on the live image from a phone’s camera, anchored to the floor or a table, so they appear to be in the room.',
-      body: `In property it lets buyers see a home as a model on their table or at real size in their living room, with no app: [AR Quick Look](@glosario#ar-quick-look) opens it on iPhone and iPad, [Scene Viewer](@glosario#scene-viewer) on Android. A computer cannot show it, so it displays a QR code. {{brand}} includes it in the complete 3D model, from {{price:maqueta}} + VAT.`,
+      body: `In property it lets buyers see a home as a model on their table or at real size in their living room, with no app: [AR Quick Look](@glosario#ar-quick-look) opens it on iPhone and iPad, [Scene Viewer](@glosario#scene-viewer) on Android. A computer cannot show it, so it displays a QR code. {{brand}} includes it in the complete 3D model.`,
     },
   },
   {
@@ -225,12 +225,12 @@ export const glossary = [
     es: {
       term: 'Render',
       definition: 'Imagen generada por ordenador a partir de un modelo 3D, calculando cómo ilumina la luz sus materiales. En inmobiliaria enseña una vivienda sin construir, vacía o reformada.',
-      body: `Renderizar es el proceso; el render, la imagen. La calidad depende del modelo, los materiales y la luz más que del programa. {{brand}} renderiza en 4K con [Cycles](@glosario#cycles) sobre el modelo de la vivienda, y la maqueta 3D completa incluye 6, desde {{price:maqueta}} + IVA. Precios de mercado, en [cuánto cuesta un render 3D](@guia-precio-render).`,
+      body: `Renderizar es el proceso; el render, la imagen. La calidad depende del modelo, los materiales y la luz más que del programa. {{brand}} renderiza en 4K con [Cycles](@glosario#cycles) sobre el modelo de la vivienda, y la maqueta 3D completa incluye 6. Precios de mercado, en [cuánto cuesta un render 3D](@guia-precio-render).`,
     },
     en: {
       term: 'Render',
       definition: 'A computer-generated image made from a 3D model by calculating how light falls on its materials. In property, a photorealistic render shows a home that is unbuilt, empty or yet to be renovated.',
-      body: `Rendering is the process; the render is the image, often called CGI in British property marketing. Quality depends on the model, the materials and the light more than on the software. {{brand}} renders in 4K with [Cycles](@glosario#cycles) from the model of the home; the complete 3D model includes 6, from {{price:maqueta}} + VAT. Market prices: [3D rendering cost guide](@guia-precio-render).`,
+      body: `Rendering is the process; the render is the image, often called CGI in British property marketing. Quality depends on the model, the materials and the light more than on the software. {{brand}} renders in 4K with [Cycles](@glosario#cycles) from the model of the home; the complete 3D model includes 6. Market prices: [3D rendering cost guide](@guia-precio-render).`,
     },
   },
   {
@@ -267,12 +267,12 @@ export const glossary = [
     es: {
       term: 'Planta cenital',
       definition: 'Imagen de una vivienda vista desde arriba en vertical, sin techo, que muestra a color la distribución, el mobiliario y los suelos. Es el formato más habitual del llamado plano 3D.',
-      body: `{{brand}} la genera con una cámara ortográfica sobre el modelo 3D, sin perspectiva, así que las proporciones se mantienen y la imagen coincide con el [plano 2D](@glosario#plano-2d) redibujado. Se entrega en 4K dentro del plano 3D, desde {{price:plano3d}} + IVA por planta, en {{delivery:plano3d}}.`,
+      body: `{{brand}} la genera con una cámara ortográfica sobre el modelo 3D, sin perspectiva, así que las proporciones se mantienen y la imagen coincide con el [plano 2D](@glosario#plano-2d) redibujado. Se entrega en 4K dentro del plano 3D, en {{delivery:plano3d}}.`,
     },
     en: {
       term: 'Top-down floor plan',
       definition: 'An image of a home seen straight from above with the roof removed, showing the layout, furniture and floor finishes in colour. It is the most common form of a so-called 3D floor plan.',
-      body: `{{brand}} produces it with an orthographic camera over the 3D model, with no perspective, so room proportions hold and the image lines up with the redrawn [2D floor plan](@glosario#plano-2d). It is delivered in 4K as part of the 3D floor plan, from {{price:plano3d}} + VAT per floor, in {{delivery:plano3d}}.`,
+      body: `{{brand}} produces it with an orthographic camera over the 3D model, with no perspective, so room proportions hold and the image lines up with the redrawn [2D floor plan](@glosario#plano-2d). It is delivered in 4K as part of the 3D floor plan, in {{delivery:plano3d}}.`,
     },
   },
   {
@@ -281,12 +281,12 @@ export const glossary = [
     es: {
       term: 'Vista isométrica',
       definition: 'Representación en 3D vista desde arriba y en diagonal, con los tres ejes a la misma escala y sin puntos de fuga, de modo que las medidas no se deforman con la distancia.',
-      body: `En inmobiliaria enseña una planta amueblada con volumen: muros, muebles y alturas a la vez, algo que la [planta cenital](@glosario#planta-cenital) no muestra. {{brand}} la entrega en 4K dentro del plano 3D, desde {{price:plano3d}} + IVA por planta; con la maqueta completa, además, giras la vivienda a tu gusto en el [visor 3D](@glosario#visor-3d).`,
+      body: `En inmobiliaria enseña una planta amueblada con volumen: muros, muebles y alturas a la vez, algo que la [planta cenital](@glosario#planta-cenital) no muestra. {{brand}} la entrega en 4K dentro del plano 3D; con la maqueta completa, además, giras la vivienda a tu gusto en el [visor 3D](@glosario#visor-3d).`,
     },
     en: {
       term: 'Isometric view',
       definition: 'A 3D drawing seen from above at an angle, with all three axes at the same scale and no vanishing points, so measurements do not shrink with distance.',
-      body: `In property it shows a furnished plan with depth: walls, furniture and heights at once, which a [top-down floor plan](@glosario#planta-cenital) cannot. {{brand}} delivers it in 4K as part of the 3D floor plan, from {{price:plano3d}} + VAT per floor; with the complete model you can also turn the home any way you like in the [3D viewer](@glosario#visor-3d).`,
+      body: `In property it shows a furnished plan with depth: walls, furniture and heights at once, which a [top-down floor plan](@glosario#planta-cenital) cannot. {{brand}} delivers it in 4K as part of the 3D floor plan; with the complete model you can also turn the home any way you like in the [3D viewer](@glosario#visor-3d).`,
     },
   },
   {
@@ -369,12 +369,12 @@ export const glossary = [
     es: {
       term: 'Home staging virtual',
       definition: 'Técnica que amuebla o redecora digitalmente una vivienda para un anuncio, sin muebles reales. Se hace retocando fotos, generando imágenes con IA o cambiando el mobiliario de un modelo 3D.',
-      body: `Sobre un modelo 3D, el nuevo estilo es coherente en todas las vistas, en el [visor 3D](@glosario#visor-3d) y en la realidad aumentada; con fotos, cada imagen se edita aparte. En {{brand}} cuesta {{extra:staging}} + IVA por estancia. Las imágenes se publican etiquetadas como recreación virtual, porque los muebles no entran en la venta.`,
+      body: `Sobre un modelo 3D, el nuevo estilo es coherente en todas las vistas, en el [visor 3D](@glosario#visor-3d) y en la realidad aumentada; con fotos, cada imagen se edita aparte. En {{brand}} se presupuesta por estancia. Las imágenes se publican etiquetadas como recreación virtual, porque los muebles no entran en la venta.`,
     },
     en: {
       term: 'Virtual staging',
       definition: 'Furnishing or restyling a home digitally to show it in a listing, without bringing in real furniture. It is done by editing photos, generating images with AI or changing the furniture in a 3D model.',
-      body: `On a 3D model, a new style stays consistent across every view, the [3D viewer](@glosario#visor-3d) and augmented reality; with photos, each image is edited on its own. At {{brand}} it costs {{extra:staging}} + VAT per room. The images should be labelled as virtually staged, because the furniture is not part of the sale.`,
+      body: `On a 3D model, a new style stays consistent across every view, the [3D viewer](@glosario#visor-3d) and augmented reality; with photos, each image is edited on its own. At {{brand}} it is quoted per room. The images should be labelled as virtually staged, because the furniture is not part of the sale.`,
     },
   },
   {
@@ -425,12 +425,12 @@ export const glossary = [
     es: {
       term: 'Maqueta virtual',
       definition: 'Modelo 3D digital de una vivienda o un edificio que sustituye a la maqueta física de las oficinas de venta: se gira, se acerca y se recorre en una pantalla o en realidad aumentada.',
-      body: `Una maqueta física se construye una vez y se queda en la sala de ventas; la virtual viaja en un enlace. Con la [realidad aumentada](@glosario#realidad-aumentada), el comprador la coloca sobre su mesa a escala 1:20 o la recorre a tamaño real. En {{brand}}, el pack de promoción cuesta desde {{price:promocion}} + IVA.`,
+      body: `Una maqueta física se construye una vez y se queda en la sala de ventas; la virtual viaja en un enlace. Con la [realidad aumentada](@glosario#realidad-aumentada), el comprador la coloca sobre su mesa a escala 1:20 o la recorre a tamaño real. En {{brand}}, el pack de promoción se presupuesta por tipologías.`,
     },
     en: {
       term: 'Virtual scale model',
       definition: 'A digital 3D model of a home or building that replaces the physical architectural model in a sales suite: it can be rotated, zoomed and walked through on a screen or in augmented reality.',
-      body: `A physical model is built once and stays in the sales suite; a virtual one travels in a link. With [augmented reality](@glosario#realidad-aumentada), buyers set it on their table at 1:20 scale or walk through it at real size. At {{brand}}, the development package starts at {{price:promocion}} + VAT.`,
+      body: `A physical model is built once and stays in the sales suite; a virtual one travels in a link. With [augmented reality](@glosario#realidad-aumentada), buyers set it on their table at 1:20 scale or walk through it at real size. At {{brand}}, the development package is quoted by unit type.`,
     },
   },
   {
@@ -439,12 +439,12 @@ export const glossary = [
     es: {
       term: 'Piso piloto virtual',
       definition: 'Versión digital del piso de muestra de una promoción: la vivienda tipo, amueblada, que el comprador recorre en renders, en un visor 3D o en realidad aumentada sin desplazarse.',
-      body: `Un piso piloto físico exige una vivienda terminada y amueblada, y solo lo ve quien viaja a la promoción. El virtual se enseña antes de empezar la obra y llega por un enlace a compradores de otros países. {{brand}} lo hace con el pack de promoción: 3 tipologías, 12 renders, visor y realidad aumentada, desde {{price:promocion}} + IVA.`,
+      body: `Un piso piloto físico exige una vivienda terminada y amueblada, y solo lo ve quien viaja a la promoción. El virtual se enseña antes de empezar la obra y llega por un enlace a compradores de otros países. {{brand}} lo hace con el pack de promoción: cada tipología con sus renders, visor y realidad aumentada.`,
     },
     en: {
       term: 'Virtual show home',
       definition: 'A digital version of a development’s show home: the typical unit, furnished and dressed, which buyers explore in renders, a 3D viewer or augmented reality instead of visiting in person.',
-      body: `A physical show home needs a finished, furnished unit, and only buyers who travel to the site see it. A virtual one can be shown before construction starts and reaches buyers abroad through a link. {{brand}} covers it with the development package: 3 unit types, 12 renders, a viewer and augmented reality, from {{price:promocion}} + VAT.`,
+      body: `A physical show home needs a finished, furnished unit, and only buyers who travel to the site see it. A virtual one can be shown before construction starts and reaches buyers abroad through a link. {{brand}} covers it with the development package: every unit type with its renders, a viewer and augmented reality.`,
     },
   },
   {

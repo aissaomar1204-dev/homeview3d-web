@@ -447,7 +447,7 @@ for (const p of pages.values()) {
     }
     if (t.includes('Service')) {
       if (n['@id']) need(p, n, ['provider', 'areaServed', 'name']);
-      if (n['@id'] && !n.offers) warn('schema', p.where, `Service ${n['@id']} without offers (the page does not show a price token)`);
+      if (n['@id'] && !n.offers && pricing.public) warn('schema', p.where, `Service ${n['@id']} without offers (the page does not show a price token)`);
       // G-02: the lowest Offer price is the «desde / from» figure the meta description quotes.
       const offerPrices = [].concat(n.offers || []).map((o) => Number(o.price)).filter((x) => Number.isFinite(x));
       const from = fromPriceIn(p.description);
@@ -1161,7 +1161,8 @@ if (!manifest.villa_viewer_poster) warn('3d', 'images.json', 'villa_viewer_poste
 const phFail = PLACEHOLDERS_FAIL ? err : warn;
 const flags = [['site.brand.placeholder', site.brand.placeholder], ['site.domainPlaceholder', site.domainPlaceholder], ['site.contact.placeholder', site.contact.placeholder], ['site.legal.placeholder', site.legal.placeholder]].filter(([, v]) => v).map(([k]) => k);
 if (flags.length) phFail('placeholders', 'build/data/site.mjs', `placeholders active: ${flags.join(', ')}${PLACEHOLDERS_FAIL ? ' (production build: fill them or set ALLOW_PLACEHOLDERS=1)' : ''}`);
-if (!pricing.confirmed) warn('placeholders', 'build/data/pricing.mjs', 'prices are a PROPOSAL (confirmed: false)');
+// With pricing.public false no price is published: a {{price}}/{{extra}}/{{volume}} token fails the build (context.mjs).
+if (!pricing.confirmed && pricing.public) warn('placeholders', 'build/data/pricing.mjs', 'prices are a PROPOSAL (confirmed: false)');
 const PH_PATTERNS = [
   [/\[(?:RAZÓN SOCIAL|NIF|DOMICILIO|DATOS REGISTRALES[^\]]*|MARCA|NOMBRE[^\]]*|CIF)\]/g, 'bracket placeholder'],
   [/\blorem ipsum\b/gi, 'lorem ipsum'],

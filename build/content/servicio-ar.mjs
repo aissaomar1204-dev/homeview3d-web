@@ -14,13 +14,13 @@ export default {
   id: 'servicio-ar',
   image: 'villa_terraza_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Realidad aumentada inmobiliaria sin app ni instalación',
-    description: 'Tu comprador ve la vivienda sobre su mesa a escala 1:20 o a tamaño real desde iPhone o Android, sin instalar nada. Incluida desde {{price:maqueta}} + IVA.',
+    description: 'Tu comprador ve la vivienda sobre su mesa a escala 1:20 o a tamaño real desde iPhone o Android, sin instalar nada. Incluida en la maqueta 3D completa.',
     h1: 'Realidad aumentada inmobiliaria: la vivienda en tu mesa',
-    lead: 'Tu comprador coloca la vivienda sobre su mesa como una maqueta a escala 1:20, o a tamaño real en el suelo, desde su iPhone, iPad o Android y sin instalar ninguna app. La creamos a partir del plano 2D y va incluida en la maqueta 3D completa, desde {{price:maqueta}} + IVA, con entrega en {{delivery:maqueta}}.',
+    lead: 'Tu comprador coloca la vivienda sobre su mesa como una maqueta a escala 1:20, o a tamaño real en el suelo, desde su iPhone, iPad o Android y sin instalar ninguna app. La creamos a partir del plano 2D y va incluida en la maqueta 3D completa, con entrega en {{delivery:maqueta}}.',
     breadcrumb: 'Realidad aumentada',
     card: {
       title: 'Realidad aumentada sin app',
@@ -38,7 +38,7 @@ export default {
       ['Modos', 'Maqueta 1:20 sobre la mesa y tamaño real'],
       ['Formatos', 'USDZ y GLB'],
       ['En ordenador', 'Código QR para abrirla en el móvil'],
-      ['Precio desde', '{{price:maqueta}} + IVA, en la maqueta completa'],
+      ['Precio', 'Incluida en la maqueta completa, sin coste aparte'],
       ['Plazo', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -102,18 +102,12 @@ export default {
         h2: '¿Cómo preparamos la vivienda para la realidad aumentada?',
         intro: 'La realidad aumentada sale del mismo modelo que los renders y el visor. En la entrega recibes los archivos USDZ y GLB y el visor con los botones de realidad aumentada ya integrados.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: '¿Cuánto cuesta la realidad aumentada para una vivienda?',
-        intro: 'No tiene precio aparte: va incluida en la maqueta 3D completa y en el pack de promoción, junto con los renders y el visor. Precios sin IVA.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: '¿Puedo usar la realidad aumentada en una feria o en la sala de ventas?',
-        a: 'Sí, y es donde más luce. Con la maqueta a escala 1:20, cualquier mesa sirve de expositor: el comercial abre la vivienda en una tableta o en el móvil del cliente y la rodean juntos, sin gafas ni equipos especiales. {{brand}} incluye la realidad aumentada en la maqueta completa, desde {{price:maqueta}} + IVA, y en cada tipología del pack de promoción.',
+        a: 'Sí, y es donde más luce. Con la maqueta a escala 1:20, cualquier mesa sirve de expositor: el comercial abre la vivienda en una tableta o en el móvil del cliente y la rodean juntos, sin gafas ni equipos especiales. {{brand}} incluye la realidad aumentada en la maqueta completa y en cada tipología del pack de promoción.',
       },
       {
         q: '¿Qué móviles son compatibles con la realidad aumentada?',
@@ -129,7 +123,7 @@ export default {
       },
       {
         q: '¿Cuánto cuesta la realidad aumentada?',
-        a: 'La realidad aumentada no tiene precio aparte: va incluida en la maqueta 3D completa de {{brand}}, desde {{price:maqueta}} + IVA por vivienda, junto con 6 renders en 4K y el visor web, y se entrega en {{delivery:maqueta}}. En promociones de obra nueva, el pack desde {{price:promocion}} + IVA incluye realidad aumentada para cada tipología.',
+        a: 'La realidad aumentada no tiene precio aparte: va incluida en la maqueta 3D completa de {{brand}}, junto con 6 renders en 4K y el visor web, y se entrega en {{delivery:maqueta}}. En promociones de obra nueva, el pack incluye realidad aumentada para cada tipología. El precio de la maqueta lo damos cerrado al ver el plano.',
       },
       {
         q: '¿Cuáles son los 4 tipos principales de realidad aumentada?',
@@ -141,7 +135,7 @@ export default {
       },
       {
         q: '¿Sirve la realidad aumentada para vender obra nueva sobre plano?',
-        a: 'Sí. {{brand}} modela cada tipología desde los planos del proyecto, antes de que exista nada construido, y el comprador la ve sobre la mesa de la sala de ventas o en su casa. El pack de promoción incluye 3 tipologías con renders, visor con selector y realidad aumentada, desde {{price:promocion}} + IVA en {{delivery:promocion}}.',
+        a: 'Sí. {{brand}} modela cada tipología desde los planos del proyecto, antes de que exista nada construido, y el comprador la ve sobre la mesa de la sala de ventas o en su casa. El pack de promoción incluye cada tipología con renders, visor con selector y realidad aumentada, en {{delivery:promocion}}.',
       },
     ],
     related: ['servicio-tour', 'sol-promotoras', 'caso-villa', 'guia-ar', 'precios'],
@@ -153,9 +147,9 @@ export default {
 
   en: {
     title: 'AR property viewing on iPhone and Android, no app',
-    description: 'Buyers place the home on their table at 1:20 or at real size from an iPhone or Android phone, with nothing to install. From {{price:maqueta}} + VAT.',
+    description: 'Buyers place the home on their table at 1:20 or at real size from an iPhone or Android phone, with nothing to install. Included in the complete 3D model.',
     h1: 'Augmented reality for real estate, with no app',
-    lead: 'Buyers place the home on their table as a 1:20 model, or at real size on the floor, from their iPhone, iPad or Android phone, with no app to install. We build it from the 2D floor plan, and it comes with the complete 3D model, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    lead: 'Buyers place the home on their table as a 1:20 model, or at real size on the floor, from their iPhone, iPad or Android phone, with no app to install. We build it from the 2D floor plan, and it comes with the complete 3D model, delivered in {{delivery:maqueta}}.',
     breadcrumb: 'Augmented reality',
     card: {
       title: 'App-free augmented reality',
@@ -173,7 +167,7 @@ export default {
       ['Modes', '1:20 tabletop model and real size'],
       ['Formats', 'USDZ and GLB'],
       ['On a computer', 'QR code to open it on a phone'],
-      ['Price from', '{{price:maqueta}} + VAT, with the complete model'],
+      ['Price', 'Included in the complete model, at no extra cost'],
       ['Turnaround', '{{delivery:maqueta}}'],
     ],
     blocks: [
@@ -237,18 +231,12 @@ export default {
         h2: 'How do you prepare a home for augmented reality?',
         intro: 'AR comes from the same model as the renders and the viewer. At delivery you receive the USDZ and GLB files and the viewer with the AR buttons already built in.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'How much does augmented reality cost per home?',
-        intro: 'There is no separate price: AR is included in the complete 3D model and in the development package, together with the renders and the viewer. Prices exclude VAT.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: 'Can I use AR at a property fair or in a sales suite?',
-        a: 'Yes, and that is where it shines. With the 1:20 tabletop model, any table becomes a display stand: your sales team opens the home on a tablet or on the client’s own phone and they walk around it together, with no headset or special kit. {{brand}} includes AR with the complete 3D model, from {{price:maqueta}} + VAT, and for every unit type in the development package.',
+        a: 'Yes, and that is where it shines. With the 1:20 tabletop model, any table becomes a display stand: your sales team opens the home on a tablet or on the client’s own phone and they walk around it together, with no headset or special kit. {{brand}} includes AR with the complete 3D model and for every unit type in the development package.',
       },
       {
         q: 'Which phones and tablets support AR viewing?',
@@ -264,7 +252,7 @@ export default {
       },
       {
         q: 'Can you see a house before it’s built in AR?',
-        a: 'Yes, that is where AR is most useful. {{brand}} models each unit type from the architect’s plans before anything is built, and buyers see it on the sales-suite table or at home. The development package covers 3 unit types with renders, a viewer with a unit selector and AR, from {{price:promocion}} + VAT in {{delivery:promocion}}.',
+        a: 'Yes, that is where AR is most useful. {{brand}} models each unit type from the architect’s plans before anything is built, and buyers see it on the sales-suite table or at home. The development package covers every unit type with renders, a viewer with a unit selector and AR, delivered in {{delivery:promocion}}.',
       },
       {
         q: 'What are the four types of augmented reality?',
@@ -276,7 +264,7 @@ export default {
       },
       {
         q: 'How much does augmented reality cost?',
-        a: 'There is no separate AR price: augmented reality is included in the {{brand}} complete 3D model, from {{price:maqueta}} + VAT per home, together with 6 renders in 4K and the web viewer, delivered in {{delivery:maqueta}}. For off-plan developments, the package from {{price:promocion}} + VAT includes AR for every unit type.',
+        a: 'There is no separate AR price: augmented reality is included in the {{brand}} complete 3D model, together with 6 renders in 4K and the web viewer, delivered in {{delivery:maqueta}}. For off-plan developments, the package includes AR for every unit type. We quote the model at a fixed price once we see the plan.',
       },
     ],
     related: ['servicio-tour', 'sol-promotoras', 'caso-villa', 'guia-ar', 'precios'],

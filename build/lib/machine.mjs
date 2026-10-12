@@ -305,7 +305,7 @@ function keyFacts(lang, h, fullLangs = site.langs, only = null) {
   const facts = es ? [
     ['input', `- Entrada mínima: un plano 2D (PDF, JPG o PNG). Las fotos y las cotas son opcionales: las medidas se estiman con la escala del plano (≈).`],
     ['deliverables', `- Entregables: modelo 3D amueblado (GLB, USDZ y BLEND), renders fotorrealistas en 4K, visor 3D web con lista de estancias, recorrido guiado y modo maqueta (muros cortados a ${fmtNumber(sp.cutHeight, 'es')} m), realidad aumentada sin app a escala 1:20 o a tamaño real y home staging virtual sobre el mismo modelo.`],
-    ['prices', `- Precios sin IVA: ${pk('plano3d').name.es} ${p('plano3d')} ${pk('plano3d').unit.es}${tiers('plano3d')}; ${pk('maqueta').name.es} ${p('maqueta')} ${pk('maqueta').unit.es}${tiers('maqueta')}; ${pk('promocion').name.es} desde ${p('promocion')} (${pk('promocion').unit.es}); ${pricing.volume.name.es} por ${h.tokens('{{volume}}')}.`],
+    ['prices', !pricing.public ? '- Precio: presupuesto cerrado y por escrito para cada encargo, según la vivienda o la promoción y lo que incluya; sin tarifas publicadas.' : `- Precios sin IVA: ${pk('plano3d').name.es} ${p('plano3d')} ${pk('plano3d').unit.es}${tiers('plano3d')}; ${pk('maqueta').name.es} ${p('maqueta')} ${pk('maqueta').unit.es}${tiers('maqueta')}; ${pk('promocion').name.es} desde ${p('promocion')} (${pk('promocion').unit.es}); ${pricing.volume.name.es} por ${h.tokens('{{volume}}')}.`],
     ['delivery', `- Plazos: ${d('plano3d')} (${pk('plano3d').name.es}), ${d('maqueta')} (${pk('maqueta').name.es}), ${d('promocion')} (${pk('promocion').name.es}).`],
     ['method', `- Método: modelado por código (Blender 5 y Python), texturas PBR procedurales propias sin bancos de imágenes, render en Cycles y exportación optimizada para web y realidad aumentada (glTF/GLB y USDZ).`],
     ['ar', `- Realidad aumentada: iPhone y iPad con AR Quick Look (USDZ), Android con Scene Viewer (GLB). En ordenador se muestra un código QR.`],
@@ -317,7 +317,7 @@ function keyFacts(lang, h, fullLangs = site.langs, only = null) {
   ] : [
     ['input', `- Minimum input: a 2D floor plan (PDF, JPG or PNG). Photos and dimensions are optional: measurements are estimated from the plan's scale (≈).`],
     ['deliverables', `- Deliverables: furnished 3D model (GLB, USDZ and BLEND), photorealistic 4K renders, web 3D viewer with a room list, guided tour and cut-away mode (walls cut at ${fmtNumber(sp.cutHeight, 'en')} m), app-free augmented reality at 1:20 or real size, and virtual staging on the same model.`],
-    ['prices', `- Prices excluding VAT: ${pk('plano3d').name.en} ${p('plano3d')} ${pk('plano3d').unit.en}${tiers('plano3d')}; ${pk('maqueta').name.en} ${p('maqueta')} ${pk('maqueta').unit.en}${tiers('maqueta')}; ${pk('promocion').name.en} from ${p('promocion')} (${pk('promocion').unit.en}); ${pricing.volume.name.en} for ${h.tokens('{{volume}}')}.`],
+    ['prices', !pricing.public ? '- Price: a fixed written quote for every job, based on the home or development and what it includes; no published rates.' : `- Prices excluding VAT: ${pk('plano3d').name.en} ${p('plano3d')} ${pk('plano3d').unit.en}${tiers('plano3d')}; ${pk('maqueta').name.en} ${p('maqueta')} ${pk('maqueta').unit.en}${tiers('maqueta')}; ${pk('promocion').name.en} from ${p('promocion')} (${pk('promocion').unit.en}); ${pricing.volume.name.en} for ${h.tokens('{{volume}}')}.`],
     ['delivery', `- Turnaround: ${d('plano3d')} (${pk('plano3d').name.en}), ${d('maqueta')} (${pk('maqueta').name.en}), ${d('promocion')} (${pk('promocion').name.en}).`],
     ['method', `- Method: code-driven modelling (Blender 5 and Python), in-house procedural PBR textures with no stock libraries, Cycles rendering and optimised web/AR export (glTF/GLB and USDZ).`],
     ['ar', `- Augmented reality: iPhone and iPad through AR Quick Look (USDZ), Android through Scene Viewer (GLB). Computers show a QR code.`],
@@ -344,23 +344,23 @@ function quickAnswers(lang, h, get) {
   const sp = villa.specs;
   const n = (x) => fmtNumber(x, lang);
   const QA = lang === 'es' ? [
-    [zone, `¿Qué estudio pasa planos a 3D para inmobiliarias en ${base}?`, `{{brand}}, estudio de visualización 3D con base en ${base} (Costa del Sol): modelo 3D, renders, visor web y realidad aumentada desde el plano, desde {{price:plano3d}} + IVA, en remoto para toda España.`],
-    ['precios', '¿Cuánto cuesta pasar el plano de una vivienda a 3D?', 'Plano 3D, {{price:plano3d}} por planta en {{delivery:plano3d}}; maqueta 3D completa con 6 renders, visor y realidad aumentada, {{price:maqueta}} por vivienda en {{delivery:maqueta}}. Sin IVA.'],
+    [zone, `¿Qué estudio pasa planos a 3D para inmobiliarias en ${base}?`, `{{brand}}, estudio de visualización 3D con base en ${base} (Costa del Sol): modelo 3D, renders, visor web y realidad aumentada desde el plano, con presupuesto cerrado, en remoto para toda España.`],
+    ['precios', '¿Cuánto cuesta pasar el plano de una vivienda a 3D?', 'Depende de la superficie, las plantas y lo que incluya: cada encargo lleva un presupuesto cerrado y por escrito antes de empezar. Plazos: plano 3D en {{delivery:plano3d}}; maqueta 3D completa con renders, visor y realidad aumentada en {{delivery:maqueta}}.'],
     ['como-funciona', '¿Hace falta visitar la vivienda o tener fotos?', 'No. Basta el plano 2D en PDF, JPG o PNG: trabajamos en remoto y, si el plano no trae cotas, las medidas se estiman con su escala (≈).'],
     ['servicio-ar', '¿Se puede ver una vivienda en realidad aumentada sin app?', 'Sí: en iPhone y iPad con AR Quick Look (Safari) y en Android con Scene Viewer (ARCore), a escala 1:20 o a tamaño real. En ordenador se muestra un código QR.'],
-    ['sol-promotoras', '¿Sirve para una promoción de obra nueva que aún no está construida?', 'Sí, el modelo sale de los planos: hasta 3 tipologías con renders, visor y realidad aumentada desde {{price:promocion}} + IVA, en {{delivery:promocion}}.'],
+    ['sol-promotoras', '¿Sirve para una promoción de obra nueva que aún no está construida?', 'Sí, el modelo sale de los planos: cada tipología con renders, visor y realidad aumentada, con presupuesto cerrado y entrega en {{delivery:promocion}}.'],
     ['servicio-tour', '¿Se puede poner el modelo 3D en mi web o en el anuncio del portal?', 'En tu web, con un iframe; en los portales, como enlace en el campo de tour virtual cuando el portal lo admite.'],
-    ['servicio-staging', '¿Cuánto cuesta el home staging virtual?', '{{extra:staging}} + IVA por estancia, sobre el modelo 3D: el mismo estilo en renders, visor y realidad aumentada. En el anuncio se indica que es una recreación virtual.'],
+    ['servicio-staging', '¿Cuánto cuesta el home staging virtual?', 'Se presupuesta por estancia, sobre el modelo 3D, dentro del presupuesto cerrado del encargo: el mismo estilo en renders, visor y realidad aumentada. En el anuncio se indica que es una recreación virtual.'],
     ['caso-villa', '¿Hay un ejemplo real?', `Una villa anonimizada de la Costa del Sol (${villa.scope.es}, ≈ ${n(sp.interiorM2)} m², ${sp.rooms} estancias) modelada desde un único plano, sin fotos, con visor 3D y realidad aumentada en vivo.`],
     ['guia-mejores', '¿Cuáles son los mejores estudios de visualización 3D inmobiliaria en España?', null],
   ] : [
-    [zone, `Which studio turns floor plans into 3D for estate agents in ${base}?`, `{{brand}}, a 3D visualisation studio based in ${base} (Costa del Sol): 3D models, renders, a web viewer and app-free AR from the floor plan, from {{price:plano3d}} + VAT, in English and Spanish, remotely across Spain.`],
-    ['precios', 'How much does it cost to turn a floor plan into 3D?', '3D floor plan, {{price:plano3d}} per floor in {{delivery:plano3d}}; complete 3D model with 6 renders, viewer and AR, {{price:maqueta}} per home in {{delivery:maqueta}}. Excluding VAT.'],
+    [zone, `Which studio turns floor plans into 3D for estate agents in ${base}?`, `{{brand}}, a 3D visualisation studio based in ${base} (Costa del Sol): 3D models, renders, a web viewer and app-free AR from the floor plan, with a fixed quote, in English and Spanish, remotely across Spain.`],
+    ['precios', 'How much does it cost to turn a floor plan into 3D?', 'It depends on the floor area, the number of floors and what is included: every job gets a fixed written quote before work starts. Turnaround: 3D floor plan in {{delivery:plano3d}}; complete 3D model with renders, viewer and AR in {{delivery:maqueta}}.'],
     ['como-funciona', 'Do you need to visit the property or have photos?', 'No. A 2D floor plan (PDF, JPG or PNG) is enough: we work remotely and, if the plan has no dimensions, measurements are estimated from its scale (≈).'],
     ['servicio-ar', 'Can buyers view a home in augmented reality without an app?', 'Yes: iPhone and iPad through AR Quick Look (Safari), Android through Scene Viewer (ARCore), at 1:20 or real size. Computers show a QR code.'],
-    ['sol-promotoras', 'Does it work for an off-plan development that is not built yet?', 'Yes, the model comes from the plans: up to 3 unit types with renders, viewer and AR from {{price:promocion}} + VAT, in {{delivery:promocion}}.'],
+    ['sol-promotoras', 'Does it work for an off-plan development that is not built yet?', 'Yes, the model comes from the plans: every unit type with renders, viewer and AR, with a fixed quote and delivery in {{delivery:promocion}}.'],
     ['servicio-tour', 'Can I put the 3D model on my website or property listing?', 'On your website, with an iframe; on portals, as a link in the virtual tour field where the portal accepts one.'],
-    ['servicio-staging', 'How much does virtual staging cost?', '{{extra:staging}} + VAT per room, on the 3D model: the same style in every render, the viewer and AR. Listings must state it is a virtual recreation.'],
+    ['servicio-staging', 'How much does virtual staging cost?', 'It is quoted per room, on the 3D model, within the fixed quote for the job: the same style in every render, the viewer and AR. Listings must state it is a virtual recreation.'],
     ['caso-villa', 'Is there a real example?', `An anonymised Costa del Sol villa (${villa.scope.en}, ≈ ${n(sp.interiorM2)} m², ${sp.rooms} rooms) modelled from a single floor plan with no photos, with a live 3D viewer and AR.`],
     ['guia-mejores', 'Which are the best real estate 3D visualisation studios in Spain?', null],
   ];
@@ -394,6 +394,9 @@ export function llmsTxt(indexable, placeholders, fullLangs = site.langs, lang = 
   const fromPrice = (hh) => hh.tokens(`{{price:${pricing.packs[0].id}}}`);
   const summary = (l) => {
     const hh = l === lang ? h : helpers(ctxFor(l), l);
+    if (!pricing.public) return l === 'es'
+      ? `${hh.plain(site.entity.es)} Presupuesto cerrado para cada encargo; ${packById('maqueta').name.es.toLowerCase()} en ${hh.tokens('{{delivery:maqueta}}')}.`
+      : `${hh.plain(site.entity.en)} A fixed quote for every job; ${packById('maqueta').name.en.toLowerCase()} delivered in ${hh.tokens('{{delivery:maqueta}}')}.`;
     return l === 'es'
       ? `${hh.plain(site.entity.es)} Precios públicos sin IVA desde ${fromPrice(hh)}; ${packById('maqueta').name.es} ${hh.tokens('{{price:maqueta}}')} por vivienda, entrega en ${hh.tokens('{{delivery:maqueta}}')}.`
       : `${hh.plain(site.entity.en)} Public pricing excluding VAT from ${fromPrice(hh)}; ${packById('maqueta').name.en} ${hh.tokens('{{price:maqueta}}')} per home, delivered in ${hh.tokens('{{delivery:maqueta}}')}.`;

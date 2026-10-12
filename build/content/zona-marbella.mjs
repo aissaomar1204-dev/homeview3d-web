@@ -20,15 +20,15 @@ const faqEs = [
   },
   {
     q: '¿Trabajáis con agencias de Nueva Andalucía, Puerto Banús o San Pedro?',
-    a: 'Sí, con cualquier agencia o asesor inmobiliario de Marbella y del resto de la Costa del Sol, porque {{brand}} solo necesita el plano. El precio no cambia por zona: desde {{price:maqueta}} + IVA por vivienda, o {{volumeUnit}} por vivienda con el pack cartera de 5. La demo de una estancia en 3D con realidad aumentada es gratis.',
+    a: 'Sí, con cualquier agencia o asesor inmobiliario de Marbella y del resto de la Costa del Sol, porque {{brand}} solo necesita el plano. El precio no cambia por zona: te damos un presupuesto cerrado por vivienda, o por volumen si son varias. La demo de una estancia en 3D con realidad aumentada es gratis.',
   },
   {
     q: '¿Cuánto cuesta un render 3D en Marbella?',
-    a: 'Con {{brand}}, un render adicional en 4K sobre el modelo cuesta {{extra:render}} + IVA, y la maqueta 3D completa con renders, visor y realidad aumentada parte de {{price:maqueta}} + IVA. Muchos estudios de la zona presupuestan por proyecto, como verás en nuestra [comparativa de estudios de infografía 3D](@guia-mejores); los rangos publicados en España, con fuente y fecha, están en la [guía de precios de renders](@guia-precio-render).',
+    a: 'Con {{brand}}, el precio depende de cuántas imágenes necesites y de si quieres la maqueta 3D completa con renders, visor y realidad aumentada; te lo damos cerrado al ver el plano. Muchos estudios de la zona también presupuestan por proyecto, como verás en nuestra [comparativa de estudios de infografía 3D](@guia-mejores); los rangos publicados en España, con fuente y fecha, están en la [guía de precios de renders](@guia-precio-render).',
   },
   {
     q: '¿Podéis modelar una villa grande o de varias plantas?',
-    a: 'Sí. {{brand}} modela cada planta a partir de su plano y la tarifa depende de la superficie total de la vivienda, sumando todas sus plantas: {{price:maqueta}} + IVA hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m². Para villas de más de 300 m² te damos un precio cerrado antes de empezar. Nuestro caso demostrativo es la planta alta de una villa.',
+    a: 'Sí. {{brand}} modela cada planta a partir de su plano y el presupuesto depende de la superficie total de la vivienda, sumando todas sus plantas. Te damos un precio cerrado antes de empezar. Nuestro caso demostrativo es la planta alta de una villa.',
   },
   {
     q: '¿En qué idiomas trabajáis?',
@@ -40,7 +40,7 @@ const faqEs = [
   },
   {
     q: '¿Podéis enseñar cómo quedaría una villa reformada?',
-    a: 'Sí, siempre que la propuesta se pueda dibujar sobre el plano. {{brand}} modela la vivienda y aplica nuevos acabados y mobiliario sobre el mismo modelo, de modo que renders, visor y realidad aumentada muestran la versión reformada. El home staging virtual cuesta {{extra:staging}} + IVA por estancia; si cambia la distribución, te damos precio antes. En el anuncio, se etiqueta como recreación virtual.',
+    a: 'Sí, siempre que la propuesta se pueda dibujar sobre el plano. {{brand}} modela la vivienda y aplica nuevos acabados y mobiliario sobre el mismo modelo, de modo que renders, visor y realidad aumentada muestran la versión reformada. El home staging virtual se presupuesta por estancia; si cambia la distribución, te damos precio antes. En el anuncio, se etiqueta como recreación virtual.',
   },
 ];
 
@@ -51,15 +51,15 @@ const faqEn = [
   },
   {
     q: 'Do you work with agencies in Nueva Andalucía, Puerto Banús or San Pedro?',
-    a: 'Yes, with any agency or independent agent in Marbella and along the Costa del Sol, because {{brand}} only needs the floor plan. Prices are the same everywhere: from {{price:maqueta}} + VAT per home, or {{volumeUnit}} per home with the 5-home portfolio pack. The demo, one room in 3D with augmented reality, is free.',
+    a: 'Yes, with any agency or independent agent in Marbella and along the Costa del Sol, because {{brand}} only needs the floor plan. Prices are the same everywhere: a fixed quote per home, or a volume quote for several. The demo, one room in 3D with augmented reality, is free.',
   },
   {
     q: 'How much does 3D rendering cost in Marbella?',
-    a: 'With {{brand}}, an extra 4K render on an existing model costs {{extra:render}} + VAT, and the complete 3D model with renders, viewer and augmented reality starts at {{price:maqueta}} + VAT. Many local studios quote per project, as our [round-up of 3D studios in Spain](@guia-mejores) shows; our [3D rendering cost guide](@guia-precio-render) compares the price ranges published in Spain, with sources and dates.',
+    a: 'With {{brand}}, the price depends on how many images you need and whether you want the complete 3D model with renders, viewer and augmented reality; we fix it once we see the plan. Many local studios also quote per project, as our [round-up of 3D studios in Spain](@guia-mejores) shows; our [3D rendering cost guide](@guia-precio-render) compares the price ranges published in Spain, with sources and dates.',
   },
   {
     q: 'Can you model a large villa over several floors?',
-    a: 'Yes. {{brand}} models each floor from its plan, and the price depends on the home’s total floor area, all floors added together: {{price:maqueta}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m². For villas over 300 m², we give you a fixed quote before we start. Our demo case is the upper floor of a villa.',
+    a: 'Yes. {{brand}} models each floor from its plan, and the quote depends on the home’s total floor area, all floors added together. We give you a fixed price before we start. Our demo case is the upper floor of a villa.',
   },
   {
     q: 'Do you also cover Estepona, Benahavís and Sotogrande?',
@@ -71,7 +71,7 @@ const faqEn = [
   },
   {
     q: 'Can you show what a dated villa would look like renovated?',
-    a: 'Yes, as long as the proposal can be drawn on the plan. {{brand}} models the home and applies new finishes and furniture to the same model, so renders, viewer and AR all show the renovated version. Virtual staging costs {{extra:staging}} + VAT per room; if the layout changes, we quote first. In the listing, label the images as a virtual recreation.',
+    a: 'Yes, as long as the proposal can be drawn on the plan. {{brand}} models the home and applies new finishes and furniture to the same model, so renders, viewer and AR all show the renovated version. Virtual staging is quoted per room; if the layout changes, we quote first. In the listing, label the images as a virtual recreation.',
   },
   {
     q: 'Is the viewer available in English?',
@@ -85,13 +85,13 @@ export default {
   id: 'zona-marbella',
   image: 'villa_terraza_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Render 3D y maqueta virtual en Marbella',
-    description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano para agencias y promotoras de Marbella, sin visitas y en días. Desde {{price:maqueta}} + IVA.',
+    description: 'Modelos 3D, renders, visor y realidad aumentada desde el plano para agencias y promotoras de Marbella, sin visitas, en días y con presupuesto cerrado.',
     h1: 'Render 3D y modelos 3D desde plano en Marbella',
-    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, convierte el plano de villas, áticos y viviendas de reventa u obra nueva en un modelo 3D amueblado con renders, visor para el anuncio y realidad aumentada sin app, para compradores que a menudo deciden desde otro país. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, convierte el plano de villas, áticos y viviendas de reventa u obra nueva en un modelo 3D amueblado con renders, visor para el anuncio y realidad aumentada sin app, para compradores que a menudo deciden desde otro país. Presupuesto cerrado y entrega en {{delivery:maqueta}}.',
     breadcrumb: 'Marbella',
     card: {
       title: 'Marbella',
@@ -107,7 +107,7 @@ export default {
       ['Compraventas en 2025', '4.399 viviendas, un 10,2 % de obra nueva'],
       ['Compras por extranjeros', '37,01 % en la provincia (2.º trimestre de 2026)'],
       ['Entrada', 'El plano de la vivienda, sin visita'],
-      ['Precio', 'Desde {{price:maqueta}} + IVA'],
+      ['Precio', 'Presupuesto cerrado antes de empezar'],
       ['Plazo', '{{delivery:maqueta}}'],
       ['Idiomas', 'Español e inglés'],
     ],
@@ -156,16 +156,16 @@ export default {
       {
         type: 'table',
         h2: '¿Qué encargar para una vivienda en Marbella?',
-        caption: 'Qué te recomendamos según el tipo de vivienda (precios sin IVA)',
-        head: ['Vivienda', 'Qué te recomendamos', 'Precio'],
+        caption: 'Qué te recomendamos según el tipo de vivienda',
+        head: ['Vivienda', 'Qué te recomendamos'],
         rows: [
-          ['Apartamento o ático de hasta 150 m²', 'Maqueta 3D completa: modelo, renders, visor y realidad aumentada', '{{price:maqueta}}'],
-          ['Villa de más de 150 y hasta 300 m² en total', 'Maqueta 3D completa, con todas sus plantas', '{{price:maqueta:1}}'],
-          ['Vivienda con decoración antigua o por reformar', 'Maqueta más home staging virtual en las estancias clave', '{{extra:staging}} por estancia'],
-          ['Piso de reventa con buenas fotos', '[Plano 3D](@servicio-plano) para explicar la distribución', '{{price:plano3d}} por planta'],
-          ['Varias captaciones en la zona', 'Pack cartera de 5 maquetas 3D completas', '{{volume}}'],
+          ['Apartamento o ático de hasta 150 m²', 'Maqueta 3D completa: modelo, renders, visor y realidad aumentada'],
+          ['Villa de más de 150 y hasta 300 m² en total', 'Maqueta 3D completa, con todas sus plantas'],
+          ['Vivienda con decoración antigua o por reformar', 'Maqueta más home staging virtual en las estancias clave'],
+          ['Piso de reventa con buenas fotos', '[Plano 3D](@servicio-plano) para explicar la distribución'],
+          ['Varias captaciones en la zona', 'Varias maquetas 3D completas, con presupuesto por volumen'],
         ],
-        note: 'Tramos por superficie, extras y condiciones en la página de [precios](@precios).',
+        note: 'Cómo presupuestamos, en la página de [precios](@precios).',
       },
       {
         type: 'callout',
@@ -186,9 +186,9 @@ export default {
 
   en: {
     title: '3D rendering in Marbella and on the Costa del Sol',
-    description: '3D models, CGI, a listing viewer and app-free AR from the floor plan for agents and developers in Marbella and the Costa del Sol, from {{price:maqueta}} + VAT.',
+    description: '3D models, CGI, a listing viewer and app-free AR from the floor plan for agents and developers in Marbella and the Costa del Sol, at a fixed quote.',
     h1: '3D rendering, 3D models and AR in Marbella',
-    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, turns floor plans of villas, penthouses and resale or off-plan homes along the Costa del Sol into furnished 3D models with renders, a listing viewer and app-free AR, for buyers who often decide from abroad. From {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, turns floor plans of villas, penthouses and resale or off-plan homes along the Costa del Sol into furnished 3D models with renders, a listing viewer and app-free AR, for buyers who often decide from abroad. A fixed quote and delivery in {{delivery:maqueta}}.',
     breadcrumb: 'Marbella',
     card: {
       title: 'Marbella and the Costa del Sol',
@@ -204,7 +204,7 @@ export default {
       ['Marbella home sales, 2025', '4,399, of which 10.2% new build'],
       ['Foreign buyers', '37.01% of purchases in Málaga province (Q2 2026)'],
       ['Input', 'The floor plan, no site visit'],
-      ['Price', 'From {{price:maqueta}} + VAT'],
+      ['Price', 'A fixed quote before work starts'],
       ['Turnaround', '{{delivery:maqueta}}'],
       ['Languages', 'English and Spanish'],
     ],
@@ -280,16 +280,16 @@ export default {
       {
         type: 'table',
         h2: 'What should you order for a Marbella property?',
-        caption: 'What we recommend by type of home (prices excluding VAT)',
-        head: ['Property', 'What we recommend', 'Price'],
+        caption: 'What we recommend by type of home',
+        head: ['Property', 'What we recommend'],
         rows: [
-          ['Apartment or penthouse up to 150 m²', 'Complete 3D model: model, renders, viewer and augmented reality', '{{price:maqueta}}'],
-          ['Villa of over 150 and up to 300 m² in total', 'Complete 3D model, all floors included', '{{price:maqueta:1}}'],
-          ['Dated home or renovation project', 'Model plus virtual staging in the key rooms', '{{extra:staging}} per room'],
-          ['Resale flat with good photos', '[3D floor plan](@servicio-plano) to explain the layout', '{{price:plano3d}} per floor'],
-          ['Several instructions in the area', 'Portfolio pack of 5 complete 3D models', '{{volume}}'],
+          ['Apartment or penthouse up to 150 m²', 'Complete 3D model: model, renders, viewer and augmented reality'],
+          ['Villa of over 150 and up to 300 m² in total', 'Complete 3D model, all floors included'],
+          ['Dated home or renovation project', 'Model plus virtual staging in the key rooms'],
+          ['Resale flat with good photos', '[3D floor plan](@servicio-plano) to explain the layout'],
+          ['Several instructions in the area', 'Several complete 3D models, with a volume quote'],
         ],
-        note: 'Size bands, extras and terms on our [pricing page](@precios).',
+        note: 'How we quote is on our [pricing page](@precios).',
       },
       {
         type: 'callout',

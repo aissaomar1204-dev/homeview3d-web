@@ -10,14 +10,14 @@ export default {
   id: 'guias',
   image: 'villa_planta_cenital_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Guías sobre renders, planos 3D y realidad aumentada',
     description: 'Guías con fuentes para decidir cómo enseñar una vivienda en 3D: precios de renders y planos, IA o modelo real, Matterport, estudios de España y AR.',
     h1: 'Guías de visualización 3D inmobiliaria',
-    lead: 'Guías para inmobiliarias, promotoras y arquitectos que están decidiendo cómo enseñar una vivienda en 3D: qué cuesta en España, cómo se hace, qué alternativa conviene y qué exige la ley. Cada cifra de mercado enlaza a su fuente, y nuestra tarifa va aparte: plano 3D desde {{price:plano3d}} + IVA, en {{delivery:plano3d}}.',
+    lead: 'Guías para inmobiliarias, promotoras y arquitectos que están decidiendo cómo enseñar una vivienda en 3D: qué cuesta en España, cómo se hace, qué alternativa conviene y qué exige la ley. Cada cifra de mercado enlaza a su fuente. Nosotros no publicamos tarifas: cada encargo lleva su presupuesto cerrado.',
     breadcrumb: 'Guías',
     card: {
       title: 'Guías',
@@ -96,7 +96,7 @@ export default {
     title: 'Guides to 3D property visualisation in Spain',
     description: 'Sourced guides for estate agents and developers: 3D rendering costs in Spain, AI vs a real 3D model, Matterport vs a 3D model and viewing homes in AR.',
     h1: 'Guides to 3D visualisation for property',
-    lead: 'Guides for estate agents, developers and architects deciding how to show a property in 3D: what it costs in Spain, whether AI or a scan will do, and how buyers open a home in augmented reality. Every market figure links to its source. Our rates sit apart: 3D floor plans from {{price:plano3d}} + VAT, in {{delivery:plano3d}}.',
+    lead: 'Guides for estate agents, developers and architects deciding how to show a property in 3D: what it costs in Spain, whether AI or a scan will do, and how buyers open a home in augmented reality. Every market figure links to its source. We do not publish rates of our own: every job gets a fixed quote.',
     breadcrumb: 'Guides',
     card: {
       title: 'Guides',

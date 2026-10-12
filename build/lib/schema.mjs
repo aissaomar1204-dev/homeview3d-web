@@ -178,6 +178,7 @@ export function primaryPack(route, page) {
  * One offer → a single object, several → an array.
  */
 function serviceOffers(entry, route, page, lang, h, url, template) {
+  if (!pricing.public) return undefined; // no public prices (build/data/pricing.mjs): no Offers
   const primary = primaryPack(route, page);
   const s = `${page?.description || ''} ${page?.lead || ''}`;
   const priced = (id) => new RegExp(`\\{\\{price:${id}[:}]`).test(s);
@@ -196,7 +197,7 @@ function serviceOffers(entry, route, page, lang, h, url, template) {
 function orgNode(entry, lang, h, full) {
   const stub = { '@type': 'ProfessionalService', '@id': ORG_ID, name: site.brand.name, url: `${site.domain}/` };
   if (!full) return stub;
-  const catalog = h.absHref('precios');
+  const catalog = pricing.public ? h.absHref('precios') : null;
   const legalOk = !site.legal.placeholder && site.brand.legalName && !/^\[/.test(site.brand.legalName);
   // Logo: public/assets/brand/logo-512.png (scripts/brand.mjs): the symbol on the paper colour, 512 x 512, crawlable.
   const logo = site.brand.logo ? h.assetUrl(site.brand.logo) : undefined;
@@ -572,6 +573,7 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       break;
     }
     case 'pricing': {
+      if (!pricing.public) break; // no public prices: no OfferCatalog
       const catalogId = `${url}#catalog`;
       const brand = site.brand.name;
       // itemOffered → the Service node of the page that sells the pack (G-10), anonymous Service otherwise.

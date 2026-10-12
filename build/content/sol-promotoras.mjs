@@ -12,11 +12,11 @@ const MIVAU = 'https://apps.fomento.gob.es/BoletinOnline2/?nivel=2&orden=3400000
 const faqEs = [
   {
     q: '¿Sirve para vender viviendas sobre plano u obra nueva que aún no existe?',
-    a: 'Sí, es su uso principal. {{brand}} construye el modelo 3D desde los planos del proyecto, sin fotos ni visita, así que puedes enseñar cada tipología amueblada antes de empezar la obra: renders 4K, visor web con selector de tipología y realidad aumentada. El pack de promoción parte de {{price:promocion}} + IVA y se entrega en {{delivery:promocion}}.',
+    a: 'Sí, es su uso principal. {{brand}} construye el modelo 3D desde los planos del proyecto, sin fotos ni visita, así que puedes enseñar cada tipología amueblada antes de empezar la obra: renders 4K, visor web con selector de tipología y realidad aumentada. El pack de promoción va con presupuesto cerrado y se entrega en {{delivery:promocion}}.',
   },
   {
     q: '¿Podéis modelar todas las tipologías de la promoción?',
-    a: 'Sí. El pack de promoción de {{brand}} incluye hasta 3 tipologías en un mismo visor, con un selector para pasar de una a otra, y cada tipología adicional cuesta {{extra:tipologia}} + IVA. Todas comparten materiales, mobiliario y criterio de luz, así que los renders de la promoción son coherentes entre sí y con lo que el comprador ve en realidad aumentada.',
+    a: 'Sí. El pack de promoción de {{brand}} incluye todas las tipologías en un mismo visor, con un selector para pasar de una a otra. Todas comparten materiales, mobiliario y criterio de luz, así que los renders de la promoción son coherentes entre sí y con lo que el comprador ve en realidad aumentada.',
   },
   {
     q: '¿Qué pasa si cambia el proyecto durante la comercialización?',
@@ -47,11 +47,11 @@ const faqEs = [
 const faqEn = [
   {
     q: 'How do I sell my off-plan property faster with 3D?',
-    a: 'Nobody can honestly promise a faster sale, and {{brand}} doesn’t. What 3D does is remove the reasons buyers hesitate: they see every unit type furnished in 4K renders, explore it in an interactive viewer and place it on their table, or at real size, in augmented reality. Our development package starts at {{price:promocion}} + VAT, delivered in {{delivery:promocion}}.',
+    a: 'Nobody can honestly promise a faster sale, and {{brand}} doesn’t. What 3D does is remove the reasons buyers hesitate: they see every unit type furnished in 4K renders, explore it in an interactive viewer and place it on their table, or at real size, in augmented reality. Our development package comes with a fixed quote and is delivered in {{delivery:promocion}}.',
   },
   {
     q: 'Can you model every unit type in a development and keep them consistent?',
-    a: 'Yes. The {{brand}} development package covers up to 3 unit types in one viewer, with a selector to switch between them, and each extra unit type costs {{extra:tipologia}} + VAT. All of them share the same materials, furniture and lighting, so the CGI across the development is consistent, and it matches what buyers see in augmented reality.',
+    a: 'Yes. The {{brand}} development package covers every unit type in one viewer, with a selector to switch between them. All of them share the same materials, furniture and lighting, so the CGI across the development is consistent, and it matches what buyers see in augmented reality.',
   },
   {
     q: 'Can foreign buyers explore an off-plan home before travelling to Spain?',
@@ -85,13 +85,13 @@ export default {
   id: 'sol-promotoras',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Renders e infografías 3D para promotoras de obra nueva',
-    description: 'Cada tipología de tu promoción en 3D: renders, maqueta virtual interactiva y realidad aumentada para vender sobre plano. Desde {{price:promocion}} + IVA.',
+    description: 'Cada tipología de tu promoción en 3D: renders, maqueta virtual interactiva y realidad aumentada para vender sobre plano, con presupuesto cerrado.',
     h1: 'Renders y maqueta virtual para promotoras de obra nueva',
-    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, modela cada tipología de tu promoción desde los planos del proyecto: renders 4K, una maqueta virtual interactiva con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Desde {{price:promocion}} + IVA hasta 3 tipologías, en {{delivery:promocion}}.',
+    lead: '{{brand}}, estudio de visualización 3D de la Costa del Sol, modela cada tipología de tu promoción desde los planos del proyecto: renders 4K, una maqueta virtual interactiva con selector de tipología y realidad aumentada para la sala de ventas y las ferias. Presupuesto cerrado según el número de tipologías y entrega en {{delivery:promocion}}.',
     breadcrumb: 'Promotoras',
     card: {
       title: 'Para promotoras de obra nueva',
@@ -106,8 +106,8 @@ export default {
       ['Para', 'Promotoras, comercializadoras y gestoras de cooperativas'],
       ['Entrada', 'Planos del proyecto en DWG, DXF o PDF'],
       ['Incluye', 'Tipologías en 3D, renders 4K, visor y AR'],
-      ['Precio', 'Desde {{price:promocion}} + IVA'],
-      ['Tipología adicional', '{{extra:tipologia}} + IVA'],
+      ['Precio', 'Presupuesto cerrado según el número de tipologías'],
+      ['Tipologías', 'Todas en un mismo visor, con selector'],
       ['Plazo', '{{delivery:promocion}}'],
       ['Cambios', '{{revisions:promocion}}'],
       ['Canales', 'Web, sala de ventas, ferias y WhatsApp'],
@@ -165,31 +165,12 @@ export default {
         ],
       },
       {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'Precios para promociones y viviendas sueltas',
-        intro: 'El pack de promoción incluye hasta 3 tipologías; cada tipología adicional cuesta {{extra:tipologia}} + IVA. Detalle completo en [precios](@precios).',
-      },
-      {
         type: 'answer',
         h2: '¿Cuánto pesa la visualización 3D en el presupuesto de una promoción?',
-        answer: 'Muy poco en proporción. Ejemplo con supuestos: 24 viviendas de 3 tipologías a un precio medio de 350.000 € suman 8,4 millones de euros en ventas. El pack de promoción cuesta {{price:promocion}} + IVA, menos del 0,1 % de ese volumen. Un piso piloto físico, además, exige obra terminada o un local donde montarlo.',
+        answer: 'Poco frente a lo que se vende. El presupuesto depende del número de tipologías, no del de viviendas: en una promoción de 24 viviendas con 3 tipologías modelamos 3 casas, no 24. Un piso piloto físico, además, exige obra terminada o un local donde montarlo, y solo enseña una tipología.',
         body: 'No te prometemos que vendas antes: eso depende del producto, el precio y tu equipo comercial. Lo que sí puedes medir es cuántas dudas dejan de llegar a la sala de ventas y cuántos compradores reservan sin haber visitado.\n\nSi estás comparando proveedores, nuestra [guía de estudios de visualización 3D en España](@guia-mejores) reúne a los que trabajan para promotoras, con lo que publica cada uno.',
       },
       plate('es', 'villa_interior_dormitorio'),
-      {
-        type: 'table',
-        caption: 'Ejemplo ilustrativo para una promoción (supuestos, no resultados)',
-        head: ['Concepto', 'Valor en el ejemplo'],
-        rows: [
-          ['Viviendas de la promoción (supuesto)', '24, en 3 tipologías'],
-          ['Precio medio por vivienda (supuesto)', '350.000 €'],
-          ['Volumen de ventas', '8.400.000 €'],
-          ['Pack de promoción', '{{price:promocion}} + IVA'],
-          ['Peso sobre el volumen de ventas', 'Menos del 0,1 %'],
-        ],
-        note: 'Cifras supuestas para ilustrar el cálculo. No es una previsión de ventas.',
-      },
       {
         type: 'callout',
         tone: 'honesty',
@@ -209,9 +190,9 @@ export default {
 
   en: {
     title: 'Off-plan 3D visualisation for developers in Spain',
-    description: 'Every unit type as a 3D model with 4K CGI, an interactive viewer and app-free AR for your sales suite and fairs. From {{price:promocion}} + VAT.',
+    description: 'Every unit type as a 3D model with 4K CGI, an interactive viewer and app-free AR for your sales suite and fairs, with a fixed quote.',
     h1: 'Off-plan 3D visualisation for property developers',
-    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and property fairs. From {{price:promocion}} + VAT for up to 3 unit types, in {{delivery:promocion}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and fairs. Fixed quote, delivered in {{delivery:promocion}}.',
     breadcrumb: 'Developers',
     card: {
       title: 'For developers selling off-plan',
@@ -226,8 +207,8 @@ export default {
       ['For', 'Developers, sales agents and off-plan marketers'],
       ['Input', 'Project drawings in DWG, DXF or PDF'],
       ['Includes', 'Unit types in 3D, 4K CGI, viewer and AR'],
-      ['Price', 'From {{price:promocion}} + VAT'],
-      ['Extra unit type', '{{extra:tipologia}} + VAT'],
+      ['Price', 'A fixed quote based on the number of unit types'],
+      ['Unit types', 'All in one viewer, with a selector'],
       ['Turnaround', '{{delivery:promocion}}'],
       ['Changes', '{{revisions:promocion}}'],
       ['Channels', 'Website, sales suite, fairs and WhatsApp'],
@@ -285,31 +266,12 @@ export default {
         ],
       },
       {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'Prices for developments and single homes',
-        intro: 'The development package covers up to 3 unit types; each extra unit type costs {{extra:tipologia}} + VAT. Full details on our [pricing page](@precios).',
-      },
-      {
         type: 'answer',
         h2: 'What does 3D cost relative to the development’s value?',
-        answer: 'Very little, proportionally. A worked example with assumptions: 24 homes across 3 unit types at an average of €350,000 add up to €8.4 million in sales. The development package costs {{price:promocion}} + VAT, under 0.1% of that. A physical show home also needs a finished unit, or premises to build one in.',
+        answer: 'Little, compared with what you sell. The quote depends on the number of unit types, not of homes: in a development of 24 homes with 3 unit types we model 3 homes, not 24. A physical show home also needs a finished unit, or premises to build one in, and shows a single unit type.',
         body: 'We won’t promise you’ll sell faster; that depends on product, price and your sales team. What you can track is how many questions stop reaching the sales suite, and how many buyers reserve without having visited.\n\nIf you are comparing suppliers, our [guide to the best 3D visualisation studios in Spain](@guia-mejores) covers those that work with developers, and what each one publishes.',
       },
       plate('en', 'villa_interior_dormitorio'),
-      {
-        type: 'table',
-        caption: 'Illustrative example for a development (assumptions, not results)',
-        head: ['Item', 'Value in the example'],
-        rows: [
-          ['Homes in the development (assumption)', '24, across 3 unit types'],
-          ['Average price per home (assumption)', '€350,000'],
-          ['Total sales value', '€8,400,000'],
-          ['Development package', '{{price:promocion}} + VAT'],
-          ['Share of total sales value', 'Under 0.1%'],
-        ],
-        note: 'Assumed figures to illustrate the calculation. This is not a sales forecast.',
-      },
       {
         type: 'callout',
         tone: 'honesty',

@@ -10,13 +10,13 @@ export default {
   id: 'servicio-renders',
   image: 'villa_interior_salon',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Renders inmobiliarios fotorrealistas desde el plano',
-    description: 'Renders e infografías 3D en 4K a partir del plano, sin fotos: 6 incluidos en la maqueta 3D desde {{price:maqueta}} + IVA. Render extra: {{extra:render}}.',
+    description: 'Renders e infografías 3D en 4K a partir del plano, sin fotos: 6 incluidos en la maqueta 3D completa, con presupuesto cerrado.',
     h1: 'Renders inmobiliarios fotorrealistas a partir del plano',
-    lead: 'Hacemos renders inmobiliarios fotorrealistas en 4K a partir del plano 2D, sin fotos, para agencias y promotoras. Salen del mismo modelo 3D que el visor y la realidad aumentada, así que todo coincide. La maqueta 3D completa incluye 6 renders desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}; cada render adicional, {{extra:render}} + IVA.',
+    lead: 'Hacemos renders inmobiliarios fotorrealistas en 4K a partir del plano 2D, sin fotos, para agencias y promotoras. Salen del mismo modelo 3D que el visor y la realidad aumentada, así que todo coincide. La maqueta 3D completa incluye 6 renders y se entrega en {{delivery:maqueta}}; los renders adicionales se hacen sobre el mismo modelo.',
     breadcrumb: 'Renders inmobiliarios',
     card: {
       title: 'Renders inmobiliarios',
@@ -31,9 +31,9 @@ export default {
       ['Entrada', 'Plano 2D, sin fotos de la vivienda'],
       ['Resolución', '4K, en PNG o JPG'],
       ['Incluidos', '6 renders en la maqueta completa; 12 en promociones'],
-      ['Render adicional', '{{extra:render}} + IVA por imagen'],
+      ['Render adicional', 'Sobre el mismo modelo, con presupuesto cerrado'],
       ['Motor', 'Blender Cycles con luz solar física'],
-      ['Plazo', '{{delivery:maqueta}}; urgente en 48 h (+{{extra:urgente}})'],
+      ['Plazo', '{{delivery:maqueta}}; urgente en 48 h, con presupuesto aparte'],
       ['Revisiones', '{{revisions:maqueta}}'],
       ['Etiquetado', 'Cada imagen indica que es un render'],
     ],
@@ -99,7 +99,7 @@ export default {
           ['Obra nueva sin construir', 'Sí', 'No', 'Sí'],
           ['Coherencia entre imágenes', 'Misma geometría en todas las vistas', 'Cada imagen se genera aparte', 'Sí, si parte de un modelo'],
           ['Visor web y realidad aumentada', 'Incluidos en la maqueta completa', 'No', 'Según el estudio, con presupuesto aparte'],
-          ['Precio', 'Público: 6 renders desde {{price:maqueta}} + IVA', 'Público en muchas herramientas', 'Normalmente bajo presupuesto'],
+          ['Precio', 'Presupuesto cerrado por vivienda', 'Público en muchas herramientas', 'Normalmente bajo presupuesto'],
           ['Plazo habitual', '{{delivery:maqueta}}', 'Minutos u horas', 'De días a semanas, según el estudio'],
         ],
         note: 'Los rangos de precio del mercado español, con fuentes enlazadas, están en [cuánto cuesta un render 3D en España](@guia-precio-render).',
@@ -107,7 +107,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Qué vistas incluye un pack de renders?',
-        answer: 'Las que necesite tu anuncio. Con la maqueta completa eliges 6 vistas en 4K: lo habitual es salón, cocina, dormitorio principal, un baño, la terraza y una vista aérea de la maqueta seccionada, que enseña toda la distribución de un vistazo. Cada vista extra cuesta {{extra:render}} + IVA.',
+        answer: 'Las que necesite tu anuncio. Con la maqueta completa eliges 6 vistas en 4K: lo habitual es salón, cocina, dormitorio principal, un baño, la terraza y una vista aérea de la maqueta seccionada, que enseña toda la distribución de un vistazo. Si necesitas más vistas, las añadimos sobre el mismo modelo.',
         body: 'Para interiores usamos cámaras a la altura de los ojos o vistas elevadas con los muros cortados, como las de la villa. La luz es la de una tarde mediterránea, calculada en el render y no añadida después. La planta cenital a color y la planta 2D redibujada van incluidas aparte de esas 6 vistas.',
       },
       {
@@ -119,7 +119,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Hacéis renders para promociones de obra nueva?',
-        answer: 'Sí. El pack de promoción incluye 3 tipologías modeladas y amuebladas, 12 renders en 4K, visor con selector de tipología y realidad aumentada, desde {{price:promocion}} + IVA en {{delivery:promocion}}. Cada tipología adicional cuesta {{extra:tipologia}} + IVA, con los mismos materiales para que toda la promoción se vea coherente.',
+        answer: 'Sí. El pack de promoción incluye cada tipología modelada y amueblada, con sus renders en 4K, visor con selector de tipología y realidad aumentada, en {{delivery:promocion}}. Todas las tipologías comparten materiales para que la promoción se vea coherente, y el presupuesto depende de cuántas sean.',
         body: 'Si vendes sobre plano, mira también nuestra página para [promotoras de obra nueva](@sol-promotoras): cómo usar renders, visor y AR en la sala de ventas y en ferias.\n\nTrabajamos en remoto desde Marbella para toda España. Si tu cartera está en la costa malagueña, mira también el [render 3D en Marbella](@zona-marbella), los [renders de obra nueva en Málaga](@zona-malaga) y nuestro trabajo en la [Costa del Sol](@zona-costa-del-sol).',
       },
       {
@@ -135,18 +135,12 @@ export default {
         title: 'Cada render va etiquetado como render',
         body: 'Entregamos cada imagen con su mención, como texto para el pie de foto del anuncio: «Render 3D. Imagen orientativa; mobiliario no incluido». En obra nueva añadimos «no contractual», porque los acabados finales pueden cambiar. Así el comprador sabe qué está viendo y la visita no le decepciona.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: '¿Cuánto cuestan los renders inmobiliarios?',
-        intro: 'Precios públicos, sin IVA. La maqueta completa incluye 6 renders en 4K y el pack de promoción, 12. Cada render adicional cuesta {{extra:render}}. Para ver cómo encaja con el mercado, consulta [cuánto cuesta un render 3D en España](@guia-precio-render).',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: '¿Cuánto cuestan vuestros renders?',
-        a: 'En {{brand}}, 6 renders en 4K van incluidos en la maqueta 3D completa desde {{price:maqueta}} + IVA, junto con el modelo, el visor web y la realidad aumentada. Cada render adicional cuesta {{extra:render}} + IVA, y el pack de promoción incluye 12. Si quieres compararlo con el mercado, lee [cuánto cuesta un render 3D en España](@guia-precio-render).',
+        a: 'En {{brand}}, 6 renders en 4K van incluidos en la maqueta 3D completa, junto con el modelo, el visor web y la realidad aumentada, con presupuesto cerrado al ver el plano. Los renders adicionales se hacen sobre el mismo modelo. Si quieres compararlo con el mercado, lee [cuánto cuesta un render 3D en España](@guia-precio-render).',
       },
       {
         q: '¿Qué es una infografía 3D?',
@@ -158,11 +152,11 @@ export default {
       },
       {
         q: '¿Cuánto tarda un render?',
-        a: '{{brand}} entrega los renders con la maqueta 3D completa en {{delivery:maqueta}}, porque primero hay que modelar la vivienda. Con el modelo hecho, calcular una imagen es rápido: las {{villa:renders}} imágenes de nuestra villa de demostración, vistas y plantas incluidas, se calcularon en unos {{villa:renderMinutes}} minutos. Si lo necesitas antes, la entrega urgente en 48 horas tiene un recargo del {{extra:urgente}}.',
+        a: '{{brand}} entrega los renders con la maqueta 3D completa en {{delivery:maqueta}}, porque primero hay que modelar la vivienda. Con el modelo hecho, calcular una imagen es rápido: las {{villa:renders}} imágenes de nuestra villa de demostración, vistas y plantas incluidas, se calcularon en unos {{villa:renderMinutes}} minutos. Si lo necesitas antes, hay entrega urgente en 48 horas, con presupuesto aparte.',
       },
       {
         q: '¿Puedo pedir cambios en los muebles o los materiales?',
-        a: 'Sí. La maqueta 3D completa incluye {{revisions:maqueta}}: puedes cambiar muebles, suelos, colores o encuadres y {{brand}} vuelve a calcular las imágenes sobre el mismo modelo. Si quieres decorar la vivienda en otro estilo completo, eso es [home staging virtual sobre el modelo 3D](@servicio-staging), a {{extra:staging}} + IVA por estancia.',
+        a: 'Sí. La maqueta 3D completa incluye {{revisions:maqueta}}: puedes cambiar muebles, suelos, colores o encuadres y {{brand}} vuelve a calcular las imágenes sobre el mismo modelo. Si quieres decorar la vivienda en otro estilo completo, eso es [home staging virtual sobre el modelo 3D](@servicio-staging), que se presupuesta por estancia.',
       },
       {
         q: '¿Cuál es la mejor IA para crear renders?',
@@ -186,9 +180,9 @@ export default {
 
   en: {
     title: 'Real estate 3D rendering in Spain, from floor plans',
-    description: 'Photorealistic 4K property CGI from the floor plan, no photos needed. 6 renders come with the complete 3D model, from {{price:maqueta}} + VAT.',
+    description: 'Photorealistic 4K property CGI from the floor plan, no photos needed. 6 renders come with the complete 3D model, at a fixed quote.',
     h1: 'Real estate 3D rendering and CGI from the floor plan',
-    lead: 'Photorealistic 4K renders made from the 2D floor plan with no photos, for estate agents and developers selling in Spain. They come from the same 3D model as the web viewer and AR. The complete 3D model includes 6 renders from {{price:maqueta}} + VAT in {{delivery:maqueta}}; extra renders cost {{extra:render}} + VAT.',
+    lead: 'Photorealistic 4K renders made from the 2D floor plan with no photos, for estate agents and developers selling in Spain. They come from the same 3D model as the web viewer and AR. The complete 3D model includes 6 renders and is delivered in {{delivery:maqueta}}; extra renders are made from the same model.',
     breadcrumb: '3D rendering',
     card: {
       title: 'Real estate 3D rendering',
@@ -203,9 +197,9 @@ export default {
       ['Input', '2D floor plan, no photos of the home'],
       ['Resolution', '4K, as PNG or JPG'],
       ['Included', '6 renders with the complete model; 12 for developments'],
-      ['Extra render', '{{extra:render}} + VAT per image'],
+      ['Extra render', 'From the same model, at a fixed quote'],
       ['Engine', 'Blender Cycles with physically based sunlight'],
-      ['Turnaround', '{{delivery:maqueta}}; 48 h rush (+{{extra:urgente}})'],
+      ['Turnaround', '{{delivery:maqueta}}; 48 h rush, quoted separately'],
       ['Revisions', '{{revisions:maqueta}}'],
       ['Labelling', 'Every image is marked as a 3D render'],
     ],
@@ -271,7 +265,7 @@ export default {
           ['Off-plan, not yet built', 'Yes', 'No', 'Yes'],
           ['Consistency between images', 'Same geometry in every view', 'Each image generated separately', 'Yes, if built from a model'],
           ['Web viewer and AR', 'Included with the complete model', 'No', 'Varies, usually quoted separately'],
-          ['Price', 'Public: 6 renders from {{price:maqueta}} + VAT', 'Public for many tools', 'Usually on request'],
+          ['Price', 'A fixed quote per home', 'Public for many tools', 'Usually on request'],
           ['Typical turnaround', '{{delivery:maqueta}}', 'Minutes to hours', 'Days to weeks, depending on the studio'],
         ],
         note: 'Market price ranges in euros, with linked sources, are in our [3D rendering cost guide for Spain](@guia-precio-render).',
@@ -279,7 +273,7 @@ export default {
       {
         type: 'answer',
         h2: 'Which views come with a render package?',
-        answer: 'Whichever your listing needs. With the complete model you choose 6 views in 4K: typically the living room, kitchen, main bedroom, a bathroom, the terrace and an aerial view of the cut-away model, which shows the whole layout at a glance. Each extra view costs {{extra:render}} + VAT.',
+        answer: 'Whichever your listing needs. With the complete model you choose 6 views in 4K: typically the living room, kitchen, main bedroom, a bathroom, the terrace and an aerial view of the cut-away model, which shows the whole layout at a glance. If you need more views, we add them from the same model.',
         body: 'Interiors are shot either at eye level or from above with the walls cut away, as in the villa. The light is a Mediterranean late afternoon, calculated in the render rather than painted in afterwards. The colour top-down plan and the redrawn 2D plan come on top of those 6 views.',
       },
       {
@@ -291,7 +285,7 @@ export default {
       {
         type: 'answer',
         h2: 'Do you render off-plan developments?',
-        answer: 'Yes. The development package covers 3 unit types, modelled and furnished, with 12 renders in 4K, a viewer with a unit-type selector and augmented reality, from {{price:promocion}} + VAT in {{delivery:promocion}}. Each extra unit type costs {{extra:tipologia}} + VAT and shares the same materials, so the whole scheme looks consistent.',
+        answer: 'Yes. The development package covers every unit type, modelled and furnished, with its 4K renders, a viewer with a unit-type selector and augmented reality, delivered in {{delivery:promocion}}. All unit types share the same materials, so the whole scheme looks consistent, and the quote depends on how many there are.',
         body: 'Selling off-plan to buyers abroad? See our page on [off-plan 3D visualisation](@sol-promotoras) for how renders, the viewer and AR work in a sales suite and at property fairs.\n\nWe work remotely from Marbella for clients across Spain and abroad; for local context, see [3D rendering in Marbella and the Costa del Sol](@zona-marbella).',
       },
       {
@@ -307,18 +301,12 @@ export default {
         title: 'Every render is labelled as a render',
         body: 'We deliver every image with its label, as caption text for the listing: “3D render. Indicative image; furniture not included.” For off-plan homes we add “not contractual”, because final finishes may change. Buyers know what they are looking at, and the viewing does not disappoint.',
       },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: 'How much should a 3D rendering cost?',
-        intro: 'Public prices, excluding VAT. The complete model includes 6 renders in 4K and the development package 12; each extra render costs {{extra:render}}. For wider context, see [3D rendering costs in Spain](@guia-precio-render), with sourced market ranges.',
-      },
       { type: 'faq' },
     ],
     faq: [
       {
         q: 'How much do your renders cost?',
-        a: 'At {{brand}}, 6 renders in 4K come with the complete 3D model from {{price:maqueta}} + VAT, together with the model, the web viewer and augmented reality. Each extra render costs {{extra:render}} + VAT, and the development package includes 12. To compare with the wider market, read [how much 3D rendering costs in Spain](@guia-precio-render).',
+        a: 'At {{brand}}, 6 renders in 4K come with the complete 3D model, together with the model, the web viewer and augmented reality, at a fixed quote once we see the plan. Extra renders are made from the same model. To compare with the wider market, read [how much 3D rendering costs in Spain](@guia-precio-render).',
       },
       {
         q: 'What is CGI in property?',
@@ -330,7 +318,7 @@ export default {
       },
       {
         q: 'How long does a rendering take?',
-        a: '{{brand}} delivers renders with the complete 3D model in {{delivery:maqueta}}, because the home has to be modelled first. Once the model exists, rendering is quick: the {{villa:renders}} images of our demo villa, views and plans included, took about {{villa:renderMinutes}} minutes in total. If you need them sooner, 48-hour rush delivery carries a {{extra:urgente}} surcharge.',
+        a: '{{brand}} delivers renders with the complete 3D model in {{delivery:maqueta}}, because the home has to be modelled first. Once the model exists, rendering is quick: the {{villa:renders}} images of our demo villa, views and plans included, took about {{villa:renderMinutes}} minutes in total. If you need them sooner, 48-hour rush delivery is quoted separately.',
       },
       {
         q: 'Do you use ChatGPT or other AI to make your renders?',
@@ -338,11 +326,11 @@ export default {
       },
       {
         q: 'Can AI images replace a rendered 3D model in a listing?',
-        a: 'Not for a listing that has to match the plan. AI already handles quick photo restyling well. What it does not replace is a measured model: the thing that keeps every render, the interactive viewer and the AR file consistent with the floor plan. {{brand}} sells that model, with renders from {{price:maqueta}} + VAT, not one-off pictures.',
+        a: 'Not for a listing that has to match the plan. AI already handles quick photo restyling well. What it does not replace is a measured model: the thing that keeps every render, the interactive viewer and the AR file consistent with the floor plan. {{brand}} sells that model, with its renders, not one-off pictures.',
       },
       {
         q: 'Can I change furniture or finishes after the first draft?',
-        a: 'Yes. The complete 3D model includes {{revisions:maqueta}}: change furniture, flooring, colours or camera angles and {{brand}} re-renders on the same model. If you want the home dressed in a completely different style, that is [3D virtual staging](@servicio-staging), at {{extra:staging}} + VAT per room.',
+        a: 'Yes. The complete 3D model includes {{revisions:maqueta}}: change furniture, flooring, colours or camera angles and {{brand}} re-renders on the same model. If you want the home dressed in a completely different style, that is [3D virtual staging](@servicio-staging), quoted per room.',
       },
       {
         q: 'Is 3D visualisation worth it for a home that is already built?',

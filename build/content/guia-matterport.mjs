@@ -26,14 +26,14 @@ export default {
   id: 'guia-matterport',
   image: 'villa_muros_completos_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Alternativa a Matterport sin visita: 3D desde el plano',
-    description: 'Qué necesita cada opción, si sirve sin la vivienda construida, AR, plazo y precio. Matterport desde 13 € al mes; el modelo desde plano, {{price:maqueta}} + IVA.',
+    description: 'Qué necesita cada opción, si sirve sin la vivienda construida, AR, plazo y precio. Matterport desde 13 € al mes; el modelo desde plano, con presupuesto cerrado.',
     h1: 'Alternativa a Matterport: modelo 3D desde plano o tour 360',
-    lead: 'Si la vivienda no está construida, está ocupada o lejos, elige un modelo 3D desde el plano; si existe y sus acabados venden, un escaneo Matterport o un tour 360. Aquí tienes la comparativa con precios verificados. Nuestro modelo desde plano cuesta desde {{price:maqueta}} + IVA y se entrega en {{delivery:maqueta}}.',
+    lead: 'Si la vivienda no está construida, está ocupada o lejos, elige un modelo 3D desde el plano; si existe y sus acabados venden, un escaneo Matterport o un tour 360. Aquí tienes la comparativa con precios verificados. Nuestro modelo desde plano va con presupuesto cerrado y se entrega en {{delivery:maqueta}}.',
     breadcrumb: 'Modelo 3D o Matterport',
     card: {
       title: '¿Modelo 3D desde plano, Matterport o tour 360?',
@@ -50,7 +50,7 @@ export default {
       ['Matterport', 'Plan gratuito; Starter desde 13 € al mes'],
       ['Escaneo con proveedor', 'Desde 190 € + IVA hasta 150 m² (Málaga)'],
       ['Tour 360 fotográfico', '190 a 350 € por pack, media en España'],
-      ['Modelo desde plano', 'Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}'],
+      ['Modelo desde plano', 'Presupuesto cerrado, en {{delivery:maqueta}}'],
       ['Realidad aumentada sin app', 'Solo incluida en el modelo desde plano'],
       ['Precios revisados', '28 de septiembre de 2026'],
     ],
@@ -78,7 +78,7 @@ export default {
           ['Incrustable en tu web', 'Sí, con código iframe', 'Sí, desde el plan Starter', 'Según la plataforma'],
           ['Cambiar muebles o acabados', 'Sí, sobre el mismo modelo', 'No: enseña lo que hay (ofrece vaciado con IA)', 'No: hay que repetir las fotos'],
           ['Plazo', '{{delivery:maqueta}} desde el plano', 'Visita y entrega en 24 a 48 horas (proveedor en Málaga)', 'Visita y edición, según el fotógrafo'],
-          ['Precio', 'Desde {{price:maqueta}} + IVA, con 6 renders y AR', 'Servicio desde 190 € + IVA hasta 150 m², o suscripción desde 13 € al mes con captura propia', '190 a 350 € por pack de media; 220 a 320 € para 90 a 140 m²'],
+          ['Precio', 'Presupuesto cerrado por vivienda, con 6 renders y AR', 'Servicio desde 190 € + IVA hasta 150 m², o suscripción desde 13 € al mes con captura propia', '190 a 350 € por pack de media; 220 a 320 € para 90 a 140 m²'],
         ],
         note: 'Fuentes: [matterport.com](' + MP + '), [andreasgrunau.com](' + AG + ') para el escaneo con cámara Pro3 en Málaga (IVA aparte) y [cronoshare.com](' + CRONO + ') para el tour 360 (precios orientativos sin IVA, enero de 2026). Comprueba el IVA de cada proveedor al contratar. Si buscas un tour 360 generado por ordenador para obra nueva, sus precios están en [cuánto cuesta un render 3D](@guia-precio-render).',
       },
@@ -170,7 +170,7 @@ export default {
       },
       {
         q: '¿Hay una versión gratuita de Matterport?',
-        a: 'Sí. El plan Free de Matterport permite 1 espacio activo y 2 usuarios, con captura desde un móvil, una tableta o una cámara 360. Compartir e incrustar el tour aparece en el plan Starter, desde 13 € al mes según su web. {{brand}} no vende suscripciones: el modelo 3D desde plano cuesta desde {{price:maqueta}} + IVA e incluye 12 meses de alojamiento del visor.',
+        a: 'Sí. El plan Free de Matterport permite 1 espacio activo y 2 usuarios, con captura desde un móvil, una tableta o una cámara 360. Compartir e incrustar el tour aparece en el plan Starter, desde 13 € al mes según su web. {{brand}} no vende suscripciones: el modelo 3D desde plano se paga una vez, con presupuesto cerrado, e incluye 12 meses de alojamiento del visor.',
       },
       {
         q: '¿Qué cámaras son compatibles con Matterport?',
@@ -178,19 +178,19 @@ export default {
       },
       {
         q: '¿Se puede hacer un tour de Matterport de una vivienda sobre plano?',
-        a: 'No. Matterport escanea espacios físicos, así que una vivienda sin construir no se puede capturar; como mucho, se escanea un piso piloto ya montado. Para vender sobre plano, {{brand}} modela cada tipología desde los planos del proyecto, con renders, visor y realidad aumentada, desde {{price:promocion}} + IVA para 3 tipologías, en {{delivery:promocion}}.',
+        a: 'No. Matterport escanea espacios físicos, así que una vivienda sin construir no se puede capturar; como mucho, se escanea un piso piloto ya montado. Para vender sobre plano, {{brand}} modela cada tipología desde los planos del proyecto, con renders, visor y realidad aumentada, en {{delivery:promocion}} y con presupuesto cerrado.',
       },
       {
         q: '¿Qué alternativa hay a Matterport si no puedo visitar la vivienda?',
-        a: 'Un modelo 3D creado desde el plano. No necesita cámara ni visita: con el plano y una medida de referencia, {{brand}} modela la vivienda amueblada y la entrega con visor web, 6 renders y realidad aumentada, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}. Sirve para viviendas alquiladas, lejanas, vacías o en construcción.',
+        a: 'Un modelo 3D creado desde el plano. No necesita cámara ni visita: con el plano y una medida de referencia, {{brand}} modela la vivienda amueblada y la entrega con visor web, 6 renders y realidad aumentada en {{delivery:maqueta}}. Sirve para viviendas alquiladas, lejanas, vacías o en construcción.',
       },
       {
         q: '¿Cuánto cobra un fotógrafo por un tour 360 en España?',
-        a: 'Según cronoshare.com, en enero de 2026 un tour 360 fotográfico costaba en España de 190 a 350 € por pack de media, y de 220 a 320 € para una vivienda de 90 a 140 m², sin IVA y como precio orientativo. Exige que la vivienda exista y esté presentable. El modelo 3D de {{brand}} parte del plano, desde {{price:maqueta}} + IVA.',
+        a: 'Según cronoshare.com, en enero de 2026 un tour 360 fotográfico costaba en España de 190 a 350 € por pack de media, y de 220 a 320 € para una vivienda de 90 a 140 m², sin IVA y como precio orientativo. Exige que la vivienda exista y esté presentable. El modelo 3D de {{brand}} parte del plano, con presupuesto cerrado.',
       },
       {
         q: '¿Qué conviene para vender una vivienda de segunda mano?',
-        a: 'Si está bien presentada, un escaneo o un tour 360 enseñan su estado real y suelen costar menos. Si está vacía, anticuada, alquilada o lejos, un modelo desde el plano la enseña amueblada o reformada, con los mismos muebles en todas las vistas. {{brand}} lo entrega en {{delivery:maqueta}}, con visor y realidad aumentada, desde {{price:maqueta}} + IVA.',
+        a: 'Si está bien presentada, un escaneo o un tour 360 enseñan su estado real y suelen costar menos. Si está vacía, anticuada, alquilada o lejos, un modelo desde el plano la enseña amueblada o reformada, con los mismos muebles en todas las vistas. {{brand}} lo entrega en {{delivery:maqueta}}, con visor y realidad aumentada.',
       },
       {
         q: '¿Es tan realista un modelo desde plano como un escaneo?',
@@ -207,9 +207,9 @@ export default {
   // ─────────────────────────────────────────────────────────────── EN
   en: {
     title: 'Matterport alternative without a site visit: 3D model',
-    description: 'What each option needs, whether it works off-plan, AR, turnaround and price. Matterport from €13 a month; a 3D model from the plan from {{price:maqueta}} + VAT.',
+    description: 'What each option needs, whether it works off-plan, AR, turnaround and price. Matterport from €13 a month; a 3D model from the plan at a fixed quote.',
     h1: 'Matterport alternative: floor plan 3D model or 360 tour?',
-    lead: 'If the home isn’t built yet, is tenanted or is a flight away, use a 3D model from the floor plan; if it exists and its finishes sell it, a Matterport scan or a 360 tour. Here is the comparison, with checked prices. Ours starts at {{price:maqueta}} + VAT, delivered in {{delivery:maqueta}}.',
+    lead: 'If the home isn’t built yet, is tenanted or is a flight away, use a 3D model from the floor plan; if it exists and its finishes sell it, a Matterport scan or a 360 tour. Here is the comparison, with checked prices. Ours comes with a fixed quote and is delivered in {{delivery:maqueta}}.',
     breadcrumb: '3D model vs Matterport',
     card: {
       title: '3D model from a plan, Matterport or 360 tour?',
@@ -226,7 +226,7 @@ export default {
       ['Matterport', 'Free plan; Starter from €13 a month'],
       ['Scan by a provider', 'From €190 + VAT up to 150 m² (Málaga)'],
       ['Photographic 360 tour', '€190 to €350 per package, Spanish average'],
-      ['Model from the plan', 'From {{price:maqueta}} + VAT, in {{delivery:maqueta}}'],
+      ['Model from the plan', 'A fixed quote, in {{delivery:maqueta}}'],
       ['App-free AR', 'Only included with the model from the plan'],
       ['Prices checked', '28 September 2026'],
     ],
@@ -254,7 +254,7 @@ export default {
           ['Embeddable on your site', 'Yes, with an iframe code', 'Yes, from the Starter plan', 'Depends on the platform'],
           ['Change furniture or finishes', 'Yes, on the same model', 'No: it shows what is there (AI defurnishing on offer)', 'No: reshoot needed'],
           ['Turnaround', '{{delivery:maqueta}} from the plan', 'Visit, then delivery in 24 to 48 hours (Málaga provider)', 'Visit and editing, depending on the photographer'],
-          ['Price', 'From {{price:maqueta}} + VAT, with 6 renders and AR', 'Service from €190 + VAT up to 150 m², or a subscription from €13 a month with your own capture', '€190 to €350 per package on average; €220 to €320 for 90 to 140 m²'],
+          ['Price', 'A fixed quote per home, with 6 renders and AR', 'Service from €190 + VAT up to 150 m², or a subscription from €13 a month with your own capture', '€190 to €350 per package on average; €220 to €320 for 90 to 140 m²'],
         ],
         note: 'Sources: [matterport.com](' + MP + '), [andreasgrunau.com](' + AG + ') for Pro3 scanning in Málaga (VAT extra) and [cronoshare.com](' + CRONO + ') for 360 tours (indicative prices ex VAT, January 2026). Check VAT with each provider before you buy. Computer-generated 360 tours for off-plan homes are priced in our [3D rendering cost guide](@guia-precio-render).',
       },
@@ -346,27 +346,27 @@ export default {
       },
       {
         q: 'Is there a free version of Matterport?',
-        a: 'Yes. Matterport’s Free plan gives you 1 active space and 2 users, captured with a phone, a tablet or a 360 camera. Sharing and embedding tours comes with the Starter plan, from €13 a month according to its website. {{brand}} doesn’t sell subscriptions: a 3D model from the plan costs from {{price:maqueta}} + VAT, with 12 months of viewer hosting included.',
+        a: 'Yes. Matterport’s Free plan gives you 1 active space and 2 users, captured with a phone, a tablet or a 360 camera. Sharing and embedding tours comes with the Starter plan, from €13 a month according to its website. {{brand}} doesn’t sell subscriptions: a 3D model from the plan is paid once, at a fixed quote, with 12 months of viewer hosting included.',
       },
       {
         q: 'Why does Matterport get expensive?',
-        a: 'The subscription itself starts low, from €13 a month on Starter according to Matterport’s site. Costs grow with scale and capture: plans are priced by active spaces, Matterport’s own Pro cameras need the Professional plan, from €65 a month, and floor plans are extra. {{brand}} charges once per home instead: from {{price:maqueta}} + VAT, with hosting for 12 months.',
+        a: 'The subscription itself starts low, from €13 a month on Starter according to Matterport’s site. Costs grow with scale and capture: plans are priced by active spaces, Matterport’s own Pro cameras need the Professional plan, from €65 a month, and floor plans are extra. {{brand}} charges once per home instead, at a fixed quote, with hosting for 12 months.',
       },
       {
         q: 'Can Matterport scan an off-plan property?',
-        a: 'No. Matterport captures physical spaces, so a home that hasn’t been built can’t be scanned; at best you scan a finished show home. For off-plan sales, {{brand}} models each unit type from the project drawings, with renders, a viewer and augmented reality, from {{price:promocion}} + VAT for 3 unit types, delivered in {{delivery:promocion}}.',
+        a: 'No. Matterport captures physical spaces, so a home that hasn’t been built can’t be scanned; at best you scan a finished show home. For off-plan sales, {{brand}} models each unit type from the project drawings, with renders, a viewer and augmented reality, delivered in {{delivery:promocion}} at a fixed quote.',
       },
       {
         q: 'Is there a Matterport alternative without a site visit?',
-        a: 'Yes: a 3D model built from the floor plan. It needs no camera and no visit. From the plan and one reference measurement, {{brand}} models the home fully furnished and delivers a web viewer, 6 renders and augmented reality, from {{price:maqueta}} + VAT in {{delivery:maqueta}}. It suits tenanted, distant, empty and unfinished homes alike.',
+        a: 'Yes: a 3D model built from the floor plan. It needs no camera and no visit. From the plan and one reference measurement, {{brand}} models the home fully furnished and delivers a web viewer, 6 renders and augmented reality in {{delivery:maqueta}}. It suits tenanted, distant, empty and unfinished homes alike.',
       },
       {
         q: 'How much does a 360 virtual tour cost in Spain?',
-        a: 'According to cronoshare.com, in January 2026 a photographic 360 tour in Spain cost €190 to €350 per package on average, and €220 to €320 for a 90 to 140 m² home, ex VAT and as a guide price. The home has to exist and be presentable. Our 3D model starts from the floor plan instead, from {{price:maqueta}} + VAT.',
+        a: 'According to cronoshare.com, in January 2026 a photographic 360 tour in Spain cost €190 to €350 per package on average, and €220 to €320 for a 90 to 140 m² home, ex VAT and as a guide price. The home has to exist and be presentable. Our 3D model starts from the floor plan instead, at a fixed quote.',
       },
       {
         q: 'Which works better for a resale property in Spain?',
-        a: 'If it is well presented, a scan or a 360 tour shows its real condition and usually costs less. If it is empty, dated, tenanted or far away, a model built from the plan shows it furnished or renovated, with the same furniture in every view. {{brand}} delivers it in {{delivery:maqueta}}, with a viewer and augmented reality, from {{price:maqueta}} + VAT.',
+        a: 'If it is well presented, a scan or a 360 tour shows its real condition and usually costs less. If it is empty, dated, tenanted or far away, a model built from the plan shows it furnished or renovated, with the same furniture in every view. {{brand}} delivers it in {{delivery:maqueta}}, with a viewer and augmented reality.',
       },
       {
         q: 'Is a model built from a floor plan as realistic as a scan?',

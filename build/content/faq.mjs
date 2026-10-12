@@ -13,21 +13,21 @@ export default {
   id: 'faq',
   image: 'villa_planta_cenital_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Preguntas frecuentes sobre modelos 3D y AR',
-    description: 'Precios desde {{price:plano3d}} + IVA, plazos, precisión de las medidas, realidad aumentada sin app, portales y confidencialidad: 37 respuestas claras.',
+    description: 'Cómo presupuestamos, plazos, precisión de las medidas, realidad aumentada sin app, portales y confidencialidad: respuestas claras antes de encargar.',
     h1: 'Preguntas frecuentes: del plano 2D al modelo 3D',
-    lead: 'Respuestas directas a las preguntas habituales de inmobiliarias, promotoras y arquitectos antes de encargar: qué entregamos, cuánto cuesta (plano 3D desde {{price:plano3d}} + IVA y maqueta completa desde {{price:maqueta}} + IVA), cuánto se tarda ({{delivery:maqueta}}), qué precisión tienen las medidas y cómo se publica en tu web y en los portales.',
+    lead: 'Respuestas directas a las preguntas habituales de inmobiliarias, promotoras y arquitectos antes de encargar: qué entregamos, cómo presupuestamos (precio cerrado y por escrito antes de empezar), cuánto se tarda ({{delivery:maqueta}}), qué precisión tienen las medidas y cómo se publica en tu web y en los portales.',
     breadcrumb: 'Preguntas frecuentes',
     card: {
       title: 'Preguntas frecuentes',
       summary: '37 respuestas cortas sobre entregables, precios, plazos, medidas, realidad aumentada, portales y confidencialidad.',
     },
     facts: [
-      ['Precio desde', '{{price:plano3d}} + IVA por planta; maqueta, {{price:maqueta}} + IVA'],
+      ['Precio', 'Presupuesto cerrado y por escrito, al ver el plano'],
       ['Plazo de la maqueta', '{{delivery:maqueta}}'],
       ['Revisiones', '{{revisions:maqueta}} en la maqueta completa'],
       ['Entrada', 'Un plano 2D, sin fotos ni visita'],
@@ -43,15 +43,15 @@ export default {
             items: [
               {
                 q: '¿Qué hacéis exactamente a partir del plano de una vivienda?',
-                a: '{{brand}} convierte el plano 2D en un modelo 3D a escala y amueblado, sin fotos ni visita. De ese modelo salen la planta cenital a color, los renders fotorrealistas en 4K, un visor web para el anuncio y la realidad aumentada para iPhone y Android. El plano 3D cuesta desde {{price:plano3d}} + IVA por planta y la maqueta completa, desde {{price:maqueta}} + IVA.',
+                a: '{{brand}} convierte el plano 2D en un modelo 3D a escala y amueblado, sin fotos ni visita. De ese modelo salen la planta cenital a color, los renders fotorrealistas en 4K, un visor web para el anuncio y la realidad aumentada para iPhone y Android. Cada encargo lleva un presupuesto cerrado y por escrito antes de empezar.',
               },
               {
                 q: '¿Qué incluye la maqueta 3D completa?',
-                a: 'La maqueta 3D completa de {{brand}} incluye el modelo amueblado con materiales a medida, 6 renders en 4K, la planta cenital a color, la planta 2D redibujada, el visor web con estancias, recorrido y [modo maqueta](@glosario#modo-maqueta), la realidad aumentada en maqueta 1:20 y a tamaño real, 12 meses de alojamiento del visor y {{revisions:maqueta}}. Cuesta {{price:maqueta}} + IVA hasta 150 m².',
+                a: 'La maqueta 3D completa de {{brand}} incluye el modelo amueblado con materiales a medida, 6 renders en 4K, la planta cenital a color, la planta 2D redibujada, el visor web con estancias, recorrido y [modo maqueta](@glosario#modo-maqueta), la realidad aumentada en maqueta 1:20 y a tamaño real, 12 meses de alojamiento del visor y {{revisions:maqueta}}. El precio depende de la superficie y lo damos cerrado al ver el plano.',
               },
               {
                 q: '¿En qué se diferencian el plano 3D, los renders y el visor 3D?',
-                a: 'El plano 3D enseña la distribución: una planta cenital a color y una vista isométrica amueblada. Los renders enseñan el ambiente de cada estancia a la altura de los ojos. El visor 3D deja al comprador girar y recorrer la vivienda por su cuenta. En {{brand}} los tres salen del mismo modelo, así que coinciden entre sí; la maqueta completa los reúne desde {{price:maqueta}} + IVA.',
+                a: 'El plano 3D enseña la distribución: una planta cenital a color y una vista isométrica amueblada. Los renders enseñan el ambiente de cada estancia a la altura de los ojos. El visor 3D deja al comprador girar y recorrer la vivienda por su cuenta. En {{brand}} los tres salen del mismo modelo, así que coinciden entre sí; la maqueta completa los reúne todos.',
               },
               {
                 q: '¿En qué formatos entregáis los archivos?',
@@ -59,7 +59,7 @@ export default {
               },
               {
                 q: '¿Tenéis vídeos con IA o recorridos en realidad virtual?',
-                a: 'Todavía no. En {{brand}} tenemos dos servicios en preparación: vídeos de recorrido generados con IA a partir de los renders, que irán etiquetados como tales, y panorámicas 360° para gafas de realidad virtual. Los anunciaremos cuando estén disponibles. Hoy entregamos renders, visor 3D con recorrido guiado y realidad aumentada sin app, incluidos en la maqueta completa desde {{price:maqueta}} + IVA.',
+                a: 'Todavía no. En {{brand}} tenemos dos servicios en preparación: vídeos de recorrido generados con IA a partir de los renders, que irán etiquetados como tales, y panorámicas 360° para gafas de realidad virtual. Los anunciaremos cuando estén disponibles. Hoy entregamos renders, visor 3D con recorrido guiado y realidad aumentada sin app, incluidos en la maqueta completa.',
               },
             ],
           },
@@ -68,15 +68,15 @@ export default {
             items: [
               {
                 q: '¿Cuáles son vuestras tarifas?',
-                a: 'Las tarifas de {{brand}} son públicas y sin IVA. Plano 3D: {{price:plano3d}} por planta hasta 150 m² y {{price:plano3d:1}} hasta 300 m². Maqueta 3D completa: {{price:maqueta}} por vivienda hasta 150 m² y {{price:maqueta:1}} hasta 300 m². Promoción de obra nueva: desde {{price:promocion}} con 3 tipologías. Home staging virtual: {{extra:staging}} por estancia. Extras y packs, en [precios](@precios).',
+                a: '{{brand}} no publica tarifas: cada vivienda y cada promoción son distintas. Con el plano delante te mandamos un presupuesto cerrado y por escrito, con lo que incluye, el plazo y las rondas de cambios, y ese precio no cambia después. Cómo lo calculamos y qué incluye cada opción, en [precios](@precios).',
               },
               {
-                q: '¿Cómo se cobra un dúplex o una vivienda de dos plantas?',
-                a: 'El plano 3D de {{brand}} se cobra por planta: un dúplex con dos plantas de hasta 150 m² cada una son dos veces {{price:plano3d}} + IVA. La maqueta 3D completa se cobra por vivienda según su superficie total: {{price:maqueta}} + IVA hasta 150 m² y {{price:maqueta:1}} + IVA hasta 300 m². Para viviendas mayores te damos precio cerrado al ver el plano.',
+                q: '¿Cómo se presupuesta un dúplex o una vivienda de dos plantas?',
+                a: 'El plano 3D de {{brand}} se presupuesta por planta, así que un dúplex cuenta sus dos plantas. La maqueta 3D completa se presupuesta por vivienda, según su superficie total y lo que incluya. En los dos casos te damos el precio cerrado al ver el plano, antes de empezar.',
               },
               {
-                q: '¿Los precios de la web llevan el IVA incluido?',
-                a: 'No. Todos los precios de {{brand}} se publican sin IVA y en la factura se suma el IVA general del 21 %. Por ejemplo, la maqueta 3D completa figura como {{price:maqueta}} + IVA y un render adicional, como {{extra:render}} + IVA. Si tu empresa factura desde fuera de España, dínoslo al pedir presupuesto y te confirmamos cómo se aplica el impuesto en tu caso.',
+                q: '¿El presupuesto lleva el IVA incluido?',
+                a: 'No. Los presupuestos de {{brand}} se dan sin IVA y en la factura se suma el IVA general del 21 %. Si tu empresa factura desde fuera de España, dínoslo al pedir presupuesto y te confirmamos cómo se aplica el impuesto en tu caso.',
               },
               {
                 q: '¿Hay que pagar algo por adelantado?',
@@ -84,11 +84,11 @@ export default {
               },
               {
                 q: '¿Qué precio tiene encargar varias viviendas al año?',
-                a: 'Baja con el volumen. El pack cartera de {{brand}} incluye 5 maquetas 3D completas por {{volume}} + IVA, es decir, {{volumeUnit}} por vivienda, para usar en 6 meses en viviendas de hasta 150 m². Si encargas más a la vez, el tramo se aplica a todas las viviendas del encargo: de 5 a 9, {{volumeUnit}} cada una, y desde 10, menos todavía. La calculadora de la página de [precios](@precios) te da el total exacto según el número de viviendas.',
+                a: 'Baja con el volumen. Si nos encargas varias viviendas a la vez o a lo largo de unos meses, {{brand}} prepara un presupuesto cerrado para tu cartera con un precio por vivienda menor que el de un encargo suelto. Cuéntanos cuántas viviendas mueves al mes y te mandamos la propuesta.',
               },
               {
-                q: '¿Cuánto cuestan los extras, como un render más o la entrega urgente?',
-                a: 'En {{brand}}, cada render adicional en 4K cuesta {{extra:render}} + IVA; el home staging virtual sobre el modelo, {{extra:staging}} + IVA por estancia; una tipología más en una promoción, {{extra:tipologia}} + IVA; y la entrega urgente en 48 horas, un recargo del {{extra:urgente}} sobre el total. Renovar el alojamiento del visor después del primer año cuesta {{extra:hosting}} + IVA por vivienda.',
+                q: '¿Cómo se presupuestan los extras, como un render más o la entrega urgente?',
+                a: 'Igual que el resto: cerrados y por escrito antes de hacerlos. En {{brand}}, los renders adicionales se calculan sobre el mismo modelo, el home staging virtual se presupuesta por estancia, cada tipología más de una promoción se suma al presupuesto y la entrega urgente en 48 horas depende del calendario. La renovación del visor te la avisamos antes de que venza.',
               },
             ],
           },
@@ -147,7 +147,7 @@ export default {
             items: [
               {
                 q: '¿Qué necesita el comprador para ver la vivienda en realidad aumentada?',
-                a: 'Solo su móvil y el enlace. En iPhone o iPad con iOS 12 o posterior, la vivienda se abre desde Safari con [AR Quick Look](@glosario#ar-quick-look); en Android 7.0 o posterior compatible con [ARCore](@glosario#arcore), con [Scene Viewer](@glosario#scene-viewer). No instala ninguna app. Ayudan una habitación con buena luz y una mesa o un suelo despejados. {{brand}} la incluye en la maqueta completa, desde {{price:maqueta}} + IVA.',
+                a: 'Solo su móvil y el enlace. En iPhone o iPad con iOS 12 o posterior, la vivienda se abre desde Safari con [AR Quick Look](@glosario#ar-quick-look); en Android 7.0 o posterior compatible con [ARCore](@glosario#arcore), con [Scene Viewer](@glosario#scene-viewer). No instala ninguna app. Ayudan una habitación con buena luz y una mesa o un suelo despejados. {{brand}} la incluye en la maqueta completa.',
               },
               {
                 q: '¿Qué diferencia hay entre la maqueta 1:20 y el tamaño real?',
@@ -197,7 +197,7 @@ export default {
             items: [
               {
                 q: '¿Quién puede usar los renders y el modelo 3D?',
-                a: 'Tú, para comercializar esa vivienda: renders, plantas y archivos 3D sirven en tu web, portales, redes, dosieres, prensa y cartelería, sin pagar más por cada uso. El visor sigue en línea mientras esté alojado: 12 meses incluidos y después {{extra:hosting}} + IVA al año. {{brand}} solo enseña tu vivienda como ejemplo si nos das permiso por escrito. Si vas a ceder el modelo a terceros, lo hablamos antes.',
+                a: 'Tú, para comercializar esa vivienda: renders, plantas y archivos 3D sirven en tu web, portales, redes, dosieres, prensa y cartelería, sin pagar más por cada uso. El visor sigue en línea mientras esté alojado: 12 meses incluidos y después, renovación anual. {{brand}} solo enseña tu vivienda como ejemplo si nos das permiso por escrito. Si vas a ceder el modelo a terceros, lo hablamos antes.',
               },
               {
                 q: '¿Compartís mis planos con alguien?',
@@ -236,16 +236,16 @@ export default {
   // ─────────────────────────────────────────────────────────────── EN
   en: {
     title: 'FAQ: floor plan to 3D model, viewer and AR',
-    description: 'Prices from {{price:plano3d}} + VAT, {{delivery:maqueta}} turnaround, measurement accuracy, app-free AR, property portals and confidentiality: 33 answers.',
+    description: 'How we quote, a {{delivery:maqueta}} turnaround, measurement accuracy, app-free AR, property portals and confidentiality: straight answers.',
     h1: 'Floor plan to 3D: frequently asked questions',
-    lead: 'Straight answers for estate agents, developers and architects before ordering: what you get, what it costs (a 3D floor plan from {{price:plano3d}} + VAT, the complete 3D model from {{price:maqueta}} + VAT), how long it takes ({{delivery:maqueta}}), how accurate it is and how buyers view it online and in AR.',
+    lead: 'Straight answers for estate agents, developers and architects before ordering: what you get, how we quote (a fixed written price before work starts), how long it takes ({{delivery:maqueta}}), how accurate it is and how buyers view it online and in AR.',
     breadcrumb: 'FAQ',
     card: {
       title: 'Frequently asked questions',
       summary: '33 short answers on deliverables, pricing, turnaround, accuracy, augmented reality, portals and confidentiality.',
     },
     facts: [
-      ['Price from', '{{price:plano3d}} + VAT per floor; complete model {{price:maqueta}} + VAT'],
+      ['Price', 'A fixed written quote, once we see the plan'],
       ['Complete model turnaround', '{{delivery:maqueta}}'],
       ['Revisions', '{{revisions:maqueta}} with the complete model'],
       ['Input', 'One 2D floor plan, no photos or site visit'],
@@ -261,15 +261,15 @@ export default {
             items: [
               {
                 q: 'What exactly do you do with a floor plan?',
-                a: '{{brand}} turns a 2D floor plan into a furnished, to-scale 3D model, with no photos and no site visit. From that one model come a colour top-down plan, photorealistic 4K renders, a web viewer for your listing and app-free augmented reality on iPhone and Android. A 3D floor plan starts at {{price:plano3d}} + VAT per floor; the complete 3D model at {{price:maqueta}} + VAT.',
+                a: '{{brand}} turns a 2D floor plan into a furnished, to-scale 3D model, with no photos and no site visit. From that one model come a colour top-down plan, photorealistic 4K renders, a web viewer for your listing and app-free augmented reality on iPhone and Android. Every job gets a fixed written quote before work starts.',
               },
               {
                 q: 'What is included in the complete 3D model?',
-                a: 'The {{brand}} complete 3D model includes the furnished model with custom materials, 6 renders in 4K, a colour top-down plan, a redrawn 2D plan, the web viewer with rooms, guided tour and [cut-away mode](@glosario#modo-maqueta), augmented reality as a 1:20 tabletop model and at real size, 12 months of viewer hosting and {{revisions:maqueta}}. It costs {{price:maqueta}} + VAT for homes up to 150 m².',
+                a: 'The {{brand}} complete 3D model includes the furnished model with custom materials, 6 renders in 4K, a colour top-down plan, a redrawn 2D plan, the web viewer with rooms, guided tour and [cut-away mode](@glosario#modo-maqueta), augmented reality as a 1:20 tabletop model and at real size, 12 months of viewer hosting and {{revisions:maqueta}}. The price depends on floor area, and we fix it once we see the plan.',
               },
               {
                 q: 'What is the difference between a 3D floor plan, a 3D render and an interactive 3D model?',
-                a: 'A 3D floor plan shows the layout: a colour top-down plan and a furnished isometric view. A 3D render shows the feel of a room at eye level, like a photograph. An interactive 3D model lets buyers rotate and walk through the home on their own. At {{brand}} all three come from the same model, so they always match; the complete 3D model bundles them from {{price:maqueta}} + VAT.',
+                a: 'A 3D floor plan shows the layout: a colour top-down plan and a furnished isometric view. A 3D render shows the feel of a room at eye level, like a photograph. An interactive 3D model lets buyers rotate and walk through the home on their own. At {{brand}} all three come from the same model, so they always match; the complete 3D model bundles them all.',
               },
               {
                 q: 'Can you work from photos alone, with no floor plan?',
@@ -286,15 +286,15 @@ export default {
             items: [
               {
                 q: 'What are your prices?',
-                a: 'All {{brand}} prices are public and exclude VAT. 3D floor plan: {{price:plano3d}} per floor up to 150 m², {{price:plano3d:1}} up to 300 m². Complete 3D model: {{price:maqueta}} per home up to 150 m², {{price:maqueta:1}} up to 300 m². New-build development: from {{price:promocion}} for 3 unit types. Virtual staging: {{extra:staging}} per room. Extras and packages are on the [pricing page](@precios).',
+                a: '{{brand}} does not publish rates: every home and every development is different. With the plan in front of us we send a fixed written quote, with what is included, the turnaround and the rounds of changes, and that price does not change afterwards. How we work it out and what each option includes are on the [pricing page](@precios).',
               },
               {
-                q: 'Are your prices shown with or without Spanish VAT?',
-                a: 'Without. Every {{brand}} price is published ex VAT, and Spanish VAT at the standard 21% rate is added on the invoice: the complete 3D model, for example, is {{price:maqueta}} + VAT and an extra render {{extra:render}} + VAT. If your agency or company is based outside Spain, tell us when you ask for a quote and we will confirm how VAT applies to your invoice.',
+                q: 'Are quotes with or without Spanish VAT?',
+                a: 'Without. {{brand}} quotes exclude VAT, and Spanish VAT at the standard 21% rate is added on the invoice. If your agency or company is based outside Spain, tell us when you ask for a quote and we will confirm how VAT applies to your invoice.',
               },
               {
-                q: 'How is a two-storey house priced?',
-                a: 'The 3D floor plan is priced per floor, so a two-storey house with floors of up to 150 m² each costs twice {{price:plano3d}} + VAT. The complete 3D model is priced per home by total floor area: {{price:maqueta}} + VAT up to 150 m² and {{price:maqueta:1}} + VAT up to 300 m². For larger villas, {{brand}} gives you a fixed quote once we see the plans.',
+                q: 'How is a two-storey house quoted?',
+                a: 'The 3D floor plan is quoted per floor, so a two-storey house counts both floors. The complete 3D model is quoted per home, by total floor area and what is included. Either way, {{brand}} gives you a fixed price once we see the plans, before any work starts.',
               },
               {
                 q: 'Do I have to pay a deposit?',
@@ -302,7 +302,7 @@ export default {
               },
               {
                 q: 'How much does it cost for several homes a year?',
-                a: 'Less per home. The {{brand}} portfolio pack covers 5 complete 3D models for {{volume}} + VAT, or {{volumeUnit}} per home, to be used within 6 months on homes up to 150 m². Order more at once and the tier applies to every home in the order: from 5 to 9 homes each costs {{volumeUnit}}, and from 10 it drops again. Developments use a separate package from {{price:promocion}} + VAT, with each extra unit type at {{extra:tipologia}} + VAT. The calculator on our [pricing page](@precios) gives exact totals.',
+                a: 'Less per home. If you order several homes at once or over a few months, {{brand}} prepares a fixed quote for your portfolio with a lower price per home than a single order. Developments are quoted by unit type. Tell us how many homes you list each month and we send you the proposal.',
               },
             ],
           },
@@ -353,7 +353,7 @@ export default {
             items: [
               {
                 q: 'What does a buyer need to open the home in AR?',
-                a: 'A phone and the link, with no app to download. Buyers open the home in augmented reality straight from the browser: [AR Quick Look](@glosario#ar-quick-look) on an iPhone or iPad with iOS 12 or later, and [Scene Viewer](@glosario#scene-viewer) on Android 7.0 or later phones that support [ARCore](@glosario#arcore). Good light and a clear table or floor help. AR is included in the complete 3D model from {{price:maqueta}} + VAT.',
+                a: 'A phone and the link, with no app to download. Buyers open the home in augmented reality straight from the browser: [AR Quick Look](@glosario#ar-quick-look) on an iPhone or iPad with iOS 12 or later, and [Scene Viewer](@glosario#scene-viewer) on Android 7.0 or later phones that support [ARCore](@glosario#arcore). Good light and a clear table or floor help. AR is included in the complete 3D model.',
               },
               {
                 q: 'What is the difference between the 1:20 tabletop model and real size?',
@@ -403,7 +403,7 @@ export default {
             items: [
               {
                 q: 'Who can use the renders, the 3D model and the AR files?',
-                a: 'You use them to market that property: renders, plans and 3D files work on your website, portals, social media, brochures, press and signage, with no fee per use. The viewer stays online while it is hosted: 12 months included, then {{extra:hosting}} + VAT a year. {{brand}} only shows your property as an example with your written permission. If you plan to pass the model to a third party, talk to us first.',
+                a: 'You use them to market that property: renders, plans and 3D files work on your website, portals, social media, brochures, press and signage, with no fee per use. The viewer stays online while it is hosted: 12 months included, then yearly renewal. {{brand}} only shows your property as an example with your written permission. If you plan to pass the model to a third party, talk to us first.',
               },
               {
                 q: 'Do you share my plans with anyone?',

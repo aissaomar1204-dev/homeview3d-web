@@ -12,14 +12,14 @@ export default {
   id: 'caso-villa',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-29',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: 'Villa en la Costa del Sol en 3D: caso desde el plano',
     description: 'Caso demostrativo: villa en la Costa del Sol modelada en 3D desde un único plano, sin fotos: {{villa:rooms}} estancias amuebladas, renders, visor web y AR.',
     h1: 'Villa en la Costa del Sol: del plano 2D al 3D',
-    lead: '{{brand}} modeló en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado; un encargo así cuesta desde {{price:maqueta}} + IVA.',
+    lead: '{{brand}} modeló en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado.',
     // Hero (D-07/V-07): ≤ 20 words so the viewer stage reaches the first screen on phones. The full lead
     // (price + GEO sentence) is the first answer block below and stays the Markdown/llms summary.
     heroLead: 'Una villa real de la Costa del Sol, modelada en 3D desde un único plano 2D. Gírala aquí.',
@@ -42,7 +42,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Qué hicimos con esta villa?',
-        answer: '{{brand}} modeló en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado; un encargo así cuesta desde {{price:maqueta}} + IVA.',
+        answer: '{{brand}} modeló en 3D la planta alta de una villa en la Costa del Sol desde {{villa:input}}. Resultado: {{villa:rooms}} estancias amuebladas en unos {{villa:interiorM2}} m², renders, visor web y realidad aumentada. Es nuestro caso demostrativo, anonimizado.',
       },
       {
         type: 'answer',
@@ -157,7 +157,7 @@ export default {
       },
       {
         q: '¿Cuánto costaría un modelo 3D como este?',
-        a: 'Un modelo así entra en la maqueta 3D completa de {{brand}}: {{price:maqueta}} + IVA para viviendas de hasta 150 m², con 6 renders en 4K, visor web, realidad aumentada y {{revisions:maqueta}}, en {{delivery:maqueta}}. Cada render por encima de los 6 incluidos cuesta {{extra:render}} + IVA. Todas las tarifas están en [precios](@precios).',
+        a: 'Un modelo así entra en la maqueta 3D completa de {{brand}}: 6 renders en 4K, visor web, realidad aumentada y {{revisions:maqueta}}, en {{delivery:maqueta}}. El precio depende de la superficie y de lo que incluya, y te lo mandamos cerrado y por escrito al ver el plano. Cómo presupuestamos, en [precios](@precios).',
       },
       {
         q: '¿Cuánto se tardó en hacer?',
@@ -173,7 +173,7 @@ export default {
       },
       {
         q: '¿Podría ver esta villa con otro estilo de muebles?',
-        a: 'Sí, sin rehacer la vivienda: el [home staging virtual](@servicio-staging) se aplica sobre el mismo modelo, por {{extra:staging}} + IVA por estancia, y el cambio aparece a la vez en los renders, el visor y la realidad aumentada. {{brand}} crea los materiales por código, así que cambiar el parqué o el color de un sofá es ajustar un valor.',
+        a: 'Sí, sin rehacer la vivienda: el [home staging virtual](@servicio-staging) se aplica sobre el mismo modelo, por estancia, y el cambio aparece a la vez en los renders, el visor y la realidad aumentada. {{brand}} crea los materiales por código, así que cambiar el parqué o el color de un sofá es ajustar un valor.',
       },
       {
         q: '¿Por qué solo la planta alta?',
@@ -187,7 +187,7 @@ export default {
     related: ['servicio-tour', 'servicio-ar', 'servicio-renders', 'precios', 'como-funciona'],
     cta: {
       h2: 'Quiero esto para mi promoción',
-      body: 'Mismo proceso, con tu plano: modelo 3D amueblado, renders, visor para tu anuncio y realidad aumentada, desde {{price:maqueta}} + IVA y en {{delivery:maqueta}}. Empezamos, si quieres, con una estancia gratis.',
+      body: 'Mismo proceso, con tu plano: modelo 3D amueblado, renders, visor para tu anuncio y realidad aumentada, con presupuesto cerrado y en {{delivery:maqueta}}. Empezamos, si quieres, con una estancia gratis.',
       service: 'maqueta',
     },
   },
@@ -197,7 +197,7 @@ export default {
     title: 'Costa del Sol villa in 3D: a floor plan case study',
     description: 'Case study: a Costa del Sol villa modelled in 3D from a single floor plan, with no photos: {{villa:rooms}} furnished rooms, renders, web viewer and AR.',
     h1: 'Costa del Sol villa: from 2D floor plan to 3D',
-    lead: '{{brand}} modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², renders, a web viewer and augmented reality. It is our anonymised demonstration case, and a project like it starts at {{price:maqueta}} + VAT.',
+    lead: '{{brand}} modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², renders, a web viewer and augmented reality. It is our anonymised demonstration case.',
     heroLead: 'A real Costa del Sol villa, modelled in 3D from a single 2D floor plan. Spin it here.',
     breadcrumb: 'Costa del Sol villa',
     card: {
@@ -218,7 +218,7 @@ export default {
       {
         type: 'answer',
         h2: 'What did we do with this villa?',
-        answer: '{{brand}} modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², renders, a web viewer and augmented reality. It is our anonymised demonstration case, and a project like it starts at {{price:maqueta}} + VAT.',
+        answer: '{{brand}} modelled the upper floor of a Costa del Sol villa in 3D from {{villa:input}}. The result: {{villa:rooms}} furnished rooms across about {{villa:interiorM2}} m², renders, a web viewer and augmented reality. It is our anonymised demonstration case.',
       },
       {
         type: 'answer',
@@ -333,7 +333,7 @@ export default {
       },
       {
         q: 'How much would a 3D model like this cost?',
-        a: 'A model like this falls under the {{brand}} complete 3D model: {{price:maqueta}} + VAT for homes up to 150 m², with 6 renders in 4K, a web viewer, augmented reality and {{revisions:maqueta}}, delivered in {{delivery:maqueta}}. Each render beyond the 6 included costs {{extra:render}} + VAT. Every rate is on our [pricing page](@precios).',
+        a: 'A model like this falls under the {{brand}} complete 3D model: 6 renders in 4K, a web viewer, augmented reality and {{revisions:maqueta}}, delivered in {{delivery:maqueta}}. The price depends on floor area and what is included, and we send it fixed and in writing once we see the plan. How we quote is on our [pricing page](@precios).',
       },
       {
         q: 'How long did it take?',
@@ -349,7 +349,7 @@ export default {
       },
       {
         q: 'Could I see this villa in a different furniture style?',
-        a: 'Yes, without rebuilding the home: [virtual staging](@servicio-staging) is applied to the same model, at {{extra:staging}} + VAT per room, and the change shows up at once in the renders, the viewer and the AR. {{brand}} creates materials in code, so changing the flooring or the colour of a sofa means adjusting a value.',
+        a: 'Yes, without rebuilding the home: [virtual staging](@servicio-staging) is applied to the same model, room by room, and the change shows up at once in the renders, the viewer and the AR. {{brand}} creates materials in code, so changing the flooring or the colour of a sofa means adjusting a value.',
       },
       {
         q: 'Why only the upper floor?',
@@ -363,7 +363,7 @@ export default {
     related: ['servicio-tour', 'servicio-ar', 'servicio-renders', 'precios', 'como-funciona'],
     cta: {
       h2: 'I want this for my development',
-      body: 'Same process, with your plan: a furnished 3D model, renders, a viewer for your listing and augmented reality, from {{price:maqueta}} + VAT in {{delivery:maqueta}}. If you like, we start with one room for free.',
+      body: 'Same process, with your plan: a furnished 3D model, renders, a viewer for your listing and augmented reality, with a fixed quote and delivered in {{delivery:maqueta}}. If you like, we start with one room for free.',
       service: 'maqueta',
     },
   },

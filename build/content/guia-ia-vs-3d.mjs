@@ -18,14 +18,14 @@ export default {
   id: 'guia-ia-vs-3d',
   image: 'villa_maqueta_iso_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
   es: {
     title: '¿Puede la IA convertir un plano en 3D? Guía 2026',
     description: 'La IA convierte un plano en una imagen 3D en segundos, pero no en un modelo con medidas. Qué hace ChatGPT, qué no y cómo usamos la IA con Blender.',
     h1: '¿Puede la IA convertir un plano en 3D? IA vs modelo real',
-    lead: 'Sí, pero en imagen. La IA generativa, como ChatGPT o Gemini, convierte un plano en una imagen con aspecto 3D; no crea un modelo medible, coherente entre vistas ni apto para realidad aumentada. {{brand}} usa la IA para escribir el código que construye ese modelo en Blender, desde {{price:maqueta}} + IVA en {{delivery:maqueta}}.',
+    lead: 'Sí, pero en imagen. La IA generativa, como ChatGPT o Gemini, convierte un plano en una imagen con aspecto 3D; no crea un modelo medible, coherente entre vistas ni apto para realidad aumentada. {{brand}} usa la IA para escribir el código que construye ese modelo en Blender, y lo entrega en {{delivery:maqueta}}.',
     breadcrumb: 'IA o modelo 3D',
     card: {
       title: '¿Puede la IA convertir un plano en 3D?',
@@ -39,7 +39,7 @@ export default {
       ['IA en nuestro flujo', 'Escribe y corrige los scripts de Blender'],
       ['Revisión humana', 'Cada muro y cada hueco contra el plano'],
       ['Imágenes virtuales', 'Siempre etiquetadas como tales'],
-      ['Maqueta 3D en {{brand}}', 'Desde {{price:maqueta}} + IVA'],
+      ['Maqueta 3D en {{brand}}', 'Presupuesto cerrado antes de empezar'],
     ],
     hero: {
       image: 'villa_maqueta_iso_opaco',
@@ -91,7 +91,7 @@ export default {
           ['Realidad aumentada', 'No', 'Según la herramienta', 'Sí: USDZ para iPhone y GLB para Android, sin app'],
           ['Cambios', 'Se regenera la imagen y puede cambiar todo', 'Se edita dentro de la herramienta', 'Se cambia un dato del script y se reconstruye en minutos'],
           ['Fotorrealismo', 'Alto en una imagen suelta', 'Variable', 'Alto y coherente, con luz física calculada'],
-          ['Coste de referencia', 'Gratis o suscripción', 'Menos de 1 € por render en pedra.ai', 'Desde {{price:maqueta}} + IVA en {{brand}}'],
+          ['Coste de referencia', 'Gratis o suscripción', 'Menos de 1 € por render en pedra.ai', 'Presupuesto cerrado en {{brand}}'],
         ],
         note: 'No hemos hecho un test controlado de herramientas. La tabla describe qué tipo de resultado produce cada tecnología y las condiciones que cada proveedor publicaba en septiembre de 2026.',
       },
@@ -159,11 +159,11 @@ export default {
     faq: [
       {
         q: '¿Qué IA puede generar planos 3D?',
-        a: 'Hay conversores con IA, como el reconocimiento de planos de Planner 5D, que levantan un modelo 3D desde la imagen del plano, y plataformas como pedra.ai que lo convierten en un render por 2 créditos. La IA generativa de chat crea imágenes, no modelos. {{brand}} usa la IA para escribir el código del modelo y lo revisa contra el plano, desde {{price:maqueta}} + IVA.',
+        a: 'Hay conversores con IA, como el reconocimiento de planos de Planner 5D, que levantan un modelo 3D desde la imagen del plano, y plataformas como pedra.ai que lo convierten en un render por 2 créditos. La IA generativa de chat crea imágenes, no modelos. {{brand}} usa la IA para escribir el código del modelo y lo revisa contra el plano.',
       },
       {
         q: '¿Qué IA genera renders?',
-        a: 'Los asistentes generales, como ChatGPT o Gemini, y herramientas específicas para inmobiliaria generan imágenes con aspecto de render a partir de texto, planos o fotos. Son rápidas y baratas, pero cada imagen se genera por separado y no garantiza la geometría. {{brand}} calcula sus renders con Cycles sobre un modelo 3D real: 6 van incluidos en la maqueta desde {{price:maqueta}} + IVA.',
+        a: 'Los asistentes generales, como ChatGPT o Gemini, y herramientas específicas para inmobiliaria generan imágenes con aspecto de render a partir de texto, planos o fotos. Son rápidas y baratas, pero cada imagen se genera por separado y no garantiza la geometría. {{brand}} calcula sus renders con Cycles sobre un modelo 3D real: 6 van incluidos en la maqueta completa.',
       },
       {
         q: '¿Cuál es la mejor IA para inmobiliarias?',
@@ -175,11 +175,11 @@ export default {
       },
       {
         q: '¿Usa {{brand}} inteligencia artificial?',
-        a: 'Sí, para escribir y corregir código. Un asistente de IA genera los scripts de Python que construyen el modelo en Blender, y una persona revisa cada muro y cada hueco contra el plano. La IA no inventa la vivienda ni sus medidas. {{brand}} entrega el modelo con renders, visor web y realidad aumentada desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
+        a: 'Sí, para escribir y corregir código. Un asistente de IA genera los scripts de Python que construyen el modelo en Blender, y una persona revisa cada muro y cada hueco contra el plano. La IA no inventa la vivienda ni sus medidas. {{brand}} entrega el modelo con renders, visor web y realidad aumentada en {{delivery:maqueta}}.',
       },
       {
         q: '¿Es más barato un render hecho con IA?',
-        a: 'Sí, bastante. Un render con IA a partir de un plano cuesta menos de 1 € en una suscripción como la de pedra.ai, y un pack de renders con IA desde fotos, 129 € sin IVA por inmueble en vistastudiodesign.com. A cambio no hay modelo 3D, visor ni realidad aumentada, y las vistas no siempre coinciden. La maqueta de {{brand}} cuesta desde {{price:maqueta}} + IVA con todo eso incluido.',
+        a: 'Sí, bastante. Un render con IA a partir de un plano cuesta menos de 1 € en una suscripción como la de pedra.ai, y un pack de renders con IA desde fotos, 129 € sin IVA por inmueble en vistastudiodesign.com. A cambio no hay modelo 3D, visor ni realidad aumentada, y las vistas no siempre coinciden. La maqueta de {{brand}} cuesta más, pero lo incluye todo, con presupuesto cerrado.',
       },
       {
         q: '¿Puede la IA leer las medidas de un plano?',
@@ -203,7 +203,7 @@ export default {
     title: 'Can AI turn a floor plan into 3D? An honest 2026 guide',
     description: 'Generative AI turns a floor plan into a 3D-looking image in seconds, not a measurable model. What ChatGPT can and can’t do, and how we use AI with Blender.',
     h1: 'Can AI turn a floor plan into a 3D model?',
-    lead: 'Yes, but only as a picture. Generative AI such as ChatGPT or Gemini turns a floor plan into a 3D-looking image; it does not create a measurable model, consistent views or AR support. {{brand}} uses AI to write the code that builds that model in Blender, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    lead: 'Yes, but only as a picture. Generative AI such as ChatGPT or Gemini turns a floor plan into a 3D-looking image; it does not create a measurable model, consistent views or AR support. {{brand}} uses AI to write the code that builds that model in Blender, and delivers it in {{delivery:maqueta}}.',
     breadcrumb: 'AI or a real 3D model',
     card: {
       title: 'Can AI turn a floor plan into 3D?',
@@ -217,7 +217,7 @@ export default {
       ['AI in our workflow', 'Writes and fixes the Blender scripts'],
       ['Human check', 'Every wall and opening against the plan'],
       ['Virtual images', 'Always labelled as virtual'],
-      ['{{brand}} complete 3D model', 'From {{price:maqueta}} + VAT'],
+      ['{{brand}} complete 3D model', 'A fixed quote before work starts'],
     ],
     hero: {
       image: 'villa_maqueta_iso_opaco',
@@ -269,7 +269,7 @@ export default {
           ['Augmented reality', 'No', 'Depends on the tool', 'Yes: USDZ for iPhone and GLB for Android, no app'],
           ['Changes', 'The image is regenerated and anything may change', 'Edited inside the tool', 'Change one value in the script and it rebuilds in minutes'],
           ['Photorealism', 'High in a single image', 'Variable', 'High and consistent, with physically based light'],
-          ['Reference cost', 'Free or subscription', 'Under €1 per render at pedra.ai', 'From {{price:maqueta}} + VAT at {{brand}}'],
+          ['Reference cost', 'Free or subscription', 'Under €1 per render at pedra.ai', 'A fixed quote at {{brand}}'],
         ],
         note: 'We have not run a controlled test of tools. The table describes the type of output each technology produces and the terms each provider published in September 2026.',
       },
@@ -343,11 +343,11 @@ export default {
     faq: [
       {
         q: 'Which AI can turn a floor plan into 3D?',
-        a: 'AI floor plan converters, such as Planner 5D’s plan recognition, build a basic 3D model from an image of the plan, and platforms such as pedra.ai turn it into a render for 2 credits. General chat AI creates images, not models. {{brand}} uses AI to write the code that builds the model and checks it against the plan, from {{price:maqueta}} + VAT.',
+        a: 'AI floor plan converters, such as Planner 5D’s plan recognition, build a basic 3D model from an image of the plan, and platforms such as pedra.ai turn it into a render for 2 credits. General chat AI creates images, not models. {{brand}} uses AI to write the code that builds the model and checks it against the plan.',
       },
       {
         q: 'Which AI tool is best for architectural renders?',
-        a: 'For a mood image, general assistants such as ChatGPT or Gemini and dedicated property tools are fast and cheap, but each image is generated separately and the geometry is not guaranteed. For renders a buyer will scrutinise, you need a model. {{brand}} computes its renders with Cycles on a real 3D model, and 6 are included in the complete model from {{price:maqueta}} + VAT.',
+        a: 'For a mood image, general assistants such as ChatGPT or Gemini and dedicated property tools are fast and cheap, but each image is generated separately and the geometry is not guaranteed. For renders a buyer will scrutinise, you need a model. {{brand}} computes its renders with Cycles on a real 3D model, and 6 are included in the complete model.',
       },
       {
         q: 'What is the best AI for estate agents?',
@@ -359,11 +359,11 @@ export default {
       },
       {
         q: 'Does {{brand}} use AI?',
-        a: 'Yes, to write and fix code. An AI assistant produces the Python scripts that build the model in Blender, and a person checks every wall and opening against the plan. AI does not invent the home or its measurements. {{brand}} delivers the model with renders, a web viewer and augmented reality from {{price:maqueta}} + VAT, in {{delivery:maqueta}}.',
+        a: 'Yes, to write and fix code. An AI assistant produces the Python scripts that build the model in Blender, and a person checks every wall and opening against the plan. AI does not invent the home or its measurements. {{brand}} delivers the model with renders, a web viewer and augmented reality in {{delivery:maqueta}}.',
       },
       {
         q: 'Are AI renders cheaper?',
-        a: 'Yes, considerably. An AI render from a floor plan costs under €1 on a subscription such as pedra.ai, and an AI render package from photos costs €129 ex VAT per property at vistastudiodesign.com. In exchange there is no 3D model, viewer or augmented reality, and views do not always match. The {{brand}} complete 3D model costs from {{price:maqueta}} + VAT with all of that included.',
+        a: 'Yes, considerably. An AI render from a floor plan costs under €1 on a subscription such as pedra.ai, and an AI render package from photos costs €129 ex VAT per property at vistastudiodesign.com. In exchange there is no 3D model, viewer or augmented reality, and views do not always match. The {{brand}} complete 3D model costs more, but includes all of that, at a fixed quote.',
       },
       {
         q: 'Can AI read the dimensions on a floor plan?',

@@ -22,13 +22,13 @@ export default {
   id: 'guia-sobre-plano',
   image: 'villa_bano_suite_opaco',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Cómo vender viviendas sobre plano: guía para promotoras',
-    description: 'Qué necesita ver un comprador sobre plano, qué exige la ley a la publicidad y 8 pasos para la preventa con renders, visor y AR. Desde {{price:promocion}} + IVA.',
+    description: 'Qué necesita ver un comprador sobre plano, qué exige la ley a la publicidad y 8 pasos para la preventa con renders, visor y AR, con presupuesto cerrado.',
     h1: '¿Cómo vender viviendas sobre plano? Guía para promotoras',
-    lead: 'Vender sobre plano es lograr reservas de viviendas que aún no existen: el comprador tiene que entender la vivienda y tu publicidad, ajustarse a lo que construirás. Aquí tienes qué enseñar, qué exige la ley y cómo montar la preventa. Con {{brand}}, 3 tipologías en 3D desde {{price:promocion}} + IVA, en {{delivery:promocion}}.',
+    lead: 'Vender sobre plano es lograr reservas de viviendas que aún no existen: el comprador tiene que entender la vivienda y tu publicidad, ajustarse a lo que construirás. Aquí tienes qué enseñar, qué exige la ley y cómo montar la preventa. Con {{brand}}, cada tipología en 3D en {{delivery:promocion}}, con presupuesto cerrado.',
     breadcrumb: 'Vender sobre plano',
     card: {
       title: 'Cómo vender viviendas sobre plano',
@@ -45,7 +45,7 @@ export default {
       ['Normas clave', 'RD 515/1989, Ley 38/1999 y, en Andalucía, Decreto 218/2005'],
       ['Regla de oro', 'Lo que muestra la publicidad es exigible'],
       ['Campaña', '8 pasos, de los planos a la sala de ventas'],
-      ['Pack de promoción', 'Desde {{price:promocion}} + IVA, hasta 3 tipologías'],
+      ['Promoción en 3D', 'Presupuesto cerrado según el número de tipologías'],
       ['Plazo del 3D', '{{delivery:promocion}}'],
       ['Normas revisadas', '28 de septiembre de 2026'],
     ],
@@ -156,7 +156,7 @@ export default {
       {
         type: 'answer',
         h2: '¿Cuánto cuesta preparar el material 3D de una promoción?',
-        answer: 'Con {{brand}}, el pack de promoción cuesta desde {{price:promocion}} + IVA e incluye 3 tipologías modeladas y amuebladas, 12 renders en 4K, visor con selector de tipología y realidad aumentada para la sala de ventas, en {{delivery:promocion}}. Cada tipología adicional cuesta {{extra:tipologia}} + IVA.',
+        answer: 'Con {{brand}}, el presupuesto de una promoción depende del número de tipologías y de lo que incluya: cada tipología modelada y amueblada, renders en 4K, visor con selector de tipología y realidad aumentada para la sala de ventas, en {{delivery:promocion}}. Te lo mandamos cerrado y por escrito al ver los planos.',
         body: 'Los rangos que publican otros estudios, con su fuente, están en [cuánto cuesta un render 3D en España](@guia-precio-render). El detalle de cada pack, en [precios](@precios), y un ejemplo terminado en el [caso de la villa en la Costa del Sol](@caso-villa): {{villa:rooms}} estancias modeladas desde {{villa:input}}. Cómo trabajamos con tu equipo, en [visualización para promotoras](@sol-promotoras).',
       },
       plate('es', 'villa_interior_salon'),
@@ -175,7 +175,7 @@ export default {
     faq: [
       {
         q: '¿Cómo funciona la compra de vivienda sobre plano?',
-        a: 'El comprador reserva una vivienda en proyecto o en construcción, firma un contrato privado y entrega cantidades a cuenta durante la obra; el resto lo paga al escriturar, con la vivienda terminada. {{brand}} convierte los planos en renders, visor y realidad aumentada para esa preventa, desde {{price:promocion}} + IVA.',
+        a: 'El comprador reserva una vivienda en proyecto o en construcción, firma un contrato privado y entrega cantidades a cuenta durante la obra; el resto lo paga al escriturar, con la vivienda terminada. {{brand}} convierte los planos en renders, visor y realidad aumentada para esa preventa, con presupuesto cerrado.',
       },
       {
         q: '¿Cómo se paga un piso comprado sobre plano?',
@@ -187,7 +187,7 @@ export default {
       },
       {
         q: '¿Se puede vender sobre plano sin piso piloto?',
-        a: 'Sí. Un piso piloto necesita una vivienda terminada o un local, y enseña una sola tipología. Con un modelo 3D, cada tipología se recorre en el visor y se coloca sobre la mesa en realidad aumentada antes de la obra. {{brand}} lo entrega para 3 tipologías desde {{price:promocion}} + IVA, en {{delivery:promocion}}.',
+        a: 'Sí. Un piso piloto necesita una vivienda terminada o un local, y enseña una sola tipología. Con un modelo 3D, cada tipología se recorre en el visor y se coloca sobre la mesa en realidad aumentada antes de la obra. {{brand}} lo entrega para cada tipología en {{delivery:promocion}}, con presupuesto cerrado.',
       },
       {
         q: '¿Qué información hay que dar al comprador de obra nueva en Andalucía?',
@@ -203,7 +203,7 @@ export default {
       },
       {
         q: '¿Cuánto cuestan los renders de una promoción sobre plano?',
-        a: 'En {{brand}}, el pack de promoción cuesta desde {{price:promocion}} + IVA e incluye 3 tipologías, 12 renders en 4K, visor y realidad aumentada; cada tipología adicional, {{extra:tipologia}} + IVA. Las tarifas publicadas por otros estudios están en [cuánto cuesta un render 3D](@guia-precio-render).',
+        a: 'Depende del número de tipologías y de lo que incluya: renders en 4K, visor y realidad aumentada. {{brand}} no publica tarifas: te manda un presupuesto cerrado y por escrito en cuanto ve los planos. Las tarifas publicadas por otros estudios están en [cuánto cuesta un render 3D](@guia-precio-render).',
       },
     ],
     related: ['sol-promotoras', 'servicio-renders', 'servicio-ar', 'caso-villa', 'precios'],

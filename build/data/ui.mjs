@@ -146,7 +146,7 @@ const es = {
     h2: '¿Quieres ver tu plano en 3D?',
     body: 'Envíanos el plano y te devolvemos una estancia modelada en 3D, con realidad aumentada, gratis y sin compromiso. Contesta una persona.',
     caseH2: 'Quiero esto para mi promoción',
-    caseBody: 'Mismo proceso, con tu plano: modelo 3D amueblado, renders, visor para tu anuncio y realidad aumentada, desde {{price:maqueta}} + IVA y en {{delivery:maqueta}}.',
+    caseBody: 'Mismo proceso, con tu plano: modelo 3D amueblado, renders, visor para tu anuncio y realidad aumentada, con presupuesto cerrado y en {{delivery:maqueta}}.',
     alt: 'Terraza principal de la villa con tumbonas, suelo de barro cocido y un olivo. Render 3D generado a partir del plano 2D.',
   },
   deliverables: {
@@ -505,7 +505,7 @@ const en = {
     h2: 'Want to see your floor plan in 3D?',
     body: 'Send us the plan and we return one room modelled in 3D, with augmented reality, free and with no commitment. A real person replies.',
     caseH2: 'I want this for my development',
-    caseBody: 'Same process, with your plan: a furnished 3D model, renders, a viewer for your listing and augmented reality, from {{price:maqueta}} + VAT in {{delivery:maqueta}}.',
+    caseBody: 'Same process, with your plan: a furnished 3D model, renders, a viewer for your listing and augmented reality, with a fixed quote and delivered in {{delivery:maqueta}}.',
     alt: 'Main terrace of the villa with sun loungers, a terracotta floor and an olive tree. 3D render generated from the 2D floor plan.',
   },
   deliverables: {

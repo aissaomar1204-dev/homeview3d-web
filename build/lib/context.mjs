@@ -142,10 +142,12 @@ export function createContext(o) {
       case 'phone': return site.contact.phoneDisplay;
       case 'whatsapp': return whatsappDisplay(site);
       case 'year': return String(new Date().getFullYear());
-      case 'price': return ctx.price(args[0], args[1] != null ? Number(args[1]) : undefined);
-      case 'extra': return ctx.extra(args[0]);
-      case 'volume': return fmtPrice(pricing.volume.price, lang);
-      case 'volumeUnit': return fmtPrice(Math.round(pricing.volume.price / pricing.volume.units), lang);
+      case 'price': case 'extra': case 'volume': case 'volumeUnit':
+        if (!pricing.public) throw new Error(`{{${name}${args.length ? `:${args.join(':')}` : ''}}} used while prices are not public (build/data/pricing.mjs, public: false)`);
+        if (name === 'price') return ctx.price(args[0], args[1] != null ? Number(args[1]) : undefined);
+        if (name === 'extra') return ctx.extra(args[0]);
+        if (name === 'volume') return fmtPrice(pricing.volume.price, lang);
+        return fmtPrice(Math.round(pricing.volume.price / pricing.volume.units), lang);
       case 'delivery': return ctx.delivery(args[0]);
       case 'revisions': return ctx.revisions(args[0]);
       case 'villa': {
