@@ -169,7 +169,7 @@ const LABELS = {
   es: {
     canonical: 'URL canónica', language: 'Idioma', updated: 'Actualizado', author: 'Autor', team: (b) => `Equipo de ${b}`,
     twin: 'English', keyFacts: 'Datos clave', faq: 'Preguntas frecuentes', related: 'Sigue leyendo', contact: 'Contacto',
-    demo: 'Pide tu demo', email: 'Email', phone: 'Teléfono', whatsapp: 'WhatsApp', form: 'Formulario de solicitud',
+    demo: 'Pide una demo', email: 'Email', phone: 'Teléfono', whatsapp: 'WhatsApp', form: 'Formulario de solicitud',
     viewer: 'Visor 3D interactivo', viewerLink: 'Ver la villa en 3D', rooms: 'Estancias del modelo', ar: 'Realidad aumentada sin app',
     formats: 'Formatos y compatibilidad', embed: 'Incrusta el visor en tu web', deliverables: 'Qué entregamos', comingSoon: 'Próximamente',
     process: 'Cómo funciona', needs: 'Qué necesitamos de ti', services: 'Servicios', audiences: 'Soluciones por tipo de cliente',
@@ -191,7 +191,7 @@ const LABELS = {
   en: {
     canonical: 'Canonical URL', language: 'Language', updated: 'Updated', author: 'Author', team: (b) => `${b} team`,
     twin: 'Español', keyFacts: 'Key facts', faq: 'Frequently asked questions', related: 'Keep reading', contact: 'Contact',
-    demo: 'Get your demo', email: 'Email', phone: 'Phone', whatsapp: 'WhatsApp', form: 'Request form',
+    demo: 'Book a demo', email: 'Email', phone: 'Phone', whatsapp: 'WhatsApp', form: 'Request form',
     viewer: 'Interactive 3D viewer', viewerLink: 'View the villa in 3D', rooms: 'Rooms in the model', ar: 'App-free augmented reality',
     formats: 'Formats and compatibility', embed: 'Embed the viewer on your website', deliverables: 'What we deliver', comingSoon: 'Coming soon',
     process: 'How it works', needs: 'What we need from you', services: 'Services', audiences: 'Solutions by client type',

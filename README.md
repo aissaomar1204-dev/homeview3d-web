@@ -11,14 +11,27 @@ estrategia GEO: `docs/research/04-geo-2026.md`.
 **Orden del lanzamiento:** §0 qué falta → §1 datos → §2 comprobación local → §3 Netlify → §4 formularios →
 §5 a §7 indexación → §8 y §9 presencia fuera de la web → §10 medición mensual.
 
-**Portada en español (desde el 12 de octubre de 2026):** `/` es la web nueva para promotoras de obra nueva (showroom
-virtual), traída de `web/sitio/` del repositorio `homeview3d`. Tiene su propio diseño y no usa las plantillas del
-resto de la web: el cuerpo está en `build/home/portada.html`, sus estilos en `build/home/estilos.css`, sus imágenes,
-fuentes y JS en `public/assets/home/` y la demo del showroom (Residencial Benahavís, ficticia y `noindex`) en
-`public/demo/`. `build/templates/home.mjs` la monta con el layout `standalone` de `build/lib/layout.mjs`, que solo
-añade el `<head>` común (title, description, canonical, hreflang, OG y JSON-LD). Contacto y enlaces legales salen de
-`build/data/site.mjs`; el título, la descripción, la FAQ y el espejo Markdown, de `build/content/home.mjs` (`es`). La
-portada en inglés (`/en/`) y el resto de páginas siguen con el diseño anterior hasta que se integren con el SEO.
+**Portadas (desde el 12 de octubre de 2026):** `/` y `/en/` son la web nueva para promotoras de obra nueva (showroom
+virtual), traída de `web/sitio/` del repositorio `homeview3d`. Tienen su propio marcado y no usan las plantillas del
+resto de la web: el cuerpo está en `build/home/portada.html` (castellano) y `build/home/portada.en.html` (el mismo
+marcado traducido), sus estilos en `build/home/estilos.css`, sus imágenes, fuentes y JS en `public/assets/home/` y la
+demo del showroom (Residencial Benahavís, ficticia y `noindex`) en `public/demo/`. `build/templates/home.mjs` las monta
+con el layout `standalone` de `build/lib/layout.mjs`, que solo añade el `<head>` común (title, description, canonical,
+hreflang, OG y JSON-LD). Contacto y enlaces legales salen de `build/data/site.mjs`; el título, la descripción, la FAQ y
+el espejo Markdown, de `build/content/home.mjs`. **La portada en castellano no se modifica:** `portada.html`,
+`estilos.css` y `main.js` son los publicados, y la portada no enlaza a las páginas SEO (decisión del 12-oct-2026). La
+inglesa usa `/assets/js/portada-en.js`, que el build genera desde `main.js` cambiando sus textos (`JS_EN` en
+`home.mjs`). `npm run check` avisa de que los servicios no se enlazan desde la portada: es esperado.
+
+**Resto de páginas (mismo día):** conservan sus textos, URLs, datos estructurados y espejos Markdown (el SEO), con el
+diseño de la portada y su propia cabecera (Servicios, Cómo funciona, Precios, La villa en 3D, Guías) y su propio pie,
+con las columnas de enlaces a todas las secciones: fondo cielo, paneles blancos redondeados que alternan con secciones abiertas y una banda oscura
+para la llamada final, títulos de página en Gloock y el resto en Hanken Grotesk (los mismos ficheros de fuente que la
+portada), botones en píldora y una cabecera flotante y un pie con el estilo de la portada. Todo sale de `src/css/` (tokens en
+`00-tokens.css`, paneles en `24-chapters.css`, cabecera y pie en `20-layout.css`) y del motor de capítulos de
+`build/lib/chapters.mjs`, que ahora decide el tono de cada panel. Solo modo claro, como la portada: sin botón de tema.
+La animación antigua de la portada inglesa (`build/lib/hero.mjs`, `src/js/hero.js`, `public/assets/hero/`) ya no se
+muestra en ninguna página; se queda en el repositorio mientras se decide si se reutiliza.
 
 ---
 
@@ -175,7 +188,7 @@ con el original; `--only=svg,icons,og` limita el trabajo):
 |---|---|
 | `public/assets/brand/symbol.svg`, `lockup-horizontal.svg`, `lockup-stacked.svg` | Símbolo y lockups a dos colores, con variante oscura dentro del fichero (para `<img>`, firmas de correo, prensa). |
 | `public/assets/brand/logo-512.png` | `Organization.logo` (schema.org): símbolo sobre el color papel, 512 × 512. |
-| `build/generated/brand.json` | Lockup horizontal en línea para la cabecera (y el pie, con `<use>`): sigue el tema porque usa los tokens. 32 px de alto desde 1024 px, 28 px por debajo (24 px por debajo de 350 px). |
+| `build/generated/brand.json` | Lockup horizontal en línea para la cabecera (y el pie, con `<use>`): toma los colores de los tokens. 24 px de alto (19 px en móvil), como en la portada. |
 | `public/favicon.svg`, `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png` | Iconos: el SVG se adapta al modo claro/oscuro del navegador; los PNG llevan el símbolo claro sobre azul añil (los de 192 y 512 son *maskable*, símbolo dentro del 80 % central). |
 | `public/assets/img/og-brand/<imagen>.jpg` | Cada imagen OG (1200 × 630) con el lockup sobre una placa de color papel abajo a la izquierda. Las originales de `public/assets/img/og/` no se tocan; la cabecera apunta a las de `og-brand/`. |
 
@@ -183,14 +196,10 @@ Los colores salen de `src/css/00-tokens.css`: cambiar el acento es un solo cambi
 **Tras `npm run images`, vuelve a ejecutar `node scripts/brand.mjs`**: `scripts/images.mjs` todavía reescribe los
 iconos de `public/` con un cuadrado liso (mientras no se quite su función `favicons()`).
 
-**Tema.** Un botón en la cabecera (junto al idioma, también en móvil) recorre Automático → Claro → Oscuro; la
-elección se guarda en `localStorage['hv-theme']` (Automático borra la clave). Un script mínimo en `<head>`, antes
-del CSS, pone `data-theme` en `<html>` antes del primer pintado (sin parpadeo); `theme.js` (con `defer`) mueve el
-botón, su etiqueta y los `theme-color`. Los tokens aplican la paleta oscura con `:root[data-theme="dark"]` o con
-sistema oscuro y sin `data-theme="light"`. Las hojas de estilo solo leen tokens: **una regla propia con
-`@media (prefers-color-scheme)` no obedece al botón** (`npm run check` lo avisa; si hace falta una diferencia por
-tema, se añade un token, como `--plan-invert`). La paleta oscura aparece dos veces en `00-tokens.css` (el QA exige
-que coincidan) y `docs/design/tokens.css` es una copia idéntica.
+**Tema.** Solo modo claro, como la portada (desde el 12 de octubre de 2026): sin botón de tema ni paleta oscura. Cada
+página lleva un único `<meta name="theme-color">` con el `--color-bg` de los tokens y `color-scheme: light`; `npm run
+check` falla si vuelve a aparecer una paleta oscura o un resto del botón. `docs/design/tokens.css` es una copia idéntica
+de `src/css/00-tokens.css`.
 
 ---
 

@@ -1,161 +1,129 @@
 /* ==========================================================================
-   tokens.css · Direction B "Plano" (recommended) · canonical design tokens
-   Spec: docs/design/DESIGN-RULEBOOK.md (Part B2 and Part C).
-   This is the ONLY stylesheet allowed to contain raw colour values
-   (enforced by docs/design/design-lint.js). Every other file uses var(--*).
-   Contrast ratios in comments were measured (WCAG 2.x formula) on 2026-09-28.
-
-   Theme (light / dark / automatic). The header toggle sets data-theme="light|dark" on <html>
-   (inline head script, localStorage "hv-theme"); no attribute = follow the system.
-     light palette  = :root (default)
-     dark palette   = :root[data-theme="dark"], or the system asks for dark AND light is not forced
-   The dark values appear twice on purpose (CSS cannot share one declaration between a media query
-   and an attribute selector). Edit both blocks together. Other stylesheets never test the theme:
-   they read tokens. If a rule must differ per theme, add a token here (see --plan-invert).
-   Brand: scripts/brand.mjs and build.mjs read --color-bg / --color-ink / --color-accent from this file,
-   light first and dark from the media block, so keep that order.
+   tokens.css · the design tokens of every page except the ES home (which brings its own stylesheet,
+   build/home/estilos.css) and the showroom demo. Same design as that home (12-oct-2026): sky background,
+   white rounded panels, night-blue ink, one Mediterranean blue accent, Gloock for the page titles and
+   Hanken Grotesk for everything else, pill buttons. Light only, like the home: no dark theme.
+   This is the ONLY stylesheet allowed to contain raw colour values (scripts/design-lint.mjs). Every other
+   file uses var(--*). Contrast ratios (WCAG 2.x) measured on 2026-10-12.
+   Brand: scripts/brand.mjs and build.mjs read --color-bg / --color-ink / --color-accent / --color-on-accent
+   from this file as 6-digit hex, so keep them in that form.
    ========================================================================== */
 
-/* ---------- Fonts: self-hosted, instanced + subset (rulebook A3) ---------- */
-/* archivo-var.woff2    = Archivo, wdth 100-125, wght 400-650, ES/EN subset, ~46 KB (preload) */
-/* geist-mono-var.woff2 = Geist Mono, wght 400-500, ES/EN subset, ~12 KB */
+/* ---------- Fonts: the same files as the home (public/assets/home/fonts, one download for the whole site) ---------- */
+/* hanken-grotesk.woff2 = Hanken Grotesk, variable wght 100-900, ~34 KB */
+/* gloock.woff2         = Gloock 400, page titles, ~17 KB (preload, like the home) */
 @font-face {
-  font-family: "Archivo";
-  src: url("/assets/fonts/archivo-var.woff2") format("woff2");
-  font-weight: 400 650;
-  font-stretch: 100% 125%;
+  font-family: "Hanken Grotesk";
+  src: url("/assets/home/fonts/hanken-grotesk.woff2") format("woff2");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Geist Mono";
-  src: url("/assets/fonts/geist-mono-var.woff2") format("woff2");
-  font-weight: 400 500;
+  font-family: "Gloock";
+  src: url("/assets/home/fonts/gloock.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
-}
-
-/* Metric-matched fallbacks, computed with fontTools against Arial.
-   Text = Archivo wdth 100 wght 400. Display S = wdth 106 wght 560 (<1024px).
-   Display L = wdth 118 wght 560 (>=1024px). They keep font-swap CLS near zero. */
-@font-face {
-  font-family: "Archivo Text Fallback";
-  src: local("Arial"), local("ArialMT");
-  size-adjust: 98.4%;
-  ascent-override: 89.2%;
-  descent-override: 21.3%;
-  line-gap-override: 0%;
-}
-@font-face {
-  font-family: "Archivo Display S Fallback";
-  src: local("Arial"), local("ArialMT");
-  size-adjust: 107.6%;
-  ascent-override: 81.6%;
-  descent-override: 19.5%;
-  line-gap-override: 0%;
-}
-@font-face {
-  font-family: "Archivo Display L Fallback";
-  src: local("Arial"), local("ArialMT");
-  size-adjust: 121.6%;
-  ascent-override: 72.2%;
-  descent-override: 17.3%;
-  line-gap-override: 0%;
 }
 
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
 
-  /* ---------- Colour: light (default) ---------- */
-  --color-bg: #F4F5F6;           /* Papel. Page background. ink 16.5:1 */
-  --color-surface: #FCFCFD;      /* Lámina. Inputs, menus, raised panels. ink 17.5:1 */
-  --color-stage: #E4E7EA;        /* Mesa. 3D viewer + render backdrop. ink-3 4.6:1 */
-  --color-ink: #14171B;          /* Grafito. Headings and body */
-  --color-ink-2: #434A52;        /* Secondary text. 8.2:1 on bg */
-  --color-ink-3: #5F6771;        /* Captions, meta. 5.3:1 on bg, 4.6:1 on stage */
-  --color-line: #D6DAE0;         /* Decorative hairlines ONLY (not a UI boundary) */
-  --color-line-strong: #79818B;  /* Input borders, dimension lines. 3.6 bg / 3.9 surface / 3.2 stage */
-  --color-accent: #2D4596;       /* Añil. CTA fill, focus ring, selected state. 8.0:1 on bg */
-  --color-accent-hover: #233A80; /* on-accent 10.3:1 */
-  --color-on-accent: #FCFCFD;    /* Text on accent. 8.5:1 */
-  --color-accent-soft: #E2E7F4;  /* Selected chip / active room row. ink 14.5:1, accent 7.1:1 */
-  --color-danger: #B3261E;       /* 6.4:1 on surface */
-  --color-success: #1F7245;      /* 5.8:1 on surface */
-  --color-scrim: rgb(20 23 27 / 0.56);
-  --shadow-pop: 0 1px 2px rgb(20 23 27 / 0.06), 0 12px 32px -12px rgb(20 23 27 / 0.22);
-  --plan-invert: 0;              /* filter: invert() for line art drawn dark on light (0 light, .91 dark) */
-  --color-qr-ink: #14171B;       /* QR modules and quiet zone: dark on light in every theme (scanners) */
-  --color-qr-paper: #FCFCFD;
+  /* ---------- Colour ---------- */
+  --color-bg: #D3E1EE;           /* Cielo. Page background and the open sections between panels. ink 13.0:1 */
+  --color-paper: rgb(255 255 255); /* Panels (the home's --paper) */
+  --color-surface: rgb(255 255 255); /* Cards, inputs, menus, FAQ items */
+  --color-stage: #EEF3F8;        /* Bruma. Image and 3D backdrops, quiet fills. ink 15.5:1 */
+  --color-ink: #0E1B2B;          /* Azul noche. Headings and body. 17.4:1 on white */
+  --color-ink-2: #3D5064;        /* Secondary text. 8.3:1 white, 6.2:1 sky */
+  --color-ink-3: #4F6175;        /* Captions, meta. 6.4:1 white, 4.8:1 sky */
+  --color-line: rgb(14 27 43 / 0.12); /* Decorative hairlines ONLY (not a UI boundary) */
+  --color-line-strong: #6B7F94;  /* Input borders, graphics. 4.1:1 white, 3.1:1 sky */
+  --color-accent: #1F5F9E;       /* Azul mediterráneo. Links on hover, focus ring, selected state. 6.6:1 white, 5.0:1 sky */
+  --color-accent-hover: #184D82;
+  --color-on-accent: #FDFEFF;    /* Text on accent or on the ink button */
+  --color-accent-soft: #E4EDF6;  /* Selected chip, icon tiles. accent 5.5:1 */
+  --color-cta: #0E1B2B;          /* Primary button: ink pill, like the home's .btn-dark */
+  --color-cta-hover: #1B2F47;
+  --color-danger: #B3261E;       /* 6.4:1 on white */
+  --color-success: #1F7245;      /* 5.8:1 on white */
+  --color-scrim: rgb(14 27 43 / 0.56);
+  --shadow-pop: 0 10px 30px rgb(14 27 43 / 0.1);
+  --shadow-media: 0 20px 50px rgb(14 27 43 / 0.1);
+  --plan-invert: 0;              /* filter: invert() for line art drawn dark on light (dark panels set it) */
+  --color-qr-ink: #0E1B2B;       /* QR modules and quiet zone: dark on light everywhere (scanners) */
+  --color-qr-paper: #FDFEFF;
 
-  /* ---------- Chapters (client-requested decoration, 2026-09-29; see the rulebook, Overrides O3) ----------
-     Every home section is a chapter with a tone. Sheets (light chapters): white, paper, mat (grey cutting mat).
-     Graphite set (dark chapters, footer, plate captions, the recommended pack): a full replacement for the
-     --color-* tokens of the element, so buttons, inputs, tables and the viewer rail re-theme themselves.
-     Measured: gr-ink 16.6:1, gr-ink-2 9.8:1, gr-ink-3 6.3:1 on gr-bg (5.5:1 on gr-stage), gr-accent 9.2:1,
-     gr-line-strong 4.0:1 (graphics), white on gr-brand 8.5:1. In the dark theme the sheets sink one step and
-     graphite goes near-black, so the rhythm survives (white 1B2026, paper 12161A, mat 232A31, graphite 07090B: steps of 1.10 to 1.13:1 between
-     neighbours, 1.22 to 1.25:1 one tone apart, 1.37:1 end to end; the mat cannot go higher, ink-3 needs 4.5:1 on it, and paper cannot go higher, cards on it use the 161A1E surface).
-     A 1px hairline on the top edge of every chapter (--ch-hair-a: none in light, 14 % ink in dark) carries the rest of the rhythm. */
-  --sheet-white: #FCFCFD;        /* Hoja blanca. ink 17.5:1 */
-  --sheet-paper: #EDEFF2;        /* Papel. ink 15.8:1, ink-3 5.0:1 */
-  --sheet-mat: #E4E7EA;          /* Mesa de corte. ink 14.5:1, ink-3 4.6:1 */
-  --gr-bg: #0E1114;              /* Grafito. Dark chapter */
-  --gr-surface: #14181C;
-  --gr-stage: #1A1F25;
-  --gr-deep: #080A0C;            /* Footer, deepest */
-  --gr-ink: #EEF0F3;
-  --gr-ink-2: #B4BBC3;
-  --gr-ink-3: #8E969F;
-  --gr-line: #262D35;            /* Decorative hairlines ONLY */
-  --gr-line-strong: #6A747F;     /* Graphics on graphite. 4.0:1 */
-  --gr-accent: #A2B3EA;          /* Añil on graphite */
-  --gr-accent-hover: #B8C5F2;
-  --gr-accent-soft: #1C2640;
-  --gr-brand: #2D4596;           /* Añil plate (recommended pack) */
-  --gr-brand-hover: #233A80;
-  --gr-brand-ink: #FCFCFD;       /* on gr-brand 8.5:1 */
-  --gr-brand-ink-2: #DCE3F6;     /* 6.8:1 */
-  --gr-brand-ink-3: #C4CFF0;     /* 5.6:1 */
-  --gr-danger: #F2877E;          /* form errors inside graphite chapters. 7.4:1 on gr-surface */
+  /* ---------- Chapter tones (build/lib/chapters.mjs) ----------
+     The home alternates white panels, open sky sections and one night band; the inner pages follow it:
+     white sheet = white panel, paper = open section on the sky, mat = white panel, graphite = night panel. */
+  --sheet-white: rgb(255 255 255);
+  --sheet-paper: #D3E1EE;
+  --sheet-mat: rgb(255 255 255);
+  --gr-bg: #0B1520;              /* Noche. Dark panels (the home's --night) */
+  --gr-surface: #13202E;
+  --gr-stage: #182838;
+  --gr-deep: #0B1520;
+  --gr-ink: #F5F8FB;             /* 17.7:1 on gr-bg */
+  --gr-ink-2: #C4CED8;           /* 11.5:1 */
+  --gr-ink-3: #A9B8C7;           /* 9.1:1 */
+  --gr-line: rgb(245 248 251 / 0.14); /* Decorative hairlines ONLY */
+  --gr-line-strong: #6B7F94;     /* Graphics on the night panel. 4.5:1 */
+  --gr-accent: #9CC3EA;          /* 10.0:1 on gr-bg */
+  --gr-accent-hover: #B8D4F0;
+  --gr-accent-soft: #16304D;
+  --gr-brand: #1F5F9E;
+  --gr-brand-hover: #184D82;
+  --gr-brand-ink: #FDFEFF;
+  --gr-brand-ink-2: #DCE7F3;
+  --gr-brand-ink-3: #C4D6EA;
+  --gr-danger: #F2877E;          /* form errors inside night panels. 7.4:1 */
   --gr-success: #7FCB9E;
-  --ch-hair-a: 0%;               /* alpha of the 1px hairline on the top edge of every chapter (24-chapters): none on light sheets, 14% ink in dark */
-  --chapter-y: clamp(72px, 7vw + 32px, 152px);
-  --chapter-num: clamp(6.5rem, 13vw, 15rem);
+
+  /* ---------- Panels (the home's --pad, --r-panel, --r-media) ---------- */
+  --pad: clamp(8px, 1.3vw, 18px);
+  --panel-gap: clamp(14px, 2vw, 24px);
+  --r-panel: clamp(22px, 2.6vw, 36px);
+  --r-media: clamp(14px, 1.6vw, 22px);
+  --r-card: 18px;
+  --chapter-y: clamp(56px, 8vw, 120px);
 
   /* ---------- Type ---------- */
-  --font-sans: "Archivo", "Archivo Text Fallback", system-ui, sans-serif;
-  --font-display: "Archivo", "Archivo Display S Fallback", system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, "SFMono-Regular", monospace;
-  --stretch-display: 106%;       /* 118% from 1024px (hero H1, display) */
-  --stretch-h2: 112%;
-  --stretch-wordmark: 112%;      /* temporary text wordmark until the logo exists (BRAND-02) */
+  --font-sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif; /* h2, h3: the home's headings */
+  --font-serif: "Gloock", "Iowan Old Style", Georgia, serif;           /* h1: the home's title face */
+  --font-mono: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;  /* data keys and short labels: small sans, no mono face */
+  --stretch-display: 100%;
+  --stretch-h2: 100%;
+  --stretch-wordmark: 100%;
   --wght-body: 400;
-  --wght-ui: 560;
+  --wght-ui: 500;
   --wght-heading: 600;
-  --wght-display: 560;
-  --wght-mono: 450;
+  --wght-display: 600;
+  --wght-mono: 500;
 
-  --fs-meta: 0.8125rem;                                   /* 13px mono labels, captions */
+  --fs-meta: 0.8125rem;                                   /* 13px labels, captions */
   --fs-sm: 0.9375rem;                                     /* 15px */
   --fs-base: 1.0625rem;                                   /* 17px body */
-  --fs-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem);/* 18 -> 21 */
+  --fs-lead: clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem); /* 17 -> 20, the home's .lead */
   --fs-h4: 1.1875rem;                                     /* 19 */
-  --fs-h3: clamp(1.3125rem, 1.2rem + 0.5vw, 1.625rem);    /* 21 -> 26 */
-  --fs-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.75rem);      /* 28 -> 44 */
-  --fs-h1: clamp(2.125rem, 1.45rem + 2.9vw, 4rem);        /* 34 -> 64 */
-  --fs-display: clamp(2.5rem, 1.5rem + 4.3vw, 5.25rem);   /* 40 -> 84, statements of <=5 words */
+  --fs-h3: clamp(1.375rem, 1.15rem + 0.7vw, 1.875rem);    /* 22 -> 30 */
+  --fs-h2: clamp(2rem, 1.2rem + 3.2vw, 4.375rem);         /* 32 -> 70, the home's h2 */
+  --fs-h1: clamp(2.5rem, 1.4rem + 4.6vw, 5.5rem);         /* 40 -> 88, Gloock */
+  --fs-display: clamp(2.75rem, 1.5rem + 5vw, 6rem);
 
-  --lh-display: 1.04;
-  --lh-h2: 1.1;
-  --lh-h3: 1.2;
+  --lh-display: 1;
+  --lh-h2: 1.02;
+  --lh-h3: 1.1;
   --lh-body: 1.6;
-  --lh-lead: 1.5;
+  --lh-lead: 1.55;
   --lh-meta: 1.4;
 
-  --tracking-display: -0.022em;
-  --tracking-h2: -0.018em;
-  --tracking-h3: -0.01em;
-  --tracking-mono: 0.01em;
+  --tracking-display: 0;
+  --tracking-h2: -0.03em;
+  --tracking-h3: -0.02em;
+  --tracking-mono: 0;
 
   /* ---------- Space (4px base, 8pt rhythm) ---------- */
   --space-1: 4px;
@@ -170,26 +138,26 @@
   --space-10: 128px;
   --space-11: 160px;
 
-  --gutter: clamp(16px, 4vw, 48px);
-  --container: 1320px;
+  --gutter: clamp(20px, 5vw, 80px);
+  --container: 1400px;           /* 1240px of content (the home's --wrap) + the gutters */
   --measure: 66ch;
-  --section-y: clamp(64px, 6vw + 40px, 136px);
-  --header-h: 64px;
+  --section-y: clamp(56px, 8vw, 120px);
+  --header-h: 60px;
   --tap-min: 44px;
 
-  /* ---------- Shape: all-sharp system ---------- */
-  --radius-0: 0;    /* images, stage, sections, title blocks */
-  --radius-1: 2px;  /* buttons, inputs, chips, toggles, menus */
+  /* ---------- Shape ---------- */
+  --radius-0: var(--r-media);    /* images, stages, frames */
+  --radius-1: 14px;              /* inputs, chips, menus (buttons are pills, 30-components) */
 
-  /* ---------- Motion ---------- */
+  /* ---------- Motion (the home's curves) ---------- */
   --dur-press: 120ms;
-  --dur-hover: 180ms;
-  --dur-state: 260ms;
-  --dur-reveal: 480ms;
+  --dur-hover: 250ms;
+  --dur-state: 450ms;
+  --dur-reveal: 900ms;
   --dur-sequence: 900ms;
-  --stagger: 60ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --stagger: 90ms;
+  --ease-out: cubic-bezier(0.22, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.7, 0, 0.2, 1);
 
   /* ---------- Layers ---------- */
   --z-raised: 10;
@@ -201,80 +169,7 @@
 
   /* ---------- Focus ---------- */
   --focus-width: 2px;
-  --focus-offset: 2px;
-}
-
-@media (min-width: 1024px) {
-  :root {
-    --font-display: "Archivo", "Archivo Display L Fallback", system-ui, sans-serif;
-    --stretch-display: 118%;
-  }
-}
-
-/* ---------- Colour: light forced (toggle "Claro"): the default palette, native controls follow ---------- */
-:root[data-theme="light"] { color-scheme: light; }
-
-/* ---------- Colour: dark, system preference unless light is forced ---------- */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-bg: #0F1215;           /* ink 15.7:1 */
-    --color-surface: #161A1E;
-    --color-stage: #1B2025;
-    --color-ink: #E8EBEE;
-    --color-ink-2: #AEB5BD;        /* 9.1:1 on bg */
-    --color-ink-3: #8A929B;        /* 6.0:1 on bg, 5.2:1 on stage */
-    --color-line: #283038;
-    --color-line-strong: #66707B;  /* 3.7 bg / 3.5 surface / 3.3 stage */
-    --color-accent: #A2B3EA;       /* 8.5:1 on surface */
-    --color-accent-hover: #B8C5F2;
-    --color-on-accent: #0F1215;    /* 9.1:1 on accent */
-    --color-accent-soft: #1C2640;  /* ink 12.5:1, accent 7.3:1 */
-    --color-danger: #F2877E;       /* 7.1:1 on surface */
-    --color-success: #7FCB9E;      /* 9.1:1 on surface */
-    --color-scrim: rgb(5 7 9 / 0.64);
-    --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
-    --plan-invert: 0.91;
-    --sheet-white: #1B2026;        /* ink-3 5.2:1 */
-    --sheet-paper: #12161A;        /* ink-3 5.8:1; the plates on white sheets */
-    --sheet-mat: #232A31;          /* ink-3 4.6:1 */
-    --gr-bg: #07090B;
-    --gr-surface: #0B0E10;
-    --gr-stage: #101418;
-    --gr-deep: #030405;
-    --gr-line: #1C2329;
-    --ch-hair-a: 14%;
-  }
-}
-
-/* ---------- Colour: dark forced (toggle "Oscuro"): same values as the block above ---------- */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --color-bg: #0F1215;           /* ink 15.7:1 */
-  --color-surface: #161A1E;
-  --color-stage: #1B2025;
-  --color-ink: #E8EBEE;
-  --color-ink-2: #AEB5BD;        /* 9.1:1 on bg */
-  --color-ink-3: #8A929B;        /* 6.0:1 on bg, 5.2:1 on stage */
-  --color-line: #283038;
-  --color-line-strong: #66707B;  /* 3.7 bg / 3.5 surface / 3.3 stage */
-  --color-accent: #A2B3EA;       /* 8.5:1 on surface */
-  --color-accent-hover: #B8C5F2;
-  --color-on-accent: #0F1215;    /* 9.1:1 on accent */
-  --color-accent-soft: #1C2640;  /* ink 12.5:1, accent 7.3:1 */
-  --color-danger: #F2877E;       /* 7.1:1 on surface */
-  --color-success: #7FCB9E;      /* 9.1:1 on surface */
-  --color-scrim: rgb(5 7 9 / 0.64);
-  --shadow-pop: 0 0 0 1px var(--color-line), 0 16px 40px -16px rgb(5 7 9 / 0.7);
-  --plan-invert: 0.91;
-  --sheet-white: #1B2026;        /* ink-3 5.2:1 */
-  --sheet-paper: #12161A;        /* ink-3 5.8:1; the plates on white sheets */
-  --sheet-mat: #232A31;          /* ink-3 4.6:1 */
-  --gr-bg: #07090B;
-  --gr-surface: #0B0E10;
-  --gr-stage: #101418;
-  --gr-deep: #030405;
-  --gr-line: #1C2329;
-  --ch-hair-a: 14%;
+  --focus-offset: 3px;
 }
 
 /* ---------- Reduced motion: every duration collapses ---------- */

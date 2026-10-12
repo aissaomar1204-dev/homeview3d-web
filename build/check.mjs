@@ -1191,28 +1191,11 @@ if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'Datos registral
   const strip = (s) => s.replace(/\/\*[\s\S]*?\*\//g, '');
   const docsTokens = (() => { try { return fs.readFileSync(path.join(ROOT, 'docs', 'design', 'tokens.css'), 'utf8'); } catch { return null; } })();
   if (docsTokens !== tokensSrc) err('structure', 'docs/design/tokens.css', 'differs from src/css/00-tokens.css (they must stay identical)', B);
-  // Theme: the dark palette exists twice (system preference unless light is forced, and data-theme="dark"): same tokens, same values.
+  // Light only, like the new home (12-oct-2026): no dark palette, no theme toggle.
   const css = strip(tokensSrc);
-  const decls = (body) => [...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map(([, k, v]) => `${k}: ${v.trim()}`).sort();
-  const viaMedia = css.match(/@media \(prefers-color-scheme: dark\)\s*\{\s*:root:not\(\[data-theme="light"\]\)\s*\{([^}]*)\}/);
-  const viaAttr = css.match(/:root\[data-theme="dark"\]\s*\{([^}]*)\}/);
-  if (!viaMedia || !viaAttr) err('structure', 'src/css/00-tokens.css', 'dark palette must exist as @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { … } } and as :root[data-theme="dark"] { … }', B);
-  else {
-    const a = decls(viaMedia[1]), b = decls(viaAttr[1]);
-    const diff = [...a.filter((x) => !b.includes(x)), ...b.filter((x) => !a.includes(x))];
-    if (diff.length) err('structure', 'src/css/00-tokens.css', `the two dark palette blocks differ: ${diff.slice(0, 4).join(' | ')}`, B);
-    const light = decls((css.match(/:root\s*\{([^}]*)\}/) || [, ''])[1]).map((x) => x.split(':')[0]);
-    const missing = a.map((x) => x.split(':')[0]).filter((k) => !light.includes(k));
-    if (missing.length) err('structure', 'src/css/00-tokens.css', `dark tokens without a light value: ${missing.join(', ')}`, B);
-  }
-  // Other stylesheets read tokens; a media query of their own must not fire when the visitor forced light.
+  if (/prefers-color-scheme:\s*dark|data-theme/.test(css)) err('structure', 'src/css/00-tokens.css', 'the site is light only (like the home): no dark palette or data-theme blocks', B);
   for (const f of fs.readdirSync(path.join(ROOT, 'src', 'css')).filter((x) => x.endsWith('.css') && !/tokens/.test(x))) {
-    const s = strip(fs.readFileSync(path.join(ROOT, 'src', 'css', f), 'utf8'));
-    for (const m of s.matchAll(/@media\s*\(prefers-color-scheme:\s*dark\)\s*\{/g)) {
-      let depth = 1, i = m.index + m[0].length;
-      while (i < s.length && depth) { if (s[i] === '{') depth++; else if (s[i] === '}') depth--; i++; }
-      if (!/data-theme/.test(s.slice(m.index, i))) warn('structure', `src/css/${f}`, 'own prefers-color-scheme rule: it ignores the theme toggle (read a token, or scope it with :root:not([data-theme="light"]) and :root[data-theme="dark"]; see 00-tokens.css --plan-invert)', B);
-    }
+    if (/@media\s*\(prefers-color-scheme:\s*dark\)/.test(strip(fs.readFileSync(path.join(ROOT, 'src', 'css', f), 'utf8')))) warn('structure', `src/css/${f}`, 'prefers-color-scheme: dark rule in a light-only site', B);
   }
   // Brand files.
   const brandFile = (p) => { const f = distFile(p); return f ? fs.readFileSync(f) : null; };
@@ -1254,20 +1237,14 @@ if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'Datos registral
       for (const k of ['theme_color', 'background_color']) if (!bg || String(wm[k]).toLowerCase() !== bg.toLowerCase()) err('discovery', 'site.webmanifest', `${k} is ${wm[k]}, expected ${bg} (--color-bg)`, B);
     }
   } catch { /* reported by the manifest check */ }
-  // Every page: theme script before the CSS, theme-color per scheme, header logo, toggle, footer logo, branded OG.
+  // Every page: one theme-color and color-scheme light (like the home), header logo, footer logo, branded OG.
   for (const p of pages.values()) {
-    if (/<html\b[^>]*\sdata-layout="standalone"/.test(p.html)) continue; // own design without the theme toggle (build/templates/home.mjs)
-    const head = p.html.slice(0, p.html.indexOf('</head>'));
-    const inline = [...head.matchAll(/<script>([^<]*)<\/script>/g)].map((m) => m[1]).find((s) => /hv-theme/.test(s));
-    const firstCss = head.search(/<link\b[^>]*\brel="stylesheet"/);
-    if (!inline) err('structure', p.where, 'no inline theme script in <head> (the stored theme would flash)', B);
-    else if (firstCss >= 0 && head.indexOf(inline) > firstCss) err('structure', p.where, 'the theme script must come before the stylesheet (no flash)', B);
+    if (/<html\b[^>]*\sdata-layout="standalone"/.test(p.html)) continue; // own design (build/templates/home.mjs), checked on its own
     const tc = p.metas.filter((m) => m.a.name === 'theme-color');
-    if (tc.length !== 2 || tc.some((m) => !/^#[0-9a-f]{6}$/i.test(m.a.content || '') || !/prefers-color-scheme/.test(m.a.media || ''))) err('structure', p.where, 'needs two <meta name="theme-color"> (light and dark) with media and a hex colour', B);
-    // Light is the default theme: <html data-theme="light"> + <meta name="color-scheme" content="light"> (theme.js switches it).
-    if (!p.metas.some((m) => m.a.name === 'color-scheme' && /\blight\b/.test(m.a.content || ''))) err('structure', p.where, 'missing <meta name="color-scheme" content="light">', B);
-    if (!/<html[^>]*\sdata-theme="light"/.test(p.html || '')) err('structure', p.where, '<html> must default to data-theme="light"', B);
-    if (!/<header\b[^>]*\bsite-header\b/.test(p.html)) continue; // bare pages (embed): no header, footer or toggle
+    if (tc.length !== 1 || !/^#[0-9a-f]{6}$/i.test(tc[0].a.content || '')) err('structure', p.where, 'needs one <meta name="theme-color"> with a hex colour', B);
+    if (!p.metas.some((m) => m.a.name === 'color-scheme' && (m.a.content || '').trim() === 'light')) err('structure', p.where, 'missing <meta name="color-scheme" content="light">', B);
+    if (/<html[^>]*\sdata-theme=/.test(p.html || '') || /hv-theme|data-theme-toggle/.test(p.html || '')) err('structure', p.where, 'theme toggle leftovers (the site is light only)', B);
+    if (!/<header\b[^>]*\bsite-header\b/.test(p.html)) continue; // bare pages (embed): no header or footer
     const brand = p.html.match(/<a class="brand"[^>]*aria-label="([^"]+)"[^>]*>([\s\S]*?)<\/a>/);
     if (!brand) err('structure', p.where, 'header logo link missing (a.brand with aria-label)', B);
     else {
@@ -1275,14 +1252,6 @@ if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'Datos registral
       if (!/<svg class="hv-logo"[^>]*aria-hidden="true"[\s\S]*<g id="hv-logo">/.test(brand[2])) err('structure', p.where, 'header logo must be the inline SVG lockup (svg.hv-logo with g#hv-logo)', B);
     }
     if (!/<svg class="hv-logo site-footer__logo"[^>]*><use href="#hv-logo"\/><\/svg>/.test(p.html)) err('structure', p.where, 'footer logo (svg.site-footer__logo using #hv-logo) missing', B);
-    const btn = p.html.match(/<button\b[^>]*\bdata-theme-toggle\b[^>]*>/);
-    if (!btn) err('structure', p.where, 'theme toggle button missing', B);
-    else {
-      const a = parseAttrs(btn[0].slice(7, -1));
-      if (a.type !== 'button' || !a['aria-label']) err('structure', p.where, 'theme toggle needs type="button" and an aria-label', B);
-      if (String(a['data-l'] || '').split('|').length !== 3) err('structure', p.where, 'theme toggle data-l needs 3 labels joined with "|" (auto, light, dark)', B);
-    }
-    if (!/<script\b[^>]*\bsrc="\/assets\/js\/theme\.[0-9a-f]{8}\.js"[^>]*\bdefer\b/.test(p.html)) err('structure', p.where, 'deferred theme.js missing', B);
     if (p.indexable) {
       if (!p.ogImage || !/\/assets\/img\/og-brand\//.test(p.ogImage)) err('meta', p.where, `og:image is not the branded copy (${p.ogImage || 'none'}): run node scripts/brand.mjs`, B);
       for (const [sel, re] of [['icon .ico', /<link rel="icon" href="\/favicon\.ico"/], ['icon .svg', /<link rel="icon" href="\/favicon\.svg" type="image\/svg\+xml"/], ['apple-touch-icon', /<link rel="apple-touch-icon" href="\/apple-touch-icon\.png"/], ['manifest', /<link rel="manifest" href="\/site\.webmanifest"/]]) if (!re.test(p.html)) err('structure', p.where, `<link> for ${sel} missing`, B);
@@ -1326,7 +1295,7 @@ const OWNERS = {
   content: 'build/content/<id>.mjs, build/data/glossary.mjs',
   assets: 'scripts/images.mjs, build/generated/images.json, public/assets/*, public/models/*, build/data/villa.mjs (bytes)',
   geo: 'build/lib/{schema,markdown,machine}.mjs, build/check.mjs, scripts/design-lint.mjs, netlify.toml, netlify/*',
-  brand: 'scripts/brand.mjs, public/assets/brand/*, favicons, public/assets/img/og-brand/*, build/lib/layout.mjs (head, header, footer, theme toggle), src/css/00-tokens.css, 10-base.css, 20-layout.css, 59-theme-*.css',
+  brand: 'scripts/brand.mjs, public/assets/brand/*, favicons, public/assets/img/og-brand/*, build/lib/layout.mjs (head, header, footer), src/css/00-tokens.css, 10-base.css, 20-layout.css, 59-theme-*.css',
   launch: 'humans before launch: build/data/site.mjs, build/data/pricing.mjs (README.md, section 1)',
 };
 const pageByWhere = new Map([...pages.values()].map((p) => [p.where, p]));

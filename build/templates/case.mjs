@@ -2,7 +2,6 @@
    app (#visor, poster eager = LCP) in cols 6-12; on phones: H1, lead, then the stage. → cajetín → blocks → FAQ →
    related → CTA. */
 import { h1, hasImage, heroActions, heroAttrs } from '../lib/components.mjs';
-import { heroLegend } from '../lib/hero.mjs';
 import { standardPage, viewerModule } from '../lib/blocks.mjs';
 
 function viewerFallback(ctx) {
@@ -24,7 +23,7 @@ export default function render(ctx) {
   } else {
     app = viewerFallback(ctx);
   }
-  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.heroLead || p.lead)}</p>${heroActions(ctx, { service: 'maqueta', secondary: null })}${heroLegend(ctx)}</div>`;
+  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.heroLead || p.lead)}</p>${heroActions(ctx, { service: 'maqueta', secondary: null })}</div>`;
   const hero = `<section class="hero hero--text hero--case" id="visor"${heroAttrs(ctx)} aria-labelledby="titulo"><div class="wrap hero__grid">${text}<div class="hero__app">${app}</div></div></section>`;
   const { html } = standardPage(ctx, {
     hero,

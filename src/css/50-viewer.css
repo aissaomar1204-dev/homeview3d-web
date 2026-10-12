@@ -104,7 +104,7 @@
 /* ---------- Stage: the model rests on the band's table, no frame ---------- */
 /* The poster is a real capture at the stage's aspect (16:11, 4:5 in portrait phones), so the swap does not jump.
    Wider boxes stay matched too: poster and live model are both height-limited there. */
-.vw-stage { position: relative; aspect-ratio: 16 / 11; overflow: clip; }
+.vw-stage { position: relative; aspect-ratio: 16 / 11; overflow: clip; border-radius: var(--r-media); }
 @media (max-width: 767px) {
   /* Full-bleed and centred on phones, whatever the orientation or zoom (reflow). */
   .vw-stage { margin-inline: calc(-1 * var(--gutter)); max-height: 85svh; }

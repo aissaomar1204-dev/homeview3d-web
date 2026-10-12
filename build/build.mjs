@@ -151,7 +151,8 @@ const pub = assets.copyPublic();
 const css = assets.buildCss();
 const js = assets.buildJs();
 assets.loadImages(path.join(HERE, 'generated', 'images.json'));
-const fontPath = '/assets/fonts/archivo-var.woff2';
+// The page-title face of every page but the ES home (Gloock, the same file as the home: one download for the whole site).
+const fontPath = '/assets/home/fonts/gloock.woff2';
 const exists = (p) => fs.existsSync(path.join(ROOT, 'public', p));
 const pageAssets = {
   css: css.url,
@@ -164,7 +165,7 @@ const pageAssets = {
   manifest: !!machineMod,
   markdown: !!machineMod,
 };
-if (!pageAssets.font) warn(`! ${fontPath} not in public/: fonts fall back to the metric-matched system faces`);
+if (!pageAssets.font) warn(`! ${fontPath} not in public/: titles fall back to the system serif`);
 const themeColors = readThemeColors(path.join(ROOT, 'src', 'css', '00-tokens.css'));
 console.log(`  assets: ${pub.count} public file(s), css ${kb(css.bytes)} + modules ${css.modules.map((m) => `${m.name} ${kb(m.bytes)}`).join(', ') || 'none'}, js ${Object.entries(js).map(([k, v]) => `${k} ${kb(v.bytes)}`).join(', ') || 'none'}`);
 
@@ -332,15 +333,12 @@ function writePage(urlPath, html) {
   fs.writeFileSync(file, html);
 }
 
+/** The page background (--color-bg) for <meta name="theme-color">: light only, like the home. */
 function readThemeColors(file) {
-  const out = { light: '', dark: '' };
+  const out = { light: '' };
   try {
-    const src = fs.readFileSync(file, 'utf8');
-    const light = src.match(/--color-bg:\s*(#[0-9a-fA-F]{6})/);
-    const darkBlock = src.split(/prefers-color-scheme:\s*dark/)[1] || '';
-    const dark = darkBlock.match(/--color-bg:\s*(#[0-9a-fA-F]{6})/);
+    const light = fs.readFileSync(file, 'utf8').match(/--color-bg:\s*(#[0-9a-fA-F]{6})/);
     out.light = light ? light[1] : '';
-    out.dark = dark ? dark[1] : '';
   } catch { /* tokens missing */ }
   return out;
 }

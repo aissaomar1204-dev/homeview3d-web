@@ -1,7 +1,6 @@
-// Home (rulebook C5 blueprint, BUILD-SPEC §6). The hero, cajetín, eyebrows and form wrapper come from the
-// template; this file only feeds them. Block order is fixed by C5: compare → deliverables → process[despiece]
-// → viewer (#demo) → audiences → faq → contactForm (no pricing or calculator while prices are not public).
-// Every price, delivery time and villa figure is a token (build/data). No market statistics on this page.
+// Home (ES and EN): the developer showroom page. Its HTML lives in build/home/portada.html and portada.en.html
+// (build/templates/home.mjs); this file feeds their <head>, their FAQ (HTML and FAQPage JSON-LD, word for word) and the
+// Markdown mirror (index.md, llms.txt). No prices and no market statistics on this page.
 
 export default {
   id: 'home',
@@ -76,106 +75,68 @@ export default {
   },
 
   // ─────────────────────────────────────────────────────────────── EN
+  // The English home is the same developer showroom page (build/home/portada.en.html, the Spanish markup translated).
+  // This file feeds its <head>, its FAQ (HTML and FAQPage) and the Markdown mirror, like the Spanish entry.
   en: {
-    title: '3D visualisation studio for real estate in Spain | {{brand}}',
-    description: '{{brand}} turns a home’s 2D floor plan into a furnished 3D model, renders, web viewer and app-free AR. A fixed quote, delivered in {{delivery:maqueta}}.',
-    h1: 'From 2D floor plan to 3D, no photos',
-    // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
-    lead: '{{brand}}, a 3D visualisation studio based in Mijas, on the Costa del Sol: photoreal 3D model, web viewer and augmented reality from the property’s floor plan. In days.',
+    title: 'Virtual 3D showroom for new-build developers | {{brand}}',
+    description: '3D showrooms for developers of villas, detached houses and townhouses in Marbella, Benahavís and Estepona. Buyers pick a home and walk through it.',
+    h1: 'Virtual showroom',
+    lead: 'For new-build developers on the Costa del Sol. Your development, before it is built: your buyer picks a home, walks through it floor by floor and gets in touch. In one link with your brand.',
     breadcrumb: 'Home',
     facts: [
-      ['Input', 'One 2D floor plan, no photos or visit'],
-      ['Deliverables', '3D model, 4K renders, web viewer and AR'],
-      ['Turnaround', '{{delivery:maqueta}}'],
-      ['Price', 'A fixed written quote before work starts'],
-      ['Augmented reality', 'iPhone, iPad and Android, no app'],
-      ['Coverage', 'Costa del Sol, all of Spain and abroad'],
-      ['Languages', 'English and Spanish'],
+      ['Who it is for', 'New-build developers on the Costa del Sol'],
+      ['What it is', 'A web showroom with your brand, in one link'],
+      ['Includes', 'Masterplan, homes floor by floor, plans, rooms and 360° tours'],
+      ['What we need', 'Plans as PDF or DWG, specifications, location and logo'],
+      ['Developments', 'From one to five homes'],
+      ['Area', 'Marbella, Benahavís, Estepona and the rest of the Costa del Sol'],
+      ['Price', 'A proposal with a fixed price once we see your project'],
     ],
     blocks: [
       {
-        type: 'compare',
-        h2: 'From plan to 3D',
-        intro: 'Same camera, same scale: on the left, the plan redrawn from the model; on the right, the render. Drag to compare. All of it came from {{villa:input}}.',
+        type: 'prose',
+        h2: 'What your buyer sees',
+        body: 'Residencial Benahavís is a sample development, with fictitious homes, statuses and prices. It works the same on a computer, a tablet or a phone.\n\n1. **They pick a home.** The whole development from the air, with each home and its status: available, reserved or sold.\n2. **They go in floor by floor.** The house without its roof, from basement to roof terrace, with its fact sheet, floor areas and price.\n3. **They understand the plan.** Every floor with its rooms, drawn from your project data.\n4. **They picture living there.** Every room full screen. If it fits, they ask you to call them without leaving the house.',
       },
       {
-        type: 'plate',
-        images: [
-          { image: 'villa_interior_salon', alt: 'Living room of the villa at eye level, with a corner sofa and sliding panels towards the terrace. 3D render of the anonymised villa.', caption: 'Living room towards the terrace. 3D render of the anonymised villa.' },
-        ],
+        type: 'prose',
+        h2: 'Your buyer does not imagine the home. They walk through it',
+        body: 'Every showroom is built from the pieces your development needs, with your brand:\n\n- **Masterplan with availability**: every home with its status, up to date.\n- **The house floor by floor**: no roof, from basement to roof terrace.\n- **Fact sheets and plans**: floor areas, rooms and price.\n- **Rooms**: every space full screen.\n- **360° tours**: look around inside every room.\n- **Day and night**: the development in another light.',
       },
       {
-        type: 'deliverables',
-        h2: 'What do you get from a single floor plan?',
-        intro: 'We model the home once, and five consistent deliverables come out of that model: change the living-room floor and it changes in the [renders](@glosario#render), in the viewer and in augmented reality. The first four come with the [complete 3D model](@servicio-plano); virtual staging is added per room.',
+        type: 'prose',
+        h2: 'From your plans to a home you can walk through',
+        body: 'The house does not need to exist, and you do not need renders. From the project documents we build every home to its real dimensions and dress it in your finishes. We need:\n\n- **Plans** as PDF or DWG: floor plans, elevations and plot.\n- **Specifications**: floors, joinery, kitchen and bathrooms.\n- **Location**: the plot and its surroundings, with views, orientation and access.\n- **Your brand**: logo and colours, so the showroom is yours.',
       },
       {
-        type: 'process',
-        variant: 'despiece',
-        h2: 'How does a floor plan become a 3D model?',
-        intro: 'Five steps and {{delivery:maqueta}} from start to finish. The geometry is not made up by an AI: we build it to scale with Python scripts in Blender, and you review it before delivery. Tools, timings per stage and quality checks are in [our process, stage by stage](@como-funciona).',
+        type: 'prose',
+        h2: 'Everyone sends a PDF. You send the home',
+        body: 'Your buyer looks at ten developments at once and all ten arrive the same way: a brochure that is downloaded, opened once and forgotten. With {{brand}} you send a link that opens the development on their phone: they walk through it, pick a home and reply from inside.\n\n- **You sell before you build.** While there are only plans, a home you can walk through convinces more than a drawing. And the bank wants to see sales before it finances the build.\n- **You reach buyers abroad.** Many of your buyers live in another country and decide from a distance. The link travels by WhatsApp and email.\n- **Your agencies all show the same thing.** Every agent shares the same link, with your brand and availability up to date. Nobody shows an old version.',
       },
       {
-        type: 'viewer',
-        h2: 'The villa in 3D',
-        intro: 'This is the actual deliverable, not a video: the upper floor of a Costa del Sol villa, modelled from its floor plan. Orbit, zoom, tour its {{villa:rooms}} rooms or cut the walls at {{villa:cutHeight}} m in [cut-away mode](@glosario#modo-maqueta). The model weighs {{file:glb}} and only downloads when you tap. Figures and method are in the [case study](@caso-villa).',
+        type: 'prose',
+        h2: 'A sales tool for your sales team',
+        body: '- **In the sales office**: your sales team presents every home on a tablet, with up-to-date availability and price.\n- **In remote sales**: the same link reaches the international buyer by WhatsApp or email.\n- **At fairs and agencies**: a QR code on the stand or in the brochure opens the whole development.',
       },
       {
-        type: 'plate',
-        images: [
-          { image: 'villa_interior_dormitorio', alt: 'Main bedroom of the villa with a built-in headboard, bedside lamps and terrace access. 3D render of the anonymised villa.', caption: 'Main bedroom. 3D render of the anonymised villa.' },
-          { image: 'villa_interior_bano', alt: 'En-suite bathroom of the villa with a round freestanding tub and black porcelain tiles. 3D render of the anonymised villa.', caption: 'En-suite bathroom. 3D render of the anonymised villa.' },
-        ],
+        type: 'prose',
+        h2: 'Villas, townhouses or a whole gated community',
+        body: 'Developments of one to five homes in Marbella, Benahavís and Estepona. Inside the showroom, each one appears with its model, its floors and its rooms, with status and fact sheet. The images on this page are illustrative and the data are samples.',
       },
       {
-        type: 'audiences',
-        h2: 'Who is it for?',
-        intro: 'Estate agents with homes that do not sell on photos alone, and developers selling off-plan to buyers who are still in London, Amsterdam or Stockholm. Your buyer opens the same model on their phone, wherever they are. [See all our services](@servicios).\n\nWhere we work: we are based in Mijas, on the Costa del Sol ([3D rendering in Marbella](@zona-marbella)) and work remotely, with no site visit, across the Costa del Sol, the rest of Spain and abroad, at the same price and turnaround.',
-      },
-      { type: 'faq' },
-      {
-        type: 'contactForm',
-        h2: 'Get your demo: one room of your plan in 3D',
-        intro: 'Attach the floor plan or paste the listing link. We reply with a fixed price and turnaround and, if you like, one room modelled in 3D that you can open in augmented reality. Free, with no obligation. A real person replies.',
-        image: 'villa_interior_dormitorio',
-        imageAlt: 'Main bedroom of the villa with a built-in headboard, bedside lamps and terrace access. 3D render of the anonymised villa.',
-        imageCaption: 'Main bedroom. 3D render of the anonymised villa.',
+        type: 'prose',
+        h2: 'Send us the plan. We show you the home',
+        body: 'Tell us about your development and we prepare a demo with your own plans: the before and after of one of your homes. Write to {{email}}, on WhatsApp or call {{phone}}.',
       },
     ],
     faq: [
-      {
-        q: 'How much does it cost to turn a floor plan into a 3D model?',
-        a: 'It depends on floor area, the number of floors and what you need: a 3D floor plan, or the complete 3D model with renders, a web viewer and augmented reality. {{brand}} sends you a fixed written quote as soon as it sees the plan, with the turnaround. What each option includes is on [floor plan to 3D model](@servicio-plano); how we quote, on our [pricing page](@precios).',
-      },
-      {
-        q: 'How quickly will I get the 3D model?',
-        a: '{{brand}} delivers the complete 3D model in {{delivery:maqueta}} and a 3D floor plan in {{delivery:plano3d}}. The clock starts once we have the plan and one reference measurement, and it includes the rounds of changes if you send them within 24 hours. Rush delivery in 48 hours is quoted separately, when the schedule allows.',
-      },
-      {
-        q: 'What do you need from me: a plan, photos, measurements?',
-        a: 'The floor plan as a PDF, JPG or PNG (or a DWG if you have one) plus one reference measurement, such as the total floor area. With that, {{brand}} models the home to scale without a site visit. Photos of finishes and a furniture style are optional: they sharpen the result. Attach the plan to the form on this page or paste the listing link.',
-      },
-      {
-        q: 'How accurate is the model if the plan has no dimensions?',
-        a: 'As accurate as the plan. Without dimensions, {{brand}} measures from the plan’s scale or from one reference measurement, so floor areas are approximate (≈), as in our demo villa. With a dimensioned plan or a DWG, the model follows the measurements. We say so in every delivery, so your listing never promises exact square metres.',
-      },
-      {
-        q: 'Do buyers need an app to see the home in augmented reality?',
-        a: 'No. On iPhone and iPad it opens in [AR Quick Look](@glosario#ar-quick-look) from Safari; on Android it opens in [Scene Viewer](@glosario#scene-viewer) on ARCore-compatible phones. One tap and the home appears on the table at 1:20 or at real size. A computer cannot show augmented reality, so {{brand}} shows a QR code to open it on a phone.',
-      },
-      {
-        q: 'Where can I show the model: my website, portals, WhatsApp?',
-        a: 'On your website, with an embed code for the viewer; by link, on WhatsApp or by email; and through a QR code in the window or on a brochure. The renders are images you can upload to any portal. {{brand}} does not promise an embedded viewer inside idealista, Rightmove or Kyero, which decide which tour providers they accept; where a portal takes a tour link, ours works.',
-      },
-      {
-        q: 'How many rounds of changes are included?',
-        a: 'The complete 3D model includes {{revisions:maqueta}} and the 3D floor plan {{revisions:plano3d}}. Because {{brand}} builds each model with scripts, swapping a floor, a piece of furniture or moving a partition is rebuilt in minutes and updates the renders, the viewer and the AR at once. If the layout changes after delivery, we quote before touching anything.',
-      },
-      {
-        q: 'What do you do with my floor plan? Is it confidential?',
-        a: 'Your plan is used for your project only. {{brand}} does not publish it or show the result as an example without your written permission, and we handle your data under the GDPR. If you are a developer and need one, we sign a non-disclosure agreement before receiving the plans. Our own demo case is anonymised for the same reason.',
-      },
+      { q: 'What do you need from my development?', a: 'The plans as PDF or DWG, the specifications, the location of the plot and your logo. If you have renders or finish references, they help too.' },
+      { q: 'What kind of developments is it for?', a: 'For new-build villas, detached and semi-detached houses and townhouses on the Costa del Sol. We start with developments of one to five homes; if yours is larger, tell us about it.' },
+      { q: 'Does my buyer have to install anything?', a: 'No. The showroom opens in the browser of a phone, tablet or computer, from a link or a QR code.' },
+      { q: 'Can my agencies use it?', a: 'Yes. They all share the same link, with your brand, so every buyer sees the same development, whoever shows it.' },
+      { q: 'How much does it cost?', a: 'It depends on the number of homes and the pieces it includes. Once we see your project we send you a proposal with a fixed price.' },
+      { q: 'Is Residencial Benahavís a real development?', a: 'No. It is a fictitious development we created to show how a showroom works. Its homes, statuses and prices are samples.' },
     ],
-    related: ['servicios', 'caso-villa', 'precios', 'como-funciona'],
+    related: ['sol-promotoras', 'servicios', 'contacto'],
   },
 };

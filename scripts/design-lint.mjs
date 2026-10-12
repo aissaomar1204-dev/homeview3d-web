@@ -33,12 +33,12 @@ try { SHARED = { ...SHARED, ...(await import('../build/lib/machine.mjs')).BUDGET
 const BUDGET = {
   htmlKB: SHARED.htmlRawKB, htmlBrotliKB: SHARED.htmlBrotliKB, brotliQuality: SHARED.brotliQuality,
   cssSharedKB: SHARED.cssSharedKB, cssPageKB: SHARED.cssPageKB, cssBlockingMax: SHARED.cssBlockingMax,
-  // fontFiles 4 while the new home (Gloock, Hanken Grotesk) and the other pages (Archivo, Geist Mono) coexist.
-  initialJsKB: SHARED.initialJsKB, fontFiles: 4, fontKB: 60, lcpImageKB: SHARED.lcpImageTargetKB, backdropFilters: 1,
+  // fontFiles 2: Gloock and Hanken Grotesk, the faces of the new home, now on every page.
+  initialJsKB: SHARED.initialJsKB, fontFiles: 2, fontKB: 60, lcpImageKB: SHARED.lcpImageTargetKB, backdropFilters: 1,
 };
 const CTA = {
-  es: ['Pide tu demo', 'Ver la villa en 3D', 'Ver en tu salón', 'Calcular precio', 'Enviar solicitud', 'Escribir por WhatsApp'],
-  en: ['Get your demo', 'View the villa in 3D', 'View in your room', 'Estimate price', 'Send request', 'Message on WhatsApp'],
+  es: ['Pide una demo', 'Ver la villa en 3D', 'Ver en tu salón', 'Calcular precio', 'Enviar solicitud', 'Escribir por WhatsApp'],
+  en: ['Book a demo', 'View the villa in 3D', 'View in your room', 'Estimate price', 'Send request', 'Message on WhatsApp'],
 };
 const BANNED_WORDS = [
   /\belevat(e|es|ing)\b/i, /\bseamless(ly)?\b/i, /\bunleash/i, /\bnext-gen\b/i, /\brevolutioni[sz]e/i,

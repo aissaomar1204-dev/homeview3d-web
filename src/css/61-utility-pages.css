@@ -2,10 +2,10 @@
    ==========================================================================
    61-utility-pages · legal reading column, 404 links, thanks steps. Owner: ENGINE.
    ========================================================================== */
-/* Legal pages: see 57-inner.css (quiet chapters). */
+/* Legal pages: see 57-inner.css (quiet panels). */
 .page-404 .index__title { font: var(--wght-heading) var(--fs-h3) var(--font-sans); }
 
 /* Thanks: numbered next steps. */
 .page-thanks .steps { max-width: var(--measure); counter-reset: n; }
 .page-thanks .step { grid-template-columns: var(--space-6) minmax(0, 1fr); column-gap: var(--space-3); }
-.page-thanks .step::before { counter-increment: n; content: counter(n); padding-top: 0.3em; font-family: var(--font-mono); font-size: var(--fs-meta); color: var(--color-ink-3); }
+.page-thanks .step::before { counter-increment: n; content: counter(n); padding-top: 0.3em; font-weight: 600; color: var(--color-accent); }

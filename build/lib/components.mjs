@@ -5,7 +5,6 @@
    ═══════════════════════════════════════════════════════════════ */
 import { esc } from './md.mjs';
 import { chapter, noteTone } from './chapters.mjs';
-import { heroLegend } from './hero.mjs';
 
 /* ─── Primitives ──────────────────────────────────────────────── */
 
@@ -41,8 +40,11 @@ export function chapterBg(ctx, name, { widths = [800, 1200, 1600, 2400], max = 2
   return hasImage(ctx, name) ? `<div class="ch-bg" aria-hidden="true">${ctx.img(name, { alt: '', sizes: '100vw', widths, max })}</div>` : '';
 }
 
+/** The round arrow tile at the end of the home's primary buttons (decorative). */
+export const BTN_ARROW = '<span class="btn__ic" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3.5 10.5l7-7M5 3.5h5.5V9"/></svg></span>';
+
 export function btnPrimary(ctx, href, label) {
-  return `<a class="btn btn--primary" href="${esc(href)}">${esc(label)}</a>`;
+  return `<a class="btn btn--primary" href="${esc(href)}">${esc(label)}${BTN_ARROW}</a>`;
 }
 
 export function linkArrow(ctx, href, label, { icon = 'arrow', attrs = '' } = {}) {
@@ -106,25 +108,18 @@ export function heroActions(ctx, { service, secondary = 'villa' } = {}) {
   return `<p class="actions" data-hero-actions>${primary}${sec}</p>`;
 }
 
-/** Line drawing behind the hero copy, per template (CSS mask on the hero sheet, 24-chapters.css: data-d). Varies from page to page. */
-const HERO_DRAWING = {
-  service: 'iso', audience: 'plan', zone: 'sec', hub: 'iso', process: 'axo', pricing: 'sec', guide: 'axo', about: 'plan',
-  faq: 'sec', glossary: 'plan', contact: 'iso', thanks: 'sec', legal: 'sec', case: 'plan', notfound: 'plan',
-};
-/** Attributes of a hero that is the first chapter (a drafting sheet), or '' on a page without chapters. */
+/** Attributes of a hero that is the first chapter (open on the sky, like the home's first screen), or '' on a page without chapters. */
 export function heroAttrs(ctx) {
   if (!ctx.chapters) return '';
   noteTone(ctx, 'h');
-  return ` data-ch="h" data-d="${HERO_DRAWING[ctx.route.template] || 'plan'}"`;
+  return ' data-ch="h"';
 }
 
 /** Left-aligned text hero with an optional side figure (page.hero). */
 export function textHero(ctx, { actions = false, service, meta = '', figureSide = true, className = '' } = {}) {
   const p = ctx.page;
   const hero = figureSide && p.hero && p.hero.image ? p.hero : null;
-  // Legend (north arrow, scale bar, sheet id) under the copy on pages with chapters (not the quiet legal pages).
-  const leg = ctx.chapters && !ctx.chapters.quiet ? heroLegend(ctx) : '';
-  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p>${meta}${actions ? heroActions(ctx, { service }) : ''}${leg}</div>`;
+  const text = `<div class="hero__text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p>${meta}${actions ? heroActions(ctx, { service }) : ''}</div>`;
   const fig = hero ? `<figure class="hero__figure${isAlpha(ctx, hero.image) ? ' figure--stage' : ''}"><div class="figure__media">${ctx.img(hero.image, { alt: hero.alt ?? defaultAlt(ctx, hero.image), sizes: '(min-width: 1320px) 500px, (min-width: 1024px) 38vw, 100vw', eager: true, max: 1200 })}</div>${hero.caption ? `<figcaption>${ctx.mdInline(hero.caption)}</figcaption>` : ''}</figure>` : '';
   return `<section class="${cls('hero hero--text', hero && 'hero--figure', className)}"${heroAttrs(ctx)} aria-labelledby="titulo"><div class="wrap hero__grid">${text}${fig}</div></section>`;
 }
@@ -141,10 +136,11 @@ export function cajetin(ctx, facts, { date } = {}) {
     return m ? `${ctx.mdInline(m[1])}<span class="sr-only">${m[2]} </span><span class="cajetin__detail">${ctx.mdInline(m[3])}</span>` : ctx.mdInline(v);
   };
   const cells = facts.map(([k, v]) => `<div class="cajetin__cell"><dt>${ctx.mdInline(k)}</dt><dd>${value(v)}</dd></div>`).join('');
-  if (ctx.chapters) noteTone(ctx, 'k');
+  // An open section on the sky right under the hero: the facts sit on a white card (24-chapters.css).
+  if (ctx.chapters) noteTone(ctx, 'p');
   const d = date || ctx.doc?.dateModified;
   const rev = d ? `<span class="cajetin__rev">${esc(ctx.t('date.revised'))} <time datetime="${esc(d)}">${esc(ctx.fmtDate(d))}</time></span>` : '';
-  return `<section class="cajetin-band"${ctx.chapters ? ' data-ch="k"' : ''} aria-label="${esc(ctx.t('cajetin.label'))}"><div class="wrap"><div class="cajetin cajetin--n${n}" data-reveal="line"><p class="cajetin__head"><span>${esc(ctx.t('cajetin.head'))}</span>${rev}</p><dl class="cajetin__grid">${cells}</dl></div></div></section>`;
+  return `<section class="cajetin-band"${ctx.chapters ? ' data-ch="p"' : ''} aria-label="${esc(ctx.t('cajetin.label'))}"><div class="wrap"><div class="cajetin cajetin--n${n}" data-reveal="line"><p class="cajetin__head"><span>${esc(ctx.t('cajetin.head'))}</span>${rev}</p><dl class="cajetin__grid">${cells}</dl></div></div></section>`;
 }
 
 /* ─── Tables (GEO-03) ─────────────────────────────────────────── */
@@ -565,7 +561,7 @@ export function contactForm(ctx, block = {}, { alternatives = true } = {}) {
     + `<div class="form__row">${text('email', { type: 'email', autocomplete: 'email', inputmode: 'email', spell: false, required: true })}${text('tel', { type: 'tel', autocomplete: 'tel', inputmode: 'tel' })}</div>`
     + plano + enlace + mensaje + origen + rgpd
     + `<p class="form__status" data-form-status role="status" aria-live="polite"></p>`
-    + `<p class="form__submit"><button type="submit" class="btn btn--primary" data-submit>${esc(ctx.t('cta.send'))}</button><button type="button" class="link-back" data-back hidden>${f('back')}</button></p>`
+    + `<p class="form__submit"><button type="submit" class="btn btn--primary" data-submit>${esc(ctx.t('cta.send'))}${BTN_ARROW}</button><button type="button" class="link-back" data-back hidden>${f('back')}</button></p>`
     + `<p class="form__privacy">${f('privacy')}</p>`
     + `</fieldset></form>`;
 

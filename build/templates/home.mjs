@@ -1,23 +1,17 @@
-/* Home.
-   ES (/): the developer showroom home (new design). A page of its own, with its own header, footer, CSS and JS
-   (public/assets/home/), written in build/home/portada.html: the 'standalone' layout only adds the shared <head>
-   (title, description, robots, canonical, hreflang, OG, JSON-LD) and ships the body as is. Contact data, legal links and
-   the FAQ come from build/data/site.mjs, build/data/routes.mjs and build/content/home.mjs, like on every other page.
-   EN (/en/): the previous home until the new one has an English version.
-   Previous home (rulebook C5, BUILD-SPEC §6): hero → cajetín → blocks → FAQ → form (the form is the end).
-   Hero "El plano se vuelve 3D" (build/lib/hero.mjs + src/js/hero.js): text column on the left, on the right a drawing
-   sheet that bleeds to the viewport edge. A 2D line plan becomes the furnished 3D maqueta; dimension lines (cotas)
-   and rulers follow the model. The served HTML is the FINAL state (still + final cotas); JS upgrades it to the
-   animation unless reduced motion, Save-Data or a slow connection say otherwise. */
+/* Home (ES / and EN /en/): the developer showroom home (new design, 12-oct-2026). A page of its own, with its own header,
+   footer, CSS and JS (public/assets/home/), written in build/home/portada.html (ES) and build/home/portada.en.html (EN,
+   the same markup translated): the 'standalone' layout only adds the shared <head> (title, description, robots,
+   canonical, hreflang, OG, JSON-LD) and ships the body as is. Contact data, legal links and the FAQ come from
+   build/data/site.mjs, build/data/routes.mjs and build/content/home.mjs, like on every other page.
+   The Spanish home is the one published from web/sitio and is NOT modified here: portada.html, estilos.css and main.js
+   stay as they are. The English JS is main.js with its Spanish strings swapped at build time (JS_EN below).
+   The other pages of the site (the SEO) share the same look through src/css, with their own header and footer. */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { h1, btnPrimary, linkArrow, contactHref, cajetin, faqSection, contactForm } from '../lib/components.mjs';
-import { renderBlocks } from '../lib/blocks.mjs';
-import { heroStage, heroBoot, heroLegend } from '../lib/hero.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const PORTADA = path.join(HERE, '..', 'home', 'portada.html');
+const PORTADA = { es: path.join(HERE, '..', 'home', 'portada.html'), en: path.join(HERE, '..', 'home', 'portada.en.html') };
 const STYLES = path.join(HERE, '..', 'home', 'estilos.css');
 // Every /assets/home/… reference resolves to its fingerprinted file (build/lib/assets.mjs copyPublic).
 const HOME_ASSET = /\/assets\/home\/[\w./-]+/g;
@@ -32,7 +26,14 @@ const HEAD = '<meta name="theme-color" content="#d3e1ee">'
   + '<link rel="stylesheet" href="STYLESHEET">'
   + "<script>document.documentElement.classList.add(window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'still' : 'motion');</script>";
 
-const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const MONTHS = {
+  es: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'],
+  en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+};
+const OG_ALT = {
+  es: 'Showroom virtual 3D de una promoción de obra nueva en la Costa del Sol',
+  en: 'Virtual 3D showroom of a new-build development on the Costa del Sol',
+};
 
 /** build/home/estilos.css with its url(../fonts|img/…) pointing to the fingerprinted files, written once per build. */
 let stylesheet = null;
@@ -45,6 +46,40 @@ function homeStylesheet(ctx) {
 }
 
 const FAQ_ICON = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+
+// Variables inserted as HTML (already escaped where needed); every other one is escaped.
+const RAW = new Set(['faq', 'actualizado']);
+
+// The strings main.js writes into the page (menu label, room names, captions), in English. Each Spanish string must be
+// found in main.js: if the home's JS changes, the build fails here instead of shipping Spanish on /en/.
+const JS_EN = [
+  ["'Cerrar el menú'", "'Close the menu'"],
+  ["'Abrir el menú'", "'Open the menu'"],
+  ["['Salón, comedor y cocina', 'Planta baja'], ['Dormitorio principal', 'Planta 1'], ['Baño suite', 'Planta 1'], ['Azotea', 'Azotea'], ['Zona de bienestar', 'Sótano']]",
+    "['Living room, dining room and kitchen', 'Ground floor'], ['Main bedroom', 'First floor'], ['Suite bathroom', 'First floor'], ['Roof terrace', 'Roof terrace'], ['Wellness area', 'Basement']]"],
+  ["'Casa 5 · '", "'House 5 · '"],
+  ["'La promoción entera desde el aire. Tu comprador ve qué casas quedan y cuál le encaja.'", "'The whole development from the air. Your buyer sees which homes are left and which one suits them.'"],
+  ["'Cada planta en 3D, para entender la distribución sin saber leer un plano.'", "'Every floor in 3D, to understand the layout without reading a plan.'"],
+  ["'La ficha de cada vivienda y el plano de cada planta, con los datos de tu proyecto.'", "'The fact sheet of every home and the plan of every floor, with your project data.'"],
+  ["'Salón, cocina, dormitorios y terrazas, cada uno situado en su planta.'", "'Living room, kitchen, bedrooms and terraces, each one on its floor.'"],
+  ["'Tu comprador se mete en la estancia y mira alrededor con el dedo o el ratón.'", "'Your buyer steps into the room and looks around with a finger or the mouse.'"],
+  ["'El masterplan y los jardines de día y de noche, con un toque.'", "'The masterplan and the gardens by day and by night, with one tap.'"],
+];
+const MAIN_JS = path.join(HERE, '..', '..', 'public', 'assets', 'home', 'js', 'main.js');
+let scriptEn = null;
+/** The home's script for a language: main.js as is in Spanish, /assets/js/portada-en.js (emitted once per build) in English. */
+function homeScript(ctx) {
+  if (ctx.lang === 'es') return ctx.asset('/assets/home/js/main.js');
+  if (scriptEn) return scriptEn;
+  let js = fs.readFileSync(MAIN_JS, 'utf8');
+  for (const [from, to] of JS_EN) {
+    if (!js.includes(from)) throw new Error(`home: main.js no longer contains ${from.slice(0, 60)} (update JS_EN in build/templates/home.mjs)`);
+    js = js.split(from).join(to);
+  }
+  scriptEn = ctx.emitAsset('/assets/js/portada-en.js', js);
+  if (!scriptEn) throw new Error('home: the English script could not be written (ctx.emitAsset)');
+  return scriptEn;
+}
 
 function portada(ctx) {
   const p = ctx.page;
@@ -67,43 +102,26 @@ function portada(ctx) {
   const mod = ctx.doc.dateModified;
   if (mod) {
     const [y, m, d] = mod.split('-').map(Number);
-    vars.actualizado = `<time datetime="${mod}">${d} de ${MONTHS[m - 1]} de ${y}</time>`;
+    vars.actualizado = `<time datetime="${mod}">${ctx.lang === 'es' ? `${d} de ${MONTHS.es[m - 1]} de ${y}` : `${d} ${MONTHS.en[m - 1]} ${y}`}</time>`;
   }
-  const html = fs.readFileSync(PORTADA, 'utf8').replace(/\{\{(href:)?([\w-]+)\}\}/g, (m, isHref, key) => {
+  const html = fs.readFileSync(PORTADA[ctx.lang], 'utf8').replace(/\{\{(href:)?([\w-]+)\}\}/g, (m, isHref, key) => {
     if (isHref) {
       if (!ctx.has(key)) throw new Error(`portada.html: page "${key}" is not built in ${ctx.lang}`);
       return esc(ctx.href(key));
     }
     if (!(key in vars)) throw new Error(`portada.html: unknown variable {{${key}}}`);
-    return key === 'faq' || key === 'actualizado' ? vars[key] : esc(vars[key]);
+    return RAW.has(key) ? vars[key] : esc(vars[key]);
   }).replace(HOME_ASSET, (p) => ctx.asset(p));
   return {
-    main: `${html}<script src="${ctx.asset('/assets/home/js/main.js')}" defer></script>`,
+    main: `${html}<script src="${homeScript(ctx)}" defer></script>`,
     layout: 'standalone',
     head: HEAD.replace(HOME_ASSET, (p) => ctx.asset(p)).replace('STYLESHEET', homeStylesheet(ctx)),
     bodyClass: 'page-home',
-    og: { url: ctx.asset('/assets/home/og-homeview3d.jpg'), width: 1200, height: 630, alt: 'Showroom virtual 3D de una promoción de obra nueva en la Costa del Sol' },
+    og: { url: ctx.asset('/assets/home/og-homeview3d.jpg'), width: 1200, height: 630, alt: OG_ALT[ctx.lang] },
   };
 }
 
 export default function render(ctx) {
-  if (ctx.lang === 'es') return portada(ctx);
-  // The home is a drawing set: every block is a chapter with a tone (build/lib/chapters.mjs).
-  ctx.chapters = {};
-  const p = ctx.page;
-  const blocks = p.blocks || [];
-  const hasDemo = blocks.some((b) => b.type === 'viewer');
-  const villaHref = hasDemo ? '#demo' : (ctx.has('caso-villa') ? ctx.href('caso-villa', 'visor') : null);
-  const secondary = villaHref ? linkArrow(ctx, villaHref, ctx.t('cta.villa'), { icon: hasDemo ? 'arrowDown' : 'arrow' }) : '';
-  const hero = `<section class="hero hero--seq" data-ch="h" aria-labelledby="titulo"><div class="hs-grid">`
-    + `<div class="hero__text hs-text">${h1(ctx, p.h1)}<p class="lead">${ctx.mdInline(p.lead)}</p><p class="actions" data-hero-actions>${btnPrimary(ctx, contactHref(ctx, 'maqueta'), ctx.t('cta.demo'))}${secondary}</p>${heroLegend(ctx)}</div>`
-    + `${heroStage(ctx)}${heroBoot()}`
-    + `</div></section>`;
-  const state = {};
-  const body = renderBlocks(ctx, blocks, {
-    state, service: 'maqueta', // no eyebrows: the chapter index rows do their job
-  });
-  const faq = !state.faqPlaced && p.faq && p.faq.length ? faqSection(ctx, p.faq, { openCount: 1 }) : '';
-  const form = state.formPlaced ? '' : contactForm(ctx, { service: 'maqueta' });
-  return { main: hero + cajetin(ctx, p.facts) + body + faq + form, bodyClass: 'page-home' };
+  if (!PORTADA[ctx.lang]) throw new Error(`home: no portada for "${ctx.lang}"`);
+  return portada(ctx);
 }

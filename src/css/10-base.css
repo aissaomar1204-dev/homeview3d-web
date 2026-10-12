@@ -19,6 +19,7 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
+  text-rendering: optimizeLegibility;
   font: var(--wght-body) var(--fs-base) / var(--lh-body) var(--font-sans);
   background: var(--color-bg);
   color: var(--color-ink);
@@ -44,30 +45,37 @@ strong { font-weight: var(--wght-heading); }
 a { color: inherit; text-decoration-thickness: 1px; text-decoration-color: var(--color-line-strong); text-underline-offset: 0.22em; }
 /* Feedback: link hover shifts to the accent (COLOR-02). */
 @media (hover: hover) and (pointer: fine) {
-  a, .theme-btn { transition: color var(--dur-hover) var(--ease-out); }
-  a:hover, .theme-btn:hover { color: var(--color-accent); text-decoration-color: currentColor; }
+  a { transition: color var(--dur-hover) var(--ease-out); }
+  a:hover { color: var(--color-accent); text-decoration-color: currentColor; }
 }
 
 /* Focus (A11Y-03): outline, never box-shadow, so it survives forced colors. */
-:focus-visible { outline: var(--focus-width) solid var(--color-accent); outline-offset: var(--focus-offset); }
+:focus-visible { outline: var(--focus-width) solid var(--color-accent); outline-offset: var(--focus-offset); border-radius: 6px; }
 .main:focus:not(:focus-visible) { outline: none; }
 
-/* ---------- Type roles (B2) ---------- */
-h1, h2, .h1 {
+/* ---------- Type roles: the home's (Gloock page title, Hanken Grotesk headings and text) ---------- */
+h1, .h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+}
+h1.h1--long { font-size: clamp(2.25rem, 1.3rem + 3.6vw, 4.5rem); line-height: 1.04; }
+h2 {
   font-family: var(--font-display);
   font-weight: var(--wght-display);
   font-size: var(--fs-h2);
-  font-stretch: var(--stretch-h2);
   line-height: var(--lh-h2);
   letter-spacing: var(--tracking-h2);
 }
-h1:not(.h1--long) { font-size: var(--fs-h1); font-stretch: var(--stretch-display); line-height: var(--lh-display); letter-spacing: var(--tracking-display); }
 h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--tracking-h3); }
-.lead { font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--color-ink-2); max-width: 48ch; }
+h4 { letter-spacing: -0.01em; }
+.lead { font-size: var(--fs-lead); line-height: var(--lh-lead); color: var(--color-ink-2); max-width: 46ch; }
 .lead strong { color: var(--color-ink); }
 .num, .table td, .cajetin dd, .specs dd { font-variant-numeric: tabular-nums lining-nums; }
 
-/* Mono is for measurements, data keys and short labels only (TYPE-09). */
+/* Data keys and short labels: small text in the sans face (the old mono roles). */
 .eyebrow, .mono, .cajetin__head, .cajetin dt, .cota, .table caption, .step__time, .compare__hint, .compare__labels,
 .despiece__legend, .bento__formats, .bento__soon span, .pack__flag, .pack__meta dt, .calc__total-label, .form__progress,
 .alt__k, .specs dt, .toc__title, .az__title, .az__letters, .byline, .dateline, .footer-col__title, .site-footer__contact dt,
@@ -75,7 +83,6 @@ h3 { font-size: var(--fs-h3); line-height: var(--lh-h3); letter-spacing: var(--t
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   font-weight: var(--wght-mono);
-  font-stretch: 100%;
   line-height: var(--lh-meta);
   letter-spacing: var(--tracking-mono);
 }
@@ -105,14 +112,15 @@ figcaption, .field__hint, .form__privacy, .calc__note, .pricing__vat, .table__no
   stroke-linejoin: round;
 }
 
-/* Skip link (A11Y-01) */
+/* Skip link (A11Y-01): the home's pill */
 .skip {
   position: fixed;
-  top: var(--space-2);
-  left: var(--space-4);
+  top: var(--space-3);
+  left: var(--space-3);
   z-index: var(--z-skip);
-  padding: var(--space-3) var(--space-4);
-  background: var(--color-accent);
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--color-cta);
   color: var(--color-on-accent);
   font-weight: var(--wght-ui);
   text-decoration: none;
@@ -121,7 +129,6 @@ figcaption, .field__hint, .form__privacy, .calc__note, .pricing__vat, .table__no
 .skip:focus { transform: none; }
 
 /* ---------- Preferences (A11Y-12) ---------- */
-/* :root:root ties the dark palette blocks in 00-tokens.css (0,2,0) and wins on source order. */
 @media (prefers-contrast: more) {
   :root:root { --color-line: var(--color-line-strong); --color-ink-3: var(--color-ink-2); }
 }

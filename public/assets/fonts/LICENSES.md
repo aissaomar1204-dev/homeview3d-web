@@ -1,15 +1,13 @@
 # Font licences
 
-Both web fonts in this folder are distributed under the **SIL Open Font License, Version 1.1** (OFL-1.1).
-Neither font declares a Reserved Font Name, so the modified (instanced + subset) files keep their original
-family names. The copyright and licence strings are kept inside each woff2 (`name` table).
+Both web fonts of the site (Gloock and Hanken Grotesk, in `/assets/home/fonts/`, the faces of every page since 12-oct-2026) are
+distributed under the **SIL Open Font License, Version 1.1** (OFL-1.1), as the licence URL inside each file says.
+The copyright and licence strings are kept inside each woff2 (`name` table), copied below.
 
-| File | Font | Copyright | Source | Modifications |
-|---|---|---|---|---|
-| `archivo-var.woff2` | Archivo (variable) | Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo) | `ofl/archivo/Archivo[wdth,wght].ttf` from github.com/google/fonts | Axes limited to wdth 100-125 and wght 400-650; subset to the Spanish/English glyph set; converted to WOFF2 |
-| `geist-mono-var.woff2` | Geist Mono (variable) | Copyright 2024 The Geist Project Authors (https://github.com/vercel/geist-font.git) | `ofl/geistmono/GeistMono[wght].ttf` from github.com/google/fonts | Axis limited to wght 400-500; subset to the Spanish/English glyph set; converted to WOFF2 |
-
-Rebuild: `python scripts/fonts/build-fonts.py` (recipe: `docs/design/DESIGN-RULEBOOK.md`, Appendix 1).
+| File | Font | Copyright (from the file) |
+|---|---|---|
+| `gloock.woff2` | Gloock 400, version 1.000 | Copyright 2022 The Gloock Project Authors (https://github.com/duartp/gloock) |
+| `hanken-grotesk.woff2` | Hanken Grotesk, variable weight, version 3.013 | Copyright 2021 The Hanken Grotesk Project Authors (https://github.com/marcologous/hanken-grotesk) |
 
 ---
 

@@ -31,16 +31,8 @@ const es = {
     close: 'Cerrar',
     sheetLabel: 'Menú del sitio',
   },
-  // Theme toggle (header button, cycles automático → claro → oscuro). One string per current state: it names the
-  // mode and the next action (aria-label and tooltip) and is also what the live region announces after a click.
-  // Joined with "|" in the button's data-l attribute, so no string may contain "|".
-  theme: {
-    auto: 'Tema: automático, según tu dispositivo. Cambiar a claro',
-    light: 'Tema: claro. Cambiar a oscuro',
-    dark: 'Tema: oscuro. Cambiar a automático',
-  },
   cta: {
-    demo: 'Pide tu demo',
+    demo: 'Pide una demo',
     villa: 'Ver la villa en 3D',
     ar: 'Ver en tu salón',
     estimate: 'Calcular precio',
@@ -321,7 +313,7 @@ const es = {
     phone: 'Teléfono',
     whatsapp: 'WhatsApp',
     base: 'Con base en Mijas (Málaga). Trabajamos en toda España y con agencias internacionales.',
-    rights: '© {year} {{brand}}. Todos los derechos reservados.',
+    rights: '© {year} {{legal:razonSocial}} · {{brand}} es su nombre comercial.',
     languageLabel: 'Idioma',
     faqLabel: 'Preguntas frecuentes',
     cut: "Sección A-A'",
@@ -394,13 +386,8 @@ const en = {
     close: 'Close',
     sheetLabel: 'Site menu',
   },
-  theme: {
-    auto: 'Theme: auto, follows your device. Switch to light',
-    light: 'Theme: light. Switch to dark',
-    dark: 'Theme: dark. Switch to auto',
-  },
   cta: {
-    demo: 'Get your demo',
+    demo: 'Book a demo',
     villa: 'View the villa in 3D',
     ar: 'View in your room',
     estimate: 'Estimate price',
@@ -680,7 +667,7 @@ const en = {
     phone: 'Phone',
     whatsapp: 'WhatsApp',
     base: 'Based in Mijas (Málaga). We work across Spain and with international agencies.',
-    rights: '© {year} {{brand}}. All rights reserved.',
+    rights: '© {year} {{legal:razonSocial}} · {{brand}} is its trading name.',
     languageLabel: 'Language',
     faqLabel: 'FAQ',
     cut: "Section A-A'",

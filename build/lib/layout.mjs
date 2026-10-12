@@ -1,16 +1,17 @@
 /* ═══════════════════════════════════════════════════════════════
    Layout (docs/build/BUILD-SPEC.md §4): <head>, header, breadcrumbs,
-   footer and the mobile bottom bar. Owner: ENGINE; brand and theme parts
-   (inline logo, favicons, branded OG, theme scripts and toggle): BRAND
-   (scripts/brand.mjs writes the assets this file reads).
+   footer. Owner: ENGINE; brand parts (inline logo,
+   favicons, branded OG): BRAND (scripts/brand.mjs writes the assets this file reads).
+   Header and footer follow the new home (build/home/portada.html): floating pill
+   with burger menu, footer on the sky with the company name.
    ═══════════════════════════════════════════════════════════════ */
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { esc } from './md.mjs';
 import { sprite } from './context.mjs';
-import { contactHref, formAnchor } from './components.mjs';
-import { modulesFor, minifyJs } from './assets.mjs';
+import { contactHref, BTN_ARROW } from './components.mjs';
+import { modulesFor } from './assets.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -18,58 +19,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 export const JS_FLAG_SCRIPT = "document.documentElement.classList.add('js')";
 export const meshoptScript = (url) => `self.ModelViewerElement = { meshoptDecoderLocation: '${url}' }`;
 
-/**
- * Theme, part 1: the inline head script, before the CSS, so the stored choice is on <html> before the first paint
- * (no flash). Light is the default: <html> ships with data-theme="light". 'hv-theme' holds 'dark' or 'auto'
- * ('auto' removes data-theme so the system preference decides, see 00-tokens.css); no key or 'light' = light. Storage is a per-visitor convenience: the access is inside try/catch and the page works without it.
- */
-export const THEME_HEAD_SCRIPT = "try{var t=localStorage.getItem('hv-theme'),r=document.documentElement;if(t==='dark')r.dataset.theme='dark';else if(t==='auto')delete r.dataset.theme}catch(e){}";
-
-/**
- * Theme, part 2: the toggle (deferred file, cached like every hashed asset, so the HTML carries only the tag).
- * Cycles light → dark → automatic, persists ('auto' is stored explicitly; no key means light), keeps <meta name="theme-color"> and
- * <meta name="color-scheme"> in step, updates the button's aria-label and tooltip (three strings joined with "|" in
- * data-l, from ui.mjs) and announces the new state in a polite live region it creates next to the button. Other tabs
- * follow through "storage".
- */
-export function themeToggleJs({ light = '#F4F5F6', dark = '#0F1215' } = {}) {
-  const src = `
-(function () {
-  var d = document, r = d.documentElement, K = 'hv-theme', C = { light: '${light}', dark: '${dark}' }, S = ['', 'light', 'dark'],
-    b = d.querySelector('[data-theme-toggle]'), o;
-  if (!b) return;
-  o = d.createElement('span');
-  o.className = 'sr-only';
-  o.setAttribute('role', 'status');
-  b.after(o);
-  function ok(v) { return S.indexOf(v) > 0 ? v : ''; }
-  function put(t, say) {
-    var m = d.querySelectorAll('meta[name=theme-color]'), c = d.querySelector('meta[name=color-scheme]'), l = b.dataset.l.split('|')[S.indexOf(t)], i;
-    if (t) r.dataset.theme = t; else delete r.dataset.theme;
-    for (i = 0; i < m.length; i++) m[i].content = C[t || (/dark/.test(m[i].getAttribute('media')) ? 'dark' : 'light')];
-    if (c) c.content = t || 'light dark';
-    b.setAttribute('aria-label', l);
-    b.title = l;
-    if (say) o.textContent = l;
-  }
-  put(ok(r.dataset.theme));
-  b.addEventListener('click', function () {
-    var n = S[(S.indexOf(ok(r.dataset.theme)) + 1) % 3];
-    try { localStorage.setItem(K, n || 'auto'); } catch (e) {}
-    put(n, 1);
-  });
-  addEventListener('storage', function (e) { if (e.key === K) put(e.newValue === 'auto' ? '' : e.newValue === 'dark' ? 'dark' : 'light'); });
-})();`;
-  return minifyJs(src).split('\n').join('');
-}
-
-/** Emits /assets/js/theme.<hash>.js once per build (same bytes, same URL) and returns its URL. */
-const themeJsUrl = new Map();
-function themeAsset(ctx, colors) {
-  const code = themeToggleJs(colors);
-  if (!themeJsUrl.has(code)) themeJsUrl.set(code, ctx.emitAsset('/assets/js/theme.js', code));
-  return themeJsUrl.get(code);
-}
+/* Light only, like the new home (build/home/estilos.css): no theme toggle, no stored theme, one theme-color. */
 
 /* ─── Brand: the inline lockup (build/generated/brand.json, written by scripts/brand.mjs) ─── */
 
@@ -77,26 +27,13 @@ let LOCKUP = null;
 try { LOCKUP = JSON.parse(fs.readFileSync(path.join(ROOT, 'build', 'generated', 'brand.json'), 'utf8')).horizontal; } catch { /* partial checkout: text wordmark */ }
 
 /**
- * Header logo: the outlined lockup as inline SVG so it follows the theme (ink and accent come from the tokens, see
+ * Header logo: the outlined lockup as inline SVG (ink and accent come from the tokens, see
  * .hv-logo in 20-layout.css). The group has an id so the footer can <use> it: the paths ship once per page.
  */
 function logoSvg() {
   return `<svg class="hv-logo" viewBox="${LOCKUP.viewBox}" aria-hidden="true" focusable="false"><g id="hv-logo"><path d="${LOCKUP.ink}"/><path class="hv-a" d="${LOCKUP.accent}"/></g></svg>`;
 }
 const footerLogo = () => `<svg class="hv-logo site-footer__logo" viewBox="${LOCKUP.viewBox}" aria-hidden="true" focusable="false"><use href="#hv-logo"/></svg>`;
-
-/* Theme toggle icons (256 grid, stroke style of the site's icon set): half disc = auto, sun = light, moon = dark. Only the
-   group of the current state is shown (CSS on html[data-theme], 20-layout.css). */
-const THEME_ICON = '<svg class="icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false">'
-  + '<g class="ic-a"><circle cx="128" cy="128" r="92"/><path d="M128 36a92 92 0 0 1 0 184z" fill="currentColor"/></g>'
-  + '<g class="ic-l"><circle cx="128" cy="128" r="44"/><path d="M128 52V28M128 204v24M52 128H28M204 128h24M74 74L57 57M182 74l17-17M74 182l-17 17M182 182l17 17"/></g>'
-  + '<g class="ic-d"><path d="M224 136A96 96 0 1 1 120 32a75 75 0 0 0 104 104z"/></g></svg>';
-
-/** The toggle button (visible only with JS, see html:not(.js) in 20-layout.css). Its polite live region is added by theme.js. */
-function themeButton(ctx) {
-  const labels = ['auto', 'light', 'dark'].map((k) => ctx.t(`theme.${k}`));
-  return `<button type="button" class="theme-btn" data-theme-toggle aria-label="${esc(labels[1])}" data-l="${esc(labels.join('|'))}">${THEME_ICON}</button>`;
-}
 
 const ROBOTS_INDEX = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 const ROBOTS_NOINDEX = 'noindex, follow';
@@ -144,13 +81,15 @@ export function header(ctx) {
   const home = ctx.href('home');
   const brand = ctx.site.brand;
   const logo = LOCKUP ? logoSvg() : `<span class="brand__word">${esc(brand.name)}</span>`;
-  const cta = `<a class="btn btn--primary btn--header" href="${esc(contactHref(ctx))}">${esc(ctx.t('cta.demo'))}</a>`;
-  return `<header class="site-header" data-header><div class="wrap site-header__bar">`
+  const cta = `<a class="btn btn--primary btn--header" href="${esc(contactHref(ctx))}">${esc(ctx.t('cta.demo'))}${BTN_ARROW}</a>`;
+  // The floating pill of the home (logo, links, «Pide una demo», burger). Below 1024px the nav becomes the full-screen
+  // menu of the home; main.js (data-menu / data-nav) opens it, traps focus and closes it with Escape.
+  return `<header class="site-header" data-header><div class="site-header__bar">`
     + `<a class="brand" href="${esc(home)}" aria-label="${esc(ctx.t('meta.homeLabel'))}">${logo}</a>`
     + `<nav class="site-nav" id="site-nav" aria-label="${esc(ctx.t('nav.label'))}" data-nav><ul class="site-nav__list" role="list">${items}</ul>`
-    + `<p class="site-nav__extra">${langLink(ctx, { className: 'lang-link lang-link--sheet', long: true })}<a class="btn btn--primary" href="${esc(contactHref(ctx))}">${esc(ctx.t('cta.demo'))}</a></p></nav>`
-    + `<div class="site-header__actions">${langLink(ctx)}${themeButton(ctx)}${cta}`
-    + `<button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" data-menu data-label-open="${esc(ctx.t('nav.menu'))}" data-label-close="${esc(ctx.t('nav.close'))}">${ctx.icon('menu', 'menu-btn__open')}${ctx.icon('close', 'menu-btn__close')}<span data-menu-label>${esc(ctx.t('nav.menu'))}</span></button>`
+    + `<p class="site-nav__extra">${langLink(ctx, { className: 'lang-link lang-link--sheet', long: true })}<a class="btn btn--primary" href="${esc(contactHref(ctx))}">${esc(ctx.t('cta.demo'))}${BTN_ARROW}</a></p></nav>`
+    + `<div class="site-header__actions">${langLink(ctx)}${cta}`
+    + `<button type="button" class="menu-btn" aria-expanded="false" aria-controls="site-nav" aria-label="${esc(ctx.t('nav.menu'))}" data-menu data-label-open="${esc(ctx.t('nav.menu'))}" data-label-close="${esc(ctx.t('nav.close'))}"><span></span><span></span></button>`
     + `</div></div></header>`;
 }
 
@@ -187,52 +126,44 @@ function col(ctx, title, ids, hub) {
   return links ? `<div class="footer-col"><h2 class="footer-col__title">${head}</h2><ul role="list">${links}</ul></div>` : '';
 }
 
-export function footer(ctx) {
-  const c = ctx.site.contact;
+/** The three link columns of the footer (services, solutions, studio). */
+function footerCols(ctx) {
   const L = ctx.lang;
-  const routes = ctx.data.routes;
-  const byTemplate = (t) => routes.filter((r) => r.template === t && r[L]).map((r) => r.id);
+  const byTemplate = (t) => ctx.data.routes.filter((r) => r.template === t && r[L]).map((r) => r.id);
   const studio = ['caso-villa', ...(ctx.has('zonas') ? ['zonas'] : byTemplate('zone')), 'guias', 'glosario', 'faq', 'sobre-nosotros', 'contacto'];
-  const cols = [
+  return [
     col(ctx, ctx.t('footer.services'), byTemplate('service'), 'servicios'),
     col(ctx, ctx.t('footer.solutions'), byTemplate('audience'), 'soluciones'),
     col(ctx, ctx.t('footer.studio'), studio),
   ].join('');
+}
+
+export function footer(ctx) {
+  const c = ctx.site.contact;
+  const L = ctx.lang;
+  const cols = footerCols(ctx);
   const legal = ['aviso-legal', 'privacidad', 'cookies'].filter((id) => ctx.has(id)).map((id) => `<li><a href="${esc(ctx.href(id))}">${esc(ctx.label(id))}</a></li>`).join('');
   const wa = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(ctx.t('cta.whatsappText'))}`;
   const year = new Date().getFullYear();
-  // The long section (villa-section-long.svg) stands on the ground line above the footer content; the brand name is the outlined masthead (data-w).
-  return `<footer class="site-footer" data-footer><div class="wrap">`
-    + `<div class="site-footer__cut" data-l="${esc(ctx.t('footer.cut'))}" aria-hidden="true"></div>`
-    + `<div class="site-footer__top" data-w="${esc(ctx.site.brand.name)}">`
-    + `<div class="site-footer__about">${LOCKUP ? footerLogo() : `<p class="brand__word brand__word--footer">${esc(ctx.site.brand.name)}</p>`}`
+  // Same footer as the home (build/home/portada.html, .foot): on the sky, logo and the entity line, contact, the link
+  // columns (inbound links to every hub and service) and the legal line with the company name.
+  return `<footer class="site-footer" data-footer><div class="site-footer__in">`
+    + `<div class="site-footer__top">`
+    + `<div class="site-footer__about"><a class="site-footer__home" href="${esc(ctx.href('home'))}" aria-label="${esc(ctx.t('meta.homeLabel'))}">${LOCKUP ? footerLogo() : `<span class="brand__word brand__word--footer">${esc(ctx.site.brand.name)}</span>`}</a>`
     + `<p class="site-footer__entity">${esc(ctx.tok(ctx.site.entity[L]))}</p>`
     + `<p class="site-footer__base">${esc(ctx.t('footer.base'))}</p>`
-    + `<dl class="site-footer__contact">`
-    + `<div><dt>${esc(ctx.t('footer.email'))}</dt><dd><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></dd></div>`
+    + `<ul class="site-footer__contact" role="list" aria-label="${esc(ctx.t('footer.contact'))}">`
+    + `<li><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></li>`
     // Phone and WhatsApp only with real contact data (V-02): no tel:/wa.me link to a placeholder number.
-    + (ctx.phoneLink ? `<div><dt>${esc(ctx.t('footer.phone'))}</dt><dd><a href="tel:${esc(c.phoneE164)}">${esc(c.phoneDisplay)}</a></dd></div>` : '')
-    + (ctx.directContact ? `<div><dt>${esc(ctx.t('footer.whatsapp'))}</dt><dd><a href="${esc(wa)}" rel="noopener">${esc(ctx.tok('{{whatsapp}}'))}</a></dd></div>` : '')
-    + `</dl></div>`
+    + (ctx.phoneLink ? `<li><a href="tel:${esc(c.phoneE164)}">${esc(c.phoneDisplay)}</a></li>` : '')
+    + (ctx.directContact ? `<li><a href="${esc(wa)}" rel="noopener">${esc(ctx.t('footer.whatsapp'))}</a></li>` : '')
+    + `</ul></div>`
     + `<div class="site-footer__cols">${cols}</div>`
     + `</div>`
     + `<div class="site-footer__bottom"><ul class="site-footer__legal" role="list" aria-label="${esc(ctx.t('footer.legal'))}">${legal}</ul>`
     + `<p class="site-footer__lang">${langLink(ctx, { className: 'lang-link lang-link--footer', long: true })}</p>`
     + `<p class="site-footer__rights">${esc(ctx.t('footer.rights', { year }))}</p></div>`
     + `</div></footer>`;
-}
-
-/* ─── Mobile bottom bar (COMP-06) ─────────────────────────────── */
-
-export function bottomBar(ctx) {
-  const onContact = ctx.route && ctx.route.id === 'contacto';
-  const demoHref = onContact ? `#${formAnchor(ctx)}` : contactHref(ctx);
-  // One line at every width: the visible label is "WhatsApp", the accessible name is the full COMP-03 label (it contains it).
-  // While the contact data are placeholders there is no WhatsApp action: the demo button takes the full width (V-02).
-  const wa = ctx.directContact
-    ? `<a class="btn btn--neutral" href="${esc(ctx.whatsappUrl())}" rel="noopener" aria-label="${esc(ctx.t('cta.whatsapp'))}">${ctx.icon('chat')}<span>${esc(ctx.t('cta.whatsappShort'))}</span></a>`
-    : '';
-  return `<div class="bottom-bar${wa ? '' : ' bottom-bar--solo'}" data-bottom-bar role="region" aria-label="${esc(ctx.t('cta.barLabel'))}"><a class="btn btn--primary" href="${esc(demoHref)}">${esc(ctx.t('cta.demo'))}</a>${wa}</div>`;
 }
 
 /* ─── Document ────────────────────────────────────────────────── */
@@ -254,7 +185,7 @@ function brandedOg(ctx, og) {
 /**
  * @param ctx
  * @param o { main, layout: 'default'|'bare'|'standalone', head, bodyClass, entry, graph, assets: { css, js: { main, viewer }, font, meshopt,
- *            favicons: { ico, svg, apple }, manifest: bool, markdown: bool }, themeColors: { light, dark }, placeholders, dateline }
+ *            favicons: { ico, svg, apple }, manifest: bool, markdown: bool }, themeColors: { light }, placeholders, dateline }
  *          'standalone': `main` is the whole <body> (own header, footer, CSS and JS, see build/templates/home.mjs) and `head`
  *          replaces the site stylesheet, scripts and theme meta; the SEO head (meta, canonical, hreflang, OG, JSON-LD) stays.
  */
@@ -323,17 +254,14 @@ export function renderDocument(ctx, o) {
     // X/Twitter reads og:title, og:description and og:image when its own tags are absent: only the card type is needed.
     + `<meta name="twitter:card" content="summary_large_image">`
     + (standalone ? (o.head || '') + `<meta name="color-scheme" content="light">` + `<meta name="format-detection" content="telephone=no">` + icons + mdAlt + ld
-      : `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${o.themeColors.light}">`
-      + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.light}">`
+      : `<meta name="theme-color" content="${o.themeColors.light}">`
       + `<meta name="color-scheme" content="light">`
-      + `<script>${THEME_HEAD_SCRIPT}</script>`
       + `<meta name="format-detection" content="telephone=no">`
       + (A.font ? `<link rel="preload" href="${esc(A.font)}" as="font" type="font/woff2" crossorigin>` : '')
       + styles
       + icons + mdAlt + feed
       + `<script>${JS_FLAG_SCRIPT}</script>`
       + ld
-      + (o.layout !== 'bare' ? `<script src="${esc(themeAsset(ctx, o.themeColors))}" defer></script>` : '')
       + (A.js.main ? `<script src="${esc(A.js.main)}" defer></script>` : '')
       + viewerScripts
       + analytics);
@@ -353,9 +281,8 @@ export function renderDocument(ctx, o) {
       + header(ctx)
       + crumbs
       + `<main id="main" class="main" tabindex="-1">${o.main}${o.dateline || ''}</main>`
-      + footer(ctx)
-      + (utility ? '' : bottomBar(ctx));
+      + footer(ctx);
   }
   body = sprite(body) + body;
-  return `<!doctype html><html lang="${L}" dir="ltr" data-theme="light"><head>${headHtml}</head><body class="${esc(bodyClass)}">${body}</body></html>\n`;
+  return `<!doctype html><html lang="${L}" dir="ltr"><head>${headHtml}</head><body class="${esc(bodyClass)}">${body}</body></html>\n`;
 }

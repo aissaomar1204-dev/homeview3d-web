@@ -6,6 +6,7 @@
 
 /* ---------- Steps ---------- */
 .step { display: grid; gap: var(--space-2); padding-block: var(--space-5); border-top: 1px solid var(--color-line); }
+.step__title { font-size: clamp(1.375rem, 1.1rem + .8vw, 1.75rem); line-height: 1.15; letter-spacing: -0.02em; }
 .step:last-child { border-bottom: 1px solid var(--color-line); }
 .step__body { max-width: 60ch; color: var(--color-ink-2); }
 .steps--compact .step { padding-block: var(--space-4); }
@@ -28,8 +29,8 @@
   .reveal-ready [data-reveal]:not([data-reveal="line"]) { transition: opacity var(--dur-reveal) var(--ease-out), transform var(--dur-reveal) var(--ease-out); transition-delay: calc(var(--i, 0) * var(--stagger)); }
   .reveal-ready [data-reveal]:not([data-reveal="line"], .is-in) { opacity: 0; transform: translateY(12px); }
   /* Storytelling: dimension lines draw from the left, then their label appears. */
-  .reveal-ready [data-reveal="line"] .cajetin__head::after, .reveal-ready .cota[data-reveal]::before { transition: transform var(--dur-reveal) var(--ease-out); }
-  .reveal-ready [data-reveal="line"]:not(.is-in) .cajetin__head::after, .reveal-ready .cota[data-reveal]:not(.is-in)::before { transform: scaleX(0); }
+  .reveal-ready .cota[data-reveal]::before { transition: transform var(--dur-reveal) var(--ease-out); }
+  .reveal-ready .cota[data-reveal]:not(.is-in)::before { transform: scaleX(0); }
   .reveal-ready .cota[data-reveal] .cota__label { transition: opacity var(--dur-hover) var(--ease-out) var(--dur-reveal); }
   .reveal-ready .cota[data-reveal]:not(.is-in) .cota__label { opacity: 0; }
 }
