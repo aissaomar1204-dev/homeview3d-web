@@ -1,8 +1,9 @@
 /* ═══════════════════════════════════════════════════════════════
    Site configuration: the ONLY place for brand, domain and contact.
    Anything marked `placeholder: true` blocks indexing (every page `noindex`).
-   `legal.pending: true` only warns: the company (AS TRINITY, S.L.) is being
-   constituted, so NIF and registry data are shown as «en trámite».
+   `legal.pending: true` only warns: AS TRINITY, S.L. is incorporated (deed of
+   5 October 2026, provisional NIF B05710421) and its entry in the Registro
+   Mercantil is in progress, so the registry data are shown as «en trámite».
    ═══════════════════════════════════════════════════════════════ */
 
 export const site = {
@@ -25,7 +26,7 @@ export const site = {
 
   // Contact. WhatsApp in international format without "+".
   contact: {
-    email: 'homeview3d.contacto@gmail.com',
+    email: 'info@homeview3d.com',
     phoneE164: '+34685494982',
     phoneDisplay: '+34 685 49 49 82',
     whatsapp: '34685494982',
@@ -46,14 +47,14 @@ export const site = {
     en: '{{brand}} is a 3D visualisation studio on the Costa del Sol that turns a home\'s 2D floor plan into a photorealistic, furnished 3D model, with renders, an interactive web viewer and app-free augmented reality, for estate agents, developers and architects across Spain.',
   },
 
-  // Legal data for aviso legal / privacidad (LSSI-CE art. 10).
-  // pending: true while the SL is being constituted (NIF and registry data not issued yet).
+  // Legal data for aviso legal / privacidad (LSSI-CE art. 10), from the deed of incorporation.
+  // pending: true until the Registro Mercantil entry exists (then: registro = tomo, folio, hoja and inscripción).
   legal: {
     razonSocial: 'AS TRINITY, S.L.',
-    nif: 'en trámite (sociedad en constitución)',
-    domicilio: 'Calle San Daniel 12, 29651 Mijas Costa (Málaga), España',
-    registro: 'Inscripción en el Registro Mercantil de Málaga en trámite',
-    email: 'homeview3d.contacto@gmail.com',
+    nif: 'B05710421',
+    domicilio: 'Calle San Daniel 12, piso 1, 29651 Mijas (Málaga), España',
+    registro: 'Sociedad constituida mediante escritura otorgada el 5 de octubre de 2026 ante el notario de Fuengirola D. Joaquín Almagro Anaya (n.º 2.667 de su protocolo). Inscripción en el Registro Mercantil de Málaga en trámite',
+    email: 'info@homeview3d.com',
     placeholder: false,
     pending: true,
   },

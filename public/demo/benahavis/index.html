@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Residencial Benahavís · Experiencia inmersiva</title>
+<meta name="description" content="Demo de visualización inmersiva: masterplan, vivienda con corte por plantas, planos y estancias a pantalla completa.">
+<link rel="stylesheet" href="estilos.css?v=0.1.4">
+</head>
+<body>
+<!-- Cabecera fija en todas las pantallas -->
+<header id="cab">
+  <button id="volver" class="ghost" aria-label="Volver" hidden><svg class="i"><use href="#i-atras"/></svg><span>Volver</span></button>
+  <div id="marca"><span id="marca-nombre">Residencial Benahavís</span><span id="marca-sub">Comunidad privada · 11 viviendas</span></div>
+  <span class="relleno"></span>
+  <button id="dianoche" class="redondo" aria-label="Cambiar entre día y noche"><svg class="i"><use id="dn-icono" href="#i-sol"/></svg></button>
+  <a id="tel" href="tel:+34600000000"><svg class="i"><use href="#i-tel"/></svg><span id="tel-txt">+34 600 000 000</span></a>
+  <button id="llamada" class="oro">Pedir llamada</button>
+</header>
+
+<main id="app">
+  <!-- 1. MASTERPLAN -->
+  <section id="p1" class="pantalla">
+    <div class="escenario" id="esc1">
+      <img id="aerea-dia" class="fondo" alt="Vista aérea de la urbanización" draggable="false">
+      <img id="aerea-noche" class="fondo noche-img" alt="" draggable="false">
+      <div id="pins1"></div>
+    </div>
+    <div class="panel-filtro" id="filtros"></div>
+    <div class="arriba-dcha"><button id="poi" class="redondo" aria-label="Puntos de interés"><svg class="i"><use href="#i-pin"/></svg></button></div>
+    <div id="pois"></div>
+    <div id="tarjeta" class="tarjeta" hidden></div>
+    <div class="pie-centro" id="pista1">Selecciona una vivienda</div>
+  </section>
+
+  <!-- 2. CASA -->
+  <section id="p2" class="pantalla" hidden>
+    <div class="escenario" id="esc2">
+      <img id="corte" class="fondo" alt="Vista cenital de la vivienda con corte por planta" draggable="false">
+      <div id="pins2"></div>
+    </div>
+    <aside class="panel izq" id="panel-casa">
+      <div id="axo" class="axo" aria-hidden="true"></div>
+      <div class="fila"><b id="c-nombre">Casa 4</b><span id="c-estado" class="insignia"></span></div>
+      <div id="c-datos" class="suave"></div>
+      <div id="c-precio" class="precio"></div>
+      <button id="ver-plano" class="oro bloque">Ver plano</button>
+      <button id="galeria" class="ghost bloque">Galería</button>
+    </aside>
+    <nav class="niveles dcha" id="niv2" aria-label="Plantas"></nav>
+  </section>
+
+  <!-- 3. PLANTAS Y FICHA -->
+  <section id="p3" class="pantalla" hidden>
+    <div class="escenario velado" id="esc3"><img id="fondo3" class="fondo" alt="" draggable="false"></div>
+    <div class="panel plano">
+      <nav class="niveles fila-niv" id="niv3" aria-label="Plantas"></nav>
+      <div id="plano" class="plano-caja"></div>
+      <div class="suave centro" id="plano-pie">Toca una estancia para ver su render</div>
+    </div>
+    <aside class="panel ficha" id="ficha">
+      <div class="fila"><b id="f-nombre">Casa 4</b><span id="f-estado" class="insignia"></span></div>
+      <div id="f-precio" class="precio"></div>
+      <dl class="datos" id="f-datos"></dl>
+      <div class="fila botones"><button id="ver-est" class="ghost">Ver estancias</button><button id="galeria2" class="ghost">Galería</button></div>
+      <div class="agente"><div class="avatar">AC</div><div><div id="ag-nombre">Agente comercial</div><div class="suave" id="ag-resp">Te llamamos en 15 min</div></div></div>
+      <label class="campo"><span class="sr">Tu teléfono</span><input id="f-tel" type="tel" inputmode="tel" placeholder="Tu teléfono" autocomplete="tel"></label>
+      <button id="f-llamada" class="oro bloque">Pedir llamada</button>
+    </aside>
+  </section>
+
+  <!-- 4. ESTANCIA -->
+  <section id="p4" class="pantalla" hidden>
+    <div class="escenario" id="esc4"><img id="est-img" class="fondo" alt="" draggable="false"></div>
+    <div class="titulo-est"><div id="e-nombre">Salón</div><div id="e-sub" class="suave"></div></div>
+    <button id="cerrar" class="redondo arriba-dcha-b" aria-label="Cerrar"><svg class="i"><use href="#i-x"/></svg></button>
+    <div id="miniaturas" class="miniaturas"></div>
+    <div class="minimapa panel"><div id="mini"></div></div>
+  </section>
+</main>
+
+<!-- Modales -->
+<div id="modal" class="modal" hidden><div class="modal-caja panel" role="dialog" aria-modal="true" aria-labelledby="m-titulo">
+  <button class="redondo cerrar-modal" data-cerrar aria-label="Cerrar"><svg class="i"><use href="#i-x"/></svg></button>
+  <h2 id="m-titulo">Pedir llamada</h2>
+  <p class="suave">Déjanos tu teléfono y un asesor te llama en unos minutos.</p>
+  <label class="campo"><span class="sr">Nombre</span><input id="m-nombre" type="text" placeholder="Nombre" autocomplete="name"></label>
+  <label class="campo"><span class="sr">Teléfono</span><input id="m-tel" type="tel" inputmode="tel" placeholder="Teléfono" autocomplete="tel"></label>
+  <button id="m-enviar" class="oro bloque">Enviar solicitud</button>
+  <p class="suave pequeno">Demostración: la solicitud no se envía a ningún sitio. Conecta <code>enviarSolicitud()</code> en <code>app.js</code> a tu CRM.</p>
+</div></div>
+<div id="lightbox" class="modal oscuro" hidden><button class="redondo cerrar-modal" data-cerrar aria-label="Cerrar"><svg class="i"><use href="#i-x"/></svg></button><div id="lb-grid" class="lb-grid"></div></div>
+<div id="aviso" class="aviso" role="status" hidden></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-sol" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-luna" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-atras" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11.5a7 7 0 0 0-14 0C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+</svg>
+
+<script src="data.js?v=0.1.4"></script>
+<script src="app.js?v=0.1.4"></script>
+</body>
+</html>

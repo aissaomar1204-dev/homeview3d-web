@@ -21,7 +21,7 @@ export default {
   id: 'privacidad',
   image: 'og_image',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Política de privacidad y protección de datos',
@@ -38,7 +38,7 @@ export default {
       {
         type: 'prose',
         h2: '¿Qué datos tratamos?',
-        body: 'Solo los que nos das y los mínimos para que la web funcione:\n\n- **Formulario de presupuesto**: tipo de cliente, servicio que te interesa, número de viviendas, nombre, empresa, email, teléfono, el plano o el enlace que adjuntes, tus comentarios y, si nos lo dices, cómo nos conociste.\n- **Origen de la visita**, que el formulario añade al enviarse: la página por la que entraste, la web de la que venías, los parámetros de campaña del enlace (utm), si los hay, y el idioma de la página.\n- **Mensajes** que nos envías por email, WhatsApp o teléfono.\n- **Datos del encargo**, si contratas: los de facturación y los archivos del proyecto.\n- **Datos técnicos de conexión**, como la dirección IP, el navegador y la página solicitada, que el servidor registra para servir la web y protegerla de abusos.\n\nLos planos pueden incluir datos de otras personas, como el nombre del propietario o la dirección de la vivienda. No los necesitamos para modelar: si puedes, tápalos antes de enviar el plano. Si nos los envías, confirmas que puedes compartirlos con nosotros para este fin.',
+        body: 'Solo los que nos das y los mínimos para que la web funcione:\n\n- **Formulario de presupuesto**: tipo de cliente, servicio que te interesa, número de viviendas, nombre, empresa, email, teléfono, el plano o el enlace que adjuntes, tus comentarios y, si nos lo dices, cómo nos conociste.\n- **Formulario de demo de la portada**: nombre, promotora, email, teléfono, ubicación de la promoción, número de viviendas y lo que nos cuentes del proyecto.\n- **Origen de la visita**, que el formulario de presupuesto añade al enviarse: la página por la que entraste, la web de la que venías, los parámetros de campaña del enlace (utm), si los hay, y el idioma de la página.\n- **Mensajes** que nos envías por email, WhatsApp o teléfono.\n- **Datos del encargo**, si contratas: los de facturación y los archivos del proyecto.\n- **Datos técnicos de conexión**, como la dirección IP, el navegador y la página solicitada, que el servidor registra para servir la web y protegerla de abusos.\n\nLos planos pueden incluir datos de otras personas, como el nombre del propietario o la dirección de la vivienda. No los necesitamos para modelar: si puedes, tápalos antes de enviar el plano. Si nos los envías, confirmas que puedes compartirlos con nosotros para este fin.',
       },
       {
         type: 'table',

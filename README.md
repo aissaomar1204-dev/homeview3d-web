@@ -11,6 +11,15 @@ estrategia GEO: `docs/research/04-geo-2026.md`.
 **Orden del lanzamiento:** §0 qué falta → §1 datos → §2 comprobación local → §3 Netlify → §4 formularios →
 §5 a §7 indexación → §8 y §9 presencia fuera de la web → §10 medición mensual.
 
+**Portada en español (desde el 12 de octubre de 2026):** `/` es la web nueva para promotoras de obra nueva (showroom
+virtual), traída de `web/sitio/` del repositorio `homeview3d`. Tiene su propio diseño y no usa las plantillas del
+resto de la web: el cuerpo está en `build/home/portada.html`, sus estilos en `build/home/estilos.css`, sus imágenes,
+fuentes y JS en `public/assets/home/` y la demo del showroom (Residencial Benahavís, ficticia y `noindex`) en
+`public/demo/`. `build/templates/home.mjs` la monta con el layout `standalone` de `build/lib/layout.mjs`, que solo
+añade el `<head>` común (title, description, canonical, hreflang, OG y JSON-LD). Contacto y enlaces legales salen de
+`build/data/site.mjs`; el título, la descripción, la FAQ y el espejo Markdown, de `build/content/home.mjs` (`es`). La
+portada en inglés (`/en/`) y el resto de páginas siguen con el diseño anterior hasta que se integren con el SEO.
+
 ---
 
 ## 0. Qué falta para lanzar
@@ -19,13 +28,14 @@ La web está construida; lo que falta para publicarla son sobre todo **decisione
 lista completa, para marcar punto por punto, está en
 [`docs/qa/content/CLIENT-CONFIRMATIONS.md`](docs/qa/content/CLIENT-CONFIRMATIONS.md).
 
-1. **Datos de la empresa:** el nombre (Home View 3D), el logotipo, el dominio (homeview3d.com), el contacto y la
-   sede (Mijas) ya están en `build/data/site.mjs` y sus `placeholder` están en `false`. **Queda un dato
-   provisional: el NIF y los datos registrales de AS TRINITY, S.L., sociedad en constitución** (`legal.pending:
+1. **Datos de la empresa:** el nombre (Home View 3D), el logotipo, el dominio (homeview3d.com), el contacto
+   (info@homeview3d.com) y la sede (Mijas) ya están en `build/data/site.mjs` y sus `placeholder` están en `false`.
+   AS TRINITY, S.L. está constituida (escritura del 5 de octubre de 2026, NIF B05710421, domicilio en Calle San
+   Daniel 12, Mijas) y el aviso legal y la política de privacidad ya lo muestran. **Queda un dato provisional: los
+   datos registrales**, porque la inscripción en el Registro Mercantil de Málaga está en trámite (`legal.pending:
    true`, §1.1). No bloquea el build ni el deploy, pero `npm run check` lo repite en la sección **LAUNCH**
-   («NIF y datos registrales en trámite») y el aviso legal y la política de privacidad dicen «en trámite» hasta que
-   se sustituya: en cuanto la sociedad esté inscrita, rellena `legal.nif` y `legal.registro`, pon
-   `legal.pending: false` y repasa el aviso legal.
+   («Datos registrales en trámite»): en cuanto la sociedad esté inscrita, pon tomo, folio, hoja e inscripción en
+   `legal.registro`, `legal.pending: false` y repasa el aviso legal.
 2. **Precios y condiciones:** precios, qué incluye cada pack, plazos y rondas, pago, demo gratis, alojamiento del
    visor, derechos de uso, atención, cobertura y uso de IA (CLIENT-CONFIRMATIONS §2 a §12). Se aplican en
    `build/data/pricing.mjs` (y las páginas que indica el documento); después, `confirmed: true` (§1.2).

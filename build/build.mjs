@@ -238,6 +238,8 @@ function renderPage(route, lang) {
 
   const imgName = doc.image || 'og_image';
   const ogUrl = assets.og(imgName) || assets.og('og_image') || assets.largest(imgName);
+  // A template may bring its own share image (the standalone home: public/assets/home/og-homeview3d.jpg).
+  const ogOwn = out.og && out.og.url ? { name: null, url: ctx.abs(out.og.url), width: out.og.width, height: out.og.height, alt: out.og.alt } : null;
   const images = [];
   const seen = new Set();
   for (const im of ctx.collect.images) {
@@ -247,7 +249,7 @@ function renderPage(route, lang) {
   }
 
   const entry = {
-    id: route.id, lang, template: route.template, path: route[lang], url: ctx.abs(route[lang]), index,
+    id: route.id, lang, template: route.template, layout, path: route[lang], url: ctx.abs(route[lang]), index,
     robots: robotsFor(index, placeholders), noindex: !index || placeholders,
     alternates,
     title,
@@ -257,7 +259,7 @@ function renderPage(route, lang) {
     facts: (page.facts || []).map(([k, v]) => [ctx.tok(k), ctx.tok(v)]),
     breadcrumbs: crumbTrail(ctx),
     parentId: route.parent || null,
-    image: { name: imgName, url: ogUrl ? ctx.abs(ogUrl) : null, width: 1200, height: 630, alt: page.hero && page.hero.image === imgName && page.hero.alt ? ctx.tok(page.hero.alt) : defaultAlt(ctx, imgName) },
+    image: ogOwn || { name: imgName, url: ogUrl ? ctx.abs(ogUrl) : null, width: 1200, height: 630, alt: page.hero && page.hero.image === imgName && page.hero.alt ? ctx.tok(page.hero.alt) : defaultAlt(ctx, imgName) },
     images,
     datePublished: doc.datePublished || null,
     dateModified: doc.dateModified || null,
@@ -288,12 +290,12 @@ function renderPage(route, lang) {
   // straight into the footer on one surface with a single hairline (D-22).
   // After a dark last chapter (home: the contact chapter) the date line continues that surface (data-on).
   // Pages with chapters (every template): the date line follows the LAST chapter, on its surface (dark → data-on, light → data-sheet).
-  const dl = index && layout !== 'bare' ? `<div class="wrap dateline-wrap"${DARK.has(lastTone(ctx)) ? ` data-on="${lastTone(ctx)}"` : ctx.chapters ? ' data-sheet' : ''}>${dateLine(ctx)}</div>` : '';
+  const dl = index && layout === 'default' ? `<div class="wrap dateline-wrap"${DARK.has(lastTone(ctx)) ? ` data-on="${lastTone(ctx)}"` : ctx.chapters ? ' data-sheet' : ''}>${dateLine(ctx)}</div>` : '';
   let body = main;
   const band = ctx.chapters ? -1 : main.lastIndexOf('<section class="block block--cta cta-band"');
   if (dl && band > -1 && !main.startsWith('<section class="block block--cta cta-band cta-band--inline"', band)) body = main.slice(0, band) + dl + main.slice(band);
   else body = main + dl;
-  const html = renderDocument(ctx, { main: body, layout, bodyClass: out.bodyClass, entry, graph, assets: pageAssets, themeColors, placeholders, dateline: '' });
+  const html = renderDocument(ctx, { main: body, layout, head: out.head, bodyClass: out.bodyClass, entry, graph, assets: pageAssets, themeColors, placeholders, dateline: '' });
   entry.html = html;
   entry.wordCount = countWords(stripTags((html.match(/<main[\s\S]*<\/main>/) || [''])[0]));
   writePage(route[lang], html);

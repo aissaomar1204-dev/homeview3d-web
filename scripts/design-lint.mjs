@@ -33,7 +33,8 @@ try { SHARED = { ...SHARED, ...(await import('../build/lib/machine.mjs')).BUDGET
 const BUDGET = {
   htmlKB: SHARED.htmlRawKB, htmlBrotliKB: SHARED.htmlBrotliKB, brotliQuality: SHARED.brotliQuality,
   cssSharedKB: SHARED.cssSharedKB, cssPageKB: SHARED.cssPageKB, cssBlockingMax: SHARED.cssBlockingMax,
-  initialJsKB: SHARED.initialJsKB, fontFiles: 3, fontKB: 60, lcpImageKB: SHARED.lcpImageTargetKB, backdropFilters: 1,
+  // fontFiles 4 while the new home (Gloock, Hanken Grotesk) and the other pages (Archivo, Geist Mono) coexist.
+  initialJsKB: SHARED.initialJsKB, fontFiles: 4, fontKB: 60, lcpImageKB: SHARED.lcpImageTargetKB, backdropFilters: 1,
 };
 const CTA = {
   es: ['Pide tu demo', 'Ver la villa en 3D', 'Ver en tu salón', 'Calcular precio', 'Enviar solicitud', 'Escribir por WhatsApp'],
@@ -113,7 +114,8 @@ const attrText = (html) => [
   ...[...html.matchAll(/<meta\b[^>]*\bcontent="([^"]*)"/gi)].map((m) => m[1]),
 ].join(' ');
 
-for (const f of files.filter((x) => x.endsWith('.html'))) {
+// /demo/ is the self-contained showroom demo, not a page of this site (build/check.mjs does the same).
+for (const f of files.filter((x) => x.endsWith('.html') && !path.relative(DIST, x).split(path.sep).join('/').startsWith('demo/'))) {
   const html = fs.readFileSync(f, 'utf8');
   const text = `${extractText(html, true)} ${attrText(html)}`;
   const visible = extractText(html, false);
@@ -277,7 +279,9 @@ if (fs.existsSync(SRC_CSS)) {
   }
 }
 
-for (const f of files.filter((x) => x.endsWith('.css'))) {
+// The new home (assets/home/) and the showroom demo (demo/) bring their own stylesheets, outside the drawing-set tokens.
+const ownDesign = (f) => /^(assets\/home|demo)\//.test(path.relative(DIST, f).split(path.sep).join('/'));
+for (const f of files.filter((x) => x.endsWith('.css') && !ownDesign(x))) {
   const css = fs.readFileSync(f, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
   if (/transition\s*:\s*all\b/i.test(css)) err(f, 'transition: all (list properties explicitly)');
   if (/outline\s*:\s*(none|0)\b/i.test(css) && !/:focus-visible/.test(css)) err(f, 'outline removed without :focus-visible replacement');

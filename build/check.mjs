@@ -134,7 +134,8 @@ const pathMap = new Map(); // url path → { id, lang, route }
 for (const r of routes) for (const l of site.langs) if (r[l]) pathMap.set(r[l], { id: r.id, lang: l, route: r });
 
 const allFiles = walk(DIST);
-const htmlFiles = allFiles.filter((f) => f.endsWith('.html'));
+// /demo/ is the self-contained showroom demo (Residencial Benahavís, noindex): its own HTML, CSS and JS, not a page of this site.
+const htmlFiles = allFiles.filter((f) => f.endsWith('.html') && !rel(f).startsWith('demo/'));
 const pages = new Map(); // url path → page
 for (const f of htmlFiles) {
   const r = `/${rel(f)}`;
@@ -1180,8 +1181,8 @@ for (const f of allFiles.filter((x) => /\.(html|md|txt|xml|json|webmanifest)$/.t
 for (const [label, h] of phHits) phFail('placeholders', 'dist', `${label}: ${h.n}× in ${h.files} file(s) (e.g. ${h.first})`);
 
 /* ═══ 14b. Brand and theme (owner: BRAND) ═════════════════════ */
-// LAUNCH warning: the company (AS TRINITY, S.L.) is in formation, so the legal notice says «en trámite».
-if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'NIF y datos registrales en trámite (legal.pending): cuando la sociedad esté inscrita, rellena legal.nif y legal.registro y pon legal.pending en false');
+// LAUNCH warning: AS TRINITY, S.L. is incorporated but not yet in the Registro Mercantil, so the legal notice says «en trámite».
+if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'Datos registrales en trámite (legal.pending): cuando la sociedad esté inscrita, pon tomo, folio, hoja e inscripción en legal.registro y legal.pending en false');
 {
   const B = 'brand';
   const tokensFile = path.join(ROOT, 'src', 'css', '00-tokens.css');
@@ -1254,6 +1255,7 @@ if (legalPending()) warn('placeholders', 'build/data/site.mjs', 'NIF y datos reg
   } catch { /* reported by the manifest check */ }
   // Every page: theme script before the CSS, theme-color per scheme, header logo, toggle, footer logo, branded OG.
   for (const p of pages.values()) {
+    if (/<html\b[^>]*\sdata-layout="standalone"/.test(p.html)) continue; // own design without the theme toggle (build/templates/home.mjs)
     const head = p.html.slice(0, p.html.indexOf('</head>'));
     const inline = [...head.matchAll(/<script>([^<]*)<\/script>/g)].map((m) => m[1]).find((s) => /hv-theme/.test(s));
     const firstCss = head.search(/<link\b[^>]*\brel="stylesheet"/);

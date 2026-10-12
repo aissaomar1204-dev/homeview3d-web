@@ -7,120 +7,72 @@ export default {
   id: 'home',
   image: 'og_image',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   // ─────────────────────────────────────────────────────────────── ES
+  // The Spanish home is the developer showroom page (build/templates/home.mjs + build/home/portada.html). The HTML lives
+  // in portada.html; this file feeds its <head>, its FAQ (HTML and FAQPage) and the Markdown mirror (index.md, llms).
   es: {
-    title: 'Estudio de visualización 3D inmobiliaria | {{brand}}',
-    description: '{{brand}} convierte el plano 2D de una vivienda en modelo 3D amueblado, renders, visor web y AR sin app. Desde {{price:maqueta}} + IVA, en {{delivery:maqueta}}.',
-    h1: 'Del plano 2D al modelo 3D, sin fotos',
-    // Hero subtext (rulebook LAYOUT-02 / COPY-05): entity + base first (SEO C-01), no price teaser; prices sit in the cajetín.
-    lead: '{{brand}}, estudio de visualización 3D en la Costa del Sol: modelo 3D fotorrealista, visor web y realidad aumentada a partir del plano de la vivienda. En días.',
+    title: 'Showroom virtual 3D para promotoras de obra nueva | {{brand}}',
+    description: 'Showrooms 3D para promotoras de villas, chalets y adosados en Marbella, Benahavís y Estepona. Tu comprador elige casa y la recorre antes de que exista.',
+    h1: 'Showroom virtual',
+    lead: 'Para promotoras de obra nueva en la Costa del Sol. Tu promoción, antes de construirla: tu comprador elige su casa, la recorre por plantas y te escribe. En un enlace con tu marca.',
     breadcrumb: 'Inicio',
     facts: [
-      ['Entrada', 'Un plano 2D, sin fotos ni visita'],
-      ['Entregas', 'Modelo 3D, renders 4K, visor web y AR'],
-      ['Plazo', '{{delivery:maqueta}}'],
-      ['Desde', '{{price:plano3d}} + IVA; maqueta completa, {{price:maqueta}}'],
-      ['Realidad aumentada', 'iPhone, iPad y Android, sin app'],
-      ['Zona', 'Costa del Sol y toda España'],
-      ['Idiomas', 'Español e inglés'],
+      ['Para quién', 'Promotoras de obra nueva en la Costa del Sol'],
+      ['Qué es', 'Un showroom web con tu marca, en un solo enlace'],
+      ['Incluye', 'Masterplan, casas por plantas, planos, estancias y visitas 360°'],
+      ['Qué necesitamos', 'Planos en PDF o DWG, memoria de calidades, ubicación y logo'],
+      ['Promociones', 'De una a cinco viviendas'],
+      ['Zona', 'Marbella, Benahavís, Estepona y el resto de la Costa del Sol'],
+      ['Precio', 'Propuesta con precio cerrado cuando vemos tu proyecto'],
     ],
     blocks: [
       {
-        type: 'compare',
-        h2: 'Del plano al 3D',
-        intro: 'Misma cámara, misma escala: a la izquierda, la planta redibujada desde el modelo; a la derecha, el render. Arrastra y compara. Todo salió de {{villa:input}}.',
+        type: 'prose',
+        h2: 'Así lo vive tu comprador',
+        body: 'Residencial Benahavís es una promoción de ejemplo, con casas, estados y precios ficticios. Funciona igual en el ordenador, la tablet o el móvil.\n\n1. **Elige su casa.** Toda la promoción desde el aire, con cada casa y su estado: disponible, reservada o vendida.\n2. **Entra por plantas.** La casa sin tejado, de sótano a azotea, con su ficha, sus metros y su precio.\n3. **Entiende el plano.** Cada planta con sus estancias, dibujada con los datos de tu proyecto.\n4. **Se imagina viviendo allí.** Cada estancia a pantalla completa. Si le encaja, te pide una llamada sin salir de la casa.',
       },
       {
-        type: 'plate',
-        images: [
-          { image: 'villa_interior_salon', alt: 'Salón de la villa a la altura de los ojos, con sofá rinconera y hojas correderas hacia la terraza. Render 3D de la villa anonimizada.', caption: 'Salón hacia la terraza. Render 3D de la villa anonimizada.' },
-        ],
+        type: 'prose',
+        h2: 'Tu comprador no imagina la casa. La recorre',
+        body: 'Cada showroom se arma con las piezas que necesita tu promoción y lleva tu marca:\n\n- **Masterplan con disponibilidad**: cada casa con su estado, al día.\n- **La casa por plantas**: sin tejado, de sótano a azotea.\n- **Fichas y planos**: metros, estancias y precio.\n- **Estancias**: cada espacio a pantalla completa.\n- **Visitas 360°**: mirar alrededor dentro de cada estancia.\n- **De día y de noche**: la promoción con otra luz.',
       },
       {
-        type: 'deliverables',
-        h2: '¿Qué recibes a partir de un solo plano?',
-        intro: 'Modelamos la vivienda una vez y de ese modelo salen cinco entregables coherentes entre sí: si cambias el suelo del salón, cambia en los [renders](@glosario#render), en el visor y en la realidad aumentada. Los cuatro primeros van en la [maqueta 3D completa](@servicio-plano); el home staging virtual se añade por estancia.',
+        type: 'prose',
+        h2: 'De tus planos a una casa que se recorre',
+        body: 'No hace falta que la casa exista, ni renders previos. Con la documentación del proyecto levantamos cada vivienda con sus medidas reales y la vestimos con tus acabados. Necesitamos:\n\n- **Planos** en PDF o DWG: plantas, alzados y parcela.\n- **Memoria de calidades**: suelos, carpinterías, cocina y baños.\n- **Ubicación**: la parcela y su entorno, con vistas, orientación y accesos.\n- **Tu marca**: logo y colores, para que el showroom sea tuyo.',
       },
       {
-        type: 'process',
-        variant: 'despiece',
-        h2: '¿Cómo se convierte un plano en un modelo 3D?',
-        intro: 'Cinco pasos y {{delivery:maqueta}} de principio a fin. La geometría no la inventa una IA: la levantamos con scripts de Python en Blender, a escala, y la revisas antes de la entrega. Herramientas, plazos por fase y control de calidad, en [el proceso completo, fase a fase](@como-funciona).',
+        type: 'prose',
+        h2: 'Todos mandan un PDF. Tú mandas la casa',
+        body: 'Tu comprador mira diez promociones a la vez y las diez le llegan igual: un dossier que se descarga, se abre una vez y se olvida. Con {{brand}} mandas un enlace que abre la promoción en su móvil: la recorre, elige casa y te contesta desde dentro.\n\n- **Vendes antes de construir.** Mientras solo hay planos, una casa que se puede recorrer convence más que una lámina. Y el banco quiere ver ventas antes de financiar la obra.\n- **Llegas a quien compra desde fuera.** Buena parte de tus compradores vive en otro país y decide a distancia. El enlace viaja por WhatsApp y por email.\n- **Tus agencias enseñan lo mismo.** Cada agente comparte el mismo enlace, con tu marca y la disponibilidad al día. Nadie enseña una versión antigua.',
       },
       {
-        type: 'viewer',
-        h2: 'La villa en 3D',
-        intro: 'Es el entregable real, no un vídeo: la planta alta de una villa en la Costa del Sol, modelada desde su plano. Gira, acércate, recorre sus {{villa:rooms}} estancias o corta los muros a {{villa:cutHeight}} m con el [modo maqueta](@glosario#modo-maqueta). El modelo pesa {{file:glb}} y solo se descarga si pulsas. Cifras y método, en el [caso demostrativo](@caso-villa).',
+        type: 'prose',
+        h2: 'Una herramienta de venta para tu equipo comercial',
+        body: '- **En la sala de ventas**: tus comerciales presentan cada vivienda en una tablet, con su disponibilidad y su precio al día.\n- **En la venta a distancia**: el mismo enlace llega al comprador internacional por WhatsApp o por email.\n- **En ferias y agencias**: un código QR en el stand o en el folleto abre la promoción completa.',
       },
       {
-        type: 'plate',
-        images: [
-          { image: 'villa_interior_dormitorio', alt: 'Dormitorio principal de la villa con cabecero de obra, mesillas con lámparas y salida a la terraza. Render 3D de la villa anonimizada.', caption: 'Dormitorio principal. Render 3D de la villa anonimizada.' },
-          { image: 'villa_interior_bano', alt: 'Baño en suite de la villa con bañera exenta redonda y porcelánico negro. Render 3D de la villa anonimizada.', caption: 'Baño en suite. Render 3D de la villa anonimizada.' },
-        ],
+        type: 'prose',
+        h2: 'Villas, adosados o una urbanización entera',
+        body: 'Promociones de una a cinco viviendas en Marbella, Benahavís y Estepona. Dentro del showroom, cada una se ve con su maqueta, sus plantas y sus estancias, con su estado y su ficha. Las imágenes de esta página son ilustrativas y los datos, de ejemplo.',
       },
       {
-        type: 'audiences',
-        h2: '¿Para quién trabajamos?',
-        intro: 'El mismo modelo resuelve problemas distintos: una vivienda vacía que no se vende por foto, una promoción sin piso piloto, un proyecto que el cliente no entiende en planta o un apartamento turístico que aún no está amueblado. [Ver todas las soluciones](@soluciones).\n\nDónde trabajamos: tenemos la base en Marbella ([render 3D en Marbella](@zona-marbella)) y trabajamos en remoto, sin visitar la vivienda, en [Málaga](@zona-malaga), en toda la [Costa del Sol](@zona-costa-del-sol) y en el resto de España, con el mismo precio y plazo.',
-      },
-      {
-        type: 'pricing',
-        variant: 'excerpt',
-        h2: '¿Cuánto cuesta el modelo 3D de tu vivienda?',
-        intro: 'Precios públicos y cerrados, sin IVA. Para una vivienda estándar no hace falta pedir presupuesto: eliges pack y sabes lo que pagas antes de enviarnos el plano. Extras, volumen y comparativa con el mercado, en la [página de precios](@precios).',
-      },
-      {
-        type: 'calculator',
-        intro: 'Con 5 o más maquetas completas de viviendas de hasta 150 m², el precio baja para todas las del encargo, no solo a partir de la quinta, y con 10 o más vuelve a bajar. Cambia el número y verás el total con y sin IVA.',
-      },
-      { type: 'faq' },
-      {
-        type: 'contactForm',
-        h2: 'Pide tu demo: una estancia de tu plano en 3D',
-        intro: 'Adjunta el plano o pega el enlace del anuncio. Te respondemos con precio cerrado y plazo y, si quieres, con una estancia modelada en 3D que puedes abrir en realidad aumentada. Gratis y sin compromiso. Contesta una persona.',
-        image: 'villa_interior_dormitorio',
-        imageAlt: 'Dormitorio principal de la villa con cabecero de obra, mesillas con lámparas y salida a la terraza. Render 3D de la villa anonimizada.',
-        imageCaption: 'Dormitorio principal. Render 3D de la villa anonimizada.',
+        type: 'prose',
+        h2: 'Mándanos el plano. Te enseñamos la casa',
+        body: 'Cuéntanos tu promoción y te preparamos una demo con tus propios planos: el antes y el después de una de tus viviendas. Escríbenos a {{email}}, por WhatsApp o al {{phone}}.',
       },
     ],
     faq: [
-      {
-        q: '¿Cuánto cuesta convertir el plano de una vivienda en 3D?',
-        a: 'En {{brand}}, el plano 3D cuesta {{price:plano3d}} + IVA por planta, y la maqueta 3D completa, con renders, visor web y realidad aumentada, {{price:maqueta}} + IVA por vivienda de hasta 150 m². Las promociones de obra nueva empiezan en {{price:promocion}} + IVA. Qué incluye cada opción, en [plano 2D a 3D](@servicio-plano); tarifas y extras, en [precios](@precios).',
-      },
-      {
-        q: '¿En cuánto tiempo tengo el modelo 3D?',
-        a: '{{brand}} entrega la maqueta 3D completa en {{delivery:maqueta}} y el plano 3D en {{delivery:plano3d}}. Los días cuentan desde que tenemos el plano y una medida de referencia, e incluyen las rondas de cambios si nos las envías en 24 h. Con entrega urgente, 48 horas por un {{extra:urgente}} más sobre el total.',
-      },
-      {
-        q: '¿Qué necesitáis para empezar: plano, fotos, medidas?',
-        a: 'Basta con el plano de la vivienda en PDF, JPG o PNG (DWG si lo tienes) y una medida de referencia, como la superficie total. Con eso, {{brand}} modela la vivienda a escala sin visitarla. Las fotos de acabados y el estilo de mobiliario son opcionales: afinan el resultado. Puedes adjuntar el plano en el formulario de esta página o pegar el enlace del anuncio.',
-      },
-      {
-        q: '¿Es fiel el modelo si el plano no tiene cotas?',
-        a: 'Es tan fiel como el plano. Si no trae cotas, {{brand}} mide sobre su escala o sobre una medida de referencia y las superficies son aproximadas (≈), como en nuestra villa de demostración. Con un plano acotado o un DWG, el modelo respeta las medidas. Lo indicamos en cada entrega para que tu anuncio no prometa metros exactos.',
-      },
-      {
-        q: '¿El comprador necesita una app para verlo en realidad aumentada?',
-        a: 'No. En iPhone y iPad se abre con [AR Quick Look](@glosario#ar-quick-look) desde Safari, y en Android con [Scene Viewer](@glosario#scene-viewer) en móviles compatibles con ARCore: un toque y la vivienda aparece sobre la mesa a escala 1:20 o a tamaño real. Un ordenador no puede mostrar realidad aumentada, así que {{brand}} enseña un código QR para abrirla en el móvil.',
-      },
-      {
-        q: '¿Dónde puedo enseñar el modelo: mi web, portales, WhatsApp?',
-        a: 'En tu web, con un código para incrustar el visor; por enlace, en WhatsApp o en un email; y con un código QR en el escaparate o en un folleto. Los renders son imágenes que subes a cualquier portal. {{brand}} no promete incrustar el visor dentro de idealista, que solo admite visitas virtuales de sus proveedores compatibles; donde el portal acepte un enlace, puedes usar el nuestro.',
-      },
-      {
-        q: '¿Cuántos cambios puedo pedir?',
-        a: 'La maqueta 3D completa incluye {{revisions:maqueta}} y el plano 3D, {{revisions:plano3d}}. Como {{brand}} construye el modelo con scripts, cambiar un suelo, un mueble o mover un tabique se rehace en minutos y se actualiza a la vez en los renders, el visor y la realidad aumentada. Si la distribución cambia después de la entrega, te pasamos presupuesto antes de tocar nada.',
-      },
-      {
-        q: '¿Qué hacéis con mi plano? ¿Es confidencial?',
-        a: 'Tu plano se usa solo para tu encargo. {{brand}} no lo publica ni enseña el resultado como ejemplo sin tu permiso por escrito, y trata tus datos conforme al RGPD. Si eres promotora y lo necesitas, firmamos un acuerdo de confidencialidad antes de recibir los planos. Nuestro propio caso de demostración está anonimizado por la misma razón.',
-      },
+      { q: '¿Qué necesitáis de mi promoción?', a: 'Los planos en PDF o DWG, la memoria de calidades, la ubicación de la parcela y tu logo. Si tienes renders o referencias de acabados, también ayudan.' },
+      { q: '¿Para qué promociones es?', a: 'Para obra nueva de villas, chalets, pareados y adosados en la Costa del Sol. Empezamos con promociones de una a cinco viviendas; si la tuya es más grande, cuéntanosla.' },
+      { q: '¿Mi comprador tiene que instalar algo?', a: 'No. El showroom se abre en el navegador del móvil, la tablet o el ordenador, desde un enlace o un código QR.' },
+      { q: '¿Pueden usarlo mis agencias?', a: 'Sí. Todas comparten el mismo enlace, con tu marca, así que cada comprador ve la misma promoción, la enseñe quien la enseñe.' },
+      { q: '¿Cuánto cuesta?', a: 'Depende del número de viviendas y de las piezas que incluya. Cuando vemos tu proyecto te mandamos una propuesta con precio cerrado.' },
+      { q: '¿Residencial Benahavís es una promoción real?', a: 'No. Es una promoción ficticia que hemos creado para enseñar cómo funciona un showroom. Sus casas, estados y precios son de ejemplo.' },
     ],
-    related: ['servicios', 'caso-villa', 'precios', 'como-funciona'],
+    related: ['sol-promotoras', 'servicios', 'contacto'],
   },
 
   // ─────────────────────────────────────────────────────────────── EN

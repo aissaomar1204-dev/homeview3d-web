@@ -253,12 +253,15 @@ function brandedOg(ctx, og) {
 
 /**
  * @param ctx
- * @param o { main, layout: 'default'|'bare', bodyClass, entry, graph, assets: { css, js: { main, viewer }, font, meshopt,
+ * @param o { main, layout: 'default'|'bare'|'standalone', head, bodyClass, entry, graph, assets: { css, js: { main, viewer }, font, meshopt,
  *            favicons: { ico, svg, apple }, manifest: bool, markdown: bool }, themeColors: { light, dark }, placeholders, dateline }
+ *          'standalone': `main` is the whole <body> (own header, footer, CSS and JS, see build/templates/home.mjs) and `head`
+ *          replaces the site stylesheet, scripts and theme meta; the SEO head (meta, canonical, hreflang, OG, JSON-LD) stays.
  */
 export function renderDocument(ctx, o) {
   const { entry, assets: A } = o;
   const L = ctx.lang;
+  const standalone = o.layout === 'standalone';
   const robots = robotsFor(entry.index, o.placeholders);
   const alt = entry.alternates || {};
   const hreflang = Object.keys(alt).length > 1
@@ -271,7 +274,7 @@ export function renderDocument(ctx, o) {
     ? (entry.datePublished ? `<meta property="article:published_time" content="${esc(entry.datePublished)}">` : '')
       + (entry.dateModified ? `<meta property="article:modified_time" content="${esc(entry.dateModified)}">` : '')
     : '';
-  const feed = A.markdown && o.layout !== 'bare'
+  const feed = A.markdown && o.layout !== 'bare' && !standalone
     ? `<link rel="alternate" type="application/rss+xml" title="${esc(ctx.t('meta.feed'))}" href="${L === ctx.site.defaultLang ? '/feed.xml' : `/${L}/feed.xml`}">`
     : '';
   // Shared stylesheet + ONE bundle of the feature modules this page uses (build/lib/assets.mjs buildCss / cssBundle):
@@ -285,7 +288,7 @@ export function renderDocument(ctx, o) {
   const ld = o.graph && o.graph.length
     ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': o.graph }).replace(/</g, '\\u003c')}</script>`
     : '';
-  const needsViewer = ctx.needs.has('viewer') && A.js.viewer;
+  const needsViewer = !standalone && ctx.needs.has('viewer') && A.js.viewer;
   const viewerScripts = needsViewer
     ? `<script>${meshoptScript(A.meshopt)}</script><script type="module" src="${esc(A.js.viewer)}"></script>`
     : '';
@@ -298,7 +301,7 @@ export function renderDocument(ctx, o) {
   const mdAlt = A.markdown && entry.index ? `<link rel="alternate" type="text/markdown" href="${esc(entry.path)}index.md">` : '';
   // Optional cookieless analytics (BUILD-SPEC §0): Plausible only, deferred, never on bare/embed pages.
   const an = ctx.site.analytics;
-  const analytics = an && an.provider === 'plausible' && o.layout !== 'bare'
+  const analytics = an && an.provider === 'plausible' && o.layout !== 'bare' && !standalone
     ? `<script defer data-domain="${esc(an.domain)}" src="${esc(`${an.host || 'https://plausible.io'}/js/script.js`)}"></script>`
     : '';
 
@@ -319,23 +322,27 @@ export function renderDocument(ctx, o) {
     + (og && ogUrl ? `<meta property="og:image" content="${esc(ogUrl)}"><meta property="og:image:width" content="${og.width}"><meta property="og:image:height" content="${og.height}"><meta property="og:image:alt" content="${esc(og.alt)}">` : '')
     // X/Twitter reads og:title, og:description and og:image when its own tags are absent: only the card type is needed.
     + `<meta name="twitter:card" content="summary_large_image">`
-    + `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${o.themeColors.light}">`
-    + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.light}">`
-    + `<meta name="color-scheme" content="light">`
-    + `<script>${THEME_HEAD_SCRIPT}</script>`
-    + `<meta name="format-detection" content="telephone=no">`
-    + (A.font ? `<link rel="preload" href="${esc(A.font)}" as="font" type="font/woff2" crossorigin>` : '')
-    + styles
-    + icons + mdAlt + feed
-    + `<script>${JS_FLAG_SCRIPT}</script>`
-    + ld
-    + (o.layout !== 'bare' ? `<script src="${esc(themeAsset(ctx, o.themeColors))}" defer></script>` : '')
-    + (A.js.main ? `<script src="${esc(A.js.main)}" defer></script>` : '')
-    + viewerScripts
-    + analytics;
+    + (standalone ? (o.head || '') + `<meta name="color-scheme" content="light">` + `<meta name="format-detection" content="telephone=no">` + icons + mdAlt + ld
+      : `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${o.themeColors.light}">`
+      + `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${o.themeColors.light}">`
+      + `<meta name="color-scheme" content="light">`
+      + `<script>${THEME_HEAD_SCRIPT}</script>`
+      + `<meta name="format-detection" content="telephone=no">`
+      + (A.font ? `<link rel="preload" href="${esc(A.font)}" as="font" type="font/woff2" crossorigin>` : '')
+      + styles
+      + icons + mdAlt + feed
+      + `<script>${JS_FLAG_SCRIPT}</script>`
+      + ld
+      + (o.layout !== 'bare' ? `<script src="${esc(themeAsset(ctx, o.themeColors))}" defer></script>` : '')
+      + (A.js.main ? `<script src="${esc(A.js.main)}" defer></script>` : '')
+      + viewerScripts
+      + analytics);
 
   const bodyClass = [o.bodyClass, `t-${entry.template}`].filter(Boolean).join(' ');
   let body;
+  if (standalone) {
+    return `<!doctype html><html lang="${L}" dir="ltr" data-layout="standalone"><head>${headHtml}</head><body class="${esc(bodyClass)}">${o.main}</body></html>\n`;
+  }
   if (o.layout === 'bare') {
     body = `<main id="main" class="main main--bare">${o.main}</main>`;
   } else {

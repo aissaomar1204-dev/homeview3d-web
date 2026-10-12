@@ -385,9 +385,10 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
   const faqAsPage = template === 'faq';
   const faqId = faq.length && !faqAsPage ? `${url}#faq` : undefined;
 
-  // Speakable: only selectors the page really renders (legal pages have neither a lead block nor a cajetín).
+  // Speakable: only selectors the page really renders (legal pages have neither a lead block nor a cajetín; the
+  // standalone home has no cajetín).
   const facts = entry.facts?.length ? entry.facts : page.facts;
-  const speakSel = template === 'legal' ? [] : ['.lead', ...(facts?.length ? ['.cajetin'] : [])];
+  const speakSel = template === 'legal' ? [] : ['.lead', ...(facts?.length && entry.layout !== 'standalone' ? ['.cajetin'] : [])];
 
   // WebPage
   const webpage = {
@@ -435,6 +436,7 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
 
   switch (template) {
     case 'home': {
+      if (entry.layout === 'standalone') break; // the developer showroom home does not list the services
       const items = deliverables.map((d) => ({ d, u: h.absHref(d.page) })).filter((x) => x.u);
       if (items.length) {
         nodes.push({

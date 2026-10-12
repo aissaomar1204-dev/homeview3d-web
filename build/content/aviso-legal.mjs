@@ -8,7 +8,7 @@ export default {
   id: 'aviso-legal',
   image: 'og_image',
   datePublished: '2026-09-28',
-  dateModified: '2026-09-28',
+  dateModified: '2026-10-12',
 
   es: {
     title: 'Aviso legal y condiciones de uso de la web',
@@ -20,7 +20,7 @@ export default {
       {
         type: 'prose',
         h2: 'Datos del titular',
-        body: '- **Titular**: {{legal:razonSocial}}\n- **NIF**: {{legal:nif}}\n- **Domicilio**: {{legal:domicilio}}\n- **Datos registrales**: {{legal:registro}}\n- **Email**: {{legal:email}}\n- **Teléfono**: {{phone}}\n- **Actividad**: estudio de visualización 3D. Convertimos planos 2D de viviendas en modelos 3D, renders, visores web y archivos de realidad aumentada para inmobiliarias, promotoras y arquitectos.\n\n{{brand}} es el nombre comercial con el que {{legal:razonSocial}} presta sus servicios. En este aviso, «nosotros» es el titular y «tú», la persona que visita la web.',
+        body: '- **Titular**: {{legal:razonSocial}}\n- **NIF**: {{legal:nif}}\n- **Domicilio**: {{legal:domicilio}}\n- **Datos registrales**: {{legal:registro}}\n- **Email**: {{legal:email}}\n- **Teléfono**: {{phone}}\n- **Actividad**: estudio de visualización 3D. Hacemos showrooms virtuales para promotoras de obra nueva (masterplan con disponibilidad, casas por plantas, planos, estancias y visitas 360°) y convertimos planos 2D de viviendas en modelos 3D, renders, visores web y archivos de realidad aumentada para promotoras, inmobiliarias y arquitectos.\n\n{{brand}} es el nombre comercial con el que {{legal:razonSocial}} presta sus servicios. En este aviso, «nosotros» es el titular y «tú», la persona que visita la web.',
       },
       {
         type: 'prose',
@@ -35,12 +35,12 @@ export default {
       {
         type: 'prose',
         h2: 'Renders, medidas y caso demostrativo',
-        body: 'Las imágenes de esta web son **renders**: imágenes generadas por ordenador a partir de un modelo 3D, no fotografías. El mobiliario, la decoración y los acabados que aparecen en ellas son una recreación virtual.\n\nLa villa en la Costa del Sol que mostramos es un **caso demostrativo anonimizado**. La modelamos a partir de la planta publicada de una villa real, sin fotos ni cotas. No reproducimos ese plano original: la planta que ves está redibujada desde nuestro modelo, y sus superficies son estimaciones (≈) tomadas de la escala del plano.\n\nLos modelos, planos 3D y renders que hacemos son material comercial para enseñar y vender viviendas. No sustituyen al plano de un arquitecto ni sirven para licencias, tasaciones o mediciones oficiales.',
+        body: 'Las imágenes de esta web son **renders**: imágenes generadas por ordenador a partir de un modelo 3D, no fotografías. El mobiliario, la decoración y los acabados que aparecen en ellas son una recreación virtual.\n\nLa portada usa además **imágenes generadas con inteligencia artificial**. Son ilustrativas: los acabados, el mobiliario y las personas que aparecen no corresponden a ninguna promoción real. **Residencial Benahavís**, la promoción del showroom de ejemplo, es ficticia: sus casas, estados, precios y datos de contacto son de ejemplo.\n\nLa villa en la Costa del Sol que mostramos es un **caso demostrativo anonimizado**. La modelamos a partir de la planta publicada de una villa real, sin fotos ni cotas. No reproducimos ese plano original: la planta que ves está redibujada desde nuestro modelo, y sus superficies son estimaciones (≈) tomadas de la escala del plano.\n\nLos modelos, planos 3D y renders que hacemos son material comercial para enseñar y vender viviendas. No sustituyen al plano de un arquitecto ni sirven para licencias, tasaciones o mediciones oficiales.',
       },
       {
         type: 'prose',
         h2: 'Propiedad intelectual e industrial',
-        body: 'Los textos, renders, modelos 3D, el visor, el diseño y el código de esta web son de {{legal:razonSocial}} o se usan con licencia. No puedes copiarlos, modificarlos ni explotarlos comercialmente sin nuestro permiso por escrito. Sí puedes enlazar cualquier página y citar fragmentos breves indicando la fuente.\n\nPuedes **incrustar el visor 3D de la villa** en tu web con el código que ofrecemos en la página del [caso demostrativo](@caso-villa), siempre que no lo modifiques ni quites la mención a {{brand}}.\n\nAlgunos componentes son de terceros y se usan según sus licencias: las fuentes tipográficas Archivo y Geist Mono (SIL Open Font License 1.1) y el visor 3D model-viewer de Google (licencia Apache 2.0). Las marcas de terceros que citamos, como portales inmobiliarios, sistemas operativos o programas, pertenecen a sus titulares y solo las mencionamos para describir compatibilidades.\n\nLos derechos de uso de los renders, modelos y archivos que entregamos a cada cliente se regulan en su presupuesto.',
+        body: 'Los textos, renders, modelos 3D, el visor, el diseño y el código de esta web son de {{legal:razonSocial}} o se usan con licencia. No puedes copiarlos, modificarlos ni explotarlos comercialmente sin nuestro permiso por escrito. Sí puedes enlazar cualquier página y citar fragmentos breves indicando la fuente.\n\nPuedes **incrustar el visor 3D de la villa** en tu web con el código que ofrecemos en la página del [caso demostrativo](@caso-villa), siempre que no lo modifiques ni quites la mención a {{brand}}.\n\nAlgunos componentes son de terceros y se usan según sus licencias: las fuentes tipográficas Archivo, Geist Mono, Gloock y Hanken Grotesk (SIL Open Font License 1.1) y el visor 3D model-viewer de Google (licencia Apache 2.0). Las marcas de terceros que citamos, como portales inmobiliarios, sistemas operativos o programas, pertenecen a sus titulares y solo las mencionamos para describir compatibilidades.\n\nLos derechos de uso de los renders, modelos y archivos que entregamos a cada cliente se regulan en su presupuesto.',
       },
       {
         type: 'prose',
@@ -80,7 +80,7 @@ export default {
       {
         type: 'prose',
         h2: 'Website owner',
-        body: '- **Owner**: {{legal:razonSocial}}\n- **Tax ID (NIF)**: {{legal:nif}}\n- **Registered address**: {{legal:domicilio}}\n- **Registry details**: {{legal:registro}}\n- **Email**: {{legal:email}}\n- **Phone**: {{phone}}\n- **Activity**: 3D visualisation studio. We turn 2D floor plans of homes into 3D models, renders, web viewers and augmented reality files for estate agents, developers and architects.\n\n{{brand}} is the trading name under which {{legal:razonSocial}} provides its services. In this notice, “we” means the owner and “you” means anyone visiting the site.\n\nThis English version is provided for convenience. If it differs from the Spanish version, the Spanish version prevails.',
+        body: '- **Owner**: {{legal:razonSocial}}\n- **Tax ID (NIF)**: {{legal:nif}}\n- **Registered address**: {{legal:domicilio}}\n- **Registry details**: {{legal:registro}}\n- **Email**: {{legal:email}}\n- **Phone**: {{phone}}\n- **Activity**: 3D visualisation studio. We build virtual showrooms for new-build developers (site plan with availability, homes floor by floor, floor plans, rooms and 360° tours) and turn 2D floor plans of homes into 3D models, renders, web viewers and augmented reality files for developers, estate agents and architects.\n\n{{brand}} is the trading name under which {{legal:razonSocial}} provides its services. In this notice, “we” means the owner and “you” means anyone visiting the site.\n\nThis English version is provided for convenience. If it differs from the Spanish version, the Spanish version prevails.',
       },
       {
         type: 'prose',

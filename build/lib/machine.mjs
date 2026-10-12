@@ -122,7 +122,7 @@ export const BUDGETS = {
   cssPageKB: 74,          // all the stylesheets one page links
   cssBlockingMax: 2,      // render-blocking stylesheet requests per page (<link rel=stylesheet> without a non-matching media, + @import)
   initialJsKB: 32,        // scripts referenced by the initial HTML (32: eased anchor scrolling, 2026-09-30)
-  fontsKB: 110,           // all woff2 files
+  fontsKB: 120,           // all woff2 files (120 since 2026-10-12: the new home adds Gloock and Hanken Grotesk, 51 KB; each page loads only its own pair)
   lcpImageKB: 150,        // LCP image, AVIF candidate closest to 1200 w (error)
   lcpImageTargetKB: 120,  // LCP image target (warning in check.mjs, error in the design lint)
   jsonLdKB: 8,            // JSON-LD per page without the FAQ Questions (they mirror visible text)
