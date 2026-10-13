@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════
    Route registry: SINGLE SOURCE OF TRUTH for page ids, templates,
    parents (breadcrumbs), URLs per language and sitemap priority.
-   - `es` / `en`: path with leading and trailing slash, or null when
-     that language version does not exist (no hreflang emitted then).
+   - `es` / `en` / `de`: path with leading and trailing slash, or null (or no `de` key) when
+     that language version does not exist (no hreflang emitted then). German is a reduced set.
    - Content lives in build/content/<id>.mjs (see docs/build/CONTENT-SCHEMA.md).
    - Links in content use the page id: [texto](@servicio-plano).
    - `index: false` → noindex + excluded from sitemap/llms.
@@ -13,7 +13,7 @@
 
 export const routes = [
   // ── Core ──────────────────────────────────────────────────────
-  { id: 'home',              template: 'home',     parent: null,         es: '/',                                   en: '/en/',                                   priority: 1.0 },
+  { id: 'home',              template: 'home',     parent: null,         es: '/',                                   en: '/en/', de: '/de/',                                   priority: 1.0 },
   { id: 'servicios',         template: 'hub',      parent: 'home',       es: '/servicios/',                         en: '/en/services/',                          priority: 0.9 },
   { id: 'servicio-plano',    template: 'service',  parent: 'servicios',  es: '/servicios/plano-2d-a-3d/',           en: '/en/floor-plan-to-3d-model/',            priority: 0.9, pack: 'plano3d' },
   { id: 'servicio-renders',  template: 'service',  parent: 'servicios',  es: '/servicios/renders-inmobiliarios/',   en: '/en/real-estate-3d-rendering/',          priority: 0.9, pack: 'maqueta' },
@@ -24,13 +24,13 @@ export const routes = [
   // ── Audiences ─────────────────────────────────────────────────
   { id: 'soluciones',        template: 'hub',      parent: 'home',       es: '/soluciones/',                        en: '/en/solutions/',                         priority: 0.7 },
   { id: 'sol-inmobiliarias', template: 'audience', parent: 'soluciones', es: '/soluciones/inmobiliarias/',           en: '/en/for-estate-agents/',                 priority: 0.8 },
-  { id: 'sol-promotoras',    template: 'audience', parent: 'soluciones', es: '/soluciones/promotoras-obra-nueva/',   en: '/en/off-plan-3d-visualisation/',         priority: 0.8, pack: 'promocion' },
+  { id: 'sol-promotoras',    template: 'audience', parent: 'soluciones', es: '/soluciones/promotoras-obra-nueva/',   en: '/en/off-plan-3d-visualisation/', de: '/de/3d-visualisierung-bautraeger/',         priority: 0.8, pack: 'promocion' },
   { id: 'sol-arquitectos',   template: 'audience', parent: 'soluciones', es: '/soluciones/arquitectos-interioristas/', en: '/en/for-architects/',                 priority: 0.6 },
   { id: 'sol-vacacional',    template: 'audience', parent: 'soluciones', es: '/soluciones/alquiler-vacacional/',    en: '/en/holiday-rentals/',                   priority: 0.5, pack: 'plano3d' },
 
   // ── Proof, process, prices ────────────────────────────────────
-  { id: 'caso-villa',        template: 'case',     parent: 'home',       es: '/casos/villa-costa-del-sol/',         en: '/en/case-studies/costa-del-sol-villa/',  priority: 0.9 },
-  { id: 'como-funciona',     template: 'process',  parent: 'home',       es: '/como-funciona/',                     en: '/en/how-it-works/',                      priority: 0.8 },
+  { id: 'caso-villa',        template: 'case',     parent: 'home',       es: '/casos/villa-costa-del-sol/',         en: '/en/case-studies/costa-del-sol-villa/', de: '/de/fallstudie/villa-costa-del-sol/',  priority: 0.9 },
+  { id: 'como-funciona',     template: 'process',  parent: 'home',       es: '/como-funciona/',                     en: '/en/how-it-works/', de: '/de/so-funktioniert-es/',                      priority: 0.8 },
   { id: 'precios',           template: 'pricing',  parent: 'home',       es: '/precios/',                           en: '/en/pricing/',                           priority: 0.9 },
 
   // ── Local ─────────────────────────────────────────────────────
@@ -54,23 +54,24 @@ export const routes = [
   { id: 'glosario',          template: 'glossary', parent: 'home',       es: '/glosario/',                          en: '/en/glossary/',                          priority: 0.6 },
   { id: 'faq',               template: 'faq',      parent: 'home',       es: '/preguntas-frecuentes/',              en: '/en/faq/',                               priority: 0.7 },
   { id: 'sobre-nosotros',    template: 'about',    parent: 'home',       es: '/sobre-nosotros/',                    en: '/en/about/',                             priority: 0.6 },
-  { id: 'contacto',          template: 'contact',  parent: 'home',       es: '/contacto/',                          en: '/en/contact/',                           priority: 0.8 },
+  { id: 'contacto',          template: 'contact',  parent: 'home',       es: '/contacto/',                          en: '/en/contact/', de: '/de/kontakt/',                           priority: 0.8 },
 
   // ── Utility (noindex) ─────────────────────────────────────────
-  { id: 'gracias',           template: 'thanks',   parent: 'home',       es: '/gracias/',                           en: '/en/thanks/',                            index: false },
-  { id: 'ar-villa',          template: 'ar',       parent: 'caso-villa', es: '/ar/villa/',                          en: '/en/ar/villa/',                          index: false },
-  { id: 'embed-villa',       template: 'embed',    parent: null,         es: '/embed/villa/',                       en: '/en/embed/villa/',                       index: false },
+  { id: 'gracias',           template: 'thanks',   parent: 'home',       es: '/gracias/',                           en: '/en/thanks/', de: '/de/danke/',                            index: false },
+  { id: 'ar-villa',          template: 'ar',       parent: 'caso-villa', es: '/ar/villa/',                          en: '/en/ar/villa/', de: '/de/ar/villa/',                          index: false },
+  { id: 'embed-villa',       template: 'embed',    parent: null,         es: '/embed/villa/',                       en: '/en/embed/villa/', de: '/de/embed/villa/',                       index: false },
 
   // ── Legal ─────────────────────────────────────────────────────
-  { id: 'aviso-legal',       template: 'legal',    parent: 'home',       es: '/aviso-legal/',                       en: '/en/legal-notice/',                      priority: 0.2 },
-  { id: 'privacidad',        template: 'legal',    parent: 'home',       es: '/politica-de-privacidad/',            en: '/en/privacy-policy/',                    priority: 0.2 },
-  { id: 'cookies',           template: 'legal',    parent: 'home',       es: '/politica-de-cookies/',               en: '/en/cookie-policy/',                     priority: 0.2 },
+  { id: 'aviso-legal',       template: 'legal',    parent: 'home',       es: '/aviso-legal/',                       en: '/en/legal-notice/', de: '/de/impressum/',                      priority: 0.2 },
+  { id: 'privacidad',        template: 'legal',    parent: 'home',       es: '/politica-de-privacidad/',            en: '/en/privacy-policy/', de: '/de/datenschutz/',                    priority: 0.2 },
+  { id: 'cookies',           template: 'legal',    parent: 'home',       es: '/politica-de-cookies/',               en: '/en/cookie-policy/', de: '/de/cookie-richtlinie/',                     priority: 0.2 },
 ];
 
 // 301 redirects (Netlify). Keep truncated URLs from 404ing.
 export const redirects = [
   { from: '/casos/', to: '/casos/villa-costa-del-sol/', status: 301 },
   { from: '/en/case-studies/', to: '/en/case-studies/costa-del-sol-villa/', status: 301 },
+  { from: '/de/fallstudie/', to: '/de/fallstudie/villa-costa-del-sol/', status: 301 },
   { from: '/ar/', to: '/ar/villa/', status: 301 },
 ];
 

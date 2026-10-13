@@ -18,6 +18,7 @@ export default {
   dateModified: '2026-09-28',
   es: { /* PageLang */ },
   en: { /* PageLang */ },            // REQUIRED if routes.mjs has an `en` path, FORBIDDEN (omit) if en is null
+  de: { /* PageLang */ },            // same rule with the `de` path (German is a reduced set, since 14-oct-2026)
 };
 ```
 

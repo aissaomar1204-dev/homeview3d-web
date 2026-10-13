@@ -1,4 +1,4 @@
-// Home (ES and EN): the developer showroom page. Its HTML lives in build/home/portada.html and portada.en.html
+// Home (ES, EN and DE): the developer showroom page. Its HTML lives in build/home/portada.html, portada.en.html and portada.de.html
 // (build/templates/home.mjs); this file feeds their <head>, their FAQ (HTML and FAQPage JSON-LD, word for word) and the
 // Markdown mirror (index.md, llms.txt). No prices and no market statistics on this page.
 
@@ -138,5 +138,68 @@ export default {
       { q: 'Is Residencial Benahavís a real development?', a: 'No. It is a fictitious development we created to show how a showroom works. Its homes, statuses and prices are samples.' },
     ],
     related: ['sol-promotoras', 'servicios', 'contacto'],
+  },
+
+  de: {
+    title: 'Virtueller 3D-Showroom für Bauträger | {{brand}}',
+    description: '3D-Showrooms für Bauträger von Villen, Einfamilien- und Reihenhäusern in Marbella, Benahavís und Estepona. Käufer wählen ein Haus und gehen hindurch.',
+    h1: 'Virtueller Showroom',
+    lead: 'Für Bauträger von Neubauprojekten an der Costa del Sol. Ihr Projekt, bevor es gebaut ist: Ihr Käufer wählt ein Haus, geht Geschoss für Geschoss hindurch und nimmt Kontakt auf. Mit einem Link und Ihrer Marke.',
+    breadcrumb: 'Startseite',
+    facts: [
+      ['Für wen', 'Bauträger von Neubauprojekten an der Costa del Sol'],
+      ['Was es ist', 'Ein Web-Showroom mit Ihrer Marke, in einem Link'],
+      ['Enthalten', 'Masterplan, Häuser Geschoss für Geschoss, Grundrisse, Räume und 360°-Rundgänge'],
+      ['Was wir brauchen', 'Pläne als PDF oder DWG, Baubeschreibung, Lage und Logo'],
+      ['Projekte', 'Mit einem bis fünf Häusern'],
+      ['Gebiet', 'Marbella, Benahavís, Estepona und die übrige Costa del Sol'],
+      ['Preis', 'Ein Angebot zum Festpreis, sobald wir Ihr Projekt kennen'],
+    ],
+    blocks: [
+      {
+        type: 'prose',
+        h2: 'Was Ihr Käufer sieht',
+        body: 'Residencial Benahavís ist ein Beispielprojekt mit fiktiven Häusern, Status und Preisen. Es funktioniert gleich am Computer, auf dem Tablet und auf dem Handy.\n\n1. **Er wählt ein Haus.** Das ganze Projekt aus der Luft, mit jedem Haus und seinem Status: frei, reserviert oder verkauft.\n2. **Er geht Geschoss für Geschoss hinein.** Das Haus ohne Dach, vom Untergeschoss bis zur Dachterrasse, mit Datenblatt, Flächen und Preis.\n3. **Er versteht den Grundriss.** Jedes Geschoss mit seinen Räumen, gezeichnet aus den Daten Ihres Projekts.\n4. **Er stellt sich vor, dort zu wohnen.** Jeder Raum im Vollbild. Wenn es passt, bittet er Sie um einen Rückruf, ohne das Haus zu verlassen.',
+      },
+      {
+        type: 'prose',
+        h2: 'Ihr Käufer stellt sich das Haus nicht vor. Er geht hindurch',
+        body: 'Jeder Showroom wird aus den Bausteinen zusammengestellt, die Ihr Projekt braucht, mit Ihrer Marke:\n\n- **Masterplan mit Verfügbarkeit**: jedes Haus mit seinem aktuellen Status.\n- **Das Haus Geschoss für Geschoss**: ohne Dach, vom Untergeschoss bis zur Dachterrasse.\n- **Datenblätter und Grundrisse**: Flächen, Räume und Preis.\n- **Räume**: jeder Raum im Vollbild.\n- **360°-Rundgänge**: in jedem Raum umschauen.\n- **Tag und Nacht**: das Projekt in anderem Licht.',
+      },
+      {
+        type: 'prose',
+        h2: 'Von Ihren Plänen zu einem begehbaren Haus',
+        body: 'Das Haus muss nicht existieren, und Sie brauchen keine Renderings. Aus den Projektunterlagen bauen wir jedes Haus in seinen echten Maßen und statten es mit Ihren Oberflächen aus. Wir brauchen:\n\n- **Pläne** als PDF oder DWG: Grundrisse, Ansichten und Grundstück.\n- **Baubeschreibung**: Böden, Tischlerarbeiten, Küche und Bäder.\n- **Lage**: das Grundstück und seine Umgebung, mit Aussicht, Ausrichtung und Zufahrt.\n- **Ihre Marke**: Logo und Farben, damit der Showroom Ihrer ist.',
+      },
+      {
+        type: 'prose',
+        h2: 'Alle schicken ein PDF. Sie schicken das Haus',
+        body: 'Ihr Käufer sieht sich zehn Projekte gleichzeitig an, und alle zehn kommen gleich an: als Broschüre, die heruntergeladen, einmal geöffnet und vergessen wird. Mit {{brand}} schicken Sie einen Link, der das Projekt auf seinem Handy öffnet: Er geht hindurch, wählt ein Haus und antwortet direkt von dort.\n\n- **Sie verkaufen, bevor Sie bauen.** Solange es nur Pläne gibt, überzeugt ein begehbares Haus mehr als eine Zeichnung. Und die Bank will Verkäufe sehen, bevor sie den Bau finanziert.\n- **Sie erreichen Käufer im Ausland.** Viele Ihrer Käufer leben in einem anderen Land und entscheiden aus der Ferne. Der Link reist per WhatsApp und E-Mail.\n- **Alle Ihre Makler zeigen dasselbe.** Jeder Makler teilt denselben Link, mit Ihrer Marke und aktueller Verfügbarkeit. Niemand zeigt eine alte Version.',
+      },
+      {
+        type: 'prose',
+        h2: 'Ein Verkaufswerkzeug für Ihr Vertriebsteam',
+        body: '- **Im Verkaufsbüro**: Ihr Vertriebsteam präsentiert jedes Haus auf einem Tablet, mit aktueller Verfügbarkeit und aktuellem Preis.\n- **Im Fernverkauf**: Derselbe Link erreicht den internationalen Käufer per WhatsApp oder E-Mail.\n- **Auf Messen und bei Maklern**: Ein QR-Code am Stand oder in der Broschüre öffnet das ganze Projekt.',
+      },
+      {
+        type: 'prose',
+        h2: 'Villen, Reihenhäuser oder eine ganze Wohnanlage',
+        body: 'Projekte mit einem bis fünf Häusern in Marbella, Benahavís und Estepona. Im Showroom erscheint jedes mit seinem Modell, seinen Geschossen und seinen Räumen, mit Status und Datenblatt. Die Bilder auf dieser Seite sind Symbolbilder, die Daten Beispiele.',
+      },
+      {
+        type: 'prose',
+        h2: 'Schicken Sie uns den Grundriss. Wir zeigen Ihnen das Haus',
+        body: 'Erzählen Sie uns von Ihrem Projekt, und wir bereiten eine Demo mit Ihren eigenen Plänen vor: das Vorher und Nachher eines Ihrer Häuser. Schreiben Sie an {{email}}, per WhatsApp oder rufen Sie {{phone}} an. Wir antworten auf Englisch oder Spanisch.',
+      },
+    ],
+    faq: [
+      { q: 'Was brauchen Sie von meinem Projekt?', a: 'Die Pläne als PDF oder DWG, die Baubeschreibung, die Lage des Grundstücks und Ihr Logo. Wenn Sie Renderings oder Referenzen für die Oberflächen haben, helfen sie auch.' },
+      { q: 'Für welche Projekte ist es gedacht?', a: 'Für Neubauvillen, Einfamilien-, Doppel- und Reihenhäuser an der Costa del Sol. Wir beginnen mit Projekten von einem bis fünf Häusern; wenn Ihres größer ist, erzählen Sie uns davon.' },
+      { q: 'Muss mein Käufer etwas installieren?', a: 'Nein. Der Showroom öffnet sich im Browser von Handy, Tablet oder Computer, über einen Link oder einen QR-Code.' },
+      { q: 'Können meine Makler ihn nutzen?', a: 'Ja. Alle teilen denselben Link mit Ihrer Marke, sodass jeder Käufer dasselbe Projekt sieht, egal wer es zeigt.' },
+      { q: 'Was kostet es?', a: 'Das hängt von der Anzahl der Häuser und den enthaltenen Bausteinen ab. Sobald wir Ihr Projekt kennen, senden wir Ihnen ein Angebot zum Festpreis.' },
+      { q: 'Ist Residencial Benahavís ein echtes Projekt?', a: 'Nein. Es ist ein fiktives Projekt, das wir erstellt haben, um zu zeigen, wie ein Showroom funktioniert. Häuser, Status und Preise sind Beispiele.' },
+    ],
+    related: ['sol-promotoras', 'como-funciona', 'contacto'],
   },
 };

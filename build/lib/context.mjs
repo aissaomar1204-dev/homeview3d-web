@@ -23,12 +23,14 @@
      ctx.collect            { images: [], faq: [], headings: [], videos: [] } filled while rendering
      ctx.emitAsset(p, text) writes a generated file as a hashed asset, returns its URL
      ctx.images             image manifest (or null)
-     ctx.otherLang, ctx.twinPath
+     ctx.otherLang, ctx.twinPath  (first other language and its twin, kept for older callers)
+     ctx.otherLangs, ctx.twins    every other language, and { lang: path } of the twins that are rendered
    ═══════════════════════════════════════════════════════════════ */
 import fs from 'node:fs';
 import { pathToFileURL } from 'node:url';
 import { esc, slugify, renderInline, renderMd, toPlain } from './md.mjs';
 import { formatPrice, packById } from '../data/pricing.mjs';
+import { numLocale, pctText, dayRange, revisionsText } from './i18n.mjs';
 
 /** Dynamic import that tolerates a missing module (other agents' files). */
 export async function optionalImport(file, { label = file, warn = console.warn } = {}) {
@@ -42,7 +44,7 @@ export async function optionalImport(file, { label = file, warn = console.warn }
 }
 
 const NBSP = ' ';
-const locale = (lang) => (lang === 'es' ? 'es-ES' : 'en-GB');
+const locale = numLocale;
 
 export function fmtNumber(n, lang, decimals) {
   const opts = { useGrouping: 'always' };
@@ -115,7 +117,8 @@ export function createContext(o) {
   const { lang, route, doc, site, data, routeById, rendered, docs, assets } = o;
   const ui = o.ui[lang];
   const page = doc ? doc[lang] : null;
-  const otherLang = site.langs.find((l) => l !== lang);
+  const otherLangs = site.langs.filter((l) => l !== lang);
+  const otherLang = otherLangs[0];
   const ids = new Map();
 
   const ctx = {
@@ -127,6 +130,7 @@ export function createContext(o) {
     docs,
     images: o.images || null,
     otherLang,
+    otherLangs,
     esc, fill, icon,
     slug: slugify,
   };
@@ -148,7 +152,7 @@ export function createContext(o) {
         if (name === 'extra') return ctx.extra(args[0]);
         if (name === 'volume') return fmtPrice(pricing.volume.price, lang);
         return fmtPrice(Math.round(pricing.volume.price / pricing.volume.units), lang);
-      case 'delivery': return ctx.delivery(args[0]);
+      case 'delivery': return ctx.delivery(args[0], args[1] === 'dat');
       case 'revisions': return ctx.revisions(args[0]);
       case 'villa': {
         if (!(args[0] in villa.specs)) throw new Error(`Unknown villa spec {{villa:${args[0]}}}`);
@@ -216,22 +220,19 @@ export function createContext(o) {
   ctx.extra = (id) => {
     const x = data.pricing.extras.find((e) => e.id === id);
     if (!x) throw new Error(`extra: unknown extra "${id}"`);
-    if (x.pct != null) return lang === 'es' ? `${x.pct}${NBSP}%` : `${x.pct}%`;
+    if (x.pct != null) return pctText(x.pct, lang);
     return fmtPrice(x.price, lang);
   };
-  ctx.delivery = (packId) => {
+  ctx.delivery = (packId, dative = false) => {
     const p = packById(packId);
     if (!p) throw new Error(`delivery: unknown pack "${packId}"`);
     const { min, max } = p.deliveryDays;
-    if (lang === 'es') return min === max ? `${min} días laborables` : `${min} a ${max} días laborables`;
-    return min === max ? `${min} working days` : `${min} to ${max} working days`;
+    return dayRange(min, max, lang, dative);
   };
   ctx.revisions = (packId) => {
     const p = packById(packId);
     if (!p) throw new Error(`revisions: unknown pack "${packId}"`);
-    const n = p.revisions;
-    if (lang === 'es') return `${n} ${n === 1 ? 'ronda' : 'rondas'} de cambios`;
-    return `${n} ${n === 1 ? 'round' : 'rounds'} of changes`;
+    return revisionsText(p.revisions, lang);
   };
   ctx.volume = () => token('volume', []);
   ctx.volumeUnit = () => token('volumeUnit', []);
@@ -269,7 +270,9 @@ export function createContext(o) {
   /** Unique heading id from text (used for h2 anchors). */
   ctx.headingId = (text) => ctx.uid(slugify(text));
 
-  ctx.twinPath = route && otherLang && route[otherLang] && rendered.has(`${route.id}:${otherLang}`) ? route[otherLang] : null;
+  ctx.twins = {};
+  if (route) for (const l of otherLangs) if (route[l] && rendered.has(`${route.id}:${l}`)) ctx.twins[l] = route[l];
+  ctx.twinPath = otherLang ? ctx.twins[otherLang] || null : null;
 
   ctx.whatsappUrl = (text) => `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(text || ui.cta.whatsappText)}`;
   /**

@@ -79,6 +79,41 @@ const faqEn = [
   },
 ];
 
+const faqDe = [
+  {
+    q: 'Verkaufe ich meine Neubauimmobilie mit 3D schneller?',
+    a: 'Einen schnelleren Verkauf kann niemand ehrlich versprechen, und {{brand}} tut es nicht. Was 3D leistet: Es nimmt Käufern die Gründe zu zögern. Sie sehen jeden Wohnungstyp möbliert in 4K-Renderings, erkunden ihn im interaktiven Viewer und stellen ihn per Augmented Reality auf ihren Tisch oder in Originalgröße in den Raum. Unser Projektpaket gibt es zum Festpreis, geliefert in {{delivery:promocion:dat}}.',
+  },
+  {
+    q: 'Können Sie alle Wohnungstypen eines Projekts einheitlich modellieren?',
+    a: 'Ja. Das Projektpaket von {{brand}} umfasst alle Wohnungstypen in einem Viewer, mit einer Auswahl zum Wechseln. Alle teilen dieselben Materialien, Möbel und dasselbe Licht, sodass die Renderings des ganzen Projekts einheitlich sind und zu dem passen, was Käufer in Augmented Reality sehen.',
+  },
+  {
+    q: 'Können ausländische Käufer eine Neubauwohnung erkunden, bevor sie nach Spanien reisen?',
+    a: 'Genau dafür ist es gedacht. Mit dem Viewer-Link geht ein Käufer in München oder Zürich Raum für Raum durch die Wohnung und öffnet sie in Augmented Reality auf iPhone, iPad oder einem Android-Handy mit ARCore, ohne App. Es ersetzt keinen Besuch vor der Unterschrift, hilft aber bei der Entscheidung, ob das Projekt die Reise wert ist.',
+  },
+  {
+    q: 'Was passiert, wenn sich die Pläne während des Verkaufs ändern?',
+    a: '{{brand}} baut das Modell mit Python-Skripten in Blender, sodass eine versetzte Trennwand, ein geändertes Fenster oder ein neuer Bodenbelag in Minuten neu aufgebaut und in Renderings, Viewer und AR neu exportiert wird. Das Paket enthält {{revisions:promocion}}. Ändert sich das Projekt nach der Lieferung, erstellen wir vor jeder Änderung ein Angebot für die Aktualisierung.',
+  },
+  {
+    q: 'Wie wird es im Verkaufsbüro oder auf einer Immobilienmesse eingesetzt?',
+    a: 'Auf einem Tablet oder auf dem Handy des Käufers. {{brand}} liefert jede Wohnung in Augmented Reality in zwei Maßstäben: als Modell 1:20 auf dem Tisch und in Originalgröße, um durch das Wohnzimmer zu gehen. Auf einer Messe öffnet ein QR-Code am Stand den Viewer und die AR auf dem Handy jedes Besuchers, ohne Installation.',
+  },
+  {
+    q: 'Kann der Viewer auf die Website des Projekts?',
+    a: 'Ja. {{brand}} liefert den 3D-Viewer mit einem iframe-Code, der sich in die Website des Projekts oder Ihres Vertriebspartners einfügen lässt, dazu einen Link zum Teilen per E-Mail und WhatsApp. Zum Vergleich: Das Web-Modell unserer Demo-Fallstudie wiegt {{file:glb}}, komprimiert, damit es sich auf dem Handy flüssig öffnet.',
+  },
+  {
+    q: 'Erstellen Sie auch Außenrenderings des Gebäudes?',
+    a: 'Das Projektpaket von {{brand}} konzentriert sich auf das Innere jedes Wohnungstyps: Aufteilung, Möbel, Oberflächen und Terrassen, also das, was Käufer vor einer Reservierung sehen müssen. Brauchen Sie auch Außenansichten des Gebäudes oder der Anlage, sagen Sie es uns bei der Demo-Anfrage und schicken Sie die vorhandenen Ansichten; wir bestätigen Umfang, Preis und Zeitplan vor dem Start.',
+  },
+  {
+    q: 'Unterschreiben Sie eine Vertraulichkeitsvereinbarung?',
+    a: 'Ja. Wenn Ihr Unternehmen eine braucht, unterzeichnet {{brand}} vor dem Erhalt der Pläne eine Vertraulichkeitsvereinbarung, und wir nutzen die Pläne nur für Ihr Projekt. Ohne Erlaubnis veröffentlichen wir nie Bilder Ihres Projekts. Unsere eigene Demo-Fallstudie ist aus demselben Grund anonymisiert: Wir zeigen weder den Originalgrundriss noch etwas, das die Immobilie identifizieren könnte.',
+  },
+];
+
 import { plate } from '../data/plates.mjs';
 
 export default {
@@ -192,7 +227,7 @@ export default {
     title: 'Off-plan 3D visualisation for developers in Spain',
     description: 'Every unit type as a 3D model with 4K CGI, an interactive viewer and app-free AR for your sales suite and fairs, with a fixed quote.',
     h1: 'Off-plan 3D visualisation for property developers',
-    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and fairs. Fixed quote, delivered in {{delivery:promocion}}.',
+    lead: '{{brand}}, a 3D visualisation studio on the Costa del Sol, models every unit type in your development from the project drawings: 4K CGI, an interactive 3D viewer with a unit-type selector and app-free augmented reality for the sales suite and fairs. Fixed quote, delivered in {{delivery:promocion:dat}}.',
     breadcrumb: 'Developers',
     card: {
       title: 'For developers selling off-plan',
@@ -285,6 +320,107 @@ export default {
     cta: {
       h2: 'Shall we show your development before it’s built?',
       body: 'Send us the plan of one unit type and we will send back one room in 3D with augmented reality, free and with no commitment.',
+      service: 'promocion',
+    },
+  },
+
+  de: {
+    title: '3D-Visualisierung für Bauträger in Spanien',
+    description: 'Jeder Wohnungstyp als 3D-Modell mit 4K-Renderings, interaktivem Viewer und AR ohne App für Verkaufsbüro und Messen, zum Festpreis.',
+    h1: '3D-Visualisierung für Bauträger von Neubauprojekten',
+    lead: '{{brand}}, ein Studio für 3D-Visualisierung an der Costa del Sol, modelliert jeden Wohnungstyp Ihres Projekts aus den Bauplänen: 4K-Renderings, ein interaktiver 3D-Viewer mit Typenauswahl und Augmented Reality ohne App für Verkaufsbüro und Messen. Zum Festpreis, geliefert in {{delivery:promocion:dat}}.',
+    breadcrumb: 'Bauträger',
+    card: {
+      title: 'Für Bauträger im Vorverkauf',
+      summary: 'Jeder Wohnungstyp in 3D, mit Renderings und Augmented Reality für Verkaufsbüro, Messen und Käufer im Ausland.',
+    },
+    hero: {
+      image: 'villa_maqueta_iso',
+      alt: 'Aufgeschnittenes 3D-Modell des Obergeschosses einer Villa an der Costa del Sol, Luftansicht aus drei Vierteln. Rendering aus dem 2D-Grundriss eines anonymisierten Falls.',
+      caption: 'Das Schnittmodell unserer Demo-Fallstudie, wie ein Käufer es vor dem Bau sehen würde. Rendering aus dem 2D-Grundriss.',
+    },
+    facts: [
+      ['Für', 'Bauträger, Vertriebe und Vermarkter von Neubauprojekten'],
+      ['Grundlage', 'Baupläne als DWG, DXF oder PDF'],
+      ['Enthalten', 'Wohnungstypen in 3D, 4K-Renderings, Viewer und AR'],
+      ['Preis', 'Festpreis nach Anzahl der Wohnungstypen'],
+      ['Wohnungstypen', 'Alle in einem Viewer, mit Auswahl'],
+      ['Lieferzeit', '{{delivery:promocion}}'],
+      ['Änderungen', '{{revisions:promocion}}'],
+      ['Kanäle', 'Website, Verkaufsbüro, Messen und WhatsApp'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'Wie verkauft man eine Immobilie, die noch nicht gebaut ist?',
+        answer: 'Indem Käufer sie zuerst betreten können. Mit einem 3D-Modell jedes Wohnungstyps gehen Käufer im Viewer durch die Wohnung, beurteilen die Oberflächen in 4K-Renderings und stellen sie per Handy auf ihren Tisch oder in Originalgröße in den Raum. Das ersetzt die Musterwohnung, ohne auf den Bau zu warten.',
+        body: 'Im Vorverkauf reservieren Käufer auf Grundlage eines Grundrisses und einer Baubeschreibung. Je besser sie die Wohnung verstehen, desto weniger Zweifel erreichen Ihr Verkaufsbüro, und desto weniger Zeit verbringt Ihr Team damit, Menschen Zeichnungen zu erklären, die keine Pläne lesen.',
+      },
+      {
+        type: 'stat',
+        value: '11.727',
+        label: 'Verkäufe von Neubauwohnungen wurden in den 12 Monaten bis Ende des 2. Quartals 2026 in der Provinz Málaga registriert, die dritthöchste Zahl aller spanischen Provinzen nach Madrid und Barcelona',
+        source: { label: 'Colegio de Registradores (Spaniens Vereinigung der Grundbuchämter), Estadística Registral Inmobiliaria', url: ERI },
+        year: '2. Quartal 2026',
+      },
+      {
+        type: 'table',
+        h2: 'Wo hilft 3D beim Start eines Neubauprojekts?',
+        intro: 'Jede Phase einer Vorverkaufskampagne hat ihren eigenen Engpass. Hier setzt das 3D-Modell an.',
+        caption: 'Typische Probleme im Vorverkauf und was ein 3D-Modell beiträgt',
+        head: ['Phase', 'Das Problem', 'Was das 3D-Modell beiträgt'],
+        rows: [
+          ['Vorverkauf und Reservierungen', 'Keine Musterwohnung, Käufer reservieren nach Plan', 'Jeder Wohnungstyp möbliert, im Viewer und in Augmented Reality'],
+          ['Verkaufsbüro', 'Das physische Modell zeigt das Gebäude, nicht die Wohnungen darin', 'Eine Wohnung im Maßstab 1:20 vom Tablet auf dem Tisch, oder das Wohnzimmer in Originalgröße'],
+          ['Immobilienmessen', 'Ein ganzes Projekt auf einem kleinen Stand zeigen', 'Ein QR-Code, der Viewer und AR auf dem Handy jedes Besuchers öffnet'],
+          ['Käufer im Ausland', 'Sie reservieren aus der Ferne und reisen höchstens einmal an', 'Ein Link per WhatsApp oder E-Mail mit Viewer und Augmented Reality'],
+          ['Planänderungen', 'Eine Trennwand oder ein Belag ändert sich mitten im Verkauf', 'Das Modell entsteht per Skript, die Änderung ist in Minuten neu aufgebaut'],
+          ['Externe Vertriebspartner', 'Jeder Makler präsentiert das Projekt anders', 'Derselbe Link, dieselben Renderings und dieselben Daten für alle'],
+        ],
+      },
+      {
+        type: 'viewer',
+        h2: 'Ein Wohnungstyp in 3D, so wie Ihre Käufer ihn sehen',
+        intro: 'Hier mit der Villa aus unserer [Demo-Fallstudie](@caso-villa): {{villa:rooms}} Räume in einem Obergeschoss, modelliert aus einem einzigen Grundriss. Bei einem Projekt kommt im Viewer eine Auswahl hinzu, um zwischen den Wohnungstypen zu wechseln.',
+      },
+      {
+        type: 'stat',
+        value: '27,9 %',
+        label: 'der Wohnungsverkäufe in der Provinz Málaga wurden 2025 von Käufern unterzeichnet, die nicht in Spanien leben (10.079 von 36.128), gegenüber einem spanischen Durchschnitt von 7,4 %',
+        source: { label: 'Spanisches Ministerium für Wohnungswesen und Stadtagenda, Immobilientransaktionen nach Wohnsitz des Käufers', url: MIVAU },
+        year: '2025',
+      },
+      {
+        type: 'steps',
+        h2: 'Wie arbeiten wir mit Ihrem Vertrieb und Ihren Architekten?',
+        intro: 'Ein Ansprechpartner auf Ihrer Seite genügt. Alles Weitere läuft aus der Ferne, per E-Mail und Videogespräch.',
+        items: [
+          { title: 'Wir erhalten das Projekt', body: 'Grundrisse jedes Wohnungstyps als DWG, DXF oder PDF, dazu die Baubeschreibung, falls vorhanden. Mit Maßen entsteht das Modell maßgenau; mit reinen Vertriebsplänen schätzen wir anhand des Maßstabs und kennzeichnen es (≈).' },
+          { title: 'Wir modellieren und richten ein', body: 'Jeder Wohnungstyp erhält Wände, Öffnungen, Tischlerarbeiten und Möbel, die zur Zielgruppe des Projekts passen. Die Oberflächen folgen der Baubeschreibung, mit eigenen Texturen statt Stockbibliotheken.' },
+          { title: 'Ihr Team prüft', body: 'Vertrieb und Architektur erhalten den Viewer über einen privaten Link und bitten um Änderungen an Möbeln, Oberflächen oder Aufteilung, die wir in {{revisions:promocion}} umsetzen.' },
+          { title: 'Sie nutzen es überall', body: 'Projekt-Website (iframe), Broschüre und Portale (Renderings), Verkaufsbüro und Messen (Augmented Reality), Partnermakler und Käufer (Link).' },
+        ],
+      },
+      {
+        type: 'answer',
+        h2: 'Was kostet 3D im Verhältnis zum Projektwert?',
+        answer: 'Wenig, gemessen an dem, was Sie verkaufen. Das Angebot richtet sich nach der Anzahl der Wohnungstypen, nicht der Wohnungen: Bei 24 Wohnungen mit 3 Typen modellieren wir 3 Wohnungen, nicht 24. Eine physische Musterwohnung braucht außerdem eine fertige Einheit oder ein Ladenlokal und zeigt nur einen Typ.',
+        body: 'Wir versprechen nicht, dass Sie schneller verkaufen; das hängt von Produkt, Preis und Vertrieb ab. Messen können Sie, wie viele Fragen das Verkaufsbüro nicht mehr erreichen und wie viele Käufer reservieren, ohne vor Ort gewesen zu sein.\n\nWie wir arbeiten, Schritt für Schritt, steht unter [So funktioniert es](@como-funciona).',
+      },
+      plate('de', 'villa_interior_dormitorio'),
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'Symbolbilder',
+        body: 'Renderings im Vorverkauf zeigen jede Wohnung möbliert und mit den vorgesehenen Oberflächen. Wir liefern sie mit Hinweis als Bildunterschrift: „3D-Rendering. Symbolbild, nicht vertragsrelevant; Möbel nicht enthalten.“ Behalten Sie ihn bei der Veröffentlichung bei und nutzen Sie die Baubeschreibung als Referenz. Haben die Pläne keine Maße, sind die Flächen maßstäbliche Schätzungen (≈).',
+      },
+      { type: 'faq' },
+    ],
+    faq: faqDe,
+    related: ['caso-villa', 'como-funciona', 'contacto'],
+    cta: {
+      h2: 'Zeigen wir Ihr Projekt, bevor es gebaut ist?',
+      body: 'Schicken Sie uns den Grundriss eines Wohnungstyps, und wir senden Ihnen einen Raum in 3D mit Augmented Reality zurück, kostenlos und unverbindlich.',
       service: 'promocion',
     },
   },

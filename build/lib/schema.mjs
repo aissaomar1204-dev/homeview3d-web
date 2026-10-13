@@ -46,19 +46,20 @@ const PLACES = {
   'Costa del Sol': { type: 'Place', q: 'Q215254' },
   'España': { type: 'Country', q: 'Q29' },
   Spain: { type: 'Country', q: 'Q29' },
+  Spanien: { type: 'Country', q: 'Q29' },
 };
 const place = (name) => { const p = PLACES[name]; return p ? { '@type': p.type, name, sameAs: WD(p.q) } : { '@type': 'Place', name }; };
-const SPAIN = (lang) => place(lang === 'es' ? 'España' : 'Spain');
+const SPAIN = (lang) => place({ es: 'España', de: 'Spanien' }[lang] || 'Spain');
 
 // Wikidata ids verified against wikidata.org (labels checked 2026-09-28).
 const KNOWS_ABOUT = [
-  { q: 'Q254183', es: 'Realidad aumentada', en: 'Augmented reality' },
-  { q: 'Q28135989', es: 'glTF', en: 'glTF' },
-  { q: 'Q54809843', es: 'USDZ', en: 'USDZ' },
-  { q: 'Q16911860', es: 'Renderizado 3D', en: '3D rendering' },
-  { q: 'Q28401684', es: 'Home staging virtual', en: 'Virtual home staging' },
-  { q: 'Q18965', es: 'Plano de planta', en: 'Floor plan' },
-  { q: 'Q173136', es: 'Blender', en: 'Blender' },
+  { q: 'Q254183', es: 'Realidad aumentada', en: 'Augmented reality', de: 'Erweiterte Realität' },
+  { q: 'Q28135989', es: 'glTF', en: 'glTF', de: 'glTF' },
+  { q: 'Q54809843', es: 'USDZ', en: 'USDZ', de: 'USDZ' },
+  { q: 'Q16911860', es: 'Renderizado 3D', en: '3D rendering', de: '3D-Rendering' },
+  { q: 'Q28401684', es: 'Home staging virtual', en: 'Virtual home staging', de: 'Virtuelles Home Staging' },
+  { q: 'Q18965', es: 'Plano de planta', en: 'Floor plan', de: 'Grundriss' },
+  { q: 'Q173136', es: 'Blender', en: 'Blender', de: 'Blender' },
 ];
 // Glossary term ids that map to a Wikidata item (only verified ids, 04-geo §6.1).
 const TERM_WIKIDATA = {
@@ -216,13 +217,13 @@ function orgNode(entry, lang, h, full) {
     address: { '@type': 'PostalAddress', addressLocality: site.base.locality, addressRegion: site.base.region, addressCountry: site.base.country },
     areaServed: (site.areaServed[lang] || site.areaServed.es).map(place),
     knowsAbout: KNOWS_ABOUT.map((k) => ({ '@type': 'Thing', name: k[lang], sameAs: WD(k.q) })),
-    knowsLanguage: site.langs.map((l) => LOCALE[l]),
+    knowsLanguage: (site.replyLangs || site.langs).map((l) => LOCALE[l]),
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'sales', // schema.org examples and Google use English values in every language
       email: site.contact.email,
       telephone: directContact() ? site.contact.phoneE164 : undefined,
-      availableLanguage: site.langs.map((l) => LOCALE[l]),
+      availableLanguage: (site.replyLangs || site.langs).map((l) => LOCALE[l]),
       areaServed: 'ES',
       url: h.absHref('contacto'),
     },
@@ -257,7 +258,7 @@ function personNode(lang, h, full) {
     image: f.image ? h.assetUrl(f.image) : undefined,
     sameAs: f.sameAs?.length ? f.sameAs : undefined,
     worksFor: ref(ORG_ID),
-    knowsLanguage: site.langs.map((l) => LOCALE[l]),
+    knowsLanguage: (site.replyLangs || site.langs).map((l) => LOCALE[l]),
   };
 }
 /** Article author: the founder once there is one, the organisation until then. */
@@ -441,7 +442,7 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       const items = deliverables.map((d) => ({ d, u: h.absHref(d.page) })).filter((x) => x.u);
       if (items.length) {
         nodes.push({
-          '@type': 'ItemList', '@id': `${url}#services`, name: lang === 'es' ? 'Servicios' : 'Services',
+          '@type': 'ItemList', '@id': `${url}#services`, name: { es: 'Servicios', de: 'Leistungen' }[lang] || 'Services',
           itemListElement: items.map(({ d, u }, i) => ({ '@type': 'ListItem', position: i + 1, name: d[lang].title, url: u })),
         });
       }
@@ -503,11 +504,13 @@ export function schemaGraph(entry, ctx = entry?.ctx) {
       const f = villa.files;
       const enc = (k, fmt) => ({ '@type': 'MediaObject', name: f[k].label[lang], contentUrl: h.abs(f[k].url), encodingFormat: fmt, contentSize: fmtMB(f[k].bytes, lang) });
       const sp = villa.specs;
-      const num = (n) => new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB').format(n);
+      const num = (n) => new Intl.NumberFormat(LOCALE[lang] || 'en-GB').format(n);
       nodes.push({
         '@type': '3DModel', '@id': modelId,
         name: `${villa.name[lang]} (${villa.scope[lang]})`,
-        description: lang === 'es'
+        description: lang === 'de'
+          ? `Fotorealistisches, möbliertes 3D-Modell, rekonstruiert aus ${sp.input.de}: ${sp.rooms} Räume, ${sp.textures} prozedurale PBR-Texturen, rund ${num(sp.interiorM2)} m² Innenfläche und ${num(sp.terracesM2)} m² Terrassen (Flächen anhand des Maßstabs des Grundrisses geschätzt).`
+          : lang === 'es'
           ? `Modelo 3D fotorrealista y amueblado reconstruido a partir de ${sp.input.es}: ${sp.rooms} estancias, ${sp.textures} texturas PBR procedurales, unos ${num(sp.interiorM2)} m² interiores y ${num(sp.terracesM2)} m² de terrazas (medidas estimadas a partir de la escala del plano).`
           : `Photorealistic, furnished 3D model rebuilt from ${sp.input.en}: ${sp.rooms} rooms, ${sp.textures} procedural PBR textures, about ${num(sp.interiorM2)} m² indoors and ${num(sp.terracesM2)} m² of terraces (areas estimated from the plan's scale).`,
         url: h.absHref('caso-villa', 'visor') || url,

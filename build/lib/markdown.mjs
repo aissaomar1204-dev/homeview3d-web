@@ -20,6 +20,7 @@ import { villa } from '../data/villa.mjs';
 import { process as proc } from '../data/process.mjs';
 import { deliverables, comingSoon } from '../data/deliverables.mjs';
 import * as viewerLib from './viewer.mjs';
+import { LOCALES, LANG_NAMES, numLocale, pctText, dayRange as dayRangeText, revisionsText } from './i18n.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const ROOT = path.resolve(HERE, '..', '..');
@@ -49,23 +50,22 @@ export const directContact = () => site.contact.placeholder !== true && !!site.c
 /** The founder (site.founder) once filled in, else null (same rule as schema.mjs). */
 const founderOf = () => (site.founder && site.founder.name && !site.founder.placeholder ? site.founder : null);
 
-export const LOCALE = { es: 'es-ES', en: 'en-GB' };
+export const LOCALE = LOCALES;
 export const brandName = () => site.brand.name;
 
 /* ── Number / size formatting (same conventions as the content tokens) ── */
 export function fmtNumber(n, lang, decimals) {
   const opts = decimals == null ? { maximumFractionDigits: 2, useGrouping: 'always' } : { minimumFractionDigits: decimals, maximumFractionDigits: decimals, useGrouping: 'always' };
-  return new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB', opts).format(n);
+  return new Intl.NumberFormat(numLocale(lang), opts).format(n);
 }
 /** Decimal megabytes like the engine's {{file:*}}: 3132584 → "3,1 MB" / "3.1 MB"; ≥ 10 MB without decimals. */
 export function fmtMB(bytes, lang) {
   const mb = bytes / 1e6;
-  return `${new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB', { maximumFractionDigits: mb < 10 ? 1 : 0 }).format(mb)} MB`;
+  return `${new Intl.NumberFormat(numLocale(lang), { maximumFractionDigits: mb < 10 ? 1 : 0 }).format(mb)} MB`;
 }
 
 /* ── Fallback token resolver (used only when no ctx.tok is available) ── */
-const dayRange = (d, lang) => (lang === 'es' ? `${d.min} a ${d.max} días laborables` : `${d.min} to ${d.max} working days`);
-const revisionsText = (n, lang) => (lang === 'es' ? `${n} ${n === 1 ? 'ronda' : 'rondas'} de cambios` : `${n} ${n === 1 ? 'round' : 'rounds'} of changes`);
+const dayRange = (d, lang, dative) => dayRangeText(d.min, d.max, lang, dative);
 export function fallbackToken(inner, lang) {
   const [name, a, b] = inner.trim().split(':');
   switch (name) {
@@ -76,10 +76,10 @@ export function fallbackToken(inner, lang) {
     case 'whatsapp': return site.contact.phoneDisplay;
     case 'year': return String(new Date().getFullYear());
     case 'price': { const p = packById(a); if (!p) return null; const v = b !== undefined ? p.tiers?.[+b]?.price : p.price; return v == null ? null : formatPrice(v, lang); }
-    case 'extra': { const x = pricing.extras.find((e) => e.id === a); if (!x) return null; return x.pct != null ? (lang === 'es' ? `${x.pct} %` : `${x.pct}%`) : formatPrice(x.price, lang); }
+    case 'extra': { const x = pricing.extras.find((e) => e.id === a); if (!x) return null; return x.pct != null ? pctText(x.pct, lang, ' ') : formatPrice(x.price, lang); }
     case 'volume': return formatPrice(pricing.volume.price, lang);
     case 'volumeUnit': return formatPrice(Math.round(pricing.volume.price / pricing.volume.units), lang);
-    case 'delivery': { const p = packById(a); return p ? dayRange(p.deliveryDays, lang) : null; }
+    case 'delivery': { const p = packById(a); return p ? dayRange(p.deliveryDays, lang, b === 'dat') : null; }
     case 'revisions': { const p = packById(a); return p ? revisionsText(p.revisions, lang) : null; }
     case 'villa': { const v = villa.specs[a]; if (v == null) return null; if (typeof v === 'number') return fmtNumber(v, lang); if (typeof v === 'object' && v[lang]) return v[lang]; if (typeof v === 'object' && 'w' in v) return `${fmtNumber(v.w, lang)} × ${fmtNumber(v.d, lang)} m`; return String(v); }
     case 'file': { const f = villa.files[a]; return f ? fmtMB(f.bytes, lang) : null; }
@@ -210,6 +210,28 @@ const LABELS = {
     desktopAr: 'Computers cannot show augmented reality: scan the QR code on this page with your phone', arPage: 'Augmented reality page',
     approx: '≈',
   },
+  de: {
+    canonical: 'Kanonische URL', language: 'Sprache', updated: 'Aktualisiert', author: 'Autor', team: (b) => `Team von ${b}`,
+    twin: 'Deutsch', keyFacts: 'Eckdaten', faq: 'Häufige Fragen', related: 'Weiterlesen', contact: 'Kontakt',
+    demo: 'Demo anfragen', email: 'E-Mail', phone: 'Telefon', whatsapp: 'WhatsApp', form: 'Anfrageformular',
+    viewer: 'Interaktiver 3D-Viewer', viewerLink: 'Die Villa in 3D ansehen', rooms: 'Räume im Modell', ar: 'Augmented Reality ohne App',
+    formats: 'Formate und Kompatibilität', embed: 'Den Viewer auf Ihrer Website einbetten', deliverables: 'Was wir liefern', comingSoon: 'Demnächst',
+    process: 'So funktioniert es', needs: 'Was wir von Ihnen brauchen', services: 'Leistungen', audiences: 'Lösungen nach Kundentyp',
+    pricing: 'Preise', calculator: 'Preis nach Volumen', guarantees: 'Garantien', specs: 'Technische Daten', sources: 'Quellen',
+    compare: 'Vom 2D-Grundriss zum 3D-Modell', gallery: 'Rendering-Galerie', glossary: 'Glossar',
+    device: 'Gerät', opens: 'So öffnet es sich', format: 'Format', size: 'Größe',
+    pack: 'Paket', priceNoVat: 'Preis ohne MwSt.', delivery: 'Lieferzeit', includes: 'Enthalten', unit: 'Einheit', area: 'Fläche',
+    extra: 'Extra', units: 'Wohnungen', perUnit: 'Preis pro Wohnung', from: 'ab', upTo: (n) => `bis ${n} m²`, range: (a, b) => `${a + 1} bis ${b} m²`,
+    videoStill: 'Standbild aus dem Video', videoLink: (s, mb) => `Video ansehen (MP4, ${s} s, ${mb})`,
+    vatNote: (r) => `Alle Preise ohne MwSt. (spanische MwSt.: ${r} %).`, source: 'Quelle', related2: 'Verwandt', render: 'Rendering',
+    comingSoonTag: 'demnächst', total: (d) => `Gesamtdauer: ${d}.`, rendersNote: 'Aus dem 3D-Modell erzeugte Bilder (Renderings), keine Fotos.',
+    unitsRange: (a, b) => (b ? `${a} bis ${b}` : `${a} oder mehr`), plan2d: '2D-Grundriss', model3d: '3D-Modell',
+    embedIntro: 'Fügen Sie diesen Code in Ihre Website ein, um den 3D-Viewer anzuzeigen:',
+    iphone: 'iPhone und iPad', android: 'Android', desktop: 'Computer, Tablet und Handy', arIos: 'AR Quick Look in Safari, ohne App',
+    arAndroid: 'Scene Viewer auf Handys mit ARCore, ohne App', webViewer: 'Web-3D-Viewer im Browser', tabletop: 'Tischmodell 1:20', realSize: 'Originalgröße',
+    desktopAr: 'Computer können keine Augmented Reality zeigen: Scannen Sie den QR-Code auf dieser Seite mit dem Handy', arPage: 'Augmented-Reality-Seite',
+    approx: '≈',
+  },
 };
 export const labels = (lang) => LABELS[lang] || LABELS.es;
 
@@ -294,7 +316,7 @@ function embedSnippet(h) {
   const code = viewerData('embedSnippet', h, () => {
     const src = h.absHref('embed-villa');
     if (!src) return '';
-    const title = h.lang === 'es' ? `${villa.name.es} en 3D` : `${villa.name.en} in 3D`;
+    const title = h.lang === 'es' ? `${villa.name.es} en 3D` : `${villa.name[h.lang] || villa.name.en} in 3D`;
     return `<iframe src="${src}" title="${title}" width="100%" height="560" style="border:0;max-width:100%" allow="xr-spatial-tracking; fullscreen" loading="lazy"></iframe>`;
   });
   return code ? ['```html', plainSpaces(code), '```'].join('\n') : '';
@@ -328,7 +350,7 @@ function pricingTables(h, variant) {
       x.name[lang], x.pct != null ? `+${h.tokens(`{{extra:${x.id}}}`)}` : h.tokens(`{{extra:${x.id}}}`), x.unit[lang],
     ])));
     const v = pricing.volume;
-    out.push('', `**${v.name[lang]}**: ${h.tokens('{{volume}}')} (${h.tokens('{{volumeUnit}}')} ${lang === 'es' ? 'por vivienda' : 'per home'}). ${v.note[lang]}`);
+    out.push('', `**${v.name[lang]}**: ${h.tokens('{{volume}}')} (${h.tokens('{{volumeUnit}}')} ${{ es: 'por vivienda', de: 'pro Wohnung' }[lang] || 'per home'}). ${v.note[lang]}`);
     out.push('', `**${L.guarantees}**`, '', pricing.guarantees[lang].map((g) => `- ${g}`).join('\n'));
   }
   out.push('', L.vatNote(Math.round(pricing.vatRate * 100)));
@@ -534,9 +556,11 @@ export function blocksToMarkdown(entry, ctx = entry?.ctx, opts = {}) {
   const meta = [`${L.canonical}: ${url}`];
   const f = founderOf();
   meta.push(`${L.language}: ${LOCALE[lang]} · ${L.updated}: ${entry.dateModified || doc.dateModified || ''} · ${L.author}: ${f ? `${f.name}, ${brand}` : L.team(brand)}`);
-  const otherLang = lang === 'es' ? 'en' : 'es';
-  const twin = entry.alternates?.[otherLang] || route[otherLang];
-  if (twin && route.index !== false) meta.push(`${L.twin}: ${h.abs(twin)}`);
+  // One line per other language that has a twin (Español / English / Deutsch).
+  for (const otherLang of site.langs.filter((l) => l !== lang)) {
+    const twin = entry.alternates?.[otherLang] || route[otherLang];
+    if (twin && route.index !== false) meta.push(`${LANG_NAMES[otherLang]}: ${h.abs(twin)}`);
+  }
   out.push(meta.join('  \n'));
   if (page.lead) out.push(h.inline(page.lead).split('\n').map((l) => `> ${l}`).join('\n'));
 

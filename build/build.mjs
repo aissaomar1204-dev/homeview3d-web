@@ -463,6 +463,7 @@ function validateContent(allDocs) {
     if (/\.\.\./.test(s)) W(id, lang, 'use the … character instead of "..."');
     if (lang === 'es' && /"[^"]+"/.test(s)) W(id, lang, `straight quotes (use « »): «${s.slice(0, 50)}…»`);
     if (lang === 'en' && /(^|\s)"[^"]+"/.test(s)) W(id, lang, `straight quotes (use “ ”): «${s.slice(0, 50)}…»`);
+    if (lang === 'de' && /(^|\s)"[^"]+"/.test(s)) W(id, lang, `straight quotes (use „ “): «${s.slice(0, 50)}…»`);
     if (/\bEstudio 3D\b/.test(s)) E(id, lang, 'literal brand name: use {{brand}}');
     checkTokens(id, lang, s);
     checkLinks(id, lang, s);

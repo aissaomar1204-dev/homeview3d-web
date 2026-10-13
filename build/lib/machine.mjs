@@ -95,6 +95,9 @@ export const LLMS_FULL = {
  *     Spanish page with a note, and an «English» section that points to the English index and full file;
  *   - /en/llms.txt: the same index for English pages («Quick answers», notes from the English cards).
  */
+/** Languages with llms.txt and llms-full.txt (German pages, since 14-oct-2026, only have their index.md mirrors and are
+ *  linked from the root llms.txt as a website). */
+export const LLMS_LANGS = ['es', 'en'];
 export const LLMS_INDEX = {
   targetBytes: 10 * 1024,
   path: (lang) => (lang === site.defaultLang ? '/llms.txt' : `/${lang}/llms.txt`),
@@ -402,7 +405,7 @@ export function llmsTxt(indexable, placeholders, fullLangs = site.langs, lang = 
       : `${hh.plain(site.entity.en)} Public pricing excluding VAT from ${fromPrice(hh)}; ${packById('maqueta').name.en} ${hh.tokens('{{price:maqueta}}')} per home, delivered in ${hh.tokens('{{delivery:maqueta}}')}.`;
   };
   lines.push(`> ${summary(lang)}`);
-  if (root) for (const l of site.langs.filter((x) => x !== lang && indexable.some((e) => e.lang === x))) lines.push(`> ${l.toUpperCase()}: ${summary(l)}`);
+  if (root) for (const l of site.langs.filter((x) => x !== lang && indexLangs.includes(x) && indexable.some((e) => e.lang === x))) lines.push(`> ${l.toUpperCase()}: ${summary(l)}`);
   lines.push('', es ? 'Datos clave:' : 'Key facts:', ...keyFacts(lang, h, fullLangs, INDEX_FACTS), '');
   const answers = quickAnswers(lang, h, (id) => get(id));
   lines.push(`## ${es ? 'Respuestas rápidas' : 'Quick answers'}`, ...answers, '');
@@ -443,8 +446,8 @@ export function llmsTxt(indexable, placeholders, fullLangs = site.langs, lang = 
         : `- [Todo el contenido en español en un fichero](${site.domain}${LLMS_FULL.path('es')}): cada página en español en Markdown`);
     }
     const home = get('home', l);
-    if (home && !indexLangs.includes(l)) other.push(`- [${l === 'en' ? 'English website' : 'Web en español'}](${home.url})`);
-    if (other.length) lines.push(`## ${l === 'en' ? 'English' : 'Español'}`, ...other, '');
+    if (home && !indexLangs.includes(l)) other.push(`- [${{ en: 'English website', es: 'Web en español', de: 'Deutsche Website' }[l] || l}](${home.url})`);
+    if (other.length) lines.push(`## ${{ en: 'English', es: 'Español', de: 'Deutsch' }[l] || l}`, ...other, '');
   }
   // Optional (llmstxt.org: can be skipped): about + legal on one line.
   const optional = ids(['sobre-nosotros', 'aviso-legal', 'privacidad', 'cookies']).filter(Boolean);
@@ -505,7 +508,7 @@ function llmsFullTxt(lang, pages, mdByKey, placeholders, fullLangs, indexLangs =
 function feedXml(lang, items, h) {
   const feedPath = lang === site.defaultLang ? '/feed.xml' : `/${lang}/feed.xml`;
   const home = h.absHref('home') || `${site.domain}/`;
-  const title = lang === 'es' ? `${site.brand.name}: guías y casos` : `${site.brand.name}: guides and case studies`;
+  const title = `${site.brand.name}: ${{ es: 'guías y casos', de: 'Ratgeber und Fallstudien' }[lang] || 'guides and case studies'}`;
   const last = items.map((e) => e.dateModified).filter(Boolean).sort().at(-1);
   const body = items.map((e) => [
     '    <item>',
@@ -616,7 +619,7 @@ function headersFile(dist, htmlFiles, extraHtml, mdPaths, keyFile, llmsPaths = [
   for (const p of mdPaths.sort()) out.push(block(p, ['Content-Type: text/markdown; charset=utf-8', 'X-Robots-Tag: noindex', 'Cache-Control: public, max-age=3600']));
   for (const p of ['/indexnow-manifest.json', '/indexnow-pending.json']) out.push(block(p, ['Content-Type: application/json; charset=utf-8', 'X-Robots-Tag: noindex', 'Cache-Control: public, max-age=0, must-revalidate']));
   out.push(block(keyFile, ['Content-Type: text/plain; charset=utf-8', 'X-Robots-Tag: noindex']));
-  for (const p of ['/feed.xml', '/en/feed.xml']) if (fs.existsSync(path.join(dist, p))) out.push(block(p, ['Content-Type: application/rss+xml; charset=utf-8', 'Cache-Control: public, max-age=3600']));
+  for (const p of site.langs.map((l) => (l === site.defaultLang ? '/feed.xml' : `/${l}/feed.xml`))) if (fs.existsSync(path.join(dist, p))) out.push(block(p, ['Content-Type: application/rss+xml; charset=utf-8', 'Cache-Control: public, max-age=3600']));
   out.push(block('/site.webmanifest', ['Content-Type: application/manifest+json; charset=utf-8', 'Cache-Control: public, max-age=86400']));
   return { text: out.join('\n'), hashes: [...hashes] };
 }
@@ -714,8 +717,8 @@ export async function writeMachineOutputs(entries, env = {}) {
   if (withVideo.length) written.push(writeFile(dist, '/sitemap-video.xml', sitemapVideos(withVideo)));
 
   // 3. llms.txt per language (LLMS_INDEX policy) + llms-full per language (LLMS_FULL policy)
-  const fullLangs = site.langs.filter((l) => withMd.some((e) => e.lang === l && !LLMS_FULL.excludeTemplates.has(e.template)));
-  const indexLangs = site.langs.filter((l) => l === site.defaultLang || withMd.some((e) => e.lang === l));
+  const fullLangs = site.langs.filter((l) => LLMS_LANGS.includes(l) && withMd.some((e) => e.lang === l && !LLMS_FULL.excludeTemplates.has(e.template)));
+  const indexLangs = site.langs.filter((l) => LLMS_LANGS.includes(l) && (l === site.defaultLang || withMd.some((e) => e.lang === l)));
   const fullPaths = [];
   for (const lang of fullLangs) {
     const full = llmsFullTxt(lang, withMd.filter((e) => e.lang === lang), mdByKey, placeholders, fullLangs, indexLangs);

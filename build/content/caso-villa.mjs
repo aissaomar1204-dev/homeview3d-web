@@ -367,4 +367,179 @@ export default {
       service: 'maqueta',
     },
   },
+
+  de: {
+    title: 'Villa an der Costa del Sol in 3D: eine Fallstudie',
+    description: 'Fallstudie: eine Villa an der Costa del Sol, aus einem einzigen Grundriss ohne Fotos in 3D modelliert: {{villa:rooms}} Räume, Renderings, Viewer und AR.',
+    h1: 'Villa an der Costa del Sol: vom 2D-Grundriss zu 3D',
+    lead: '{{brand}} hat das Obergeschoss einer Villa an der Costa del Sol aus {{villa:input}} in 3D modelliert. Das Ergebnis: {{villa:rooms}} möblierte Räume auf rund {{villa:interiorM2}} m², Renderings, ein Web-Viewer und Augmented Reality. Es ist unsere anonymisierte Demo-Fallstudie.',
+    heroLead: 'Eine reale Villa an der Costa del Sol, aus einem einzigen 2D-Grundriss in 3D modelliert. Drehen Sie sie hier.',
+    breadcrumb: 'Villa an der Costa del Sol',
+    card: {
+      title: 'Fallstudie: Villa an der Costa del Sol',
+      summary: 'Eine Villa, aus einem einzigen Grundriss ohne Fotos modelliert: Zahlen, Renderings, Viewer, Augmented Reality und die Grenzen des Falls.',
+    },
+    facts: [
+      ['Grundlage', 'Ein veröffentlichter 2D-Grundriss, ohne Fotos und ohne Maße'],
+      ['Umfang', 'Obergeschoss einer Villa, mit zwei Terrassen'],
+      ['Fläche', '≈ {{villa:interiorM2}} m² innen und ≈ {{villa:terracesM2}} m² Terrassen'],
+      ['Räume', '{{villa:rooms}}, davon {{villa:bedrooms}} Schlafzimmer'],
+      ['Bilder', '{{villa:renders}} in insgesamt rund {{villa:renderMinutes}} Minuten Rechenzeit'],
+      ['Web-Modell', '{{file:glb}}, mit geführtem Rundgang und Schnittansicht'],
+      ['Augmented Reality', 'iPhone, iPad und Android: 1:20 und Originalgröße'],
+      ['Arbeit', 'Eine einzige Sitzung, vom Grundriss bis zum Export'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'Was haben wir mit dieser Villa gemacht?',
+        answer: '{{brand}} hat das Obergeschoss einer Villa an der Costa del Sol aus {{villa:input}} in 3D modelliert. Das Ergebnis: {{villa:rooms}} möblierte Räume auf rund {{villa:interiorM2}} m², Renderings, ein Web-Viewer und Augmented Reality. Es ist unsere anonymisierte Demo-Fallstudie.',
+      },
+      {
+        type: 'answer',
+        h2: 'Warum ein Grundriss und keine Fotos?',
+        answer: 'Weil ein Grundriss oft alles ist, was ein Makler oder Bauträger hat, wenn es nichts zu fotografieren gibt: eine Wohnung im Vorverkauf, eine leere Immobilie oder eine Villa, zu der Ihr Käufer nicht fliegen kann. Wir haben den schwierigsten Fall gewählt, einen veröffentlichten Grundriss ohne ein einziges Innenfoto und ohne Maße. Alles auf dieser Seite stammt aus diesem Grundriss.',
+        body: 'Der Viewer oben enthält das echte Modell: Drehen Sie die Villa, betreten Sie jeden Raum, schalten Sie die Schnittansicht ein, um die Wände auf {{villa:cutHeight}} m zu schneiden, oder ziehen Sie sie auf ihre vollen {{villa:wallHeight}} m hoch. Genau das erhält Ihr Käufer per Link oder eingebettet auf Ihrer Website.',
+      },
+      {
+        type: 'specs',
+        h2: 'Die Villa in Zahlen',
+        items: [
+          ['Grundfläche des Modells', '{{villa:footprint}}'],
+          ['Bäder', '{{villa:bathrooms}}'],
+          ['Prozedurale PBR-Texturen', '{{villa:textures}}, für dieses Modell erstellt'],
+          ['Materialien', '{{villa:materials}}'],
+          ['Dreiecke', '{{villa:triangles}}'],
+          ['Wandhöhe', '{{villa:wallHeight}} m'],
+          ['Schnitthöhe', '{{villa:cutHeight}} m'],
+          ['Komprimierung des Web-Modells', 'GLB mit Meshopt und WebP-Texturen'],
+          ['AR auf dem iPhone (USDZ)', '{{file:usdzMesa}} für das Tischmodell 1:20 und {{file:usdzReal}} in Originalgröße'],
+          ['AR auf Android (GLB)', '{{file:glbArMesa}} für das Tischmodell 1:20 und {{file:glbAr}} in Originalgröße'],
+        ],
+      },
+      {
+        type: 'gallery',
+        h2: 'Die Renderings der Villa',
+        intro: 'Die {{villa:renders}} Bilder des Falls (6 Luftansichten, 4 Ansichten auf Augenhöhe, die Draufsicht, der Liniengrundriss und das Bild für soziale Medien) wurden in Cycles in insgesamt rund {{villa:renderMinutes}} Minuten berechnet, im Licht eines mediterranen Spätnachmittags. Keines ist ein Foto oder ein KI-generiertes Bild. Zuerst kommen die 4 Ansichten auf Augenhöhe, mit Decken und eingeschalteten Lampen, dann die 6 Luftansichten; beide Grundrisse finden Sie im Vergleichsregler weiter unten. Himmel und Meer hinter den Fenstern sind eine illustrative Kulisse, nicht die echte Umgebung der Villa.',
+        items: [
+          { image: 'villa_interior_salon', alt: '3D-Rendering des Wohnzimmers der anonymisierten Villa auf Augenhöhe: Sofa, eine eingeschaltete Stehlampe und drei Schiebetüren, offen zur Terrasse mit Sonnenliegen.', caption: 'Wohnzimmer mit Blick zur Terrasse, auf Augenhöhe. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_interior_dormitorio', alt: '3D-Rendering des Hauptschlafzimmers der anonymisierten Villa auf Augenhöhe: 180-cm-Bett mit gemauertem Kopfteil, eingeschaltete Nachttischlampen und eine Schiebetür zur Terrasse.', caption: 'Hauptschlafzimmer im Licht des späten Nachmittags. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_interior_bano', alt: '3D-Rendering des En-suite-Bads der anonymisierten Villa auf Augenhöhe: runde freistehende Wanne, schwarzes Feinsteinzeug, ein runder Spiegel und eine Terrazzowand.', caption: 'En-suite-Bad mit freistehender Wanne. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_interior_terraza', alt: '3D-Rendering der Hauptterrasse der anonymisierten Villa auf Augenhöhe: Terrakottaboden, Outdoor-Sofa, niedriger Tisch und ein Olivenbaum im Topf.', caption: 'Hauptterrasse mit Outdoor-Sofa und Olivenbaum. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_maqueta_iso', alt: 'Aufgeschnittenes 3D-Modell des Obergeschosses der Villa auf {{villa:cutHeight}} m, Luftansicht aus drei Vierteln mit möblierten Räumen. 3D-Rendering der anonymisierten Villa an der Costa del Sol.', caption: 'Schnittmodell auf {{villa:cutHeight}} m, Luftansicht aus drei Vierteln. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_salon_dormitorio', alt: '3D-Rendering des Wohnzimmers mit Ecksofa und des Hauptschlafzimmers der anonymisierten Villa im Licht des späten Nachmittags.', caption: 'Wohnzimmer und Hauptschlafzimmer von oben. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_dormitorios', alt: '3D-Rendering des Schlafzimmerflügels und des Familienbads der anonymisierten Villa, mit Rasenterrasse und Wendeltreppe.', caption: 'Schlafzimmerflügel und Familienbad. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_bano_suite', alt: '3D-Rendering des En-suite-Bads der anonymisierten Villa mit runder freistehender Wanne, schwarzem Feinsteinzeug und einer Terrazzowand.', caption: 'En-suite-Bad von oben, mit aufgeschnittenen Wänden. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_terraza', alt: '3D-Rendering der Hauptterrasse der anonymisierten Villa mit Terrakottaboden, zwei Sonnenliegen, einem Outdoor-Sofa und einem Olivenbaum im Topf.', caption: 'Hauptterrasse mit Sonnenliegen und Olivenbaum, von oben. 3D-Rendering der anonymisierten Villa.' },
+          { image: 'villa_muros_completos', alt: '3D-Rendering der anonymisierten Villa mit Wänden in voller Höhe von {{villa:wallHeight}} m, Außenluftansicht aus drei Vierteln.', caption: 'Volle Wände auf {{villa:wallHeight}} m. 3D-Rendering der anonymisierten Villa.' },
+        ],
+      },
+      {
+        type: 'video',
+        video: 'villa-turntable',
+        h2: 'Wie sieht das Modell in Bewegung aus?',
+        caption: 'Eine Kamerafahrt rund um das Modell, auf {{villa:cutHeight}} m geschnitten, im selben Licht wie die Renderings. 3D-Animation, in Cycles berechnet, ohne Ton; keine Filmaufnahme.',
+      },
+      {
+        type: 'compare',
+        h2: 'Der Grundriss, neu gezeichnet und in Farbe',
+        intro: 'Der Originalgrundriss gehört einem Dritten, und wir veröffentlichen ihn nicht. Links der aus unserem Modell neu gezeichnete 2D-Grundriss, rechts die farbige Draufsicht. Beide stammen aus derselben orthografischen Kamera, und die Umrisse stimmen auf ±3 px überein, die Breite der Linie.',
+      },
+      {
+        type: 'steps',
+        h2: 'Wie ist sie entstanden, Schritt für Schritt?',
+        intro: 'Die tatsächliche Arbeitsfolge, in einer einzigen Sitzung. Zeiten nennen wir nur, wo wir sie gemessen haben: Die einzelnen Phasen haben wir nicht getrennt gestoppt, also erfinden wir keine Stunden. Den Standardablauf und seine Dauer beschreibt [So funktioniert es](@como-funciona).',
+        items: [
+          {
+            title: 'Den Grundriss lesen',
+            body: 'Grundlage war der veröffentlichte Grundriss der Villa. Ohne Maße haben wir den Maßstab aus dem Grundriss selbst bestimmt und jede Wand und Öffnung daran gemessen. Notiert haben wir, was der Grundriss offenlässt: Höhen, Tischlerarbeiten und Bodenbeläge.',
+          },
+          {
+            title: 'Modellieren per Skript',
+            body: 'Ein Python-Skript baut in Blender die {{villa:wallHeight}} m hohen Wände, dazu Trennwände, Öffnungen, Türen und Fenster, die Treppe ins Erdgeschoss und die Wendeltreppe auf der Terrasse. Weil die Geometrie aus Daten entsteht, heißt eine Trennwand versetzen, einen Wert ändern und es erneut ausführen.',
+          },
+          {
+            title: 'Möbel und Materialien',
+            body: 'Wir haben alle {{villa:rooms}} Räume nach dem eingerichtet, was der Grundriss zeigt, und {{villa:textures}} prozedurale Texturen erstellt: Terrakotta, Terrazzo, schwarzes Feinsteinzeug, Holz und Kunstrasen, unter anderem. Keine stammt aus einer Stockbibliothek.',
+          },
+          {
+            title: 'Licht und Renderings',
+            time: '≈ {{villa:renderMinutes}} Min.',
+            body: 'Licht eines mediterranen Spätnachmittags: eine warme, tiefe Sonne und ein physikalischer Himmel. Cycles hat die {{villa:renders}} Bilder (6 Luftansichten, 4 Ansichten auf Augenhöhe, beide Grundrisse und das Bild für soziale Medien) in insgesamt rund {{villa:renderMinutes}} Minuten auf einer Grafikkarte RTX 4060 berechnet, mit automatischen Prüfungen auf überstrahlte Pixel und nicht geladene Texturen.',
+          },
+          {
+            title: 'Export für Web und Augmented Reality',
+            body: 'Wir exportieren nach glTF, und eine automatische Pipeline bereinigt, komprimiert und validiert das Modell: Die Web-Datei kommt auf {{file:glb}}, weniger als ein Drittel des ursprünglichen Exports, mit denselben {{villa:triangles}} Dreiecken und {{villa:materials}} Materialien. Nach einer Änderung lassen wir diese Pipeline einfach erneut laufen, ohne Handarbeit. Außerdem erstellen wir die USDZ-Dateien für das iPhone und die GLB-Dateien für Android.',
+          },
+          {
+            title: 'Viewer und Prüfungen',
+            body: 'Den Viewer haben wir mit model-viewer eingerichtet: Raumliste, geführter Rundgang, Lichtsteuerung und der Schnitt auf {{villa:cutHeight}} m. Getestet haben wir ihn mit gedrosselter Verbindung: Zuerst erscheint das Standbild, und das Modell lädt erst beim Tippen.',
+          },
+        ],
+      },
+      {
+        type: 'answer',
+        h2: 'Was würde sich mit Fotos oder einem bemaßten Grundriss ändern?',
+        answer: 'Genauigkeit und Oberflächen. Mit einem bemaßten Grundriss oder einer DWG wären die Flächen keine Schätzungen (≈) mehr, und das Modell folgte jedem Maß. Mit Innenfotos würden wir die echten Böden, die Küche und die Bäder nachbilden, statt sie zu interpretieren. Ablauf und Lieferzeit blieben gleich.',
+        body: 'Hier hatte der Grundriss keine Maße: Wir haben an seinem Maßstab gemessen, die Maße des Modells können also von der gebauten Villa abweichen. Auch ein Teil der Möbel ist unsere Interpretation, weil ein Exposé-Grundriss nur Umrisse zeichnet. Für Aufteilung, Licht und die Funktion jedes Raums spielt das keine Rolle; es spielte eine Rolle, wenn Sie Einbauschränke bestellen wollten, deshalb sagen wir es.\n\nZwei Grenzen der Modellierung verbirgt das Rendering nicht. Die weiße freistehende Wanne wirkt in voller Sonne fast wie ein massiver Zylinder, obwohl sie ein Becken hat. Und der Olivenbaum auf der Terrasse ist licht. Das sind Details, die ein echtes Projekt in der Korrekturrunde verfeinert.',
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'Was echt und was geschätzt ist',
+        body: villa.notice.de,
+      },
+      {
+        type: 'embedCode',
+        h2: 'Kann ich diesen Viewer auf meine Website stellen?',
+        intro: 'Ja: Es ist ein iframe. Kopieren Sie diesen Code und fügen Sie ihn in Ihre Website ein; für Ihre Immobilie liefern wir denselben Code mit Ihrem Modell. Er funktioniert gleich auf einer Exposé-Seite, einer Projekt-Website oder einer Landingpage.',
+      },
+      {
+        type: 'ar',
+        h2: 'In Augmented Reality öffnen',
+        intro: 'Auf iPhone oder iPad öffnet sie sich in AR Quick Look, auf Android in Scene Viewer. Wählen Sie das Modell 1:20, um es auf einen Tisch zu stellen, oder die Originalgröße, um hindurchzugehen. Am Computer scannen Sie den QR-Code mit dem Handy.',
+      },
+      { type: 'faq' },
+    ],
+    faq: [
+      {
+        q: 'Ist das eine echte Villa?',
+        a: 'Ja. Grundlage war der veröffentlichte Grundriss einer realen Villa an der Costa del Sol, aber der Fall ist anonymisiert: Wir zeigen weder den Originalgrundriss noch Adresse, Exposé oder Maklerbüro. {{brand}} hat den Grundriss aus dem eigenen Modell neu gezeichnet. Die Flächen sind Schätzungen anhand des Maßstabs (≈), und ein Teil der Möbel ist unsere Interpretation.',
+      },
+      {
+        q: 'Was würde ein solches 3D-Modell kosten?',
+        a: 'Ein solches Modell entspricht dem kompletten 3D-Modell von {{brand}}: 6 Renderings in 4K, ein Web-Viewer, Augmented Reality und {{revisions:maqueta}}, geliefert in {{delivery:maqueta:dat}}. Der Preis hängt von Fläche und Umfang ab, und wir senden ihn als schriftlichen Festpreis, sobald wir den Grundriss kennen. Fragen Sie über das [Kontaktformular](@contacto) an.',
+      },
+      {
+        q: 'Wie lange hat es gedauert?',
+        a: 'Modellierung, Texturen und Export entstanden in einer einzigen Arbeitssitzung, und die {{villa:renders}} Bilder des Falls (6 Luftansichten, 4 Ansichten auf Augenhöhe, beide Grundrisse und das Bild für soziale Medien) brauchten insgesamt rund {{villa:renderMinutes}} Minuten Rechenzeit. Ein echtes Projekt von {{brand}} dauert {{delivery:maqueta}}, weil es Ihre Prüfung einschließt: Wir senden Ihnen den Viewer über einen privaten Link und setzen {{revisions:maqueta}} vor der Lieferung um.',
+      },
+      {
+        q: 'Sind die Flächen im Viewer exakt?',
+        a: 'Nein, und wir kennzeichnen sie mit ≈. Der Grundriss dieser Villa hatte keine Maße, also hat {{brand}} an seinem Maßstab gemessen: Die {{villa:interiorM2}} m² innen und {{villa:terracesM2}} m² Terrassen sind Schätzungen. Mit einem bemaßten Grundriss oder einer DWG folgt das Modell den Maßen des Projekts. Veröffentlichen Sie in einem Exposé immer die amtliche Fläche, nicht die des Modells.',
+      },
+      {
+        q: 'Kann ich diese Villa auf meinem Handy in Augmented Reality ansehen?',
+        a: 'Ja. Auf iPhone oder iPad tippen Sie in Safari auf „In Ihrem Raum ansehen“, und sie öffnet sich in AR Quick Look; auf Android öffnet sie sich in Scene Viewer auf Handys mit ARCore. Sie können das Tischmodell 1:20 wählen, {{file:usdzMesa}} auf dem iPhone, oder die Immobilie in Originalgröße. Am Computer zeigt {{brand}} stattdessen einen QR-Code.',
+      },
+      {
+        q: 'Könnte ich diese Villa in einem anderen Einrichtungsstil sehen?',
+        a: 'Ja, ohne die Immobilie neu zu bauen: Virtuelles Home Staging wird auf dasselbe Modell angewendet, Raum für Raum, und die Änderung erscheint sofort in den Renderings, im Viewer und in der AR. {{brand}} erstellt Materialien per Code, sodass ein anderer Bodenbelag oder eine andere Sofafarbe nur einen geänderten Wert bedeutet.',
+      },
+      {
+        q: 'Warum nur das Obergeschoss?',
+        a: 'Weil nur dieser Grundriss veröffentlicht war. {{brand}} hat modelliert, was der Grundriss festlegt, und kein Erdgeschoss oder keine Fassade erfunden, was Raten bedeutet hätte. Bei einem echten Projekt modellieren wir jedes Geschoss, das Sie uns schicken; der Preis hängt von der Gesamtfläche ab, und wir legen ihn fest, sobald wir die Grundrisse sehen.',
+      },
+      {
+        q: 'Kann ich diese Villa meinen Kunden als Beispiel zeigen?',
+        a: 'Ja, zeigen Sie ihnen diese Seite oder den Viewer, damit sie sehen, was sie bekämen. Bedenken Sie, dass sie nicht zum Verkauf steht: Es ist eine anonymisierte Demonstration von {{brand}}, ohne Preis, Lage oder Maklerbüro. Wenn Sie dasselbe für eine Immobilie in Ihrem Bestand möchten, fragen Sie die kostenlose Demo an, und wir modellieren einen Raum Ihres Grundrisses.',
+      },
+    ],
+    related: ['sol-promotoras', 'como-funciona', 'contacto'],
+    cta: {
+      h2: 'Das möchte ich für mein Projekt',
+      body: 'Derselbe Ablauf mit Ihrem Grundriss: ein möbliertes 3D-Modell, Renderings, ein Viewer für Ihr Exposé und Augmented Reality, zum Festpreis und geliefert in {{delivery:maqueta:dat}}. Wenn Sie möchten, beginnen wir kostenlos mit einem Raum.',
+      service: 'maqueta',
+    },
+  },
 };

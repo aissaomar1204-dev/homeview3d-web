@@ -359,7 +359,7 @@ const R = {
 
 export function glossaryTerms(ctx) {
   const list = (ctx.data.glossary || []).filter((t) => t[ctx.lang] && t[ctx.lang].term);
-  const coll = new Intl.Collator(ctx.lang === 'es' ? 'es' : 'en', { sensitivity: 'base' });
+  const coll = new Intl.Collator(ctx.lang, { sensitivity: 'base' });
   return list.slice().sort((a, b) => coll.compare(a[ctx.lang].term, b[ctx.lang].term));
 }
 

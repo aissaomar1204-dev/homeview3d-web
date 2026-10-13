@@ -39,6 +39,7 @@ const BUDGET = {
 const CTA = {
   es: ['Pide una demo', 'Ver la villa en 3D', 'Ver en tu salón', 'Calcular precio', 'Enviar solicitud', 'Escribir por WhatsApp'],
   en: ['Book a demo', 'View the villa in 3D', 'View in your room', 'Estimate price', 'Send request', 'Message on WhatsApp'],
+  de: ['Demo anfragen', 'Die Villa in 3D ansehen', 'In Ihrem Raum ansehen', 'Preis berechnen', 'Anfrage senden', 'Per WhatsApp schreiben'],
 };
 const BANNED_WORDS = [
   /\belevat(e|es|ing)\b/i, /\bseamless(ly)?\b/i, /\bunleash/i, /\bnext-gen\b/i, /\brevolutioni[sz]e/i,

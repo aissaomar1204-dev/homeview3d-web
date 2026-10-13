@@ -4,6 +4,7 @@
    values here: every visual decision lives in src/css via tokens.
    ═══════════════════════════════════════════════════════════════ */
 import { esc } from './md.mjs';
+import { numLocale, dayRange } from './i18n.mjs';
 import { chapter, noteTone } from './chapters.mjs';
 
 /* ─── Primitives ──────────────────────────────────────────────── */
@@ -64,8 +65,8 @@ export function contactHref(ctx, service, extra = {}) {
   return `${ctx.href('contacto')}${qs ? `?${qs}` : ''}#${formAnchor(ctx)}`;
 }
 
-export const formAnchor = (ctx) => (ctx.lang === 'es' ? 'contacto' : 'contact');
-export const calcAnchor = (ctx) => (ctx.lang === 'es' ? 'calculadora' : 'calculator');
+export const formAnchor = (ctx) => ({ es: 'contacto', de: 'kontakt' }[ctx.lang] || 'contact');
+export const calcAnchor = (ctx) => ({ es: 'calculadora', de: 'rechner' }[ctx.lang] || 'calculator');
 
 /** Is the image in the manifest (so optional visuals can be skipped instead of placeholder'd)? */
 export const hasImage = (ctx, name) => !!(ctx.images && ctx.images[name]);
@@ -366,7 +367,7 @@ export function processSteps(ctx, { headingLevel = 3 } = {}) {
 
 function totalCota(ctx) {
   const { min, max } = ctx.data.process.totalDays;
-  const days = ctx.lang === 'es' ? `${min} a ${max} días laborables` : `${min} to ${max} working days`;
+  const days = dayRange(min, max, ctx.lang);
   return `<p class="cota" data-reveal="line"><span class="cota__label">${esc(ctx.t('process.total'))}: <strong>${esc(days)}</strong></span></p>`;
 }
 
@@ -501,7 +502,7 @@ export function calculator(ctx, block = {}) {
   const base = contactHref(ctx, c.packId).split('#')[0];
   const widget = `<div class="calc__widget" data-calc hidden`
     + ` data-steps="${esc(JSON.stringify(steps))}" data-min="${c.minUnits}" data-max="${c.maxUnits}" data-vat="${vat}"`
-    + ` data-locale="${ctx.lang === 'es' ? 'es-ES' : 'en-GB'}" data-per-unit="${esc(ctx.t('calc.perUnit'))}" data-save="${esc(ctx.t('calc.save'))}" data-href="${esc(base)}" data-anchor="${formAnchor(ctx)}">`
+    + ` data-locale="${numLocale(ctx.lang)}" data-per-unit="${esc(ctx.t('calc.perUnit'))}" data-save="${esc(ctx.t('calc.save'))}" data-href="${esc(base)}" data-anchor="${formAnchor(ctx)}">`
     + `<label class="calc__label" for="${inputId}">${esc(ctx.t('calc.units'))}</label>`
     + `<div class="stepper"><button type="button" class="stepper__btn" data-step="-1" aria-label="${esc(ctx.t('calc.less'))}" aria-controls="${inputId}">${ctx.icon('minus')}</button>`
     + `<input class="stepper__input num" type="number" id="${inputId}" name="unidades" inputmode="numeric" min="${c.minUnits}" step="1" value="1" autocomplete="off">`

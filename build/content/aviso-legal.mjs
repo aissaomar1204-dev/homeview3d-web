@@ -129,4 +129,64 @@ export default {
       },
     ],
   },
+
+  de: {
+    title: 'Impressum und Nutzungsbedingungen der Website',
+    description: 'Wer diese Website nach dem spanischen LSSI-CE betreibt, die Nutzungsbedingungen, was unsere Angebote und Renderings bedeuten, Urheberrecht und Haftung.',
+    h1: 'Impressum',
+    lead: 'Diese Seite nennt die Angaben zum Unternehmen hinter dieser Website, wie es Artikel 10 des spanischen Gesetzes 34/2002 (LSSI-CE) verlangt, und die Bedingungen für die Nutzung: was Sie mit den Inhalten tun dürfen, was unsere Angebote und die veröffentlichten Renderings bedeuten und welches Recht gilt.',
+    breadcrumb: 'Impressum',
+    blocks: [
+      {
+        type: 'prose',
+        h2: 'Betreiber der Website',
+        body: '- **Betreiber**: {{legal:razonSocial}}\n- **Steuernummer (NIF)**: {{legal:nif}}\n- **Sitz**: {{legal:domicilio}}\n- **Registerangaben**: {{legal:registro}}\n- **E-Mail**: {{legal:email}}\n- **Telefon**: {{phone}}\n- **Tätigkeit**: Studio für 3D-Visualisierung. Wir erstellen virtuelle Showrooms für Bauträger von Neubauprojekten (Lageplan mit Verfügbarkeit, Häuser Geschoss für Geschoss, Grundrisse, Räume und 360°-Rundgänge) und verwandeln 2D-Grundrisse von Immobilien in 3D-Modelle, Renderings, Web-Viewer und Augmented-Reality-Dateien für Bauträger, Immobilienmakler und Architekten.\n\n{{brand}} ist der Handelsname, unter dem {{legal:razonSocial}} ihre Leistungen erbringt. In diesem Impressum steht „wir“ für den Betreiber und „Sie“ für alle, die die Website besuchen.\n\nDiese deutsche Fassung dient nur der Information. Weicht sie von der spanischen Fassung ab, gilt die spanische Fassung.',
+      },
+      {
+        type: 'prose',
+        h2: 'Wozu diese Website dient',
+        body: 'Diese Website beschreibt die Leistungen von {{brand}}, zeigt eine Demo-Fallstudie und ermöglicht es, ein Angebot oder eine Demo anzufragen. **Online kann nichts gekauft oder bezahlt werden**: Das Formular übermittelt uns nur Ihre Anfrage. Jedes Projekt wird einzeln vereinbart, über ein schriftliches Angebot, das Sie annehmen und das Preis, Lieferzeit, Leistungen und Korrekturrunden festlegt.\n\nMit der Nutzung der Website akzeptieren Sie dieses Impressum in der zu diesem Zeitpunkt veröffentlichten Fassung. Wenn Sie nicht einverstanden sind, nutzen Sie die Website bitte nicht.',
+      },
+      {
+        type: 'prose',
+        h2: 'Was unsere Angebote bedeuten',
+        body: 'Wir veröffentlichen keine Tarife: Jedes Projekt wird schriftlich angeboten, in Euro und **ohne Mehrwertsteuer**, die, wo sie anfällt, auf die Rechnung kommt. Für jedes Projekt zählt der Preis im angenommenen Angebot, und er ändert sich nicht, solange sich das Projekt nicht ändert und Sie kein neues Angebot annehmen.',
+      },
+      {
+        type: 'prose',
+        h2: 'Renderings, Maße und die Demo-Fallstudie',
+        body: 'Die Bilder auf dieser Website sind **Renderings**: am Computer aus einem 3D-Modell erzeugte Bilder, keine Fotos. Die gezeigten Möbel, Dekorationen und Oberflächen sind eine virtuelle Nachbildung.\n\nDie gezeigte Villa an der Costa del Sol ist ein **anonymisierter Demo-Fall**. Wir haben sie aus dem veröffentlichten Grundriss einer realen Villa modelliert, ohne Fotos und ohne Maße. Diesen Originalgrundriss geben wir nicht wieder: Der gezeigte Grundriss ist aus unserem eigenen Modell neu gezeichnet, und seine Flächen sind Schätzungen (≈) anhand des Maßstabs.\n\nDie von uns erstellten Modelle, 3D-Grundrisse und Renderings sind Marketingmaterial, um Immobilien zu zeigen und zu verkaufen. Sie ersetzen keine Architektenpläne und gelten nicht für Bauanträge, Gutachten oder amtliche Vermessungen.',
+      },
+      {
+        type: 'prose',
+        h2: 'Urheberrecht',
+        body: 'Texte, Renderings, 3D-Modelle, Viewer, Gestaltung und Code dieser Website gehören {{legal:razonSocial}} oder werden unter Lizenz genutzt. Ohne unsere schriftliche Erlaubnis dürfen Sie sie nicht kopieren, verändern oder gewerblich nutzen. Sie dürfen auf jede Seite verlinken und kurze Auszüge mit Quellenangabe zitieren.\n\nSie dürfen den **3D-Viewer der Villa** mit dem Code, den wir auf der Seite der [Demo-Fallstudie](@caso-villa) bereitstellen, auf Ihrer eigenen Website einbetten, solange Sie ihn nicht verändern und den Hinweis auf {{brand}} nicht entfernen.\n\nEinige Bestandteile gehören Dritten und werden unter deren Lizenzen genutzt: die Schriften Gloock und Hanken Grotesk (SIL Open Font License 1.1) und der 3D-Viewer model-viewer von Google (Apache License 2.0). Erwähnte Marken Dritter, etwa von Immobilienportalen, Betriebssystemen oder Software, gehören ihren Inhabern und werden nur genannt, um die Kompatibilität zu beschreiben.\n\nDie Nutzungsrechte an den Renderings, Modellen und Dateien, die wir jedem Kunden liefern, regelt das Angebot dieses Kunden.',
+      },
+      {
+        type: 'prose',
+        h2: 'Zulässige Nutzung',
+        body: 'Sie verpflichten sich, die Website rechtmäßig zu nutzen und nichts zu tun, was sie beschädigen oder andere an der Nutzung hindern könnte, etwa Schadcode einzuschleusen, auf nicht öffentliche Bereiche zuzugreifen oder den Server absichtlich zu überlasten.\n\nWenn Sie uns über das Formular Pläne oder Unterlagen schicken, bestätigen Sie, dass Sie berechtigt sind, sie uns für ein Angebot zu überlassen, und dass die angegebenen Kontaktdaten Ihre eigenen oder die Ihres Unternehmens sind.',
+      },
+      {
+        type: 'prose',
+        h2: 'Haftung',
+        body: 'Wir achten darauf, dass die Informationen auf dieser Website richtig und aktuell sind, und jede Seite zeigt, wann sie zuletzt aktualisiert wurde. Dennoch kann sie Fehler oder Lücken enthalten, die wir korrigieren, sobald wir sie bemerken. Zitierte Marktzahlen stammen aus verlinkten öffentlichen Quellen, und ihre Richtigkeit hängt von diesen Quellen ab.\n\nWir haften nicht für Unterbrechungen durch Wartung, technische Störungen außerhalb unseres Einflusses oder höhere Gewalt, noch für Schäden aus einer Nutzung der Website entgegen diesem Impressum. Augmented Reality setzt ein kompatibles Gerät voraus: AR Quick Look auf iPhone und iPad und Scene Viewer auf Android-Handys mit ARCore.\n\nNichts in diesem Impressum beschränkt eine Haftung, die gesetzlich nicht ausgeschlossen werden kann.',
+      },
+      {
+        type: 'prose',
+        h2: 'Links zu anderen Websites',
+        body: 'Wir verlinken auf externe Quellen wie amtliche Statistiken oder technische Dokumentation, damit Sie die zitierten Zahlen prüfen können. Diese Websites kontrollieren wir nicht und sind für ihre Inhalte nicht verantwortlich. Wenn Sie einen Link zu rechtswidrigen Inhalten finden, schreiben Sie an {{legal:email}}, und wir entfernen ihn.',
+      },
+      {
+        type: 'prose',
+        h2: 'Datenschutz und Cookies',
+        body: 'Wie wir die Daten verarbeiten, die Sie uns schicken, wie lange wir sie aufbewahren und wie Sie Ihre Rechte ausüben, erklärt unsere [Datenschutzerklärung](@privacidad). Diese Website setzt keine Cookies; was sie in Ihrem Browser speichert, beschreibt unsere [Cookie-Richtlinie](@cookies).',
+      },
+      {
+        type: 'prose',
+        h2: 'Anwendbares Recht und Gerichtsstand',
+        body: `Dieses Impressum unterliegt spanischem Recht, insbesondere dem [Gesetz 34/2002 über Dienste der Informationsgesellschaft und den elektronischen Geschäftsverkehr](${LSSI}) (LSSI-CE). Schließen Sie als Verbraucher einen Vertrag mit uns, behalten Sie die Rechte, die Ihnen das Verbraucherrecht gibt, und können vor den Gerichten Ihres Wohnorts klagen. In allen anderen Fällen und soweit das Gesetz nichts anderes vorsieht, unterwerfen sich die Parteien den Gerichten am Sitz des Betreibers.\n\nFür Fragen zu diesem Impressum schreiben Sie an {{legal:email}}.`,
+      },
+    ],
+  },
 };

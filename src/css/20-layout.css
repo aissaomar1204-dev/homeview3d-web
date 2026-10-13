@@ -106,8 +106,8 @@
   .site-header .btn--header .btn__ic { display: none; }
   .site-header__actions .lang-link { min-width: 36px; }
 }
-/* 320px: the language link moves into the menu only. */
-@media (max-width: 359px) {
+/* Phones: the language links (two since the German pages) move into the menu and the footer only. */
+@media (max-width: 429px) {
   .site-header__actions .lang-link { display: none; }
 }
 

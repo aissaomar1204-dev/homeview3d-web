@@ -59,16 +59,18 @@ function ancestors(ctx, id) {
 
 /* ─── Header ──────────────────────────────────────────────────── */
 
+/** One link per other language (ES / EN / DE): to the twin page when it exists, otherwise to that language's home. */
 function langLink(ctx, { className = 'lang-link', long = false } = {}) {
-  const other = ctx.otherLang;
-  if (!other) return '';
-  const target = ctx.twinPath || (ctx.data.routeById.home && ctx.data.routeById.home[other]);
-  if (!target) return '';
-  const oui = ctx.data.ui ? ctx.data.ui[other] : null;
-  const label = oui ? oui.meta.versionLabel : other.toUpperCase();
-  const text = long ? label : (oui ? oui.meta.langShort : other.toUpperCase());
-  // Label in name (WCAG 2.5.3): the accessible name starts with the visible "EN"/"ES".
-  return `<a class="${className}" href="${esc(target)}" hreflang="${other}" lang="${other}"${long ? '' : ` aria-label="${esc(`${text}, ${label}`)}"`}>${esc(text)}</a>`;
+  const links = (ctx.otherLangs || []).map((other) => {
+    const target = (ctx.twins && ctx.twins[other]) || (ctx.data.routeById.home && ctx.data.routeById.home[other]);
+    if (!target) return '';
+    const oui = ctx.data.ui ? ctx.data.ui[other] : null;
+    const label = oui ? oui.meta.versionLabel : other.toUpperCase();
+    const text = long ? label : (oui ? oui.meta.langShort : other.toUpperCase());
+    // Label in name (WCAG 2.5.3): the accessible name starts with the visible "EN"/"ES"/"DE".
+    return `<a class="${className}" href="${esc(target)}" hreflang="${other}" lang="${other}"${long ? '' : ` aria-label="${esc(`${text}, ${label}`)}"`}>${esc(text)}</a>`;
+  }).filter(Boolean);
+  return links.join(long ? '<span class="lang-sep" aria-hidden="true"> · </span>' : '');
 }
 
 export function header(ctx) {

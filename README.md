@@ -23,6 +23,17 @@ el espejo Markdown, de `build/content/home.mjs`. **La portada en castellano no s
 inglesa usa `/assets/js/portada-en.js`, que el build genera desde `main.js` cambiando sus textos (`JS_EN` en
 `home.mjs`). `npm run check` avisa de que los servicios no se enlazan desde la portada: es esperado.
 
+**Alemán (desde el 14 de octubre de 2026):** un tercer idioma con un conjunto reducido bajo `/de/`: la portada
+(`build/home/portada.de.html`, el mismo marcado traducido, con su JS generado desde `main.js` por `JS_TR` en
+`build/templates/home.mjs`), Bauträger (`sol-promotoras`), la villa, So funktioniert es, Kontakt, Impressum,
+Datenschutz, Cookie-Richtlinie, Danke, AR y el visor incrustable. Las rutas alemanas están en `routes.mjs` (clave `de`),
+los textos de interfaz en `ui.mjs` y `ui-viewer.mjs` (`de`, tratamiento de «Sie», comillas „…“), y los formatos por
+idioma en `build/lib/i18n.mjs`. Tras «in», «nach» o «von», el plazo se escribe `{{delivery:<pack>:dat}}` (dativo:
+«in 3 bis 5 Werktagen»). No hay `llms.txt` en alemán (`LLMS_LANGS` en `machine.mjs`): el `llms.txt` raíz enlaza la
+web alemana. Respondemos en español e inglés, no en alemán (`site.replyLangs`, que alimenta el schema). La portada en
+castellano solo gana el `hreflang` y el `og:locale:alternate` del alemán en su `<head>`. **Antes de darlo por
+definitivo, que lo revise una persona nativa.**
+
 **Resto de páginas (mismo día):** conservan sus textos, URLs, datos estructurados y espejos Markdown (el SEO), con el
 diseño de la portada y su propia cabecera (Servicios, Cómo funciona, Precios, La villa en 3D, Guías) y su propio pie,
 con las columnas de enlaces a todas las secciones: fondo cielo, paneles blancos redondeados que alternan con secciones abiertas y una banda oscura

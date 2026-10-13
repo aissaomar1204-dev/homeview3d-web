@@ -108,4 +108,52 @@ export default {
       },
     ],
   },
+
+  de: {
+    title: 'Cookie-Richtlinie: Diese Website setzt keine Cookies',
+    description: 'Diese Website setzt keine Cookies und nutzt keine Analyse, Werbung oder Tracker Dritter. Sie merkt sich nur für die Dauer Ihres Besuchs, wie Sie hierherkamen.',
+    h1: 'Cookie-Richtlinie',
+    lead: 'Diese Website setzt keine Cookies: keine Analyse-, Werbe- oder Social-Media-Cookies. Deshalb sehen Sie kein Cookie-Banner. Das Einzige, was sie in Ihrem Browser speichert, und nur für die Dauer Ihres Besuchs, ist, wie Sie hierherkamen, damit es Ihrer Anfrage beigefügt werden kann, falls Sie uns schreiben.',
+    breadcrumb: 'Cookies',
+    blocks: [
+      {
+        type: 'prose',
+        h2: 'Was sind Cookies?',
+        body: `Cookies sind kleine Dateien, die eine Website in Ihrem Browser speichert, um sich Informationen zwischen Seiten oder Besuchen zu merken. Das spanische Recht wendet in Artikel 22.2 des [Gesetzes 34/2002](${LSSI}) (LSSI-CE) dieselben Regeln auf jede ähnliche Technik an, etwa den lokalen Speicher des Browsers: Sie müssen darüber informiert werden, und sofern sie für einen von Ihnen gewünschten Dienst nicht unbedingt nötig ist, muss vor der Nutzung Ihre Einwilligung eingeholt werden.`,
+      },
+      {
+        type: 'table',
+        h2: 'Was speichert diese Website in Ihrem Browser?',
+        intro: 'Keine Cookies. Nur die folgenden Einträge, im Sitzungsspeicher des Browsers (sessionStorage): Sie gehören nur zu dieser Website, werden mit niemandem geteilt und beim Schließen des Tabs gelöscht.',
+        caption: 'Einträge, die diese Website in Ihrem Browser speichert',
+        head: ['Eintrag', 'Wozu er dient', 'Wie lange', 'Wer ihn nutzt'],
+        rows: [
+          ['landing', 'Sich die erste besuchte Seite merken', 'Bis Sie den Tab schließen', 'Nur diese Website'],
+          ['referrer', 'Sich die Website merken, von der Sie kamen, falls Sie von einer anderen Seite kamen', 'Bis Sie den Tab schließen', 'Nur diese Website'],
+          ['utm_source, utm_medium und utm_campaign', 'Sich die Kampagnenparameter des Links merken, dem Sie gefolgt sind, falls er welche hatte', 'Bis Sie den Tab schließen', 'Nur diese Website'],
+        ],
+        note: 'Diese Einträge verlassen Ihren Browser nur, wenn Sie das Anfrageformular senden: Dann reisen sie mit Ihrer Anfrage, wie in unserer [Datenschutzerklärung](@privacidad) erklärt. Senden Sie es nicht, verschwinden sie beim Schließen des Tabs.',
+      },
+      {
+        type: 'prose',
+        h2: 'Gibt es Analyse, Werbung oder Inhalte Dritter?',
+        body: 'Nein. Diese Website lädt kein Google Analytics, keine Social-Media-Pixel, Karten, eingebetteten Videos oder Werbung. Schriften und 3D-Viewer werden von unserer eigenen Domain ausgeliefert, ohne Aufrufe an Server Dritter, während Sie surfen.\n\nFalls wir künftig ein Statistik-Werkzeug einsetzen, wird es eine **cookielose** Lösung sein, die niemanden identifiziert, und wir führen es auf dieser Seite mit Namen und Datum auf. Sollten wir jemals Cookies verwenden, die Ihre Einwilligung brauchen, fragen wir vorher, mit einem Banner, in dem Annehmen und Ablehnen gleich gewichtet sind.',
+      },
+      {
+        type: 'prose',
+        h2: 'Und WhatsApp, Augmented Reality oder der Viewer auf anderen Websites?',
+        body: '- **WhatsApp und externe Links**: Wenn Sie auf „Per WhatsApp schreiben“ oder einen Link zu einer anderen Website tippen, verlassen Sie diese Seite, und das Ziel wendet seine eigene Cookie-Richtlinie an.\n- **Augmented Reality**: Auf iPhone und iPad öffnet sie sich in AR Quick Look, auf Android in Scene Viewer von Google. Das sind Funktionen Ihres Handys nach den Bedingungen von Apple oder Google; diese Website setzt dabei keine Cookies.\n- **Eingebetteter Viewer**: Bettet ein Maklerbüro unseren 3D-Viewer auf seiner Website ein, setzt der Viewer auch dort keine Cookies. Die einbettende Website hat ihre eigene Richtlinie.',
+      },
+      {
+        type: 'prose',
+        h2: 'Wie löschen oder blockieren Sie Cookies in Ihrem Browser?',
+        body: 'Auch wenn diese Website keine verwendet, können Sie Cookies und Websitedaten jeder Website in den Datenschutzeinstellungen Ihres Browsers (Chrome, Safari, Firefox oder Edge) ansehen, löschen oder blockieren. Der Sitzungsspeicher dieser Website leert sich beim Schließen des Tabs und auch, wenn Sie die Websitedaten löschen.',
+      },
+      {
+        type: 'prose',
+        h2: 'Änderungen dieser Richtlinie',
+        body: 'Ändert sich, was diese Website in Ihrem Browser speichert, aktualisieren wir diese Seite mit Datum, bevor die Änderung in Kraft tritt. Für Fragen schreiben Sie an {{legal:email}}. Die Angaben zum Betreiber der Website stehen in unserem [Impressum](@aviso-legal).\n\nDiese deutsche Fassung dient nur der Information; weicht sie von der spanischen Fassung ab, gilt die spanische Fassung.',
+      },
+    ],
+  },
 };

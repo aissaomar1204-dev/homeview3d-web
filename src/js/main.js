@@ -121,7 +121,7 @@
     var out = function (k) { return $('[data-out="' + k + '"]', w); };
     var money = function (n, dec) {
       var s = new Intl.NumberFormat(locale, { minimumFractionDigits: dec, maximumFractionDigits: dec, useGrouping: 'always' }).format(n);
-      return locale === 'es-ES' ? s + ' €' : '€' + s;
+      return locale === 'en-GB' ? '€' + s : s + ' €';
     };
     var rows = $$('[data-tier]', w.parentElement);
     var save = out('save');
@@ -412,18 +412,18 @@
    closed (only the questions show). The full text stays in the HTML for search engines and assistants. */
 (function () {
   if (!matchMedia('(max-width: 767px)').matches) return;
-  var es = (document.documentElement.lang || 'es').slice(0, 2) === 'es', more = es ? 'Leer más' : 'Read more', less = es ? 'Leer menos' : 'Read less';
+  var T = { es: ['Leer más', 'Leer menos'], de: ['Mehr lesen', 'Weniger lesen'] }[document.documentElement.lang.slice(0, 2)] || ['Read more', 'Read less'];
   document.querySelectorAll('.faq__item[open]').forEach(function (d) { d.open = false; });
   document.querySelectorAll('.block__intro').forEach(function (p, i) {
     p.classList.add('is-clamped');
     if (p.scrollHeight <= p.clientHeight + 2) { p.classList.remove('is-clamped'); return; }
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'more-btn'; b.textContent = more;
+    b.type = 'button'; b.className = 'more-btn'; b.textContent = T[0];
     if (!p.id) p.id = 'intro-' + i;
     b.setAttribute('aria-controls', p.id); b.setAttribute('aria-expanded', 'false');
     b.addEventListener('click', function () {
       var open = p.classList.toggle('is-clamped') === false;
-      b.textContent = open ? less : more; b.setAttribute('aria-expanded', String(open));
+      b.textContent = open ? T[1] : T[0]; b.setAttribute('aria-expanded', String(open));
     });
     p.after(b);
   });

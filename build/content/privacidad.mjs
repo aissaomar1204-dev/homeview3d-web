@@ -180,4 +180,83 @@ export default {
       },
     ],
   },
+
+  de: {
+    title: 'Datenschutzerklärung und Umgang mit Ihren Daten',
+    description: 'Welche Daten wir bei einer Anfrage oder einem Grundriss verarbeiten, wozu, wie lange, wer sie verarbeitet und wie Sie Ihre Rechte nach der DSGVO ausüben.',
+    h1: 'Datenschutzerklärung',
+    lead: 'Die Daten, die Sie uns bei einer Angebots- oder Demo-Anfrage geben, verwenden wir nur, um zu antworten, unser Angebot zu erstellen und, wenn Sie uns beauftragen, die Arbeit auszuführen und abzurechnen. Wir verkaufen Ihre Daten nicht, nutzen sie nicht für Werbung, und diese Website setzt keine Cookies. Die Einzelheiten folgen, nach DSGVO und spanischem Recht.',
+    breadcrumb: 'Datenschutz',
+    blocks: [
+      {
+        type: 'prose',
+        h2: 'Wer ist verantwortlich?',
+        body: `- **Verantwortlicher**: {{legal:razonSocial}}, unter dem Handelsnamen {{brand}}\n- **Steuernummer (NIF)**: {{legal:nif}}\n- **Sitz**: {{legal:domicilio}}\n- **E-Mail für Datenschutzfragen**: {{legal:email}}\n\nEinen Datenschutzbeauftragten haben wir nicht benannt, weil unsere Tätigkeit keinen erfordert. Für Fragen zu Ihren Daten schreiben Sie an die genannte Adresse.\n\nDiese Erklärung wendet die [Verordnung (EU) 2016/679](${SRC.rgpd}), die Datenschutz-Grundverordnung (DSGVO), und das spanische [Organgesetz 3/2018](${SRC.lopdgdd}) über den Schutz personenbezogener Daten und digitale Rechte (LOPDGDD) an. Diese deutsche Fassung dient nur der Information; weicht sie von der spanischen Fassung ab, gilt die spanische Fassung.`,
+      },
+      {
+        type: 'prose',
+        h2: 'Welche Daten verarbeiten wir?',
+        body: 'Nur, was Sie uns geben, und das Minimum, das für den Betrieb der Website nötig ist:\n\n- **Anfrageformular**: Art des Kunden, die gewünschte Leistung, Anzahl der Immobilien, Name, Unternehmen, E-Mail, Telefon, der angehängte Grundriss oder Link, Ihre Anmerkungen und, wenn Sie es angeben, wie Sie von uns erfahren haben.\n- **Herkunft des Besuchs**, die das Formular beim Senden hinzufügt: die Einstiegsseite, die Website, von der Sie kamen, etwaige Kampagnenparameter im Link (utm) und die Sprache der Seite.\n- **Nachrichten**, die Sie uns per E-Mail, WhatsApp oder Telefon schicken.\n- **Projektdaten**, wenn Sie uns beauftragen: Rechnungsangaben und die Projektdateien.\n- **Technische Verbindungsdaten** wie IP-Adresse, Browser und aufgerufene Seite, die der Server protokolliert, um die Website auszuliefern und vor Missbrauch zu schützen.\n\nGrundrisse können Daten anderer Personen enthalten, etwa den Namen des Eigentümers oder die Adresse der Immobilie. Für das Modell brauchen wir sie nicht; schwärzen Sie sie bitte vor dem Senden, wenn möglich. Senden Sie sie dennoch, bestätigen Sie, dass Sie berechtigt sind, sie uns zu diesem Zweck zu überlassen.',
+      },
+      {
+        type: 'table',
+        h2: 'Wozu nutzen wir Ihre Daten, und auf welcher Rechtsgrundlage?',
+        intro: 'Jede Nutzung hat ihre eigene Rechtsgrundlage und Speicherdauer. Für nichts, was nicht in dieser Tabelle steht, verwenden wir Ihre Daten.',
+        caption: 'Zwecke, Rechtsgrundlagen und Speicherdauer',
+        head: ['Zweck', 'Rechtsgrundlage', 'Wie lange'],
+        rows: [
+          ['Ihre Anfrage beantworten und das Angebot oder die Demo senden', 'Vorvertragliche Maßnahmen auf Ihre Anfrage (Art. 6 Abs. 1 lit. b DSGVO)', '12 Monate ab dem letzten Kontakt, wenn kein Projekt folgt'],
+          ['Die Arbeit ausführen, liefern und Korrekturen bearbeiten', 'Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO)', 'Für die Dauer des Projekts und eines etwaigen gebuchten Viewer-Hostings'],
+          ['Abrechnen und buchhalterische und steuerliche Pflichten erfüllen', 'Rechtliche Verpflichtung (Art. 6 Abs. 1 lit. c DSGVO)', 'Sechs Jahre, wie Artikel 30 des spanischen Handelsgesetzbuchs verlangt'],
+          ['Wissen, welche Kanäle uns Anfragen bringen (Herkunft des Besuchs)', 'Berechtigtes Interesse, Anfragen ohne Cookies zu messen (Art. 6 Abs. 1 lit. f DSGVO)', 'Dieselbe Dauer wie die zugehörige Anfrage'],
+          ['Die Website sicher und erreichbar halten (technische Protokolle)', 'Berechtigtes Interesse am Schutz des Dienstes (Art. 6 Abs. 1 lit. f DSGVO)', 'Die begrenzte Dauer, die der Hosting-Anbieter festlegt'],
+        ],
+        note: 'Schreiben Sie im Namen eines Unternehmens, verarbeiten wir Ihre geschäftlichen Kontaktdaten auf Grundlage unseres berechtigten Interesses an der Geschäftsbeziehung (Art. 6 Abs. 1 lit. f DSGVO und Art. 19 LOPDGDD). Endet eine Frist, sperren wir die Daten: Sie bleiben nur für Gerichte und Behörden erhalten, solange Rechtsansprüche möglich sind (Art. 32 LOPDGDD), und werden dann gelöscht. Folgt kein Projekt, wird Ihr Grundriss zusammen mit der übrigen Anfrage gelöscht.',
+      },
+      {
+        type: 'prose',
+        body: 'Wir treffen keine automatisierten Entscheidungen und erstellen keine Profile: Ein Mensch liest jede Anfrage und entscheidet über die Antwort. Newsletter oder Werbung schicken wir Ihnen auch nicht; sollten wir das einmal wollen, bitten wir Sie gesondert um Ihre Einwilligung, die Sie jederzeit widerrufen können.',
+      },
+      {
+        type: 'prose',
+        h2: 'Wer kann Ihre Daten noch sehen?',
+        body: `Wir verkaufen und teilen Ihre Daten nicht. Zugriff haben nur die Anbieter, die wir für unsere Leistung brauchen, als **Auftragsverarbeiter** mit einem Vertrag, der sie verpflichtet, die Daten nur nach unseren Weisungen zu nutzen und sicher aufzubewahren:\n\n- **Netlify, Inc.** (USA): hostet diese Website und empfängt und speichert Formulareinsendungen, einschließlich angehängter Grundrisse. Netlify veröffentlicht die [Unterauftragsverarbeiter](${SRC.netlifySub}), auf die es sich stützt.\n- **Unser E-Mail-Anbieter**: betreibt das Postfach, in dem wir Ihre Nachrichten erhalten und beantworten.\n\nAußerdem geben wir Daten an die spanische Steuerbehörde und andere öffentliche Stellen weiter, wo das Gesetz es verlangt, und an unsere Bank zur Abwicklung von Zahlungen.\n\nSchreiben Sie uns per **WhatsApp**, wird dieser Dienst von WhatsApp Ireland Limited nach eigenen Bedingungen und eigener [Datenschutzrichtlinie](${SRC.whatsapp}) erbracht. Wir nutzen das Gespräch nur, um Ihre Anfrage zu bearbeiten.`,
+      },
+      {
+        type: 'prose',
+        h2: 'Verlassen Ihre Daten den Europäischen Wirtschaftsraum?',
+        body: `Ja, in einem Fall: Netlify, Inc. hat seinen Sitz in den USA. Netlify ist nach dem [EU-U.S. Data Privacy Framework](${SRC.dpf}) zertifiziert, für das ein Angemessenheitsbeschluss der Europäischen Kommission gilt, und sein Auftragsverarbeitungsvertrag sieht die von der Kommission genehmigten Standardvertragsklauseln (Durchführungsbeschluss 2021/914) vor, falls dieser Rahmen nicht mehr gilt. Einzelheiten stehen in der [Datenschutzrichtlinie von Netlify](${SRC.netlify}).\n\nVerarbeitet unser E-Mail-Anbieter Daten außerhalb des Europäischen Wirtschaftsraums, dann nur auf Grundlage eines Angemessenheitsbeschlusses der Europäischen Kommission oder von Standardvertragsklauseln.`,
+      },
+      {
+        type: 'prose',
+        h2: 'Welche Rechte haben Sie?',
+        body: '- **Auskunft**: erfahren, ob wir Ihre Daten verarbeiten, und eine Kopie erhalten.\n- **Berichtigung**: unrichtige oder unvollständige Daten korrigieren lassen.\n- **Löschung**: verlangen, dass wir sie löschen, etwa wenn sie nicht mehr nötig sind.\n- **Widerspruch**: einer Verarbeitung auf Grundlage unseres berechtigten Interesses widersprechen.\n- **Einschränkung**: verlangen, dass wir sie nicht mehr nutzen, während wir ihre Richtigkeit prüfen oder Ihren Widerspruch bewerten.\n- **Datenübertragbarkeit**: die Daten, die Sie uns für ein Projekt gegeben haben, in einem gängigen Format erhalten.\n- **Widerruf der Einwilligung**, wo die Verarbeitung auf einer Einwilligung beruht, ohne Auswirkung auf das bis dahin Geschehene.',
+      },
+      {
+        type: 'prose',
+        h2: 'Wie üben Sie Ihre Rechte aus?',
+        body: 'Schreiben Sie an {{legal:email}} mit dem Betreff „Datenschutz“, welches Recht Sie ausüben möchten und wohin wir antworten sollen. Einen Identitätsnachweis verlangen wir nur, wenn wir begründete Zweifel haben, dass die Anfrage von Ihnen stammt.\n\nEs ist kostenlos. Wir antworten innerhalb von höchstens einem Monat; bei komplexen oder zahlreichen Anfragen erlaubt das Gesetz eine Verlängerung um zwei weitere Monate, worüber wir Sie innerhalb des ersten Monats informieren.',
+      },
+      {
+        type: 'prose',
+        h2: 'Wo können Sie sich beschweren?',
+        body: `Wenn Sie meinen, dass wir mit Ihren Daten falsch umgegangen sind oder Ihre Anfrage nicht bearbeitet haben, können Sie sich bei der spanischen Datenschutzbehörde (AEPD) über ihr [Online-Portal](${SRC.aepdSede}) beschweren oder sich unter [aepd.es](${SRC.aepd}) informieren. Wenn Sie in einem anderen EU-Land leben, können Sie sich auch an die Datenschutzbehörde Ihres Landes wenden. Wir würden die Sache aber gern zuerst selbst klären: Die meisten Fragen lösen sich mit einer E-Mail.`,
+      },
+      {
+        type: 'prose',
+        h2: 'Wie schützen wir Ihre Daten und Ihre Grundrisse?',
+        body: 'Die Website funktioniert nur über eine verschlüsselte Verbindung (HTTPS). Formulareinsendungen und Grundrisse werden im privaten Bereich des Hosting-Anbieters gespeichert, mit Zugriff nur für das Team von {{brand}}.\n\nIhre Grundrisse nutzen wir nur für Ihr Angebot und Ihr Projekt: Wir veröffentlichen sie nicht, verwenden sie nicht in anderen Projekten und zeigen ohne Ihre Erlaubnis keine Bilder Ihrer Immobilie. Wenn Ihr Unternehmen eine braucht, unterzeichnen wir vor dem Erhalt der Grundrisse eine Vertraulichkeitsvereinbarung.',
+      },
+      {
+        type: 'prose',
+        h2: 'Minderjährige',
+        body: 'Unsere Leistungen richten sich an Fachleute und volljährige Eigentümer. Wenn Sie unter 14 Jahre alt sind, schicken Sie uns bitte keine Daten: Das spanische Recht (Art. 7 LOPDGDD) verlangt dafür die Einwilligung Ihrer Eltern oder Erziehungsberechtigten.',
+      },
+      {
+        type: 'prose',
+        h2: 'Änderungen dieser Erklärung',
+        body: 'Ändern wir den Umgang mit Ihren Daten, etwa durch einen neuen Anbieter, aktualisieren wir diese Seite und ihr Datum. Betrifft die Änderung eine laufende Anfrage oder ein laufendes Projekt, informieren wir Sie per E-Mail.',
+      },
+    ],
+  },
 };

@@ -30,7 +30,7 @@ import { routes, routeById, redirects as routeRedirects } from './data/routes.mj
 import { pricing, formatPrice } from './data/pricing.mjs';
 import { villa } from './data/villa.mjs';
 import {
-  routeIndexable, embedPrefixes, ALLOWED_AGENTS, BLOCKED_AGENTS, CRITICAL_AGENTS, inlineScriptHashes, LLMS_FULL, LLMS_INDEX, EMBED_ROBOTS, CONTENT_SIGNAL, BUDGETS,
+  routeIndexable, embedPrefixes, ALLOWED_AGENTS, BLOCKED_AGENTS, CRITICAL_AGENTS, inlineScriptHashes, LLMS_FULL, LLMS_INDEX, LLMS_LANGS, EMBED_ROBOTS, CONTENT_SIGNAL, BUDGETS,
 } from './lib/machine.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -802,7 +802,7 @@ if (smVideo) {
 const mdLinks = (s) => [...String(s).matchAll(/\]\((https?:\/\/[^)\s]+)\)/g)].map((m) => m[1]);
 const llms = readDist('llms.txt');
 if (!llms) err('discovery', 'llms.txt', 'missing');
-for (const lang of site.langs) {
+for (const lang of site.langs.filter((l) => LLMS_LANGS.includes(l))) {
   const fp = LLMS_INDEX.path(lang).slice(1);
   const idx = lang === site.defaultLang ? llms : readDist(fp);
   if (!idx) {
@@ -833,7 +833,7 @@ for (const lang of site.langs) {
   if (/[–—]/.test(idx)) warn('discovery', fp, 'em/en dash found');
 }
 // llms-full: one file per language (LLMS_FULL policy in build/lib/machine.mjs), each ≤ 400 KB target.
-for (const lang of site.langs) {
+for (const lang of site.langs.filter((l) => LLMS_LANGS.includes(l))) {
   const fp = LLMS_FULL.path(lang).slice(1);
   const hasPages = indexablePages.some((p) => p.lang === lang && !LLMS_FULL.excludeTemplates.has(p.template));
   const full = readDist(fp);

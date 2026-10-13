@@ -227,4 +227,114 @@ export default {
     ],
     related: ['precios', 'como-funciona', 'caso-villa', 'servicio-plano'],
   },
+
+  de: {
+    title: 'Angebot anfragen: Laden Sie Ihren Grundriss hoch',
+    description: 'Laden Sie Ihren Grundriss hoch und erhalten Sie innerhalb eines Werktags Festpreis und Liefertermin, oder eine kostenlose 3D-Demo eines Raums mit AR.',
+    h1: 'Angebot oder kostenlose Demo aus Ihrem Grundriss',
+    lead: 'Laden Sie den Grundriss hoch (PDF, JPG, PNG oder DWG) und sagen Sie uns, was Sie brauchen. Ein Mensch antwortet innerhalb eines Werktags mit Festpreis und Liefertermin, auf Wunsch mit einer kostenlosen 3D-Demo eines Raums. Das komplette 3D-Modell liefern wir in {{delivery:maqueta:dat}}.',
+    breadcrumb: 'Kontakt',
+    card: {
+      title: 'Angebot anfragen',
+      summary: 'Grundriss hochladen und innerhalb eines Werktags Festpreis und Liefertermin erhalten, oder eine kostenlose 3D-Demo eines Raums.',
+    },
+    facts: [
+      ['Antwortzeit', 'Innerhalb eines Werktags, von einem Menschen'],
+      ['Kanäle', 'Formular, WhatsApp, E-Mail oder Telefon'],
+      ['Was Sie anhängen', 'Grundriss als PDF, JPG, PNG, DWG oder DXF'],
+      ['Keine Datei zur Hand?', 'Ein Exposé- oder Download-Link'],
+      ['Kostenlose Demo', 'Ein Raum in 3D mit Augmented Reality'],
+      ['Preis', 'Ein schriftlicher Festpreis, sobald wir den Grundriss kennen'],
+      ['Sprachen', 'Englisch und Spanisch'],
+      ['Zeitzone', 'Spanien (MEZ/MESZ), wie Deutschland'],
+    ],
+    blocks: [
+      {
+        type: 'contactForm',
+        h2: 'Welche Immobilie möchten Sie in 3D sehen?',
+        intro: 'Zwei kurze Schritte: zuerst die Immobilie, dann Ihre Angaben. Pflicht sind nur Kundentyp, Name, E-Mail und das Datenschutz-Häkchen. Den Grundriss können Sie jetzt anhängen oder später per WhatsApp oder E-Mail schicken.',
+        image: 'villa_interior_salon',
+        imageAlt: 'Wohnzimmer der Villa auf Augenhöhe, mit Ecksofa und Schiebetüren zur Terrasse. 3D-Rendering der anonymisierten Villa.',
+        imageCaption: 'Wohnzimmer mit Blick zur Terrasse. 3D-Rendering der anonymisierten Villa.',
+      },
+      {
+        type: 'prose',
+        h2: 'Lieber WhatsApp, E-Mail oder ein Anruf?',
+        body: 'Nutzen Sie, was Ihnen am besten passt. Jeder Kanal erreicht dasselbe Team, mit derselben Antwortzeit.\n\n- **WhatsApp ({{whatsapp}})**: am schnellsten, wenn der Grundriss auf Ihrem Handy ist. Schicken Sie das PDF oder ein scharfes Foto, die ungefähre Fläche und die gewünschte Leistung.\n- **E-Mail ({{email}})**: am besten für große Dateien, DWG-Zeichnungen oder mehrere Wohnungstypen eines Projekts. Sind sie zu groß zum Anhängen, fügen Sie einen Download-Link ein.\n- **Telefon ({{phone}})**: wenn Sie vor dem Senden lieber kurz sprechen möchten. Wir sagen Ihnen, welches Paket passt und was es kostet.\n\nWir arbeiten nach spanischer Zeit, die der deutschen entspricht, und antworten auf Englisch oder Spanisch. In der Zwischenzeit können Sie sich [unsere Demo-Villa in 3D](@caso-villa) ansehen.',
+      },
+      {
+        type: 'needs',
+        h2: 'Was brauchen wir für einen Preis?',
+        intro: 'Für Festpreis und Liefertermin reichen der Grundriss und ein Referenzmaß: die Gesamtfläche oder die Breite eines Raums. Alles Weitere verbessert das Ergebnis und kann später folgen.',
+      },
+      {
+        type: 'steps',
+        h2: 'Was passiert, nachdem ich meine Anfrage gesendet habe?',
+        intro: 'Nichts beginnt ohne Ihre Freigabe. Das sind die Schritte, sobald Ihre Nachricht bei uns ankommt.',
+        items: [
+          {
+            title: 'Wir lesen Ihre Anfrage und prüfen den Grundriss',
+            body: 'Ein Mensch prüft, ob der Grundriss lesbar ist und ein Referenzmaß hat. Fehlt etwas, fragen wir vor dem Angebot nach, damit sich der Preis später nicht ändert.',
+            time: 'Bei Eingang',
+          },
+          {
+            title: 'Sie erhalten Festpreis und Liefertermin',
+            body: 'Per E-Mail oder WhatsApp: das passende Paket für die Immobilie, was es enthält und der Liefertermin. Wir veröffentlichen keine Tarife: Sie erhalten einen schriftlichen Festpreis ohne Mehrwertsteuer, die, wo sie anfällt, auf die Rechnung kommt.',
+            time: 'Innerhalb eines Werktags',
+          },
+          {
+            title: 'Eine kostenlose Demo, wenn Sie möchten',
+            body: 'Bevor Sie sich entscheiden, modellieren wir einen Raum Ihres Grundrisses und senden ihn mit Augmented Reality, damit Sie ihn auf dem Handy öffnen können. Passt es nicht, zahlen Sie nichts.',
+            time: 'Optional',
+          },
+          {
+            title: 'Sie bestätigen, wir starten',
+            body: 'Sobald Sie schriftlich bestätigen, beginnt die Arbeit. Ein 3D-Grundriss dauert {{delivery:plano3d}}, das komplette 3D-Modell {{delivery:maqueta}}, mit {{revisions:maqueta}}.',
+            time: 'Projektstart',
+          },
+          {
+            title: 'Sie prüfen, erhalten und zahlen',
+            body: 'Sie erhalten den Viewer über einen privaten Link, wir setzen Ihre Änderungen um und liefern die finalen Dateien. Sie zahlen, wenn Sie die fertige Arbeit erhalten. Jeder Schritt ist unter [So funktioniert es](@como-funciona) erklärt.',
+            time: 'Bei Lieferung',
+          },
+        ],
+      },
+      { type: 'faq' },
+    ],
+    faq: [
+      {
+        q: 'Wie schnell erhalte ich eine Antwort auf meine Anfrage?',
+        a: '{{brand}} beantwortet jede Anfrage innerhalb eines Werktags, und die Antwort kommt von einem Menschen, nicht von einem Autoresponder. Sie enthält einen Festpreis, den Leistungsumfang und einen Liefertermin, oder zuerst die Fragen, die wir zum Grundriss klären müssen. Anfragen vom Wochenende oder von spanischen Feiertagen beantworten wir am nächsten Werktag.',
+      },
+      {
+        q: 'Ist die kostenlose Demo wirklich kostenlos und unverbindlich?',
+        a: 'Ja. Ein Angebot von {{brand}} kostet nichts und verpflichtet zu nichts, die Demo ebenso: Wir modellieren einen Raum Ihres Grundrisses in 3D und senden ihn mit Augmented Reality, damit Sie ihn auf dem Handy öffnen können. Gefällt er Ihnen, schicken wir das Festpreisangebot für die ganze Immobilie; wenn nicht, zahlen Sie nichts und wir haken nicht nach.',
+      },
+      {
+        q: 'Bekomme ich ein Angebot, auch ohne den Grundriss zur Hand?',
+        a: 'Ja. Fügen Sie den Link zum Exposé mit dem Grundriss ein, schicken Sie ein deutliches Foto der Broschüre oder bitten Sie bei einem Neubauprojekt den Architekten um die Wohnungsgrundrisse und leiten Sie sie später weiter. Mit Wohnfläche und Anzahl der Geschosse gibt Ihnen {{brand}} ein erstes Angebot, das wir schriftlich bestätigen, sobald wir den Grundriss sehen.',
+      },
+      {
+        q: 'Was, wenn mein Grundriss größer als 8 MB ist oder aus mehreren Dateien besteht?',
+        a: 'Das Formular von {{brand}} nimmt eine Datei bis 8 MB als PDF, JPG, PNG, DWG oder DXF an. Für größere Dateien oder mehrere Grundrisse fügen Sie einen Download-Link (Google Drive, Dropbox, WeTransfer oder ähnlich) ins Formular ein oder schicken ihn an {{email}}. Bei einem Projekt mit mehreren Wohnungstypen ist ein geteilter Ordner mit einem Grundriss pro Typ am einfachsten.',
+      },
+      {
+        q: 'Erstellen Sie Angebote für ein ganzes Portfolio oder ein Neubauprojekt?',
+        a: 'Ja. Geben Sie im Formular an, wie viele Immobilien oder Wohnungstypen es sind. Für Makler mit mehreren Objekten und für Neubauprojekte im Vorverkauf erstellt {{brand}} ein Festpreisangebot, das das Volumen berücksichtigt: Je mehr Immobilien oder Wohnungstypen, desto niedriger der Preis pro Einheit. Die Arbeit mit Bauträgern beschreiben wir unter [3D-Visualisierung für Bauträger](@sol-promotoras).',
+      },
+      {
+        q: 'Bleibt mein Grundriss vertraulich?',
+        a: 'Ja. {{brand}} nutzt Ihren Grundriss und Ihre Daten nur, um das Angebot zu erstellen und, wenn Sie zustimmen, die Arbeit auszuführen. Wir veröffentlichen ohne Ihre Erlaubnis keine Bilder Ihrer Immobilie und geben den Grundriss nicht an Dritte weiter. Wenn Ihr Bauträger oder Maklerbüro eine braucht, unterzeichnen wir vorher eine Vertraulichkeitsvereinbarung. Fristen und Ihre Rechte stehen in unserer [Datenschutzerklärung](@privacidad).',
+      },
+      {
+        q: 'Wann zahle ich, und enthalten Ihre Preise die Mehrwertsteuer?',
+        a: 'Sie zahlen, wenn Sie die fertige Arbeit erhalten. {{brand}} berechnet nichts für Angebot oder Demo, und die Rechnung kommt mit den gelieferten, geprüften Dateien. Die Angebote verstehen sich ohne Mehrwertsteuer, die, wo sie anfällt, auf die Rechnung kommt, und sie sind fest: Was wir schriftlich vereinbaren, zahlen Sie.',
+      },
+      {
+        q: 'Kann ich vor dem Senden mit jemandem sprechen?',
+        a: 'Natürlich. Rufen Sie {{phone}} an oder schreiben Sie per WhatsApp an {{whatsapp}} und erzählen Sie uns von der Immobilie: Art, ungefähre Fläche, wo Sie es nutzen (Exposé, Website oder Verkaufsbüro) und Ihre Frist. {{brand}} sagt Ihnen, welches Paket passt und was es kostet. Wir sind in derselben Zeitzone wie Deutschland. Eine Expresslieferung in 48 Stunden wird gesondert angeboten.',
+      },
+    ],
+    related: ['como-funciona', 'caso-villa', 'sol-promotoras'],
+  },
 };

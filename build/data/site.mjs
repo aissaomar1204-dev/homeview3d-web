@@ -19,10 +19,11 @@ export const site = {
   domain: 'https://homeview3d.com',
   domainPlaceholder: false,
 
-  langs: ['es', 'en'],
-  defaultLang: 'es',             // Spanish at the root, English under /en/
+  langs: ['es', 'en', 'de'],
+  defaultLang: 'es',             // Spanish at the root, English under /en/, German under /de/ (reduced set, routes.mjs)
   xDefault: 'en',                // hreflang x-default points to the English twin when it exists
-  locale: { es: 'es_ES', en: 'en_GB' },
+  locale: { es: 'es_ES', en: 'en_GB', de: 'de_DE' },
+  replyLangs: ['es', 'en'],       // languages we answer in (schema knowsLanguage / availableLanguage): German pages exist, German replies do not
 
   // Contact. WhatsApp in international format without "+".
   contact: {
@@ -39,12 +40,14 @@ export const site = {
   areaServed: {
     es: ['Marbella', 'Málaga', 'Costa del Sol', 'España'],
     en: ['Marbella', 'Málaga', 'Costa del Sol', 'Spain'],
+    de: ['Marbella', 'Málaga', 'Costa del Sol', 'Spanien'],
   },
 
   // One canonical entity sentence, identical everywhere (site, llms.txt, directories, profiles).
   entity: {
     es: '{{brand}} es un estudio de visualización 3D en la Costa del Sol que convierte el plano 2D de una vivienda en un modelo 3D fotorrealista y amueblado, con renders, visor web interactivo y realidad aumentada sin app, para inmobiliarias, promotoras y arquitectos de toda España.',
     en: '{{brand}} is a 3D visualisation studio on the Costa del Sol that turns a home\'s 2D floor plan into a photorealistic, furnished 3D model, with renders, an interactive web viewer and app-free augmented reality, for estate agents, developers and architects across Spain.',
+    de: '{{brand}} ist ein Studio für 3D-Visualisierung an der Costa del Sol, das den 2D-Grundriss einer Immobilie in ein fotorealistisches, möbliertes 3D-Modell verwandelt, mit Renderings, interaktivem Web-Viewer und Augmented Reality ohne App, für Makler, Bauträger und Architekten in ganz Spanien.',
   },
 
   // Legal data for aviso legal / privacidad (LSSI-CE art. 10), from the deed of incorporation.
