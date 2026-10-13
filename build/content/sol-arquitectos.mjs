@@ -1,4 +1,4 @@
-// Audience page: architects, interior designers and renovation companies (ES only).
+// Audience page: architects, interior designers and renovation companies (ES + EN).
 // Keyword focus: renders para arquitectos, visualización arquitectónica (PAA «¿Qué es la visualización arquitectónica?»), interioristas.
 // Angle (02-keywords C11): fast iteration because the model is built by code, AR to present to the end client, embeddable viewer.
 // «¿Cuánto cobra un arquitecto por un render?» is owned by guia-precio-render (linked, not targeted).
@@ -31,6 +31,37 @@ const faq = [
   {
     q: '¿Trabajáis con interioristas y empresas de reformas?',
     a: 'Sí. Para un interiorista, {{brand}} amuebla y materializa el modelo con tu propuesta y la cambia de estilo sin rehacerlo. Para una empresa de reformas, modelamos el estado actual y la propuesta sobre el mismo plano, de modo que el cliente compara antes y después en renders, en el visor y en realidad aumentada. El home staging virtual se presupuesta por estancia.',
+  },
+];
+
+const faqEn = [
+  {
+    q: 'Can you work with my DWG or DXF files?',
+    a: 'Yes. {{brand}} works with DWG and DXF, which are the most accurate, and also with PDF, JPG or PNG floor plans. With a dimensioned CAD file, the model is built to measure. With an image that has no dimensions, we estimate from the drawing’s scale and mark the figures with ≈. Send elevations or sections too if you have them: they help with heights, openings and joinery.',
+  },
+  {
+    q: 'How long does a round of changes take?',
+    a: 'The change to the model itself is fast: {{brand}} generates the geometry by script, so moving a partition or swapping a floor finish rebuilds in minutes. What takes longer is re-rendering the views and checking them. The complete 3D model includes {{revisions:maqueta}}, and when we receive your comments we confirm the turnaround for each round.',
+  },
+  {
+    q: 'Can I present the design to my client in augmented reality?',
+    a: 'Yes. {{brand}} delivers the design in augmented reality at two scales: a 1:20 model your client sees on the meeting table, and a real-size version to walk around the living room. It opens with one tap on iPhone or iPad (AR Quick Look) and on compatible Android phones (Scene Viewer), with no app to install.',
+  },
+  {
+    q: 'Do you hand over the 3D model so I can keep working with it?',
+    a: 'Yes. Alongside the 4K renders and the web viewer, {{brand}} delivers the model as GLB for the web and Android, USDZ for iPhone and BLEND, the editable Blender file. You can reuse the furnished geometry in later presentations of that project, or ask us for new views on the same model further down the line.',
+  },
+  {
+    q: 'What is the best AI for architectural renders?',
+    a: 'It depends on what you need it for. Generative AI makes attractive images from a sketch or a photo, but it does not respect dimensions or keep views consistent with each other. {{brand}} uses scripts to build a to-scale 3D model in Blender and renders it with Cycles, so every view comes from the same geometry. We compare both in our guide [AI floor plan to 3D](@guia-ia-vs-3d).',
+  },
+  {
+    q: 'What does an extra render on the model cost?',
+    a: 'Once the model is built, each extra 4K render uses the same geometry, so it takes little work. The {{brand}} complete 3D model, with the model, several renders, web viewer and augmented reality, gets a fixed quote once we see the plans. To compare with other rates in the Spanish market, see the published ranges in our [3D rendering cost guide](@guia-precio-render).',
+  },
+  {
+    q: 'Do you work with interior designers and renovation companies?',
+    a: 'Yes. For an interior designer, {{brand}} furnishes and finishes the model to your scheme and can switch its style without rebuilding it. For a renovation company, we model the current state and the proposal on the same plan, so the client compares before and after in renders, in the viewer and in augmented reality. Virtual staging is quoted per room.',
   },
 ];
 
@@ -143,6 +174,111 @@ export default {
     cta: {
       h2: '¿Probamos con tu próximo proyecto?',
       body: 'Envíanos una planta y te devolvemos una estancia modelada en 3D con realidad aumentada, gratis, para que se la enseñes a tu cliente.',
+      service: 'maqueta',
+    },
+  },
+
+  en: {
+    title: '3D visualisation for architects and designers',
+    description: 'From floor plan to 3D model, with 4K renders, a web viewer and AR to present and iterate your design, changes in minutes and a fixed quote.',
+    h1: 'Renders and 3D models for architects and interior designers',
+    lead: 'We turn your floor plans into a furnished 3D model with 4K renders, a web viewer and augmented reality, so your client understands the design and signs it off sooner. Because the model is built in code, every change regenerates in minutes. Delivered in {{delivery:maqueta}}, with a fixed quote.',
+    breadcrumb: 'Architects and designers',
+    card: {
+      title: 'For architects and interior designers',
+      summary: 'Present and iterate the design with renders, a 3D viewer and augmented reality, on a model that changes in minutes.',
+    },
+    hero: {
+      image: 'villa_muros_completos',
+      alt: 'Aerial view of the upper floor of a Costa del Sol villa with its walls at full height. 3D render generated from the 2D floor plan of an anonymised case.',
+      caption: 'The floor plan of our demo case with full-height walls. Rendered from the 2D floor plan.',
+    },
+    facts: [
+      ['For', 'Architects, interior designers and renovation firms'],
+      ['Input', 'Floor plans as DWG, DXF, PDF or image'],
+      ['Outputs', '4K renders, web viewer, AR and 3D files'],
+      ['3D formats', 'GLB, USDZ and BLEND'],
+      ['Changes', '{{revisions:maqueta}}, regenerated in minutes'],
+      ['Price', 'A fixed quote before we start'],
+      ['Extra renders', 'On the same model'],
+      ['Turnaround', '{{delivery:maqueta}}'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'What is architectural visualisation?',
+        answer: 'It is showing a project as images, walkthroughs or 3D models before it is built, so that people who cannot read drawings understand it. At {{brand}} it starts from your floor plans: a to-scale 3D model that produces photorealistic renders, a web viewer you can explore and the home in augmented reality.',
+        body: 'Our approach is practical. We do not make competition imagery: we tackle what eats most of your time on a residential project, which is explaining it to the client, changing it and explaining it again. That is why everything comes from one model rather than from separate images.',
+      },
+      {
+        type: 'table',
+        h2: 'Where does the 3D model save you time?',
+        intro: 'The stages of a project where clients tend to get stuck, and what changes when they work from a 3D model instead of from floor plans.',
+        caption: 'Stages of a residential project and what the 3D model adds',
+        head: ['Stage', 'The usual way', 'With the 3D model'],
+        rows: [
+          ['First proposal', 'Plans and the odd perspective the client never quite understands', 'Furnished renders and a link to the viewer the client can turn around on their own'],
+          ['Iteration', 'Every change means redoing the views', 'The model is generated by script: a new partition or floor rebuilds in minutes'],
+          ['Client meeting', 'A laptop screen and a lot of explaining', 'The home on the table at 1:20 in augmented reality, or the living room at real size'],
+          ['Materials and finishes', 'Physical samples and loose catalogues', 'PBR materials with real surface relief on the model, consistent in every view'],
+          ['Website and portfolio', 'Still images', 'The 3D viewer embedded with an iframe, plus 4K renders'],
+        ],
+      },
+      {
+        type: 'figure',
+        image: 'villa_interior_dormitorio',
+        alt: 'Eye-level 3D render of the anonymised villa’s main bedroom: built-in headboard finished in timber, linen bedding, lit bedside lamps and a sliding door to the terrace. Generated from the 2D floor plan.',
+        caption: 'Timber, textiles and late-afternoon light on the same model, at eye level. 3D render of the anonymised villa.',
+        layout: 'wide',
+      },
+      {
+        type: 'steps',
+        h2: 'How do we work with your practice?',
+        intro: 'You keep the design and the judgement calls; we build the model and the images.',
+        items: [
+          { title: 'You send us the floor plans', body: 'DWG or DXF if you have them; otherwise PDF or an image. With dimensions, the model is built to measure; without them, we estimate from the scale and mark it (≈).' },
+          { title: 'We agree the brief', body: 'Furniture style, material palette and key views. If you have references or a finishes schedule, we follow them; if not, we propose a direction.' },
+          { title: 'You review in the viewer', body: 'We send you a private link to the model. You mark changes to layout, furniture or materials and we apply them in {{revisions:maqueta}}.' },
+          { title: 'You receive the files', body: '4K renders, the web viewer with its embed code and the model as [USDZ](@glosario#usdz), [GLB](@glosario#glb) and BLEND, ready to open in Blender.' },
+        ],
+      },
+      {
+        type: 'viewer',
+        h2: 'How will your client see the design?',
+        intro: 'Try [cut-away mode](@glosario#modo-maqueta) on the villa from our [demo case](@caso-villa): walls cut at {{villa:cutHeight}} m to read the layout at a glance, and full-height walls when you want to see the volume.',
+      },
+      {
+        type: 'answer',
+        h2: 'Is outsourcing your renders worth it?',
+        answer: 'Compare the price with your own hours. An example built on assumptions: if preparing the model, materials and renders yourself takes 20 hours and your studio time is worth €50 an hour, that is €1,000 of time not spent designing. Set that against the fixed quote for the complete 3D model, which also includes a web viewer and augmented reality.',
+        body: 'If your hours multiplied by your rate exceed the price of the job, outsourcing pays. If not, you might only want the part you do not do yourself: the viewer and augmented reality for client presentations. How we quote is on the [pricing page](@precios).',
+      },
+      plate('en', 'villa_dormitorios_opaco'),
+      {
+        type: 'table',
+        caption: 'Illustrative example: your own hours versus outsourcing (assumptions, not results)',
+        head: ['Item', 'Value in the example'],
+        rows: [
+          ['Hours of modelling, materials and renders (assumed)', '20 h'],
+          ['Cost of an hour of your studio time (assumed)', '€50'],
+          ['Estimated internal cost', '€1,000'],
+          ['Rule of thumb', 'If hours × rate exceeds the quote for the job, outsourcing pays'],
+        ],
+        note: 'Assumed figures to show the calculation. Use your own hours and rate.',
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'What we do not do',
+        body: 'We do not sign off or check designs: the geometry comes from your drawings and technical responsibility stays with you. The images are indicative representations of the project. If the plan has no dimensions, the model’s measurements are scale estimates (≈).',
+      },
+      { type: 'faq' },
+    ],
+    faq: faqEn,
+    related: ['servicio-renders', 'servicio-tour', 'servicio-ar', 'caso-villa', 'precios'],
+    cta: {
+      h2: 'Shall we try it on your next project?',
+      body: 'Send us a floor plan and we will send back one room modelled in 3D with augmented reality, free, for you to show your client.',
       service: 'maqueta',
     },
   },

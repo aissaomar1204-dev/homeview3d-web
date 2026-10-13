@@ -263,7 +263,7 @@ export default {
         a: 'Because we are a new studio and we are not going to make them up. {{brand}} will publish client reviews and case studies when we have them, and with the client’s permission. Meanwhile, the proof can be checked: open the demo villa in 3D and in augmented reality, and ask for one room of your own plan, free of charge.',
       },
     ],
-    related: ['caso-villa', 'como-funciona', 'precios', 'guia-ia-vs-3d', 'zona-marbella'],
+    related: ['caso-villa', 'como-funciona', 'precios', 'guia-ia-vs-3d', 'zona-costa-del-sol'],
     cta: {
       h2: 'Shall we talk about your floor plan?',
       body: 'Send us the plan and we reply with a fixed price and turnaround. If you would rather see it before deciding, we model one room free of charge and send it to you in augmented reality.',

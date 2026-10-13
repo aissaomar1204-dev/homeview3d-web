@@ -281,7 +281,7 @@ export default {
         a: 'Yes, as listing images: our 3D floor plan is a set of 4K PNG files you upload alongside the photos. What we do not promise is an embedded 3D viewer inside a portal listing, because idealista, for example, only accepts 3D tours from its approved providers. The viewer works on your own website, by link, over WhatsApp or through a QR code.',
       },
     ],
-    related: ['servicio-renders', 'servicio-tour', 'caso-villa', 'precios', 'guia-ia-vs-3d'],
+    related: ['servicio-renders', 'servicio-tour', 'caso-villa', 'precios', 'guia-plano-2d-3d'],
     cta: {
       h2: 'Shall we see your floor plan in 3D?',
       body: 'Send us the plan and we will model one room in 3D, with augmented reality, free and with no obligation. If you like it, we carry on with the whole home. A real person replies.',

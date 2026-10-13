@@ -281,7 +281,7 @@ export default {
       { type: 'faq' },
     ],
     faq: faqEn,
-    related: ['servicio-renders', 'servicio-ar', 'servicio-tour', 'zona-marbella', 'caso-villa'],
+    related: ['servicio-renders', 'servicio-ar', 'servicio-tour', 'guia-sobre-plano', 'caso-villa'],
     cta: {
       h2: 'Shall we show your development before it’s built?',
       body: 'Send us the plan of one unit type and we will send back one room in 3D with augmented reality, free and with no commitment.',

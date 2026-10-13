@@ -374,7 +374,7 @@ export default {
         a: 'No. Augmented reality needs a 3D model with geometry and materials, in USDZ format for iPhone and iPad or GLB for Android, and an image is flat. That is why {{brand}} builds the model first: the renders and the files to place the home on a table at 1:20 scale or at real size both come from it, with no app to install.',
       },
     ],
-    related: ['servicio-plano', 'servicio-staging', 'guia-precio-render', 'caso-villa', 'como-funciona'],
+    related: ['servicio-plano', 'guia-plano-2d-3d', 'servicio-staging', 'caso-villa', 'como-funciona'],
     cta: {
       h2: 'Try it with your own floor plan',
       body: 'Send us your plan and we will model one room in 3D free of charge, with augmented reality, so you can compare it with an AI image.',

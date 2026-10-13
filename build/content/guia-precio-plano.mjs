@@ -432,7 +432,7 @@ export default {
         a: 'At {{brand}}, a complete 3D model of the home, with renders, a web viewer and augmented reality, comes with a fixed quote based on floor area, delivered in {{delivery:maqueta}}. It includes 6 renders in 4K, the colour top-down plan and {{revisions:maqueta}}. Market ranges for renders are in our [3D rendering cost guide for Spain](@guia-precio-render).',
       },
     ],
-    related: ['guia-precio-render', 'servicio-plano', 'guia-ia-vs-3d', 'precios', 'caso-villa'],
+    related: ['guia-precio-render', 'servicio-plano', 'guia-plano-2d-3d', 'precios', 'caso-villa'],
     cta: {
       h2: 'Get a price for your 3D floor plan',
       body: 'Send us the plan as a PDF or JPG and we reply with a price and turnaround. No site visit and no photos needed.',

@@ -22,11 +22,11 @@ export const routes = [
   { id: 'servicio-staging',  template: 'service',  parent: 'servicios',  es: '/servicios/home-staging-virtual/',     en: '/en/virtual-staging/',                   priority: 0.8, pack: 'staging' },
 
   // ── Audiences ─────────────────────────────────────────────────
-  { id: 'soluciones',        template: 'hub',      parent: 'home',       es: '/soluciones/',                        en: null,                                     priority: 0.7 },
+  { id: 'soluciones',        template: 'hub',      parent: 'home',       es: '/soluciones/',                        en: '/en/solutions/',                         priority: 0.7 },
   { id: 'sol-inmobiliarias', template: 'audience', parent: 'soluciones', es: '/soluciones/inmobiliarias/',           en: '/en/for-estate-agents/',                 priority: 0.8 },
   { id: 'sol-promotoras',    template: 'audience', parent: 'soluciones', es: '/soluciones/promotoras-obra-nueva/',   en: '/en/off-plan-3d-visualisation/',         priority: 0.8, pack: 'promocion' },
-  { id: 'sol-arquitectos',   template: 'audience', parent: 'soluciones', es: '/soluciones/arquitectos-interioristas/', en: null,                                  priority: 0.6 },
-  { id: 'sol-vacacional',    template: 'audience', parent: 'soluciones', es: '/soluciones/alquiler-vacacional/',    en: null,                                     priority: 0.5, pack: 'plano3d' },
+  { id: 'sol-arquitectos',   template: 'audience', parent: 'soluciones', es: '/soluciones/arquitectos-interioristas/', en: '/en/for-architects/',                 priority: 0.6 },
+  { id: 'sol-vacacional',    template: 'audience', parent: 'soluciones', es: '/soluciones/alquiler-vacacional/',    en: '/en/holiday-rentals/',                   priority: 0.5, pack: 'plano3d' },
 
   // ── Proof, process, prices ────────────────────────────────────
   { id: 'caso-villa',        template: 'case',     parent: 'home',       es: '/casos/villa-costa-del-sol/',         en: '/en/case-studies/costa-del-sol-villa/',  priority: 0.9 },
@@ -34,18 +34,18 @@ export const routes = [
   { id: 'precios',           template: 'pricing',  parent: 'home',       es: '/precios/',                           en: '/en/pricing/',                           priority: 0.9 },
 
   // ── Local ─────────────────────────────────────────────────────
-  { id: 'zonas',             template: 'hub',      parent: 'home',       es: '/zonas/',                             en: null,                                     priority: 0.6 },
+  { id: 'zonas',             template: 'hub',      parent: 'home',       es: '/zonas/',                             en: '/en/areas/',                             priority: 0.6 },
   { id: 'zona-marbella',     template: 'zone',     parent: 'zonas',      es: '/zonas/marbella/',                    en: '/en/3d-rendering-marbella/',             priority: 0.8 },
-  { id: 'zona-malaga',       template: 'zone',     parent: 'zonas',      es: '/zonas/malaga/',                      en: null,                                     priority: 0.7 },
-  { id: 'zona-costa-del-sol', template: 'zone',    parent: 'zonas',      es: '/zonas/costa-del-sol/',               en: null,                                     priority: 0.7 },
+  { id: 'zona-malaga',       template: 'zone',     parent: 'zonas',      es: '/zonas/malaga/',                      en: '/en/3d-rendering-malaga/',               priority: 0.7 },
+  { id: 'zona-costa-del-sol', template: 'zone',    parent: 'zonas',      es: '/zonas/costa-del-sol/',               en: '/en/3d-rendering-costa-del-sol/',        priority: 0.7 },
 
   // ── Guides ────────────────────────────────────────────────────
   { id: 'guias',             template: 'hub',      parent: 'home',       es: '/guias/',                             en: '/en/guides/',                            priority: 0.7 },
   { id: 'guia-precio-render', template: 'guide',   parent: 'guias',      es: '/guias/cuanto-cuesta-un-render-3d/',  en: '/en/guides/3d-rendering-cost-spain/',    priority: 0.8 },
   { id: 'guia-precio-plano', template: 'guide',    parent: 'guias',      es: '/guias/cuanto-cuesta-un-plano-3d/',   en: '/en/guides/3d-floor-plan-cost-spain/',   priority: 0.7 },
-  { id: 'guia-plano-2d-3d',  template: 'guide',    parent: 'guias',      es: '/guias/como-convertir-un-plano-2d-en-3d/', en: null,                                priority: 0.7 },
+  { id: 'guia-plano-2d-3d',  template: 'guide',    parent: 'guias',      es: '/guias/como-convertir-un-plano-2d-en-3d/', en: '/en/guides/convert-2d-floor-plan-to-3d/', priority: 0.7 },
   { id: 'guia-ia-vs-3d',     template: 'guide',    parent: 'guias',      es: '/guias/ia-o-modelo-3d-real/',         en: '/en/guides/ai-floor-plan-to-3d/',        priority: 0.7 },
-  { id: 'guia-sobre-plano',  template: 'guide',    parent: 'guias',      es: '/guias/como-vender-viviendas-sobre-plano/', en: null,                               priority: 0.7 },
+  { id: 'guia-sobre-plano',  template: 'guide',    parent: 'guias',      es: '/guias/como-vender-viviendas-sobre-plano/', en: '/en/guides/sell-off-plan-property-spain/', priority: 0.7 },
   { id: 'guia-matterport',   template: 'guide',    parent: 'guias',      es: '/guias/modelo-3d-vs-matterport/',     en: '/en/guides/3d-model-vs-matterport/',     priority: 0.7 },
   { id: 'guia-ar',           template: 'guide',    parent: 'guias',      es: '/guias/ver-una-vivienda-en-realidad-aumentada/', en: '/en/guides/view-property-in-ar/', priority: 0.7 },
   { id: 'guia-mejores',      template: 'guide',    parent: 'guias',      es: '/guias/mejores-estudios-visualizacion-3d-espana/', en: '/en/guides/best-3d-visualisation-studios-spain/', priority: 0.7 },

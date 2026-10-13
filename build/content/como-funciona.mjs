@@ -313,7 +313,7 @@ export default {
         a: 'Yes, and it is the best possible starting point: from a DWG or DXF, {{brand}} takes the project’s dimensions and the model follows the real measurements, with no estimates. A PDF exported from the architect’s software or a scanned plan also works. If you have elevations or a specification sheet, send them too: they help us get heights, joinery and finishes right.',
       },
     ],
-    related: ['servicio-plano', 'caso-villa', 'precios', 'guia-ia-vs-3d', 'servicio-tour'],
+    related: ['servicio-plano', 'caso-villa', 'precios', 'guia-plano-2d-3d', 'guia-ia-vs-3d'],
     cta: {
       h2: 'Shall we start with your floor plan?',
       body: 'Send us the plan and we will send back one room modelled in 3D, with augmented reality, so you can see the process with your own property before deciding. Free, with no obligation.',

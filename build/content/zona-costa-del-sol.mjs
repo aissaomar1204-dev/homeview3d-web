@@ -1,4 +1,4 @@
-// Zone page: Costa del Sol (ES only). Local hub for the coast: sections per municipality, not one page per town.
+// Zone page: Costa del Sol (ES + EN). Local hub for the coast: sections per municipality, not one page per town.
 // Keyword focus (02-keywords C8): renders Costa del Sol, infografías 3D Costa del Sol, render Estepona / Benahavís / Mijas / Fuengirola / Sotogrande.
 // Anti-cannibalisation: «render 3D Marbella» → zona-marbella; Málaga capital → zona-malaga.
 // No physical presence promised, no local clients; the demo villa is located only as «Costa del Sol».
@@ -42,6 +42,37 @@ const faq = [
   {
     q: '¿Tenéis algún caso en la Costa del Sol?',
     a: 'Tenemos un caso demostrativo, no un encargo de cliente: la planta alta de una villa real de la Costa del Sol, modelada por {{brand}} a partir de su plano publicado, sin fotos del interior. Está anonimizado, así que no indicamos el municipio ni la dirección, y el plano original no se reproduce. Puedes recorrerla en el visor y abrirla en realidad aumentada en la página del caso.',
+  },
+];
+
+const faqEn = [
+  {
+    q: 'Do you cover the whole Costa del Sol?',
+    a: 'Yes, from Sotogrande to Nerja and across the rest of Spain. {{brand}} builds the 3D model from the floor plan, without visiting the home, so price and turnaround are the same in Estepona, Mijas, Fuengirola or the Axarquía: the complete 3D model is delivered in {{delivery:maqueta}}, with a fixed quote before we start.',
+  },
+  {
+    q: 'Will you come out to Estepona, Benahavís or Sotogrande?',
+    a: 'There is no need. {{brand}} works remotely: you send the floor plan as a PDF, DWG or image, or a link to the listing, and we settle questions by video call, email or WhatsApp. That way you pay no travel costs and turnaround does not depend on anyone’s diary. If you need exact measurements of an existing home, your surveyor can take them and pass them on.',
+  },
+  {
+    q: 'How much does a render cost on the Costa del Sol?',
+    a: 'It depends on how many images you need and whether you want renders only or the complete 3D model, with several renders, a web viewer and augmented reality. {{brand}} sends a fixed quote as soon as it sees the floor plan, and extra renders are produced on the same model. Other Spanish studios’ ranges are in our [3D rendering cost guide](@guia-precio-render).',
+  },
+  {
+    q: 'Can you model every unit type in an Estepona development?',
+    a: 'Yes. The {{brand}} development package includes up to 3 unit types in one viewer, with a selector to switch between them, 4K renders and augmented reality for the sales suite and fairs. If the development has more unit types, they are added to the same quote. All we need is the project floor plans and, if there is one, the specification sheet.',
+  },
+  {
+    q: 'Does it work for villas with a garden and pool?',
+    a: '{{brand}} models the home and its terraces in detail, because that is where buyers spend their time and what photos struggle most to explain. The garden, pool and plot are included if they appear on the plan; tell us what you want to show when you ask for a demo and we will confirm the scope and price before we start.',
+  },
+  {
+    q: 'Where do the figures for each town come from?',
+    a: 'From official sources, with a link. Sales by town come from Spain’s Ministry of Housing and Urban Agenda, which compiles them from notarial deeds; on this page we add up the four quarters of 2025. The share of foreign buyers comes from the Colegio de Registradores. {{brand}} does not publish third-party figures without a source or results statistics it cannot verify.',
+  },
+  {
+    q: 'Do you have a case study on the Costa del Sol?',
+    a: 'We have a demonstration case, not a client job: the upper floor of a real Costa del Sol villa, modelled by {{brand}} from its published floor plan, with no photos of the interior. It is anonymised, so we do not give the town or address, and the original plan is not reproduced. You can explore it in the viewer and open it in augmented reality on the case study page.',
   },
 ];
 
@@ -157,6 +188,114 @@ export default {
     cta: {
       h2: '¿Qué vivienda de la costa vemos en 3D?',
       body: 'Envíanos el plano, sea de Sotogrande o de Nerja, y te devolvemos una estancia en 3D con realidad aumentada, gratis y sin compromiso.',
+      service: 'maqueta',
+    },
+  },
+
+  en: {
+    title: '3D renders on the Costa del Sol, town by town',
+    description: '3D models, renders, a viewer and augmented reality from the floor plan in Estepona, Benahavís, Mijas, Fuengirola, Nerja or Sotogrande, at a fixed quote.',
+    h1: 'Renders and 3D models from Sotogrande to Nerja',
+    lead: '{{brand}}, a 3D visualisation studio based in Mijas on the Costa del Sol, produces renders and 3D models with a web viewer and app-free augmented reality from the floor plans of homes all along the coast, from Sotogrande to Nerja, for agents and developers. A fixed quote per home and delivery in {{delivery:maqueta}}.',
+    breadcrumb: 'Costa del Sol',
+    card: {
+      title: 'Costa del Sol',
+      summary: 'From Sotogrande to Nerja: what sells in each town and how a 3D model fits, with official data.',
+    },
+    hero: {
+      image: 'villa_dormitorios',
+      alt: 'Bedroom wing of a Costa del Sol villa with a furnished double bedroom, twin bedroom and family bathroom. 3D render generated from the 2D floor plan of an anonymised case.',
+      caption: 'Bedroom wing of our demo case, a villa on the Costa del Sol. Rendered from the 2D floor plan.',
+    },
+    facts: [
+      ['Towns', 'From Sotogrande (San Roque) to Nerja'],
+      ['Outside Málaga city', 'Over 80% of the province’s home sales'],
+      ['Foreign buyers', '37.01% in the province (Q2 2026)'],
+      ['Non-residents', '27.9% of the province’s home sales in 2025'],
+      ['Input', 'The home’s floor plan, no site visit'],
+      ['Price', 'A fixed quote before we start'],
+      ['Turnaround', '{{delivery:maqueta}}'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'Why does the Costa del Sol need a different way to show homes?',
+        answer: 'Because most of Málaga province’s sales happen on the coast, and many buyers do not live here. Málaga city accounts for only 18.09% of the province’s home sales, and in 2025 people who do not live in Spain signed 27.9% of all home sales in the province.',
+        body: 'For an agency or developer on the coast, that means selling to someone whose first viewing happens on a phone, in another country and in another language. A 3D model with a viewer link and augmented reality shows them the home before they travel. If you work in Marbella or Málaga city, they have their own pages: [3D rendering in Marbella](@zona-marbella) and [3D rendering in Málaga](@zona-malaga).',
+      },
+      {
+        type: 'table',
+        h2: 'Home sales by town in 2025',
+        intro: 'From west to east. The right-hand column is our recommendation based on the type of home that sells most in each town.',
+        caption: 'Home sales by Costa del Sol town in 2025 and what fits best',
+        head: ['Town', 'Home sales 2025', 'New builds', 'What fits best'],
+        rows: [
+          ['San Roque (Sotogrande)', '1,018', '158 (15.5%)', 'Complete model with AR for villas and apartments'],
+          ['Manilva', '1,122', '92 (8.2%)', 'Complete model for apartments and townhouses on gated estates'],
+          ['Casares', '635', '113 (17.8%)', 'Complete model for coastal and golf developments'],
+          ['Estepona', '3,466', '888 (25.6%)', 'New-build unit types in 3D with viewer and AR'],
+          ['Benahavís', '711', '23 (3.2%)', 'Complete model and virtual staging for resale villas'],
+          ['Mijas', '3,190', '337 (10.6%)', 'Complete model for resale villas and townhouses'],
+          ['Fuengirola', '2,169', '621 (28.6%)', '3D floor plan for flats and a viewer for developments'],
+          ['Benalmádena', '2,070', '188 (9.1%)', '3D floor plan and renders for resale apartments'],
+          ['Torremolinos', '1,990', '442 (22.2%)', '3D floor plan for flats and unit types for new builds'],
+          ['Rincón de la Victoria', '860', '214 (24.9%)', 'New-build unit types and 3D floor plans for flats'],
+          ['Vélez-Málaga', '1,410', '160 (11.3%)', '3D floor plan and renders for flats and houses'],
+          ['Torrox', '820', '155 (18.9%)', '3D floor plan and complete model for apartments'],
+          ['Nerja', '582', '38 (6.5%)', '3D floor plan and renders for resale apartments and houses'],
+        ],
+        note: 'Source: Spanish Ministry of Housing and Urban Agenda, home sales by municipality, compiled from notarial deeds (sum of the four quarters of 2025). San Roque, in Cádiz province, covers the whole municipality, not just Sotogrande.',
+        sources: [{ label: 'Spanish Ministry of Housing and Urban Agenda: property transactions by municipality', url: MIVAU }],
+      },
+      plate('en', 'villa_terraza_opaco'),
+      {
+        type: 'prose',
+        h2: 'Estepona: new builds and off-plan sales',
+        body: 'Estepona recorded 888 new-build home sales in 2025, the second-highest figure in the province after Málaga city and more than Marbella, Manilva, Casares and Benahavís combined. It is the town on the western coast where most homes are sold off-plan: apartment and townhouse developments, many aimed at foreign buyers.\n\nThe useful output here is every unit type in 3D, with a viewer and selector for the development’s website and augmented reality for the sales suite and fairs. We explain it in [solutions for developers](@sol-promotoras), and the full sales process in our [guide to selling off-plan](@guia-sobre-plano).',
+      },
+      {
+        type: 'prose',
+        h2: 'Benahavís: villas on gated estates',
+        body: 'Benahavís is the opposite: 711 sales in 2025 and only 23 of them new builds. What sells is mostly resale villas on gated estates and large plots, often decorated to the previous owner’s taste.\n\nFor these homes the complete 3D model with [virtual staging](@servicio-staging) works: buyers see the house as they could live in it, labelled as a virtual recreation. And real-size augmented reality lets them walk the living room and terrace from their own home.',
+      },
+      {
+        type: 'prose',
+        h2: 'Mijas and Fuengirola: from townhouses to flats',
+        body: 'Mijas recorded 3,190 sales in 2025, most of them resales: villas, townhouses and apartments on the coastal estates. Here the complete model helps sell to buyers comparing several similar homes in a few days.\n\nFuengirola, more urban and compact, recorded 2,169 sales, 28.6% of them new builds. Flats dominate, and for many listings a colour [3D floor plan](@servicio-plano) that explains the layout is enough.',
+      },
+      {
+        type: 'prose',
+        h2: 'Benalmádena and Torremolinos',
+        body: 'Benalmádena (2,070 sales in 2025) and Torremolinos (1,990) are apartment markets with different profiles: in Benalmádena new builds made up 9.1% of sales, in Torremolinos 22.2%. For resales, a 3D floor plan and a couple of renders usually explain the home; for new developments, unit types in 3D help sell before the build is finished.',
+      },
+      {
+        type: 'prose',
+        h2: 'Sotogrande, Manilva and Casares',
+        body: 'At the western end, Sotogrande belongs to San Roque, already in Cádiz province, which recorded 1,018 sales in 2025. Villas and apartments by the marina and the golf courses, with an international buyer much like Marbella’s: the complete model with augmented reality is the natural choice.\n\nManilva (1,122 sales) and Casares (635, with 17.8% new builds) mix apartments and townhouses on coastal and golf estates, often sold to buyers who do not live in Spain.',
+      },
+      {
+        type: 'prose',
+        h2: 'Nerja and the Axarquía',
+        body: 'East of Málaga, the market changes scale. Nerja recorded 582 sales in 2025 and only 38 new builds: resale apartments and houses, where a 3D floor plan and renders of the main rooms explain the home. Vélez-Málaga recorded 1,410 and Torrox 820.\n\nRincón de la Victoria is the exception: 860 sales, almost one in four of them new builds. There, unit types in 3D suit the developments and 3D floor plans suit the flats.',
+      },
+      {
+        type: 'ar',
+        h2: 'How does a buyer abroad see the home?',
+        intro: 'On their phone, with nothing to install. Open the villa from our [demo case](@caso-villa) in augmented reality, a Costa del Sol villa modelled from a single floor plan: with [AR Quick Look](@glosario#ar-quick-look) on iPhone or iPad and with [Scene Viewer](@glosario#scene-viewer) on Android. Not opening? See [how to view a property in AR, step by step](@guia-ar).',
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'How we work on the coast',
+        body: 'We work remotely from the floor plan: nobody needs to visit the home, and questions are settled on a video call. If the plan has no dimensions, the model’s areas are scale estimates (≈). We do not cite clients or sales figures we cannot verify, and prices are the same along the whole coast; how we quote is on the [pricing page](@precios).',
+      },
+      { type: 'faq' },
+    ],
+    faq: faqEn,
+    related: ['zona-marbella', 'zona-malaga', 'sol-promotoras', 'caso-villa', 'precios'],
+    cta: {
+      h2: 'Which home on the coast shall we see in 3D?',
+      body: 'Send us the floor plan, from Sotogrande or from Nerja, and we will send back one room in 3D with augmented reality, free and with no commitment.',
       service: 'maqueta',
     },
   },

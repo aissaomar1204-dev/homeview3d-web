@@ -373,7 +373,7 @@ export default {
         a: 'In the renders, yes: {{brand}} computes each 4K image with physically based light in Blender Cycles, using [PBR](@glosario#pbr) materials made for each home. The web viewer is real-time 3D, lighter and slightly less photographic. The real difference lies elsewhere: a scan shows what is there; the model shows the project or the proposal.',
       },
     ],
-    related: ['servicio-tour', 'servicio-plano', 'caso-villa', 'guia-ar', 'precios'],
+    related: ['servicio-tour', 'servicio-plano', 'caso-villa', 'guia-sobre-plano', 'precios'],
     cta: {
       h2: 'Can’t scan the property?',
       body: 'Send us the floor plan: we will model one room free of charge and send it back in augmented reality, so you can compare it with a 360 tour. No obligation.',

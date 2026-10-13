@@ -1,4 +1,4 @@
-// Audience page: holiday rentals / viviendas con fines turísticos (ES only).
+// Audience page: holiday rentals / viviendas con fines turísticos (ES + EN).
 // Keyword focus (02-keywords C13): tour virtual apartamento turístico, plano 3D alquiler vacacional, fotos Airbnb.
 // Honest angle: the home already exists and usually has photos, so the use cases are pre-launch, redecoration,
 // layout questions and direct-booking websites. No claims about booking platforms' features beyond images.
@@ -31,6 +31,37 @@ const faq = [
   {
     q: '¿Pueden los huéspedes ver la vivienda en realidad aumentada?',
     a: 'Sí, con la maqueta 3D completa de {{brand}}. Desde tu web o desde el enlace que les envíes, el huésped toca un botón y la vivienda aparece sobre su mesa a escala 1:20 en iPhone, iPad o Android compatible, sin instalar nada. Es útil para familias y grupos que quieren decidir quién duerme dónde antes de llegar.',
+  },
+];
+
+const faqEn = [
+  {
+    q: 'Does it work for a holiday let on Airbnb or Booking.com?',
+    a: 'Yes, with a caveat. On booking platforms you upload the {{brand}} renders and 3D floor plan as listing photos, which every platform accepts. The 3D viewer and augmented reality go on your direct-booking website and in the channels you run yourself, such as WhatsApp or email. Check each platform’s rules on external links before posting any.',
+  },
+  {
+    q: 'Can I list the apartment before it is furnished?',
+    a: 'Yes, and that is where it pays off most. {{brand}} models and furnishes the home from the floor plan, so you can open your calendar with renders of the model while the works finish or the furniture is on its way. Publish them with their render label and swap them for real photos once the home is ready, so guests find what they saw.',
+  },
+  {
+    q: 'Do I have to say the images are virtual?',
+    a: 'Yes. {{brand}} delivers every image with its caption label: “3D render. Indicative image; furniture not included.” on renders and “Virtually staged. Furniture not included.” on virtual staging. Keep it in the listing. Use the model to show the layout and the style, never to promise furniture or views that guests will not find. It is a matter of trust, and of reviews.',
+  },
+  {
+    q: 'How much does a 3D floor plan for a holiday apartment cost?',
+    a: 'It depends on the floor area and on what you need. The {{brand}} 3D floor plan includes a colour top-down plan and a furnished isometric view, in {{delivery:plano3d}}. If you also want renders of each room, a web viewer and augmented reality, that is the complete 3D model. Either way, we send you a fixed quote once we see the floor plan.',
+  },
+  {
+    q: 'What if I manage several holiday rentals?',
+    a: 'For management companies and owners with several properties, {{brand}} prepares a volume quote: the more homes, the lower the price per unit. If several homes share a layout, as in an apartment building, we take that into account when quoting, because repeating a unit type is less work than modelling a new home.',
+  },
+  {
+    q: 'Do you need to visit the apartment?',
+    a: 'No. {{brand}} works remotely from the floor plan of the apartment or villa, as a PDF or image. If you send photos of the finishes, such as the floors, kitchen or bathrooms, the model will look closer to reality; if they do not exist yet, we propose materials. Questions are handled by email, WhatsApp or video call.',
+  },
+  {
+    q: 'Can guests view the home in augmented reality?',
+    a: 'Yes, with the {{brand}} complete 3D model. From your website or a link you send them, guests tap a button and the home appears on their table at 1:20 scale on an iPhone, iPad or compatible Android phone, with nothing to install. It helps families and groups decide who sleeps where before they arrive.',
   },
 ];
 
@@ -135,6 +166,103 @@ export default {
     cta: {
       h2: '¿Vemos tu vivienda en 3D antes de amueblarla?',
       body: 'Envíanos el plano y te devolvemos una estancia en 3D con realidad aumentada, gratis y sin compromiso.',
+      service: 'plano3d',
+    },
+  },
+
+  en: {
+    title: '3D floor plans and 3D tours for holiday rentals',
+    description: 'A colour 3D floor plan, renders and a viewer for your holiday apartment or rental villa, even before it is furnished, with a fixed quote.',
+    h1: '3D floor plans, renders and a viewer for holiday rentals',
+    lead: 'We turn the floor plan of your holiday apartment or rental villa into a colour 3D floor plan and, if you need them, renders and a 3D viewer for your direct-booking website, so you can list it before it is furnished. 3D floor plan in {{delivery:plano3d}}; with renders and viewer, in {{delivery:maqueta}}.',
+    breadcrumb: 'Holiday rentals',
+    card: {
+      title: 'For holiday rentals',
+      summary: 'Launch the listing before furnishing and show the layout with a 3D floor plan, renders and a viewer for direct bookings.',
+    },
+    hero: {
+      image: 'villa_terraza',
+      alt: 'Main terrace of a Costa del Sol villa with sun loungers, an outdoor sofa, terracotta floor tiles and a potted olive tree. 3D render generated from the 2D floor plan of an anonymised case.',
+      caption: 'Main terrace of our demo case. Rendered from the 2D floor plan.',
+    },
+    facts: [
+      ['For', 'Owners and managers of holiday rentals'],
+      ['Input', 'The floor plan of the apartment or villa'],
+      ['Basic option', 'Colour 3D floor plan'],
+      ['Full option', 'Complete 3D model with renders, viewer and AR'],
+      ['Virtual staging', 'Per room, on the model'],
+      ['3D floor plan turnaround', '{{delivery:plano3d}}'],
+      ['Several properties', 'Volume quote'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'Is 3D worth it for a holiday rental?',
+        answer: 'Yes, in three specific cases: when the home is not furnished yet and you want to open bookings, when you are about to redecorate and want to try it before buying furniture, and when guests keep asking how the bedrooms are arranged. If you already have good photos and the listing performs, you may not need it.',
+        body: 'Unlike an agency or a developer, you are not selling the home: you are selling nights. What matters is reaching the calendar sooner and having guests book knowing exactly what they will find.',
+      },
+      {
+        type: 'table',
+        h2: 'What should you order for your situation?',
+        caption: 'What we recommend at each stage of your holiday rental',
+        head: ['Your situation', 'What we recommend'],
+        rows: [
+          ['New or newly renovated home, not yet furnished', 'Complete 3D model, with renders to open bookings sooner'],
+          ['Listing with photos, but guests unsure about the layout', '[3D floor plan](@servicio-plano): colour top-down plan and isometric view'],
+          ['You are about to redecorate or change the furniture', '[Virtual staging](@servicio-staging) on the model to compare styles'],
+          ['You have your own direct-booking website', 'Embedded [3D viewer](@servicio-tour) and augmented reality, both included in the complete model'],
+          ['You manage several properties', 'Several complete 3D models, with a volume quote'],
+        ],
+        note: 'How we quote each option is on the [pricing page](@precios).',
+      },
+      {
+        type: 'prose',
+        h2: 'Which guest questions does a 3D floor plan answer?',
+        body: 'The ones that arrive by message before booking, and the ones that end in a lukewarm review when the answer was not what guests expected:\n\n- Which bedroom has its own bathroom?\n- Are the beds doubles or singles, and where is the sofa bed?\n- Does the terrace open off the living room or a bedroom?\n- Do you have to walk through a bedroom to reach the bathroom?\n- Can a family of five stay without anyone sleeping in the living room?\n\nA colour top-down plan with the furniture drawn in answers all of them at a glance, with nothing to translate: it works as well for a guest from Germany as for one from Leeds.',
+      },
+      {
+        type: 'figure',
+        image: 'villa_planta_cenital',
+        alt: 'Colour top-down plan of the upper floor of a Costa del Sol villa, with furnished bedrooms, bathrooms, living room and terraces. 3D render generated from the 2D floor plan.',
+        caption: 'Top-down plan of our demo case: {{villa:rooms}} rooms and {{villa:bedrooms}} bedrooms readable at a glance. Rendered from the 2D floor plan.',
+        layout: 'wide',
+      },
+      {
+        type: 'steps',
+        h2: 'How do you use it on each channel?',
+        intro: 'Each channel accepts different things. This is how to make the most of the model without breaking anyone’s rules.',
+        items: [
+          { title: 'Booking platforms', body: 'You upload the renders and the colour floor plan as listing photos. Check each platform’s rules on external links: images are what you can always publish.' },
+          { title: 'Your direct-booking website', body: 'You embed the 3D viewer with an iframe. Guests turn the home around, step into each room and, on their phone, place it on the table in augmented reality. It is a selling point the platforms do not give you.' },
+          { title: 'Messages with guests', body: 'In the channels you run yourself, such as WhatsApp or email, you send the viewer link to anyone asking about the layout, the beds or the terrace.' },
+          { title: 'Before opening', body: 'If the home is half furnished, you list it with renders of the model, each with its render label, and swap them for real photos once it is ready.' },
+        ],
+      },
+      {
+        type: 'viewer',
+        h2: 'How your guests will see the home',
+        intro: 'This is the villa from our [demo case](@caso-villa), with a main terrace, a bedroom terrace and {{villa:bedrooms}} bedrooms, modelled from a single floor plan. Turn it around, step into each room or open it in augmented reality.',
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'Virtual recreation',
+        body: 'Every image comes with its caption label: “3D render. Indicative image; furniture not included.” on renders and “Virtually staged. Furniture not included.” on virtual staging. Keep it in the listing. Guests should find what they saw: use the model to show the layout and the style, not to promise furniture you will not put in. Views from the terrace are not modelled: your photos show those.',
+      },
+      {
+        type: 'answer',
+        h2: 'How many nights does it take to cover the cost?',
+        answer: 'Divide the cost by your nightly rate. With the fixed quote in front of you, work out how many booked nights cover it: for a holiday apartment it is usually only a few. And if the model lets you open the calendar before furnishing, every week gained counts.',
+        body: 'This is a worked method, not a measured result. Do the sums with your own average rate and your real occupancy.',
+      },
+      plate('en', 'villa_interior_dormitorio'),
+      { type: 'faq' },
+    ],
+    faq: faqEn,
+    related: ['servicio-plano', 'servicio-staging', 'servicio-tour', 'caso-villa', 'precios'],
+    cta: {
+      h2: 'Shall we see your home in 3D before you furnish it?',
+      body: 'Send us the floor plan and we will send back one room in 3D with augmented reality, free and with no commitment.',
       service: 'plano3d',
     },
   },

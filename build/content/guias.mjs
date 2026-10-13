@@ -1,6 +1,6 @@
 // Hub: guides index (ES + EN).
 // ES children (routes.mjs): guia-precio-render, guia-precio-plano, guia-plano-2d-3d, guia-ia-vs-3d, guia-matterport, guia-mejores, guia-sobre-plano, guia-ar.
-// EN children: guia-precio-render, guia-precio-plano, guia-ia-vs-3d, guia-matterport, guia-mejores, guia-ar (plano-2d-3d and sobre-plano are ES only).
+// EN children: the same eight guides.
 // The `pages` block skips any guide whose content file is not rendered yet; counts are deliberately not written in copy.
 // No statistics here: the guides carry their own sourced figures.
 
@@ -106,7 +106,7 @@ export default {
       ['For', 'Estate agents, developers and architects'],
       ['Prices', '3D rendering and 3D floor plans in Spain, with sources'],
       ['Comparisons', 'AI vs a 3D model; Matterport or 360 tour; studios in Spain'],
-      ['How-to', 'Viewing a property in AR on iPhone and Android'],
+      ['How-to', 'AR viewing, converting a plan to 3D, selling off-plan'],
       ['Data checked', 'September 2026'],
       ['Written by', 'The {{brand}} team, an interested party'],
     ],
@@ -115,33 +115,35 @@ export default {
         type: 'answer',
         h2: 'Which guide do you need?',
         answer: 'The one that matches the decision in front of you. Budgeting for a listing or a launch? Start with 3D rendering or 3D floor plan costs in Spain. Shown an AI image and wondering if it will do? Read AI vs a real 3D model. Weighing a scan against a model? See our Matterport comparison. Choosing a supplier? Read our studio round-up.',
-        body: 'The guides come in three kinds. **Price guides** gather rates published by studios and platforms working in Spain, in euros, each linked to its source; handy if you are used to UK or North American price guides. **Comparisons** set two options side by side on the same criteria and say when each one makes sense, including when the answer isn’t us. **How-to guides** walk through a task step by step, such as opening a property in AR on a buyer’s phone.\n\nWe publish two further guides in Spanish for agencies and developers in Spain: converting a plan to 3D yourself, and selling off-plan under Spanish advertising rules. The language switch at the top of this page takes you to them.',
+        body: 'The guides come in three kinds. **Price guides** gather rates published by studios and platforms working in Spain, in euros, each linked to its source; handy if you are used to UK or North American price guides. **Comparisons** set two options side by side on the same criteria and say when each one makes sense, including when the answer isn’t us. **How-to guides** walk through a task step by step, such as opening a property in AR on a buyer’s phone.\n\nTwo of the how-to guides go further: [converting a floor plan to 3D yourself](@guia-plano-2d-3d), with free software or AI, and [selling off-plan property in Spain](@guia-sobre-plano) within Spanish advertising rules, written for developers.',
       },
       {
         type: 'table',
         h2: 'Which guide answers your question?',
-        caption: 'Our English guides by question and stage of the decision',
+        caption: 'Guides by question and stage of the decision',
         head: ['Your question', 'Guide', 'Most useful when…'],
         rows: [
           ['How much does 3D rendering cost in Spain?', '[3D rendering cost in Spain](@guia-precio-render)', 'You are comparing quotes per image, per home or per development, in euros'],
           ['How much does a 3D floor plan cost in Spain?', '[3D floor plan cost in Spain](@guia-precio-plano)', 'You only need the furnished layout for a listing and want to know what a fair price per floor is'],
+          ['Can I turn a floor plan into 3D myself?', '[Convert a 2D floor plan to 3D](@guia-plano-2d-3d)', 'You have the time and want to try free software or an AI tool'],
           ['Can AI turn my floor plan into 3D?', '[AI floor plan to 3D](@guia-ia-vs-3d)', 'Someone has shown you an AI image and you wonder whether it is enough to sell with'],
           ['Do I need Matterport or a 360 tour?', '[3D model, Matterport or 360 tour](@guia-matterport)', 'You are torn between scanning or photographing the home and modelling it from the plan, or it has not been built yet'],
           ['Which 3D visualisation studio should I use?', '[Best 3D visualisation studios in Spain](@guia-mejores)', 'You are comparing suppliers and want to know what each offers, who it suits and what it charges'],
+          ['How do I sell a development that does not exist yet?', '[Selling off-plan property in Spain](@guia-sobre-plano)', 'You are preparing a pre-sale and need to know what to show and what Spanish law requires of your advertising'],
           ['How does a buyer view a home in AR?', '[Viewing a property in AR](@guia-ar)', 'You are about to send AR to a buyer abroad and want to explain how to open it on an iPhone or Android phone'],
         ],
       },
       {
         type: 'pages',
-        h2: 'All our guides in English',
+        h2: 'All our guides',
         intro: 'From setting a budget to putting the home on your buyer’s coffee table.',
-        ids: ['guia-precio-render', 'guia-precio-plano', 'guia-ia-vs-3d', 'guia-matterport', 'guia-mejores', 'guia-ar'],
+        ids: ['guia-precio-render', 'guia-precio-plano', 'guia-plano-2d-3d', 'guia-ia-vs-3d', 'guia-matterport', 'guia-mejores', 'guia-sobre-plano', 'guia-ar'],
       },
       plate('en', 'villa_interior_salon'),
       {
         type: 'prose',
         h2: 'How do we write these guides?',
-        body: 'Four rules you can check in every guide:\n\n- **Every market figure links to the page that publishes it**, with the date we checked it. Ranges are quoted as ranges and “from” prices as “from” prices.\n- **Primary sources only for property market data**, such as the Colegio de Registradores (Spain’s land registrars), government ministries or the BOE, Spain’s official gazette. We do not quote figures that only appear in search engine or AI summaries.\n- **Our prices are kept apart.** Other studios’ rates go in the market tables; ours are on the [pricing page](@precios), and we say so whenever we compare.\n- **We declare our interest.** We sell 3D visualisation, so none of these guides is neutral. That is why each one also says when another option suits you better: a scan if the home is finished, a free app if you have the time, or an exterior specialist if all you need is a façade.\n\nThe “Updated” date on each guide changes only when its content does.',
+        body: 'Four rules you can check in every guide:\n\n- **Every market figure links to the page that publishes it**, with the date we checked it. Ranges are quoted as ranges and “from” prices as “from” prices.\n- **Primary sources only for property market data**, such as the Colegio de Registradores (Spain’s land registrars), government ministries or the BOE, Spain’s official gazette. We do not quote figures that only appear in search engine or AI summaries.\n- **Our own offer is kept apart.** Other studios’ rates go in the market tables; how we quote is on the [pricing page](@precios), and we say so whenever we compare.\n- **We declare our interest.** We sell 3D visualisation, so none of these guides is neutral. That is why each one also says when another option suits you better: a scan if the home is finished, a free app if you have the time, or an exterior specialist if all you need is a façade.\n\nThe “Updated” date on each guide changes only when its content does.',
       },
       {
         type: 'steps',
@@ -149,9 +151,9 @@ export default {
         intro: 'A reading order that runs from seeing a result to asking for a price.',
         items: [
           { title: 'Look at a real result', body: 'Open the [Costa del Sol villa](@caso-villa) in the viewer and in augmented reality. It is our demonstration case: {{villa:rooms}} rooms modelled from a single floor plan, with no photos.' },
-          { title: 'Put the price in context', body: 'Read [how much 3D rendering costs in Spain](@guia-precio-render) or, if you only need the layout, [what a 3D floor plan costs](@guia-precio-plano), with published rates alongside our own.' },
-          { title: 'Rule out what won’t work', body: 'If you are weighing AI, a scan or a model, the comparisons [AI floor plan to 3D](@guia-ia-vs-3d) and [3D model, Matterport or 360 tour](@guia-matterport) show what you get from each. Once you know what you need, our [round-up of studios and tools in Spain](@guia-mejores) shows who does it.' },
-          { title: 'Ask for a fixed price', body: 'With your floor plan in front of us, we tell you which package fits and what it costs, and if you like we model one room free of charge first. Our rates are on the [pricing page](@precios).' },
+          { title: 'Put the price in context', body: 'Read [how much 3D rendering costs in Spain](@guia-precio-render) or, if you only need the layout, [what a 3D floor plan costs](@guia-precio-plano), with the rates other studios publish.' },
+          { title: 'Rule out what won’t work', body: 'If you are weighing [doing it yourself](@guia-plano-2d-3d), AI, a scan or a model, the comparisons [AI floor plan to 3D](@guia-ia-vs-3d) and [3D model, Matterport or 360 tour](@guia-matterport) show what you get from each. Once you know what you need, our [round-up of studios and tools in Spain](@guia-mejores) shows who does it.' },
+          { title: 'Ask for a fixed price', body: 'With your floor plan in front of us, we tell you which package fits and what it costs, and if you like we model one room free of charge first. How we quote is on the [pricing page](@precios).' },
         ],
       },
       {

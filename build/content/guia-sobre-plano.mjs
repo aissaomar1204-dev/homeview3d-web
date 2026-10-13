@@ -1,4 +1,4 @@
-// Guide (ES only): how to sell homes off-plan, from a developer's marketing point of view.
+// Guide (ES + EN): how to sell homes off-plan, from a developer's marketing point of view.
 // Keyword owner of «vender viviendas sobre plano» (02-keywords-es.md C3, §4.3). PAA: «¿Cómo funciona la compra
 // de vivienda sobre plano?», «¿Cómo se paga un piso comprado sobre plano?».
 // Legal texts verified 2026-09-28 in the consolidated BOE/BOJA texts linked below:
@@ -210,6 +210,196 @@ export default {
     cta: {
       h2: 'Enseña cada tipología antes de la obra',
       body: 'Envíanos las plantas y la memoria de calidades. Te respondemos con precio cerrado y plazo, y si quieres, con una estancia de prueba en realidad aumentada.',
+      service: 'promocion',
+    },
+  },
+
+  en: {
+    title: 'Selling off-plan property in Spain: a developer’s guide',
+    description: 'What off-plan buyers need to see, what Spanish law requires of advertising and 8 pre-sale steps with renders, a viewer and AR, with a fixed quote.',
+    h1: 'How do you sell homes off-plan? A guide for developers',
+    lead: 'Selling off-plan means securing reservations for homes that don’t exist yet: buyers must understand the home, and your advertising must match what you will build. Here is what to show, what Spanish law requires and how to run the pre-sale. With {{brand}}, every unit type in 3D in {{delivery:promocion}}, with a fixed quote.',
+    breadcrumb: 'Selling off-plan',
+    card: {
+      title: 'How to sell homes off-plan in Spain',
+      summary: 'What buyers need to see, what Spanish law requires of renders and brochures, and a pre-sale campaign in 8 steps.',
+    },
+    hero: {
+      image: 'villa_bano_suite',
+      alt: 'En-suite bathroom with a round freestanding tub, black porcelain tiles and an olive-green rain shower. 3D render of the anonymised Costa del Sol villa, generated from its 2D floor plan.',
+      caption: 'A finish from the specification sheet, seen before it is built. Rendered from the 2D floor plan, with no photos.',
+    },
+    facts: [
+      ['For', 'Developers, sales agents and new-build agencies'],
+      ['What decides a reservation', 'Layout, finishes, space, price and guarantees'],
+      ['Key rules', 'RD 515/1989, Law 38/1999 and, in Andalusia, Decree 218/2005'],
+      ['Golden rule', 'What your advertising shows is enforceable'],
+      ['Campaign', '8 steps, from the drawings to the sales suite'],
+      ['Development in 3D', 'Fixed quote based on the number of unit types'],
+      ['3D turnaround', '{{delivery:promocion}}'],
+      ['Rules checked', '28 September 2026'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'How does selling homes off-plan work in Spain?',
+        answer: 'Selling off-plan means marketing homes that are still at the design stage or under construction. The buyer reserves, signs a private contract and makes stage payments during the build; the balance is paid on completion before a notary, once the home is finished and has its occupation licence. For months, they decide on plans, a specification sheet and images alone.',
+        body: 'For a developer, marketing is translation: turning a 1:100 plan and a list of materials into something buyers understand and can picture themselves living in.\n\nStage payments are not a sales detail either. Spain’s [Building Act, Ley 38/1999](' + LOE + '), requires them to be guaranteed by a surety insurance policy or a bank guarantee covering taxes and legal interest, and to be paid into a special account. That guarantee must also be mentioned in your advertising.',
+      },
+      {
+        type: 'stat',
+        value: '37.01%',
+        label: 'of home purchases in Málaga province in the second quarter of 2026 were made by foreign buyers, the second-highest share in Spain after Alicante',
+        source: { label: 'Colegio de Registradores (Spain’s association of land registrars), Estadística Registral Inmobiliaria, p. 44', url: ERI },
+        year: 'Q2 2026',
+      },
+      {
+        type: 'table',
+        h2: 'What does a buyer need to see before reserving off-plan?',
+        intro: 'The usual questions from new-build buyers, the document that answers each one and the format that makes it understandable.',
+        caption: 'What off-plan buyers ask and how to answer them',
+        head: ['Buyer’s question', 'Document that answers it', 'Format that makes it understandable'],
+        rows: [
+          ['What is the layout?', 'Floor plan of the home with usable floor area', 'Furnished 3D floor plan and a viewer with the walls cut away'],
+          ['Is the living room big? Will my sofa fit?', 'Dimensions on the plan', 'To-scale model and real-size augmented reality'],
+          ['What will the finishes be like?', 'Specification sheet', 'Renders with the exact materials in the specification'],
+          ['What light and views will it have?', 'Site plan and orientation', 'Renders with natural light; for views, real photos taken from the plot'],
+          ['How much will I pay, and when?', 'Price and payment schedule', 'A clear table in the brochure: 3D adds nothing here'],
+          ['Is my money protected?', 'Insurance or bank guarantee for stage payments', 'Mention it in your advertising, as the law requires'],
+          ['When will it be handed over?', 'Completion date and build stage', 'Up-to-date construction photos on the development website'],
+        ],
+        note: 'If the buyer lives abroad, every row can be handled remotely: by link, video call or WhatsApp.',
+      },
+      {
+        type: 'answer',
+        h2: 'Why are the plans and the specification sheet not enough?',
+        answer: 'Because they are technical documents written for contracts, not for imagination. A 1:100 plan shows walls and dimensions, but not volume, light or furniture; a specification says “large-format porcelain tiles” without showing how they look in a living room. 3D does not replace those documents: it makes them readable for the people who will live there.',
+        body: '[Property renders](@servicio-renders) sell on portals and in brochures. The [3D viewer](@servicio-tour) lets buyers walk through the home from their sofa. [App-free augmented reality](@servicio-ar) puts the unit type on the sales suite table.\n\nWhat matters is that they all come from the same 3D model: that way the floor in the render is the floor in the viewer and in augmented reality, and if the specification changes, all three change together.',
+      },
+      {
+        type: 'figure',
+        image: 'villa_dormitorios',
+        alt: 'Furnished bedroom wing and family bathroom of the anonymised Costa del Sol villa. 3D render generated from its 2D floor plan.',
+        caption: 'Part of the home seen before it exists. Rendered from the 2D floor plan.',
+        layout: 'wide',
+      },
+      {
+        type: 'table',
+        h2: 'Renders, a 3D viewer, augmented reality or a show home?',
+        intro: 'What each format adds to a pre-sale, where it is used and where it falls short. They are not mutually exclusive.',
+        caption: 'Formats for showing an off-plan home',
+        head: ['Format', 'What it adds', 'Where it is used', 'Limit'],
+        rows: [
+          ['4K renders', 'Finishes, light and atmosphere in each room', 'Portals, website, brochure, social media and billboards', 'Still images: you cannot walk through them'],
+          ['Furnished 3D floor plan', 'The layout at a glance, with furniture to scale', 'Unit type sheets and listings', 'A top-down or isometric view, no walkthrough'],
+          ['3D web viewer', 'Walking through the home room by room, with [cut-away mode](@glosario#modo-maqueta)', 'Development website, email and WhatsApp', 'Needs a connection'],
+          ['Augmented reality', 'The unit type on the table at 1:20 or at real size', 'Sales suite, fairs and the buyer’s home', 'Only on a compatible phone or tablet'],
+          ['Physical scale model of the building', 'The volume of the scheme and the communal areas', 'Sales suite', 'Does not show the inside of each home'],
+          ['Physical show home', 'Touching materials and measuring the real space', 'A finished home or fitted-out premises', 'Set-up cost; a single unit type'],
+        ],
+        note: '{{brand}} produces the first four from the project drawings; the physical model and the show home are jobs for other trades.',
+      },
+      {
+        type: 'answer',
+        h2: 'What does Spanish law say about images in new-build advertising?',
+        answer: 'That what you show can be enforced. Royal Decree 515/1989 requires home advertising to match the homes’ real features, to say whether they are under construction and not to mislead. And any details it gives about construction, installations or services are enforceable even if they are not in the contract.',
+        body: 'That is set out in [articles 2 and 3 of Royal Decree 515/1989](' + RD515 + '#a3), and [article 61 of Spain’s General Law for the Defence of Consumers and Users](' + TRLGDCU + ') repeats it for any product or service: the content of advertising becomes part of the contract. In terms of images: if the render shows oak flooring and the specification says porcelain tiles, your buyer has a case.\n\nIn Andalusia, [Decree 218/2005](' + BOJA + ') details what advertising must include: the build stage, location, developer, number of homes, usable floor area if you describe rooms, taxes if you publish a price and the guarantee for stage payments. Anyone offering homes at the design stage or under construction, including as an intermediary, must hand over a free Documento Informativo Abreviado (a short information document) with a dimensioned furniture layout plan at a minimum scale of 1:100.\n\nAnd the [Building Act](' + LOE + ') requires that advertising to name the insurer or guarantor and the bank holding the special account.',
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'This is not legal advice',
+        body: 'We are a 3D visualisation studio, not a law firm, and we sell the material this guide describes. We summarise rules from the BOE (Spain’s official gazette) and the BOJA (Andalusia’s), with a link to each text: ask your legal adviser to review brochures, website and contracts. Outside Andalusia, check your region’s consumer rules.',
+      },
+      {
+        type: 'checklist',
+        h2: 'What should every render and brochure for the development include?',
+        intro: 'To check your material before publishing it: legal requirements, with the rule behind each, and our own good practice.',
+        items: [
+          'Render finishes that match the specification sheet: floors, joinery, sanitaryware, kitchen and façade.',
+          'Furniture and decoration marked as not included, with a visible label like the one we deliver with every render: “3D render. Indicative image, not contractual; furniture not included.”',
+          'The status of the home: at design stage, under construction or finished (RD 515/1989, art. 2).',
+          'Usable floor area of each unit type if you describe bedrooms or rooms, not just the built area (Decree 218/2005, art. 5).',
+          'The developer’s identity and the development’s location (Decree 218/2005, art. 5).',
+          'The insurer or guarantor and the bank holding the special account, if you take stage payments (Law 38/1999, first additional provision).',
+          'Taxes and costs payable by the buyer, if you publish the price (Decree 218/2005, art. 5).',
+          'In brochures, how long the information is valid and where the documentation can be consulted (RD 515/1989, art. 8).',
+          'In Andalusia, the right to receive the Documento Informativo Abreviado and where to ask for it (Decree 218/2005, art. 5).',
+          'The project date and version in each render’s file name, so you know which specification it matches.',
+        ],
+      },
+      {
+        type: 'steps',
+        h2: 'How do you prepare a pre-sale campaign, step by step?',
+        intro: 'From the drawings to the sales suite. The 3D timings are ours; the rest depends on your schedule.',
+        items: [
+          { title: 'Fix the unit types and the specification sheet', body: 'Before producing a single image: every later change means reviewing renders, viewer and brochures.', time: 'Before starting' },
+          { title: 'Order the 3D model of each unit type', body: 'Floor plans as DWG, DXF or PDF, plus the specification. Without dimensions, areas are estimates (≈) and are marked as such.', time: '{{delivery:promocion}} for 3 unit types' },
+          { title: 'Review with the architects and the sales director', body: 'A private link to the viewer to request changes to furniture, finishes or layout. The package includes {{revisions:promocion}}.' },
+          { title: 'Build the development website', body: 'One page per unit type with renders, 3D floor plan, usable floor area, embedded viewer and a form. Legal documentation available to download.' },
+          { title: 'Prepare the brochure and the listings', body: 'Renders and floor plans in the brochure and on portals. idealista only publishes 3D tours from its approved providers: the viewer goes on your website, by link, on a QR code or in the virtual tour field of portals that accept external links.' },
+          { title: 'Equip the sales suite and the fairs', body: 'A tablet with every unit type in augmented reality at 1:20 and a QR code on the stand that opens the viewer on each visitor’s phone.' },
+          { title: 'Give partner agencies the same material', body: 'The same link, the same renders and the same sheets: none of them shows an old specification or rounds up floor areas.' },
+          { title: 'Update during the build', body: 'If a finish changes, the model is updated and the renders, viewer and AR are re-exported. When the build is finished, replace the renders with real photos.', time: 'Until handover' },
+        ],
+      },
+      {
+        type: 'answer',
+        h2: 'How much does the 3D material for a development cost?',
+        answer: 'With {{brand}}, the quote for a development depends on the number of unit types and on what it includes: each unit type modelled and furnished, 4K renders, a viewer with a unit-type selector and augmented reality for the sales suite, in {{delivery:promocion}}. We send it to you fixed and in writing once we see the drawings.',
+        body: 'The ranges other studios publish, with their sources, are in [how much 3D rendering costs in Spain](@guia-precio-render). The detail of each package is on the [pricing page](@precios), and a finished example in the [Costa del Sol villa case study](@caso-villa): {{villa:rooms}} rooms modelled from {{villa:input}}. How we work with your team is on [off-plan 3D visualisation for developers](@sol-promotoras).',
+      },
+      plate('en', 'villa_interior_salon'),
+      { type: 'faq' },
+      {
+        type: 'sources',
+        items: [
+          { label: 'BOE: Royal Decree 515/1989 on consumer information in home sales, arts. 2 to 8', url: RD515, note: 'In Spanish. Checked 28 Sep 2026.' },
+          { label: 'BOE: General Law for the Defence of Consumers and Users, art. 61', url: TRLGDCU, note: 'In Spanish. Checked 28 Sep 2026.' },
+          { label: 'BOE: Law 38/1999 on Building (Ley de Ordenación de la Edificación), first additional provision', url: LOE, note: 'In Spanish. Checked 28 Sep 2026.' },
+          { label: 'BOJA: Decree 218/2005, consumer information in home sales in Andalusia', url: BOJA, note: 'In Spanish. Arts. 4 to 6.' },
+          { label: 'Colegio de Registradores: Estadística Registral Inmobiliaria, Q2 2026', url: ERI, note: 'In Spanish. Page 44.' },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: 'How does buying a home off-plan work in Spain?',
+        a: 'The buyer reserves a home at the design stage or under construction, signs a private contract and makes stage payments during the build; the balance is paid on completion before a notary, once the home is finished. {{brand}} turns the drawings into renders, a viewer and augmented reality for that pre-sale, with a fixed quote.',
+      },
+      {
+        q: 'How do you pay for an off-plan property in Spain?',
+        a: 'The usual pattern is a reservation fee, stage payments during the build and the balance on completion, often with a mortgage. Spain’s Building Act, Ley 38/1999, requires the developer to pay stage payments into a special account and to guarantee them with a surety insurance policy or a bank guarantee, taxes and legal interest included.',
+      },
+      {
+        q: 'Do renders have to say “indicative image”?',
+        a: 'None of the rules we cite requires that exact wording: they require advertising not to mislead, and they make what it shows enforceable. The label covers furniture and decoration, not a finish that differs from the specification sheet. That is why {{brand}} models floors, joinery and sanitaryware according to the specification.',
+      },
+      {
+        q: 'Can you sell off-plan without a show home?',
+        a: 'Yes. A show home needs a finished unit or premises, and shows a single unit type. With a 3D model, every unit type can be explored in the viewer and placed on a table in augmented reality before construction starts. {{brand}} delivers it for each unit type in {{delivery:promocion}}, with a fixed quote.',
+      },
+      {
+        q: 'What information must new-build buyers receive in Andalusia?',
+        a: 'Anyone offering homes at the design stage or under construction in Andalusia, including as an intermediary, must give a free Documento Informativo Abreviado to anyone asking for information: developer, a dimensioned furniture layout plan at a minimum scale of 1:100, usable floor area, specification, price with taxes and the guarantee for stage payments. The {{brand}} 3D floor plan complements it; it does not replace it.',
+      },
+      {
+        q: 'Do the renders need changing if the specification sheet changes?',
+        a: 'Yes, and the sooner the better: what your advertising shows is enforceable even if it is not in the contract. {{brand}} generates the model with Python scripts in Blender, so changing a floor or a window frame rebuilds in minutes, and the renders, viewer and augmented reality are re-exported.',
+      },
+      {
+        q: 'How do you show a development to buyers who live abroad?',
+        a: 'With a link: buyers walk through the unit type in the 3D viewer and open it in augmented reality on their phone, with nothing to install. In Málaga province, 37.01% of home purchases in the second quarter of 2026 were made by foreign buyers. The {{brand}} viewer is available in English and Spanish.',
+      },
+      {
+        q: 'How much do renders for an off-plan development cost?',
+        a: 'It depends on the number of unit types and on what is included: 4K renders, a viewer and augmented reality. {{brand}} does not publish rates: we send a fixed, written quote as soon as we see the drawings. Rates published by other studios are in [how much 3D rendering costs](@guia-precio-render).',
+      },
+    ],
+    related: ['sol-promotoras', 'servicio-renders', 'servicio-ar', 'caso-villa', 'precios'],
+    cta: {
+      h2: 'Show every unit type before you build',
+      body: 'Send us the floor plans and the specification sheet. We will reply with a fixed price and turnaround and, if you like, a test room in augmented reality.',
       service: 'promocion',
     },
   },

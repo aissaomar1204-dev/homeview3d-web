@@ -1,4 +1,4 @@
-// Zone page: Málaga capital (ES only).
+// Zone page: Málaga capital (ES + EN).
 // Keyword focus (02-keywords C8): render 3D Málaga, infografías 3D Málaga, renders Málaga.
 // Unique angle vs Marbella: a city of flats, strong new-build activity in the province, old flats to renovate in the centre.
 // No physical presence promised, no local clients.
@@ -40,6 +40,37 @@ const faq = [
   {
     q: '¿Qué precisión tienen las medidas de un plano sin cotas?',
     a: 'Son aproximadas. Cuando el plano no trae cotas, {{brand}} calcula la escala con una medida de referencia, como una puerta estándar o la superficie total, y estima el resto. Por eso marcamos esas superficies con ≈. Si la precisión importa, por ejemplo para una reforma o una venta sobre plano, trabajamos con el plano acotado del proyecto o con tus mediciones.',
+  },
+];
+
+const faqEn = [
+  {
+    q: 'Do you need to visit the flat or the site in Málaga?',
+    a: 'No. {{brand}} works remotely from the floor plan: you send it as a PDF, DWG or image, or as a link to the listing, and questions are handled by video call, email or WhatsApp. With no travel involved, turnaround is the same in the historic centre, in Teatinos or anywhere else: {{delivery:plano3d}} for the 3D floor plan and {{delivery:maqueta}} for the complete model.',
+  },
+  {
+    q: 'Do you work with developers in Málaga city?',
+    a: 'Yes. Málaga is the third Spanish province by new-build home sales, and {{brand}} has a package designed for off-plan sales: every unit type in 3D with renders, a viewer with a unit-type selector and augmented reality for the sales suite, with a fixed quote and delivered in {{delivery:promocion}}. Details are on our page for [off-plan developers](@sol-promotoras).',
+  },
+  {
+    q: 'Can you model an old flat in the centre from a hand-drawn plan?',
+    a: 'Yes, as long as the plan is legible. {{brand}} works with scanned plans, photos of a sketch or plans from the Catastro, Spain’s land registry maps. Without dimensions, we need at least one reference measurement or the approximate floor area, and we estimate the rest from the scale (≈). With that model you can show the current state and a renovation proposal on the same geometry.',
+  },
+  {
+    q: 'How much does 3D rendering of a flat in Málaga cost?',
+    a: 'It depends on the floor area and on what you need: the 3D floor plan of a flat, with a colour top-down plan and a furnished isometric view, or the complete 3D model, with renders of each room, a web viewer and augmented reality. {{brand}} sends you a fixed quote once it sees the floor plan, and the price is the same in Málaga as anywhere else in Spain.',
+  },
+  {
+    q: 'Do you also work in Torremolinos, Rincón de la Victoria or the Axarquía?',
+    a: 'Yes. {{brand}} works from the floor plan, so location changes neither price nor turnaround. Torremolinos, Benalmádena, Rincón de la Victoria, Vélez-Málaga, Nerja and any other town in the metropolitan area are quoted on the same terms. Our [Costa del Sol page](@zona-costa-del-sol) has the sales data for each town and the kind of job that fits best.',
+  },
+  {
+    q: 'Does the 3D viewer work on my agency’s website?',
+    a: 'Yes. {{brand}} delivers the viewer with an iframe code that you paste into the property page on your website, plus a link to share by WhatsApp or email. It cannot be embedded inside idealista, which only accepts approved multimedia providers, but you can upload the renders and the colour floor plan there as listing images.',
+  },
+  {
+    q: 'How accurate are measurements from a plan without dimensions?',
+    a: 'They are approximate. When the plan has no dimensions, {{brand}} works out the scale from a reference measurement, such as a standard door or the total floor area, and estimates the rest. That is why we mark those areas with ≈. When precision matters, for a renovation or an off-plan sale for example, we work from the project’s dimensioned plan or from your own measurements.',
   },
 ];
 
@@ -135,6 +166,94 @@ export default {
     cta: {
       h2: '¿Vemos tu piso o tu promoción en 3D?',
       body: 'Envíanos el plano y te devolvemos una estancia modelada en 3D con realidad aumentada, gratis y sin compromiso.',
+      service: 'maqueta',
+    },
+  },
+
+  en: {
+    title: '3D rendering and CGI in Málaga',
+    description: 'CGI and 3D models from the floor plan for developers, agents and renovations in Málaga city, with a 3D viewer and augmented reality. Fixed quote.',
+    h1: '3D rendering and CGI from floor plans in Málaga',
+    lead: '{{brand}}, a 3D visualisation studio based in Mijas on the Costa del Sol, turns floor plans of flats, new builds and homes to renovate in Málaga into furnished 3D models, with renders, a viewer and app-free augmented reality. 3D floor plan in {{delivery:plano3d}}, with a fixed quote.',
+    breadcrumb: 'Málaga',
+    card: {
+      title: 'Málaga',
+      summary: 'Flats, new builds and renovations in Málaga city: CGI and 3D models from the floor plan, with augmented reality.',
+    },
+    hero: {
+      image: 'villa_interior_terraza',
+      alt: 'Eye-level 3D render of the demo villa’s terrace: terracotta floor, outdoor sofa, low table and a potted olive tree. Generated from the 2D floor plan of an anonymised case.',
+      caption: 'The terrace of our demo case, at eye level. 3D render of the anonymised villa; the sea in the background is illustrative.',
+    },
+    facts: [
+      ['Area', 'Málaga city and its metropolitan area'],
+      ['Home sales in 2025', '6,301 homes, 1,038 of them new builds'],
+      ['Average price in the city', '€3,401/m², up 14.7% in a year'],
+      ['New builds in the province', '11,727 sales in 12 months, third in Spain'],
+      ['Input', 'The floor plan of the flat or the project'],
+      ['Price', 'A fixed quote before we start'],
+      ['Complete model turnaround', '{{delivery:maqueta}}'],
+    ],
+    blocks: [
+      {
+        type: 'answer',
+        h2: 'What is the housing market like in Málaga city?',
+        answer: 'A market of flats, with plenty of new building across the province and rising prices. Málaga city recorded 6,301 home sales in 2025, 1,038 of them new builds, according to Spain’s Ministry of Housing. Its average registered price reached €3,401/m², up 14.7% in a year, according to the Colegio de Registradores.',
+        body: 'Unlike Marbella, the city is dominated by flats in multi-storey blocks, new-build developments in growing districts such as Teatinos or the western seafront, and older flats in the centre and established neighbourhoods sold for renovation. Each calls for a different output from the 3D model.',
+      },
+      {
+        type: 'table',
+        h2: 'Málaga in figures',
+        caption: 'Home sales and prices in Málaga city and the province',
+        head: ['Figure', 'Value', 'Period', 'Source'],
+        rows: [
+          ['Home sales in Málaga city', '6,301', 'Year 2025', 'Ministry of Housing'],
+          ['Of which new builds', '1,038 (16.5%)', 'Year 2025', 'Ministry of Housing'],
+          ['Average registered price in the city', '€3,401/m² (+14.7%)', '12 months to Q2 2026', 'Colegio de Registradores'],
+          ['City’s share of home sales in the province', '18.09%', '12 months to Q2 2026', 'Colegio de Registradores'],
+          ['New-build home sales in the province', '11,727 (third in Spain)', '12 months to Q2 2026', 'Colegio de Registradores'],
+          ['Purchases by foreign buyers in the province', '37.01%', 'Q2 2026', 'Colegio de Registradores'],
+        ],
+        note: 'The Ministry’s sales figures come from notarial deeds and are counted by the municipality where the home is located (sum of the four quarters of 2025). The Colegio de Registradores figures refer to registered sales.',
+        sources: [
+          { label: 'Spanish Ministry of Housing and Urban Agenda: property transactions by municipality', url: MIVAU },
+          { label: 'Colegio de Registradores: Estadística Registral Inmobiliaria, Q2 2026', url: ERI },
+        ],
+      },
+      {
+        type: 'compare',
+        h2: 'From the flat’s floor plan to 3D CGI',
+        intro: 'Drag the handle: underneath, the redrawn 2D plan; on top, the colour top-down plan that comes out of the 3D model. It is the same geometry, so the measurements line up.',
+      },
+      plate('en', 'villa_interior_salon'),
+      {
+        type: 'prose',
+        h2: 'What do developers, agents and renovators in Málaga order?',
+        body: '- **Developers.** The province is third in Spain for new-build home sales. To sell off-plan: every unit type in 3D, with a viewer and augmented reality for the sales suite and for buyers who reserve remotely. We explain it in [solutions for developers](@sol-promotoras) and in our guide to [selling off-plan property in Spain](@guia-sobre-plano).\n- **Estate agents.** In a two- or three-bedroom flat, the floor plan explains more than ten photos. A colour [3D floor plan](@servicio-plano) solves the layout, and the complete model adds renders, a viewer and augmented reality for higher-value homes.\n- **Renovations.** Older flats tend to have very compartmentalised layouts. On the model you show the current state and the proposal, with new furniture and finishes, before asking builders for quotes. More in [architects and interior designers](@sol-arquitectos).',
+      },
+      {
+        type: 'prose',
+        h2: 'Who buys in Málaga, and how do they see the listing?',
+        body: 'Málaga city mixes local first-time buyers, investors and foreign buyers. Across the province, 37.01% of home purchases in the second quarter of 2026 were made by foreign nationals, according to the Colegio de Registradores, although the city accounts for only 18.09% of the province’s sales: most of the market is on the coast.\n\nFor buyers who live in Málaga, augmented reality is mainly a sales suite or office tool: the home at 1:20 on the table while you walk them through the development. For those searching from abroad, what works is the viewer link by WhatsApp or email, which opens on any phone with nothing to install.',
+      },
+      {
+        type: 'ar',
+        h2: 'Try it on your phone',
+        intro: 'Open the villa from our [demo case](@caso-villa) in augmented reality: on iPhone or iPad with [AR Quick Look](@glosario#ar-quick-look) and on Android with [Scene Viewer](@glosario#scene-viewer). On a computer, scan the QR code. Not opening? Follow [how to view a property in AR, step by step](@guia-ar).',
+      },
+      {
+        type: 'callout',
+        tone: 'honesty',
+        title: 'How we work in Málaga',
+        body: 'We work remotely from the floor plan, so there is no need for us to visit the flat or the site: questions are settled on a video call. If the plan has no dimensions, the model’s areas are scale estimates (≈). Prices are the same across Spain, and how we quote is on the [pricing page](@precios).',
+      },
+      { type: 'faq' },
+    ],
+    faq: faqEn,
+    related: ['sol-promotoras', 'servicio-plano', 'zona-costa-del-sol', 'caso-villa', 'precios'],
+    cta: {
+      h2: 'Shall we see your flat or your development in 3D?',
+      body: 'Send us the floor plan and we will send back one room modelled in 3D with augmented reality, free and with no commitment.',
       service: 'maqueta',
     },
   },

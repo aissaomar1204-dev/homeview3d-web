@@ -1,7 +1,7 @@
 // Zone page: Marbella (ES) and the single strong English local page for Marbella + Costa del Sol towns (EN).
 // Keyword focus ES: render 3D Marbella, infografías 3D Marbella, plano 3D Marbella, home staging virtual Marbella.
 // Keyword focus EN: 3d rendering marbella, 3d rendering costa del sol, architectural visualization marbella, virtual staging marbella.
-// Anti-cannibalisation: «renders Costa del Sol» (ES) → zona-costa-del-sol. EN has no Costa del Sol twin, so the EN page covers the towns as sections.
+// Anti-cannibalisation: «renders Costa del Sol» → zona-costa-del-sol (ES and, since 14-oct-2026, EN: the EN Costa del Sol page targets the towns one by one).
 // No physical presence promised (remote work from the plan), no local clients, the demo villa is only «Costa del Sol».
 // Sources verified 2026-09-28:
 //  - Ministerio de Vivienda y Agenda Urbana (boletín online, tablas 2, 2.3, 2.4 por municipios; tabla 1.6 residencia del comprador), 1T-4T 2025:
@@ -300,7 +300,7 @@ export default {
       { type: 'faq' },
     ],
     faq: faqEn,
-    related: ['sol-inmobiliarias', 'sol-promotoras', 'servicio-renders', 'caso-villa', 'precios'],
+    related: ['sol-inmobiliarias', 'sol-promotoras', 'zona-costa-del-sol', 'caso-villa', 'precios'],
     cta: {
       h2: 'Got a villa on your books?',
       body: 'Send us its floor plan and we will send back one room in 3D with augmented reality, free and with no commitment.',
