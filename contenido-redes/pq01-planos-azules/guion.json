@@ -1,0 +1,21 @@
+{
+  "titulo": "¿Por qué los planos antiguos eran azules?",
+  "nota": "Serie general «¿Por qué…?» (público amplio, no promotoras). Cierre neutro: sin «Mándame el plano» ni pedir que sigan; tras la última frase, el logo en silencio. Cada fragmento es un subtítulo. 'pausa' marca el hueco después del fragmento (x0,35 al montar la toma). Fuentes en la ficha de publicación.",
+  "fragmentos": [
+    {"n": 1,  "escena": 1,  "texto": "¿Por qué los planos antiguos eran azules?", "pausa": 0.3},
+    {"n": 2,  "escena": 1,  "texto": "No era por gusto: era química.", "pausa": 0.5},
+    {"n": 3,  "escena": 2,  "texto": "Antes, cada copia de un plano se calcaba a mano.", "pausa": 0.5},
+    {"n": 4,  "escena": 3,  "texto": "En mil ochocientos cuarenta y dos, un astrónomo inglés encontró un atajo:", "pausa": 0.2},
+    {"n": 5,  "escena": 4,  "texto": "un papel con sales de hierro que se vuelve azul al sol.", "pausa": 0.4},
+    {"n": 6,  "escena": 5,  "texto": "Encima se pone el plano, dibujado en papel de calco.", "pausa": 0.2},
+    {"n": 7,  "escena": 5,  "texto": "Donde pasa la luz, azul.", "pausa": 0.15},
+    {"n": 8,  "escena": 5,  "texto": "Donde hay tinta, blanco.", "pausa": 0.4},
+    {"n": 9,  "escena": 6,  "texto": "Un par de minutos al sol, un lavado con agua, y copia hecha.", "pausa": 0.3},
+    {"n": 10, "escena": 7,  "texto": "Diez veces más barata que calcarla a mano.", "pausa": 0.5},
+    {"n": 11, "escena": 8,  "texto": "Durante más de un siglo, las obras se levantaron con planos azules.", "pausa": 0.3},
+    {"n": 12, "escena": 9,  "texto": "Por eso en inglés un plano sigue siendo un «blueprint».", "pausa": 0.5},
+    {"n": 13, "escena": 10, "texto": "Luego llegaron la fotocopiadora y el ordenador.", "pausa": 0.3},
+    {"n": 14, "escena": 11, "texto": "Hoy, muchas veces, el plano ni siquiera es de papel.", "pausa": 0.3},
+    {"n": 15, "escena": 11, "texto": "Y se puede levantar en tres dimensiones.", "pausa": 2.0}
+  ]
+}

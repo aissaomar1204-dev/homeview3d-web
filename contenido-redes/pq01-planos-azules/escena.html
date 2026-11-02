@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Planos azules · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; --azul: #1E4D8C; --sens: #D6D99A; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 55%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 24px; right: 24px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; font: 600 15px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; }
+.tag.dark { color: var(--ink-3); }
+#serie { position: absolute; left: 0; right: 0; top: 74px; text-align: center; z-index: 50; font: 700 18px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- sol y rayos: escenas 4 a 6 -->
+  <svg class="full" id="solsvg" viewBox="0 0 540 960" style="z-index:3">
+    <g id="rayos"></g>
+    <g id="sol" transform="translate(440 318)" opacity="0">
+      <g id="solRayos"></g>
+      <circle r="28" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+    </g>
+  </svg>
+
+  <!-- la hoja que se expone al sol: escenas 5 y 6 -->
+  <svg class="full" id="expsvg" viewBox="0 0 540 960" style="z-index:4;opacity:0">
+    <rect id="expPapel" x="70" y="470" width="400" height="300" rx="4" fill="#D6D99A" stroke="#0E1B2B" stroke-width="2"/>
+    <g id="expPlano"></g>
+    <g id="bandeja" opacity="0">
+      <rect x="50" y="448" width="440" height="344" rx="24" fill="rgb(120 170 220 / .30)" stroke="#0E1B2B" stroke-width="2.4"/>
+      <g id="olas"></g>
+    </g>
+  </svg>
+
+  <!-- 1 · la pregunta y un plano azul -->
+  <div class="sc" id="s1">
+    <div class="big" id="b1" style="top:150px;font-size:52px">¿Por qué los planos antiguos eran azules?</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="hoja1" transform="rotate(-3 270 545)" style="filter:drop-shadow(0 18px 20px rgb(14 27 43 / .35))"></g></svg>
+    <div class="chip" id="chipQuim" style="left:50%;top:760px;opacity:0">hierro + sol = azul</div>
+  </div>
+
+  <!-- 2 · calcar a mano -->
+  <div class="sc" id="s2">
+    <svg class="full" viewBox="0 0 540 960">
+      <rect x="70" y="390" width="400" height="300" fill="#fff" stroke="#0E1B2B" stroke-width="2"/>
+      <g id="orig" opacity=".3"></g>
+      <rect x="60" y="380" width="420" height="320" fill="#fff" fill-opacity=".45" stroke="#4F6175" stroke-width="1.4"/>
+      <g id="copia2"></g>
+      <g id="lapiz">
+        <path d="M0 0L5 -16L16 -10Z" fill="#0E1B2B"/>
+        <path d="M5 -16L66 -118L77 -112L16 -10Z" fill="#fff" stroke="#0E1B2B" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M62 -110L73 -104" stroke="#0E1B2B" stroke-width="2"/>
+      </g>
+      <g id="reloj" transform="translate(455 300)">
+        <circle r="32" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <path id="aguja1" d="M0 0V-22" class="ln"/>
+        <path id="aguja2" d="M0 0V-14" class="ln" style="stroke-width:3.2"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- 3 · 1842 -->
+  <div class="sc" id="s3">
+    <div class="abs" id="anyo" style="left:0;right:0;top:262px;text-align:center;font:400 150px/1 Gloock;opacity:0">1842</div>
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="tele" transform="translate(270 585)">
+        <path class="ln tl" pathLength="1" d="M-140 40L110 -100L126 -72L-124 68Z"/>
+        <path class="ln tl" pathLength="1" d="M-140 40L-160 52L-150 74L-124 68"/>
+        <path class="ln tl" pathLength="1" d="M100 -110L136 -62"/>
+        <path class="ln tl" pathLength="1" d="M-8 -12L-82 200M-8 -12L66 200M-8 -12L-8 205"/>
+        <path class="ln tl" pathLength="1" d="M-120 205H110" style="opacity:.5"/>
+      </g>
+    </svg>
+    <div class="abs" id="herschel" style="left:0;right:0;top:810px;text-align:center;font:700 24px 'Hanken Grotesk';opacity:0">John Herschel <span style="color:#4F6175;font-weight:600">· astrónomo inglés</span></div>
+  </div>
+
+  <!-- 4 · el papel que se vuelve azul -->
+  <div class="sc" id="s4">
+    <svg class="full" viewBox="0 0 540 960">
+      <rect id="muestra" x="110" y="500" width="320" height="230" rx="6" fill="#D6D99A" stroke="#0E1B2B" stroke-width="2.4"/>
+      <text id="prusia" x="270" y="628" text-anchor="middle" style="font:400 34px Gloock;fill:#fff" opacity="0">azul de Prusia</text>
+    </svg>
+    <div class="chip" id="chipSales" style="left:110px;top:440px;opacity:0">papel con sales de hierro</div>
+  </div>
+
+  <!-- 5 · el calco encima, la luz y la tinta -->
+  <div class="sc" id="s5" data-fijo="1" style="z-index:6">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="calco">
+        <rect x="70" y="470" width="400" height="300" fill="#fff" fill-opacity=".72" stroke="#4F6175" stroke-width="1.5"/>
+        <g id="calcoPlano"></g>
+      </g>
+    </svg>
+    <div class="chip" id="chipCalco" style="left:70px;top:405px;opacity:0">papel de calco</div>
+    <div class="chip ok" id="chipLuz" style="left:70px;top:800px;opacity:0">luz → azul</div>
+    <div class="chip" id="chipTinta" style="left:282px;top:800px;opacity:0">tinta → blanco</div>
+  </div>
+
+  <!-- 6 · dos minutos, agua y copia -->
+  <div class="sc" id="s6" data-fijo="1" style="z-index:6">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="reloj6" transform="translate(110 850)" opacity="0">
+        <circle r="34" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <circle id="anillo6" r="26" fill="none" stroke="#1F5F9E" stroke-width="7" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90)"/>
+      </g>
+      <text id="min6" x="160" y="860" style="font:700 28px 'Hanken Grotesk';fill:#0E1B2B" opacity="0">2 min</text>
+    </svg>
+    <div class="chip ok" id="chipCopia" style="left:50%;top:388px;opacity:0">✓ copia hecha</div>
+  </div>
+
+  <!-- 7 · diez veces más barata -->
+  <div class="sc" id="s7">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="barras"></g>
+      <path d="M70 800H470" class="ln"/>
+      <text id="n10" x="170" y="402" text-anchor="middle" style="font:400 48px Gloock;fill:#0E1B2B" opacity="0">10</text>
+      <text id="n1" x="370" y="748" text-anchor="middle" style="font:400 48px Gloock;fill:#0E1B2B" opacity="0">1</text>
+      <text x="170" y="834" text-anchor="middle" style="font:700 21px 'Hanken Grotesk';fill:#0E1B2B">Calcada a mano</text>
+      <text x="370" y="834" text-anchor="middle" style="font:700 21px 'Hanken Grotesk';fill:#0E1B2B">Copia azul</text>
+      <text x="270" y="884" text-anchor="middle" style="font:600 14px 'Hanken Grotesk';fill:#4F6175">Coste por copia · oficinas de arquitectura de EE. UU., años 1890</text>
+    </svg>
+  </div>
+
+  <!-- 8 · un siglo de obras con planos azules -->
+  <div class="sc" id="s8">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="grua">
+        <path class="ln gr" pathLength="1" d="M470 800V330"/>
+        <path class="ln gr" pathLength="1" d="M458 800V330 M458 790L470 760L458 730L470 700L458 670L470 640L458 610L470 580L458 550L470 520L458 490L470 460L458 430L470 400L458 370L470 340"/>
+        <path class="ln gr" pathLength="1" d="M150 340H520 M150 352H458 M470 330L440 300H520"/>
+        <path class="ln gr" pathLength="1" d="M300 352V405 M300 405q0 14 -10 14"/>
+      </g>
+      <g id="edif"></g>
+      <g id="tablero"></g>
+      <path d="M20 800H520" class="ln"/>
+    </svg>
+    <div class="chip" id="chipSiglo" style="left:50%;top:248px;opacity:0">más de 100 años</div>
+  </div>
+
+  <!-- 9 · blueprint en el diccionario -->
+  <div class="sc" id="s9">
+    <div class="abs" id="dicc" style="left:50px;top:320px;width:440px;background:#fff;border-radius:22px;box-shadow:0 30px 50px -24px rgb(14 27 43 / .6), 0 0 0 1px rgb(14 27 43 / .08);padding:36px 38px 38px">
+      <div style="font:400 68px/1 Gloock">blueprint</div>
+      <div style="font:600 19px 'Hanken Grotesk';color:#4F6175;margin-top:14px">inglés · sustantivo</div>
+      <div style="height:2px;background:#0E1B2B;opacity:.12;margin:24px 0"></div>
+      <div style="font:700 26px/1.4 'Hanken Grotesk'">1. Plano de una obra.<br>2. Plan detallado de algo.</div>
+      <div id="etim" style="margin-top:26px;font:700 23px 'Hanken Grotesk';color:#4F6175;opacity:0"><span style="color:#1F5F9E">blue</span> = azul · <span style="color:#1F5F9E">print</span> = copia</div>
+    </div>
+  </div>
+
+  <!-- 10 · la fotocopiadora y el ordenador -->
+  <div class="sc" id="s10">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="copiadora" opacity="0"><g transform="translate(-22 0)">
+        <g id="hojaSale"><rect width="84" height="60" fill="#fff" stroke="#0E1B2B" stroke-width="1.6"/><g id="hojaSalePlano"></g></g>
+        <rect x="62" y="500" width="176" height="130" rx="10" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <rect x="54" y="482" width="192" height="20" rx="5" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <rect x="160" y="522" width="56" height="20" rx="4" fill="none" stroke="#0E1B2B" stroke-width="2"/>
+        <path d="M238 604H292" class="ln"/>
+        <path d="M76 630V662M224 630V662" class="ln"/>
+      </g></g>
+      <g id="monitor" opacity="0">
+        <rect x="290" y="455" width="210" height="150" rx="12" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <rect x="302" y="467" width="186" height="126" rx="4" fill="#E4EDF6"/>
+        <g id="monPlano"></g>
+        <path d="M395 605V645M355 645H435" class="ln"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- 11 · el giro: el plano ya no es de papel y se levanta -->
+  <div class="sc" id="s11">
+    <div id="flot" style="position:absolute;left:30px;top:384px;width:480px;height:353px;transform-origin:50% 50%">
+      <svg id="flotSvg" viewBox="-20 -20 340 250" width="480" height="353" style="overflow:visible"></svg>
+    </div>
+    <div id="vista" style="position:absolute;left:-40px;top:330px;width:620px;height:399px;transform-origin:50% 50%">
+      <!-- las tres capas del despiece encajan una sobre otra: suelos, muros y muebles -->
+      <img id="imSuelo" src="assets/villa_despiece_1-1600.webp" style="position:absolute;inset:0;width:620px;height:399px;opacity:0">
+      <img id="imMuros" src="assets/villa_despiece_2-1600.webp" style="position:absolute;inset:0;width:620px;height:399px;opacity:0">
+      <img id="imMuebles" src="assets/villa_despiece_3-1600.webp" style="position:absolute;inset:0;width:620px;height:399px;opacity:0">
+    </div>
+    <div class="tag dark" id="tag11" style="top:742px;opacity:0">Villa de ejemplo · modelo 3D desde su plano</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:800px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:880px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="serie">¿Por qué…?</div>
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const mezcla = (a, b, k) => { const A = hex(a), B = hex(b); return `rgb(${A.map((v, i) => Math.round(lerp(v, B[i], k))).join(',')})`; };
+const NS = 'http://www.w3.org/2000/svg';
+const INK = '#0E1B2B', AZUL = '#1E4D8C', SENS = '#D6D99A', ACC = '#1F5F9E';
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// el mismo plano en todas las escenas (una vivienda de 12 × 8,40 m, 25 px por metro)
+const PLAN = {
+  muros: 'M0 0H300V210H0Z M120 0V88 M0 120H40 M72 120H200 M232 120H300 M210 0V120 M180 152V210',
+  ventanas: 'M30 -5H90V5H30Z M235 -5H285V5H235Z M-5 30V90H5V30Z M20 205H70V215H20Z M295 135V175H305V135Z',
+  puertas: 'M40 120V88A32 32 0 0 1 72 120 M232 120V152A32 32 0 0 1 200 120 M120 88H152A32 32 0 0 1 120 120 M180 152H148A32 32 0 0 1 180 120',
+  muebles: 'M228 22H284V96H228Z M228 38H284 M126 6H204V22H126Z M42 165A18 18 0 1 0 78 165A18 18 0 1 0 42 165 M95 176H160V200H95Z M250 160H294V204H250Z',
+};
+function plano(parent, x, y, s, color, w, cota) {
+  const g = el('g', { transform: `translate(${x} ${y}) scale(${s})` }, parent);
+  const ps = {};
+  [['muros', w], ['ventanas', w * .6], ['puertas', w * .6], ['muebles', w * .55]].forEach(([k, ww]) => {
+    ps[k] = el('path', { d: PLAN[k], fill: 'none', stroke: color, 'stroke-width': ww / s, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  });
+  if (cota) {
+    el('path', { d: 'M0 -22H300 M0 -28V-16 M300 -28V-16 M-22 0V210 M-28 0H-16 M-28 210H-16', fill: 'none', stroke: color, 'stroke-width': 1.1 / s, opacity: .8 }, g);
+    el('text', { x: 150, y: -29, 'text-anchor': 'middle', style: `font:700 ${11 / s}px 'Hanken Grotesk';fill:${color}` }, g).textContent = '12,00';
+    el('text', { x: -29, y: 105, 'text-anchor': 'middle', transform: 'rotate(-90 -29 105)', style: `font:700 ${11 / s}px 'Hanken Grotesk';fill:${color}` }, g).textContent = '8,40';
+  }
+  return { g, ps };
+}
+function hojaAzul(parent, x, y, w, h, s, rejilla) {
+  el('rect', { x, y, width: w, height: h, rx: 4, fill: AZUL, stroke: INK, 'stroke-width': 2 }, parent);
+  if (rejilla) {
+    for (let gx = x + 22; gx < x + w; gx += 22) el('path', { d: `M${gx} ${y}V${y + h}`, stroke: '#fff', 'stroke-width': .6, opacity: .14 }, parent);
+    for (let gy = y + 22; gy < y + h; gy += 22) el('path', { d: `M${x} ${gy}H${x + w}`, stroke: '#fff', 'stroke-width': .6, opacity: .14 }, parent);
+    el('rect', { x: x + 12, y: y + 12, width: w - 24, height: h - 24, fill: 'none', stroke: '#fff', 'stroke-width': 1.2, opacity: .7 }, parent);
+    el('rect', { x: x + w - 128, y: y + h - 40, width: 116, height: 28, fill: 'none', stroke: '#fff', 'stroke-width': 1.2, opacity: .7 }, parent);
+    el('text', { x: x + w - 70, y: y + h - 21, 'text-anchor': 'middle', style: "font:700 11px 'Hanken Grotesk';fill:#fff;letter-spacing:.08em", opacity: .85 }, parent).textContent = 'PLANTA · E 1:50';
+  }
+}
+
+let P1, P2o, P2c, PE, PC, PF;
+function build() {
+  hojaAzul($('#hoja1'), 50, 380, 440, 330, 1, true);
+  P1 = plano($('#hoja1'), 97, 434, 1.15, '#fff', 2.4, true);
+  P2o = plano($('#orig'), 112, 432, 1.05, INK, 2.4);
+  P2c = plano($('#copia2'), 112, 432, 1.05, INK, 2.4);
+  PE = plano($('#expPlano'), 112, 510, 1.05, SENS, 3);
+  PC = plano($('#calcoPlano'), 112, 510, 1.05, INK, 2.6);
+  plano($('#hojaSalePlano'), 12, 9, .2, INK, 1.4);
+  plano($('#monPlano'), 320, 477, .5, ACC, 2);
+  PF = plano($('#flotSvg'), 0, 0, 1, ACC, 3.2, true);
+  // tablero de obra con su plano azul
+  hojaAzul($('#tablero'), 28, 640, 176, 132, 1, false);
+  plano($('#tablero'), 48, 663, .45, '#fff', 1.6);
+  el('path', { d: 'M60 772V800M172 772V800', class: 'ln' }, $('#tablero'));
+  // cinco plantas que suben
+  for (let i = 0; i < 5; i++) {
+    const g = el('g', { class: 'planta', opacity: 0 }, $('#edif'));
+    const y = 800 - 70 * (i + 1);
+    el('rect', { x: 210, y, width: 220, height: 70, fill: '#fff', 'fill-opacity': .55, stroke: INK, 'stroke-width': 2.4 }, g);
+    [232, 300, 368].forEach((wx) => el('rect', { x: wx, y: y + 18, width: 40, height: 32, fill: 'none', stroke: INK, 'stroke-width': 1.8 }, g));
+  }
+  // diez copias a mano frente a una copia azul
+  for (let i = 0; i < 10; i++) el('rect', { class: 'bl', x: 110, y: 800 - 38 * (i + 1) + 4, width: 120, height: 34, rx: 4, fill: '#fff', stroke: INK, 'stroke-width': 2, opacity: 0 }, $('#barras'));
+  el('rect', { id: 'blAzul', x: 310, y: 766, width: 120, height: 34, rx: 4, fill: AZUL, stroke: INK, 'stroke-width': 2, opacity: 0 }, $('#barras'));
+  // rayos del sol
+  for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6;
+    el('path', { d: `M${Math.cos(a) * 36} ${Math.sin(a) * 36}L${Math.cos(a) * 48} ${Math.sin(a) * 48}`, class: 'ln' }, $('#solRayos')); }
+  for (let i = 0; i < 6; i++) el('path', { class: 'rayo', fill: 'none', stroke: '#E0A526', 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-dasharray': '10 12' }, $('#rayos'));
+  for (let i = 0; i < 4; i++) el('path', { class: 'ola', fill: 'none', stroke: '#fff', 'stroke-width': 2.2, 'stroke-linecap': 'round', opacity: .8 }, $('#olas'));
+}
+
+const dibuja = (P, k) => {  // muros primero, luego el resto
+  P.ps.muros.setAttribute('stroke-dashoffset', 1 - clamp(k / .65));
+  ['ventanas', 'puertas', 'muebles'].forEach((n) => P.ps[n].setAttribute('stroke-dashoffset', 1 - clamp((k - .55) / .45)));
+};
+const color = (P, c) => Object.values(P.ps).forEach((p) => p.setAttribute('stroke', c));
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function sceneAt(t) { const E = TL.escenas; let n = 1; E.forEach((e) => { if (t >= e.start) n = e.n; }); return n; }
+const chip = (s, t, a, centrado) => { const p = pop(t, a, .2); $(s).style.opacity = p.o; $(s).style.transform = `${centrado ? 'translateX(-50%) ' : ''}scale(${p.s})`; };
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = s.dataset.fijo ? 'none' : `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+  const n = sceneAt(t);
+  const F = {}; TL.fragmentos.forEach((f) => F[f.n] = f);
+
+  // ---- 1 · la pregunta y el plano azul ----
+  { $('#b1').style.opacity = 1 - prog(t, F[2].start - .1, F[2].start + .05);  // visible desde el primer fotograma (portada)
+    dibuja(P1, lerp(.3, 1, ease(prog(t, 0, 1.6))));
+    chip('#chipQuim', t, C.quimica, true); }
+
+  // ---- 2 · calcar a mano, línea a línea ----
+  { const [a, b] = C.calca; const k = prog(t, a + .1, b - .05); dibuja(P2c, k);
+    const m = P2c.ps.muros, L = m.getTotalLength(), q = m.getPointAtLength(L * clamp(k / .65));
+    const r = k < .65 ? q : P2c.ps.muebles.getPointAtLength(P2c.ps.muebles.getTotalLength() * clamp((k - .55) / .45));
+    $('#lapiz').setAttribute('transform', `translate(${112 + 1.05 * r.x} ${432 + 1.05 * r.y})`);
+    $('#aguja1').setAttribute('transform', `rotate(${(t - a) * 720})`); $('#aguja2').setAttribute('transform', `rotate(${(t - a) * 60})`); }
+
+  // ---- 3 · 1842 y el astrónomo ----
+  { const y = pop(t, C.anyo - .05, .25); $('#anyo').style.opacity = y.o; $('#anyo').style.transform = `scale(${y.s})`;
+    $$('.tl').forEach((p, i) => p.style.strokeDashoffset = 1 - ease(prog(t, C.astro - .35 + i * .08, C.astro + .25 + i * .08)));
+    $$('.tl').forEach((p) => p.style.strokeDasharray = 1);
+    $('#herschel').style.opacity = prog(t, C.astro, C.astro + .25); }
+
+  // ---- sol y rayos (4 a 6) ----
+  { const vis = (n === 4 && t >= C.muestra - .1) || n === 5 || n === 6;
+    const s = pop(t, C.muestra, .25); $('#sol').setAttribute('opacity', vis ? (n === 4 ? s.o : 1) : 0);
+    $('#solRayos').setAttribute('transform', `rotate(${t * 18})`);
+    const rayos = (n === 4 && t >= C.muestra + .2) || (n === 5 && t >= C.luz - .1 && t < C.tinta) || (n === 6 && t < C.lavado);
+    const [x0, x1, yd] = n === 4 ? [130, 410, 500] : [90, 450, 470];
+    $$('.rayo').forEach((r, i) => { const tx = lerp(x0, x1, i / 5), dx = tx - 440, dy = yd - 318, d = Math.hypot(dx, dy);
+      r.setAttribute('d', `M${440 + dx / d * 56} ${318 + dy / d * 56}L${tx} ${yd - 6}`); r.setAttribute('stroke-dashoffset', -t * 70); });
+    $('#rayos').setAttribute('opacity', rayos ? 1 : 0); }
+
+  // ---- 4 · la muestra se vuelve azul ----
+  { chip('#chipSales', t, C.muestra + .15);
+    $('#muestra').setAttribute('fill', mezcla(SENS, AZUL, ease(prog(t, C.azul5 - .1, C.azul5 + .7))));
+    $('#prusia').setAttribute('opacity', prog(t, C.azul5 + .5, C.azul5 + .8)); }
+
+  // ---- 5 y 6 · la hoja: luz, tinta, agua ----
+  { $('#expsvg').style.opacity = (n === 5 || n === 6) ? 1 : 0;
+    $('#expPapel').setAttribute('fill', mezcla(SENS, AZUL, ease(prog(t, C.luz, C.azul7 + .35))));
+    color(PE, mezcla(SENS, '#FFFFFF', ease(prog(t, C.blanco - .1, C.blanco + .35))));
+    const baja = out(prog(t, C.calco, C.calco + .5)), sube = ease(prog(t, C.tinta, C.tinta + .45));
+    $('#calco').setAttribute('transform', `translate(0 ${-560 * (1 - baja) - 260 * sube})`);
+    $('#calco').setAttribute('opacity', 1 - sube);
+    chip('#chipCalco', t, C.calcoPal); $('#chipCalco').style.opacity *= 1 - prog(t, C.tinta, C.tinta + .2);
+    chip('#chipLuz', t, C.azul7); chip('#chipTinta', t, C.blanco);
+    // reloj de dos minutos
+    const r = pop(t, C.minutos - .1, .2); $('#reloj6').setAttribute('opacity', r.o); $('#min6').setAttribute('opacity', r.o);
+    $('#anillo6').setAttribute('stroke-dashoffset', 1 - ease(prog(t, C.minutos, C.minutos + .9)));
+    // el lavado
+    const ag = prog(t, C.lavado - .1, C.lavado + .2) * (1 - prog(t, C.copia - .1, C.copia + .2));
+    $('#bandeja').setAttribute('opacity', ag);
+    $$('.ola').forEach((o, i) => { const y0 = 520 + i * 70; let d = '';
+      for (let x = 60; x <= 480; x += 10) d += (x === 60 ? 'M' : 'L') + x + ' ' + (y0 + 5 * Math.sin((x + t * 90 + i * 40) / 18)).toFixed(1);
+      o.setAttribute('d', d); });
+    chip('#chipCopia', t, C.copia, true); }
+
+  // ---- 7 · diez a uno ----
+  { $$('.bl').forEach((b, i) => { const p = pop(t, C.diez + .1 + i * .07, .16); b.setAttribute('opacity', p.o); });
+    $('#n10').setAttribute('opacity', prog(t, C.diez + .8, C.diez + 1));
+    const a = pop(t, C.diez + 1, .2); $('#blAzul').setAttribute('opacity', a.o); $('#n1').setAttribute('opacity', a.o); }
+
+  // ---- 8 · la grúa, las plantas y el plano azul en la obra ----
+  { $$('.gr').forEach((p, i) => { p.style.strokeDasharray = 1; p.style.strokeDashoffset = 1 - ease(prog(t, ES[8].start + i * .12, ES[8].start + .5 + i * .12)); });
+    $$('.planta').forEach((g, i) => { const k = out(prog(t, C.levantaron + i * .12, C.levantaron + i * .12 + .2));
+      g.setAttribute('opacity', k); g.setAttribute('transform', `translate(0 ${20 * (1 - k)})`); });
+    chip('#chipSiglo', t, C.siglo, true); }
+
+  // ---- 9 · diccionario ----
+  { const d = pop(t, ES[9].start + .05, .25); $('#dicc').style.opacity = d.o; $('#dicc').style.transform = `scale(${d.s})`;
+    $('#etim').style.opacity = prog(t, C.bp, C.bp + .25); }
+
+  // ---- 10 · fotocopiadora y ordenador ----
+  { const c = pop(t, C.copiadora - .1, .2); $('#copiadora').setAttribute('opacity', c.o);
+    $('#copiadora').setAttribute('transform', `translate(150 570) scale(${c.s}) translate(-150 -570)`);
+    $('#hojaSale').setAttribute('transform', `translate(${lerp(170, 222, ease(prog(t, C.copiadora + .1, C.copiadora + .8)))} 574)`);
+    const m = pop(t, C.ordenador - .1, .2); $('#monitor').setAttribute('opacity', m.o);
+    $('#monitor').setAttribute('transform', `translate(395 550) scale(${m.s}) translate(-395 -550)`); }
+
+  // ---- 11 · el giro ----
+  { const a = ease(prog(t, ES[11].start, ES[11].start + .55));
+    const k = ease(prog(t, C.papel14 - .2, C.papel14 + .5));
+    const fuera = prog(t, C.giro, C.giro + .45);
+    const f = $('#flot');
+    f.style.opacity = (1 - fuera);
+    f.style.transform = `translate(${lerp(125, 0, a)}px, ${lerp(-30, 0, a)}px) scale(${lerp(.36, 1, a) * lerp(1, .9, k)}) perspective(1200px) rotateX(${54 * k}deg) rotateZ(${-36 * k}deg)`;
+    // la casa se monta: el suelo, los muros que suben y los muebles que bajan
+    const su = out(prog(t, C.giro, C.giro + .45)), mu = out(prog(t, C.levantar - .1, C.levantar + .45)), mb = out(prog(t, C.tres - .1, C.tres + .4));
+    $('#imSuelo').style.opacity = su; $('#imSuelo').style.transform = `translateY(${30 * (1 - su)}px)`;
+    $('#imMuros').style.opacity = mu; $('#imMuros').style.transform = `translateY(${36 * (1 - mu)}px)`;
+    $('#imMuebles').style.opacity = mb; $('#imMuebles').style.transform = `translateY(${-30 * (1 - mb)}px)`;
+    $('#vista').style.transform = `scale(${1 + .07 * prog(t, C.giro, TL.duracion)})`;
+    $('#tag11').style.opacity = prog(t, C.giro + .5, C.giro + .8);
+    $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6); }
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

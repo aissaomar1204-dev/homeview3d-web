@@ -17,13 +17,14 @@ Imágenes en `homeview3d-web/public/assets/` (`home/img/`, `img/`, `hero/`, `vid
 | 04 · Tres segundos | `villa_plano_lineas`, `villa_planta_cenital` (el giro: el plano en líneas se convierte en la planta real), `villa_interior_salon`, `villa_bano_suite`, `villa_maqueta_iso`. Dibujados nuevos: cuenta atrás, marcador «3/3 → 0/3», mazo de diez promociones y encuesta de nota |
 | 06 · El domingo | `showroom-casa`, `showroom-plano`, `showroom-estancia` (pantallas reales en una tablet). Dibujados nuevos: tablet, correos con PDF, descargas, visor de PDF (fachada, noche, plano), rejilla de nueve dossiers iguales y bandeja del lunes |
 | 02 · Más leads | `r-azotea`, `r-dormitorio`, `r-bano`, `r-jardin` (estancias de la casa 5 que tapan los agujeros). Dibujados nuevos: embudo con contactos que caen, cuatro agujeros con preguntas, fichas de CRM «Sin respuesta» |
+| pq01 · Planos azules (serie «¿Por qué…?») | `villa_despiece_1`, `villa_despiece_2` y `villa_despiece_3` (suelos, muros y muebles: encajan una sobre otra y la casa se monta por capas en el giro). Dibujados nuevos: plano azul con rejilla y cajetín, calco a mano con lápiz y reloj, telescopio de 1842, papel con sales de hierro y sol con rayos, calco sobre el papel, bandeja de agua, barras «diez a uno», grúa con edificio y tablero de obra, ficha de diccionario «blueprint», fotocopiadora y ordenador, plano que se inclina |
 
 Repetidos entre 03 y 01: plano en líneas, pantallas del móvil, promoción de día y de noche y la casa reservada.
 A partir de ahora quedan **gastados** y no se vuelven a usar.
 
 ## Libres
 
-**Villa demostrativa** (`img/villa_*`): `villa_muros_completos`, `villa_despiece_1/2/3`, `villa_dormitorios`,
+**Villa demostrativa** (`img/villa_*`): `villa_muros_completos`, `villa_dormitorios`,
 `villa_salon_dormitorio`, `villa_terraza`, `villa_interior_bano`, `villa_interior_dormitorio`, `villa_interior_terraza`,
 `villa_viewer_poster` (y sus variantes `_opaco`).
 
@@ -41,11 +42,13 @@ A partir de ahora quedan **gastados** y no se vuelven a usar.
 ## Ideas de reparto para los siguientes
 
 - 08 · La ventana de la IA → `plano-2d`/`plano-papel` (el plano), la imagen que genere la IA en la prueba real y `plano-3d` + `v-salon` (lo construido). La villa ya salió en el 04.
-- 05 · El tabique → `villa_despiece_1/2/3` (las capas del modelo) y `villa-turntable.mp4`.
+- 05 · El tabique → `villa_muros_completos` y `villa-turntable.mp4` (las capas del despiece ya salieron en el pq01).
 - 07 · Cuatro metros de stand → `venta-tablet` y las tipologías `sw-adosados`, `sw-andaluza`, `sw-golf`, `sw-ladera` (cinco villas que no caben en el stand).
 
 ## Motivos de guion ya usados
 
 No repetir tampoco las situaciones: «a las once de la noche con otras nueve promociones» (04), pestañas del navegador (01),
 burbuja de WhatsApp (01), «Pedir llamada» con ding (03), «Casa 3 · Reservada» (03 y 01), avión (01), PDF en el móvil (03),
-domingo con la tablet y dossiers en PDF (06), correo del lunes (06), reto con cuenta atrás (04), embudo con agujeros y fichas de CRM (02).
+domingo con la tablet y dossiers en PDF (06), correo del lunes (06), reto con cuenta atrás (04), embudo con agujeros y fichas de CRM (02),
+plano azul y cianotipia, calcar a mano, grúa y edificio que sube, entrada de diccionario, fotocopiadora y ordenador, el plano que se
+inclina y se levanta en 3D (pq01).

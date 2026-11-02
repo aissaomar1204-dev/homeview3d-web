@@ -24,6 +24,27 @@ Para hacer un reel nuevo con Claude Code basta con abrir el repo en esta rama y 
 Los guiones originales de los ocho están en `guiones/guiones-homeview.html` (ábrelo en el navegador). Son un punto de
 partida: al producirlos se adaptan para no repetir escenas (ver más abajo).
 
+## Serie general «¿Por qué…?» (para crecer en seguidores)
+
+Desde noviembre de 2026, una segunda serie para **público general**: curiosidades sobre el origen de los planos, la
+arquitectura y los modelos 3D. Sirve para ganar seguidores antes de hablar a promotoras. Carpetas `pqNN-titulo`.
+
+Lo que cambia respecto a la serie de promotoras (decidido por Álvaro el 2026-11-02):
+- **Cierre neutro:** no se dice «Mándame el plano. Te enseño la casa.» ni se pide seguir o comentar. Tras la última
+  frase, el logo y homeview3d.com en silencio. Es una prueba para ver qué viralidad sale sola y qué pide la gente.
+- El caption sí puede pedir (guardar, mandar, seguir y una pregunta de un toque); el comentario fijado lleva solo las
+  fuentes, y no hay encuestas.
+- Lo demás se mantiene: identidad, voz de Tony con Eleven v3 (unos 930 créditos, 0,34 $, por capítulo de ~45 s),
+  todo dibujado hasta el giro e imágenes reales de HomeView después, y cada dato con su fuente.
+
+| Nº | Título | Estado | Duración | Ángulo |
+| --- | --- | --- | --- | --- |
+| pq01 | Planos azules | Hecho | 0:42 | Por qué los planos antiguos eran azules: la cianotipia de Herschel (1842) y el «blueprint» |
+| pq02 | La tetera | Idea | | El modelo 3D más famoso del mundo es una tetera (Newell, Utah, 1975) |
+| pq03 | El dibujo técnico | Idea | | Monge y la geometría descriptiva, secreto militar francés |
+| pq04 | La escalera cómoda | Idea | | La regla de Blondel (1675) y la norma española (por comprobar) |
+| pq05 | El plano más antiguo | Idea | | La estatua de Gudea con el plano de un templo (Louvre); sin decir «el más antiguo» |
+
 ## Qué hay en cada carpeta de vídeo
 
 | Archivo | Para qué |
