@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>El domingo · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 45%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 20px; right: 20px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.clock { position: absolute; left: 0; right: 0; text-align: center; font: 400 64px/1 "Gloock", Georgia, serif; color: var(--ink); }
+.clock small { display: block; font: 600 17px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; color: var(--ink-3); font: 600 14px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; }
+/* la tablet: 500 × 330, pantalla 472 × 295 (16:10) */
+#tablet { position: absolute; left: 20px; top: 400px; width: 500px; height: 330px; border-radius: 30px; background: #fff; border: 4px solid var(--ink); z-index: 10; transform-origin: 50% 50%; box-shadow: 0 30px 50px -26px rgb(14 27 43 / .6); }
+#pantalla { position: absolute; left: 10px; top: 13.5px; width: 472px; height: 295px; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 0 0 2px var(--ink); }
+.capa { position: absolute; inset: 0; opacity: 0; }
+.capa svg { position: absolute; inset: 0; width: 472px; height: 295px; }
+.real { position: absolute; left: 0; top: 0; width: 472px; height: 295px; transform-origin: 0 0; }
+.fila { font: 600 15px "Hanken Grotesk"; fill: var(--ink); }
+.gris { font: 500 13px "Hanken Grotesk"; fill: var(--ink-3); }
+.ripple { position: absolute; width: 60px; height: 60px; margin: -30px 0 0 -30px; border-radius: 50%; border: 4px solid var(--accent); z-index: 40; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- relojes -->
+  <div class="clock" id="reloj1" style="top:240px;opacity:0"><small>Domingo</small>17:40</div>
+
+  <!-- la tablet (escenas 1, 2, 3, 5 y 6) -->
+  <div id="tablet">
+    <div id="pantalla">
+      <!-- 1 · el correo con dossiers -->
+      <div class="capa" id="c1"><svg viewBox="0 0 472 295">
+        <rect width="472" height="40" fill="#E4EDF6"/><text x="18" y="26" class="fila" style="font-weight:700">Recibidos</text>
+        <g id="correos"></g>
+      </svg></div>
+      <!-- 2 · descargas -->
+      <div class="capa" id="c2"><svg viewBox="0 0 472 295">
+        <rect width="472" height="40" fill="#E4EDF6"/><text x="18" y="26" class="fila" style="font-weight:700">Descargas</text>
+        <g id="descargas"></g>
+      </svg></div>
+      <!-- 3 · el visor de PDF -->
+      <div class="capa" id="c3"><svg viewBox="0 0 472 295">
+        <rect width="472" height="295" fill="#4F6175"/>
+        <rect width="472" height="32" fill="#0E1B2B"/><text x="16" y="21" style="font:600 13px 'Hanken Grotesk';fill:#fff">dossier_v3_final.pdf</text>
+        <text id="pag" x="456" y="21" text-anchor="end" style="font:600 13px 'Hanken Grotesk';fill:#fff">1 / 38</text>
+        <g id="hoja" transform="translate(236 165)">
+          <rect x="-105" y="-120" width="210" height="245" fill="#fff"/>
+          <!-- fachada de día -->
+          <g id="pDia"><path class="ln" d="M-80 60V-10L0-60L80-10V60Z"/><path class="ln" d="M-50 60V20H-20V60M15 0h40v30h-40z"/><circle cx="60" cy="-80" r="14" fill="none" stroke="#0E1B2B" stroke-width="2.4"/>
+            <text y="100" text-anchor="middle" style="font:700 13px 'Hanken Grotesk';fill:#0E1B2B">FACHADA</text></g>
+          <!-- fachada de noche -->
+          <g id="pNoche" opacity="0"><rect x="-105" y="-120" width="210" height="245" fill="#0E1B2B"/><path d="M-80 60V-10L0-60L80-10V60Z" fill="none" stroke="#fff" stroke-width="2.4"/>
+            <rect x="-50" y="20" width="30" height="40" fill="#F2C14E"/><rect x="15" y="0" width="40" height="30" fill="#F2C14E"/><circle cx="60" cy="-85" r="10" fill="#fff"/>
+            <text y="100" text-anchor="middle" style="font:700 13px 'Hanken Grotesk';fill:#fff">FACHADA · NOCHE</text></g>
+          <!-- plano -->
+          <g id="pPlano" opacity="0"><path class="ln" d="M-80-90h160v170h-160z M-80-20h70v100 M-10-90v50 M20-20h60 M20-20v40 M-40-20v-30"/>
+            <path class="ln" style="stroke-width:1.2" d="M-70-80h50M30 0h40M-70 60h40"/>
+            <text y="105" text-anchor="middle" style="font:700 13px 'Hanken Grotesk';fill:#0E1B2B">PLANTA BAJA · E 1:100</text>
+            <text id="qPlano" x="40" y="-40" style="font:400 70px Gloock;fill:#B3261E" opacity="0">?</text></g>
+        </g>
+      </svg></div>
+      <!-- 5 · el enlace -->
+      <div class="capa" id="c5"><svg viewBox="0 0 472 295">
+        <rect width="472" height="40" fill="#E4EDF6"/><text x="18" y="26" class="fila" style="font-weight:700">Mensajes</text>
+        <rect x="40" y="70" width="300" height="130" rx="16" fill="#E4EDF6"/>
+        <text x="60" y="104" class="fila">Te paso la promoción por dentro.</text>
+        <text x="60" y="126" class="gris">Elige casa y entra cuando quieras:</text>
+        <rect id="boton" x="60" y="142" width="220" height="42" rx="10" fill="#1F5F9E"/>
+        <text x="170" y="169" text-anchor="middle" style="font:700 15px 'Hanken Grotesk';fill:#fff">Ver la promoción en 3D</text>
+      </svg></div>
+      <!-- 6 · el showroom real -->
+      <div class="capa" id="c6">
+        <img class="real" id="r1" src="assets/showroom-casa-1440.webp">
+        <img class="real" id="r2" src="assets/showroom-plano-1440.webp" style="opacity:0">
+        <img class="real" id="r3" src="assets/showroom-estancia-1440.webp" style="opacity:0">
+      </div>
+    </div>
+    <div class="ripple" id="rip" style="left:180px;top:178px"></div>
+  </div>
+  <div class="tag" id="tag6" style="top:760px;opacity:0;z-index:12">Showroom de ejemplo · Residencial Benahavís (ficticio)</div>
+
+  <!-- 4 · los dossiers iguales -->
+  <div class="sc" id="s4"><svg class="full" viewBox="0 0 540 960"><g id="rejilla"></g></svg></div>
+
+  <!-- 7 · el lunes -->
+  <div class="sc" id="s7">
+    <div class="clock" style="top:240px"><small>Lunes</small>9:02</div>
+    <svg class="full" viewBox="0 0 540 960">
+      <rect x="40" y="400" width="460" height="290" rx="14" fill="#fff" stroke="#0E1B2B" stroke-width="4"/>
+      <path d="M10 708h520l-30 26H40Z" fill="#fff" stroke="#0E1B2B" stroke-width="4" stroke-linejoin="round"/>
+      <rect x="54" y="414" width="432" height="36" fill="#E4EDF6"/><text x="70" y="438" class="fila" style="font-weight:700">Comercial · Recibidos</text>
+      <g id="nuevo" opacity="0">
+        <rect x="54" y="456" width="432" height="76" fill="#fff"/><circle cx="74" cy="494" r="6" fill="#1F5F9E"/>
+        <text x="90" y="485" style="font:700 17px 'Hanken Grotesk';fill:#0E1B2B">Marta R.</text><text x="470" y="485" text-anchor="end" class="gris">9:02</text>
+        <text x="90" y="512" style="font:700 16px 'Hanken Grotesk';fill:#1F5F9E">¿La casa 5 sigue disponible?</text>
+        <path d="M54 532h432" stroke="#0E1B2B" stroke-opacity=".15" stroke-width="2"/>
+      </g>
+      <g id="viejos" opacity=".45">
+        <path d="M54 532h432M54 582h432M54 632h432" stroke="#0E1B2B" stroke-opacity=".15" stroke-width="2"/>
+        <rect x="90" y="548" width="160" height="10" rx="5" fill="#4F6175"/><rect x="90" y="564" width="260" height="8" rx="4" fill="#4F6175" opacity=".5"/>
+        <rect x="90" y="598" width="130" height="10" rx="5" fill="#4F6175"/><rect x="90" y="614" width="220" height="8" rx="4" fill="#4F6175" opacity=".5"/>
+        <rect x="90" y="648" width="150" height="10" rx="5" fill="#4F6175"/><rect x="90" y="664" width="240" height="8" rx="4" fill="#4F6175" opacity=".5"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- 9 · la frase -->
+  <div class="sc" id="s9">
+    <div class="big" id="b9a" style="top:330px;font-size:60px;opacity:0">Todos mandan un PDF.</div>
+    <div class="big" id="b9b" style="top:520px;font-size:66px;color:#1F5F9E;opacity:0">Tú, manda la casa.</div>
+  </div>
+
+  <!-- 10 · cierre -->
+  <div class="sc" id="s10">
+    <div class="big" id="b12a" style="top:360px;font-size:50px;white-space:nowrap;opacity:0">Mándame el plano.</div>
+    <div class="big" id="b12b" style="top:425px;font-size:50px;white-space:nowrap;opacity:0">Te enseño la casa.</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:600px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:680px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+function txt(e, s) { e.textContent = s; return e; }
+
+const CORREOS = [['Residencial Las Lomas', 'dossier_v3_final.pdf · 48 MB'], ['Villas del Golf', 'memoria_calidades.pdf · 31 MB'], ['Altos de la Costa', 'brochure_ES_def.pdf · 52 MB'], ['Mirador Sur', 'dossier.pdf · 44 MB']];
+const ORDEN = [[0, 1, 2, 3, 4, 5, 6, 7, 8], [4, 0, 7, 2, 8, 3, 1, 6, 5], [6, 3, 1, 8, 4, 0, 5, 2, 7]];
+
+function build() {
+  const g = $('#correos');
+  CORREOS.forEach(([de, adj], i) => {
+    const r = el('g', { class: 'correo', opacity: 0 }, g);
+    el('path', { d: `M0 ${48 + i * 60}H472`, stroke: '#0E1B2B', 'stroke-opacity': .12, 'stroke-width': 2 }, r);
+    txt(el('text', { x: 18, y: 68 + i * 60, class: 'fila', style: 'font-weight:700' }, r), de);
+    el('rect', { x: 18, y: 78 + i * 60, width: 220, height: 22, rx: 6, fill: '#FCE9E7', stroke: '#B3261E', 'stroke-width': 1.4 }, r);
+    txt(el('text', { x: 28, y: 94 + i * 60, style: "font:700 12px 'Hanken Grotesk';fill:#B3261E" }, r), 'PDF  ' + adj);
+  });
+  const d = $('#descargas');
+  [['dossier_v3_final.pdf', '48 MB'], ['memoria_calidades.pdf', '31 MB'], ['brochure_ES_def.pdf', '52 MB']].forEach(([n, mb], i) => {
+    const r = el('g', { class: 'desc', opacity: 0 }, d);
+    const y = 70 + i * 72;
+    el('rect', { x: 18, y: y - 18, width: 34, height: 42, rx: 4, fill: '#B3261E' }, r);
+    txt(el('text', { x: 35, y: y + 8, 'text-anchor': 'middle', style: "font:800 11px 'Hanken Grotesk';fill:#fff" }, r), 'PDF');
+    txt(el('text', { x: 66, y: y, class: 'fila', style: 'font-weight:700' }, r), n);
+    txt(el('text', { x: 454, y: y, 'text-anchor': 'end', class: 'gris' }, r), mb);
+    el('rect', { x: 66, y: y + 12, width: 388, height: 10, rx: 5, fill: '#E4EDF6' }, r);
+    el('rect', { class: 'barra', x: 66, y: y + 12, width: 0, height: 10, rx: 5, fill: '#1F5F9E' }, r);
+  });
+  const rj = $('#rejilla');
+  for (let i = 0; i < 9; i++) {
+    const c = el('g', { class: 'cub', opacity: 0 }, rj);
+    el('rect', { x: -62, y: -84, width: 124, height: 168, rx: 6, fill: '#fff', stroke: '#0E1B2B', 'stroke-width': 2.4 }, c);
+    el('path', { class: 'ln', d: 'M-40 30V-5L0-32L40-5V30Z', style: 'stroke-width:2' }, c);
+    el('path', { class: 'ln', d: 'M-25 30V10H-10V30M8 0h20v15h-20z', style: 'stroke-width:1.6' }, c);
+    txt(el('text', { y: -54, 'text-anchor': 'middle', style: "font:700 11px 'Hanken Grotesk';fill:#4F6175;letter-spacing:.08em" }, c), 'DOSSIER');
+    el('rect', { x: -40, y: 50, width: 80, height: 7, rx: 3, fill: '#4F6175', opacity: .5 }, c);
+    const im = el('image', { class: 'gana', href: 'assets/showroom-estancia-1440.webp', x: -62, y: -84, width: 124, height: 168, preserveAspectRatio: 'xMidYMid slice', opacity: 0 }, c);
+    el('rect', { class: 'marco', x: -62, y: -84, width: 124, height: 168, rx: 6, fill: 'none', stroke: '#1F5F9E', 'stroke-width': 6, opacity: 0 }, c);
+  }
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function sceneAt(t) { let n = 1; TL.escenas.forEach((e) => { if (t >= e.start) n = e.n; }); return n; }
+function celda(i) { return [130 + (i % 3) * 140, 380 + Math.floor(i / 3) * 190]; }
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+  const n = sceneAt(t);
+
+  // ---- la tablet ----
+  { const vis = [1, 2, 3, 5, 6].includes(n);
+    const T = $('#tablet'); T.style.opacity = vis ? 1 : 0;
+    let sc = 1, y = 0;
+    if (n <= 3) { sc = lerp(.9, 1, out(prog(t, 0, .4))) * (1 + .04 * prog(t, 0, ES[4].start)); }
+    if (n === 3) { sc *= 1 + .03 * ease(prog(t, ES[3].start, ES[3].start + .4)); y = -10 * ease(prog(t, ES[3].start, ES[3].start + .4)); }
+    if (n >= 5) { const k = ease(prog(t, ES[6].start, ES[6].start + .5)); sc = 1 + .04 * prog(t, ES[5].start, ES[6].start) + .02 * k; y = -40 * k; }
+    T.style.transform = `translateY(${y}px) scale(${sc})`;
+    ['#c1', '#c2', '#c3', '#c5', '#c6'].forEach((c) => $(c).style.opacity = +(c === '#c' + n));
+    $('#reloj1').style.opacity = n <= 2 ? prog(t, 0, .25) : 0;
+    $('#tag6').style.opacity = n === 6 ? prog(t, ES[6].start, ES[6].start + .3) : 0; }
+
+  // 1 · llegan los correos con PDF
+  $$('.correo').forEach((r, i) => { const k = out(prog(t, C.correos + i * .3, C.correos + i * .3 + .25)); r.setAttribute('opacity', k); r.setAttribute('transform', `translate(${30 * (1 - k)} 0)`); });
+
+  // 2 · descargas, una tras otra
+  $$('.desc').forEach((r, i) => { const a = C.descargas[i]; r.setAttribute('opacity', prog(t, a - .1, a + .05));
+    r.querySelector('.barra').setAttribute('width', 388 * ease(prog(t, a, a + .9))); });
+
+  // 3 · el PDF: fachada, noche, plano
+  { const pg = t < C.noche ? 1 : t < C.plano ? 2 : 14;
+    $('#pag').textContent = pg + ' / 38';
+    $('#pNoche').setAttribute('opacity', +(t >= C.noche && t < C.plano)); $('#pDia').setAttribute('opacity', +(t < C.noche));
+    $('#pPlano').setAttribute('opacity', +(t >= C.plano)); $('#qPlano').setAttribute('opacity', prog(t, C.duda, C.duda + .15));
+    const flip = Math.max(...[C.fachada, C.noche, C.plano].map((a) => t >= a ? 1 - prog(t, a, a + .18) : 0));
+    $('#hoja').setAttribute('transform', `translate(${236 + 40 * flip} 165) scale(${1 - .06 * flip})`); }
+
+  // 4 · nueve dossiers iguales que se barajan
+  { const cs = $$('#rejilla .cub');
+    const k1 = ease(prog(t, C.baraja[0], C.baraja[0] + .45)), k2 = ease(prog(t, C.baraja[1], C.baraja[1] + .45));
+    cs.forEach((c, i) => {
+      const p0 = celda(ORDEN[0][i]), p1 = celda(ORDEN[1][i]), p2 = celda(ORDEN[2][i]);
+      let x = lerp(lerp(p0[0], p1[0], k1), p2[0], k2), y = lerp(lerp(p0[1], p1[1], k1), p2[1], k2);
+      const enS8 = n >= 8;
+      const a = enS8 ? ES[8].start : C.rejilla + i * .05;
+      const k = out(prog(t, a, a + .2));
+      c.setAttribute('opacity', k * (enS8 && i !== 4 ? 1 - .7 * prog(t, C.gris, C.gris + .3) : 1));
+      c.setAttribute('transform', `translate(${x} ${y + 30 * (1 - k)}) scale(${enS8 && i === 4 ? 1 + .15 * out(prog(t, C.gana, C.gana + .3)) : 1})`);
+      c.querySelector('.gana').setAttribute('opacity', enS8 && i === 4 ? prog(t, C.gana, C.gana + .2) : 0);
+      c.querySelector('.marco').setAttribute('opacity', enS8 && i === 4 ? prog(t, C.gana, C.gana + .2) : 0);
+    });
+    $('#s4').style.opacity = (n === 4 || n === 8) ? 1 : 0;
+    $('#s4').style.transform = 'none'; }
+
+  // 5 · toca el enlace
+  { const r = prog(t, C.toque, C.toque + .45); $('#rip').style.opacity = n === 5 && r > 0 && r < 1 ? 1 - r : 0; $('#rip').style.transform = `scale(${.4 + r})`; }
+
+  // 6 · pantallas reales con zoom a lo importante
+  { const S = [C.casa, C.planta, C.cocina];
+    const Z = [ // [escala, x, y] del encuadre (en px de la pantalla)
+      [[1, 0, 0], [1.9, 0, -45]],
+      [[1, 0, 0], [1.8, 0, -140]],
+      [[1, 0, 0], [1.25, -60, -30]],
+    ];
+    ['#r1', '#r2', '#r3'].forEach((s, i) => {
+      const a = S[i], b = S[i + 1] || ES[7].start;
+      const on = i === 0 ? 1 : prog(t, a, a + .12);
+      $(s).style.opacity = on;
+      const k = ease(prog(t, a + .1, Math.min(b, a + 1.2)));
+      const [z0, z1] = Z[i];
+      const sc = lerp(z0[0], z1[0], k), x = lerp(z0[1], z1[1], k), y = lerp(z0[2], z1[2], k);
+      $(s).style.transform = `translate(${x}px, ${y}px) scale(${sc})`;
+    }); }
+
+  // 7 · el correo del lunes
+  { const k = pop(t, C.correo, .25); $('#nuevo').setAttribute('opacity', k.o);
+    $('#nuevo').setAttribute('transform', `translate(0 ${-20 * (1 - out(prog(t, C.correo, C.correo + .25)))})`);
+    $('#viejos').setAttribute('transform', `translate(0 ${-50 * (1 - out(prog(t, C.correo, C.correo + .25)))})`); }
+
+  // 9 y 10 · frases finales
+  [['#b9a', C.b9a], ['#b9b', C.b9b], ['#b12a', C.b12a], ['#b12b', C.b12b]].forEach(([s, c]) => {
+    const p = pop(t, c, .25); $(s).style.opacity = p.o; $(s).style.transform = `scale(${p.s})`; });
+  $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6);
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

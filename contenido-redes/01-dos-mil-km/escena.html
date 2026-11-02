@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Dos mil kilómetros · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 45%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ac { fill: none; stroke: var(--accent); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+.thin { stroke-width: 1.6; }
+.lbl { font: 700 21px "Hanken Grotesk"; fill: var(--ink); text-anchor: middle; }
+.q { font: 500 18px "Hanken Grotesk"; fill: var(--ink-3); text-anchor: middle; }
+.serif { font-family: "Gloock", Georgia, serif; font-weight: 400; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 20px; right: 20px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.state { background: var(--accent); color: #fff; }
+.screen { position: absolute; border-radius: 30px; box-shadow: 0 0 0 6px var(--ink), 0 30px 50px -20px rgb(14 27 43 / .7); }
+.fadetop { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 130px); mask-image: linear-gradient(to bottom, transparent 0, #000 130px); }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; color: #fff; font: 600 15px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 6px rgb(0 0 0 / .7); }
+.ripple { position: absolute; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; border: 4px solid var(--accent); z-index: 40; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · El dato -->
+  <div class="sc" id="s1">
+    <div class="big" id="pct" style="top:270px;font-size:128px">0 %</div>
+    <div class="abs" style="left:0;right:0;top:420px;text-align:center;font:600 19px 'Hanken Grotesk';color:#4F6175">compradores que no viven en España</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="casas"></g></svg>
+    <div class="abs" id="fuente" style="left:0;right:0;top:640px;text-align:center;font:500 14px 'Hanken Grotesk';color:#4F6175;letter-spacing:.04em">Ministerio de Vivienda · provincia de Málaga · 2025</div>
+  </div>
+
+  <!-- 2 · La ruta -->
+  <div class="sc" id="s2">
+    <svg class="full" viewBox="0 0 540 960">
+      <defs><mask id="m2"><path id="ruta2m" d="M130 690 Q150 420 400 330" stroke="#fff" stroke-width="14" fill="none" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></mask></defs>
+      <path id="ruta2" class="ac" d="M130 690 Q150 420 400 330" stroke-dasharray="2 12" mask="url(#m2)" style="stroke-width:5"/>
+      <g transform="translate(130 690)"><circle r="13" fill="#1F5F9E"/><circle r="5" fill="#fff"/></g>
+      <g transform="translate(400 330)"><circle r="13" fill="#0E1B2B"/><circle r="5" fill="#fff"/></g>
+      <text class="lbl" x="130" y="735">Málaga</text>
+      <text class="lbl" x="400" y="300">Düsseldorf</text>
+      <text id="km" class="lbl" x="300" y="545" opacity="0" style="fill:#1F5F9E;font-size:26px">≈ 1.850 km</text>
+    </svg>
+    <img class="abs" id="vuela" src="assets/hero-plan-lines-1400.webp" style="width:120px;left:0;top:0">
+  </div>
+
+  <!-- 3 · La mesa de Klaus -->
+  <div class="sc" id="s3">
+    <svg class="full" viewBox="0 0 540 960">
+      <rect x="45" y="300" width="450" height="420" rx="44" fill="#fff" fill-opacity=".55" stroke="#0E1B2B" stroke-width="2.4"/>
+      <g id="memo" opacity="0"><rect x="318" y="350" width="140" height="180" rx="6" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <text x="388" y="382" class="q" style="font-size:13px;font-weight:700;fill:#0E1B2B">MEMORIA DE</text><text x="388" y="400" class="q" style="font-size:13px;font-weight:700;fill:#0E1B2B">CALIDADES</text>
+        <path class="ln thin" d="M338 425h100M338 445h100M338 465h80M338 485h100M338 505h60"/></g>
+      <g><circle cx="400" cy="630" r="34" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/><circle cx="400" cy="630" r="24" class="ln thin"/></g>
+      <g id="duda" opacity="0"><circle cx="270" cy="545" r="78" fill="#fff" stroke="#1F5F9E" stroke-width="4"/>
+        <path id="avion3" fill="#0E1B2B" transform="translate(255 545) rotate(45) scale(1.2)" d="M0 -30 L5 -10 L28 2 L28 8 L5 2 L4 20 L12 26 L12 30 L0 26 L-12 30 L-12 26 L-4 20 L-5 2 L-28 8 L-28 2 L-5 -10 Z"/>
+        <text x="300" y="580" class="serif" style="font-size:64px;fill:#1F5F9E">?</text></g>
+    </svg>
+    <img class="abs" src="assets/hero-plan-lines-1400.webp" style="left:-60px;top:270px;width:480px;transform:rotate(-7deg)">
+    <div class="chip" id="klaus" style="left:50%;top:252px;transform:translateX(-50%);opacity:0">Klaus · Düsseldorf</div>
+  </div>
+
+  <!-- 4 · Dudas → seguro -->
+  <div class="sc" id="s4">
+    <svg class="full" viewBox="0 0 540 960">
+      <path class="ln" d="M240 300V700"/><path class="ln thin" d="M228 300h24M228 400h24M228 500h24M228 600h24M228 700h24"/>
+      <text class="lbl" x="214" y="307" style="text-anchor:end">seguro</text>
+      <text class="lbl" x="214" y="707" style="text-anchor:end;fill:#4F6175">dudas</text>
+      <path fill="#0E1B2B" opacity=".35" transform="translate(300 300) rotate(45) scale(.9)" d="M0 -30 L5 -10 L28 2 L28 8 L5 2 L4 20 L12 26 L12 30 L0 26 L-12 30 L-12 26 L-4 20 L-5 2 L-28 8 L-28 2 L-5 -10 Z"/>
+      <g id="marca"><path id="marcaF" d="M0 0 L26 -16 L26 16 Z" fill="#1F5F9E"/><text id="marcaT" x="40" y="8" class="lbl" style="text-anchor:start">con el dossier</text></g>
+    </svg>
+  </div>
+
+  <!-- 5 · Pestañas -->
+  <div class="sc" id="s5">
+    <svg class="full" viewBox="0 0 540 960">
+      <rect x="40" y="320" width="460" height="330" rx="16" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+      <path class="ln thin" d="M40 370H500"/>
+      <g id="tabs"></g>
+      <g class="ln thin" opacity=".5"><rect x="80" y="400" width="180" height="120" rx="6"/><path d="M290 410h170M290 440h140M290 470h170M290 500h100M80 560h380M80 590h300"/></g>
+    </svg>
+  </div>
+
+  <!-- 6 · El enlace -->
+  <div class="sc" id="s6">
+    <svg class="full" viewBox="0 0 540 960">
+      <rect x="160" y="250" width="220" height="450" rx="34" fill="#fff" stroke="#0E1B2B" stroke-width="4"/>
+      <path d="M240 272h60" stroke="#0E1B2B" stroke-width="4" stroke-linecap="round"/>
+      <path class="ln thin" d="M160 310H380"/><text x="200" y="300" class="lbl" style="text-anchor:start;font-size:16px">Home View 3D</text>
+      <g id="burbuja" opacity="0">
+        <rect x="178" y="350" width="184" height="124" rx="16" fill="#E4EDF6"/>
+        <text x="192" y="382" style="font:600 15px 'Hanken Grotesk';fill:#0E1B2B">Klaus, aquí tienes</text>
+        <text x="192" y="402" style="font:600 15px 'Hanken Grotesk';fill:#0E1B2B">la casa por dentro:</text>
+        <rect x="192" y="418" width="156" height="36" rx="8" fill="#1F5F9E"/>
+        <text x="270" y="442" style="font:700 15px 'Hanken Grotesk';fill:#fff;text-anchor:middle">Abrir la promoción</text>
+        <text x="350" y="490" style="font:500 12px 'Hanken Grotesk';fill:#4F6175;text-anchor:end">21:14 ✓✓</text>
+      </g>
+    </svg>
+    <div class="ripple" id="rip6" style="left:270px;top:436px"></div>
+  </div>
+
+  <!-- 7 · El showroom en el móvil -->
+  <div class="sc" id="s7">
+    <img class="screen scr" src="assets/movil-masterplan-780.webp" style="left:155px;top:262px;width:230px;height:498px">
+    <img class="screen scr" src="assets/movil-casa-780.webp" style="left:155px;top:262px;width:230px;height:498px;opacity:0">
+    <img class="screen scr" src="assets/movil-plano-780.webp" style="left:155px;top:262px;width:230px;height:498px;opacity:0">
+    <div class="ripple" id="rip7" style="border-color:#fff"></div>
+  </div>
+
+  <!-- 8 · De día y de noche -->
+  <div class="sc" id="s8">
+    <div class="abs fadetop" style="left:0;top:240px;width:540px;height:720px;overflow:hidden">
+      <img class="abs" id="day" src="assets/v-masterplan-1400.webp" style="top:0;height:720px;width:1291px">
+      <img class="abs" id="night" src="assets/v-noche-1400.webp" style="top:0;height:720px;width:1291px;opacity:0">
+    </div>
+    <div class="tag" style="top:790px">Promoción de ejemplo · imagen ilustrativa</div>
+  </div>
+
+  <!-- 9 · El vuelo -->
+  <div class="sc" id="s9">
+    <div class="abs fadetop" style="left:0;top:470px;width:540px;height:490px;overflow:hidden">
+      <img class="abs" src="assets/hero-casas-1400.webp" style="left:-120px;top:0;height:490px;width:735px">
+    </div>
+    <svg class="full" viewBox="0 0 540 960">
+      <path id="ruta9" class="ac" d="M420 280 Q220 280 120 450" stroke-dasharray="2 12" style="stroke-width:5"/>
+      <g transform="translate(420 280)"><circle r="11" fill="#0E1B2B"/><circle r="4" fill="#fff"/></g>
+      <g transform="translate(120 450)"><circle r="11" fill="#1F5F9E"/><circle r="4" fill="#fff"/></g>
+      <text class="lbl" x="420" y="258" style="font-size:18px">Düsseldorf</text>
+      <text class="lbl" x="150" y="490" style="font-size:18px;text-anchor:start">Málaga</text>
+      <path id="avion9" fill="#0E1B2B" d="M0 -30 L5 -10 L28 2 L28 8 L5 2 L4 20 L12 26 L12 30 L0 26 L-12 30 L-12 26 L-4 20 L-5 2 L-28 8 L-28 2 L-5 -10 Z"/>
+    </svg>
+    <div class="chip state" id="reservada" style="left:240px;top:640px;opacity:0">Casa 3 · Reservada</div>
+    <div class="tag" style="top:900px">Promoción de ejemplo · imagen ilustrativa</div>
+  </div>
+
+  <!-- 10 · La frase -->
+  <div class="sc" id="s10">
+    <div class="big" id="b10a" style="top:300px;font-size:52px;opacity:0">Tu comprador más difícil es el que no puede venir.</div>
+    <div class="big" id="b10b" style="top:560px;font-size:64px;color:#1F5F9E;opacity:0">Mándale la casa.</div>
+  </div>
+
+  <!-- 11 · Cierre -->
+  <div class="sc" id="s11">
+    <div class="big" id="b12a" style="top:360px;font-size:50px;white-space:nowrap;opacity:0">Mándame el plano.</div>
+    <div class="big" id="b12b" style="top:425px;font-size:50px;white-space:nowrap;opacity:0">Te enseño la casa.</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:600px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:680px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+const CASA = 'M0 44 V18 L22 0 L44 18 V44 Z';
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+function build() {
+  // diez casas: la tercera se rellena al 79 % (27,9 %)
+  const g = $('#casas');
+  for (let i = 0; i < 10; i++) {
+    const x = 26 + i * 49, y = 520;
+    const cp = el('clipPath', { id: 'cc' + i }, g); el('path', { d: CASA, transform: `translate(${x} ${y})` }, cp);
+    el('rect', { class: 'fill', x, y: y + 44, width: 44, height: 0, fill: '#1F5F9E', 'clip-path': `url(#cc${i})` }, g);
+    el('path', { d: CASA, transform: `translate(${x} ${y})`, fill: 'none', stroke: '#0E1B2B', 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, g);
+  }
+  // pestañas: ocho promociones más + la tuya
+  const tg = $('#tabs');
+  for (let i = 0; i < 9; i++) {
+    const t = el('g', { class: 'tab', opacity: 0 }, tg);
+    el('rect', { x: 0, y: 0, width: 50, height: 34, rx: 7, fill: i === 8 ? '#1F5F9E' : '#E4EDF6', stroke: '#0E1B2B', 'stroke-width': 1.6 }, t);
+    el('rect', { x: 8, y: 11, width: 12, height: 12, rx: 3, fill: i === 8 ? '#fff' : '#4F6175' }, t);
+    if (i === 8) { const tx = el('text', { x: 26, y: 23, fill: '#fff', style: "font:700 13px 'Hanken Grotesk'" }, t); tx.textContent = 'Tu promoción'; }
+  }
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, x.pausa * .35));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas;
+  E.forEach((e, i) => {
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    const s = $('#s' + e.n);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+
+  // 1 · contador y casas
+  { const p = ease(prog(t, C.contador[0], C.contador[1] - .2));
+    $('#pct').textContent = (27.9 * p).toFixed(1).replace('.', ',') + ' %';
+    const fills = [1, 1, .79];
+    $$('#casas .fill').forEach((r, i) => {
+      const k = i < 3 ? out(prog(t, C.casas[0] + i * .25, C.casas[0] + i * .25 + .4)) * fills[i] : 0;
+      r.setAttribute('y', 520 + 44 * (1 - k)); r.setAttribute('height', 44 * k);
+    });
+    $('#fuente').style.opacity = prog(t, C.casas[0], C.casas[0] + .3); }
+
+  // 2 · la ruta y el plano que vuela
+  { const p = ease(prog(t, C.ruta[0], C.ruta[1]));
+    $('#ruta2m').style.strokeDashoffset = 1 - p;
+    const path = $('#ruta2'), L = path.getTotalLength(), q = path.getPointAtLength(L * (1 - p));
+    const v = $('#vuela'); v.style.left = (q.x - 60) + 'px'; v.style.top = (q.y - 39) + 'px'; v.style.opacity = p > 0 && p < .98 ? 1 : 0;
+    $('#km').setAttribute('opacity', prog(t, C.ruta[1] - .4, C.ruta[1] - .1)); }
+
+  // 3 · la mesa
+  { const k = pop(t, C.klaus); $('#klaus').style.opacity = k.o; $('#klaus').style.transform = `translateX(-50%) scale(${k.s})`;
+    $('#memo').setAttribute('opacity', prog(t, C.memoria - .1, C.memoria + .1));
+    const d = pop(t, C.avion, .2); $('#duda').setAttribute('opacity', d.o);
+    $('#duda').setAttribute('transform', `translate(270 545) scale(${d.s}) translate(-270 -545)`); }
+
+  // 4 · dudas → seguro → dudas
+  { const sube = ease(prog(t, C.sube[0], C.sube[1])), baja = out(prog(t, C.baja, C.baja + .35));
+    const v = .08 + .8 * sube - .62 * baja, y = 700 - 400 * v;
+    $('#marca').setAttribute('transform', `translate(262 ${y})`);
+    const rojo = baja > .3;
+    $('#marcaF').setAttribute('fill', rojo ? '#B3261E' : '#1F5F9E');
+    $('#marcaT').textContent = rojo ? 'con un plano' : 'casi seguro';
+    $('#marcaT').setAttribute('opacity', prog(t, C.sube[0] + .3, C.sube[0] + .6));
+    $('#marcaT').style.fill = rojo ? '#B3261E' : '#0E1B2B'; }
+
+  // 5 · pestañas
+  { const tabs = $$('#tabs .tab'); let k = 0; C.pestanas.forEach((p0) => { if (t >= p0) k++; });
+    const w = Math.min(150, 440 / (k + 1));
+    tabs.forEach((tb, i) => {
+      if (i === 8) { // la tuya, empujada al final
+        const gris = prog(t, C.tuya, C.tuya + .3);
+        tb.setAttribute('opacity', 1 - .65 * gris);
+        tb.setAttribute('transform', `translate(${50 + k * w} 333)`);
+        tb.querySelector('rect').setAttribute('width', w - 4);
+        const tx = tb.querySelector('text'); if (tx) tx.setAttribute('opacity', w > 110 ? 1 : 0);
+      } else {
+        const on = t >= C.pestanas[i] ? 1 : 0;
+        tb.setAttribute('opacity', on);
+        tb.setAttribute('transform', `translate(${50 + i * w} 333)`);
+        tb.querySelector('rect').setAttribute('width', w - 4);
+      }
+    }); }
+
+  // 6 · el enlace
+  { const b = pop(t, C.burbuja, .2); $('#burbuja').setAttribute('opacity', b.o);
+    const r = prog(t, C.toque, C.toque + .45); $('#rip6').style.opacity = r > 0 && r < 1 ? 1 - r : 0; $('#rip6').style.transform = `scale(${.4 + r})`; }
+
+  // 7 · pantallas reales
+  { const S = C.screens; let k = 0; S.forEach((s, i) => { if (t >= s) k = i; });
+    $$('.scr').forEach((im, i) => im.style.opacity = i === 0 ? 1 : (i <= k ? prog(t, S[i], S[i] + .15) : 0));
+    let rp = 0, rx = 270, ry = 520;
+    C.taps.forEach((tp, i) => { const p = prog(t, tp, tp + .45); if (p > 0 && p < 1) { rp = p; rx = [300, 250][i]; ry = [470, 560][i]; } });
+    const r = $('#rip7'); r.style.left = rx + 'px'; r.style.top = ry + 'px'; r.style.opacity = rp > 0 ? 1 - rp : 0; r.style.transform = `scale(${.4 + rp})`; }
+
+  // 8 · día y noche
+  { const k = prog(t, E[7].start, E[7].end + .3);
+    const x = -470 + 300 * k, sc = 1.18 - .12 * ease(prog(t, E[7].start, E[7].start + 1.2));
+    ['#day', '#night'].forEach((s) => { $(s).style.left = x + 'px'; $(s).style.transform = `scale(${sc})`; });
+    $('#night').style.opacity = ease(prog(t, C.noche, C.noche + .5)); }
+
+  // 9 · el vuelo
+  { const p = ease(prog(t, C.vuelo[0], C.vuelo[1])), path = $('#ruta9'), L = path.getTotalLength();
+    const a = path.getPointAtLength(L * p), b = path.getPointAtLength(Math.min(L, L * p + 2));
+    const ang = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI + 90;
+    $('#avion9').setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${ang}) scale(.9)`);
+    const r = pop(t, C.reservada, .2); $('#reservada').style.opacity = r.o; $('#reservada').style.transform = `scale(${r.s})`; }
+
+  // 10 y 11 · frases finales
+  [['#b10a', C.b10a], ['#b10b', C.b10b], ['#b12a', C.b12a], ['#b12b', C.b12b]].forEach(([s, c]) => {
+    const p = pop(t, c, .25); $(s).style.opacity = p.o; $(s).style.transform = `scale(${p.s})`; });
+  $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6);
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

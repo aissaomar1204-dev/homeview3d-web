@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Más leads · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 45%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 20px; right: 20px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 19px/1 "Hanken Grotesk"; padding: 10px 15px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 2px var(--stamp); transform-origin: 50% 50%; }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; color: var(--ink-3); font: 600 14px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; }
+.cont { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; }
+.cont b { font: 400 50px/1 "Gloock", Georgia, serif; color: var(--ink); }
+.cont span { display: block; font: 600 16px "Hanken Grotesk"; color: var(--ink-3); margin-top: 4px; }
+.render { position: absolute; z-index: 35; overflow: hidden; border-radius: 18px; opacity: 0; box-shadow: 0 24px 44px -20px rgb(14 27 43 / .7), 0 0 0 3px var(--accent); }
+.render img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.render i { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 600 13px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 6px rgb(0 0 0 / .8); font-style: normal; }
+.card { position: absolute; left: 50px; right: 50px; height: 112px; background: #fff; border-radius: 18px; box-shadow: 0 0 0 2.4px var(--ink); padding: 18px 22px; }
+.card b { display: block; font: 700 20px "Hanken Grotesk"; }
+.card small { display: block; font: 500 16px "Hanken Grotesk"; color: var(--ink-3); margin-top: 6px; }
+.card em { position: absolute; right: 18px; top: 18px; font: 700 14px "Hanken Grotesk"; font-style: normal; padding: 7px 11px; border-radius: 999px; background: var(--accent); color: #fff; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- el embudo (persistente) -->
+  <svg class="full" id="embudo" viewBox="0 0 540 960" style="z-index:10">
+    <g id="cam">
+      <path id="pared" class="ln" style="stroke-width:4" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"
+            d="M120 300 L244 600 L244 670 M420 300 L296 600 L296 670"/>
+      <ellipse id="boca" cx="270" cy="300" rx="150" ry="20" class="ln" style="stroke-width:4" opacity="0"/>
+      <g id="agujeros"></g>
+      <g id="puntos"></g>
+      <g id="parches"></g>
+      <!-- la sala de ventas -->
+      <g id="sala" opacity="0" transform="translate(270 735)">
+        <path class="ln" style="stroke-width:3" d="M-46 34V-6L0-36L46-6V34Z"/><path class="ln" d="M-12 34V8H12V34"/>
+        <circle id="brillo" r="60" fill="#1F5F9E" opacity="0"/>
+        <text y="64" text-anchor="middle" style="font:700 16px 'Hanken Grotesk';fill:#4F6175">Sala de ventas</text>
+      </g>
+    </g>
+  </svg>
+
+  <div class="cont" id="contTop" style="top:228px;opacity:0;z-index:12"><b id="nTop">100</b><span>contactos al mes</span></div>
+  <div class="cont" id="contBot" style="top:842px;opacity:0;z-index:12"><b id="nBot">4</b><span>visitas a la sala</span></div>
+  <div class="tag" id="simul" style="top:918px;opacity:0;z-index:12;color:#B3261E">Simulación</div>
+
+  <div class="chip q" style="left:0;top:0;opacity:0">¿Le da el sol a la terraza?</div>
+  <div class="chip q" style="left:0;top:0;opacity:0">¿Cabe mi cama?</div>
+  <div class="chip q" style="left:0;top:0;opacity:0">¿Cómo es el baño?</div>
+  <div class="chip q" style="left:0;top:0;opacity:0">¿Cómo queda el jardín?</div>
+
+  <div class="render"><img src="assets/r-azotea-1400.webp"><i>Casa 5 · azotea</i></div>
+  <div class="render"><img src="assets/r-dormitorio-1400.webp"><i>Casa 5 · dormitorio principal</i></div>
+  <div class="render"><img src="assets/r-bano-1400.webp"><i>Casa 5 · baño suite</i></div>
+  <div class="render"><img src="assets/r-jardin-1400.webp"><i>Casa 5 · jardín en 360°</i></div>
+  <div class="tag" id="tagR" style="top:900px;opacity:0;z-index:36">Showroom de ejemplo · Residencial Benahavís (ficticio)</div>
+
+  <!-- 6 · los que dejan de contestar -->
+  <div class="sc" id="s6">
+    <div class="card" style="top:290px"><b>Lead #142 · Casa 3</b><small>Último mensaje tuyo: hace 9 días</small><em class="st">Interesado</em></div>
+    <div class="card" style="top:420px"><b>Lead #158 · Casa 7</b><small>Último mensaje tuyo: hace 6 días</small><em class="st">Interesado</em></div>
+    <div class="card" style="top:550px"><b>Lead #187 · Casa 2</b><small>Último mensaje tuyo: hace 3 días</small><em class="st">Interesado</em></div>
+    <div class="abs" id="no" style="left:0;right:0;top:700px;text-align:center;font:400 46px Gloock;color:#B3261E;opacity:0">ni sí, ni no.</div>
+  </div>
+
+  <!-- 11 · la frase -->
+  <div class="sc" id="s11">
+    <div class="big" id="b11a" style="top:300px;font-size:50px;opacity:0">Las reservas no salen de lo que echas arriba.</div>
+    <div class="big" id="b11b" style="top:540px;font-size:56px;color:#1F5F9E;opacity:0">Salen de lo que se queda dentro.</div>
+  </div>
+
+  <!-- 12 · cierre -->
+  <div class="sc" id="s12">
+    <div class="big" id="b12a" style="top:360px;font-size:50px;white-space:nowrap;opacity:0">Mándame el plano.</div>
+    <div class="big" id="b12b" style="top:425px;font-size:50px;white-space:nowrap;opacity:0">Te enseño la casa.</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:600px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:680px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+let TL = null, P = [];
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// geometría del embudo
+const CX = 270, Y0 = 270, Y1 = 690;
+const hw = (y) => y <= 300 ? 150 : y <= 600 ? 150 - (y - 300) * 124 / 300 : 26;
+const HOLES = [[370, -1], [430, 1], [500, -1], [550, 1]].map(([y, s]) => ({ y, s, x: CX + s * hw(y) }));
+const D = 1.7; // segundos que tarda un punto en caer
+const yAt = (p) => Y0 + (Y1 - Y0) * Math.pow(p, 1.3);
+const pAt = (y) => Math.pow((y - Y0) / (Y1 - Y0), 1 / 1.3);
+
+function rnd(seed) { let s = seed >>> 0; return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+
+function build() {
+  const C = TL.cues, E = TL.escenas;
+  // agujeros: hueco en la pared + bordes rojos; y su parche (miniatura del render)
+  const ga = $('#agujeros'), gp = $('#parches');
+  const srcs = ['r-azotea', 'r-dormitorio', 'r-bano', 'r-jardin'];
+  HOLES.forEach((h, i) => {
+    const g = el('g', { class: 'ag', opacity: 0, transform: `translate(${h.x} ${h.y})` }, ga);
+    el('path', { d: 'M0 -16V16', stroke: '#D3E1EE', 'stroke-width': 10 }, g);
+    el('circle', { r: 19, fill: 'none', stroke: '#B3261E', 'stroke-width': 4 }, g);
+    const p = el('g', { class: 'pa', opacity: 0, transform: `translate(${h.x} ${h.y})` }, gp);
+    const cp = el('clipPath', { id: 'cp' + i }, p); el('rect', { x: -34, y: -22, width: 68, height: 44, rx: 8 }, cp);
+    el('image', { href: `assets/${srcs[i]}-1400.webp`, x: -40, y: -22, width: 80, height: 44, preserveAspectRatio: 'xMidYMid slice', 'clip-path': `url(#cp${i})` }, p);
+    el('rect', { x: -34, y: -22, width: 68, height: 44, rx: 8, fill: 'none', stroke: '#1F5F9E', 'stroke-width': 4 }, p);
+  });
+  // puntos: cada uno es un contacto que cae por el embudo
+  const r = rnd(7), fin = E.find((e) => e.n === 11).start;
+  let t = .35;
+  while (t < fin) {
+    const rate = t < C.doble ? 4 : t < C.mas ? 9 : t < C.tapa[0] ? 14 : 9;
+    const fuga = r() < .88 ? Math.floor(r() * 4) : -1;
+    P.push({ s: t, u: (r() * 2 - 1) * .7, h: fuga, v: .7 + r() * .6 });
+    t += 1 / rate * (.6 + r() * .8);
+  }
+  const g = $('#puntos');
+  P.forEach((p) => { p.e = el('circle', { r: 6, fill: '#1F5F9E', opacity: 0 }, g); });
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function sceneAt(t) { let n = 1; TL.escenas.forEach((e) => { if (t >= e.start) n = e.n; }); return n; }
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+  const n = sceneAt(t);
+
+  // ---- el embudo ----
+  { const vis = ![6, 11, 12].includes(n);
+    $('#embudo').style.opacity = vis ? 1 : 0;
+    $('#pared').style.strokeDashoffset = 1 - ease(prog(t, 0, .5));
+    $('#boca').setAttribute('opacity', prog(t, .3, .5));
+    $('#sala').setAttribute('opacity', prog(t, .4, .6));
+    // cámara: se acerca a las paredes en 4-5, se aleja después
+    const z = ease(prog(t, ES[4].start, ES[4].start + .6)) * (1 - ease(prog(t, ES[7].start, ES[7].start + .5)));
+    $('#cam').setAttribute('transform', `translate(0 34) translate(270 470) scale(${1 + .08 * z}) translate(-270 -470)`);
+    // agujeros (visibles desde el 4) y parches (desde el giro)
+    $$('.ag').forEach((a, i) => { const k = pop(t, C.agujeros[i], .2); a.setAttribute('opacity', k.o * (t < C.parche[i] + .05 ? 1 : 0));
+      a.setAttribute('transform', `translate(${HOLES[i].x} ${HOLES[i].y}) scale(${k.s})`); });
+    $$('.pa').forEach((a, i) => { const k = pop(t, C.parche[i], .2); a.setAttribute('opacity', k.o);
+      a.setAttribute('transform', `translate(${HOLES[i].x} ${HOLES[i].y}) scale(${k.s})`); });
+    // puntos
+    let llegan = 0;
+    P.forEach((p) => {
+      const e = p.e;
+      if (t < p.s) { e.setAttribute('opacity', 0); return; }
+      const h = p.h >= 0 ? HOLES[p.h] : null;
+      const th = h ? p.s + D * pAt(h.y) : Infinity;
+      const fuga = h && th < C.parche[p.h];
+      if (fuga && t >= th) { // sale por el agujero y se pierde
+        const d = t - th;
+        const x = h.x + h.s * d * 140 * p.v, y = h.y + d * 150;
+        e.setAttribute('cx', x); e.setAttribute('cy', y); e.setAttribute('fill', '#B3261E'); e.setAttribute('opacity', clamp(1 - d / .55));
+        return;
+      }
+      const q = (t - p.s) / D;
+      if (q >= 1) { if (t - p.s - D < .4) llegan++; e.setAttribute('opacity', 0); return; }
+      const y = yAt(q);
+      let u = p.u;
+      if (fuga) u = lerp(u, h.s, clamp((y - (h.y - 90)) / 90)); // se va hacia su agujero
+      e.setAttribute('cx', CX + u * (hw(y) - 6)); e.setAttribute('cy', y); e.setAttribute('fill', '#1F5F9E');
+      e.setAttribute('opacity', clamp((y - Y0) / 25));
+    });
+    $('#brillo').setAttribute('opacity', Math.min(.35, llegan * .1) * (t > C.giro ? 1 : .3)); }
+
+  // ---- contadores (simulación) ----
+  { const k = ease(prog(t, C.doble, C.doble + 1));
+    $('#nTop').textContent = Math.round(100 + 100 * k);
+    $('#contTop').style.opacity = n >= 2 && n <= 3 ? 1 : 0;
+    $('#nBot').textContent = t >= C.mueve ? '5' : '4';
+    $('#contBot').style.opacity = n === 3 ? prog(t, ES[3].start, ES[3].start + .2) : 0;
+    $('#simul').style.opacity = n >= 2 && n <= 3 ? 1 : 0; }
+
+  // ---- preguntas en cada agujero ----
+  $$('.q').forEach((q, i) => {
+    const h = HOLES[i], k = pop(t, C.preguntas[i], .2);
+    const w = q.offsetWidth;
+    const x = clamp(h.s < 0 ? h.x + 18 : h.x - 18 - w, 12, 528 - w);
+    q.style.left = x + 'px'; q.style.top = (h.y + 34 - 19) + 'px';
+    q.style.opacity = n === 5 ? k.o : 0; q.style.transform = `scale(${k.s})`;
+  });
+
+  // ---- 6 · dejan de contestar ----
+  { $$('#s6 .st').forEach((s, i) => { const g = t >= C.silencio + i * .2; s.textContent = g ? 'Sin respuesta' : 'Interesado'; s.style.background = g ? '#4F6175' : '#1F5F9E'; });
+    $('#no').style.opacity = prog(t, C.ninguno, C.ninguno + .2); }
+
+  // ---- 9 · cada render tapa su agujero ----
+  { $$('.render').forEach((r, i) => {
+      const a = C.tapa[i], b = C.parche[i];
+      const k = out(prog(t, a, a + .2)), f = ease(prog(t, b - .3, b));
+      const big = { x: 30, y: 300, w: 480, h: 268 }, h = HOLES[i], sm = { x: h.x - 34, y: h.y + 34 - 22, w: 68, h: 44 };
+      const x = lerp(big.x, sm.x, f), y = lerp(big.y, sm.y, f), w = lerp(big.w, sm.w, f), hh = lerp(big.h, sm.h, f);
+      r.style.left = x + 'px'; r.style.top = y + 'px'; r.style.width = w + 'px'; r.style.height = hh + 'px';
+      r.style.opacity = t >= b ? 0 : k * (n === 9 ? 1 : 0);
+      r.querySelector('i').style.opacity = 1 - f;
+      r.querySelector('img').style.transform = `scale(${1.04 + .06 * prog(t, a, b)})`;
+    });
+    $('#tagR').style.opacity = n === 9 ? 1 : 0; }
+
+  // ---- frases ----
+  [['#b11a', C.b11a], ['#b11b', C.b11b], ['#b12a', C.b12a], ['#b12b', C.b12b]].forEach(([s, c]) => {
+    const p = pop(t, c, .25); $(s).style.opacity = p.o; $(s).style.transform = `scale(${p.s})`; });
+  $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6);
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "titulo": "El domingo",
+  "nota": "Cada fragmento es un subtítulo. 'pausa' marca el hueco después del fragmento (x0,35 al montar la toma).",
+  "fragmentos": [
+    {"n": 1,  "escena": 1,  "texto": "Domingo por la tarde.", "pausa": 0.25},
+    {"n": 2,  "escena": 1,  "texto": "Tu comprador abre los dossiers de la semana.", "pausa": 0.4},
+    {"n": 3,  "escena": 2,  "texto": "PDF de cuarenta y ocho megas.", "pausa": 0.2},
+    {"n": 4,  "escena": 2,  "texto": "Otro PDF.", "pausa": 0.2},
+    {"n": 5,  "escena": 2,  "texto": "Otro PDF.", "pausa": 0.5},
+    {"n": 6,  "escena": 3,  "texto": "Abre el primero.", "pausa": 0.2},
+    {"n": 7,  "escena": 3,  "texto": "La fachada.", "pausa": 0.15},
+    {"n": 8,  "escena": 3,  "texto": "La fachada de noche.", "pausa": 0.15},
+    {"n": 9,  "escena": 3,  "texto": "Un plano que no entiende.", "pausa": 0.5},
+    {"n": 10, "escena": 4,  "texto": "A la cuarta, ya no sabe cuál era cuál.", "pausa": 0.7},
+    {"n": 11, "escena": 5,  "texto": "Y entonces abre un enlace.", "pausa": 0.6},
+    {"n": 12, "escena": 6,  "texto": "Elige una casa: disponible, con su precio.", "pausa": 0.3},
+    {"n": 13, "escena": 6,  "texto": "La recorre planta por planta.", "pausa": 0.3},
+    {"n": 14, "escena": 6,  "texto": "Y se sienta en la cocina.", "pausa": 0.6},
+    {"n": 15, "escena": 7,  "texto": "El lunes, a las nueve,", "pausa": 0.2},
+    {"n": 16, "escena": 7,  "texto": "tu comercial tiene un correo suyo:", "pausa": 0.2},
+    {"n": 17, "escena": 7,  "texto": "«¿La casa cinco sigue disponible?»", "pausa": 0.7},
+    {"n": 18, "escena": 8,  "texto": "No ganó la promoción más bonita.", "pausa": 0.3},
+    {"n": 19, "escena": 8,  "texto": "Ganó la única que pudo recorrer.", "pausa": 0.7},
+    {"n": 20, "escena": 9,  "texto": "Todos mandan un PDF.", "pausa": 0.3},
+    {"n": 21, "escena": 9,  "texto": "Tú, manda la casa.", "pausa": 0.7},
+    {"n": 22, "escena": 10, "texto": "Mándame el plano.", "pausa": 0.3},
+    {"n": 23, "escena": 10, "texto": "Te enseño la casa.", "pausa": 2.0}
+  ]
+}

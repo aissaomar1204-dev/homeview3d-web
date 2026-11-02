@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>El bucle · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root {
+  --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 45%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.ac { fill: none; stroke: var(--accent); stroke-width: 4.5; stroke-linecap: round; }
+.thin { stroke-width: 1.6; }
+.lbl { font: 700 21px "Hanken Grotesk"; fill: var(--ink); text-anchor: middle; }
+.q { font: 500 18px "Hanken Grotesk"; fill: var(--ink-3); text-anchor: middle; }
+.serif { font-family: "Gloock", Georgia, serif; font-weight: 400; }
+#sub {
+  position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center;
+  font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); letter-spacing: -.005em;
+}
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 20px; right: 20px; text-align: center; font: 400 58px/1.02 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.stamp {
+  position: absolute; left: 120px; top: 520px; width: 300px; padding: 14px 10px; z-index: 30;
+  border: 5px solid var(--stamp); border-radius: 8px; color: var(--stamp); background: rgb(255 255 255 / .5);
+  font: 800 30px/1.1 "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; text-align: center;
+}
+.chip {
+  position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap;
+  font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px;
+  box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08);
+}
+.chip.state { background: var(--accent); color: #fff; }
+.chip.cta { background: var(--ink); color: #fff; }
+.screen { position: absolute; border-radius: 30px; box-shadow: 0 0 0 6px var(--ink), 0 30px 50px -20px rgb(14 27 43 / .7); }
+.fadetop { -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 130px); mask-image: linear-gradient(to bottom, transparent 0, #000 130px); }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; color: #fff; font: 600 15px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 6px rgb(0 0 0 / .7); }
+.ripple { position: absolute; width: 70px; height: 70px; margin: -35px 0 0 -35px; border-radius: 50%; border: 4px solid #fff; z-index: 40; opacity: 0; box-shadow: 0 0 0 2px rgb(14 27 43 / .3); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · Plano + sello -->
+  <div class="sc" id="s1">
+    <img class="abs" id="s1plan" src="assets/hero-plan-lines-1400.webp" style="left:-155px;top:197px;width:850px">
+    <div class="stamp" id="stamp">Pendiente de<br>preventas</div>
+  </div>
+
+  <!-- 2 · Parcela vacía -->
+  <div class="sc" id="s2">
+    <img class="abs" id="s2plan" src="assets/hero-plan-lines-1400.webp" style="left:-155px;top:197px;width:850px">
+    <svg class="full" viewBox="0 0 540 960">
+      <rect id="parcel" class="ln" x="90" y="330" width="360" height="340" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <g id="cotas" opacity="0">
+        <path class="ln thin" d="M90 300h360M90 290v20M450 290v20"/><text class="lbl" x="270" y="290">32,40 m</text>
+        <path class="ln thin" d="M58 330v340M48 330h20M48 670h20"/><text class="lbl" x="44" y="500" transform="rotate(-90 44 500)">18,00 m</text>
+      </g>
+      <g id="sign" opacity="0">
+        <path class="ln" d="M270 640v-70"/>
+        <rect x="186" y="520" width="168" height="54" rx="6" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <text class="lbl" x="270" y="555" style="letter-spacing:2px;font-size:18px">PRÓXIMAMENTE</text>
+      </g>
+    </svg>
+    <div class="big" id="noexiste" style="top:720px">No existe.</div>
+  </div>
+
+  <!-- 3 · Compás -->
+  <div class="sc" id="s3">
+    <svg class="full" viewBox="0 0 540 960">
+      <circle id="c3" class="ac" cx="270" cy="470" r="150" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90 270 470)"/>
+      <circle cx="270" cy="470" r="5" fill="#0E1B2B"/>
+      <g id="rlab" opacity="0"><path class="ln thin" d="M270 470L376 364" stroke-dasharray="7 7"/><text class="lbl" x="360" y="400" text-anchor="start" style="text-anchor:start">R = meses</text></g>
+      <g id="compass"><path id="leg1" class="ln" d=""/><path id="leg2" class="ln" d=""/><circle id="hinge" r="9" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/><path id="handle" class="ln" d=""/></g>
+    </svg>
+    <div class="big" id="elbucle" style="top:700px;font-size:72px">El bucle</div>
+  </div>
+
+  <!-- 4 · Tres nodos -->
+  <div class="sc" id="s4">
+    <svg class="full" viewBox="0 0 540 960">
+      <circle class="ac" cx="270" cy="470" r="150"/>
+      <g id="arrows"></g>
+      <circle id="dot" r="9" fill="#1F5F9E"/>
+      <g id="n1"><circle class="nd" cx="270" cy="320" r="38" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <g class="ic" transform="translate(270 320)"><path class="ln thin" d="M-17 13h34M-14 13v-15M-5 13v-15M5 13v-15M14 13v-15M-19 -4l19 -12 19 12z"/></g></g>
+      <text class="lbl" x="270" y="262">Banco</text>
+      <text class="q" id="q1" x="270" y="405" opacity="0">«enséñame preventas»</text>
+      <g id="n2"><circle class="nd" cx="400" cy="545" r="38" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <g class="ic" transform="translate(400 545)"><rect class="ln thin" x="-11" y="-19" width="22" height="38" rx="5"/><path class="ln thin" d="M-4 13h8"/></g></g>
+      <text class="lbl" x="400" y="612">Comprador</text>
+      <text class="q" id="q2" x="400" y="640" opacity="0">«enséñame la casa»</text>
+      <g id="n3"><circle class="nd" cx="140" cy="545" r="38" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <g class="ic" transform="translate(140 545)"><path class="ln thin" d="M-10 20v-38M-10 -16h28M-10 -10l8 -6M18 -16v10M-18 20h16"/></g></g>
+      <text class="lbl" x="140" y="612">Obra</text>
+      <text class="q" id="q3" x="140" y="640" opacity="0">«necesito el préstamo»</text>
+    </svg>
+  </div>
+
+  <!-- 5 · Meses -->
+  <div class="sc" id="s5">
+    <svg class="full" viewBox="0 0 540 960">
+      <circle class="ln thin" cx="270" cy="470" r="150" stroke-dasharray="8 8"/>
+      <circle id="arc5" class="ac" cx="270" cy="470" r="150" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-90 270 470)" style="stroke-width:9"/>
+      <g id="months"></g>
+      <text id="mes" class="serif" x="270" y="482" text-anchor="middle" style="font-size:50px;fill:#0E1B2B">mes 1</text>
+      <text id="suelo" class="q" x="270" y="528" opacity="0" style="font-weight:700">suelo parado</text>
+      <text id="interes" class="q" x="270" y="556" opacity="0" style="font-weight:700">intereses corriendo</text>
+      <g id="promos"></g>
+      <text id="promolbl" class="q" x="270" y="770" opacity="0">otras diez promociones</text>
+    </svg>
+  </div>
+
+  <!-- 6 · El PDF -->
+  <div class="sc" id="s6">
+    <div id="phone6" class="abs" style="left:170px;top:280px;width:200px;height:380px;transform-origin:50% 60%">
+      <svg class="abs" viewBox="0 0 200 380" style="inset:0;width:200px;height:380px">
+        <rect x="3" y="3" width="194" height="374" rx="30" fill="#fff" stroke="#0E1B2B" stroke-width="4"/>
+        <path d="M80 22h40" stroke="#0E1B2B" stroke-width="4" stroke-linecap="round"/>
+        <g id="dl"><rect x="30" y="180" width="140" height="10" rx="5" fill="#E4EDF6"/><rect id="dlbar" x="30" y="180" width="0" height="10" rx="5" fill="#1F5F9E"/>
+          <text x="100" y="166" text-anchor="middle" style="font:600 14px 'Hanken Grotesk';fill:#4F6175">Descargando…</text></g>
+      </svg>
+      <img id="tinyplan" class="abs" src="assets/hero-plan-lines-1400.webp" style="left:25px;top:140px;width:150px;opacity:0">
+    </div>
+    <div class="chip" id="file" style="left:50%;top:700px;transform:translateX(-50%);opacity:0">dossier_v3_final.pdf · 48 MB</div>
+  </div>
+
+  <!-- 7 · Preguntas -->
+  <div class="sc" id="s7">
+    <img class="abs" src="assets/hero-plan-lines-1400.webp" style="left:-155px;top:197px;width:850px">
+    <div class="chip q7" style="left:40px;top:330px">¿Dónde está el salón?</div>
+    <div class="chip q7" style="left:300px;top:420px">¿Entra el sol?</div>
+    <div class="chip q7" style="left:60px;top:510px">¿Cuántos m²?</div>
+    <div class="chip q7" style="left:250px;top:590px">¿Cabe mi sofá?</div>
+    <div class="chip q7" style="left:30px;top:670px">¿Y la terraza?</div>
+    <div class="chip q7" style="left:270px;top:740px">¿Hacia dónde mira?</div>
+  </div>
+
+  <!-- 8 · El giro -->
+  <div class="sc" id="s8">
+    <img class="abs" id="s8lines" src="assets/hero-plan-lines-1400.webp" style="left:-155px;top:197px;width:850px">
+    <div id="rise" class="abs" style="left:-155px;top:197px;width:850px;height:546px"></div>
+    <div class="big" id="aqui" style="top:738px;font-size:76px">Aquí.</div>
+  </div>
+
+  <!-- 9 · Masterplan -->
+  <div class="sc" id="s9">
+    <div class="abs fadetop" style="left:0;top:240px;width:540px;height:720px;overflow:hidden">
+      <img class="abs" id="day" src="assets/v-masterplan-1400.webp" style="top:0;height:720px;width:1291px">
+      <img class="abs" id="night" src="assets/v-noche-1400.webp" style="top:0;height:720px;width:1291px;opacity:0">
+    </div>
+    <div class="tag" style="top:790px">Promoción de ejemplo · imagen ilustrativa</div>
+  </div>
+
+  <!-- 10 · Móvil -->
+  <div class="sc" id="s10">
+    <img class="screen scr" src="assets/movil-masterplan-780.webp" style="left:155px;top:262px;width:230px;height:498px">
+    <img class="screen scr" src="assets/movil-casa-780.webp" style="left:155px;top:262px;width:230px;height:498px;opacity:0">
+    <img class="screen scr" src="assets/movil-plano-780.webp" style="left:155px;top:262px;width:230px;height:498px;opacity:0">
+    <img class="screen scr" src="assets/movil-estancia-780.webp" style="left:155px;top:262px;width:230px;height:498px;opacity:0">
+    <div class="ripple" id="rip"></div>
+    <div class="chip cta" id="cta" style="left:50%;top:690px;transform:translateX(-50%);opacity:0">Pedir llamada</div>
+  </div>
+
+  <!-- 11 · La flecha -->
+  <div class="sc" id="s11">
+    <div class="abs fadetop" style="left:0;top:430px;width:540px;height:530px;overflow:hidden">
+      <img class="abs" src="assets/hero-casas-1400.webp" style="left:-120px;top:0;height:530px;width:795px">
+    </div>
+    <svg class="full" viewBox="0 0 540 960">
+      <circle id="c11" class="ac" cx="270" cy="330" r="62" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" transform="rotate(-90 270 330)"/>
+      <path id="line11" class="ac" d="M40 330H492" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="head11" class="ac" d="M478 316l16 14 -16 14" opacity="0"/>
+      <g class="ln thin"><path class="tk" d="M80 320v20" opacity="0"/><path class="tk" d="M200 320v20" opacity="0"/><path class="tk" d="M330 320v20" opacity="0"/><path class="tk" d="M450 320v20" opacity="0"/></g>
+      <text class="lbl w11" x="80" y="378" opacity="0">Reservas</text><text class="lbl w11" x="200" y="378" opacity="0">Ventas</text>
+      <text class="lbl w11" x="330" y="378" opacity="0">Préstamo</text><text class="lbl w11" x="450" y="378" opacity="0">Obra</text>
+    </svg>
+    <div class="chip state" id="reservada" style="left:250px;top:610px;opacity:0">Casa 3 · Reservada</div>
+    <div class="tag" style="top:900px">Promoción de ejemplo · imagen ilustrativa</div>
+  </div>
+
+  <!-- 12 · Cierre -->
+  <div class="sc" id="s12">
+    <svg class="full" viewBox="0 0 540 960"><circle id="c12" class="ac" cx="270" cy="470" r="70" stroke-dasharray="330 110" opacity="0"/></svg>
+    <div class="big" id="b12a" style="top:360px;font-size:50px;white-space:nowrap;opacity:0">Mándame el plano.</div>
+    <div class="big" id="b12b" style="top:425px;font-size:50px;white-space:nowrap;opacity:0">Te enseño la casa.</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:600px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:680px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+let TL = null;
+
+// --- construcción única ---
+function build() {
+  // flechas del bucle (sentido horario) entre nodos
+  const g = $('#arrows');
+  [-30, 90, 210].forEach((deg) => {
+    const a = deg * Math.PI / 180, cx = 270 + 150 * Math.cos(a), cy = 470 + 150 * Math.sin(a);
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('class', 'ac'); p.setAttribute('d', 'M-11 -12L3 0L-11 12');
+    p.setAttribute('transform', `translate(${cx} ${cy}) rotate(${deg + 90})`);
+    g.appendChild(p);
+  });
+  // números de mes
+  const m = $('#months');
+  for (let i = 0; i < 6; i++) {
+    const a = (-90 + i * 60) * Math.PI / 180;
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('class', 'lbl'); t.setAttribute('x', 270 + 186 * Math.cos(a)); t.setAttribute('y', 478 + 186 * Math.sin(a));
+    t.textContent = i + 1; t.setAttribute('opacity', 0); m.appendChild(t);
+  }
+  // diez promociones
+  const pr = $('#promos');
+  for (let i = 0; i < 10; i++) {
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('x', 33 + i * 48); r.setAttribute('y', 680); r.setAttribute('width', 38); r.setAttribute('height', 54); r.setAttribute('rx', 4);
+    r.setAttribute('fill', '#fff'); r.setAttribute('stroke', '#0E1B2B'); r.setAttribute('stroke-width', 2); r.setAttribute('opacity', 0);
+    pr.appendChild(r);
+  }
+  // secuencia del plano que se levanta
+  const rise = $('#rise');
+  for (let i = 0; i < 48; i++) {
+    const im = document.createElement('img');
+    im.src = `assets/hero/hero-${String(i).padStart(3, '0')}.webp`;
+    im.className = 'abs'; im.style.cssText = 'left:0;top:0;width:100%;opacity:0';
+    rise.appendChild(im);
+  }
+}
+
+// --- subtítulos palabra a palabra ---
+let lastSub = -1;
+function subtitles(t) {
+  const el = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, x.pausa * .85));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) {
+    el.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' ');
+    lastSub = id;
+  }
+  if (id !== -1) el.querySelectorAll('span').forEach((s, i) => s.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas;
+  // visibilidad de escenas con fundido corto
+  E.forEach((e, i) => {
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    const el = $('#s' + e.n);
+    el.style.opacity = inn * (1 - outp);
+    // empuje de cámara constante: nada se queda quieto
+    el.style.transform = `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+
+  // 1 · sello
+  { const p = pop(t, C.stamp, .16); const s = $('#stamp');
+    s.style.opacity = p.o; s.style.transform = `rotate(-9deg) scale(${1.6 - .6 * out(prog(t, C.stamp, C.stamp + .16))})`;
+    const k = prog(t, C.stamp + .05, C.stamp + .35); $('#s1plan').style.transform = `translateY(${Math.sin(k * 40) * (1 - k) * 5}px)`; }
+
+  // 2 · parcela
+  $('#s2plan').style.opacity = 1 - prog(t, C.erase[0], C.erase[1]);
+  $('#parcel').style.strokeDashoffset = 1 - ease(prog(t, C.parcel[0], C.parcel[1]));
+  $('#cotas').setAttribute('opacity', prog(t, C.parcel[1] - .2, C.parcel[1] + .2));
+  { const k = out(prog(t, C.sign, C.sign + .2)); $('#sign').setAttribute('opacity', k); $('#sign').setAttribute('transform', `translate(0 ${(1 - k) * 30})`); }
+  { const p = pop(t, C.noexiste); $('#noexiste').style.opacity = p.o; $('#noexiste').style.transform = `scale(${p.s})`; }
+
+  // 3 · compás
+  { const p = ease(prog(t, C.compass[0], C.compass[1]));
+    $('#c3').style.strokeDashoffset = 1 - p;
+    const a = (-90 + 360 * p) * Math.PI / 180, cx = 270, cy = 470;
+    const px = cx + 150 * Math.cos(a), py = cy + 150 * Math.sin(a);
+    const mx = (cx + px) / 2 - 55 * Math.sin(a), my = (cy + py) / 2 + 55 * Math.cos(a);
+    $('#leg1').setAttribute('d', `M${cx} ${cy}L${mx} ${my}`); $('#leg2').setAttribute('d', `M${mx} ${my}L${px} ${py}`);
+    $('#hinge').setAttribute('cx', mx); $('#hinge').setAttribute('cy', my);
+    $('#handle').setAttribute('d', `M${mx} ${my}l${-28 * Math.sin(a)} ${28 * Math.cos(a)}`);
+    $('#compass').setAttribute('opacity', 1 - prog(t, C.compass[1], C.compass[1] + .35));
+    $('#rlab').setAttribute('opacity', prog(t, C.rlab, C.rlab + .15));
+    const b = pop(t, C.elbucle); $('#elbucle').style.opacity = b.o; $('#elbucle').style.transform = `scale(${b.s})`; }
+
+  // 4 · nodos
+  { const a = (-90 + (t - E[3].start) * 130) * Math.PI / 180;
+    $('#dot').setAttribute('cx', 270 + 150 * Math.cos(a)); $('#dot').setAttribute('cy', 470 + 150 * Math.sin(a));
+    C.nodes.forEach((c, i) => {
+      const on = prog(t, c, c + .12), next = C.nodes[i + 1];
+      const act = on * (next ? 1 - prog(t, next, next + .12) : 1);
+      const n = $('#n' + (i + 1));
+      n.querySelector('.nd').setAttribute('fill', act > .5 ? '#1F5F9E' : '#fff');
+      n.querySelectorAll('.ic .ln').forEach((l) => l.style.stroke = act > .5 ? '#fff' : '#0E1B2B');
+      n.setAttribute('transform', `translate(${n === $('#n1') ? 270 : i === 1 ? 400 : 140} ${i === 0 ? 320 : 545}) scale(${1 + .12 * act}) translate(${-(i === 0 ? 270 : i === 1 ? 400 : 140)} ${-(i === 0 ? 320 : 545)})`);
+      $('#q' + (i + 1)).setAttribute('opacity', on);
+    }); }
+
+  // 5 · meses
+  { const M = C.months; let k = 0; M.forEach((m, i) => { if (t >= m) k = i + 1; });
+    $('#arc5').style.strokeDashoffset = 1 - (k === 0 ? 0 : (k - 1 + out(prog(t, M[k - 1], M[k - 1] + .35))) / 6);
+    $('#mes').textContent = 'mes ' + Math.max(1, k);
+    $$('#months text').forEach((el, i) => el.setAttribute('opacity', t >= M[i] ? 1 : .25));
+    $('#suelo').setAttribute('opacity', prog(t, C.suelo, C.suelo + .25));
+    $('#interes').setAttribute('opacity', prog(t, C.intereses, C.intereses + .25));
+    $$('#promos rect').forEach((r, i) => { const p = out(prog(t, C.promos + i * .08, C.promos + i * .08 + .25)); r.setAttribute('opacity', p); r.setAttribute('transform', `translate(0 ${(1 - p) * 20})`); });
+    $('#promolbl').setAttribute('opacity', prog(t, C.promos + .8, C.promos + 1.1)); }
+
+  // 6 · PDF
+  { $('#file').style.opacity = prog(t, E[5].start + .1, E[5].start + .4);
+    $('#dlbar').setAttribute('width', 140 * ease(prog(t, C.download[0], C.download[1])));
+    const e = prog(t, C.esto, C.esto + .2);
+    $('#dl').setAttribute('opacity', 1 - e);
+    $('#tinyplan').style.opacity = e;
+    $('#phone6').style.transform = `scale(${1 + .1 * out(prog(t, C.esto, C.esto + .5))})`; }
+
+  // 7 · preguntas
+  $$('.q7').forEach((c, i) => { const p = pop(t, C.chips[i], .2); c.style.opacity = p.o; c.style.transform = `scale(${p.s})`; });
+
+  // 8 · se levanta
+  { const ri = prog(t, C.rise[0], C.rise[1]);
+    $('#s8lines').style.opacity = 1 - prog(t, C.rise[0] - .3, C.rise[0]);
+    const imgs = $('#rise').children, idx = Math.round(ease(ri) * 47);
+    for (let i = 0; i < imgs.length; i++) imgs[i].style.opacity = (t >= C.rise[0] - .3 && i === idx) ? prog(t, C.rise[0] - .3, C.rise[0]) : 0;
+    const z = ease(prog(t, C.rise[0] + .4, C.rise[1] + .3)), w = 850 - 210 * z;
+    Object.assign($('#rise').style, { width: w + 'px', height: w * 900 / 1400 + 'px', left: (270 - w / 2) + 'px', top: (470 - w * 900 / 2800 - 10 * z) + 'px' });
+    const p = pop(t, C.aqui, .25); $('#aqui').style.opacity = p.o; $('#aqui').style.transform = `scale(${p.s})`; }
+
+  // 9 · masterplan
+  { const k = prog(t, E[8].start, E[8].end + .3);
+    const x = -470 + 300 * k, sc = 1.18 - .12 * ease(prog(t, E[8].start, E[8].start + 1.4));
+    ['#day', '#night'].forEach((s) => { $(s).style.left = x + 'px'; $(s).style.transform = `scale(${sc})`; $(s).style.transformOrigin = '50% 50%'; });
+    $('#night').style.opacity = ease(prog(t, C.noche, C.noche + .6)); }
+
+  // 10 · móvil
+  { const S = C.screens; let k = 0; S.forEach((s, i) => { if (t >= s) k = i; });
+    $$('.scr').forEach((im, i) => im.style.opacity = i === 0 ? 1 : (i <= k ? prog(t, S[i], S[i] + .18) : 0));
+    let rp = 0, rx = 270, ry = 560;
+    C.taps.forEach((tp, i) => { const p = prog(t, tp, tp + .45); if (p > 0 && p < 1) { rp = p; rx = [270, 300, 250, 270][i]; ry = [470, 560, 500, 720][i]; } });
+    const r = $('#rip'); r.style.left = rx + 'px'; r.style.top = ry + 'px'; r.style.opacity = rp > 0 ? (1 - rp) : 0; r.style.transform = `scale(${.4 + rp})`;
+    const c = pop(t, C.cta, .25), press = prog(t, C.taps[3], C.taps[3] + .12) * (1 - prog(t, C.taps[3] + .12, C.taps[3] + .3));
+    $('#cta').style.opacity = c.o; $('#cta').style.transform = `translateX(-50%) scale(${c.s - .08 * press})`; }
+
+  // 11 · flecha
+  { const u = ease(prog(t, C.unroll[0], C.unroll[1]));
+    $('#c11').style.strokeDashoffset = u; $('#c11').style.opacity = 1 - prog(t, C.unroll[1] - .1, C.unroll[1]);
+    $('#line11').style.strokeDashoffset = 1 - u; $('#head11').setAttribute('opacity', prog(t, C.unroll[1] - .1, C.unroll[1] + .1));
+    $$('.w11').forEach((w, i) => w.setAttribute('opacity', prog(t, C.words11[i], C.words11[i] + .15)));
+    $$('.tk').forEach((w, i) => w.setAttribute('opacity', prog(t, C.words11[i], C.words11[i] + .15)));
+    const p = pop(t, C.words11[0], .25); $('#reservada').style.opacity = p.o; $('#reservada').style.transform = `scale(${p.s})`; }
+
+  // 12 · cierre
+  { const c = $('#c12'); c.setAttribute('opacity', prog(t, E[11].start, E[11].start + .3) * (1 - prog(t, C.b12a - .3, C.b12a)));
+    c.setAttribute('transform', `rotate(${(t - E[11].start) * 160} 270 470)`);
+    const a = pop(t, C.b12a, .3), b = pop(t, C.b12b, .3);
+    $('#b12a').style.opacity = a.o; $('#b12a').style.transform = `scale(${a.s})`;
+    $('#b12b').style.opacity = b.o; $('#b12b').style.transform = `scale(${b.s})`;
+    $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6); }
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

@@ -63,3 +63,9 @@ pendientes (`legal.pending`) son esperados.
 - Commits en español, claros y en presente («Añade...», «Corrige...»).
 - No subas secretos, tokens ni claves. Nada de credenciales en el repo.
 - Si dudas si algo es «trabajo en sucio» o «producto final», va al taller.
+
+## Rama `contenido` (reels para redes)
+
+Rama aparte, **no se fusiona con `main`** ni afecta a la web: aquí se producen los reels de la marca.
+Todo está en `contenido-redes/` (guía en su `README.md`) y la skill `.claude/skills/reel-homeview` explica a Claude
+cómo hacer uno nuevo. Las imágenes salen de `public/assets/`.

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Tres segundos · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 45%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.lbl { font: 700 21px "Hanken Grotesk"; fill: var(--ink); text-anchor: middle; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 20px; right: 20px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; color: #fff; font: 600 15px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; text-shadow: 0 1px 6px rgb(0 0 0 / .7); }
+.tag.dark { color: var(--ink-3); text-shadow: none; }
+.photo { position: absolute; overflow: hidden; border-radius: 22px; box-shadow: 0 30px 50px -24px rgb(14 27 43 / .7), 0 0 0 1px rgb(14 27 43 / .1); }
+.photo img { position: absolute; display: block; }
+/* el plano: 440 × 678 px, mismas coordenadas (800 × 1233) para las dos imágenes y las marcas */
+#plano { position: absolute; left: 50px; top: 8px; width: 440px; height: 678px; z-index: 5; transform-origin: 0 0; }
+#plano img, #plano svg { position: absolute; inset: 0; width: 440px; height: 678px; }
+#plano .papel { background: #fff; position: absolute; inset: -8px; box-shadow: 0 24px 44px -24px rgb(14 27 43 / .6); }
+#reto { position: absolute; left: 0; right: 0; top: 74px; text-align: center; z-index: 50; }
+#reto span { display: inline-block; font: 700 18px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+#reto i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px 1px; border: 2px solid var(--accent); vertical-align: middle; }
+#reto i.on { background: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1-3 y 7-10 · el plano (compartido entre escenas) -->
+  <div id="ventana" style="position:absolute;left:0;top:232px;width:540px;height:728px;overflow:hidden;z-index:5">
+  <div id="plano">
+    <div class="papel"></div>
+    <img id="lineas" src="assets/villa_plano_lineas-1600.webp">
+    <img id="color" src="assets/villa_planta_cenital_opaco-1600.webp" style="clip-path: inset(100% 0 0 0)">
+    <svg viewBox="0 0 800 1233">
+      <path id="barrido" d="M-20 0H820" stroke="#1F5F9E" stroke-width="7" opacity="0"/>
+      <!-- salón y correderas -->
+      <rect id="mSalon" x="292" y="508" width="262" height="282" rx="18" fill="none" stroke="#1F5F9E" stroke-width="10" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <path id="mCorr" d="M282 548V760" stroke="#B3261E" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      <!-- tres dormitorios -->
+      <g class="pin" data-x="160" data-y="370"><circle r="46" fill="#1F5F9E"/><text y="17" text-anchor="middle" style="font:400 50px Gloock;fill:#fff">1</text></g>
+      <g class="pin" data-x="410" data-y="250"><circle r="46" fill="#1F5F9E"/><text y="17" text-anchor="middle" style="font:400 50px Gloock;fill:#fff">2</text></g>
+      <g class="pin" data-x="450" data-y="900"><circle r="46" fill="#1F5F9E"/><text y="17" text-anchor="middle" style="font:400 50px Gloock;fill:#fff">3</text></g>
+      <!-- dos baños -->
+      <g class="pinb" data-x="676" data-y="270"><circle r="40" fill="#fff" stroke="#1F5F9E" stroke-width="8"/><path d="M-16 0 l11 12 l22 -24" fill="none" stroke="#1F5F9E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></g>
+      <g class="pinb" data-x="560" data-y="1110"><circle r="40" fill="#fff" stroke="#1F5F9E" stroke-width="8"/><path d="M-16 0 l11 12 l22 -24" fill="none" stroke="#1F5F9E" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></g>
+    </svg>
+  </div>
+  </div>
+
+  <!-- cuenta atrás -->
+  <svg class="full" id="cuenta" viewBox="0 0 540 960" style="z-index:40;opacity:0">
+    <circle cx="140" cy="790" r="56" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+    <circle id="anillo" cx="140" cy="790" r="48" fill="none" stroke="#B3261E" stroke-width="8" pathLength="1" stroke-dasharray="1" transform="rotate(-90 140 790)"/>
+    <text id="num" x="140" y="812" text-anchor="middle" style="font:400 60px Gloock;fill:#0E1B2B">3</text>
+  </svg>
+
+  <div class="chip ok" id="okSalon" style="left:300px;top:250px;opacity:0;z-index:48">✓ Salón · 3 correderas</div>
+
+  <!-- 4 · la puntuación -->
+  <div class="sc" id="s4">
+    <div class="abs" style="left:0;right:0;top:330px;text-align:center;font:400 190px/1 Gloock;color:var(--ink)">
+      <span id="tuya" style="display:inline-block">3</span><span style="color:#4F6175"> / 3</span>
+    </div>
+    <div class="abs" id="nota4" style="left:0;right:0;top:560px;text-align:center;font:600 21px 'Hanken Grotesk';color:#4F6175">si has dudado, cuenta como fallo</div>
+  </div>
+
+  <!-- 5 · el domingo del comprador: un mazo de promociones -->
+  <div class="sc" id="s5">
+    <div class="abs" id="hora" style="left:0;right:0;top:250px;text-align:center;font:400 84px/1 Gloock;color:var(--ink)">23:00</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="mazo"></g></svg>
+    <div class="chip" id="mas9" style="left:330px;top:380px;opacity:0">+9 promociones</div>
+  </div>
+
+  <!-- 6 · la frase -->
+  <div class="sc" id="s6">
+    <div class="big" id="b6a" style="top:330px;font-size:64px;opacity:0">El plano es tu idioma.</div>
+    <div class="big" id="b6b" style="top:520px;font-size:64px;color:#B3261E;opacity:0">No el suyo.</div>
+  </div>
+
+  <!-- 8b · el salón por dentro -->
+  <div class="photo" id="fotoSalon" style="left:30px;top:300px;width:480px;height:560px;opacity:0;z-index:46">
+    <img id="imSalon" src="assets/villa_interior_salon-1600.webp" style="height:560px;width:840px;left:-200px;top:0">
+    <div class="tag" style="bottom:22px">Villa de ejemplo · desde el plano</div>
+  </div>
+
+  <div class="chip ok" id="okDorm" style="left:50%;top:250px;opacity:0;z-index:45">✓ 3 dormitorios</div>
+
+  <!-- 10 · el baño en suite -->
+  <div class="sc" id="s10" style="z-index:46">
+    <div class="photo" style="left:30px;top:270px;width:480px;height:600px;background:#eee">
+      <img id="imBano" src="assets/villa_bano_suite_opaco-1600.webp" style="width:750px;height:600px;left:-150px;top:0">
+      <svg viewBox="0 0 480 600" style="position:absolute;inset:0;width:480px;height:600px">
+        <ellipse id="mBanera" cx="300" cy="118" rx="88" ry="80" fill="none" stroke="#1F5F9E" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" transform="rotate(-8 300 118)"/>
+      </svg>
+    </div>
+    <div class="chip ok" id="okBano" style="left:50%;top:240px;opacity:0">✓ 2 baños · 1 en suite</div>
+  </div>
+
+  <!-- 11 · la maqueta -->
+  <div class="sc" id="s11">
+    <div class="abs" style="left:-60px;top:250px;width:660px;height:640px;overflow:hidden">
+      <img id="imMaq" src="assets/villa_maqueta_iso_opaco-1600.webp" style="position:absolute;height:640px;width:996px;left:-170px;top:0">
+    </div>
+    <div class="tag dark" style="top:880px">Villa de ejemplo · modelo 3D generado desde el plano</div>
+  </div>
+
+  <!-- 12 · comenta -->
+  <div class="sc" id="s12">
+    <div class="abs" style="left:0;right:0;top:300px;text-align:center;font:400 58px/1.05 Gloock">¿Cuántas<br>has acertado?</div>
+    <div id="opciones" class="abs" style="left:40px;right:40px;top:480px;display:flex;flex-direction:column;gap:14px"></div>
+  </div>
+
+  <!-- 13 · cierre -->
+  <div class="sc" id="s13">
+    <div class="big" id="b12a" style="top:360px;font-size:50px;white-space:nowrap;opacity:0">Mándame el plano.</div>
+    <div class="big" id="b12b" style="top:425px;font-size:50px;white-space:nowrap;opacity:0">Te enseño la casa.</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:600px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:680px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="reto"><span>Reto · 3 segundos</span><br><i></i><i></i><i></i></div>
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+function build() {
+  // diez promociones en un mazo: nueve fachadas dibujadas y, encima, la tuya (el plano)
+  const g = $('#mazo');
+  for (let i = 0; i < 10; i++) {
+    const c = el('g', { class: 'carta', opacity: 0 }, g);
+    el('rect', { x: -95, y: -150, width: 190, height: 300, rx: 18, fill: i === 9 ? '#fff' : '#E4EDF6', stroke: '#0E1B2B', 'stroke-width': 2.4 }, c);
+    if (i < 9) {
+      const h = 40 + (i * 37) % 50, w = 60 + (i * 23) % 50;
+      el('path', { d: `M${-w} 60 V${60 - h} L0 ${20 - h - 30} L${w} ${60 - h} V60 Z`, class: 'ln', style: 'stroke-width:2' }, c);
+      el('path', { d: 'M-70 95H70M-70 115H40', class: 'ln', style: 'stroke-width:2;opacity:.5' }, c);
+      el('text', { x: 0, y: -115, 'text-anchor': 'middle', style: "font:700 12px 'Hanken Grotesk';fill:#4F6175" }, c).textContent = 'PDF · ' + (18 + (i * 7) % 40) + ' MB';
+    } else {
+      const im = el('image', { href: 'assets/villa_plano_lineas-1600.webp', x: -80, y: -125, width: 160, height: 247 }, c);
+    }
+  }
+  // opciones de la encuesta del final
+  const o = $('#opciones');
+  ['0 / 3', '1 / 3', '2 / 3', '3 / 3'].forEach((s) => {
+    const d = document.createElement('div');
+    d.className = 'op'; d.style.cssText = "background:#fff;border-radius:16px;padding:16px 22px;font:700 24px 'Hanken Grotesk';box-shadow:0 0 0 2px #0E1B2B;opacity:0";
+    d.textContent = s; o.appendChild(d);
+  });
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function sceneAt(t) { const E = TL.escenas; let n = 1; E.forEach((e) => { if (t >= e.start) n = e.n; }); return n; }
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+  const n = sceneAt(t);
+
+  // ---- el plano: visible en las escenas 1-3 y 7-9 ----
+  { const P = $('#plano');
+    const vis = (n <= 3 || (n >= 7 && n <= 9)) ? 1 : 0;
+    // en 1-3: entra de golpe y cada pregunta se acerca un poco a una zona distinta
+    let sc = 1, x = 50, y = 240;
+    if (n <= 3) {
+      const k = ease(prog(t, 0, .35)); sc = lerp(1.08, 1, k);
+      const q = [[50, 240, 1], [40, 236, 1.03], [36, 230, 1.05]][n - 1];
+      const kk = ease(prog(t, ES[n].start, ES[n].start + .4));
+      const prev = n > 1 ? [[50, 240, 1], [40, 236, 1.03]][n - 2] : q;
+      x = lerp(prev[0], q[0], kk); y = lerp(prev[1], q[1], kk); sc *= lerp(prev[2], q[2], kk);
+    } else if (n >= 7) {
+      // giro: el plano entra centrado; en el 8 se acerca al salón; en el 9 vuelve entero
+      const z8 = ease(prog(t, ES[8].start, ES[8].start + .5)), z9 = ease(prog(t, ES[9].start, ES[9].start + .4));
+      const zoom = z8 * (1 - z9);
+      sc = 1 + .55 * zoom; x = 50 - 175 * zoom; y = 240 - 270 * zoom;
+    }
+    P.style.opacity = vis; P.style.transform = `translate(${x - 50}px, ${y - 240}px) scale(${sc})`; $('#ventana').style.opacity = vis;
+    // el plano en líneas se convierte en la planta real, de abajo arriba
+    const g = ease(prog(t, C.giro, C.giro + 1.1));
+    $('#color').style.clipPath = `inset(${100 * (1 - g)}% 0 0 0)`;
+    const b = $('#barrido'); const yb = 1233 * (1 - g); b.setAttribute('d', `M-20 ${yb}H820`); b.setAttribute('opacity', g > 0 && g < 1 ? 1 : 0);
+    // marcas
+    $('#mSalon').style.strokeDashoffset = 1 - ease(prog(t, C.salon, C.salon + .5));
+    $('#mCorr').style.strokeDashoffset = 1 - ease(prog(t, C.corr, C.corr + .4));
+    $('#mSalon').style.opacity = n === 8 ? 1 : 0; $('#mCorr').style.opacity = n === 8 ? 1 : 0;
+    $$('.pin').forEach((p, i) => { const k = pop(t, C.dorm[i], .2); p.setAttribute('opacity', n === 9 ? k.o : 0);
+      p.setAttribute('transform', `translate(${p.dataset.x} ${p.dataset.y}) scale(${k.s})`); });
+    $$('.pinb').forEach((p) => p.setAttribute('opacity', 0));
+    const ok = pop(t, C.corr + .3, .2); $('#okSalon').style.opacity = n === 8 ? ok.o : 0; $('#okSalon').style.transform = `translateX(-50%) scale(${ok.s})`; $('#okSalon').style.left = '50%';
+    const od = pop(t, C.dorm[2] + .25, .2); $('#okDorm').style.opacity = n === 9 ? od.o : 0; $('#okDorm').style.transform = `translateX(-50%) scale(${od.s})`;
+  }
+
+  // ---- cuenta atrás de cada pregunta ----
+  { let on = 0, p = 0;
+    C.cuenta.forEach(([a, b]) => { if (t >= a - .05 && t < b) { on = 1; p = prog(t, a, b); } });
+    $('#cuenta').style.opacity = on;
+    $('#anillo').style.strokeDashoffset = p;
+    $('#num').textContent = Math.max(1, Math.ceil(3 * (1 - p) - 1e-6));
+    const r = $('#reto'); r.style.opacity = n <= 3 ? 1 : 0;
+    r.querySelectorAll('i').forEach((d, i) => d.classList.toggle('on', i < n)); }
+
+  // ---- 4 · puntuación: el 3 cae a 0 ----
+  { const k = prog(t, C.cero, C.cero + .25); const tu = $('#tuya');
+    tu.textContent = k < .5 ? '3' : '0'; tu.style.color = k < .5 ? '#0E1B2B' : '#B3261E';
+    tu.style.transform = `translateY(${k < .5 ? -40 * ease(k * 2) : 40 * (1 - ease((k - .5) * 2))}px)`;
+    $('#nota4').style.opacity = prog(t, C.cero + .2, C.cero + .5); }
+
+  // ---- 5 · el mazo de diez promociones ----
+  { const cartas = $$('#mazo .carta');
+    cartas.forEach((c, i) => {
+      const a = C.mazo + i * .09, k = out(prog(t, a, a + .25));
+      const fan = (i - 4.5) * 3.2 * ease(prog(t, C.abre, C.abre + .5));
+      const x = 250 + (i - 4.5) * 5 + fan * 5, y = 640 - i * 4;
+      c.setAttribute('opacity', k);
+      c.setAttribute('transform', `translate(${x} ${y + 60 * (1 - k)}) rotate(${fan + (i % 2 ? 2 : -2)}) scale(1.35)`);
+    });
+    const m = pop(t, C.abre + .2, .2); $('#mas9').style.opacity = m.o; $('#mas9').style.transform = `scale(${m.s})`;
+    $('#hora').style.opacity = prog(t, C.hora - .1, C.hora + .15); }
+
+  // ---- 6 · frases ----
+  [['#b6a', C.b6a], ['#b6b', C.b6b], ['#b12a', C.b12a], ['#b12b', C.b12b]].forEach(([s, c]) => {
+    const p = pop(t, c, .25); $(s).style.opacity = p.o; $(s).style.transform = `scale(${p.s})`; });
+
+  // ---- 8b · el salón por dentro ----
+  { const k = n === 8 ? prog(t, C.fotoSalon, C.fotoSalon + .12) : 0; const f = $('#fotoSalon');
+    f.style.opacity = k; f.style.transform = `scale(${.94 + .06 * out(k)})`;
+    $('#imSalon').style.left = (-200 + 90 * prog(t, C.fotoSalon, ES[9].start)) + 'px'; }
+
+  // ---- 10 · el baño en suite ----
+  { $('#mBanera').style.strokeDashoffset = 1 - ease(prog(t, C.banera, C.banera + .5));
+    $('#imBano').style.left = (-150 + 40 * prog(t, ES[10].start, ES[10].end)) + 'px';
+    const o = pop(t, C.okBano, .2); $('#okBano').style.opacity = o.o; $('#okBano').style.transform = `translateX(-50%) scale(${o.s})`; }
+
+  // ---- 11 · la maqueta, empuje lento ----
+  { const k = prog(t, ES[11].start, ES[11].end + .1); $('#imMaq').style.transform = `scale(${1 + .12 * k})`; $('#imMaq').style.transformOrigin = '55% 50%'; }
+
+  // ---- 12 · opciones ----
+  $$('#opciones .op').forEach((d, i) => { const p = pop(t, C.opciones + i * .12, .18); d.style.opacity = p.o; d.style.transform = `scale(${p.s})`; });
+
+  $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6);
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{
+  "titulo": "Tres segundos",
+  "nota": "Cada fragmento es un subtítulo. 'pausa' marca el hueco después del fragmento (x0,35 al montar la toma); 'hueco' lo fija a mano (la cuenta atrás).",
+  "fragmentos": [
+    {"n": 1,  "escena": 1,  "texto": "Te paso el plano de una villa.", "pausa": 0.3},
+    {"n": 2,  "escena": 1,  "texto": "Tienes tres segundos.", "pausa": 0.3},
+    {"n": 3,  "escena": 1,  "texto": "¿Dónde está el salón?", "pausa": 1.6, "hueco": 1.5},
+    {"n": 4,  "escena": 2,  "texto": "¿Cuántos dormitorios tiene?", "pausa": 1.6, "hueco": 1.5},
+    {"n": 5,  "escena": 3,  "texto": "¿Y cuántos baños?", "pausa": 1.6, "hueco": 1.5},
+    {"n": 6,  "escena": 4,  "texto": "Si has dudado en alguna…", "pausa": 0.3},
+    {"n": 7,  "escena": 4,  "texto": "tú, que lees planos todos los días…", "pausa": 0.6},
+    {"n": 8,  "escena": 5,  "texto": "Ahora piensa en tu comprador.", "pausa": 0.3},
+    {"n": 9,  "escena": 5,  "texto": "En el móvil, a las once de la noche,", "pausa": 0.2},
+    {"n": 10, "escena": 5,  "texto": "con otras nueve promociones abiertas.", "pausa": 0.6},
+    {"n": 11, "escena": 6,  "texto": "El plano es tu idioma.", "pausa": 0.3},
+    {"n": 12, "escena": 6,  "texto": "No el suyo.", "pausa": 0.8},
+    {"n": 13, "escena": 7,  "texto": "El mismo plano, otra vez.", "pausa": 0.5},
+    {"n": 14, "escena": 8,  "texto": "El salón, aquí, en el centro,", "pausa": 0.2},
+    {"n": 15, "escena": 8,  "texto": "abierto a la terraza con tres correderas.", "pausa": 0.4},
+    {"n": 16, "escena": 9,  "texto": "Tres dormitorios.", "pausa": 0.4},
+    {"n": 17, "escena": 10, "texto": "Y dos baños: uno en suite, con bañera exenta.", "pausa": 0.5},
+    {"n": 18, "escena": 11, "texto": "No ha tenido que preguntar nada.", "pausa": 0.2},
+    {"n": 19, "escena": 11, "texto": "Lo ha visto.", "pausa": 0.7},
+    {"n": 20, "escena": 12, "texto": "Comenta cuántas has acertado.", "pausa": 0.3},
+    {"n": 21, "escena": 12, "texto": "Y si quieres ver así tu promoción…", "pausa": 0.4},
+    {"n": 22, "escena": 13, "texto": "Mándame el plano.", "pausa": 0.3},
+    {"n": 23, "escena": 13, "texto": "Te enseño la casa.", "pausa": 2.0}
+  ]
+}

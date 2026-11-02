@@ -1,0 +1,498 @@
+<title>Guiones virales HomeView</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gloock&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: la estética de homeview3d.com (cielo, paneles blancos, Gloock + Hanken). Fichas de guion a dos columnas: fotograma 9:16 y guion. Tema claro único, como la web. */
+:root {
+  --sky: #D3E1EE;        /* cielo: fondo de página y de los fotogramas */
+  --mist: #EEF3F8;       /* bruma: fondos tranquilos */
+  --paper: #FFFFFF;      /* paneles */
+  --ink: #0E1B2B;        /* azul noche: trazo y texto */
+  --ink-2: #3D5064;
+  --ink-3: #4F6175;
+  --line: rgb(14 27 43 / .12);
+  --accent: #1F5F9E;     /* azul mediterráneo: lo que cambia tras el giro */
+  --stamp: #B3261E;      /* solo para avisos y sellos */
+  --f-display: "Gloock", "Iowan Old Style", Georgia, serif;
+  --f-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--sky); color: var(--ink); font: 400 16px/1.6 var(--f-body); }
+.wrap {
+  max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 96px;
+  display: grid; gap: 28px;
+}
+.panel { background: var(--paper); border-radius: 22px; padding: clamp(22px, 4vw, 48px); display: grid; gap: 22px; min-width: 0; }
+h1, h2 { font-family: var(--f-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+h1 { font-size: clamp(2.6rem, 7vw, 5.2rem); line-height: .98; }
+h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.1; }
+h3 { font: 700 1.1rem/1.3 var(--f-body); margin: 0; text-wrap: balance; }
+p { margin: 0; max-width: 66ch; }
+a { color: var(--accent); }
+.eyebrow { font: 700 .72rem/1 var(--f-body); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.lead { font-size: 1.15rem; color: var(--ink-2); }
+.lead strong { color: var(--ink); font-weight: 600; }
+.muted { color: var(--ink-3); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* Cabecera */
+.picks { display: flex; flex-wrap: wrap; gap: 10px; }
+.picks a { text-decoration: none; font-weight: 700; font-size: .9rem; padding: 8px 14px; border-radius: 999px; background: var(--ink); color: #fff; }
+.picks a.alt { background: var(--mist); color: var(--ink); }
+
+/* La regla */
+.rule-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.rule-card { background: var(--mist); border-radius: 16px; padding: 20px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.rule-card .k { font: 400 1.6rem/1.1 var(--f-display); }
+.rule-card p { color: var(--ink-2); font-size: .95rem; }
+.cmp { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .95rem; min-width: 520px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 700 .7rem/1.2 var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+td:first-child { font-weight: 600; white-space: nowrap; }
+
+/* Fotogramas 9:16 */
+.ph { position: relative; width: 230px; max-width: 100%; aspect-ratio: 9 / 16; border-radius: 22px; overflow: hidden;
+  background: var(--sky); box-shadow: 0 0 0 1px var(--line), 0 22px 40px -24px rgb(14 27 43 / .55); }
+.ph .sub { position: absolute; inset: 9% 8% auto; text-align: center; font: 700 13.5px/1.25 var(--f-body); color: var(--ink); z-index: 4; max-width: none; text-wrap: balance; }
+.ph .big { position: absolute; inset: auto 6% 10%; text-align: center; font: 400 26px/1.05 var(--f-display); color: var(--ink); z-index: 4; max-width: none; text-wrap: balance; }
+.ph svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
+.ph .abs { position: absolute; display: block; max-width: none; }
+.ph .ln { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ph .ac { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.ph .rd { fill: none; stroke: var(--stamp); stroke-width: 2.4; stroke-linecap: round; }
+.ph .dash { stroke-dasharray: 4 4; }
+.ph .t { font: 600 10.5px var(--f-body); fill: var(--ink); }
+.ph .tq { font: 500 9.5px var(--f-body); fill: var(--ink-3); }
+.ph .tg { font: 400 24px var(--f-display); fill: var(--ink); }
+.ph .wh { fill: var(--paper); }
+.chip { position: absolute; z-index: 3; background: var(--paper); color: var(--ink); font: 600 10.5px/1 var(--f-body); padding: 6px 9px; border-radius: 999px; box-shadow: 0 6px 16px -8px rgb(14 27 43 / .5); white-space: nowrap; }
+.chip.state { background: var(--accent); color: #fff; }
+.mult { mix-blend-mode: multiply; }
+
+/* Guiones */
+.scripts { display: grid; gap: 22px; }
+.script { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 34px; padding: clamp(20px, 3vw, 34px); background: var(--paper); border-radius: 22px; scroll-margin-top: 20px; }
+.script.done { box-shadow: inset 0 0 0 2px var(--accent); }
+.side { display: grid; gap: 14px; align-content: start; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.num { font: 400 2rem/1 var(--f-display); }
+.tag { font: 700 .68rem/1 var(--f-body); letter-spacing: .1em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; background: var(--mist); color: var(--ink-2); }
+.tag.blue { background: var(--accent); color: #fff; }
+.body { display: grid; gap: 18px; min-width: 0; }
+.hook { font: 400 clamp(1.3rem, 2.6vw, 1.75rem)/1.2 var(--f-display); text-wrap: balance; }
+.premise { color: var(--ink-2); }
+.premise strong { color: var(--ink); font-weight: 600; }
+.beats { display: grid; border-top: 1px solid var(--line); }
+.beat { display: grid; grid-template-columns: 3.4rem minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: .95rem; }
+.beat .t { font-variant-numeric: tabular-nums; color: var(--ink-3); font-size: .85rem; padding-top: 2px; }
+.beat .scr { color: var(--ink-3); font-size: .88rem; }
+.beat .scr::before { content: "En pantalla: "; display: none; font-weight: 700; }
+.beat.head { font: 700 .7rem/1.2 var(--f-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+.beat.turn { background: linear-gradient(90deg, var(--mist), transparent); }
+.beat.turn .vo { color: var(--accent); font-weight: 600; }
+.extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.box { padding: 14px 16px; border-radius: 12px; background: var(--mist); font-size: .92rem; color: var(--ink-2); display: grid; gap: 4px; min-width: 0; }
+.box b { color: var(--ink); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; }
+.produced { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 16px 18px; border-radius: 14px; background: var(--mist); }
+.produced a { font-weight: 700; }
+
+/* Calendario */
+.weeks { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.week { padding: 20px; background: var(--mist); border-radius: 16px; display: grid; gap: 10px; align-content: start; }
+.week ol { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--ink-2); font-size: .95rem; }
+.week ol b { color: var(--ink); font-weight: 600; }
+.honest ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--ink-2); }
+footer { color: var(--ink-3); font-size: .85rem; padding-inline: 4px; }
+
+@media (max-width: 760px) {
+  .script { grid-template-columns: 1fr; gap: 22px; }
+  .side { grid-template-columns: 150px 1fr; align-items: start; }
+  .beat { grid-template-columns: 3rem minmax(0, 1fr); }
+  .beat .scr { grid-column: 2; }
+  .beat .scr::before { display: inline; }
+  .beat.head { display: none; }
+}
+@media (max-width: 420px) { .side { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap">
+
+<!-- CABECERA -->
+<section class="panel">
+  <span class="eyebrow">HomeView 3D · Serie para promotoras y constructoras</span>
+  <h1>Ocho guiones con la cara de HomeView</h1>
+  <p class="lead">Todos siguen la fórmula que funcionó en Wodlog (hook en 3 segundos, un mecanismo dibujado, un giro a mitad), pero <strong>con la estética, las letras y las imágenes de homeview3d.com</strong>. Sin personajes ni pizarra: se habla de tú a la promotora, y la voz es de una persona.</p>
+  <nav class="picks" aria-label="Accesos">
+    <a href="https://claude.ai/artifact/GQHrvbyAHgNZgvApWQN6uB">03 · El bucle: storyboard completo</a>
+    <a class="alt" href="#guiones">Los 8 guiones</a>
+    <a class="alt" href="#calendario">Orden de publicación</a>
+  </nav>
+</section>
+
+<!-- LA REGLA DE LA SERIE -->
+<section class="panel">
+  <span class="eyebrow">La regla de la serie</span>
+  <h2>Línea mientras no existe. Render cuando ya se puede ver</h2>
+  <p class="lead">Es lo que hace que cada vídeo sea de HomeView aunque se tape el logo. La primera mitad está dibujada con la línea del plano de la web: el problema, lo que aún no existe. En el giro entran vuestras imágenes reales: la casa ya se puede ver.</p>
+  <div class="rule-row">
+    <div class="rule-card"><span class="k">Fondo cielo y línea técnica</span><p>El azul cielo de la web, una cuadrícula muy suave y trazo de plano en azul noche: cotas, compás, flechas. Nada de mano alzada.</p></div>
+    <div class="rule-card"><span class="k">Gloock + Hanken</span><p>Las letras de la web. Subtítulos en Hanken Bold arriba, palabra a palabra. Una sola frase en Gloock por escena.</p></div>
+    <div class="rule-card"><span class="k">El giro, siempre real</span><p>Tras el giro, solo imágenes de verdad: renders, masterplan, pantallas del showroom. Con el rótulo «promoción de ejemplo».</p></div>
+    <div class="rule-card"><span class="k">Un solo cierre</span><p>«Mándame el plano. Te enseño la casa.» En Gloock, con el logo y homeview3d.com. Siempre igual.</p></div>
+  </div>
+  <div class="cmp">
+    <table>
+      <thead><tr><th>Qué tomamos de Wodlog</th><th>Cómo queda en HomeView</th></tr></thead>
+      <tbody>
+        <tr><td>Hook que contradice</td><td>«Más leads no te hace vender más», «El problema de tu promoción no es el banco»</td></tr>
+        <tr><td>Mecanismo dibujado</td><td>El bucle del banco, el embudo con agujeros, la ruta del comprador extranjero</td></tr>
+        <tr><td>Giro a mitad</td><td>Las líneas se levantan y aparece la casa real (la animación del hero de la web)</td></tr>
+        <tr><td>Jerga del nicho</td><td>Preventa, memoria de calidades, tipología, comercializadora, cambio de proyecto</td></tr>
+        <tr><td>Lo que dejamos fuera</td><td>Los dos personajes de colores, la tiza, la apuesta como formato fijo</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- GUIONES -->
+<section class="panel" id="guiones">
+  <span class="eyebrow">Guiones</span>
+  <h2>Los ocho, en el orden en que se graban</h2>
+  <p class="lead">Las cifras de contactos y visitas son <strong>simulaciones</strong> y llevan ese rótulo en pantalla. Los datos reales llevan su fuente.</p>
+
+  <div class="scripts">
+
+  <!-- 03 -->
+  <article class="script done" id="g3">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 03: el bucle entre banco, comprador y obra">
+        <p class="sub">El banco te pide preventas.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <circle class="ac" cx="135" cy="262" r="82"/>
+          <circle class="wh ln" cx="135" cy="180" r="16"/><path class="ln" d="M126 186h18M127 186v-8M135 186v-8M143 186v-8M125 177l10 -6 10 6"/>
+          <circle class="wh ln" cx="206" cy="303" r="16"/><rect class="ln" x="201" y="293" width="10" height="19" rx="2"/>
+          <circle class="wh ln" cx="64" cy="303" r="16"/><path class="ln" d="M58 313v-20h14M58 297h16"/>
+          <text class="t" x="135" y="152" text-anchor="middle">Banco</text><text class="t" x="206" y="336" text-anchor="middle">Comprador</text><text class="t" x="64" y="336" text-anchor="middle">Obra</text>
+        </svg>
+        <p class="big">El bucle</p>
+      </div>
+      <div class="meta"><span class="num">03</span><span class="tag blue">En producción</span><span class="tag">Mecanismo · 60–69 s</span></div>
+    </div>
+    <div class="body">
+      <h3>El bucle del banco</h3>
+      <p class="hook">«El banco no te financia la obra hasta que vendas. Y nadie te compra una casa que no existe.»</p>
+      <p class="premise">El círculo banco · comprador · obra, dibujado con compás; se rompe cuando el plano se levanta y el comprador recorre la casa en el móvil. <strong>Es el primero:</strong> el storyboard escena a escena está en su propia página y el vídeo ya está montado con voz guía.</p>
+      <div class="produced"><a href="https://claude.ai/artifact/GQHrvbyAHgNZgvApWQN6uB">Ver el storyboard de las 12 escenas</a><span class="muted">Proyecto del vídeo en contenido-redes/03-el-bucle</span></div>
+    </div>
+  </article>
+
+  <!-- 01 -->
+  <article class="script" id="g1">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 01: ruta punteada de Düsseldorf a Málaga y el dato 27,9 %">
+        <p class="sub">Y tú le mandas un plano.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <path class="ln" d="M40 330c20-10 40-6 52 6s30 18 50 10M120 150c30 8 60 4 90-6M150 180c10 40 40 60 70 60"/>
+          <circle cx="78" cy="352" r="5" fill="#1F5F9E"/><text class="t" x="68" y="376">Málaga</text>
+          <circle cx="196" cy="168" r="5" fill="#0E1B2B"/><text class="t" x="150" y="160">Düsseldorf</text>
+          <path class="ac dash" d="M78 352C110 250 150 210 196 168"/>
+          <text class="t" x="160" y="262" style="fill:#1F5F9E">≈ 2.000 km</text>
+          <text class="tg" x="135" y="420" text-anchor="middle" style="font-size:40px">27,9 %</text>
+          <text class="tq" x="135" y="440" text-anchor="middle">Ministerio de Vivienda, 2025</text>
+        </svg>
+      </div>
+      <div class="meta"><span class="num">01</span><span class="tag">Dato real · 60 s</span></div>
+    </div>
+    <div class="body">
+      <h3>Dos mil kilómetros</h3>
+      <p class="hook">«Casi 3 de cada 10 viviendas en Málaga las compra alguien que no vive en España. Y tú le mandas un plano.»</p>
+      <p class="premise">El comprador extranjero decide a distancia y viaja una vez, si viaja, como dice la web. <strong>El vídeo sigue su decisión desde su cocina.</strong> La primera mitad es un mapa de líneas; tras el giro, el showroom real en su móvil.</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Casi 3 de cada 10 viviendas en Málaga las compra alguien que no vive en España.</span><span class="scr">Mapa de Europa en línea. «27,9 %» en Gloock y la fuente pequeña.</span></div>
+        <div class="beat"><span class="t">0:05</span><span class="vo">Y tú le mandas un plano.</span><span class="scr">Un plano en línea vuela por la ruta punteada. Cota «≈ 2.000 km».</span></div>
+        <div class="beat"><span class="t">0:09</span><span class="vo">Klaus vive en Düsseldorf. Tiene tu plano, la memoria de calidades y una duda: ¿cojo un avión para verla?</span><span class="scr">Mesa de cocina en línea con el plano encima y un avión con interrogación.</span></div>
+        <div class="beat"><span class="t">0:17</span><span class="vo">Para subirse a ese avión tiene que estar casi seguro. Y con un plano no lo está.</span><span class="scr">Una cota de «dudas» a «seguro» con la marca pegada a «dudas».</span></div>
+        <div class="beat"><span class="t">0:23</span><span class="vo">Así que espera. Mira otras promociones. Y la tuya se queda en una pestaña.</span><span class="scr">Pestañas del navegador que se multiplican.</span></div>
+        <div class="beat turn"><span class="t">0:29</span><span class="vo">Ahora, Klaus recibe un enlace por WhatsApp.</span><span class="scr">Corte a imagen real: el móvil con el masterplan del showroom.</span></div>
+        <div class="beat"><span class="t">0:33</span><span class="vo">Ve la promoción desde el aire, elige casa y entra por plantas. Con su mujer, en su cocina. De día y de noche.</span><span class="scr">Grabación real del showroom; masterplan de día y de noche.</span></div>
+        <div class="beat"><span class="t">0:44</span><span class="vo">Cuando por fin coge el avión, ya sabe qué casa quiere.</span><span class="scr">El avión aterriza; la casa real con el chip «Reservada».</span></div>
+        <div class="beat"><span class="t">0:50</span><span class="vo">Tu comprador más difícil es el que no puede venir. Mándale la casa.</span><span class="scr">Frase en Gloock.</span></div>
+        <div class="beat"><span class="t">0:55</span><span class="vo">Mándame el plano. Te enseño la casa.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«¿Cuántos de tus compradores reservan sin haber pisado la parcela?»</div>
+        <div class="box"><b>Por qué puede viralizar</b>El dato sorprende a quien no es del sector y confirma lo que vive quien sí. Se comparte en equipos comerciales internacionales.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 08 -->
+  <article class="script" id="g8">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 08: el plano con la ventana marcada frente a la imagen de IA con un círculo rojo">
+        <p class="sub">Le di este plano a una IA. Mira la ventana.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <rect class="ln wh" x="26" y="150" width="104" height="134"/><rect class="ln wh" x="140" y="150" width="104" height="134"/>
+          <path class="ln" d="M26 210h60v74M86 150v34"/><path class="ln" d="M140 210h60v74M200 150v34"/>
+          <path class="ac" d="M26 226v40" style="stroke-width:6"/>
+          <path class="ac" d="M206 150h32" style="stroke-width:6"/>
+          <path class="rd" d="M234 128c24 6 26 36 0 42c-24 6-42-6-40-22c2-14 20-24 40-20"/>
+          <text class="t" x="78" y="306" text-anchor="middle">el plano</text><text class="t" x="192" y="306" text-anchor="middle" style="fill:#B3261E">la IA</text>
+        </svg>
+        <p class="big">¿Bonita o fiel?</p>
+      </div>
+      <div class="meta"><span class="num">08</span><span class="tag">Experimento · 60 s</span></div>
+    </div>
+    <div class="body">
+      <h3>La ventana que puso la IA</h3>
+      <p class="hook">«Le di este plano a una IA. Mira dónde ha puesto la ventana.»</p>
+      <p class="premise">Tema de debate con una postura que la web ya defiende por escrito: «la IA para escribir código, nunca para inventar geometría». <strong>La prueba se hace de verdad</strong> con un generador de imágenes y se enseña sin retocar. Si la IA acierta, el guion cambia.</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Le di este plano a una IA. Mira dónde ha puesto la ventana.</span><span class="scr">La imagen generada, tal cual, con un círculo rojo dibujándose.</span></div>
+        <div class="beat"><span class="t">0:04</span><span class="vo">El plano dice: ventana del salón aquí, tres hojas correderas a la terraza.</span><span class="scr">El plano en línea con el hueco marcado en azul.</span></div>
+        <div class="beat"><span class="t">0:10</span><span class="vo">La IA la ha puesto en otra pared. Y se ha inventado una terraza.</span><span class="scr">Círculos rojos sobre los fallos reales que salgan en la prueba.</span></div>
+        <div class="beat"><span class="t">0:16</span><span class="vo">Una IA de imágenes no lee planos. Pinta algo que parece una casa.</span><span class="scr">Frase en Gloock.</span></div>
+        <div class="beat"><span class="t">0:21</span><span class="vo">Y si vendes sobre plano, lo que enseñas hoy es lo que tu comprador espera recibir.</span><span class="scr">Línea de tiempo: hoy → entrega de llaves.</span></div>
+        <div class="beat turn"><span class="t">0:28</span><span class="vo">El mismo plano, construido. Cada muro sale de una medida. La ventana, donde dice el plano.</span><span class="scr">Los muros se levantan desde el plano; entra el render real.</span></div>
+        <div class="beat"><span class="t">0:38</span><span class="vo">Y el sol entra por esa ventana, no por otra, porque la luz se calcula.</span><span class="scr">Render real con la luz entrando por las correderas.</span></div>
+        <div class="beat"><span class="t">0:44</span><span class="vo">Una imagen bonita te ayuda a reservar. Una fiel te evita problemas en la entrega.</span><span class="scr">Llave entregada con un ✓ azul.</span></div>
+        <div class="beat"><span class="t">0:51</span><span class="vo">Yo uso la IA para escribir código. La casa sale del plano. Mándame el tuyo.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«¿Habéis usado imágenes de IA en alguna promoción? ¿Cómo fue la entrega?»</div>
+        <div class="box"><b>Por qué puede viralizar</b>La IA genera debate en cualquier nicho, y aquí la postura es clara y se puede demostrar. Se comparte para dar la razón o para discutirla.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 -->
+  <article class="script" id="g4">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 04: plano real de la villa con una cuenta atrás">
+        <p class="sub">Tienes 3 segundos: ¿dónde está el salón?</p>
+        <img class="abs mult" src="img/villa_plano_lineas-800.webp" alt="" style="top:20%;left:16%;width:68%" width="800" height="1233">
+        <p class="big" style="font-size:54px;bottom:6%">3</p>
+      </div>
+      <div class="meta"><span class="num">04</span><span class="tag">Reto · 55 s</span></div>
+    </div>
+    <div class="body">
+      <h3>Tienes tres segundos</h3>
+      <p class="hook">«Te paso el plano de una villa. Tienes tres segundos: ¿dónde está el salón?»</p>
+      <p class="premise">El espectador juega, falla y comenta su puntuación. <strong>Todas las respuestas salen de la villa demostrativa de la web</strong> (salón con tres correderas a la terraza, cama de 180 en el principal, baño en suite con bañera exenta), con su plano en líneas y su maqueta 3D.</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Te paso el plano de una villa. Tienes tres segundos: ¿dónde está el salón?</span><span class="scr">Plano en líneas de la villa demostrativa. 3, 2, 1 en Gloock.</span></div>
+        <div class="beat"><span class="t">0:06</span><span class="vo">¿Cabe una cama de 180 en el dormitorio principal?</span><span class="scr">Cuenta atrás.</span></div>
+        <div class="beat"><span class="t">0:10</span><span class="vo">¿Cuántos baños tiene esta planta?</span><span class="scr">Cuenta atrás.</span></div>
+        <div class="beat"><span class="t">0:14</span><span class="vo">Si has dudado en alguna… tú, que lees planos todos los días.</span><span class="scr">«0 / 3» en Gloock.</span></div>
+        <div class="beat"><span class="t">0:18</span><span class="vo">Ahora piensa en tu comprador. En el móvil, a las once de la noche, con otras nueve promociones abiertas.</span><span class="scr">El plano se encoge dentro de un móvil en línea.</span></div>
+        <div class="beat"><span class="t">0:25</span><span class="vo">El plano es tu idioma. No el suyo.</span><span class="scr">Frase en Gloock.</span></div>
+        <div class="beat turn"><span class="t">0:28</span><span class="vo">El mismo plano, otra vez.</span><span class="scr">El plano se levanta y se convierte en la maqueta 3D de la villa.</span></div>
+        <div class="beat"><span class="t">0:31</span><span class="vo">El salón, aquí, abierto a la terraza con tres correderas. La cama de 180 cabe, con butaca. Y hay dos baños: uno en suite, con bañera exenta.</span><span class="scr">Un ✓ azul sobre cada respuesta en el 3D; corte a los renders del salón y del baño.</span></div>
+        <div class="beat"><span class="t">0:42</span><span class="vo">No ha tenido que preguntar nada. Lo ha visto.</span><span class="scr">Render del salón a pantalla completa.</span></div>
+        <div class="beat"><span class="t">0:47</span><span class="vo">Comenta cuántas has acertado. Y si quieres la prueba con tu plano, mándamelo.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«Sin trampas: ¿cuántas has acertado?»</div>
+        <div class="box"><b>Por qué puede viralizar</b>Los retos multiplican comentarios y revisionados: la gente vuelve atrás para comprobar. Arquitectos y aparejadores también juegan.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 06 -->
+  <article class="script" id="g6">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 06: móvil con varios PDF y un enlace">
+        <p class="sub">Esto es lo que le llega a tu comprador.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <rect class="ln wh" x="78" y="118" width="114" height="236" rx="16"/>
+          <g class="ln"><rect x="92" y="142" width="86" height="24" rx="5"/><rect x="92" y="172" width="86" height="24" rx="5"/><rect x="92" y="202" width="86" height="24" rx="5"/><rect x="92" y="232" width="86" height="24" rx="5"/><rect x="92" y="262" width="86" height="24" rx="5"/></g>
+          <g class="tq"><text x="100" y="158">PDF · 48 MB</text><text x="100" y="188">PDF · 31 MB</text><text x="100" y="218">dossier.pdf</text><text x="100" y="248">v3_final.pdf</text><text x="100" y="278">PDF · 52 MB</text></g>
+          <rect class="ac" x="92" y="300" width="86" height="34" rx="8" style="fill:#1F5F9E"/>
+          <text class="t" x="135" y="321" text-anchor="middle" style="fill:#fff">un enlace</text>
+        </svg>
+        <p class="big" style="font-size:22px">Domingo, 23:40</p>
+      </div>
+      <div class="meta"><span class="num">06</span><span class="tag">Punto de vista · 58 s</span></div>
+    </div>
+    <div class="body">
+      <h3>El domingo de tu comprador</h3>
+      <p class="hook">«Tu comprador está mirando diez promociones a la vez. Esto es lo que le llega.»</p>
+      <p class="premise">Todo pasa dentro de su móvil. Mientras son PDFs, el móvil está dibujado; <strong>el enlace abre la grabación real del showroom</strong>, con el mismo recorrido que la web: masterplan, casa por plantas, estancia y pedir llamada.</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Tu comprador está mirando diez promociones a la vez. Esto es lo que le llega.</span><span class="scr">Móvil en línea; caen notificaciones.</span></div>
+        <div class="beat"><span class="t">0:05</span><span class="vo">Domingo, once de la noche. Sofá. Diez promociones en la Costa del Sol.</span><span class="scr">«23:40» en el móvil.</span></div>
+        <div class="beat"><span class="t">0:09</span><span class="vo">PDF. PDF. PDF de cuarenta y ocho megas. Otro PDF.</span><span class="scr">Barras de descarga, rápidas, una tras otra.</span></div>
+        <div class="beat"><span class="t">0:14</span><span class="vo">Abre el primero. La fachada. La fachada de noche. Un plano que no entiende.</span><span class="scr">Páginas en línea que pasan.</span></div>
+        <div class="beat"><span class="t">0:22</span><span class="vo">A la cuarta, ya no sabe cuál era cuál.</span><span class="scr">Las miniaturas se funden en una sola.</span></div>
+        <div class="beat turn"><span class="t">0:27</span><span class="vo">Y entonces abre un enlace.</span><span class="scr">Medio segundo de silencio. Entra la pantalla real.</span></div>
+        <div class="beat"><span class="t">0:30</span><span class="vo">Ve la promoción desde el aire. Toca una casa: disponible. Entra por plantas. Se asoma a la terraza.</span><span class="scr">Grabación real del showroom de ejemplo.</span></div>
+        <div class="beat"><span class="t">0:40</span><span class="vo">Cinco minutos después, sin salir de la casa, te pide una llamada.</span><span class="scr">Pulsa «Pedir llamada». Suena el «ding».</span></div>
+        <div class="beat"><span class="t">0:46</span><span class="vo">No ganó la promoción más bonita. Ganó la única que pudo recorrer.</span><span class="scr">Diez miniaturas; nueve en gris.</span></div>
+        <div class="beat"><span class="t">0:52</span><span class="vo">Todos mandan un PDF. Tú, manda la casa. Mándame el plano.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«¿Cuántos megas pesa vuestro dossier? Sed sinceros.»</div>
+        <div class="box"><b>Por qué puede viralizar</b>El «PDF de 48 megas» y el «v3_final» dan risa de reconocimiento. Es el más fácil de entender fuera del sector.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 02 -->
+  <article class="script" id="g2">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 02: embudo con agujeros por los que se escapan compradores">
+        <p class="sub">Más leads… no te hace vender más.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <path class="ln wh" d="M50 140H220L160 270V340H110V270Z"/>
+          <g class="ln"><circle cx="80" cy="186" r="6"/><circle cx="192" cy="190" r="6"/><circle cx="104" cy="240" r="6"/><circle cx="168" cy="244" r="6"/></g>
+          <g fill="#1F5F9E"><circle cx="70" cy="204" r="3"/><circle cx="66" cy="220" r="3"/><circle cx="202" cy="208" r="3"/><circle cx="96" cy="258" r="3"/><circle cx="176" cy="262" r="3"/><circle cx="180" cy="278" r="3"/></g>
+          <g class="tq"><text x="18" y="182">¿m²?</text><text x="208" y="184">¿sol?</text><text x="30" y="262">¿sofá?</text><text x="192" y="246">¿vistas?</text></g>
+          <text class="t" x="135" y="128" text-anchor="middle">200 contactos</text>
+          <text class="t" x="135" y="362" text-anchor="middle">4 visitas</text>
+          <text class="tq" x="135" y="452" text-anchor="middle" style="letter-spacing:1px">SIMULACIÓN</text>
+        </svg>
+      </div>
+      <div class="meta"><span class="num">02</span><span class="tag">Mito roto · 58 s</span></div>
+    </div>
+    <div class="body">
+      <h3>Más leads no te hace vender más</h3>
+      <p class="hook">«Más leads… no te hace vender más.»</p>
+      <p class="premise">Un embudo en línea con un agujero por cada pregunta que el plano no contesta. <strong>En el giro, cada agujero se tapa con una pieza real del showroom</strong>: la ficha con los metros, la vista de noche, la estancia a pantalla completa, la visita 360°.</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Más leads… no te hace vender más.</span><span class="scr">Embudo en línea, vacío.</span></div>
+        <div class="beat"><span class="t">0:04</span><span class="vo">Doblas el presupuesto de anuncios: doscientos contactos al mes en vez de cien.</span><span class="scr">Contador de 100 a 200 cayendo en el embudo. Rótulo «simulación».</span></div>
+        <div class="beat"><span class="t">0:09</span><span class="vo">Y las visitas a la sala de ventas… casi no se mueven.</span><span class="scr">Contador de visitas, quieto.</span></div>
+        <div class="beat"><span class="t">0:13</span><span class="vo">Porque tu embudo tiene agujeros.</span><span class="scr">Zoom a las paredes del embudo.</span></div>
+        <div class="beat"><span class="t">0:16</span><span class="vo">Cada pregunta que el plano no contesta es uno. ¿Cuántos metros tiene el salón? ¿Le da el sol a la terraza? ¿Cabe mi sofá? ¿Qué se ve desde arriba?</span><span class="scr">Cada agujero con su pregunta; puntos azules que se escapan.</span></div>
+        <div class="beat"><span class="t">0:26</span><span class="vo">Por cada agujero se va un comprador. No te dice que no. Deja de contestar.</span><span class="scr">Chat con el doble check y sin respuesta.</span></div>
+        <div class="beat turn"><span class="t">0:32</span><span class="vo">Más anuncios llenan antes el embudo. Pero se vacía por los mismos agujeros. Hay que taparlos.</span><span class="scr">El embudo gotea; se detiene.</span></div>
+        <div class="beat"><span class="t">0:38</span><span class="vo">Los metros, en la ficha de cada casa. El sol, de día y de noche. El sofá, en cada estancia. Las vistas, en 360.</span><span class="scr">Cada agujero se tapa con un recorte real del showroom.</span></div>
+        <div class="beat"><span class="t">0:48</span><span class="vo">El comprador ya no pregunta. Llega a la llamada sabiendo qué casa quiere.</span><span class="scr">Pantalla real de «Pedir llamada».</span></div>
+        <div class="beat"><span class="t">0:53</span><span class="vo">Las reservas no salen de lo que echas arriba. Salen de lo que se queda dentro. Mándame el plano.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«¿Cuál es la pregunta que más os repiten los compradores sobre plano?»</div>
+        <div class="box"><b>Por qué puede viralizar</b>Toca el gasto en anuncios, lo que más discuten promotora y comercializadora. Las preguntas del embudo las reconoce cualquier comercial.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 05 -->
+  <article class="script" id="g5">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 05: tabique desplazado 40 centímetros y tres móviles con versiones distintas">
+        <p class="sub">Moviste un tabique 40 centímetros.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <rect class="ln wh" x="44" y="130" width="182" height="160"/>
+          <path class="ln dash" d="M120 130v160" style="stroke:#B3261E"/>
+          <path class="ln" d="M150 130v160" style="stroke-width:3"/>
+          <path class="ac" d="M120 306h30"/><path class="ln" d="M120 299v14M150 299v14"/>
+          <text class="t" x="135" y="328" text-anchor="middle" style="fill:#1F5F9E">+40 cm</text>
+          <g class="ln wh"><rect x="40" y="356" width="48" height="76" rx="8"/><rect x="111" y="356" width="48" height="76" rx="8"/><rect x="182" y="356" width="48" height="76" rx="8"/></g>
+          <text class="t" x="64" y="398" text-anchor="middle" style="fill:#B3261E">v1</text><text class="t" x="135" y="398" text-anchor="middle">v2</text><text class="t" x="206" y="398" text-anchor="middle" style="fill:#B3261E">v1</text>
+        </svg>
+      </div>
+      <div class="meta"><span class="num">05</span><span class="tag">Constructoras · 58 s</span></div>
+    </div>
+    <div class="body">
+      <h3>El tabique de 40 centímetros</h3>
+      <p class="hook">«Moviste un tabique 40 centímetros. Y tus agencias siguieron enseñando la casa vieja.»</p>
+      <p class="premise">Para constructoras, estudios y promotoras con comercializadoras externas. <strong>Respaldo de la web:</strong> el modelo se construye por script, el cambio se rehace en minutos y todas las agencias comparten el mismo enlace.</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Moviste un tabique cuarenta centímetros. Y tus agencias siguieron enseñando la casa vieja.</span><span class="scr">Plano en línea; el tabique se desplaza con la cota «+40 cm».</span></div>
+        <div class="beat"><span class="t">0:06</span><span class="vo">Pasa en casi todas las promociones. A mitad de comercialización, el proyecto cambia: un tabique, una ventana, un acabado.</span><span class="scr">Tres cambios dibujados uno tras otro.</span></div>
+        <div class="beat"><span class="t">0:13</span><span class="vo">Si tus imágenes son renders sueltos, cada cambio es un encargo nuevo. Y mientras llega, cada agencia enseña lo que tiene en su carpeta.</span><span class="scr">Tres móviles en línea: «v1», «v2», «v1».</span></div>
+        <div class="beat"><span class="t">0:22</span><span class="vo">Un comprador reserva mirando el salón de la versión vieja.</span><span class="scr">Contrato en línea junto a un salón tachado en rojo.</span></div>
+        <div class="beat"><span class="t">0:27</span><span class="vo">Y el problema te llega en la entrega de llaves.</span><span class="scr">Llave con un aviso rojo.</span></div>
+        <div class="beat turn"><span class="t">0:31</span><span class="vo">Ahora, la misma casa como un modelo. Cambias la medida y se rehace todo: el plano, los renders, la visita.</span><span class="scr">«tabique = 3,40 m» y el plano 3D real se actualiza en cascada.</span></div>
+        <div class="beat"><span class="t">0:40</span><span class="vo">Y como todas tus agencias comparten un mismo enlace, al día siguiente todas enseñan la casa nueva.</span><span class="scr">Los tres móviles muestran el mismo showroom real.</span></div>
+        <div class="beat"><span class="t">0:47</span><span class="vo">El problema no es cambiar el proyecto. Es que tu promoción exista en seis versiones.</span><span class="scr">Frase en Gloock.</span></div>
+        <div class="beat"><span class="t">0:52</span><span class="vo">Una casa, un modelo, un enlace. Mándame el plano.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«¿Cuántas versiones del proyecto llegasteis a tener en vuestra última promoción?»</div>
+        <div class="box"><b>Por qué puede viralizar</b>El salón que ya no existe es una pesadilla que conoce cualquier jefe de obra o de postventa. Abre la serie al público constructora.</div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 07 -->
+  <article class="script" id="g7">
+    <div class="side">
+      <div class="ph" role="img" aria-label="Fotograma del guion 07: stand de feria con maqueta y código QR">
+        <p class="sub">Una feria. 4 m² de stand.</p>
+        <svg viewBox="0 0 270 480" aria-hidden="true">
+          <path class="ln wh" d="M40 320l95 -45 95 45 -95 45z"/><path class="ln" d="M40 320v-130l95 -45v130M230 320v-130l-95 -45"/>
+          <path class="ac" d="M40 336l95 45"/><text class="t" x="70" y="384" style="fill:#1F5F9E">2 m</text>
+          <g class="ln"><path d="M70 292l26 -12 26 12 -26 12z"/><path d="M80 292v-14l16 -8 16 8v14"/></g>
+          <g class="ln wh"><rect x="160" y="252" width="34" height="34"/></g><path class="ln" d="M166 258h8v8h-8zM180 258h8v8h-8zM166 272h8v8h-8zM182 274h6v6"/>
+          <text class="t" x="96" y="336" text-anchor="middle">maqueta</text><text class="t" x="178" y="304" text-anchor="middle">QR</text>
+        </svg>
+      </div>
+      <div class="meta"><span class="num">07</span><span class="tag">De temporada · 55 s</span></div>
+    </div>
+    <div class="body">
+      <h3>Cuatro metros de stand</h3>
+      <p class="hook">«Una feria. Cuatro metros cuadrados de stand. ¿Cómo metes ahí cinco villas?»</p>
+      <p class="premise">Para publicar unas semanas antes de una feria. Primera mitad dibujada: la maqueta, los folletos, la bolsa. <strong>Giro con la foto real de la sala de ventas con tablet</strong> que ya tenéis en la web, y el QR de la web: «un código QR en el stand o en el folleto abre la promoción completa».</p>
+      <div class="beats">
+        <div class="beat head"><span>Tiempo</span><span>Voz</span><span>En pantalla</span></div>
+        <div class="beat"><span class="t">0:00</span><span class="vo">Una feria. Cuatro metros cuadrados de stand. ¿Cómo metes ahí cinco villas?</span><span class="scr">Stand en línea con la cota «2 m».</span></div>
+        <div class="beat"><span class="t">0:06</span><span class="vo">La maqueta enseña la promoción desde fuera. Pero el comprador quiere entrar. Y en una maqueta no se entra.</span><span class="scr">Maqueta en línea; una mano que no cabe por la ventana.</span></div>
+        <div class="beat"><span class="t">0:14</span><span class="vo">Los folletos acaban en la bolsa de la feria, con otros cuarenta.</span><span class="scr">Bolsa en línea, rebosando.</span></div>
+        <div class="beat"><span class="t">0:19</span><span class="vo">Y el lunes tienes una pila de tarjetas… y nadie que haya visto la casa por dentro.</span><span class="scr">Pila de tarjetas dibujada.</span></div>
+        <div class="beat turn"><span class="t">0:25</span><span class="vo">Ahora, el mismo stand con una tablet y un código QR.</span><span class="scr">Foto real: comercial con la tablet y el masterplan.</span></div>
+        <div class="beat"><span class="t">0:29</span><span class="vo">Tu comercial abre cada casa por plantas delante del comprador. Y quien escanea el QR se lleva la promoción entera en el móvil.</span><span class="scr">Pantallas reales del showroom.</span></div>
+        <div class="beat"><span class="t">0:38</span><span class="vo">Esa noche la vuelve a abrir en casa, con su pareja.</span><span class="scr">El móvil real sobre un sofá en línea.</span></div>
+        <div class="beat"><span class="t">0:43</span><span class="vo">En una feria no gana el stand más grande. Gana el que se va a casa con el comprador.</span><span class="scr">Frase en Gloock.</span></div>
+        <div class="beat"><span class="t">0:50</span><span class="vo">Mándame el plano. Te enseño la casa.</span><span class="scr">Cierre fijo con logo.</span></div>
+      </div>
+      <div class="extras">
+        <div class="box"><b>Comentario fijado</b>«¿Qué os funciona mejor en una feria, maqueta o pantalla?»</div>
+        <div class="box"><b>Por qué puede viralizar</b>Es de temporada: se comparte en los grupos de cada feria. Fuera de esas fechas pierde fuerza.</div>
+      </div>
+    </div>
+  </article>
+
+  </div>
+</section>
+
+<!-- CALENDARIO -->
+<section class="panel" id="calendario">
+  <span class="eyebrow">Orden de publicación</span>
+  <h2>Tres semanas para encontrar el que funciona</h2>
+  <p class="lead">El mismo archivo en Reels, TikTok y Shorts. En LinkedIn, como vídeo nativo con dos o tres líneas en primera persona.</p>
+  <div class="weeks">
+    <div class="week"><span class="eyebrow">Semana 1</span><ol><li><b>03 · El bucle</b>, ya montado</li><li><b>01 · Dos mil kilómetros</b>, el del dato</li><li><b>08 · La ventana de la IA</b>, el de debate</li></ol></div>
+    <div class="week"><span class="eyebrow">Semana 2</span><ol><li><b>04 · Tres segundos</b>, el reto</li><li><b>06 · El domingo</b>, el más fácil de entender</li><li><b>02 · Más leads</b>, para comerciales</li></ol></div>
+    <div class="week"><span class="eyebrow">Semana 3</span><ol><li><b>05 · El tabique</b>, abre a constructoras</li><li><b>07 · Cuatro metros</b>, antes de una feria</li><li>Segunda parte del que mejor haya ido</li></ol></div>
+  </div>
+</section>
+
+<section class="panel honest">
+  <span class="eyebrow">Rigor</span>
+  <h2>Lo que no puede salir en ningún vídeo</h2>
+  <ul>
+    <li>Cifras inventadas sin rótulo. Contactos, visitas y meses son <b>simulaciones</b> y se rotulan así.</li>
+    <li>Datos reales siempre con fuente: 27,9 % de compraventas en la provincia de Málaga por no residentes en 2025 (Ministerio de Vivienda) y 11.727 compraventas de vivienda nueva en 12 meses hasta el 2T 2026 (Registradores).</li>
+    <li>Un número para «lo que pide el banco»: cambia según la entidad.</li>
+    <li>Testimonios, logos de clientes o «nuestros clientes venden un X % más»: la web se compromete a no inventarlos.</li>
+    <li>Imágenes de Residencial Benahavís sin el rótulo «promoción de ejemplo · imagen ilustrativa».</li>
+  </ul>
+</section>
+
+<footer>Serie de guiones para promotoras de HomeView 3D, con la identidad y las imágenes de homeview3d.com. Octubre de 2026.</footer>
+
+</div>

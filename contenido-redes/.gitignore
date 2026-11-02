@@ -1,0 +1,12 @@
+# Se regeneran con build.py: no se suben
+.venv/
+*/voz/completa.wav
+*/voz-guia/
+*/timeline.json
+*/salida/muestras/
+*/salida/_imagen.mp4
+*/salida/_audio.wav
+*/salida/*-voz-final.mp4
+*/salida/*-voz-guia.mp4
+*/salida/*-sin-voz.mp4
+*/salida/*-ligero.mp4
