@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>La tetera · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 55%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 24px; right: 24px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; font: 600 15px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; }
+.tag.dark { color: var(--ink-3); }
+.photo { position: absolute; overflow: hidden; border-radius: 22px; box-shadow: 0 30px 50px -24px rgb(14 27 43 / .7), 0 0 0 1px rgb(14 27 43 / .1); }
+.photo img { position: absolute; display: block; }
+.card { position: absolute; background: #fff; border-radius: 18px; box-shadow: 0 18px 30px -18px rgb(14 27 43 / .6), 0 0 0 1px rgb(14 27 43 / .08); }
+#serie { position: absolute; left: 0; right: 0; top: 74px; text-align: center; z-index: 50; font: 700 18px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · la pregunta y la tetera -->
+  <div class="sc" id="s1">
+    <div class="big" id="b1" style="top:142px;font-size:46px">¿Sabes que el modelo 3D más famoso del mundo es una tetera?</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="t1"></g></svg>
+  </div>
+
+  <!-- 2 · Utah, 1975, y un terminal de la época -->
+  <div class="sc" id="s2">
+    <div class="abs" id="utah" style="left:0;right:0;top:292px;text-align:center;font:700 20px 'Hanken Grotesk';letter-spacing:.12em;text-transform:uppercase;color:#1F5F9E;opacity:0">Universidad de Utah</div>
+    <div class="abs" id="anyo" style="left:0;right:0;top:326px;text-align:center;font:400 130px/1 Gloock;opacity:0">1975</div>
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="terminal" opacity="0" transform="translate(0 34)">
+        <rect x="150" y="470" width="240" height="210" rx="18" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <rect x="170" y="490" width="200" height="160" rx="8" fill="#0E1B2B"/>
+        <path id="cubo" fill="none" stroke="#9CC2E8" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M255 680V700M285 680V700M215 700H325" class="ln"/>
+        <path d="M120 720H420L444 762H96Z" fill="#fff" stroke="#0E1B2B" stroke-width="2.4" stroke-linejoin="round"/>
+        <path d="M140 735H400M132 748H408" stroke="#0E1B2B" stroke-width="1.4" stroke-dasharray="10 6" opacity=".5"/>
+      </g>
+    </svg>
+    <div class="chip" id="chipNewell" style="left:50%;top:822px;opacity:0">Martin Newell</div>
+  </div>
+
+  <!-- 3 · el té -->
+  <div class="sc" id="s3">
+    <svg class="full" viewBox="0 0 540 960">
+      <path d="M30 760H510" class="ln"/>
+      <g id="taza1"></g><g id="taza2"></g>
+      <g id="vapor"></g>
+      <g id="t3"></g>
+      <ellipse id="aro3" cx="270" cy="664" rx="168" ry="118" fill="none" stroke="#1F5F9E" stroke-width="5" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+    </svg>
+    <div class="chip" id="chipSandra" style="left:50%;top:430px;opacity:0">Sandra Newell</div>
+  </div>
+
+  <!-- 4 · papel milimetrado y ordenador -->
+  <div class="sc" id="s4" data-fijo="1">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="papel4"></g>
+      <g id="t4"></g>
+      <g id="lapiz">
+        <path d="M0 0L5 -16L16 -10Z" fill="#0E1B2B"/>
+        <path d="M5 -16L66 -118L77 -112L16 -10Z" fill="#fff" stroke="#0E1B2B" stroke-width="2.2" stroke-linejoin="round"/>
+        <path d="M62 -110L73 -104" stroke="#0E1B2B" stroke-width="2"/>
+      </g>
+      <g id="pantalla4" opacity="0">
+        <rect x="135" y="585" width="270" height="200" rx="16" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+        <rect x="153" y="603" width="234" height="150" rx="6" fill="#0E1B2B"/>
+        <g id="t4b"></g>
+        <path d="M255 785V805M285 785V805M225 805H315" class="ln"/>
+      </g>
+      <g id="puntos4"></g>
+    </svg>
+  </div>
+
+  <!-- 5 · por qué es perfecta -->
+  <div class="sc" id="s5">
+    <svg class="full" viewBox="0 0 540 960">
+      <defs>
+        <linearGradient id="sombra" x1="0" x2="1" y1="0" y2="0.3"><stop offset=".35" stop-color="#fff"/><stop offset="1" stop-color="#9FB1C6"/></linearGradient>
+      </defs>
+      <ellipse id="proy5" cx="276" cy="636" rx="175" ry="18" fill="#0E1B2B" opacity="0"/>
+      <g id="t5"></g>
+    </svg>
+    <div class="chip" id="chipCurvas" style="left:60px;top:690px;opacity:0">curvas</div>
+    <div class="chip" id="chipAsa" style="left:60px;top:750px;opacity:0">asa con agujero</div>
+    <div class="chip" id="chipSombras" style="left:60px;top:810px;opacity:0">sombras sobre sí misma</div>
+    <div class="chip ok" id="chipTextura" style="left:220px;top:690px;opacity:0">✓ sin color ni textura</div>
+  </div>
+
+  <!-- 6 · de serie en los programas y en el cine -->
+  <div class="sc" id="s6">
+    <svg class="full" viewBox="0 0 540 960"><g id="ventanas"></g></svg>
+    <div class="card" id="cardToy" style="left:45px;top:672px;width:215px;height:112px;opacity:0;padding:18px 20px">
+      <div style="font:400 30px/1 Gloock">Toy Story</div>
+      <div style="font:600 16px 'Hanken Grotesk';color:#4F6175;margin-top:10px">cine · 1995</div>
+    </div>
+    <div class="card" id="cardSimpson" style="left:280px;top:672px;width:215px;height:112px;opacity:0;padding:18px 20px">
+      <div style="font:400 30px/1 Gloock">Los Simpson</div>
+      <div style="font:600 16px 'Hanken Grotesk';color:#4F6175;margin-top:10px">tele · 1995</div>
+    </div>
+  </div>
+
+  <!-- 7 · la real y la del ordenador -->
+  <div class="sc" id="s7" data-fijo="1">
+    <svg class="full" viewBox="0 0 540 960">
+      <path d="M20 702H520" class="ln" style="opacity:.5"/>
+      <g id="t7a"></g><g id="t7b"></g>
+      <path id="cotaA" class="ln" style="stroke:#1F5F9E;stroke-width:2"/>
+      <path id="cotaB" class="ln" style="stroke:#1F5F9E;stroke-width:2"/>
+      <path id="nivel" d="M60 0H500" stroke="#B3261E" stroke-width="2" stroke-dasharray="8 7" opacity="0"/>
+      <rect id="prensa" x="270" y="0" width="260" height="18" rx="6" fill="#0E1B2B" opacity="0"/>
+      <text x="140" y="740" text-anchor="middle" style="font:700 21px 'Hanken Grotesk';fill:#0E1B2B">la real</text>
+      <text x="400" y="740" text-anchor="middle" style="font:700 21px 'Hanken Grotesk';fill:#0E1B2B">la del ordenador</text>
+    </svg>
+    <div class="chip" id="chip33" style="left:50%;top:400px;opacity:0;color:#B3261E">la real, un 33 % más alta</div>
+    <div class="chip ok" id="chipGusto" style="left:50%;top:790px;opacity:0">✓ y gustó más así</div>
+  </div>
+
+  <!-- 8 · en un museo -->
+  <div class="sc" id="s8">
+    <svg class="full" viewBox="0 0 540 960">
+      <path d="M200 250L170 400M340 250L370 400" stroke="#E0A526" stroke-width="2" stroke-dasharray="4 8" opacity=".7"/>
+      <rect x="170" y="640" width="200" height="170" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+      <rect x="160" y="628" width="220" height="14" fill="#fff" stroke="#0E1B2B" stroke-width="2.4"/>
+      <g id="t8"></g>
+      <rect x="166" y="400" width="208" height="228" fill="rgb(255 255 255 / .25)" stroke="#0E1B2B" stroke-width="2"/>
+      <path d="M190 420L230 470M206 420L262 490" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+      <g id="placa" opacity="0">
+        <rect x="190" y="680" width="160" height="58" rx="4" fill="#E4EDF6" stroke="#0E1B2B" stroke-width="1.6"/>
+        <text x="270" y="704" text-anchor="middle" style="font:700 12.5px 'Hanken Grotesk';fill:#0E1B2B">Computer History Museum</text>
+        <text x="270" y="724" text-anchor="middle" style="font:600 12px 'Hanken Grotesk';fill:#4F6175">Mountain View, California</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- 9 · el giro: del papel a una casa entera -->
+  <div class="sc" id="s9">
+    <svg class="full" viewBox="0 0 540 960"><g id="papel9"></g><g id="plano9"></g></svg>
+    <div class="photo" id="foto9" style="left:70px;top:236px;width:400px;height:496px;opacity:0;z-index:40">
+      <img id="imCasa" src="assets/sw-golf-1000.webp" style="width:400px;height:496px;left:0;top:0">
+    </div>
+    <div class="tag dark" id="tag9" style="top:748px;opacity:0">Casa de ejemplo · modelo 3D desde su plano</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:795px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:876px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="serie">¿Por qué…?</div>
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+const INK = '#0E1B2B', ACC = '#1F5F9E';
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// la tetera, de perfil (pico a la derecha, asa a la izquierda), en una caja de 304 × 196
+const TETERA = {
+  cuerpo: 'M88 62C52 74 40 120 58 160C66 176 84 186 150 188C216 186 234 176 242 160C260 120 248 74 212 62Z',
+  pie: 'M86 187L82 196H218L214 187',
+  tapa: 'M92 62C110 44 190 44 208 62 M140 44C138 33 162 33 160 44 M144 34A7 7 0 1 1 156 34',
+  pico: 'M244 120C272 112 274 76 296 52L304 58C284 82 284 132 240 150',
+  asa: 'M60 92C14 86 10 160 62 156 M62 106C34 104 32 146 60 142',
+};
+const MALLA = {
+  lat: 'M60 80Q150 96 240 80 M50 105Q150 124 250 105 M50 130Q150 150 250 130 M56 155Q150 174 244 155 M80 178Q150 192 220 178',
+  lon: 'M150 62V188 M110 63C96 100 96 150 110 187 M190 63C204 100 204 150 190 187 M90 64C70 100 66 150 86 184 M210 64C230 100 234 150 214 184',
+};
+function tetera(parent, x, y, s, o = {}) {
+  const w = o.w || 2.4, st = o.stroke || INK;
+  const g0 = el('g', { transform: `translate(${x} ${y})` }, parent);
+  const g = el('g', { transform: `scale(${s})` }, g0);
+  const ps = {};
+  ps.asa = el('path', { d: TETERA.asa, fill: 'none', stroke: st, 'stroke-width': w / s, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  ps.pico = el('path', { d: TETERA.pico, fill: o.fill || '#fff', stroke: st, 'stroke-width': w / s, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  ps.cuerpo = el('path', { d: TETERA.cuerpo, fill: o.fill || '#fff', stroke: st, 'stroke-width': w / s, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  ps.pie = el('path', { d: TETERA.pie, fill: o.fill || '#fff', stroke: st, 'stroke-width': w / s, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  ps.tapa = el('path', { d: TETERA.tapa, fill: 'none', stroke: st, 'stroke-width': w / s, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  if (o.malla) {
+    ps.lat = el('path', { d: MALLA.lat, fill: 'none', stroke: o.malla, 'stroke-width': w * .6 / s, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+    ps.lon = el('path', { d: MALLA.lon, fill: 'none', stroke: o.malla, 'stroke-width': w * .6 / s, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 0 }, g);
+  }
+  return { g0, g, ps, x, y, s };
+}
+const dibujaT = (T, k) => Object.values(T.ps).forEach((p, i) => p.setAttribute('stroke-dashoffset', 1 - clamp(k * 1.4 - i * .08)));
+// aplasta en vertical desde la base (y = 196 de la caja)
+const altoT = (T, sy) => T.g.setAttribute('transform', `translate(0 ${196 * T.s * (1 - sy)}) scale(${T.s} ${T.s * sy})`);
+
+function milimetrado(parent, x, y, w, h) {
+  el('rect', { x, y, width: w, height: h, fill: '#fff', stroke: INK, 'stroke-width': 2 }, parent);
+  for (let gx = x + 10; gx < x + w; gx += 10) el('path', { d: `M${gx} ${y}V${y + h}`, stroke: ACC, 'stroke-width': (gx - x) % 50 ? .5 : 1, opacity: (gx - x) % 50 ? .25 : .45 }, parent);
+  for (let gy = y + 10; gy < y + h; gy += 10) el('path', { d: `M${x} ${gy}H${x + w}`, stroke: ACC, 'stroke-width': (gy - y) % 50 ? .5 : 1, opacity: (gy - y) % 50 ? .25 : .45 }, parent);
+}
+function taza(parent, cx, flip) {
+  const g = el('g', { transform: `translate(${cx} 0) scale(${flip ? -1 : 1} 1)` }, parent);
+  el('path', { d: 'M-40 700H40L32 750Q0 760 -32 750Z', fill: '#fff', stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, g);
+  el('path', { d: 'M40 712C58 712 58 738 36 738', class: 'ln' }, g);
+  el('path', { d: 'M-60 758H60', class: 'ln' }, g);
+}
+
+let T1, T3, T4, T4b, T5, T7a, T7b, T8, DOTS = [];
+function build() {
+  T1 = tetera($('#t1'), 50, 380, 1.45);
+  taza($('#taza1'), 110, false); taza($('#taza2'), 430, true);
+  for (let i = 0; i < 4; i++) el('path', { class: 'humo', fill: 'none', stroke: '#4F6175', 'stroke-width': 2, 'stroke-linecap': 'round', opacity: .55 }, $('#vapor'));
+  T3 = tetera($('#t3'), 133, 580, .9);
+  milimetrado($('#papel4'), 50, 236, 440, 304);
+  T4 = tetera($('#t4'), 103, 270, 1.1);
+  T4b = tetera($('#t4b'), 178, 615, .6, { stroke: '#9CC2E8', fill: 'none', malla: '#9CC2E8', w: 1.8 });
+  // los puntos que se apuntan a mano: sobre la silueta del cuerpo
+  const c = T4.ps.cuerpo, L = c.getTotalLength();
+  for (let i = 0; i < 16; i++) { const p = c.getPointAtLength(L * (i + .5) / 16);
+    DOTS.push({ a: [103 + 1.1 * p.x, 270 + 1.1 * p.y], b: [178 + .6 * p.x, 615 + .6 * p.y], e: el('circle', { r: 4.5, fill: ACC, opacity: 0 }, $('#puntos4')) }); }
+  T5 = tetera($('#t5'), 57, 360, 1.4, { malla: ACC });
+  // cuatro programas de 3D con su tetera
+  const estilos = [{ malla: ACC, fill: '#fff' }, { fill: '#fff' }, { fill: '#0E1B2B', stroke: '#0E1B2B' }, { fill: '#9CC2E8', stroke: ACC }];
+  [[45, 262], [285, 262], [45, 462], [285, 462]].forEach(([x, y], i) => {
+    const g = el('g', { class: 'ventana', opacity: 0 }, $('#ventanas'));
+    el('rect', { x, y, width: 210, height: 180, rx: 12, fill: '#fff', stroke: INK, 'stroke-width': 2.2 }, g);
+    el('path', { d: `M${x} ${y + 26}H${x + 210}`, stroke: INK, 'stroke-width': 1.6 }, g);
+    [0, 1, 2].forEach((k) => el('circle', { cx: x + 16 + k * 14, cy: y + 13, r: 4, fill: 'none', stroke: INK, 'stroke-width': 1.4 }, g));
+    el('rect', { x: x + 8, y: y + 34, width: 22, height: 138, rx: 4, fill: '#E4EDF6' }, g);
+    tetera(g, x + 50, y + 62, .48, Object.assign({ w: 1.6 }, estilos[i]));
+  });
+  T7a = tetera($('#t7a'), 21, 702 - 196 * .78, .78); altoT(T7a, 4 / 3);
+  T7b = tetera($('#t7b'), 281, 702 - 196 * .78, .78);
+  T8 = tetera($('#t8'), 179, 630 - 196 * .6, .6);
+  // un plano en el papel milimetrado (con escalera: la casa tiene plantas)
+  milimetrado($('#papel9'), 50, 250, 440, 330);
+  const g9 = el('g', { transform: 'translate(92 300) scale(1.37)' }, $('#plano9'));
+  ['M0 0H260V180H0Z M100 0V70 M100 100V180 M0 90H60 M90 90H180 M210 90H260 M180 0V60',
+   'M60 90A30 30 0 0 1 90 60 M180 60A30 30 0 0 0 210 90',
+   'M200 105V180 M200 115H260 M200 130H260 M200 145H260 M200 160H260',
+   'M20 -4H70V4H20Z M130 -4H170V4H130Z M-4 120V160H4V120Z M256 20V60H264V20Z M30 176H80V184H30Z'].forEach((d, i) =>
+    el('path', { class: 'p9', d, fill: 'none', stroke: INK, 'stroke-width': (i ? 1.4 : 2.2) / 1.37, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, g9));
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+function sceneAt(t) { const E = TL.escenas; let n = 1; E.forEach((e) => { if (t >= e.start) n = e.n; }); return n; }
+const chip = (s, t, a, centrado) => { const p = pop(t, a, .2); $(s).style.opacity = p.o; $(s).style.transform = `${centrado ? 'translateX(-50%) ' : ''}scale(${p.s})`; };
+
+function cubo(t) {  // un cubo de alambre girando en la pantalla del terminal
+  const a = t * .9, b = .55, P = [];
+  for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) {
+    const x1 = x * Math.cos(a) - z * Math.sin(a), z1 = x * Math.sin(a) + z * Math.cos(a);
+    const y1 = y * Math.cos(b) - z1 * Math.sin(b);
+    P.push([270 + 42 * x1, 570 + 42 * y1]);
+  }
+  const A = [[0, 1], [2, 3], [4, 5], [6, 7], [0, 2], [1, 3], [4, 6], [5, 7], [0, 4], [1, 5], [2, 6], [3, 7]];
+  return A.map(([i, j]) => `M${P[i][0].toFixed(1)} ${P[i][1].toFixed(1)}L${P[j][0].toFixed(1)} ${P[j][1].toFixed(1)}`).join('');
+}
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = s.dataset.fijo ? 'none' : `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+  const F = {}; TL.fragmentos.forEach((f) => F[f.n] = f);
+
+  // ---- 1 · la pregunta y la tetera (visibles desde el primer fotograma: portada) ----
+  dibujaT(T1, 1);
+  T1.g0.setAttribute('transform', `translate(50 ${380 - 10 * Math.sin(Math.PI * prog(t, .2, 1.2))})`);
+
+  // ---- 2 · Utah, 1975 y el terminal ----
+  { $('#utah').style.opacity = prog(t, ES[2].start, ES[2].start + .25);
+    const y = pop(t, C.anyo - .05, .25); $('#anyo').style.opacity = y.o; $('#anyo').style.transform = `scale(${y.s})`;
+    const m = pop(t, C.newell, .25); $('#terminal').setAttribute('opacity', m.o);
+    $('#cubo').setAttribute('d', cubo(t)); $('#cubo').setAttribute('opacity', prog(t, C.programas - .3, C.programas));
+    chip('#chipNewell', t, C.newell + .1, true); }
+
+  // ---- 3 · el té ----
+  { $$('.humo').forEach((h, i) => { const cx = i < 2 ? 110 : 430, x0 = cx - 12 + (i % 2) * 24; let d = '';
+      for (let k = 0; k <= 10; k++) { const y = 690 - k * 8; d += (k ? 'L' : 'M') + (x0 + 5 * Math.sin(k * .9 + t * 4 + i)).toFixed(1) + ' ' + y; }
+      h.setAttribute('d', d); });
+    chip('#chipSandra', t, C.mujer, true);
+    $('#aro3').setAttribute('stroke-dashoffset', 1 - ease(prog(t, C.tetera - .1, C.tetera + .45))); }
+
+  // ---- 4 · papel milimetrado, puntos y ordenador ----
+  { const k = prog(t, C.dibuja + .05, C.puntos - .1); dibujaT(T4, k);
+    const c = T4.ps.cuerpo, q = c.getPointAtLength(c.getTotalLength() * clamp(k * 1.4 - .16));
+    $('#lapiz').setAttribute('transform', `translate(${103 + 1.1 * q.x} ${270 + 1.1 * q.y})`);
+    $('#lapiz').setAttribute('opacity', 1 - prog(t, C.puntos - .1, C.puntos + .1));
+    const sc = pop(t, C.ordenador - .2, .2); $('#pantalla4').setAttribute('opacity', sc.o);
+    DOTS.forEach((d, i) => { const a = C.puntos + i * .03, b = C.ordenador + .05 + i * .03;
+      const o = prog(t, a, a + .1), v = ease(prog(t, b, b + .45));
+      d.e.setAttribute('opacity', o); d.e.setAttribute('cx', lerp(d.a[0], d.b[0], v)); d.e.setAttribute('cy', lerp(d.a[1], d.b[1], v)); });
+    dibujaT(T4b, prog(t, C.ordenador + .4, C.ordenador + 1.1)); }
+
+  // ---- 5 · curvas, asa, sombras, sin textura ----
+  { const p = pop(t, C.perfecta - .1, .25); T5.g0.setAttribute('transform', `translate(57 360) translate(152 98) scale(${p.s}) translate(-152 -98)`); T5.g0.setAttribute('opacity', p.o);
+    const cur = prog(t, C.curvas, C.curvas + .3), asa = prog(t, C.asa, C.asa + .3), som = prog(t, C.sombras, C.sombras + .5), tex = prog(t, C.textura - .2, C.textura + .4);
+    T5.ps.lat.setAttribute('stroke-width', (1.44 + 2 * cur * (1 - asa)) / 1.4);
+    T5.ps.asa.setAttribute('stroke', asa > 0 && som < 1 ? ACC : INK); T5.ps.asa.setAttribute('stroke-width', (2.4 + 2.5 * asa * (1 - som)) / 1.4);
+    ['cuerpo', 'pico', 'pie'].forEach((n) => T5.ps[n].setAttribute('fill', som > 0 ? 'url(#sombra)' : '#fff'));
+    $('#proy5').setAttribute('opacity', .14 * som);
+    T5.ps.lat.setAttribute('opacity', 1 - tex); T5.ps.lon.setAttribute('opacity', 1 - tex);
+    chip('#chipCurvas', t, C.curvas); chip('#chipAsa', t, C.asa); chip('#chipSombras', t, C.sombras); chip('#chipTextura', t, C.textura); }
+
+  // ---- 6 · cuatro programas, y el cine y la tele ----
+  { $$('.ventana').forEach((g, i) => { const p = pop(t, C.serie + i * .12, .2); g.setAttribute('opacity', p.o);
+      g.setAttribute('transform', `translate(0 ${16 * (1 - p.o)})`); });
+    [['#cardToy', C.toy], ['#cardSimpson', C.simpson]].forEach(([s, c]) => { const p = pop(t, c - .05, .2); $(s).style.opacity = p.o; $(s).style.transform = `scale(${p.s})`; }); }
+
+  // ---- 7 · la real es más alta; la del ordenador, aplastada ----
+  { const ap = prog(t, ES[7].start, ES[7].start + .25);
+    T7a.g0.setAttribute('opacity', ap); T7b.g0.setAttribute('opacity', ap);
+    // al empezar la frase 14 vuelve a ser alta y la prensa la aplasta
+    const sube = ease(prog(t, F[14].start - .05, F[14].start + .2)), baja = ease(prog(t, C.aplastaron + .1, C.aplastaron + .35));
+    const sy = 1 + (1 / 3) * sube * (1 - baja);
+    altoT(T7b, sy);
+    const hA = 196 * .78 * 4 / 3, hB = 196 * .78 * sy;
+    $('#cotaA').setAttribute('d', `M18 ${702 - hA}V702M10 ${702 - hA}H26M10 702H26`); $('#cotaA').setAttribute('opacity', ap);
+    $('#cotaB').setAttribute('d', `M278 ${702 - hB}V702M270 ${702 - hB}H286M270 702H286`); $('#cotaB').setAttribute('opacity', ap);
+    const nv = prog(t, C.baja - .1, C.baja + .2) * (1 - prog(t, F[14].start - .1, F[14].start + .05));
+    $('#nivel').setAttribute('transform', `translate(0 ${702 - hA})`); $('#nivel').setAttribute('opacity', nv);
+    chip('#chip33', t, C.baja, true); $('#chip33').style.opacity *= 1 - prog(t, F[14].start - .1, F[14].start + .1);
+    const pr = sube * (1 - prog(t, C.aplastaron + .5, C.aplastaron + .7));
+    $('#prensa').setAttribute('opacity', pr); $('#prensa').setAttribute('y', 702 - hB - 18);
+    chip('#chipGusto', t, C.gusto, true); }
+
+  // ---- 8 · el museo ----
+  { $('#placa').setAttribute('opacity', prog(t, C.california - .3, C.california)); }
+
+  // ---- 9 · el giro: el plano en papel y la casa entera ----
+  { $$('.p9').forEach((p, i) => p.setAttribute('stroke-dashoffset', 1 - ease(prog(t, C.idea + i * .15, C.idea + .9 + i * .15))));
+    const g = prog(t, C.giro, C.giro + .5);
+    $('#papel9').setAttribute('opacity', 1 - g); $('#plano9').setAttribute('opacity', 1 - g);
+    $('#foto9').style.opacity = g; $('#foto9').style.transform = `translateY(${60 * (1 - out(g))}px) scale(${.92 + .08 * out(g)})`;
+    $('#imCasa').style.transform = `scale(${1 + .08 * prog(t, C.giro, TL.duracion)})`;
+    $('#tag9').style.opacity = prog(t, C.giro + .5, C.giro + .8);
+    $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6); }
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

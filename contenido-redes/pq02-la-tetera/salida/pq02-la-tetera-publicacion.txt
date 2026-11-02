@@ -1,0 +1,148 @@
+HOMEVIEW 3D · SERIE «¿POR QUÉ…?» · CAPÍTULO 2 · LA TETERA
+Ficha de publicación
+================================================================
+
+ARCHIVOS
+- pq02-la-tetera-1080.mp4  → el que se publica (1080x1920, 0:42)
+- pq02-la-tetera-ligero.mp4 → solo para revisar en el móvil, no publicar
+
+DE QUÉ VA (en una línea)
+El modelo 3D más famoso del mundo es una tetera: en 1975, en la Universidad de Utah, Martin Newell necesitaba un objeto sencillo para probar sus programas de 3D y su mujer le propuso la tetera con la que tomaban el té. La dibujó en papel milimetrado y pasó los puntos a mano. Era perfecta para probar (curvas, asa con agujero, sombras sobre sí misma, se reconoce sin textura), por eso viene en casi todos los programas de 3D y sale en Toy Story y en Los Simpson. La del ordenador es más baja que la real: la aplastaron en una demostración. La original está en un museo de California. Y la misma idea, del papel al ordenador, levanta hoy casas enteras.
+
+A QUIÉN VA
+Público general con interés por el 3D, el diseño, la arquitectura y las curiosidades. Segundo capítulo de la serie para ganar seguidores.
+
+CÓMO ES ESTA PRUEBA (igual que el capítulo 1)
+El vídeo no pide nada (cierre neutro). El caption sí pide guardar, mandar y seguir, con una pregunta de un toque. Al leer los comentarios, separar las respuestas 🫖/🤯 de lo que la gente pregunta o pide por su cuenta.
+
+
+----------------------------------------------------------------
+1. CAPTION · INSTAGRAM (Reels) y TIKTOK
+----------------------------------------------------------------
+INSTAGRAM (las dos primeras líneas son las que se ven sin pulsar «más»):
+
+El modelo 3D más famoso del mundo es una tetera. Y tiene historia. 🫖
+
+En 1975, Martin Newell necesitaba un objeto sencillo para probar sus programas de 3D en la Universidad de Utah. Su mujer, Sandra, le propuso la tetera con la que estaban tomando el té.
+
+La dibujó en papel milimetrado y pasó los puntos al ordenador a mano.
+
+Resultó perfecta: curvas, un asa con agujero, sombras sobre sí misma… y se reconoce sin color ni textura.
+
+Por eso viene de serie en casi todos los programas de 3D, y sale en Toy Story y en Los Simpson. Búscala en la fiesta del té de Buzz y en el Homer en 3D. 👀
+
+El detalle: la del ordenador es más baja que la real. La aplastaron en una demostración y gustó más así. 🤏
+
+📌 Guárdalo para tu próxima conversación friki.
+📤 Mándaselo a quien haga 3D.
+➕ Síguenos: en el próximo «¿Por qué…?», por qué el dibujo técnico del instituto empezó siendo un secreto militar.
+
+¿Lo sabías? Responde 🫖 si sí o 🤯 si no.
+
+#modelado3d #3d #diseño3d #arquitectura #curiosidades #historia #blender #render
+
+TIKTOK (más corto):
+
+El modelo 3D más famoso del mundo es una tetera 🫖 Utah, 1975: papel milimetrado y puntos a mano. Guárdalo y síguenos para el del dibujo técnico 👀
+
+#3d #modelado3d #curiosidades #arquitectura #historia
+
+Notas:
+- Mismo esquema que el capítulo 1: arranque con dato sorprendente, la historia en frases cortas, el detalle curioso al final (la tetera aplastada) y tres llamadas (guardar, mandar, seguir).
+- OJO: deja comprometido el capítulo 3 (el dibujo técnico y Gaspard Monge). Si no se va a hacer, cambiar esa línea por «Síguenos para más «¿Por qué…?»».
+
+
+----------------------------------------------------------------
+2. CAPTION · LINKEDIN (subir el vídeo nativo, no enlace)
+----------------------------------------------------------------
+El modelo 3D más famoso del mundo es una tetera.
+
+En 1975, en la Universidad de Utah, Martin Newell necesitaba un objeto sencillo y conocido para probar sus programas de gráficos 3D. Su mujer le propuso la tetera con la que estaban tomando el té. La dibujó en papel milimetrado y metió los puntos a mano en el ordenador.
+
+Resultó ser una prueba casi perfecta: superficies curvas, un asa con agujero, sombras sobre sí misma, y se reconoce sin necesidad de texturas. Por eso sigue viniendo de serie en casi todos los programas de modelado.
+
+Medio siglo después, la idea es la misma: pasar del papel al ordenador. Solo que hoy se levantan casas enteras.
+
+#Modelado3D #Arquitectura #Diseño #HistoriaDeLaTecnología #3D
+
+Notas LinkedIn:
+- Sin enlaces en el texto. Las fuentes, en el primer comentario.
+- Publicar desde el perfil personal y compartir desde la página de empresa.
+
+
+----------------------------------------------------------------
+3. COMENTARIO FIJADO (solo fuentes, sin pedir nada)
+----------------------------------------------------------------
+Fuentes:
+· La tetera de Utah (Martin Newell, 1975), la propuesta de Sandra Newell, el papel milimetrado, por qué sirve para probar, Toy Story y el episodio «Treehouse of Horror VI» de Los Simpson, y que la real es un 33 % más alta que la del ordenador: https://en.wikipedia.org/wiki/Utah_teapot
+· La tetera original, en el Computer History Museum (Mountain View, California): https://www.computerhistory.org/revolution/story/206
+La casa del final es una casa de ejemplo: un modelo 3D hecho desde su plano.
+
+
+----------------------------------------------------------------
+4. VOTACIONES Y ENCUESTAS
+----------------------------------------------------------------
+Ninguna, como en el capítulo 1: queremos ver qué sale solo en los comentarios.
+
+Para más adelante (no ahora):
+- Story con ENCUESTA: «¿Conocías la tetera de Utah?» → «Sí, soy del 3D» / «Ni idea».
+
+
+----------------------------------------------------------------
+5. CUÁNDO PUBLICAR
+----------------------------------------------------------------
+- El mismo día de la semana y a la misma hora que el capítulo 1, para poder comparar.
+- Si aún no hay costumbre: de martes a jueves entre 19:00 y 21:00 en Instagram y TikTok; LinkedIn, martes o miércoles, 8:00-9:30.
+- Dejar al menos 3-4 días entre el capítulo 1 y el 2.
+
+
+----------------------------------------------------------------
+6. LA PRIMERA HORA
+----------------------------------------------------------------
+- Fijar el comentario de fuentes (punto 3) en el minuto 1.
+- Contestar con datos y sin vender. Si alguien comenta que la usa en su programa de 3D, preguntarle cuál: es conversación natural.
+- NO pedir a conocidos que comenten: falsearía la prueba.
+- Apuntar las preguntas y peticiones de los comentarios en la misma lista que el capítulo 1.
+
+
+----------------------------------------------------------------
+7. PORTADA Y DETALLES
+----------------------------------------------------------------
+- Portada: el primer fotograma (la pregunta grande sobre la tetera dibujada) o el segundo 31 (la tetera real al lado de la aplastada, con la prensa).
+- Recortar para que en la cuadrícula (4:5) se lea la pregunta entera.
+- Activar subtítulos automáticos.
+- Texto alternativo: «Animación: una tetera dibujada en línea. Universidad de Utah, 1975, y un terminal de la época con un cubo girando. Dos tazas de té y una tetera. La tetera se dibuja en papel milimetrado y sus puntos pasan a una pantalla, donde aparece en malla. Se señalan sus curvas, el asa con agujero y las sombras. Cuatro ventanas de programas de 3D con la tetera y dos tarjetas: Toy Story y Los Simpson, 1995. La tetera real, más alta, al lado de la del ordenador, que una prensa aplasta. La tetera en la vitrina de un museo de California. Un plano en papel milimetrado se convierte en una casa de ejemplo en 3D por plantas.»
+- Música: el vídeo ya lleva base musical. No añadir otra; un audio en tendencia, como mucho al 5-10 %.
+
+
+----------------------------------------------------------------
+8. QUÉ MEDIR (a las 48 horas y a los 7 días)
+----------------------------------------------------------------
+- Lo mismo que el capítulo 1, para comparar: alcance a no seguidores, seguidores ganados, guardados y compartidos, retención a los 3 s (objetivo, más del 60 %), visto completo (objetivo, más del 35 %; dura 42 s).
+- Comparar el arranque: el 1 empieza con «¿Por qué…?» y el 2 con «¿Sabes que…?». Si la retención a los 3 s del 2 es claramente mejor, usar «¿Sabes que…?» en los siguientes.
+
+
+----------------------------------------------------------------
+9. ARRANQUES ALTERNATIVOS
+----------------------------------------------------------------
+A (el actual): «¿Sabes que el modelo 3D más famoso del mundo es una tetera?»
+B: «Esta tetera sale en Toy Story, en Los Simpson y en casi todos los programas de 3D.»
+C: «La tetera del ordenador es más baja que la real. Y hay un motivo.»
+
+
+----------------------------------------------------------------
+10. CÓMO SACARLE MÁS
+----------------------------------------------------------------
+- Carrusel de 5: la tetera → papel milimetrado → malla 3D → «sale en Toy Story y en Los Simpson» → la real frente a la aplastada.
+- Clip de 8 s solo con la tetera aplastada («Un detalle: la del ordenador es más baja que la real…») para Stories.
+- Responder con vídeo a quien diga «yo la uso en mi programa»: alcance gratis.
+
+
+----------------------------------------------------------------
+11. LO QUE NO SE PUEDE DECIR
+----------------------------------------------------------------
+- Que fue el primer modelo 3D de la historia (no lo fue) o que Newell inventó el 3D.
+- El nombre del episodio de Los Simpson en castellano sin comprobarlo: en las fuentes está como «Treehouse of Horror VI».
+- No se dibujan personajes de Toy Story ni de Los Simpson: solo sus nombres. Tampoco se usan fotogramas de las dos (derechos de Disney; decidido con Álvaro el 2026-11-02): el caption invita a buscar la tetera en la fiesta del té de Buzz y en el Homer en 3D.
+- La casa del final es de ejemplo (ficticia): lleva su rótulo en pantalla.
+- Ni testimonios, ni cifras de ventas, ni «con nosotros…».

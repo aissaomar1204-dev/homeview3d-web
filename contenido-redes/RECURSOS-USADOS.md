@@ -18,6 +18,7 @@ Imágenes en `homeview3d-web/public/assets/` (`home/img/`, `img/`, `hero/`, `vid
 | 06 · El domingo | `showroom-casa`, `showroom-plano`, `showroom-estancia` (pantallas reales en una tablet). Dibujados nuevos: tablet, correos con PDF, descargas, visor de PDF (fachada, noche, plano), rejilla de nueve dossiers iguales y bandeja del lunes |
 | 02 · Más leads | `r-azotea`, `r-dormitorio`, `r-bano`, `r-jardin` (estancias de la casa 5 que tapan los agujeros). Dibujados nuevos: embudo con contactos que caen, cuatro agujeros con preguntas, fichas de CRM «Sin respuesta» |
 | pq01 · Planos azules (serie «¿Por qué…?») | `villa_despiece_1`, `villa_despiece_2` y `villa_despiece_3` (suelos, muros y muebles: encajan una sobre otra y la casa se monta por capas en el giro). Dibujados nuevos: plano azul con rejilla y cajetín, calco a mano con lápiz y reloj, telescopio de 1842, papel con sales de hierro y sol con rayos, calco sobre el papel, bandeja de agua, barras «diez a uno», grúa con edificio y tablero de obra, ficha de diccionario «blueprint», fotocopiadora y ordenador, plano que se inclina |
+| pq02 · La tetera (serie «¿Por qué…?») | `sw-golf` (la casa por plantas, en el giro). Dibujados nuevos: tetera de Utah (de perfil y en malla), terminal de 1975 con un cubo girando, tazas de té con vapor, papel milimetrado con puntos que pasan a una pantalla, cuatro ventanas de programas 3D, tarjetas «Toy Story» y «Los Simpson» (solo texto), la tetera real frente a la aplastada con una prensa, vitrina de museo, plano con escalera en papel milimetrado |
 
 Repetidos entre 03 y 01: plano en líneas, pantallas del móvil, promoción de día y de noche y la casa reservada.
 A partir de ahora quedan **gastados** y no se vuelven a usar.
@@ -33,7 +34,7 @@ A partir de ahora quedan **gastados** y no se vuelven a usar.
 
 **Showroom en escritorio** (`home/img/`): `showroom-masterplan` (ojo: es la misma promoción aérea de `v-masterplan`, que ya está gastada; usarla solo recortada a la interfaz).
 
-**Tipologías** (`home/img/sw-*`): `sw-adosados`, `sw-andaluza`, `sw-golf`, `sw-ladera`, `sw-salon`, `sw-suite`.
+**Tipologías** (`home/img/sw-*`): `sw-adosados`, `sw-andaluza`, `sw-ladera`, `sw-salon`, `sw-suite`.
 
 **Sala de ventas**: `venta-tablet` (comercial con tablet).
 
@@ -43,7 +44,7 @@ A partir de ahora quedan **gastados** y no se vuelven a usar.
 
 - 08 · La ventana de la IA → `plano-2d`/`plano-papel` (el plano), la imagen que genere la IA en la prueba real y `plano-3d` + `v-salon` (lo construido). La villa ya salió en el 04.
 - 05 · El tabique → `villa_muros_completos` y `villa-turntable.mp4` (las capas del despiece ya salieron en el pq01).
-- 07 · Cuatro metros de stand → `venta-tablet` y las tipologías `sw-adosados`, `sw-andaluza`, `sw-golf`, `sw-ladera` (cinco villas que no caben en el stand).
+- 07 · Cuatro metros de stand → `venta-tablet` y las tipologías `sw-adosados`, `sw-andaluza`, `sw-ladera` (las villas que no caben en el stand; `sw-golf` ya salió en el pq02).
 
 ## Motivos de guion ya usados
 
@@ -51,4 +52,5 @@ No repetir tampoco las situaciones: «a las once de la noche con otras nueve pro
 burbuja de WhatsApp (01), «Pedir llamada» con ding (03), «Casa 3 · Reservada» (03 y 01), avión (01), PDF en el móvil (03),
 domingo con la tablet y dossiers en PDF (06), correo del lunes (06), reto con cuenta atrás (04), embudo con agujeros y fichas de CRM (02),
 plano azul y cianotipia, calcar a mano, grúa y edificio que sube, entrada de diccionario, fotocopiadora y ordenador, el plano que se
-inclina y se levanta en 3D (pq01).
+inclina y se levanta en 3D (pq01), papel milimetrado con puntos que pasan a una pantalla, ventanas de programas, la prensa que
+aplasta, la vitrina de museo (pq02).

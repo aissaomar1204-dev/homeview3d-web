@@ -40,8 +40,8 @@ Lo que cambia respecto a la serie de promotoras (decidido por Álvaro el 2026-11
 | Nº | Título | Estado | Duración | Ángulo |
 | --- | --- | --- | --- | --- |
 | pq01 | Planos azules | Hecho | 0:42 | Por qué los planos antiguos eran azules: la cianotipia de Herschel (1842) y el «blueprint» |
-| pq02 | La tetera | Idea | | El modelo 3D más famoso del mundo es una tetera (Newell, Utah, 1975) |
-| pq03 | El dibujo técnico | Idea | | Monge y la geometría descriptiva, secreto militar francés |
+| pq02 | La tetera | Hecho | 0:42 | El modelo 3D más famoso del mundo es una tetera (Newell, Utah, 1975); arranca con «¿Sabes que…?» |
+| pq03 | El dibujo técnico | Idea (anunciado en el caption del pq02) | | Monge y la geometría descriptiva, secreto militar francés |
 | pq04 | La escalera cómoda | Idea | | La regla de Blondel (1675) y la norma española (por comprobar) |
 | pq05 | El plano más antiguo | Idea | | La estatua de Gudea con el plano de un templo (Louvre); sin decir «el más antiguo» |
 

@@ -1,0 +1,23 @@
+{
+  "titulo": "¿Sabes que el modelo 3D más famoso del mundo es una tetera?",
+  "nota": "Serie general «¿Por qué…?», capítulo 2. Cierre neutro: sin «Mándame el plano» ni pedir que sigan; tras la última frase, el logo en silencio. Cada fragmento es un subtítulo. 'pausa' marca el hueco después del fragmento (x0,35 al montar la toma). Las frases 7-8, 12-13 y 16-17 se locutaron juntas y se parten al montar. Fuentes en la ficha de publicación.",
+  "fragmentos": [
+    {"n": 1,  "escena": 1, "texto": "¿Sabes que el modelo 3D más famoso del mundo es una tetera?", "pausa": 0.5},
+    {"n": 2,  "escena": 2, "texto": "Universidad de Utah, mil novecientos setenta y cinco.", "pausa": 0.2},
+    {"n": 3,  "escena": 2, "texto": "Martin Newell necesita un objeto sencillo para probar sus programas de 3D.", "pausa": 0.4},
+    {"n": 4,  "escena": 3, "texto": "Tomando el té, su mujer le propone la tetera.", "pausa": 0.5},
+    {"n": 5,  "escena": 4, "texto": "Él la dibuja en papel milimetrado", "pausa": 0.15},
+    {"n": 6,  "escena": 4, "texto": "y pasa los puntos al ordenador a mano.", "pausa": 0.5},
+    {"n": 7,  "escena": 5, "texto": "Y es perfecta:", "pausa": 0.15},
+    {"n": 8,  "escena": 5, "texto": "curvas, un asa con agujero, sombras sobre sí misma,", "pausa": 0.15},
+    {"n": 9,  "escena": 5, "texto": "y se reconoce sin color ni textura.", "pausa": 0.5},
+    {"n": 10, "escena": 6, "texto": "Por eso hoy viene de serie en casi todos los programas de 3D.", "pausa": 0.3},
+    {"n": 11, "escena": 6, "texto": "Y sale en Toy Story y en Los Simpson.", "pausa": 0.5},
+    {"n": 12, "escena": 7, "texto": "Un detalle:", "pausa": 0.15},
+    {"n": 13, "escena": 7, "texto": "la del ordenador es más baja que la real.", "pausa": 0.2},
+    {"n": 14, "escena": 7, "texto": "La aplastaron en una demostración y gustó más así.", "pausa": 0.5},
+    {"n": 15, "escena": 8, "texto": "La original está hoy en un museo de California.", "pausa": 0.5},
+    {"n": 16, "escena": 9, "texto": "Y la idea, del papel al ordenador,", "pausa": 0.15},
+    {"n": 17, "escena": 9, "texto": "sirve hoy para levantar casas enteras.", "pausa": 2.0}
+  ]
+}
