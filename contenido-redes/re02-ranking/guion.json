@@ -1,0 +1,21 @@
+{
+  "titulo": "¿Sabes dónde está la vivienda más cara de España?",
+  "nota": "Tanda 1 del sector (guiones/tanda-sector-1.md, guion 2). Cierre neutro: tras la última frase, el logo en silencio. Cada fragmento es un subtítulo (las frases largas van en dos). Datos: Ministerio de Vivienda, valor tasado medio de vivienda libre, total, municipios de más de 25.000 habitantes, 2.º trimestre de 2026: 1 Santa Eulalia del Río 6.844,4 · 2 Calvià 5.502,2 · 3 Eivissa 5.473,3 · 4 Madrid 5.418,4 · 5 San Sebastián 5.208,3 · 6 Pozuelo de Alarcón 5.206,2 · 12 Marbella 4.528,3 · 40 Málaga 3.320,5 · 306 (último) Villarrobledo 665,5 €/m².",
+  "fragmentos": [
+    {"n": 1, "escena": 1, "texto": "¿Sabes dónde está la vivienda más cara de España?", "pausa": 0.5},
+    {"n": 2, "escena": 1, "texto": "Este es el top cinco, según las tasaciones oficiales.", "pausa": 0.5},
+    {"n": 3, "escena": 2, "texto": "Quinto: San Sebastián, cinco mil doscientos euros el metro.", "pausa": 0.2},
+    {"n": 4, "escena": 2, "texto": "Y Pozuelo, solo dos euros por detrás.", "pausa": 0.5},
+    {"n": 5, "escena": 2, "texto": "Cuarto: Madrid, cinco mil cuatrocientos.", "pausa": 0.5},
+    {"n": 6, "escena": 2, "texto": "Tercero: Ibiza ciudad, cinco mil cuatrocientos setenta.", "pausa": 0.5},
+    {"n": 7, "escena": 2, "texto": "Segundo: Calvià, en Mallorca, cinco mil quinientos.", "pausa": 0.5},
+    {"n": 8, "escena": 2, "texto": "Y primero, con diferencia: Santa Eulalia del Río, en Ibiza.", "pausa": 0.2},
+    {"n": 9, "escena": 2, "texto": "Más de seis mil ochocientos euros el metro.", "pausa": 0.5},
+    {"n": 10, "escena": 2, "texto": "Tres de los cinco, en Baleares.", "pausa": 0.5},
+    {"n": 11, "escena": 2, "texto": "¿Y la Costa del Sol?", "pausa": 0.2},
+    {"n": 12, "escena": 2, "texto": "Marbella, puesto doce. Málaga capital, el cuarenta.", "pausa": 0.5},
+    {"n": 13, "escena": 2, "texto": "El más barato de la lista,", "pausa": 0.1},
+    {"n": 14, "escena": 2, "texto": "Villarrobledo, en Albacete: seiscientos sesenta y seis euros.", "pausa": 0.5},
+    {"n": 15, "escena": 3, "texto": "El mismo metro cuadrado, diez veces más caro.", "pausa": 2.0}
+  ]
+}

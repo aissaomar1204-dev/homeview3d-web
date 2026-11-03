@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>La vivienda más cara · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 29px/1.2 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 24px; right: 24px; text-align: center; font: 400 44px/1.05 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 19px/1 "Hanken Grotesk"; padding: 12px 17px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.chip.mal { color: var(--stamp); }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; font: 600 14px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+#serie { position: absolute; left: 0; right: 0; top: 74px; text-align: center; z-index: 50; font: 700 16px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+/* etiquetas de las casas en el mapa */
+.et { position: absolute; z-index: 15; background: #fff; border-radius: 10px; padding: 5px 9px 6px; white-space: nowrap; opacity: 0;
+  box-shadow: 0 8px 18px -8px rgb(14 27 43 / .5), 0 0 0 1px rgb(14 27 43 / .08); font: 700 13px/1.15 "Hanken Grotesk"; color: var(--ink); }
+.et i { font-style: normal; color: var(--ink-3); margin-right: 3px; }
+.et span { display: block; font: 400 19px/1.05 Gloock; color: var(--accent); margin-top: 2px; }
+.et.gris span { color: var(--ink-3); }
+/* la tabla del top 5 */
+#tabla { position: absolute; left: 30px; right: 30px; top: 574px; height: 220px; z-index: 20; }
+.fila { position: absolute; left: 0; right: 0; height: 38px; border-radius: 12px; border: 2px dashed rgb(14 27 43 / .26); opacity: 0; }
+.fila .num { position: absolute; left: 14px; top: 7px; font: 400 23px/1 Gloock; color: rgb(14 27 43 / .4); }
+.fila .q { position: absolute; left: 64px; top: 9px; font: 700 16px "Hanken Grotesk"; color: rgb(14 27 43 / .28); }
+.fila .lleno { position: absolute; inset: -2px; border-radius: 12px; background: #fff; opacity: 0; overflow: hidden;
+  box-shadow: 0 10px 22px -12px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.fila .lleno .num { color: var(--ink); }
+.fila .nom { position: absolute; left: 64px; top: 11px; font: 700 17px/1 "Hanken Grotesk"; white-space: nowrap; }
+.fila .nom em { font-style: normal; font-weight: 600; color: var(--ink-3); font-size: 13px; margin-left: 6px; }
+.fila .val { position: absolute; right: 14px; top: 8px; font: 400 23px/1 Gloock; color: var(--accent); }
+.fila .val small { font: 600 13px "Hanken Grotesk"; color: var(--ink-3); margin-left: 3px; }
+.fila .bal { position: absolute; left: 0; top: 0; bottom: 0; width: 7px; background: var(--accent); opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · la pregunta (portada) -->
+  <div class="sc" id="s1">
+    <div class="big" id="b1" style="top:104px">¿Sabes dónde está la vivienda más cara de España?</div>
+    <div class="chip ok" id="chipTasa" style="left:50%;top:412px;opacity:0">Tasación oficial · Ministerio de Vivienda</div>
+  </div>
+
+  <!-- el mapa con las casas y la tabla (de la escena 1 a la 2) -->
+  <div class="abs" id="mapaL" style="inset:0;z-index:10">
+    <svg class="full" viewBox="0 0 540 960">
+      <defs>
+        <linearGradient id="gm" gradientUnits="userSpaceOnUse" x1="0" y1="226" x2="0" y2="548">
+          <stop offset="0" stop-color="#000"/><stop offset=".07" stop-color="#fff"/><stop offset=".93" stop-color="#fff"/><stop offset="1" stop-color="#000"/>
+        </linearGradient>
+        <mask id="mk" maskUnits="userSpaceOnUse" x="0" y="0" width="540" height="960"><rect x="0" y="226" width="540" height="322" fill="url(#gm)"/></mask>
+      </defs>
+      <g mask="url(#mk)">
+        <path id="tierra" fill="#fff" stroke="#0E1B2B" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+        <path id="islas" fill="#fff" stroke="#0E1B2B" stroke-width="2" stroke-linejoin="round"/>
+      </g>
+      <g id="canarias"></g>
+      <g id="casas"></g>
+    </svg>
+    <div id="etiquetas"></div>
+    <div class="chip mal" id="chipPoz" style="left:50%;top:494px;opacity:0">5.206 €: a solo 2 € del quinto</div>
+    <div class="chip ok" id="chipBal" style="left:330px;top:500px;opacity:0">3 de los 5, en Baleares</div>
+    <div class="tag" id="cab" style="top:548px;opacity:0">Top 5 · municipios de más de 25.000 hab.</div>
+    <div id="tabla"></div>
+  </div>
+
+  <!-- 3 · el mismo metro cuadrado, diez veces más caro -->
+  <div class="sc" id="s3">
+    <svg class="full" viewBox="0 0 540 960"><g id="prismas"></g></svg>
+    <div class="abs" id="pr666" style="left:60px;width:200px;text-align:center;font:400 34px/1 Gloock;opacity:0">666 €</div>
+    <div class="abs" id="pr6844" style="left:280px;width:200px;text-align:center;font:400 34px/1 Gloock;color:#1F5F9E;opacity:0">6.844 €</div>
+    <div class="abs" id="por10" style="left:0;right:0;top:446px;text-align:center;font:400 46px/1 Gloock;color:#B3261E;opacity:0">×10</div>
+    <div class="abs" style="left:60px;width:200px;top:696px;text-align:center">
+      <div style="font:400 22px/1 Gloock;color:#4F6175">1 m²</div>
+      <div style="font:700 16px/1.2 'Hanken Grotesk';margin-top:6px">Villarrobledo</div>
+    </div>
+    <div class="abs" style="left:280px;width:200px;top:696px;text-align:center">
+      <div style="font:400 22px/1 Gloock;color:#4F6175">1 m²</div>
+      <div style="font:700 16px/1.2 'Hanken Grotesk';margin-top:6px">Santa Eulalia del Río</div>
+    </div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:795px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:876px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="serie">Tasaciones oficiales · 2.º trim. 2026</div>
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+const INK = '#0E1B2B', INK3 = '#4F6175', ACC = '#1F5F9E', STAMP = '#B3261E', SOFT = '#E4EDF6';
+const f1 = (v) => v.toFixed(1);
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// ---------- el mapa (longitud, latitud; dibujo simplificado) ----------
+const PENINSULA = [
+  // Galicia, de la desembocadura del Miño al cabo Ortegal
+  [-8.87, 41.87], [-8.90, 42.10], [-8.80, 42.25], [-8.95, 42.40], [-9.08, 42.58], [-9.04, 42.75], [-9.30, 42.92], [-9.20, 43.10],
+  [-9.20, 43.20], [-8.95, 43.32], [-8.55, 43.32], [-8.40, 43.38], [-8.25, 43.50], [-8.10, 43.65], [-7.87, 43.77], [-7.69, 43.79],
+  // Cantábrico
+  [-7.40, 43.70], [-7.04, 43.55], [-6.50, 43.57], [-6.05, 43.60], [-5.85, 43.66], [-5.66, 43.55], [-5.20, 43.48], [-4.60, 43.40],
+  [-4.00, 43.45], [-3.80, 43.47], [-3.40, 43.42], [-3.00, 43.38], [-2.60, 43.42], [-2.20, 43.32], [-1.79, 43.38],
+  // Pirineos
+  [-1.60, 43.25], [-1.42, 43.27], [-1.30, 43.08], [-0.95, 42.98], [-0.70, 42.88], [-0.30, 42.82], [0.10, 42.70], [0.70, 42.85],
+  [0.95, 42.80], [1.45, 42.60], [1.73, 42.50], [2.00, 42.40], [2.55, 42.35], [3.15, 42.44], [3.32, 42.32],
+  // Mediterráneo
+  [3.18, 42.22], [3.20, 41.90], [2.80, 41.65], [2.18, 41.38], [1.70, 41.22], [1.25, 41.11], [0.85, 40.85], [0.87, 40.70],
+  [0.55, 40.55], [0.20, 40.15], [-0.03, 39.98], [-0.32, 39.45], [-0.23, 39.17], [0.00, 38.90], [0.23, 38.73], [-0.10, 38.55],
+  [-0.48, 38.34], [-0.60, 38.15], [-0.75, 37.85], [-0.69, 37.63], [-0.98, 37.58], [-1.30, 37.55], [-1.58, 37.40], [-1.85, 37.20],
+  [-1.90, 36.95], [-2.19, 36.72], [-2.46, 36.83], [-2.80, 36.70], [-3.02, 36.74], [-3.52, 36.72], [-4.00, 36.75], [-4.42, 36.71],
+  [-4.65, 36.53], [-4.88, 36.50], [-5.15, 36.42], [-5.35, 36.16], [-5.60, 36.01],
+  // Atlántico sur
+  [-5.95, 36.18], [-6.29, 36.53], [-6.44, 36.74], [-6.83, 37.10], [-7.10, 37.20], [-7.41, 37.18],
+  // frontera con Portugal
+  [-7.50, 37.55], [-7.25, 37.95], [-7.00, 38.20], [-7.30, 38.45], [-7.10, 38.80], [-7.02, 38.88], [-7.20, 39.10], [-7.35, 39.40],
+  [-7.53, 39.66], [-7.00, 39.67], [-6.90, 40.00], [-6.85, 40.25], [-6.80, 40.60], [-6.95, 41.00], [-6.70, 41.10], [-6.25, 41.50],
+  [-6.40, 41.70], [-6.55, 41.95], [-6.95, 41.95], [-7.20, 41.88], [-7.60, 41.85], [-8.10, 41.80], [-8.20, 42.05], [-8.60, 42.00],
+];
+const BALEARES = {
+  mallorca: [[3.21, 39.96], [3.10, 39.90], [3.12, 39.83], [3.25, 39.75], [3.47, 39.71], [3.33, 39.54], [3.20, 39.40], [3.05, 39.27],
+    [2.97, 39.33], [2.79, 39.37], [2.73, 39.51], [2.62, 39.55], [2.52, 39.47], [2.38, 39.53], [2.35, 39.60], [2.55, 39.70], [2.70, 39.80], [2.92, 39.90]],
+  menorca: [[3.83, 40.00], [3.95, 40.06], [4.09, 40.09], [4.20, 40.03], [4.30, 39.88], [4.25, 39.82], [4.05, 39.90], [3.85, 39.93]],
+  ibiza: [[1.30, 38.98], [1.40, 39.08], [1.52, 39.11], [1.60, 39.08], [1.58, 39.00], [1.53, 38.97], [1.45, 38.90], [1.38, 38.84],
+    [1.30, 38.86], [1.22, 38.89], [1.26, 38.96]],
+  formentera: [[1.38, 38.73], [1.45, 38.71], [1.58, 38.67], [1.53, 38.64], [1.43, 38.66]],
+};
+const CANARIAS = [
+  [[-13.42, 29.22], [-13.47, 29.05], [-13.80, 28.88], [-13.87, 28.95], [-13.70, 29.10]],                                     // Lanzarote
+  [[-13.85, 28.75], [-13.82, 28.45], [-14.00, 28.20], [-14.30, 28.10], [-14.50, 28.07], [-14.20, 28.30], [-14.05, 28.55], [-13.95, 28.72]], // Fuerteventura
+  [[-15.40, 28.15], [-15.38, 27.85], [-15.60, 27.73], [-15.82, 27.85], [-15.80, 28.05], [-15.62, 28.17]],                     // Gran Canaria
+  [[-16.12, 28.57], [-16.40, 28.40], [-16.70, 28.08], [-16.85, 28.30], [-16.90, 28.37], [-16.55, 28.42], [-16.35, 28.55]],    // Tenerife
+  [[-17.10, 28.12], [-17.20, 28.02], [-17.33, 28.10], [-17.22, 28.20]],                                                       // La Gomera
+  [[-17.78, 28.85], [-17.90, 28.75], [-17.85, 28.50], [-17.75, 28.55], [-17.75, 28.75]],                                      // La Palma
+  [[-18.15, 27.80], [-17.88, 27.78], [-17.98, 27.65]],                                                                         // El Hierro
+];
+
+// las casas: valor tasado medio (total) del 2.º trim. de 2026, €/m²
+const SITIOS = {
+  ss:  { n: 'San Sebastián', sub: 'Gipuzkoa', lon: -1.98, lat: 43.32, v: 5208.3, p: 5, lado: 'der', cue: 'n5' },
+  poz: { n: 'Pozuelo', lon: -3.81, lat: 40.43, v: 5206.2, p: 6, lado: 'izq', cue: 'poz', gris: true },
+  mad: { n: 'Madrid', lon: -3.70, lat: 40.42, v: 5418.4, p: 4, lado: 'der', cue: 'n4' },
+  eiv: { n: 'Ibiza ciudad', sub: 'Eivissa', lon: 1.43, lat: 38.91, v: 5473.3, p: 3, lado: 'izq', cue: 'n3' },
+  cal: { n: 'Calvià', sub: 'Mallorca', lon: 2.506, lat: 39.565, v: 5502.2, p: 2, lado: 'arriba', cue: 'n2' },
+  se:  { n: 'Santa Eulalia del Río', sub: 'Ibiza', lon: 1.53, lat: 38.98, v: 6844.4, p: 1, lado: 'der', ladoTodo: 'arriba', cue: 'n1', crece: 1.6 },
+  mar: { n: 'Marbella', lon: -4.88, lat: 36.51, v: 4528.3, p: 12, lado: 'izq', cue: 'mar', gris: true },
+  mal: { n: 'Málaga', lon: -4.42, lat: 36.72, v: 3320.5, p: 40, lado: 'der', cue: 'mal', gris: true },
+  vil: { n: 'Villarrobledo', lon: -2.60, lat: 39.27, v: 665.5, p: 306, lado: 'izq', cue: 'vil', gris: true },
+};
+const TOP = ['se', 'cal', 'eiv', 'mad', 'ss'];
+const ALTO = 80;  // px de la casa más cara
+const miles = (v) => String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+// cámara: centro (lon, lat) y escala (px por grado de latitud)
+const VISTAS = {
+  hero:  { lon: -2.5, lat: 40.1, k: 37 },
+  norte: { lon: -2.8, lat: 41.4, k: 48 },
+  bal:   { lon: 2.3, lat: 39.3, k: 160 },
+  sur:   { lon: -4.6, lat: 37.2, k: 110 },
+  todo:  { lon: -2.5, lat: 40.5, k: 33 },
+};
+const COS = Math.cos(40 * Math.PI / 180), YC = 388;
+let CAM = VISTAS.hero;
+const px = (lon, lat) => [270 + (lon - CAM.lon) * COS * CAM.k, YC + (CAM.lat - lat) * CAM.k];
+const camino = (pts) => pts.map(([lo, la], i) => { const [x, y] = px(lo, la); return (i ? 'L' : 'M') + f1(x) + ' ' + f1(y); }).join('') + 'Z';
+const mezclaCam = (a, b, p) => ({ lon: lerp(a.lon, b.lon, p), lat: lerp(a.lat, b.lat, p), k: Math.exp(lerp(Math.log(a.k), Math.log(b.k), p)) });
+
+// casa de frente con su lado: ancho fijo y alto según el precio
+function casita(x, y, H, gris, op) {
+  const w = 12, d = 5, r = Math.min(7, H * .35), b = H - r, l = x - w / 2, R = x + w / 2;
+  const [fr, la, te] = gris ? ['#fff', '#C9D6E3', '#E4EDF6'] : [ACC, '#123E66', '#3A7BBE'];
+  const st = `stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"`;
+  return `<g opacity="${f1(op * 10) / 10}">` +
+    `<ellipse cx="${f1(x + 2)}" cy="${f1(y + 1)}" rx="10" ry="3" fill="${INK}" opacity=".16"/>` +
+    `<path d="M${f1(R)} ${f1(y)}L${f1(R + d)} ${f1(y - 3)}L${f1(R + d)} ${f1(y - 3 - b)}L${f1(R)} ${f1(y - b)}Z" fill="${la}" ${st}/>` +
+    `<path d="M${f1(R)} ${f1(y - b)}L${f1(R + d)} ${f1(y - 3 - b)}L${f1(x + d)} ${f1(y - 3 - H)}L${f1(x)} ${f1(y - H)}Z" fill="${te}" ${st}/>` +
+    `<path d="M${f1(l)} ${f1(y)}L${f1(R)} ${f1(y)}L${f1(R)} ${f1(y - b)}L${f1(x)} ${f1(y - H)}L${f1(l)} ${f1(y - b)}Z" fill="${fr}" ${st}/></g>`;
+}
+
+// prisma isométrico sobre una baldosa de 1 m²: centro de la base (cx, cy), semiejes a × b, alto h
+function prisma(cx, cy, a, b, h, [arriba, izq, der]) {
+  const P = (pts, c) => `<path d="M${pts.map((p) => p.map(f1).join(' ')).join('L')}Z" fill="${c}" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/>`;
+  return P([[cx - a, cy - h], [cx, cy + b - h], [cx, cy + b], [cx - a, cy]], izq) +
+    P([[cx, cy + b - h], [cx + a, cy - h], [cx + a, cy], [cx, cy + b]], der) +
+    P([[cx, cy - b - h], [cx + a, cy - h], [cx, cy + b - h], [cx - a, cy - h]], arriba);
+}
+
+let G = {};
+function build() {
+  // etiquetas del mapa
+  for (const id in SITIOS) {
+    const s = SITIOS[id], e = document.createElement('div');
+    e.className = 'et' + (s.gris ? ' gris' : '');
+    e.innerHTML = `<i>${s.p}.º</i>${s.n}<span>${miles(s.v)} €/m²</span>`;
+    $('#etiquetas').appendChild(e); s.et = e;
+  }
+  // la tabla: del 1.º (arriba) al 5.º
+  G.filas = TOP.map((id, i) => {
+    const s = SITIOS[id], f = document.createElement('div');
+    f.className = 'fila'; f.style.top = `${i * 44}px`;
+    f.innerHTML = `<div class="num">${i + 1}.º</div><div class="q">?</div>` +
+      `<div class="lleno"><div class="bal"></div><div class="num">${i + 1}.º</div><div class="nom">${s.n}${s.sub ? `<em>${s.sub}</em>` : ''}</div>` +
+      `<div class="val"><b style="font-weight:400">${miles(s.v)}</b><small>€/m²</small></div></div>`;
+    $('#tabla').appendChild(f);
+    return f;
+  });
+  // las Canarias, en un recuadro abajo a la derecha (fijo en pantalla)
+  const g = $('#canarias'), q = 27, x0 = 340, y0 = 488;
+  el('rect', { x: x0, y: y0, width: 114, height: 50, rx: 6, fill: 'none', stroke: INK3, 'stroke-width': 1.2, 'stroke-dasharray': '4 4' }, g);
+  const d = CANARIAS.map((pts) => pts.map(([lo, la], i) => `${i ? 'L' : 'M'}${f1(x0 + 8 + (lo + 18.2) * COS * q)} ${f1(y0 + 6 + (29.3 - la) * q)}`).join('') + 'Z').join('');
+  el('path', { d, fill: '#fff', stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round' }, g);
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+const chip = (s, t, a, centrado = true) => { const p = pop(t, a, .2); $(s).style.opacity = p.o; $(s).style.transform = `${centrado ? 'translateX(-50%) ' : ''}scale(${p.s})`; return p.o; };
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .1);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .1);
+    s.style.opacity = inn * (1 - outp);
+  });
+  const F = {}; TL.fragmentos.forEach((f) => F[f.n] = f);
+  const fin = prog(t, ES[3].start - .1, ES[3].start + .2);  // el mapa y la tabla se van
+
+  // ---- 1 · la pregunta; con la frase 2 se va y sale la etiqueta de la fuente ----
+  $('#b1').style.opacity = 1 - prog(t, F[2].start - .15, F[2].start + .15);
+  chip('#chipTasa', t, C.tasacion);
+  $('#chipTasa').style.opacity *= 1 - prog(t, C.quinto - .1, C.quinto + .1);
+
+  // ---- la cámara del mapa ----
+  let v = VISTAS.hero;
+  for (const [t0, n] of [[C.quinto, 'norte'], [C.tercero, 'bal'], [C.costa, 'sur'], [C.barato, 'todo']]) {
+    const p = ease(prog(t, t0 - .15, t0 + .75)); if (p > 0) v = mezclaCam(v, VISTAS[n], p);
+  }
+  CAM = v;
+  const entero = clamp((48 - CAM.k) / 10);  // 1 cuando se ve España entera
+  const todo = ease(prog(t, C.barato - .15, C.barato + .75));
+  $('#mapaL').style.opacity = 1 - fin;
+
+  // ---- el mapa se dibuja al principio ----
+  const dib = ease(prog(t, .15, 1.6));
+  const tierra = $('#tierra'), islas = $('#islas');
+  tierra.setAttribute('d', camino(PENINSULA));
+  tierra.setAttribute('pathLength', 1); tierra.setAttribute('stroke-dasharray', 1); tierra.setAttribute('stroke-dashoffset', 1 - dib);
+  tierra.setAttribute('fill-opacity', prog(t, 1.0, 1.7));
+  islas.setAttribute('d', Object.values(BALEARES).map(camino).join(''));
+  const isl = prog(t, 1.3, 1.8), luz = prog(t, C.islas - .1, C.islas + .3) * (1 - prog(t, C.costa, C.costa + .4));
+  islas.setAttribute('opacity', isl);
+  islas.setAttribute('fill', luz > .01 ? `rgb(${Math.round(lerp(255, 31, luz * .55))} ${Math.round(lerp(255, 95, luz * .55))} ${Math.round(lerp(255, 158, luz * .55))})` : '#fff');
+  $('#canarias').setAttribute('opacity', prog(t, 1.4, 1.9) * entero);
+
+  // ---- las casas y sus etiquetas ----
+  const casas = [];
+  for (const id in SITIOS) {
+    const s = SITIOS[id], t0 = C[s.cue];
+    let a = prog(t, t0 - .05, t0 + .1);
+    if (id === 'poz') a *= 1 - prog(t, C.n4 - .3, C.n4);  // Pozuelo se queda fuera del top 5
+    if (a <= 0) { s.et.style.opacity = 0; continue; }
+    const [x, y] = px(s.lon, s.lat);
+    const dentro = clamp((y - 236) / 20) * clamp((560 - y) / 20) * clamp((x + 10) / 20) * clamp((550 - x) / 20);
+    const H = ALTO * s.v / 6844.4 * out(prog(t, t0, t0 + (s.crece || .5)));
+    casas.push({ y, html: casita(x, y, Math.max(1, H), s.gris, a * dentro) });
+    // etiqueta: con España entera (al final) solo la primera y la última
+    let eo = prog(t, t0 + .1, t0 + .3) * a * dentro;
+    if (!['se', 'vil'].includes(id)) eo *= 1 - todo;
+    const lado = todo > .5 && s.ladoTodo ? s.ladoTodo : s.lado, yt = y - H;
+    const e = s.et; e.style.opacity = eo;
+    if (lado === 'der') { e.style.left = `${x + 14}px`; e.style.top = `${yt + 6}px`; e.style.transform = 'translateY(-50%)'; }
+    else if (lado === 'izq') { e.style.left = `${x - 10}px`; e.style.top = `${yt + 6}px`; e.style.transform = 'translate(-100%, -50%)'; }
+    else { e.style.left = `${x + 2}px`; e.style.top = `${yt - 8}px`; e.style.transform = 'translate(-50%, -100%)'; }
+  }
+  casas.sort((p, q) => p.y - q.y);
+  $('#casas').innerHTML = casas.map((c) => c.html).join('');
+
+  // ---- la tabla: los cinco huecos y cómo se llenan (del 5.º al 1.º) ----
+  $('#cab').style.opacity = prog(t, C.top5, C.top5 + .3);
+  const llena = { ss: C.v5, mad: C.v4, eiv: C.v3, cal: C.v2, se: C.n1 };
+  TOP.forEach((id, i) => {
+    const f = G.filas[i], p = pop(t, C.top5 + .15 + i * .09, .2);
+    f.style.opacity = p.o; f.style.transform = `scale(${p.s})`;
+    const l = f.querySelector('.lleno'), q = pop(t, llena[id] - .05, .2);
+    l.style.opacity = q.o; l.style.transform = `scale(${lerp(.92, 1, q.o) + .03 * Math.sin(q.o * Math.PI)})`;
+    f.querySelector('.q').style.opacity = 1 - q.o;
+    l.querySelector('.bal').style.opacity = i < 3 ? prog(t, C.islas + i * .12, C.islas + i * .12 + .15) * (1 - prog(t, C.costa, C.costa + .4)) : 0;
+  });
+  // la primera: el precio sube hasta 6.844 mientras se dice
+  { const b = G.filas[0].querySelector('.val b'), k = ease(prog(t, C.n1 + .1, C.v1 + .25));
+    b.textContent = miles(lerp(5502.2, 6844.4, k)); }
+
+  chip('#chipPoz', t, C.dos);
+  $('#chipPoz').style.opacity *= 1 - prog(t, C.cuarto - .1, C.cuarto + .1);
+  chip('#chipBal', t, C.islas + .35);
+  $('#chipBal').style.opacity *= 1 - prog(t, C.costa - .1, C.costa + .1);
+
+  // ---- 3 · el mismo metro cuadrado: dos columnas, una diez veces más alta ----
+  { const H = 330, k = ease(prog(t, C.mismo + .1, C.mismo + 1.9)), h1 = H * k, h2 = Math.min(H * 665.5 / 6844.4, h1);
+    const azul = [SOFT, '#2E6CAB', '#123E66'], baldosa = ['#fff', '#fff', '#fff'];
+    $('#prismas').innerHTML =
+      prisma(160, 640, 70, 35, 6, baldosa) + prisma(380, 640, 70, 35, 6, baldosa) +
+      prisma(160, 634, 56, 28, Math.max(.5, h2), azul) + prisma(380, 634, 56, 28, Math.max(.5, h1), azul);
+    const a = prog(t, C.mismo + .4, C.mismo + .7), b = prog(t, C.mismo + 1.7, C.mismo + 2.0);
+    $('#pr666').style.opacity = a; $('#pr666').style.top = `${634 - h2 - 28 - 46}px`;
+    $('#pr6844').style.opacity = b; $('#pr6844').style.top = `${634 - h1 - 28 - 46}px`;
+    const x = pop(t, C.diez, .2); $('#por10').style.opacity = x.o; $('#por10').style.transform = `scale(${x.s})`;
+    $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6); }
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

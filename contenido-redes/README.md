@@ -58,7 +58,7 @@ HomeView. Cierre neutro en todos, también en el debate y el humor: la pregunta 
 | Nº | Título | Estado | Duración | Ángulo |
 | --- | --- | --- | --- | --- |
 | re01 | 300.000 € | Hecho | 0:33 | Los metros que da el mismo dinero en Málaga, Barcelona y Madrid (tasación oficial, 2.º trim. 2026) |
-| re02 | El ranking | Guion | | Los 5 municipios con la vivienda más cara (tasación oficial) |
+| re02 | El ranking | Hecho | 0:44 | Los 5 municipios con la vivienda más cara (tasación oficial, 2.º trim. 2026): tres en Baleares |
 | re03 | La villa | Guion | | Qué hace cara una villa: suelo, vistas, metros y acabados (SIMULACIÓN) |
 | re04 | La rentabilidad | Guion | | Bruta y neta de un piso alquilado, con cifras de SIMULACIÓN; no es una recomendación |
 | re05 | La terraza al sur | Guion | | El mismo piso con cuatro orientaciones |

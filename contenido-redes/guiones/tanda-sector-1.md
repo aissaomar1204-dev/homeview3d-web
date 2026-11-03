@@ -52,19 +52,22 @@ Gancho: tres de los cinco están en Baleares, y entre el primero y el último de
 
 | # | Escena | Texto | En pantalla |
 |---|---|---|---|
-| 1 | 1 | ¿Dónde está la vivienda más cara de España? | Mapa de España dibujado en línea |
-| 2 | 1 | Este es el top cinco, según las tasaciones oficiales. | «Municipios de más de 25.000 hab. · tasación · 2.º trim. 2026» |
-| 3 | 2 | Quinto: San Sebastián, cinco mil doscientos euros el metro. | Casa dibujada sobre el mapa; «5.208 €/m²» |
-| 4 | 2 | Y Pozuelo, a solo dos euros. | Una segunda casa al lado, casi igual; «5.206 €/m²» |
-| 5 | 3 | Cuarto: Madrid, cinco mil cuatrocientos. | «5.418 €/m²» |
-| 6 | 3 | Tercero: Ibiza, la ciudad, casi lo mismo. | «Eivissa · 5.473 €/m²» |
-| 7 | 4 | Segundo: Calviá, en Mallorca. | «5.502 €/m²» |
-| 8 | 4 | Y primero, con diferencia: Santa Eulalia del Río, en Ibiza. | La casa crece por encima de las demás |
-| 9 | 4 | Más de seis mil ochocientos euros el metro. | «6.844 €/m²» |
-| 10 | 5 | Tres de los cinco, en Baleares. | Las islas se iluminan |
-| 11 | 5 | ¿Y la Costa del Sol? Marbella, puesto doce. Málaga capital, el cuarenta. | «12.º Marbella 4.528 · 40.º Málaga 3.321» |
-| 12 | 6 | El más barato de la lista, Villarrobledo, en Albacete: seiscientos sesenta y seis euros. | Casa diminuta; «666 €/m²» |
-| 13 | 6 | El mismo metro cuadrado, diez veces más caro. | Dos cuadrados de un metro, uno diez veces más alto |
+| 1 | 1 | ¿Sabes dónde está la vivienda más cara de España? | Mapa de España dibujado en línea |
+| 2 | 1 | Este es el top cinco, según las tasaciones oficiales. | «Top 5 · municipios de más de 25.000 hab.»; tabla con cinco huecos |
+| 3 | 2 | Quinto: San Sebastián, cinco mil doscientos euros el metro. | Casa sobre el mapa, alta según su precio; «5.208 €/m²» |
+| 4 | 2 | Y Pozuelo, solo dos euros por detrás. | Otra casa casi igual, en blanco; «5.206 €: a solo 2 € del quinto» |
+| 5 | 2 | Cuarto: Madrid, cinco mil cuatrocientos. | «5.418 €/m²» |
+| 6 | 2 | Tercero: Ibiza ciudad, cinco mil cuatrocientos setenta. | El mapa se acerca a Baleares; «Ibiza ciudad · Eivissa · 5.473 €/m²» |
+| 7 | 2 | Segundo: Calvià, en Mallorca, cinco mil quinientos. | «5.502 €/m²» |
+| 8 | 2 | Y primero, con diferencia: Santa Eulalia del Río, en Ibiza. | La casa crece por encima de las demás; el precio sube en la tabla |
+| 9 | 2 | Más de seis mil ochocientos euros el metro. | «6.844 €/m²» |
+| 10 | 2 | Tres de los cinco, en Baleares. | Las islas se iluminan; «3 de los 5, en Baleares» |
+| 11-12 | 2 | ¿Y la Costa del Sol? Marbella, puesto doce. Málaga capital, el cuarenta. | El mapa baja a Málaga; «12.º Marbella 4.528 · 40.º Málaga 3.321» |
+| 13-14 | 2 | El más barato de la lista, Villarrobledo, en Albacete: seiscientos sesenta y seis euros. | España entera; casa diminuta, «306.º · 666 €/m²» |
+| 15 | 3 | El mismo metro cuadrado, diez veces más caro. | Dos baldosas de 1 m²: una columna diez veces más alta; «×10» |
+
+Hecho como **re02** (2026-11-03, 0:44): frase 1 cambiada por Álvaro («¿Sabes dónde…?»), y las 4, 6 y 7 con el precio
+dicho; en voz, «Calviá»; en pantalla, «Calvià» (nombre oficial). Las frases 11 y 12 de antes van en dos subtítulos cada una.
 
 Datos (columna «Total»): 1 Santa Eulalia del Río 6.844,4 · 2 Calvià 5.502,2 · 3 Eivissa 5.473,3 · 4 Madrid 5.418,4 ·
 5 San Sebastián/Donostia 5.208,3 · 6 Pozuelo de Alarcón 5.206,2 · 11 Barcelona 4.601,8 · 12 Marbella 4.528,3 ·
