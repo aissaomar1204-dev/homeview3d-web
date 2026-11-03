@@ -1,0 +1,84 @@
+{
+  "titulo": "¿Cuántos metros cuadrados compras con 300.000 €?",
+  "nota": "Tanda 1 del sector (guiones/tanda-sector-1.md, guion 1). Cierre neutro: tras la última frase, el logo en silencio. Cada fragmento es un subtítulo. Datos: Ministerio de Vivienda, valor tasado de vivienda libre de hasta cinco años, 2.º trimestre de 2026 (Málaga 4.140,3 · Barcelona 5.109,8 · Madrid 6.205,3 €/m²). Los planos son de ejemplo.",
+  "fragmentos": [
+    {
+      "n": 1,
+      "escena": 1,
+      "texto": "¿Cuántos metros cuadrados compras con trescientos mil euros?",
+      "pausa": 0.5
+    },
+    {
+      "n": 2,
+      "escena": 1,
+      "texto": "Vivienda nueva, según las tasaciones oficiales.",
+      "pausa": 0.5
+    },
+    {
+      "n": 3,
+      "escena": 2,
+      "texto": "En Málaga, unos setenta y dos metros.",
+      "pausa": 0.2
+    },
+    {
+      "n": 4,
+      "escena": 2,
+      "texto": "Dos dormitorios, salón y terraza.",
+      "pausa": 0.5
+    },
+    {
+      "n": 5,
+      "escena": 3,
+      "texto": "En Barcelona, unos cincuenta y nueve.",
+      "pausa": 0.2
+    },
+    {
+      "n": 6,
+      "escena": 3,
+      "texto": "Dos dormitorios, pero más justos.",
+      "pausa": 0.5
+    },
+    {
+      "n": 7,
+      "escena": 4,
+      "texto": "Y en Madrid, unos cuarenta y ocho.",
+      "pausa": 0.2
+    },
+    {
+      "n": 8,
+      "escena": 4,
+      "texto": "Un dormitorio.",
+      "pausa": 0.5
+    },
+    {
+      "n": 9,
+      "escena": 5,
+      "texto": "Mismo dinero: veinticuatro metros de diferencia.",
+      "pausa": 0.2
+    },
+    {
+      "n": 10,
+      "escena": 5,
+      "texto": "Casi un salón entero.",
+      "pausa": 0.5
+    },
+    {
+      "n": 11,
+      "escena": 6,
+      "texto": "Y ojo: son metros construidos, con las paredes dentro.",
+      "pausa": 0.2
+    },
+    {
+      "n": 12,
+      "escena": 6,
+      "texto": "Los útiles, los que pisas, son menos.",
+      "pausa": 0.3
+    },
+    {
+      "n": 13,
+      "escena": 6,
+      "texto": "Y todo, antes de impuestos.",
+      "pausa": 2.0
+    }
+  ]
+}

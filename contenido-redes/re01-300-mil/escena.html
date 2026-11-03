@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>300.000 € · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 55%; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+.ln { fill: none; stroke: var(--ink); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 33px/1.22 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 24px; right: 24px; text-align: center; font: 400 58px/1.04 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 21px/1 "Hanken Grotesk"; padding: 13px 18px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.chip.mal { color: var(--stamp); }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; font: 600 15px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; }
+.tag.dark { color: var(--ink-3); }
+.ciudad { position: absolute; left: 0; right: 0; top: 230px; text-align: center; font: 400 54px/1 Gloock; }
+.precio { position: absolute; left: 0; right: 0; top: 294px; text-align: center; font: 600 18px "Hanken Grotesk"; color: var(--ink-3); }
+.precio b { color: var(--accent); font-weight: 800; }
+#serie { position: absolute; left: 0; right: 0; top: 74px; text-align: center; z-index: 50; font: 700 16px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+#sello { position: absolute; left: 270px; top: 432px; z-index: 40; padding: 14px 26px; border: 6px solid var(--stamp); border-radius: 12px; color: var(--stamp); background: rgb(255 255 255 / .82); font: 800 40px/1 "Hanken Grotesk"; letter-spacing: .06em; white-space: nowrap; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · la pregunta y el fajo de billetes -->
+  <div class="sc" id="s1">
+    <div class="big" id="b1" style="top:236px;font-size:48px">¿Cuántos m² compras con 300.000 €?</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="fajo"></g></svg>
+    <div class="abs" id="cifra" style="left:0;right:0;top:612px;text-align:center;font:400 76px/1 Gloock">300.000 €</div>
+    <div class="chip" id="chipNueva" style="left:50%;top:600px;opacity:0">Vivienda de hasta 5 años</div>
+    <div class="chip ok" id="chipTasa" style="left:50%;top:664px;opacity:0">Tasación oficial · Ministerio de Vivienda</div>
+  </div>
+
+  <!-- 2 · Málaga -->
+  <div class="sc" id="s2" data-fijo="1">
+    <div class="ciudad">Málaga</div>
+    <div class="precio"><b>4.140 €/m²</b> · vivienda de hasta 5 años</div>
+    <div class="chip" id="chip2" style="left:50%;top:770px;opacity:0">2 dormitorios · salón · terraza</div>
+  </div>
+
+  <!-- 3 · Barcelona -->
+  <div class="sc" id="s3" data-fijo="1">
+    <div class="ciudad">Barcelona</div>
+    <div class="precio"><b>5.110 €/m²</b> · vivienda de hasta 5 años</div>
+    <div class="chip mal" id="chip3" style="left:50%;top:770px;opacity:0">2 dormitorios, más justos · sin terraza</div>
+  </div>
+
+  <!-- 4 · Madrid -->
+  <div class="sc" id="s4" data-fijo="1">
+    <div class="ciudad">Madrid</div>
+    <div class="precio"><b>6.205 €/m²</b> · vivienda de hasta 5 años</div>
+    <div class="chip mal" id="chip4" style="left:50%;top:770px;opacity:0">1 dormitorio</div>
+  </div>
+
+  <!-- el plano que se encoge (persiste de la escena 2 a la 4) -->
+  <div class="abs" id="planoL" style="inset:0;opacity:0;z-index:10">
+    <svg class="full" viewBox="0 0 540 960"><g id="plano"></g></svg>
+    <div class="abs" id="cnt" style="left:0;right:0;top:688px;text-align:center;font:400 66px/1 Gloock;opacity:0">72 m²</div>
+    <div class="tag dark" style="top:846px">Distribución de ejemplo</div>
+  </div>
+
+  <!-- 5 · los tres, a la misma escala -->
+  <div class="sc" id="s5" data-fijo="1">
+    <svg class="full" viewBox="0 0 540 960">
+      <g id="mini"></g>
+      <g id="cruce"></g>
+    </svg>
+    <div class="chip" id="chipSalon" style="left:50%;top:738px;opacity:0">≈ casi un salón entero</div>
+    <div class="tag dark" style="top:812px">Distribuciones de ejemplo · misma escala</div>
+  </div>
+
+  <!-- 6 · construidos, útiles e impuestos -->
+  <div class="sc" id="s6" data-fijo="1">
+    <svg class="full" viewBox="0 0 540 960"><g id="plano6"></g></svg>
+    <div class="abs" id="lbCons" style="left:0;right:0;top:590px;text-align:center;font:400 46px/1 Gloock;opacity:0">48 m² construidos</div>
+    <div class="abs" id="lbUtil" style="left:0;right:0;top:590px;text-align:center;font:400 46px/1 Gloock;opacity:0">útiles: menos</div>
+    <div class="chip mal" id="chipPared" style="left:50%;top:658px;opacity:0">paredes incluidas</div>
+    <div class="chip ok" id="chipPisas" style="left:50%;top:658px;opacity:0">solo lo que pisas</div>
+    <div id="sello">SIN IMPUESTOS</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:795px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:876px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="serie">Tasaciones oficiales · 2.º trim. 2026</div>
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => Array.from(document.querySelectorAll(s));
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+const INK = '#0E1B2B', INK3 = '#4F6175', ACC = '#1F5F9E', STAMP = '#B3261E', SOFT = '#E4EDF6';
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+
+// ---------- los tres pisos de ejemplo (metros; ejes de muro) ----------
+// W × D: huella; xs: ancho del salón-cocina; t: fondo de la terraza (bajo el salón); y1, y2: fin del dorm. 1 y del baño
+const PISOS = {
+  malaga:    { W: 9.0, D: 8.0, xs: 5.0, t: 1.6, y1: 3.6, y2: 5.0 },  // 72 m²
+  barcelona: { W: 8.4, D: 7.0, xs: 4.6, t: 0.0, y1: 3.2, y2: 4.6 },  // 58,8 m²
+  madrid:    { W: 8.0, D: 6.0, xs: 4.4, t: 0.0, y1: 4.0, y2: 6.0 },  // 48 m²
+};
+const mezcla = (a, b, k) => { const r = {}; for (const n in a) r[n] = lerp(a[n], b[n], k); return r; };
+
+// tramo de muro recto con huecos (a lo largo del eje, en metros)
+function tramoH(y, xa, xb, huecos) { let d = '', x = xa;
+  for (const [a, b] of huecos.filter(([a, b]) => b - a > .05 && a > xa && b < xb).sort((p, q) => p[0] - q[0])) { if (a > x) d += `M${x} ${y}H${a}`; x = b; }
+  return xb - x > .01 ? d + `M${x} ${y}H${xb}` : d; }
+function tramoV(x, ya, yb, huecos) { let d = '', y = ya;
+  for (const [a, b] of huecos.filter(([a, b]) => b - a > .05 && a > ya && b < yb).sort((p, q) => p[0] - q[0])) { if (a > y) d += `M${x} ${y}V${a}`; y = b; }
+  return yb - y > .01 ? d + `M${x} ${y}V${yb}` : d; }
+
+// dibuja un piso en metros dentro de un <g transform="translate scale">: devuelve el SVG en texto
+function piso(P, S, o = {}) {
+  const { W, D, xs, t, y1, y2 } = P, fy = D - t, f = (v) => +v.toFixed(3);
+  const muro = o.muro || INK, mop = o.muroOp ?? 1, k = 1 / S;
+  const hD2 = D - y2, hB = y2 - y1;
+  let s = '';
+  // suelos (mientras se dibuja el plano, aparecen con los muros)
+  const so = o.dibujo != null ? f(clamp(o.dibujo * 1.6)) : 1;
+  s += `<rect x="0" y="0" width="${f(W)}" height="${f(D)}" fill="#fff" opacity="${so}"/>`;
+  if (t > .05) s += `<rect x="0" y="${f(fy)}" width="${f(xs)}" height="${f(t)}" fill="${SOFT}" opacity="${so}"/>`;
+  if (o.huella) s += `<rect x="-.15" y="-.15" width="${f(W + .3)}" height="${f(D + .3)}" fill="${ACC}" opacity="${o.huella}"/>`;
+  const hl = o.hl || {}, zona = (x, y, w, h, c, a) => a > 0 && w > .05 && h > .05 ? `<rect x="${f(x)}" y="${f(y)}" width="${f(w)}" height="${f(h)}" fill="${c}" opacity="${a}"/>` : '';
+  s += zona(0, 0, xs, fy, ACC, (hl.salon || 0) * .22);
+  s += zona(0, fy, xs, t, ACC, (hl.terraza || 0) * .3);
+  s += zona(xs, 0, W - xs, y1, ACC, (hl.dorm1 || 0) * .22);
+  s += zona(xs, y2, W - xs, hD2, STAMP, (hl.dorm2 || 0) * .16);
+  if (o.utiles) [[0, 0, xs, fy, .15, .06], [xs, 0, W - xs, y1, .06, .15], [xs, y1, W - xs, hB, .06, .15], [xs, y2, W - xs, hD2, .06, .15]].forEach(([x, y, w, h, a, b]) => {
+    if (w > .4 && h > .4) s += `<rect x="${f(x + a)}" y="${f(y + .15)}" width="${f(w - a - b)}" height="${f(h - .15 - .06)}" fill="${ACC}" opacity="${o.utiles * .3}"/>`; });
+  // huecos de ventana y puertas
+  const vTop = [[.9, 2.4], [xs + .9, W - .9]];
+  const vDer = []; if (hB > 1.0) vDer.push([y1 + .35, y2 - .35]); if (hD2 > 1.6) vDer.push([y2 + .6, D - .6]);
+  const vFac = [[.6, xs - .6]];
+  const puertas = [[y1 - .9, y1 - .1]]; if (hB >= 1.0) puertas.push([y1 + .2, y1 + .9]); if (fy - y2 >= 1.0 && hD2 >= 1.0) puertas.push([y2 + .15, y2 + .95]);
+  // cristales (debajo de los muros)
+  let cr = '';
+  vTop.forEach(([a, b]) => cr += `M${f(a)} -.05H${f(b)}M${f(a)} .05H${f(b)}`);
+  vDer.forEach(([a, b]) => cr += `M${f(W - .05)} ${f(a)}V${f(b)}M${f(W + .05)} ${f(a)}V${f(b)}`);
+  vFac.forEach(([a, b]) => cr += `M${f(a)} ${f(fy - .05)}H${f(b)}M${f(a)} ${f(fy + .05)}H${f(b)}`);
+  const lo = o.lineas ?? 1;
+  s += `<path d="${cr}" stroke="${ACC}" stroke-width="${f(1.3 * k)}" fill="none" opacity="${lo}"/>`;
+  if (t > .05) s += `<path d="M0 ${f(fy)}V${f(D)}H${f(xs)}" stroke="${INK}" stroke-width="${f(1.6 * k)}" stroke-dasharray="${f(5 * k)} ${f(4 * k)}" fill="none" opacity="${lo}"/>`;
+  // puertas: hoja abierta hacia la derecha y su arco
+  let pu = '';
+  puertas.forEach(([a, b]) => { const w = b - a; pu += `M${f(xs)} ${f(b)}H${f(xs + w)}A${f(w)} ${f(w)} 0 0 0 ${f(xs)} ${f(a)}`; });
+  s += `<path d="${pu}" stroke="${INK3}" stroke-width="${f(1.3 * k)}" fill="none" opacity="${lo}"/>`;
+  // muros
+  let ext = tramoH(0, 0, W, vTop) + tramoV(W, 0, D, vDer) + tramoV(0, 0, fy, []) + tramoH(D, xs, W, []) + tramoH(fy, 0, xs, vFac);
+  if (t > .05) ext += tramoV(xs, fy, D, []);
+  let int = tramoV(xs, 0, fy, puertas) + tramoH(y1, xs, W, []);
+  if (hD2 > .05) int += tramoH(y2, xs, W, []);
+  const dash = o.dibujo != null ? `pathLength="1" stroke-dasharray="1" stroke-dashoffset="${f(1 - o.dibujo)}"` : '';
+  s += `<path d="${int}" stroke="${muro}" stroke-width=".12" stroke-linecap="square" fill="none" opacity="${mop}" ${dash}/>`;
+  s += `<path d="${ext}" stroke="${muro}" stroke-width=".3" stroke-linecap="square" fill="none" opacity="${mop}" ${dash}/>`;
+  // rótulos
+  if (o.rotulos) {
+    const fs = clamp(S * .4, 10, 17) * k, fa = fs * .82, ro = o.rotulos;
+    const rot = (x, y, txt, area, a, color) => a <= 0 ? '' :
+      `<g opacity="${f(a * ro)}"><text x="${f(x)}" y="${f(y)}" text-anchor="middle" style="font:700 ${f(fs)}px 'Hanken Grotesk';fill:${color || INK}">${txt}</text>` +
+      (area ? `<text x="${f(x)}" y="${f(y + fs * 1.25)}" text-anchor="middle" style="font:600 ${f(fa)}px 'Hanken Grotesk';fill:${color || INK3}">${Math.round(area)} m²</text>` : '') + '</g>';
+    s += rot(xs / 2, fy / 2, 'Salón-cocina', xs * fy, 1);
+    s += rot(xs / 2, fy + t / 2 + fs * .35, 'Terraza', 0, clamp((t - .7) / .5));
+    s += rot((xs + W) / 2, y1 / 2, 'Dorm. 1', (W - xs) * y1, 1, hl.dorm1 > .5 ? ACC : null);
+    s += rot((xs + W) / 2, (y1 + y2) / 2 + fs * .3, 'Baño', 0, clamp((hB - .9) / .4));
+    s += rot((xs + W) / 2, (y2 + D) / 2 - fs * .2, 'Dorm. 2', (W - xs) * hD2, clamp((hD2 - 1.2) / .6), hl.dorm2 > .5 ? STAMP : null);
+  }
+  return s;
+}
+const ponPiso = (g, P, S, x0, y0, o) => { g.setAttribute('transform', `translate(${x0} ${y0}) scale(${S})`); g.innerHTML = piso(P, S, o); };
+
+// fajo de billetes
+function billete(parent, cx, cy, rot) {
+  const g = el('g', { transform: `translate(${cx} ${cy}) rotate(${rot})` }, parent);
+  el('rect', { x: -140, y: -70, width: 280, height: 140, rx: 10, fill: '#fff', stroke: INK, 'stroke-width': 2.4 }, g);
+  el('rect', { x: -128, y: -58, width: 256, height: 116, rx: 6, fill: 'none', stroke: ACC, 'stroke-width': 1.4 }, g);
+  el('circle', { cx: 72, cy: 0, r: 36, fill: SOFT, stroke: ACC, 'stroke-width': 1.6 }, g);
+  const e = el('text', { x: 72, y: 15, 'text-anchor': 'middle', style: "font:400 42px Gloock;fill:#1F5F9E" }, g); e.textContent = '€';
+  el('path', { d: 'M-108 -30H-20M-108 -12H-40M-108 6H-58', stroke: INK, 'stroke-width': 1.8, 'stroke-linecap': 'round', opacity: .45 }, g);
+  return g;
+}
+
+let G = {};
+function build() {
+  const f = $('#fajo');
+  billete(f, 270, 506, -7); billete(f, 270, 496, 5); const top = billete(f, 270, 486, 0);
+  el('rect', { x: -24, y: -76, width: 48, height: 152, rx: 4, fill: ACC, stroke: INK, 'stroke-width': 2 }, top);
+  G.plano = $('#plano');
+  G.mini = [0, 1, 2].map(() => el('g', {}, $('#mini')));
+  G.miniTxt = [['Málaga', '72 m²'], ['Barcelona', '59 m²'], ['Madrid', '48 m²']].map(([c, m]) => {
+    const g = el('g', { opacity: 0 }, $('#mini'));
+    el('text', { 'text-anchor': 'middle', y: 0, style: "font:700 16px 'Hanken Grotesk';fill:#0E1B2B" }, g).textContent = c;
+    el('text', { 'text-anchor': 'middle', y: 32, style: 'font:400 28px Gloock;fill:#0E1B2B' }, g).textContent = m;
+    return g; });
+  G.cruceMad = el('g', {}, $('#cruce'));
+  G.cruceL = el('path', { fill: STAMP, 'fill-opacity': .16, stroke: STAMP, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, $('#cruce'));
+  G.cruceMal = el('rect', { fill: 'none', stroke: ACC, 'stroke-width': 2.2, 'stroke-dasharray': '8 6' }, $('#cruce'));
+  G.cruceTxt = el('text', { 'text-anchor': 'middle', style: 'font:400 32px Gloock;fill:#B3261E' }, $('#cruce')); G.cruceTxt.textContent = '24 m²';
+  G.p6 = $('#plano6');
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+const chip = (s, t, a, centrado = true) => { const p = pop(t, a, .2); $(s).style.opacity = p.o; $(s).style.transform = `${centrado ? 'translateX(-50%) ' : ''}scale(${p.s})`; };
+const pulso = (t, a, d = 1.1) => Math.sin(Math.PI * prog(t, a, a + d));
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .08);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .08);
+    s.style.opacity = inn * (1 - outp);
+    s.style.transform = s.dataset.fijo ? 'none' : `scale(${1 + .05 * prog(t, e.start, e.end + .1)})`;
+  });
+  const F = {}; TL.fragmentos.forEach((f) => F[f.n] = f);
+
+  // ---- 1 · la pregunta (portada) y el fajo; con la frase 2 sube y salen las etiquetas ----
+  { const sube = ease(prog(t, F[2].start - .15, F[2].start + .35));
+    $('#b1').style.opacity = 1 - sube;
+    $('#fajo').setAttribute('transform', `translate(0 ${-150 * sube + -8 * Math.sin(Math.PI * prog(t, .2, 1.2))})`);
+    $('#cifra').style.transform = `translateY(${-150 * sube}px)`;
+    chip('#chipNueva', t, C.nueva + .1); chip('#chipTasa', t, C.tasacion); }
+
+  // ---- 2 a 4 · el plano: se dibuja en Málaga y se encoge en Barcelona y Madrid ----
+  { const k1 = ease(prog(t, C.barcelona, C.barcelona + .7)), k2 = ease(prog(t, C.madrid, C.madrid + .7));
+    const P = mezcla(mezcla(PISOS.malaga, PISOS.barcelona, k1), PISOS.madrid, k2);
+    const S = 42, dib = ease(prog(t, C.malaga + .05, C.malaga + 1.0));
+    ponPiso(G.plano, P, S, 270 - P.W * S / 2, 336, {
+      dibujo: dib, lineas: prog(t, C.malaga + .7, C.malaga + 1.1), rotulos: prog(t, C.malaga + .8, C.malaga + 1.2),
+      hl: { salon: pulso(t, C.salon - .05), terraza: pulso(t, C.terraza - .05), dorm2: pulso(t, C.justos - .2, 1.4) * (1 - k2), dorm1: pulso(t, C.undorm - .05, 1.2) } });
+    $('#planoL').style.opacity = prog(t, ES[2].start, ES[2].start + .1) * (1 - prog(t, ES[5].start, ES[5].start + .08));
+    const c = pop(t, C.m72 - .1, .2); $('#cnt').style.opacity = c.o; $('#cnt').style.transform = `scale(${c.s})`;
+    $('#cnt').textContent = `${Math.round(P.W * P.D)} m²`;
+    chip('#chip2', t, C.dorms + .1); chip('#chip3', t, C.justos - .1); chip('#chip4', t, C.undorm); }
+
+  // ---- 5 · los tres a la misma escala, y Madrid dentro de Málaga ----
+  { const S = 16, xs = [47, 211, 365], y0 = 262;
+    ['malaga', 'barcelona', 'madrid'].forEach((n, i) => { const P = PISOS[n], a = pop(t, C.comparar + i * .12, .2);
+      ponPiso(G.mini[i], P, S, xs[i], y0, { lineas: .8 });
+      G.mini[i].setAttribute('opacity', a.o);
+      G.miniTxt[i].setAttribute('transform', `translate(${xs[i] + P.W * S / 2} 414)`); G.miniTxt[i].setAttribute('opacity', a.o); });
+    const S2 = 28, X = 270 - 9 * S2 / 2, Y = 488, ap = prog(t, C.veinticuatro - .35, C.veinticuatro - .05);
+    ponPiso(G.cruceMad, PISOS.madrid, S2, X, Y, { lineas: .8 }); G.cruceMad.setAttribute('opacity', ap);
+    Object.entries({ x: X, y: Y, width: 9 * S2, height: 8 * S2 }).forEach(([k, v]) => G.cruceMal.setAttribute(k, v));
+    G.cruceMal.setAttribute('opacity', ap);
+    const L = (x, y) => `${X + x * S2} ${Y + y * S2}`;
+    G.cruceL.setAttribute('d', `M${L(8, 0)}L${L(9, 0)}L${L(9, 8)}L${L(0, 8)}L${L(0, 6)}L${L(8, 6)}Z`);
+    const l = prog(t, C.veinticuatro, C.veinticuatro + .3); G.cruceL.setAttribute('opacity', l);
+    const tx = pop(t, C.veinticuatro + .1, .2); G.cruceTxt.setAttribute('x', X + 4 * S2); G.cruceTxt.setAttribute('y', Y + 7 * S2 + 11);
+    G.cruceTxt.setAttribute('opacity', tx.o);
+    chip('#chipSalon', t, C.unsalon); }
+
+  // ---- 6 · construidos (con paredes), útiles e impuestos ----
+  { const S = 44, cons = prog(t, C.construidos - .2, C.construidos + .2), par = prog(t, C.paredes - .1, C.paredes + .2), util = prog(t, C.utiles, C.utiles + .4);
+    const rojo = par * (1 - util);
+    ponPiso(G.p6, PISOS.madrid, S, 270 - 8 * S / 2, 300, {
+      rotulos: 1, huella: .2 * cons * (1 - util), utiles: util,
+      muro: rojo > .5 ? STAMP : INK, muroOp: 1 - .8 * util });
+    $('#lbCons').style.opacity = cons * (1 - util); $('#lbUtil').style.opacity = util;
+    chip('#chipPared', t, C.paredes); $('#chipPared').style.opacity *= 1 - util;
+    chip('#chipPisas', t, C.menos - .3);
+    const se = prog(t, C.impuestos + .02, C.impuestos + .18);
+    $('#sello').style.opacity = se; $('#sello').style.transform = `translate(-50%, -50%) rotate(-8deg) scale(${1.6 - .6 * out(se)})`;
+    $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6); }
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

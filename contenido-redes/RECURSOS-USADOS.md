@@ -19,6 +19,7 @@ Imágenes en `homeview3d-web/public/assets/` (`home/img/`, `img/`, `hero/`, `vid
 | 02 · Más leads | `r-azotea`, `r-dormitorio`, `r-bano`, `r-jardin` (estancias de la casa 5 que tapan los agujeros). Dibujados nuevos: embudo con contactos que caen, cuatro agujeros con preguntas, fichas de CRM «Sin respuesta» |
 | pq01 · Planos azules (serie «¿Por qué…?») | `villa_despiece_1`, `villa_despiece_2` y `villa_despiece_3` (suelos, muros y muebles: encajan una sobre otra y la casa se monta por capas en el giro). Dibujados nuevos: plano azul con rejilla y cajetín, calco a mano con lápiz y reloj, telescopio de 1842, papel con sales de hierro y sol con rayos, calco sobre el papel, bandeja de agua, barras «diez a uno», grúa con edificio y tablero de obra, ficha de diccionario «blueprint», fotocopiadora y ordenador, plano que se inclina |
 | pq02 · La tetera (serie «¿Por qué…?») | `sw-golf` (la casa por plantas, en el giro). Dibujados nuevos: tetera de Utah (de perfil y en malla), terminal de 1975 con un cubo girando, tazas de té con vapor, papel milimetrado con puntos que pasan a una pantalla, cuatro ventanas de programas 3D, tarjetas «Toy Story» y «Los Simpson» (solo texto), la tetera real frente a la aplastada con una prensa, vitrina de museo, plano con escalera en papel milimetrado |
+| re01 · 300.000 € (tanda del sector) | Ninguna imagen de HomeView. Dibujados nuevos: fajo de billetes con faja, plano de un piso de ejemplo que se dibuja y se encoge (72 → 59 → 48 m²), tres planos a la misma escala, Madrid dentro de Málaga con la diferencia en rojo, paredes en rojo («construidos») y sello «SIN IMPUESTOS» |
 
 Repetidos entre 03 y 01: plano en líneas, pantallas del móvil, promoción de día y de noche y la casa reservada.
 A partir de ahora quedan **gastados** y no se vuelven a usar.
@@ -53,4 +54,5 @@ burbuja de WhatsApp (01), «Pedir llamada» con ding (03), «Casa 3 · Reservada
 domingo con la tablet y dossiers en PDF (06), correo del lunes (06), reto con cuenta atrás (04), embudo con agujeros y fichas de CRM (02),
 plano azul y cianotipia, calcar a mano, grúa y edificio que sube, entrada de diccionario, fotocopiadora y ordenador, el plano que se
 inclina y se levanta en 3D (pq01), papel milimetrado con puntos que pasan a una pantalla, ventanas de programas, la prensa que
-aplasta, la vitrina de museo (pq02).
+aplasta, la vitrina de museo (pq02), fajo de billetes, el plano que se encoge de ciudad en ciudad, un plano dentro de otro con la
+diferencia en rojo, el sello «sin impuestos» (re01; la plantilla de comparativa sí se puede repetir con otras cifras).

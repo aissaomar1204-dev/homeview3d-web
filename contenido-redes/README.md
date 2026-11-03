@@ -44,6 +44,25 @@ Lo que cambia respecto a la serie de promotoras (decidido por Álvaro el 2026-11
 | pq03 | El dibujo técnico | Idea (anunciado en el caption del pq02) | | Monge y la geometría descriptiva, secreto militar francés |
 | pq04 | La escalera cómoda | Idea | | La regla de Blondel (1675) y la norma española (por comprobar) |
 | pq05 | El plano más antiguo | Idea | | La estatua de Gudea con el plano de un templo (Louvre); sin decir «el más antiguo» |
+| pq06 | El metro | Idea (por comprobar) | | Francia lo sacó midiendo la Tierra (1792-1798); la medición acababa en Barcelona y Méchain escondió un error. Giro: los planos se dibujan en metros |
+| pq07 | Los triángulos | Idea (por comprobar) | | Por qué todo lo 3D está hecho de triángulos: tres puntos siempre quedan en un mismo plano. Giro: la casa, en malla |
+
+## Tanda del sector (para crecer, desde noviembre de 2026)
+
+Vídeos de vivienda nueva para un público más amplio: comparativas, rankings, lujo, inversión (solo cómo se calcula),
+debate y humor. Guiones en `guiones/tanda-sector-1.md`. Carpetas `reNN-titulo` (numeración provisional).
+
+Lo que cambia (Álvaro, 2026-11-03): todo se dibuja con código, como en Wodlog, y no hace falta que haya imágenes de
+HomeView. Cierre neutro en todos, también en el debate y el humor: la pregunta va en el caption.
+
+| Nº | Título | Estado | Duración | Ángulo |
+| --- | --- | --- | --- | --- |
+| re01 | 300.000 € | Hecho | 0:33 | Los metros que da el mismo dinero en Málaga, Barcelona y Madrid (tasación oficial, 2.º trim. 2026) |
+| re02 | El ranking | Guion | | Los 5 municipios con la vivienda más cara (tasación oficial) |
+| re03 | La villa | Guion | | Qué hace cara una villa: suelo, vistas, metros y acabados (SIMULACIÓN) |
+| re04 | La rentabilidad | Guion | | Bruta y neta de un piso alquilado, con cifras de SIMULACIÓN; no es una recomendación |
+| re05 | La terraza al sur | Guion | | El mismo piso con cuatro orientaciones |
+| re06 | El diccionario | Guion | | Lo que de verdad dicen las palabras de los anuncios |
 
 ## Qué hay en cada carpeta de vídeo
 
