@@ -40,8 +40,9 @@ Gancho: el mismo dinero da 72 m² en Málaga y 48 en Madrid. Deja hecha la plant
 
 Cuentas: 300.000 / 4.140,3 = 72,5 m² (Málaga); / 5.109,8 = 58,7 m² (Barcelona); / 6.205,3 = 48,3 m² (Madrid).
 Columna «hasta cinco años de antigüedad». Tasaciones de esa columna: Málaga 218, Barcelona 334, Madrid 847.
-Por comprobar en la metodología del Ministerio (la web bloquea la descarga): que el metro es construido. Lo dice
-arquitasa.com/valor-tasado-vivienda.
+Confirmado: el metro es construido. Metodología oficial del Ministerio (marzo de 2025, apartado 6.3.1, pág. 10):
+«cociente entre el valor de tasación y la superficie construida de la vivienda». Copia oficial en
+https://www.larioja.org/larioja-client/cm/estadistica/images?idMmedia=1756893 (la web del Ministerio bloquea la descarga).
 
 ---
 

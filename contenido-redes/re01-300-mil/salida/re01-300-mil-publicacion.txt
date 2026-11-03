@@ -70,7 +70,7 @@ Notas LinkedIn:
 ----------------------------------------------------------------
 Fuente: Ministerio de Vivienda y Agenda Urbana, Estadística de Valor Tasado de Vivienda, tabla 4 (municipios de más de 25.000 habitantes), 2.º trimestre de 2026, vivienda libre de hasta cinco años: Málaga 4.140 €/m², Barcelona 5.110 €/m², Madrid 6.205 €/m². Metros = 300.000 € ÷ €/m².
 https://apps.fomento.gob.es/BoletinOnline2/sedal/35103500.XLS
-El valor tasado no es el precio de venta. Los planos son distribuciones de ejemplo.
+El valor es por metro cuadrado construido (metodología del Ministerio, apartado 6.3.1) y no es el precio de venta. Los planos son distribuciones de ejemplo.
 
 
 ----------------------------------------------------------------
@@ -137,6 +137,6 @@ C: «En Madrid, trescientos mil euros son un dormitorio.»
 - Que es el precio de venta: es el valor tasado (tasaciones de vivienda libre de hasta cinco años).
 - Cifras distintas de las de la fuente, ni redondeos que cambien los metros (72, 59, 48).
 - Que los planos son reales: son distribuciones de ejemplo y llevan el rótulo.
-- Por confirmar: que el valor tasado por metro se calcula sobre superficie construida. Lo dice Arquitasa (sociedad de tasación); la nota metodológica del Ministerio no se pudo descargar (la web la bloquea). Confirmarlo antes de publicar o, si no se puede, quitar «construidos» del caption.
+- Confirmado (2026-11-03): el valor tasado es por metro construido. La metodología oficial del Ministerio (marzo de 2025, apartado 6.3.1, página 10) lo calcula como «cociente entre el valor de tasación y la superficie construida de la vivienda». Copia oficial: https://www.larioja.org/larioja-client/cm/estadistica/images?idMmedia=1756893
 - Los datos son del 2.º trimestre de 2026: si al publicar ya hay datos del 3.º, actualizar las cifras y el vídeo.
 - Ni testimonios, ni cifras de ventas, ni «con nosotros…».
