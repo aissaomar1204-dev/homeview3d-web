@@ -64,6 +64,22 @@ HomeView. Cierre neutro en todos, también en el debate y el humor: la pregunta 
 | re05 | La terraza al sur | Guion | | El mismo piso con cuatro orientaciones |
 | re06 | El diccionario | Guion | | Lo que de verdad dicen las palabras de los anuncios |
 
+## Serie «Casas imposibles» (para crecer, desde noviembre de 2026)
+
+Un pueblo o una casa de España por capítulo, de unos 40 s, todo dibujado con código. El giro de cada capítulo es el
+corte de la casa («así es por dentro») y el cierre une la casa con los planos. Cierre neutro: la pregunta («¿Vivirías
+aquí?») va en el caption. Guiones y fuentes en `guiones/casas-imposibles.md`. Carpetas `ciNN-lugar`.
+
+| Nº | Título | Estado | Duración | Ángulo |
+| --- | --- | --- | --- | --- |
+| ci01 | Setenil de las Bodegas | Hecho | 0:46 | Calles enteras bajo la roca, en el cañón del Guadalporcún; «septem nihil» |
+| ci02 | Casas Colgadas de Cuenca | Idea | | Colgadas sobre la hoz del Huécar desde el siglo XV; hoy, museo de arte abstracto (1966) |
+| ci03 | Guadix | Idea | | Unas 2.000 casas cueva a 18-20 °C todo el año (falta fuente oficial) |
+| ci04 | Castellfollit de la Roca | Idea | | Casas al borde de un acantilado de basalto de unos 50 m |
+| ci05 | Pallozas de Os Ancares | Idea | | Casas redondas con techo de paja; personas y animales bajo el mismo techo |
+| ci06 | Alcalá del Júcar | Idea | | Casas cueva que atraviesan la montaña (las fuentes no coinciden en medidas ni fechas) |
+| ci07 | La casa estrecha de Valencia | Idea | | Una fachada de poco más de un metro (sin decir «la más estrecha»: no está comprobado) |
+
 ## Qué hay en cada carpeta de vídeo
 
 | Archivo | Para qué |

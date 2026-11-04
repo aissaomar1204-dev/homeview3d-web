@@ -21,6 +21,7 @@ Imágenes en `homeview3d-web/public/assets/` (`home/img/`, `img/`, `hero/`, `vid
 | pq02 · La tetera (serie «¿Por qué…?») | `sw-golf` (la casa por plantas, en el giro). Dibujados nuevos: tetera de Utah (de perfil y en malla), terminal de 1975 con un cubo girando, tazas de té con vapor, papel milimetrado con puntos que pasan a una pantalla, cuatro ventanas de programas 3D, tarjetas «Toy Story» y «Los Simpson» (solo texto), la tetera real frente a la aplastada con una prensa, vitrina de museo, plano con escalera en papel milimetrado |
 | re01 · 300.000 € (tanda del sector) | Ninguna imagen de HomeView. Dibujados nuevos: fajo de billetes con faja, plano de un piso de ejemplo que se dibuja y se encoge (72 → 59 → 48 m²), tres planos a la misma escala, Madrid dentro de Málaga con la diferencia en rojo, paredes en rojo («construidos») y sello «SIN IMPUESTOS» |
 | re02 · El ranking (tanda del sector) | Ninguna imagen de HomeView. Dibujados nuevos: mapa de España en línea con Baleares y Canarias en recuadro, cámara que viaja (norte, Baleares, Costa del Sol), casas en el mapa con la altura según el precio, tabla del top 5 con huecos que se llenan, islas que se encienden, dos baldosas de 1 m² con columnas (una diez veces más alta) |
+| ci01 · Setenil (serie «Casas imposibles») | Ninguna imagen de HomeView. Dibujados nuevos: casa blanca bajo una roca, mapa pequeño con chincheta, corte del cañón con casas bajo la roca y zoom, lado del sol y de la sombra, corte de una casa con la roca de techo y la fachada, línea del tiempo de 5.000 años con la pirámide de Guiza, torreón con siete flechas, casa con la montaña detrás (tachada) y la roca que baja a hacerle de techo, plano de una calle con la roca encima |
 
 Repetidos entre 03 y 01: plano en líneas, pantallas del móvil, promoción de día y de noche y la casa reservada.
 A partir de ahora quedan **gastados** y no se vuelven a usar.
@@ -58,4 +59,6 @@ inclina y se levanta en 3D (pq01), papel milimetrado con puntos que pasan a una 
 aplasta, la vitrina de museo (pq02), fajo de billetes, el plano que se encoge de ciudad en ciudad, un plano dentro de otro con la
 diferencia en rojo, el sello «sin impuestos» (re01; la plantilla de comparativa sí se puede repetir con otras cifras), el mapa con casas que
 crecen según el precio y la tabla con huecos, las columnas sobre baldosas de 1 m² (re02; la plantilla de ranking sí se puede
-repetir con otros datos).
+repetir con otros datos), el corte del cañón con la cámara que
+entra en una calle, la línea del tiempo hacia atrás, la torre con flechas que rebotan (ci01; el corte «así es por dentro»
+y el plano con la roca se repiten como plantilla de la serie).

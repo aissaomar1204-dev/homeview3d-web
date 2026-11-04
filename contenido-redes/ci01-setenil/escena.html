@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Setenil · escena</title>
+<style>
+@font-face { font-family: "Gloock"; src: url("assets/fonts/gloock.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Hanken Grotesk"; src: url("assets/fonts/hanken-grotesk.woff2") format("woff2"); font-weight: 100 900; }
+:root { --sky: #D3E1EE; --ink: #0E1B2B; --ink-3: #4F6175; --accent: #1F5F9E; --stamp: #B3261E; --paper: #fff; --soft: #E4EDF6; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 540px; height: 960px; overflow: hidden; background: var(--sky); }
+#stage {
+  position: relative; width: 540px; height: 960px; overflow: hidden; background: var(--sky);
+  background-image: linear-gradient(rgb(14 27 43 / .045) 1px, transparent 1px), linear-gradient(90deg, rgb(14 27 43 / .045) 1px, transparent 1px);
+  background-size: 30px 30px; background-position: 15px 15px;
+  font-family: "Hanken Grotesk", Arial, sans-serif; color: var(--ink);
+}
+.sc { position: absolute; inset: 0; opacity: 0; }
+.abs { position: absolute; display: block; }
+svg.full { position: absolute; inset: 0; width: 540px; height: 960px; overflow: visible; }
+#canonG path, #canonG rect, #canonG line { vector-effect: non-scaling-stroke; }
+#sub { position: absolute; left: 30px; right: 30px; top: 128px; z-index: 50; text-align: center; font: 700 30px/1.2 "Hanken Grotesk"; color: var(--ink); }
+#sub span { opacity: 0; }
+#sub span.on { opacity: 1; }
+.big { position: absolute; left: 24px; right: 24px; text-align: center; font: 400 50px/1.05 "Gloock", Georgia, serif; color: var(--ink); z-index: 20; }
+.chip { position: absolute; z-index: 30; background: var(--paper); color: var(--ink); white-space: nowrap; font: 700 19px/1 "Hanken Grotesk"; padding: 12px 17px; border-radius: 999px; box-shadow: 0 10px 24px -10px rgb(14 27 43 / .55), 0 0 0 1px rgb(14 27 43 / .08); }
+.chip.ok { background: var(--accent); color: #fff; }
+.chip.mal { color: var(--stamp); }
+.tag { position: absolute; left: 0; right: 0; text-align: center; z-index: 25; font: 600 14px "Hanken Grotesk"; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+#serie { position: absolute; left: 0; right: 0; top: 74px; text-align: center; z-index: 50; font: 700 16px "Hanken Grotesk"; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 · la pregunta, la casa bajo la roca y el mapa -->
+  <div class="sc" id="s1">
+    <div class="big" id="b1" style="top:112px">¿Vivirías dentro de una cueva?</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="cueva"></g><g id="mapa"></g></svg>
+    <div class="chip ok" id="chipPueblo" style="left:50%;top:738px;opacity:0">Setenil de las Bodegas · Cádiz</div>
+  </div>
+
+  <!-- 2 · el cañón del río y las calles bajo la roca -->
+  <div class="sc" id="s2">
+    <svg class="full" viewBox="0 0 540 960"><defs><clipPath id="clipCanon"><rect x="0" y="222" width="540" height="560"/></clipPath></defs><g clip-path="url(#clipCanon)"><g id="canonG"></g></g></svg>
+    <div class="tag" id="tagRio" style="top:742px;opacity:0">Río Guadalporcún</div>
+    <div class="chip" id="chipRoca" style="left:50%;top:252px;opacity:0">El techo: la roca</div>
+    <div class="chip" id="chipSol" style="left:118px;top:566px;opacity:0">Cuevas del Sol</div>
+    <div class="chip" id="chipSombra" style="left:418px;top:610px;opacity:0">Cuevas de la Sombra</div>
+    <div class="tag" style="top:792px">Dibujo de ejemplo</div>
+  </div>
+
+  <!-- 3 · la casa por dentro -->
+  <div class="sc" id="s3">
+    <svg class="full" viewBox="0 0 540 960"><g id="corte"></g></svg>
+    <div class="chip" id="chipTecho" style="left:230px;top:282px;opacity:0">La roca hace de techo</div>
+    <div class="chip ok" id="chipFachada" style="left:400px;top:668px;opacity:0">Fachada blanca</div>
+    <div class="tag" style="top:742px">Distribución de ejemplo</div>
+  </div>
+
+  <!-- 4 · cinco mil años -->
+  <div class="sc" id="s4">
+    <svg class="full" viewBox="0 0 540 960"><g id="tiempo"></g></svg>
+    <div class="abs" id="cnt5000" style="left:0;right:0;top:300px;text-align:center;font:400 72px/1 Gloock;opacity:0">0 años</div>
+    <div class="chip ok" id="chipFigura" style="left:50%;top:640px;opacity:0">Una figura de hace 5.000 años, hallada en Setenil</div>
+  </div>
+
+  <!-- 5 · el nombre: septem nihil -->
+  <div class="sc" id="s5">
+    <div class="abs" id="nomSetenil" style="left:0;right:0;top:236px;text-align:center;font:400 62px/1 Gloock">Setenil</div>
+    <div class="abs" id="nomSeptem" style="left:0;right:0;top:236px;text-align:center;font:400 54px/1 Gloock;color:#1F5F9E;opacity:0">«Septem nihil»</div>
+    <div class="abs" id="nomTrad" style="left:0;right:0;top:304px;text-align:center;font:700 20px 'Hanken Grotesk';color:#4F6175;opacity:0">Siete veces nada · según la tradición</div>
+    <svg class="full" viewBox="0 0 540 960"><g id="torre"></g><g id="flechas"></g></svg>
+    <div class="chip mal" id="chipIntentos" style="left:50%;top:742px;opacity:0">Intento 1 de 7</div>
+    <div class="tag" id="tagTorre" style="top:712px">Torreón árabe · siglo XII</div>
+  </div>
+
+  <!-- 6 · la montaña no está detrás de la casa: es parte de ella -->
+  <div class="sc" id="s6">
+    <svg class="full" viewBox="0 0 540 960"><defs><clipPath id="clipMonte"><rect x="0" y="222" width="540" height="738"/></clipPath></defs><g clip-path="url(#clipMonte)"><g id="monte"></g></g></svg>
+    <div class="chip ok" id="chipParte" style="left:50%;top:690px;opacity:0">La montaña, parte de la casa</div>
+    <div class="tag" style="top:760px">Dibujo de ejemplo</div>
+  </div>
+
+  <!-- 7 · el plano: primero, la montaña -->
+  <div class="sc" id="s7">
+    <svg class="full" viewBox="0 0 540 960"><g id="plano"></g></svg>
+    <div class="tag" style="top:700px">Plano de ejemplo</div>
+    <img class="abs" id="logo" src="assets/lockup-horizontal.svg" style="left:120px;top:795px;width:300px;opacity:0">
+    <div class="abs" id="url" style="left:0;right:0;top:876px;text-align:center;font:600 20px 'Hanken Grotesk';color:#4F6175;opacity:0">homeview3d.com</div>
+  </div>
+
+  <div id="serie">Casas imposibles · 1</div>
+  <div id="sub"></div>
+</div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const prog = (t, a, b) => clamp((t - a) / (b - a));
+const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const out = (x) => 1 - Math.pow(1 - x, 3);
+const lerp = (a, b, k) => a + (b - a) * k;
+const pop = (t, a, d = .14) => { const p = prog(t, a, a + d); return { o: p, s: .7 + .3 * out(p) + .06 * Math.sin(p * Math.PI) }; };
+const NS = 'http://www.w3.org/2000/svg';
+const INK = '#0E1B2B', INK3 = '#4F6175', ACC = '#1F5F9E', STAMP = '#B3261E', SOFT = '#E4EDF6';
+const ROCA = '#E6D5B3', ROCA2 = '#CDB68A', TEJA = '#B5653A';
+const f1 = (v) => (+v).toFixed(1);
+let TL = null;
+
+function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent && parent.appendChild(e); return e; }
+const poli = (pts, cerrar = true) => 'M' + pts.map((p) => p.map(f1).join(' ')).join('L') + (cerrar ? 'Z' : '');
+// trazo que se dibuja: p de 0 a 1
+const trazo = (e, p) => { e.setAttribute('pathLength', 1); e.setAttribute('stroke-dasharray', 1); e.setAttribute('stroke-dashoffset', f1(1 - p * 1.0001)); };
+// casita blanca de frente (alzado): x, y de la esquina de arriba a la izquierda
+function casa(g, x, y, w, h, o = {}) {
+  const c = el('g', {}, g);
+  el('rect', { x, y, width: w, height: h, fill: '#fff', stroke: INK, 'stroke-width': o.sw || 2, 'stroke-linejoin': 'round' }, c);
+  if (o.teja) el('path', { d: `M${x - 3} ${y}H${x + w + 3}`, stroke: TEJA, 'stroke-width': 5, 'stroke-linecap': 'round' }, c);
+  const pw = Math.max(6, w * .2), ph = h * .45;
+  el('rect', { x: x + w * .2, y: y + h - ph, width: pw, height: ph, fill: ACC, opacity: .85 }, c);
+  el('rect', { x: x + w * .58, y: y + h * .25, width: pw, height: pw, fill: SOFT, stroke: ACC, 'stroke-width': 1.4 }, c);
+  return c;
+}
+
+// ---------- mapa pequeño (lon, lat; dibujo simplificado) ----------
+const PENINSULA = [
+  [-8.87, 41.87], [-8.90, 42.10], [-8.80, 42.25], [-8.95, 42.40], [-9.08, 42.58], [-9.04, 42.75], [-9.30, 42.92], [-9.20, 43.10],
+  [-9.20, 43.20], [-8.95, 43.32], [-8.55, 43.32], [-8.40, 43.38], [-8.25, 43.50], [-8.10, 43.65], [-7.87, 43.77], [-7.69, 43.79],
+  [-7.40, 43.70], [-7.04, 43.55], [-6.50, 43.57], [-6.05, 43.60], [-5.85, 43.66], [-5.66, 43.55], [-5.20, 43.48], [-4.60, 43.40],
+  [-4.00, 43.45], [-3.80, 43.47], [-3.40, 43.42], [-3.00, 43.38], [-2.60, 43.42], [-2.20, 43.32], [-1.79, 43.38],
+  [-1.60, 43.25], [-1.42, 43.27], [-1.30, 43.08], [-0.95, 42.98], [-0.70, 42.88], [-0.30, 42.82], [0.10, 42.70], [0.70, 42.85],
+  [0.95, 42.80], [1.45, 42.60], [1.73, 42.50], [2.00, 42.40], [2.55, 42.35], [3.15, 42.44], [3.32, 42.32],
+  [3.18, 42.22], [3.20, 41.90], [2.80, 41.65], [2.18, 41.38], [1.70, 41.22], [1.25, 41.11], [0.85, 40.85], [0.87, 40.70],
+  [0.55, 40.55], [0.20, 40.15], [-0.03, 39.98], [-0.32, 39.45], [-0.23, 39.17], [0.00, 38.90], [0.23, 38.73], [-0.10, 38.55],
+  [-0.48, 38.34], [-0.60, 38.15], [-0.75, 37.85], [-0.69, 37.63], [-0.98, 37.58], [-1.30, 37.55], [-1.58, 37.40], [-1.85, 37.20],
+  [-1.90, 36.95], [-2.19, 36.72], [-2.46, 36.83], [-2.80, 36.70], [-3.02, 36.74], [-3.52, 36.72], [-4.00, 36.75], [-4.42, 36.71],
+  [-4.65, 36.53], [-4.88, 36.50], [-5.15, 36.42], [-5.35, 36.16], [-5.60, 36.01],
+  [-5.95, 36.18], [-6.29, 36.53], [-6.44, 36.74], [-6.83, 37.10], [-7.10, 37.20], [-7.41, 37.18],
+  [-7.50, 37.55], [-7.25, 37.95], [-7.00, 38.20], [-7.30, 38.45], [-7.10, 38.80], [-7.02, 38.88], [-7.20, 39.10], [-7.35, 39.40],
+  [-7.53, 39.66], [-7.00, 39.67], [-6.90, 40.00], [-6.85, 40.25], [-6.80, 40.60], [-6.95, 41.00], [-6.70, 41.10], [-6.25, 41.50],
+  [-6.40, 41.70], [-6.55, 41.95], [-6.95, 41.95], [-7.20, 41.88], [-7.60, 41.85], [-8.10, 41.80], [-8.20, 42.05], [-8.60, 42.00],
+];
+const ISLAS = [
+  [[3.21, 39.96], [3.10, 39.90], [3.12, 39.83], [3.25, 39.75], [3.47, 39.71], [3.33, 39.54], [3.20, 39.40], [3.05, 39.27], [2.97, 39.33],
+    [2.79, 39.37], [2.73, 39.51], [2.62, 39.55], [2.52, 39.47], [2.38, 39.53], [2.35, 39.60], [2.55, 39.70], [2.70, 39.80], [2.92, 39.90]],
+  [[3.83, 40.00], [3.95, 40.06], [4.09, 40.09], [4.20, 40.03], [4.30, 39.88], [4.25, 39.82], [4.05, 39.90], [3.85, 39.93]],
+  [[1.30, 38.98], [1.40, 39.08], [1.52, 39.11], [1.60, 39.08], [1.58, 39.00], [1.53, 38.97], [1.45, 38.90], [1.38, 38.84], [1.30, 38.86], [1.22, 38.89], [1.26, 38.96]],
+];
+const CANARIAS = [
+  [[-13.42, 29.22], [-13.47, 29.05], [-13.80, 28.88], [-13.87, 28.95], [-13.70, 29.10]],
+  [[-13.85, 28.75], [-13.82, 28.45], [-14.00, 28.20], [-14.30, 28.10], [-14.50, 28.07], [-14.20, 28.30], [-14.05, 28.55], [-13.95, 28.72]],
+  [[-15.40, 28.15], [-15.38, 27.85], [-15.60, 27.73], [-15.82, 27.85], [-15.80, 28.05], [-15.62, 28.17]],
+  [[-16.12, 28.57], [-16.40, 28.40], [-16.70, 28.08], [-16.85, 28.30], [-16.90, 28.37], [-16.55, 28.42], [-16.35, 28.55]],
+  [[-17.10, 28.12], [-17.20, 28.02], [-17.33, 28.10], [-17.22, 28.20]],
+  [[-17.78, 28.85], [-17.90, 28.75], [-17.85, 28.50], [-17.75, 28.55], [-17.75, 28.75]],
+  [[-18.15, 27.80], [-17.88, 27.78], [-17.98, 27.65]],
+];
+const SETENIL = [-5.18, 36.86];
+const COS = Math.cos(40 * Math.PI / 180), MK = 26, MX = 270, MY = 610, MLON = -2.5, MLAT = 39.9;
+const mp = ([lon, lat]) => [MX + (lon - MLON) * COS * MK, MY + (MLAT - lat) * MK];
+
+// ---------- el cañón (corte transversal) ----------
+const PL = [[-20, 300], [60, 296], [120, 302], [168, 300], [196, 318], [206, 344], [209, 382], [206, 420], [210, 450], [214, 470], [230, 492], [236, 516], [222, 538], [196, 546], [184, 560], [182, 598], [190, 622], [236, 626], [250, 660], [256, 704]];
+const PR = PL.map(([x, y]) => [540 - x, y + 14]);
+const RECESO = [210, 585];  // la casa de abajo a la izquierda, bajo la roca
+
+// la roca de la portada (y del final)
+const ROCA_CUEVA = [[30, 330], [90, 300], [170, 292], [260, 304], [350, 290], [440, 300], [500, 322], [512, 380], [498, 452],
+  [470, 480], [420, 458], [330, 452], [240, 456], [150, 466], [112, 500], [86, 560], [72, 640], [24, 640], [18, 470]];
+
+// ---------- la casa por dentro (corte) ----------
+const ROCA_CORTE = [[-20, 236], [560, 236], [560, 330], [470, 338], [444, 352], [420, 357], [330, 345], [230, 343], [150, 353], [100, 382],
+  [78, 432], [70, 500], [68, 562], [72, 640], [-20, 640]];
+
+let G = {};
+function build() {
+  // 1 · roca sobre una casa
+  const cv = $('#cueva');
+  G.cuevaRoca = el('path', { d: poli(ROCA_CUEVA), fill: ROCA, stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round' }, cv);
+  G.cuevaVetas = el('path', { d: 'M60 360Q200 340 330 352T490 344M48 420Q170 404 300 412T500 404M40 500Q70 470 120 452', fill: 'none', stroke: ROCA2, 'stroke-width': 2, 'stroke-linecap': 'round' }, cv);
+  G.cuevaSuelo = el('path', { d: 'M10 640H530', stroke: INK, 'stroke-width': 2.6, 'stroke-linecap': 'round', fill: 'none' }, cv);
+  G.cuevaCasa = el('g', {}, cv);
+  el('path', { d: poli([[150, 640], [150, 470], [240, 458], [330, 454], [412, 460], [412, 640]]), fill: '#fff', stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, G.cuevaCasa);
+  el('rect', { x: 256, y: 552, width: 48, height: 88, fill: ACC, opacity: .85 }, G.cuevaCasa);
+  [[178, 516], [344, 516]].forEach(([x, y]) => el('rect', { x, y, width: 40, height: 40, fill: SOFT, stroke: ACC, 'stroke-width': 2 }, G.cuevaCasa));
+  el('path', { d: 'M200 640v-22h16v22M352 640v-22h16v22', fill: '#7FA36B', stroke: INK, 'stroke-width': 1.4 }, G.cuevaCasa);
+  // mapa
+  const m = $('#mapa');
+  G.mapaTierra = el('path', { d: poli(PENINSULA.map(mp)), fill: '#fff', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, m);
+  G.mapaIslas = el('path', { d: ISLAS.map((p) => poli(p.map(mp))).join(''), fill: '#fff', stroke: INK, 'stroke-width': 1.4, 'stroke-linejoin': 'round' }, m);
+  G.mapaCan = el('g', {}, m);
+  const qx = 352, qy = 690, q = 13;
+  el('rect', { x: qx, y: qy, width: 58, height: 26, rx: 4, fill: 'none', stroke: INK3, 'stroke-width': 1, 'stroke-dasharray': '3 3' }, G.mapaCan);
+  el('path', { d: CANARIAS.map((p) => poli(p.map(([lo, la]) => [qx + 4 + (lo + 18.2) * COS * q, qy + 3 + (29.3 - la) * q]))).join(''), fill: '#fff', stroke: INK, 'stroke-width': 1 }, G.mapaCan);
+  const [sx, sy] = mp(SETENIL);
+  G.pin = el('g', { transform: `translate(${f1(sx)} ${f1(sy)})` }, m);
+  G.pinHalo = el('circle', { r: 10, fill: STAMP, opacity: .25 }, G.pin);
+  el('path', { d: 'M0 0C-9 -12 -9 -24 0 -26C9 -24 9 -12 0 0Z', fill: STAMP, stroke: INK, 'stroke-width': 1.6 }, G.pin);
+  el('circle', { cy: -18, r: 3.2, fill: '#fff' }, G.pin);
+
+  // 2 · el cañón
+  const c = $('#canonG');
+  G.rocaL = el('path', { d: poli([...PL, [256, 780], [-20, 780]]), fill: ROCA, stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round' }, c);
+  G.rocaR = el('path', { d: poli([...PR, [284, 780], [560, 780]]), fill: ROCA, stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round' }, c);
+  G.luz = el('path', { d: poli([...PL, [256, 780], [-20, 780]]), fill: '#F2C14E', opacity: 0 }, c);
+  G.sombra = el('path', { d: poli([...PR, [284, 780], [560, 780]]), fill: '#2B4A6B', opacity: 0 }, c);
+  G.vetas = el('path', { d: 'M-10 340Q60 330 130 344M-10 520Q70 506 150 516M-10 650Q80 640 170 656M550 360Q480 350 410 362M550 540Q470 528 380 538M550 668Q460 660 380 676',
+    fill: 'none', stroke: ROCA2, 'stroke-width': 2, 'stroke-linecap': 'round' }, c);
+  G.agua = el('path', { d: 'M256 704L284 704L281 726L259 726Z', fill: ACC, opacity: .45, stroke: ACC, 'stroke-width': 1.6 }, c);
+  G.casasCanon = el('g', {}, c);
+  [[22, 256, 42, 44], [70, 262, 40, 38], [116, 258, 44, 42]].forEach(([x, y, w, h]) => casa(G.casasCanon, x, y, w, h, { teja: 1, sw: 1.8 }));
+  [[378, 270, 40, 44], [424, 276, 40, 38], [470, 272, 44, 42]].forEach(([x, y, w, h]) => casa(G.casasCanon, x, y, w, h, { teja: 1, sw: 1.8 }));
+  [[188, 562, 42, 60], [310, 576, 42, 60]].forEach(([x, y, w, h]) => casa(G.casasCanon, x, y, w, h, { sw: 1.8 }));
+
+  // 3 · el corte de la casa
+  const k = $('#corte');
+  el('path', { d: 'M-20 640H560V720H-20Z', fill: ROCA2, opacity: .55 }, k);
+  G.rocaCorte = el('path', { d: poli(ROCA_CORTE), fill: ROCA, stroke: INK, 'stroke-width': 2.8, 'stroke-linejoin': 'round' }, k);
+  G.rocaLuz = el('path', { d: poli(ROCA_CORTE), fill: '#F2C14E', opacity: 0 }, k);
+  el('path', { d: 'M10 268Q160 256 300 270T540 262M10 304Q150 296 250 306M380 300Q460 296 540 306M20 400Q40 460 30 560', fill: 'none', stroke: ROCA2, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, k);
+  // suelo, alfombra y muebles de ejemplo
+  el('path', { d: 'M-20 640H560', stroke: INK, 'stroke-width': 2.8 }, k);
+  el('path', { d: 'M150 636H330', stroke: STAMP, 'stroke-width': 5, opacity: .5, 'stroke-linecap': 'round' }, k);
+  el('path', { d: 'M120 640V588Q120 578 130 578H236Q246 578 246 588V640M120 606H246M136 578V560Q136 552 146 552H222Q232 552 232 560V578', fill: '#fff', stroke: INK, 'stroke-width': 2.2, 'stroke-linejoin': 'round' }, k);
+  el('path', { d: 'M280 640V604M340 640V604M270 604H350', fill: 'none', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, k);
+  el('path', { d: 'M300 346V438M286 456H314L306 438H294Z', fill: '#FFE7A8', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, k);
+  G.lampLuz = el('path', { d: 'M286 456L250 600H350L314 456Z', fill: '#FFE7A8', opacity: .35 }, k);
+  el('path', { d: 'M372 640V560Q372 548 384 548H410V640', fill: '#fff', stroke: INK, 'stroke-width': 2 }, k);
+  el('path', { d: 'M384 548V530M378 530H404', stroke: '#7FA36B', 'stroke-width': 6, 'stroke-linecap': 'round' }, k);
+  // fachada: muro blanco con ventana y puerta
+  G.fachada = el('g', {}, k);
+  el('path', { d: 'M444 352L458 350V640H444Z', fill: '#fff', stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, G.fachada);
+  el('path', { d: 'M444 424H458V488H444ZM444 556H458V640H444Z', fill: SOFT, stroke: ACC, 'stroke-width': 2 }, G.fachada);
+  G.fachadaLuz = el('path', { d: 'M440 350L462 348V644H440Z', fill: 'none', stroke: ACC, 'stroke-width': 4, opacity: 0 }, k);
+  // calle de fuera
+  el('path', { d: 'M500 640V560M492 560H508', stroke: INK, 'stroke-width': 2.2, 'stroke-linecap': 'round' }, k);
+
+  // 4 · la línea del tiempo
+  const tg = $('#tiempo');
+  G.linea = el('path', { d: 'M60 520H480', stroke: INK, 'stroke-width': 3, 'stroke-linecap': 'round' }, tg);
+  G.marcas = el('g', {}, tg);
+  for (let i = 0; i <= 10; i++) el('path', { d: `M${60 + i * 42} 512V528`, stroke: INK, 'stroke-width': 1.6 }, G.marcas);
+  G.hoy = el('g', {}, tg); casa(G.hoy, 462, 466, 36, 40, { teja: 1, sw: 1.8 });
+  el('text', { x: 480, y: 556, 'text-anchor': 'middle', style: "font:700 16px 'Hanken Grotesk';fill:#0E1B2B" }, G.hoy).textContent = 'Hoy';
+  G.piramide = el('g', { opacity: 0 }, tg);
+  el('path', { d: 'M78 506L102 470L126 506Z', fill: '#F2D9A0', stroke: INK, 'stroke-width': 1.8, 'stroke-linejoin': 'round' }, G.piramide);
+  el('text', { x: 102, y: 450, 'text-anchor': 'middle', style: "font:700 13px 'Hanken Grotesk';fill:#4F6175" }, G.piramide).textContent = 'Pirámide de Guiza';
+  el('text', { x: 102, y: 466, 'text-anchor': 'middle', style: "font:600 12px 'Hanken Grotesk';fill:#4F6175" }, G.piramide).textContent = 'unos 4.500 años';
+  G.punto = el('circle', { r: 9, fill: STAMP, stroke: INK, 'stroke-width': 2 }, tg);
+  G.inicio = el('g', { opacity: 0 }, tg);
+  el('path', { d: 'M36 520Q36 476 60 476Q84 476 84 520Z', fill: ROCA, stroke: INK, 'stroke-width': 2 }, G.inicio);
+  el('path', { d: 'M50 520Q50 496 60 496Q70 496 70 520Z', fill: INK, opacity: .75 }, G.inicio);
+  el('text', { x: 60, y: 556, 'text-anchor': 'middle', style: "font:700 16px 'Hanken Grotesk';fill:#B3261E" }, G.inicio).textContent = 'Hace 5.000 años';
+
+  // 5 · la torre y las flechas
+  const tw = $('#torre');
+  el('path', { d: 'M110 700Q150 640 270 636Q390 640 430 700Z', fill: ROCA, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, tw);
+  G.torre = el('path', { d: 'M206 642V430H220V412H238V430H258V412H282V430H302V412H320V430H334V642Z', fill: '#fff', stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round' }, tw);
+  el('path', { d: 'M248 642V596Q248 580 270 580Q292 580 292 596V642Z', fill: INK, opacity: .8 }, tw);
+  el('path', { d: 'M262 470H278V500H262Z', fill: INK, opacity: .7 }, tw);
+  el('path', { d: 'M206 520H334', stroke: ROCA2, 'stroke-width': 2 }, tw);
+  G.flechas = [...Array(7)].map((_, i) => {
+    const g = el('g', { opacity: 0 }, $('#flechas'));
+    el('path', { d: 'M-34 0H0M-8 -6L0 0L-8 6M-34 0L-40 -6M-34 0L-40 6', fill: 'none', stroke: INK, 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g);
+    return g;
+  });
+
+  // 6 · la montaña detrás de una casa normal; después baja y le hace de techo
+  const mo = $('#monte');
+  G.monteDetras = el('path', { d: 'M-10 640L70 470L150 400L210 330L270 300L330 352L400 300L470 420L550 640Z', fill: ROCA, stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, mo);
+  G.cruz = el('path', { d: 'M150 300L390 420M390 300L150 420', stroke: STAMP, 'stroke-width': 7, 'stroke-linecap': 'round', fill: 'none' }, mo);
+  el('path', { d: 'M-10 640H550', stroke: INK, 'stroke-width': 2.6 }, mo);
+  G.monteCasa = el('g', {}, mo);
+  el('rect', { x: 150, y: 470, width: 262, height: 170, fill: '#fff', stroke: INK, 'stroke-width': 2.4, 'stroke-linejoin': 'round' }, G.monteCasa);
+  el('rect', { x: 256, y: 552, width: 48, height: 88, fill: ACC, opacity: .85 }, G.monteCasa);
+  [[178, 516], [344, 516]].forEach(([x, y]) => el('rect', { x, y, width: 40, height: 40, fill: SOFT, stroke: ACC, 'stroke-width': 2 }, G.monteCasa));
+  G.tejado = el('path', { d: 'M140 470H422', stroke: TEJA, 'stroke-width': 9, 'stroke-linecap': 'round' }, mo);
+  G.monteRoca = el('g', {}, mo);
+  el('path', { d: poli(ROCA_CUEVA), fill: ROCA, stroke: INK, 'stroke-width': 2.6, 'stroke-linejoin': 'round' }, G.monteRoca);
+  el('path', { d: 'M60 360Q200 340 330 352T490 344M48 420Q170 404 300 412T500 404M40 500Q70 470 120 452', fill: 'none', stroke: ROCA2, 'stroke-width': 2, 'stroke-linecap': 'round' }, G.monteRoca);
+
+  // 7 · el plano: la roca primero, después las casas
+  const p = $('#plano');
+  G.planoRoca = el('path', { d: poli([[-20, 330], [90, 300], [200, 318], [320, 296], [430, 314], [560, 300], [560, 610], [470, 626], [380, 604], [270, 630], [170, 606], [70, 628], [-20, 612]]),
+    fill: ROCA, 'fill-opacity': .55, stroke: INK, 'stroke-width': 2.2, 'stroke-dasharray': '10 7', 'stroke-linejoin': 'round' }, p);
+  G.planoRayas = el('g', { opacity: 0 }, p);
+  for (let i = -6; i < 16; i++) el('path', { d: `M${i * 40} 640L${i * 40 + 220} 300`, stroke: ROCA2, 'stroke-width': 1.6 }, G.planoRayas);
+  G.planoRayas.setAttribute('clip-path', 'url(#clipRoca)');
+  const defs = el('defs', {}, p), cp = el('clipPath', { id: 'clipRoca' }, defs);
+  el('path', { d: G.planoRoca.getAttribute('d') }, cp);
+  G.planoRotRoca = el('text', { x: 270, y: 370, 'text-anchor': 'middle', style: 'font:400 34px Gloock;fill:#0E1B2B', opacity: 0 }, p); G.planoRotRoca.textContent = 'roca';
+  G.planoBoceto = el('path', { d: 'M40 450H500V590H40ZM155 450V590M270 450V590M385 450V590', fill: 'none', stroke: INK3, 'stroke-width': 1.6, 'stroke-dasharray': '6 6', opacity: 0 }, p);
+  G.planoCasas = el('path', { d: 'M40 450H500V590H40ZM155 450V590M270 450V590M385 450V590', fill: 'none', stroke: INK, 'stroke-width': 7, 'stroke-linejoin': 'miter' }, p);
+  G.planoPuertas = el('path', { d: 'M80 590V552A38 38 0 0 1 118 590M195 590V552A38 38 0 0 1 233 590M310 590V552A38 38 0 0 1 348 590M425 590V552A38 38 0 0 1 463 590',
+    fill: 'none', stroke: INK3, 'stroke-width': 1.6, opacity: 0 }, p);
+  G.planoCalle = el('path', { d: 'M-20 600H560M-20 668H560', stroke: INK, 'stroke-width': 2, 'stroke-dasharray': '2 0', opacity: 0 }, p);
+  G.planoRotCalle = el('text', { x: 270, y: 642, 'text-anchor': 'middle', style: "font:700 17px 'Hanken Grotesk';fill:#4F6175", opacity: 0 }, p); G.planoRotCalle.textContent = 'calle';
+}
+
+let lastSub = -1;
+function subtitles(t) {
+  const s = $('#sub');
+  const f = TL.fragmentos.find((x) => t >= x.start - .05 && t < x.end + Math.max(.15, Math.min(.45, x.pausa * .35)));
+  const id = f && !f.ocultar ? f.n : -1;
+  if (id !== lastSub) { s.innerHTML = id === -1 ? '' : f.palabras.map((w) => `<span>${w.w}</span>`).join(' '); lastSub = id; }
+  if (id !== -1) s.querySelectorAll('span').forEach((x, i) => x.classList.toggle('on', t >= f.palabras[i].t));
+}
+
+const chip = (s, t, a, centrado = true) => { const p = pop(t, a, .2); $(s).style.opacity = p.o; $(s).style.transform = `${centrado ? 'translateX(-50%) ' : ''}scale(${p.s})`; return p.o; };
+const pulso = (t, a, d = 1.1) => Math.sin(Math.PI * prog(t, a, a + d));
+
+function render(t) {
+  const C = TL.cues, E = TL.escenas, ES = {}; E.forEach((e) => ES[e.n] = e);
+  E.forEach((e, i) => {
+    const s = $('#s' + e.n); if (!s) return;
+    const inn = i === 0 ? 1 : prog(t, e.start, e.start + .12);
+    const outp = i === E.length - 1 ? 0 : prog(t, e.end, e.end + .12);
+    s.style.opacity = inn * (1 - outp);
+  });
+  const F = {}; TL.fragmentos.forEach((f) => F[f.n] = f);
+
+  // ---- 1 · la roca sobre la casa; con la frase 2 sube y sale el mapa ----
+  { const d = ease(prog(t, .1, 1.2));
+    trazo(G.cuevaRoca, d); G.cuevaRoca.setAttribute('fill-opacity', prog(t, .7, 1.2));
+    G.cuevaVetas.setAttribute('opacity', prog(t, 1.0, 1.4)); trazo(G.cuevaSuelo, ease(prog(t, .5, 1.2)));
+    G.cuevaCasa.setAttribute('opacity', prog(t, 1.0, 1.6));
+    const sube = ease(prog(t, F[2].start - .15, F[2].start + .45));
+    $('#b1').style.opacity = 1 - prog(t, F[2].start - .15, F[2].start + .15);
+    $('#cueva').setAttribute('transform', `translate(270 ${f1(lerp(470, 368, sube))}) scale(${f1(lerp(1, .58, sube) * 100) / 100}) translate(-270 -470)`);
+    const m = prog(t, F[2].start + .1, F[2].start + .9);
+    trazo(G.mapaTierra, ease(m)); G.mapaTierra.setAttribute('fill-opacity', prog(t, F[2].start + .6, F[2].start + 1.0));
+    G.mapaIslas.setAttribute('opacity', prog(t, F[2].start + .7, F[2].start + 1.0)); G.mapaCan.setAttribute('opacity', prog(t, F[2].start + .7, F[2].start + 1.0));
+    const p = pop(t, C.cadiz - .1, .2); G.pin.setAttribute('opacity', p.o);
+    G.pinHalo.setAttribute('r', f1(10 + 10 * pulso(t, C.calles, .9))); G.pinHalo.setAttribute('opacity', f1(.25 * p.o * 100) / 100);
+    chip('#chipPueblo', t, C.cadiz); }
+
+  // ---- 2 · el cañón: se dibuja, la cámara entra en una calle bajo la roca y vuelve ----
+  { const d = ease(prog(t, C.canon + .05, C.canon + 1.2));
+    [G.rocaL, G.rocaR].forEach((e) => { trazo(e, d); e.setAttribute('fill-opacity', prog(t, C.canon + .8, C.canon + 1.3)); });
+    G.vetas.setAttribute('opacity', prog(t, C.canon + 1.0, C.canon + 1.4));
+    G.casasCanon.setAttribute('opacity', prog(t, C.canon + 1.0, C.canon + 1.6));
+    G.agua.setAttribute('opacity', .45 * prog(t, C.rio - .2, C.rio + .2));
+    $('#tagRio').style.opacity = prog(t, C.rio, C.rio + .3) * (1 - prog(t, C.techo - .1, C.techo + .1)) + prog(t, C.famosas + .3, C.famosas + .6);
+    const zin = ease(prog(t, C.techo - .1, C.techo + .8)), zout = ease(prog(t, C.famosas - .15, C.famosas + .6)), z = zin * (1 - zout);
+    const [cx, cy] = RECESO, k = lerp(1, 2.6, z);
+    $('#canonG').setAttribute('transform', `translate(${f1(lerp(270, 270, z))} ${f1(lerp(470, 470, z))}) scale(${f1(k * 100) / 100}) translate(${f1(-lerp(270, cx, z))} ${f1(-lerp(470, cy - 20, z))})`);
+    chip('#chipRoca', t, C.roca); $('#chipRoca').style.opacity *= 1 - prog(t, C.famosas - .2, C.famosas);
+    G.luz.setAttribute('opacity', .3 * prog(t, C.sol, C.sol + .4));
+    G.sombra.setAttribute('opacity', .22 * prog(t, C.sombra, C.sombra + .4));
+    chip('#chipSol', t, C.sol); chip('#chipSombra', t, C.sombra); }
+
+  // ---- 3 · el corte: la roca es el techo y la fachada cierra la casa ----
+  { const a = prog(t, ES[3].start, ES[3].start + .5);
+    $('#corte').setAttribute('transform', `translate(270 480) scale(${f1((.9 + .1 * out(a)) * 100) / 100}) translate(-270 -480)`);
+    G.rocaLuz.setAttribute('opacity', .35 * pulso(t, C.arriba, 1.6));
+    G.fachadaLuz.setAttribute('opacity', pulso(t, C.delante, 1.8));
+    chip('#chipTecho', t, C.techo2 - .2); chip('#chipFachada', t, C.fachada); }
+
+  // ---- 4 · cinco mil años: el punto viaja de hoy hacia atrás ----
+  { trazo(G.linea, ease(prog(t, ES[4].start + .1, ES[4].start + .8)));
+    G.marcas.setAttribute('opacity', prog(t, ES[4].start + .5, ES[4].start + .9));
+    G.hoy.setAttribute('opacity', prog(t, ES[4].start + .2, ES[4].start + .5));
+    const v = ease(prog(t, C.figura + .1, C.cincomil + .3));
+    G.punto.setAttribute('cx', f1(lerp(480, 60, v))); G.punto.setAttribute('cy', 520); G.punto.setAttribute('opacity', prog(t, C.figura, C.figura + .1));
+    G.piramide.setAttribute('opacity', prog(t, C.figura + .1 + .78 * (C.cincomil + .2 - C.figura), C.cincomil + .3));
+    G.inicio.setAttribute('opacity', prog(t, C.cincomil + .1, C.cincomil + .35));
+    const n = Math.round(5000 * v / 100) * 100;
+    $('#cnt5000').textContent = `${n.toLocaleString ? String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.') : n} años`;
+    $('#cnt5000').style.opacity = prog(t, C.figura, C.figura + .2);
+    chip('#chipFigura', t, C.cincomil + .3); }
+
+  // ---- 5 · el nombre: «septem nihil», y siete intentos contra la torre ----
+  { const sp = prog(t, C.septem - .1, C.septem + .15);
+    $('#nomSetenil').style.opacity = prog(t, ES[5].start, ES[5].start + .2) * (1 - sp);
+    const s2 = pop(t, C.septem - .05, .2); $('#nomSeptem').style.opacity = s2.o; $('#nomSeptem').style.transform = `scale(${s2.s})`;
+    $('#nomTrad').style.opacity = prog(t, C.nada - .1, C.nada + .2);
+    let n = 0;
+    G.flechas.forEach((g, i) => {
+      const ti = C.intentos + .2 + i * .42, izq = i % 2 === 0, y = 500 + (i * 37) % 110;
+      const vuelo = prog(t, ti - .25, ti), cae = prog(t, ti, ti + .45);
+      if (t >= ti) n = i + 1;
+      const x0 = izq ? -50 : 590, x1 = izq ? 204 : 336;
+      const x = lerp(x0, x1, vuelo) + (izq ? -1 : 1) * 18 * cae, yy = y + 150 * cae * cae;
+      const rot = (izq ? 0 : 180) + (izq ? 1 : -1) * 70 * cae;
+      g.setAttribute('transform', `translate(${f1(x)} ${f1(yy)}) rotate(${f1(rot)})`);
+      g.setAttribute('opacity', f1(prog(t, ti - .25, ti - .2) * (1 - prog(t, ti + .3, ti + .45)) * 100) / 100);
+    });
+    const c = $('#chipIntentos');
+    c.textContent = n >= 7 && t >= C.ysiete ? '7 intentos · 7 veces nada' : `Intento ${Math.max(1, n)} de 7`;
+    chip('#chipIntentos', t, C.intentos + .2);
+    G.torre.setAttribute('fill', n > 0 && t < C.intentos + .2 + (n - 1) * .42 + .15 ? '#FFF1EE' : '#fff'); }
+
+  // ---- 6 · la montaña, detrás de la casa (no: tachada) y después encima, como techo ----
+  { const a = prog(t, ES[6].start, ES[6].start + .4), baja = prog(t, C.parte - .1, C.parte + .45);
+    G.monteDetras.setAttribute('opacity', f1(a * (1 - prog(t, C.parte - .1, C.parte + .2)) * 100) / 100);
+    G.monteCasa.setAttribute('opacity', a); G.tejado.setAttribute('opacity', a * (1 - prog(t, C.parte + .2, C.parte + .4)));
+    const c = prog(t, C.detras, C.detras + .25); trazo(G.cruz, ease(c)); G.cruz.setAttribute('opacity', 1 - prog(t, C.parte - .1, C.parte + .1));
+    const y = baja < 1 ? -330 * (1 - baja * baja) : 0, rebote = 6 * Math.sin(Math.PI * prog(t, C.parte + .45, C.parte + .7));
+    G.monteRoca.setAttribute('transform', `translate(0 ${f1(y - rebote)})`); G.monteRoca.setAttribute('opacity', baja > 0 ? 1 : 0);
+    chip('#chipParte', t, C.parte + .5); }
+
+  // ---- 7 · el plano: primero la montaña, después las casas ----
+  { G.planoBoceto.setAttribute('opacity', .5 * prog(t, C.plano + .1, C.plano + .5) * (1 - prog(t, C.montana + .3, C.montana + .6)));
+    const m = C.montana, r = ease(prog(t, m - 1.0, m - .1));
+    trazo(G.planoRoca, r); G.planoRoca.setAttribute('stroke-dasharray', r < 1 ? 1 : '10 7');
+    G.planoRoca.setAttribute('fill-opacity', .55 * prog(t, m - .4, m));
+    G.planoRayas.setAttribute('opacity', prog(t, m - .2, m + .2));
+    G.planoRotRoca.setAttribute('opacity', prog(t, m - .3, m));
+    trazo(G.planoCasas, ease(prog(t, m + .1, m + .8)));
+    G.planoPuertas.setAttribute('opacity', prog(t, m + .6, m + .9));
+    G.planoCalle.setAttribute('opacity', prog(t, m + .5, m + .8)); G.planoRotCalle.setAttribute('opacity', prog(t, m + .6, m + .9));
+    $('#logo').style.opacity = prog(t, C.logo, C.logo + .4); $('#url').style.opacity = prog(t, C.logo + .2, C.logo + .6); }
+
+  subtitles(t);
+}
+
+async function init(tl) {
+  TL = tl; build();
+  await document.fonts.ready;
+  await Promise.all(Array.from(document.images).map((im) => im.decode().catch(() => {})));
+  render(0);
+  return TL.duracion;
+}
+window.init = init; window.render = render;
+</script>
+</body>
+</html>

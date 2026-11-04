@@ -1,0 +1,4 @@
+{
+ "nota": "Cortes a mano entre los silencios largos de la toma (build.buscar_silencios(x, 0.05)). Pausas internas: tras «Bodegas,» (2, 6,31-6,99), «río,» (3), «nadie:» (4, 16,16-16,85), «dos:» (5, 20,06-20,59), «tradición,» (12, 42,89-43,37; «séptem» desde 43,72) y «conquistarlo,» (14, 49,82-50,20). El final (15 y 16) es una segunda toma (voz/toma-2-final.mp3) pegada tras la primera (voz/toma-1.mp3) a partir de 52,6 s; pausa interna tras «casa:» (15, 55,03-55,62).",
+ "cortes": [[0.0, 1.93], [4.57, 8.37], [9.80, 12.77], [13.71, 17.44], [18.95, 22.42], [24.04, 25.52], [26.96, 28.66], [29.44, 31.51], [32.49, 34.03], [35.15, 37.99], [39.39, 39.86], [41.17, 44.55], [45.52, 46.65], [48.10, 51.59], [53.02, 56.64], [58.43, 61.44]]
+}

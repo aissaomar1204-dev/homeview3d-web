@@ -1,0 +1,22 @@
+{
+  "titulo": "¿Vivirías dentro de una cueva?",
+  "nota": "Serie «Casas imposibles», capítulo 1: Setenil de las Bodegas (Cádiz). Cierre neutro: tras la última frase, el logo en silencio. Cada fragmento es un subtítulo. Fuente principal: guía oficial «Ruta de las calles-cueva» (Diputación de Cádiz y Ayuntamiento de Setenil): caserío incrustado en el cañón del río Guadalporcún; calles-cueva Cuevas del Sol y Cuevas de la Sombra, paralelas al río; techo de roca caliza natural; venus de cinco mil años (la Damita de Setenil) hallada en el municipio; «Septem nihil. Siete veces nada. Según la tradición popular, de ahí su nombre». Las habitaciones del corte son de ejemplo.",
+  "fragmentos": [
+    {"n": 1, "escena": 1, "texto": "¿Vivirías dentro de una cueva?", "pausa": 0.5},
+    {"n": 2, "escena": 1, "texto": "En Setenil de las Bodegas, en Cádiz, hay calles enteras así.", "pausa": 0.5},
+    {"n": 3, "escena": 2, "texto": "El pueblo está metido en el cañón de un río, el Guadalporcún.", "pausa": 0.5},
+    {"n": 4, "escena": 2, "texto": "Y en algunas calles, el techo no lo ha puesto nadie: es la roca.", "pausa": 0.5},
+    {"n": 5, "escena": 2, "texto": "Las más famosas son dos: Cuevas del Sol y Cuevas de la Sombra.", "pausa": 0.5},
+    {"n": 6, "escena": 3, "texto": "¿Y cómo es una casa así por dentro?", "pausa": 0.5},
+    {"n": 7, "escena": 3, "texto": "Arriba, la roca hace de techo.", "pausa": 0.2},
+    {"n": 8, "escena": 3, "texto": "Delante, una fachada blanca cierra la casa.", "pausa": 0.5},
+    {"n": 9, "escena": 4, "texto": "Y aquí se vive desde hace mucho:", "pausa": 0.1},
+    {"n": 10, "escena": 4, "texto": "en el pueblo apareció una figura de hace cinco mil años.", "pausa": 0.5},
+    {"n": 11, "escena": 5, "texto": "¿Y el nombre?", "pausa": 0.2},
+    {"n": 12, "escena": 5, "texto": "Según la tradición, viene del latín: «septem nihil».", "pausa": 0.2},
+    {"n": 13, "escena": 5, "texto": "Siete veces nada.", "pausa": 0.5},
+    {"n": 14, "escena": 5, "texto": "Siete veces intentaron conquistarlo, y siete veces nada.", "pausa": 0.5},
+    {"n": 15, "escena": 6, "texto": "Aquí la montaña no está detrás de la casa: es parte de ella.", "pausa": 0.5},
+    {"n": 16, "escena": 7, "texto": "Por eso, para dibujar su plano, primero hay que dibujar la montaña.", "pausa": 2.0}
+  ]
+}
